@@ -386,4 +386,95 @@
         <tag>mess</tag>
       </tags>
   </entry>
+  <entry>
+    <title>Linux基础</title>
+    <url>/2021/08/07/linux%E5%9F%BA%E7%A1%80/</url>
+    <content><![CDATA[<h1 id="linux基础"><a href="#linux基础" class="headerlink" title="linux基础"></a><font color=#86473F>linux基础</font></h1><p><font color=#BF6766>这节课的目的：</font></p>
+<ul>
+<li>让没有任何编程基础的萌新了解linux系统</li>
+<li>大致了解linux最基本文件操作指令以及软件的下载安装</li>
+</ul>
+<p><font color=#BF6766>并没有很多的指令的学习，主要是想为萌新们加深对于linux系统的理解。以及讲一些个人的比较奇怪的体会</font></p>
+<h2 id="1）linux是什么？"><a href="#1）linux是什么？" class="headerlink" title="1）linux是什么？"></a><font color=#B19693>1）linux是什么？</font></h2><p>Linux是一类自由和开源的操作系统。</p>
+<p>通常情况下，我们接触到的linux都是被打包好的各种linux发行版，包括<a href="https://zh.wikipedia.org/wiki/Debian">Debian</a>（<font color=#A96360>及其派生版本<a href="https://zh.wikipedia.org/wiki/Ubuntu">Ubuntu</a>、Kali等</font>）、<a href="https://zh.wikipedia.org/wiki/Fedora">Fedora</a>（<font color=#A96360>及其相关版本<a href="https://zh.wikipedia.org/wiki/CentOS">CentOS</a>和<a href="https://zh.wikipedia.org/wiki/OpenSUSE">openSUSE</a>等。)</font></p>
+<p>也就是类似ubuntu，centos等操作系统，都属于linux。不同的发行版的命令格式以及依赖库都不太一样，在学习初期选择一种发行版使用就行，没有必要反复横跳。</p>
+<p>如果你立志学习web安全，那么可以学习kali，二进制安全则是ubuntu，运维的话似乎用centos的人比较多。</p>
+<h2 id="2）为什么要使用linux？"><a href="#2）为什么要使用linux？" class="headerlink" title="2）为什么要使用linux？"></a><font color=#B19693>2）为什么要使用linux？</font></h2><h3 id="1）免费"><a href="#1）免费" class="headerlink" title="1）免费"></a><font color=#AB3B3A>1）免费</font></h3><p>windoe10家庭版在中国官网售价<strong>1088rmb</strong>，Mac OS X正版则只随电脑附赠，最便宜的是mac mini，<strong>5299</strong>起。</p>
+<p><strong>然而作为三大操作系统之一的linux，完全免费</strong>（<font color=#A96360><a href="http://haacked.com/archive/2012/02/22/spirit-of-open-source.aspx/">关于开源协议以及开源精神</a></font>）</p>
+<h3 id="2）开源"><a href="#2）开源" class="headerlink" title="2）开源"></a><font color=#AB3B3A>2）开源</font></h3><p>开源意味着用户可以对linux 内核进行查看甚至修改，例如对于linux服务器来说，用户甚至可以自定义系统程序，为管理提供了便利。</p>
+<p>另一方面，内核开源使得我们有机会去分析内核代码，使得源码剖析成为可能。（在ctf pwn方向，完全开源的内核代码为glibc pwn以及kernel pwn学习提供了极大的便利）</p>
+<h3 id="3）软件生态丰富"><a href="#3）软件生态丰富" class="headerlink" title="3）软件生态丰富"></a><font color=#AB3B3A>3）软件生态丰富</font></h3><p>对于很多我们熟悉的桌面版软件（QQ，WX等），linux一众发行版的适配可以说是非常糟糕。比如你可能需要费非常大的力气才能在liunx上跑一个bug很多，ui很奇怪的qq。</p>
+<p>但是对于SRE的日常学习来说，linux是必不可少的。我们使用的非常多的程序基本都是原生支持linux而不一定支持其他操作系统，也就意味着可能在Linux上能顺利运行，在win或者macosx上就会出现很多奇怪的bug，或者根本就不支持。并且，承接上文说到的开源，开源且自由的环境让服务器状态几乎变得透明，我们可以很方便地进行服务器的管理，~~也希望同学们能多学习一点运维知识，就算以后不干这行也很有用，毕竟运维安全部，运维也是大头嘛。</p>
+<h3 id="4）ctf学习"><a href="#4）ctf学习" class="headerlink" title="4）ctf学习"></a><font color=#AB3B3A>4）ctf学习</font></h3><p>接上一点，Linux基本上是学习ctf竞赛道路中必备的工具，正确熟练地使用linux能使你学习效率大大提高。</p>
+<p>传说“kali学得好，牢饭少不了”，作为linux发行版其一的kali拥有超过600个预装的渗透测试程序，为不管是打ctf还是实战都提供了极大的便利。美剧Mr.robot中，男主就是靠一台kali打四方，其标志性的龙图标在剧中非常惹人注目。</p>
+<h2 id="3）安装一个linux系统"><a href="#3）安装一个linux系统" class="headerlink" title="3）安装一个linux系统"></a><font color=#B19693>3）安装一个linux系统</font></h2><p>这个应该上课前就要安装吧。</p>
+<p>我就不再重新装了，但是有几点需要注意。</p>
+<p>首先学习二进制的同学一般来说是装ubuntu，学web安全的同学可以装kali，运维好像选择centos的比较多/</p>
+<p>然后就是关于某个发行版的具体版本。在官网上可以看到ubuntu大致分为后缀的普通版和LTS（long term support）版本，建议直接装lts版本。</p>
+<p>然后是具体的版本号</p>
+<p>一般来说装最新版本的lts是不会出什么大问题的，不同的版本主观体验上差别基本就是ui和glibc。</p>
+<p>前者换个主题就搞定了，后者的话基本只在做pwn题时才能感受到。所以影响不大。</p>
+<p>下载好系统镜像文件后基本就是傻瓜式操作了，看看网上的文章照着操作就完事。<del>如果是用Parallel Desktop的同学装系统碰到问题不能解决的话可以问我，vm我也不会·（）。</del></p>
+<p>如果在物理机和虚拟机之间的交互上出了问题，尽量先在网上查一查。我也没有用过vm虚拟机。。不太清楚怎么搞。</p>
+<p>还有一点要吐槽，ubuntu官网那个下载界面真的好怪</p>
+<p>就是这个界面，好怪，这还是中文站，设计得好像只有四个版本。结果是要点那个桌面系统进去。</p>
+<p><img src="/Users/rin/blog/source/iamge/ubuntu%E5%AE%98%E7%BD%91.png" alt="ubuntu官网"></p>
+<h2 id="4）linux基础知识及常见命令"><a href="#4）linux基础知识及常见命令" class="headerlink" title="4）linux基础知识及常见命令"></a><font color=#B19693>4）linux基础知识及常见命令</font></h2><p><strong>事实上这个东西就和记英文单词一样，没有必要记。用得多了自然就熟了，特别生僻的直接查就好了。所以我觉得学习初期记一些简单的命令就行。</strong></p>
+<h4 id="文件管理"><a href="#文件管理" class="headerlink" title="文件管理"></a><font color=#AB3B3A>文件管理</font></h4><figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><br>ls  <span class="hljs-comment">#列举出当前工作目录的内容（文件或文件夹）</span><br>  <br><span class="hljs-built_in">cd</span>  <span class="hljs-comment">#切换文件路径</span><br>    <br>mkdir  <span class="hljs-comment">#新建文件夹</span><br>  <br><span class="hljs-built_in">pwd</span> <span class="hljs-comment">#显示当前工作目录</span><br>  <br>rm  <span class="hljs-comment">#删除指定文件</span><br>  <br></code></pre></td></tr></table></figure>
+
+<p>如果你在搜索引擎中搜索linux文件管理基本命令，你会发现无论哪个文章，里面的指令介绍都有至少二十条。这还不包括指令的各种参数的列举。</p>
+<p>那么为什么我只列出了5条呢？<br>最主要的原因是我认为指令是根据自己需要来学习的，并且这种东西不存在理解的难度，网上指令大全一大把，如果碰到不知道的指令直接Google然后记住就好了。</p>
+<p>其次就我个人来说二进制学习并不需要什么太过复杂的指令，记这些不如去记gdb的调试指令（）。</p>
+<p>再其次就是感觉大家大多数还是在用桌面版，桌面版的话ubuntu直接为文件管理提供了图形化界面，比较友好直观。像win那样操作就好了，但是如果是linux server就没办法啦。（好怪，不会真的有人拿云服务器学ctf吧）</p>
+<h4 id="安装-更新-包管理"><a href="#安装-更新-包管理" class="headerlink" title="安装/更新/包管理"></a><font color=#AB3B3A>安装/更新/包管理</font></h4><p>在了解相关指令之前，必须明确一个概念就是，抛开ubuntu贫瘠的应用市场不谈。ubuntu等一众发行版下载/安装程序基本都是通过shell来交互。</p>
+<p>也就是ubuntu下载某个程序，一般来说不是到某个应用市场下载安装包再一键安装（当然也行），而是通过<font color=#86473F>储存库 -&gt; 包管理器 -&gt;用户</font>的路径对软件包进行分发。</p>
+<p>比如我们要下载vim这个代码编辑器，只需要一条简单的指令就能实现自动下载和安装</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">sudo apt install vim<br></code></pre></td></tr></table></figure>
+
+
+
+<p>这里<code>sudo</code>表示以管理员身份指令后面的指令，如果你执行某条指令时报错了，不要慌张。认真看后面的报错的信息，（ps：如果使用的是ubuntu20.04，那么你可以调成中文，非常萌新友好）</p>
+<p><code>apt</code>则是ubuntu中的一个包管理器，可以自动下载，配置，安装二进制或者源代码格式的软件包。</p>
+<p>类似apt的包管理还有很多，ubuntu上就有特别常用的pip，npm之类，</p>
+<p><code>install</code>则是具体的指令，类似的还有<code>remove</code>，<code>update</code>，<code>upgrade</code>等。</p>
+<p>我们还忽略了一个叫储存库的东西，它比较大众的名字是“软件源”，负责储存各种软件下载的路径。</p>
+<p>![截屏2021-08-07 上午11.17.05](/Users/rin/blog/source/iamge/截屏2021-08-07 上午11.17.05.png)</p>
+<p>比如说这里。</p>
+<p>Do you want to continue？</p>
+<p>当我们选择yes，apt就开始自动从<code>http://cn.archive.ubuntu.com/ubuntu bionic-updates/main amd64 vim-runtime all</code>这个网址下载vim的安装包，这个网址就可以理解为是一个软件源。</p>
+<p>就像在手机上下载软件，有app store。软件源就类似app store，然后你需要通过包管理器将软件源上的东西下载并安装到本地。</p>
+<p>当然软件源是可以更换的，由于国内不能科学上网，如果用默认的源下载速度一般会很慢。推荐更换清华或者阿里源。</p>
+<p>具体的换源教程建议百度。</p>
+<p>然后列举一些最基本的指令，具体的指令实际上不用记住，只要知道有这么个东西，它大致是干什么的就行。以后遇到了再学习也不会迟。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-comment">#apt</span><br>sudo apt update  <span class="hljs-comment">#查看可新的软件包</span><br>sudo apt upgrate  <span class="hljs-comment">#更新软件包</span><br>sudo apt remove  <span class="hljs-comment">#删除某个通过apt下载安装的软件包</span><br><br><span class="hljs-comment">#dpkg</span><br>dpkg -i package.deb     <span class="hljs-comment">#安装包</span><br>dpkg -r package         <span class="hljs-comment">#删除包</span><br><span class="hljs-comment">#dpkg也是包管理工具，但是一般来说用于处理本地下载好的包，就是从网上下载好deb文件，然后通过dpkg安装。</span><br><br></code></pre></td></tr></table></figure>
+
+
+
+<p>还要注意的就是以后大家会遇到要安装pip的情况。</p>
+<p>pip是一个专门处理基于python语言程序的包管理器。但是一般来说ubuntu18及以上都是默认支持python3的，所以相对应的pip也应该安装pip3。具体的安装方法可自寻文章。</p>
+<h2 id="5）linux学习心得"><a href="#5）linux学习心得" class="headerlink" title="5）linux学习心得"></a><font color=#B19693>5）linux学习心得</font></h2><p>在熟练掌握最基础命令+善用搜素引擎之后，你已经能初步操作linux做你想做的事情了。</p>
+<p>但是上文中我也一直说在授课中我不想讲太多纯粹的指令。这些东西应该在课后自己折腾。就算课上讲了，有一说一一会儿就忘了。</p>
+<p>但是就“如何学习（或者记住）命令”这个问题，我认为还是有一定的窍门的，并不是纯粹的熟能生巧。</p>
+<p>比如一般通过萌新大概会对代码有天然的恐惧，给他一篇再清楚再详细的文章，也可能报错连连。犯诸如打错字，复制别人的用户名，行号等等。由于这种对于自己看不懂的东西天生的抵触，他可能在很长一段时间里都只是纯粹地对教程上的指令进行复制粘贴，而不去探究，哪怕只是搜一下，这个命令为什么是这样的，这个pip和pip3有什么区别等等。</p>
+<p>所以我希望大家在学习某一条指令的时候，尽量先把每一条指令拆分开来，分别查对应的功能或者意思。</p>
+<p>就比如我在前面写到的</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">sudo apt install vim<br></code></pre></td></tr></table></figure>
+
+<p>在新人眼里这就是一串英文字母，但是沉下心来你会发现它由四个部分组成，具体的前文已经分析过了。</p>
+<p>然后你会逐渐发现这些指令都有共通的地方，学会了一条“语法”，就相当于学会了成百上千条指令。</p>
+<p>同时明白了指令的原理也能让你随机应变，找到你自己环境的差异然后有针对性的对指令进行修改。</p>
+<p>linux系统更加深奥的部分，将会由别的学姐在之后的课程中带领大家深入。希望下面简单的课后作业能使大家充满决心！</p>
+<h2 id="7）课后作业"><a href="#7）课后作业" class="headerlink" title="7）课后作业"></a><font color=#B19693>7）课后作业</font></h2><h4 id="Level0"><a href="#Level0" class="headerlink" title="Level0 "></a><font color=#AB3B3A>Level0 </font></h4><p>利用（linux自带的）gcc编译器通过指令编译一个<code>hello world</code> c程序。</p>
+<p>（ps：程序的源码不会写的话直接网上复制，不过hello world这种程度的代码建议花十分钟学一学）</p>
+<h4 id="Level1"><a href="#Level1" class="headerlink" title="Level1 "></a><font color=#AB3B3A>Level1 </font></h4><p>使用gdb调试你的hello world程序，感受单步调试的神圣感，将你看到的东西记在心里，也许以后会用上。</p>
+<h4 id="Level2"><a href="#Level2" class="headerlink" title="Level2 "></a><font color=#AB3B3A>Level2 </font></h4><p><strong><font color=#9F353A>夹带私货环节，不想学pwn的同学可以直接跳过。 </font></strong></p>
+<p>利用pip3安装一个pwntools。</p>
+<h2 id="8）参考"><a href="#8）参考" class="headerlink" title="8）参考"></a><font color=#B19693>8）参考</font></h2><p>鸟哥的Linux私房菜</p>
+<p><a href="http://haacked.com/archive/2012/02/22/spirit-of-open-source.aspx/">What Is The Spirit of Open Source?</a></p>
+<p><a href="https://www.runoob.com/linux/linux-comm-apt.html">Linux apt 命令</a></p>
+]]></content>
+      <tags>
+        <tag>mess</tag>
+      </tags>
+  </entry>
 </search>
