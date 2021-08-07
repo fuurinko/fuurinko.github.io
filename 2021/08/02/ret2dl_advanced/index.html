@@ -1,0 +1,488 @@
+
+
+<!DOCTYPE html>
+<html lang="en | zh-CN |zh-TW" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="../../../../img/favicon.png">
+  <link rel="icon" href="../../../../img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="Rin777">
+  <meta name="keywords" content="">
+  
+  <title>ret2dl_advanced - Rin777</title>
+
+  <link  rel="stylesheet" href="../../../../https:/cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="../../../../https:/cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="../../../../lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="../../../../https:/cdn.jsdelivr.net/npm/highlight.js@10.7.2/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="../../../../https:/cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="../../../../at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="../../../../at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="../../../../css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"fuurinko.github.io","root":"/","version":"1.8.11","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="../../../../js/utils.js" ></script>
+  <script  src="../../../../js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="../../../../index.html">&nbsp;<strong>Rin777</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="../../../../index.html">
+                <i class="iconfont icon-home-fill"></i>
+                ホーム
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="../../../../archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                アーカイブ
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="../../../../categories/">
+                <i class="iconfont icon-category-fill"></i>
+                カテゴリー
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="../../../../tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                タグ
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="../../../../about/">
+                <i class="iconfont icon-user-fill"></i>
+                本ブログ情報　
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('../../../../img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="ret2dl_advanced">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-08-02 11:22" pubdate>
+        August 2, 2021 am
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      1.1k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      15
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">ret2dl_advanced</h1>
+            
+            <div class="markdown-body">
+              <h1 id=""><a href="#" class="headerlink" title=""></a></h1><h2 id="ret2dl-advanced"><a href="#ret2dl-advanced" class="headerlink" title="ret2dl_advanced"></a>ret2dl_advanced</h2><h3 id="1-review"><a href="#1-review" class="headerlink" title="1)review"></a>1)review</h3><p>当FULL RELRO保护开启时，通过 <code>dl_run_time</code>来获取libc基址的方式几乎无解。</p>
+<p>但是我们仍然能够找到某种方式来getshell。</p>
+<p>相关论文中给出一种解决方案，即通过<code>dt_bug</code>入口找到突破点。</p>
+<p>(Ps:为什么找不到相关的中文文章)</p>
+<h3 id="2）dt-dbg？"><a href="#2）dt-dbg？" class="headerlink" title="2）dt_dbg？"></a>2）dt_dbg？</h3><p><code>dt_dbg</code>这个概念实际上并不新鲜，简单来说它可以被包含在<code>libc.so</code>文件中，比如我们指定一个特定的libc版本加载的时候，通常除了程序本体还要附加一个libc文件，有时我们的debug信息就包含在这个<code>libc.so</code>文件中。但是有的libc.so文件是不包含debug信息的。所以如果我们程序的libc没有dbg文件那这个方法也没用了。</p>
+<p><code>dt_dubug</code>用于指向<code>type_r_debug</code>这个结构体。这个结构体用来保存调试器需要的信息来确认动态装载器的基址和拦截一些特定的与动态装载相关的事件。</p>
+<p>此外，这个结构体的<code>r_map</code>域保存了指向<code>link_map</code>的链接表表头的指针。</p>
+<p>也就是<code>dt_dbg</code>指向<code>type_r_debug</code>，且<code>type_r_debug</code>维护了指向<code>link_map</code>的指针。</p>
+<p><code>r_debug</code>具体代码如下:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">/* Rendezvous structure used by the run-time dynamic linker to communicate details of shared object loading to the debugger. If the executable&#x27;s dynamic section has a DT_DEBUG element, the run-time linker sets that element&#x27;s value to the address where this structure can be found. */</span><br><br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">r_debug</span></span><br><span class="hljs-class">  &#123;</span> <br>    <span class="hljs-keyword">int</span> r_version;              <span class="hljs-comment">/* Version number for this protocol. */</span><br><br>    <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">link_map</span> *<span class="hljs-title">r_map</span>;</span>     <span class="hljs-comment">/* Head of the chain of loaded objects. */</span><br><br>    <span class="hljs-comment">/* This is the address of a function internal to the run-time linker, that will always be called when the linker begins to map in a library or unmap it, and again when the mapping change is complete. The debugger can set a breakpoint at this address if it wants to notice shared object mapping changes. */</span><br>    ElfW(Addr) r_brk;<br>    <span class="hljs-class"><span class="hljs-keyword">enum</span></span><br><span class="hljs-class">      &#123;</span> <br>        <span class="hljs-comment">/* This state value describes the mapping change taking place when the `r_brk&#x27; address is called. */</span><br>        RT_CONSISTENT,          <span class="hljs-comment">/* Mapping change is complete. */</span><br>        RT_ADD,                 <span class="hljs-comment">/* Beginning to add a new object. */</span><br>        RT_DELETE               <span class="hljs-comment">/* Beginning to remove an object mapping. */</span><br>      &#125; r_state;<br><br>    ElfW(Addr) r_ldbase;        <span class="hljs-comment">/* Base address the linker is loaded at. */</span><br>  &#125;;<br></code></pre></td></tr></table></figure>
+
+<p>实操一遍</p>
+<p>随便写一个无output的栈溢出。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs bash">fur1n@ubuntu:~/pwn$ readelf -d ret2dl<br><br>Dynamic section at offset 0xdb8 contains 27 entries:<br>  Tag        Type                         Name/Value<br>...<br> 0x0000000000000015 (DEBUG)              0x0<br><br><br></code></pre></td></tr></table></figure>
+
+<p>在没有运行的时候<code>dt_dbg</code>为空。</p>
+<p>在关闭aslr的情况下找到<code>dt_debug</code>并不困难。</p>
+<p>gdb使用<code>elfheader</code>命令查看相关elfheader的地址，可以找到<code>.dynamic</code></p>
+<p>段的地址。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">pwndbg&gt; x/50gx 0x600e20<br>...<br>0x600ee0:	0x0000000000000015	0x00007ffff7ffe140<br></code></pre></td></tr></table></figure>
+
+<p>0x00007ffff7ffe140也就是<code>dt_debug</code>指向的<code>r_debug</code>的地址。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs bash">pwndbg&gt; x/20gx 0x00007ffff7ffe140<br>0x7ffff7ffe140 &lt;_r_debug&gt;:	0x0000000000000001	0x00007ffff7ffe170<br>0x7ffff7ffe150 &lt;_r_debug+16&gt;:	0x00007ffff7de3f40	0x0000000000000000<br>0x7ffff7ffe160 &lt;_r_debug+32&gt;:	0x00007ffff7dd3000	0x0000000000000000<br>0x7ffff7ffe170:	0x0000000000000000	0x00007ffff7ffe700<br>0x7ffff7ffe180:	0x0000000000600e20	0x00007ffff7ffe710<br>0x7ffff7ffe190:	0x0000000000000000	0x00007ffff7ffe170<br>0x7ffff7ffe1a0:	0x0000000000000000	0x00007ffff7ffe6e8<br>0x7ffff7ffe1b0:	0x0000000000000000	0x0000000000600e20<br>0x7ffff7ffe1c0:	0x0000000000600f00	0x0000000000600ef0<br>0x7ffff7ffe1d0:	0x0000000000000000	0x0000000000600ea0<br><br></code></pre></td></tr></table></figure>
+
+<p><code>r_debug</code>维护的第一个结构体，也就是<code>link_map</code>地址，即<code>0x00007ffff7ffe170</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">0x7ffff7ffe140 &lt;_r_debug&gt;:	0x0000000000000001	0x00007ffff7ffe170<br></code></pre></td></tr></table></figure>
+
+<p>这样我们就从<code>dt_debug</code>找到了<code>link_map</code>的地址。</p>
+<p>虽然但是。</p>
+<p>只是找到<code>link_map</code>没啥用。</p>
+<p>我们的最终目的还是寻找到<code>dl_runtime_resolve</code>函数的地址，当地址被找到那么之后的操作就是常规的ret2dl了。</p>
+<p>能从动态链接库中找到<code>dl_runtime_resolve</code>函数地址的原理大致是Full RELRO保护只对main excutable生效，而动态链接库并不受它保护。这就意味着我们如果能够通过动态链接库来找到<code>dl_runtime_resolve</code>函数地址，那么问题就迎刃而解了。</p>
+<p>那么如何寻找呢？</p>
+<p>实际比较简单（无aslr的情况），只要根据<code>link_map</code>的结构依次顺下来就好了。</p>
+<p>上一个section我们找到了<code>link_map</code>的地址，接下来我们通过<code>link_map</code>逐步找到</p>
+<p><code>dl_runtime_resolve</code>。</p>
+<p>首先我们找到<code>libc.so.6</code>文件。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs bash">pwndbg&gt; x/20gx 0x00007ffff7ffe170<br>0x7ffff7ffe170:	0x0000000000000000	0x00007ffff7ffe700<br>0x7ffff7ffe180:	0x0000000000600e20	0x00007ffff7ffe710<br>---<br>pwndbg&gt; x/20gx 0x00007ffff7ffe700<br>0x7ffff7ffe700:	0x0000000000000000	0x0000000000000000<br>0x7ffff7ffe710:	0x00007ffff7ffb000	0x00007ffff7ffebb0<br>---<br>pwndbg&gt; x/s 0x00007ffff7ffebb0<br>0x7ffff7ffebb0:	<span class="hljs-string">&quot;linux-vdso.so.1&quot;</span><br>---<br>pwndbg&gt; x/10gx 0x00007ffff7ffe710<br>0x7ffff7ffe710:	0x00007ffff7ffb000	0x00007ffff7ffebb0<br>0x7ffff7ffe720:	0x00007ffff7ffb3a0	0x00007ffff7fe2000<br>---<br>pwndbg&gt; x/10gx 0x00007ffff7fe2000<br>0x7ffff7fe2000:	0x00007ffff79e2000	0x00007ffff7ffedd0<br>---<br>pwndbg&gt; x/s 0x00007ffff7ffedd0<br>0x7ffff7ffedd0:	<span class="hljs-string">&quot;/lib/x86_64-linux-gnu/libc.so.6&quot;</span><br><br></code></pre></td></tr></table></figure>
+
+<p>即<code>0x00007ffff7ffedd0</code>。</p>
+<p>0x3即<code>GOT[]</code>入口</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">pwndbg&gt; x/30gx 0x00007ffff7dccb80<br>...<br>0x7ffff7dccc30:	0x0000000000000003	0x00007ffff7dcd000<br><br></code></pre></td></tr></table></figure>
+
+<p>找到GOT[3]</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">pwndbg&gt; x/5gx 0x00007ffff7dcd000<br>0x7ffff7dcd000:	0x00000000003eab80	0x00007ffff7fe2000<br>0x7ffff7dcd010:	0x00007ffff7dea8f0	0x00007ffff7b70a10<br></code></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs bash">pwndbg&gt; xinfo 0x00007ffff7dea8f0<br>Extended information <span class="hljs-keyword">for</span> virtual address 0x7ffff7dea8f0:<br><br>  Containing mapping:<br>    0x7ffff7dd3000     0x7ffff7dfc000 r-xp    29000 0      /lib/x86_64-linux-gnu/ld-2.27.so<br><br>  Offset information:<br>         Mapped Area 0x7ffff7dea8f0 = 0x7ffff7dd3000 + 0x178f0<br>         File (Base) 0x7ffff7dea8f0 = 0x7ffff7dd3000 + 0x178f0<br>      File (Segment) 0x7ffff7dea8f0 = 0x7ffff7dd3000 + 0x178f0<br>         File (Disk) 0x7ffff7dea8f0 = /lib/x86_64-linux-gnu/ld-2.27.so + 0x178f0<br><br> Containing ELF sections:<br>               .text 0x7ffff7dea8f0 = 0x7ffff7dd3f10 + 0x169e0<br><br></code></pre></td></tr></table></figure>
+
+<h3 id="3）exploitation"><a href="#3）exploitation" class="headerlink" title="3）exploitation"></a>3）exploitation</h3><p>在无aslr并已经获取到<code>dl_runtime_resolve</code>的情况下的利用和patial relro相似。</p>
+<p>有aslr的情况。。</p>
+<p>我也不会。</p>
+<h3 id="4-refrence"><a href="#4-refrence" class="headerlink" title="4)refrence"></a>4)refrence</h3><p><a target="_blank" rel="noopener" href="http://rk700.github.io/2015/04/09/dt_debug-read/">通过DT_DEBUG来获得各个库的基址</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.usenix.org/conference/usenixsecurity15/technical-sessions/presentation/di-frederico">How the ELF Ruined Christmas</a></p>
+<p><a target="_blank" rel="noopener" href="https://ypl.coffee/dl-resolve-full-relro/">Finding link_map and _dl_runtime_resolve() under full RELRO</a></p>
+<p>————————————————tbc——————————————————-</p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="../../../../tags/stack/">stack</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="../summertask/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">SummerTask</span>
+                        <span class="visible-mobile">前の記事</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="../0CTF2018-babystack/">
+                        <span class="hidden-mobile">0CTF_2018_babystack</span>
+                        <span class="visible-mobile">次の記事</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;ディレクトリ</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">検索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">キーワード</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="../../../../https:/cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="../../../../https:/cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="../../../../https:/cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" ></script>
+<script  src="../../../../https:/cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" ></script>
+<script  src="../../../../js/events.js" ></script>
+<script  src="../../../../js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="../../../../js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="../../../../https:/cdn.jsdelivr.net/npm/tocbot@4.12.3/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="../../../../https:/cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="../../../../https:/cdn.jsdelivr.net/npm/anchor-js@4.3.1/anchor.min.js" ></script>
+
+
+
+  <script defer src="../../../../https:/cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js" ></script>
+
+
+
+  <script  src="../../../../js/local-search.js" ></script>
+
+
+
+
+
+
+  <script  src="../../../../https:/cdn.jsdelivr.net/npm/typed.js@2.0.12/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="../../../../js/boot.js" ></script>
+
+
+</body>
+</html>
