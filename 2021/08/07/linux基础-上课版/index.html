@@ -185,7 +185,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      5.1k 字
+      3.9k 字
     </span>
   
 
@@ -195,7 +195,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      54
+      42
        分钟
     </span>
   
@@ -233,7 +233,6 @@
 <li>让没有任何编程基础的萌新了解linux系统</li>
 <li>大致了解linux最基本文件操作指令以及软件的下载安装</li>
 </ul>
-<p><font color=#BF6766>并没有很多的指令的学习，主要是想为萌新们加深对于linux系统的理解。以及讲一些个人的比较奇怪的体会，所以可能内容会比较少。另一方面这样也能空出一些时间拿来实操，翻车了也不怕。</font></p>
 <h2 id="0）普通的介绍"><a href="#0）普通的介绍" class="headerlink" title="0）普通的介绍"></a><font color=#B19693>0）普通的介绍</font></h2><p>SRE第一节课，由我来给大家讲linux基础。讲课水平很菜，linux水平也就凑合做个ctf题。</p>
 <p>希望大佬不要炸鱼。</p>
 <h2 id="1）linux是什么？"><a href="#1）linux是什么？" class="headerlink" title="1）linux是什么？"></a><font color=#B19693>1）linux是什么？</font></h2><p>Linux是一类自由和开源的操作系统。</p>
@@ -250,19 +249,9 @@
 <p>传说“kali学得好，牢饭少不了”，作为linux发行版其一的kali拥有超过600个预装的渗透测试程序，为不管是打ctf还是实战都提供了极大的便利。美剧Mr.robot中，男主就是靠一台kali打四方，其标志性的龙图标在剧中非常惹人注目。</p>
 <h2 id="3）安装一个linux系统"><a href="#3）安装一个linux系统" class="headerlink" title="3）安装一个linux系统"></a><font color=#B19693>3）安装一个linux系统</font></h2><p>这个应该上课前就要安装吧，过程也很简单，官网下载iso文件然后狂点下一步。<del>如果是用Parallel Desktop的同学装系统碰到问题不能解决的话可以问我，vm我也不会·（）。</del></p>
 <p>如果在物理机和虚拟机之间的文件交互上出了问题，尽量先在网上查一查。我也没有用过vm虚拟机。。不太清楚怎么搞。</p>
-<p>我就不再重新装了，但是有几点需要注意。</p>
-<p>之前提到，没有明确方向的同学建议装Ubuntu20.04LTS。</p>
-<p>原因很简单，好用，而且大家都在用，有问题能快速解决。</p>
-<p>虽然但是，我不敢说，但是Mac OS X 10.15的同学如果装ubuntu20.04LTS，我不敢说有多大概率，可能只有百分之一，会遇到日常崩系统（日常。指每天），我也不知道为什么，反正我遇到了，怎么想也想不通，所以我放弃了20.04（）。</p>
-<p>vm我没用过没有办法给出什么建设性的意见，但是如果是pd用户我只能说，一定要经常备份（拍快照）。等你系统崩了没办法恢复需要忍痛重装系统的时候你就知道有多苦了。</p>
-<p>还是Mac OS X 10.15 + ubuntu 20.04 LTS的环境，我当初重装了系统附加环境两次我才发现有快照这个东西，后面有一次我恢复快照都没办法解决系统崩盘的问题，然后心一狠把整个系统删除了，安装包也重新在官网下载了一个，果然稳定了，花了一上午把环境重新配好，开心地用了一个月，结果又又又开始崩。那个时候我就是，每天用完准备关闭系统让它休眠之前一定要拍快照，以至于现在环境很正常但是我还是养成了战战兢兢每隔几天备份系统的习惯</p>
-<p>但是我现在用的18.04挺稳定的，几个月都没有崩的痕迹。所以我诚挚地希望电脑是低配mba然后用pd的同学谨慎考虑20.04 lts。</p>
-<p> Ps：那个靠每天恢复快照苟活的20.04在我换电脑移植文件后彻底与我说再见了，不是我要抛弃它，是它自己怎么也恢复不了，错的不是big sur，也不是惨兮兮的ubuntu20.04 lts，是<del>这个世界</del>我。</p>
-<p>PPS：ubuntu官网那个下载界面真的好怪。</p>
 <p><img src="https://img-blog.csdnimg.cn/0b001a45034c4c2fa65b161b8e8c84c8.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L20wXzUxMTg3NTU4,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="1"></p>
-<p>就是这个界面，好怪，这还是中文站，设计得好像只有四个版本。结果是要点那个桌面系统进去。</p>
 <h2 id="4）linux基础知识及常见命令"><a href="#4）linux基础知识及常见命令" class="headerlink" title="4）linux基础知识及常见命令"></a><font color=#B19693>4）linux基础知识及常见命令</font></h2><p><strong>事实上这个东西就和记英文单词一样，没有必要记。用得多了自然就熟了，特别生僻的直接查就好了。所以我觉得学习初期记一些简单的命令就行。</strong></p>
-<h4 id="文件管理"><a href="#文件管理" class="headerlink" title="文件管理"></a><font color=#AB3B3A>文件管理</font></h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs bash"><br>./filename  <span class="hljs-comment">#相当于双击打开文件</span><br><br>ls  <span class="hljs-comment">#列举出当前工作目录的内容（文件或文件夹）</span><br>  <br><span class="hljs-built_in">cd</span>  <span class="hljs-comment">#切换文件路径</span><br>    <br>mkdir  <span class="hljs-comment">#新建文件夹</span><br>  <br><span class="hljs-built_in">pwd</span> <span class="hljs-comment">#显示当前工作目录</span><br>  <br>rm  <span class="hljs-comment">#删除指定文件</span><br></code></pre></td></tr></table></figure>
+<h4 id="文件管理"><a href="#文件管理" class="headerlink" title="文件管理"></a><font color=#AB3B3A>文件管理</font></h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs bash">./filename  <span class="hljs-comment">#相当于双击打开文件</span><br><br>ls  <span class="hljs-comment">#列举出当前工作目录的内容（文件或文件夹）</span><br>  <br><span class="hljs-built_in">cd</span>  <span class="hljs-comment">#切换文件路径</span><br>    <br>mkdir  <span class="hljs-comment">#新建文件夹</span><br>  <br><span class="hljs-built_in">pwd</span> <span class="hljs-comment">#显示当前工作目录</span><br>  <br>rm  <span class="hljs-comment">#删除指定文件</span><br></code></pre></td></tr></table></figure>
 
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs bash">cp <span class="hljs-comment">#复制。</span><br><br>-i <span class="hljs-comment">#提示</span><br>-r <span class="hljs-comment">#复制目录及目录内所有项目</span><br>-a <span class="hljs-comment">#复制的文件与原文件时间一样</span><br>cp -ai a.txt <span class="hljs-built_in">test</span>  <span class="hljs-comment">#复制 a.txt 到 test 目录下，保持原文件时间，如果原文件存在提示是否覆盖。</span><br><span class="hljs-comment">#注意：命令行复制，如果目标文件已经存在会提示是否覆盖，而在 shell 脚本中，如果不加 -i 参数，则不会提示，而是直接覆盖！</span><br></code></pre></td></tr></table></figure>
 
@@ -305,7 +294,7 @@
 <p>还要注意的就是以后大家会遇到要安装pip的情况。</p>
 <p>pip是一个专门处理基于python语言程序的包管理器。但是一般来说ubuntu18及以上都是默认支持python3的，所以相对应的pip也应该安装pip3。具体的安装方法可自寻文章。</p>
 <h4 id="其他"><a href="#其他" class="headerlink" title="其他"></a><font color=#AB3B3A>其他</font></h4><p>奇奇怪怪（）的重要命令。不能说很重要，只能说特别重要。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs bash"><br><span class="hljs-comment">#gcc最简单的无脑编译指令 </span><br>gcc -o main main.c <span class="hljs-comment">#main.c是源码文件的名字，main是编译出来可执行文件的名字，这个名字可以随便取。</span><br><span class="hljs-comment">#也可以写成这样</span><br>gcc main.c -o main<br><span class="hljs-comment">#这样以默认参数编译出来的程序是比较安全的（）</span><br><span class="hljs-comment">#此外gcc还能生成编译各个阶段的文件，以及编译多个文件，还能通过控制参数改变程序的保护方式等等各种功能，具体参数可以自己查一查。</span><br><span class="hljs-comment">#https://www.runoob.com/w3cnote/gcc-parameter-detail.html里的命令比较全面。</span><br><br></code></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment">#gcc编译#最简单的无脑编译指令 </span><br>gcc -o main main.c <span class="hljs-comment">#main.c是源码文件的名字，main是编译出来可执行文件的名字，这个名字可以随便取。</span><br><span class="hljs-comment">#也可以写成这样</span><br>gcc main.c -o main<br><span class="hljs-comment">#这样以默认参数编译出来的程序是比较安全的（）</span><br><span class="hljs-comment">#此外gcc还能生成编译各个阶段的文件，以及编译多个文件，还能通过控制参数改变程序的保护方式等等各种功能，具体参数可以自己查一查。</span><br><span class="hljs-comment">#https://www.runoob.com/w3cnote/gcc-parameter-detail.html里的命令比较全面。</span><br></code></pre></td></tr></table></figure>
 
 
 
@@ -314,11 +303,8 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs bash">gdb &lt;filename&gt;<span class="hljs-comment">#调试器</span><br><span class="hljs-comment">#加载程序进调试器，此时程序并未运行</span><br>r <span class="hljs-comment">#runing</span><br>c <span class="hljs-comment">#continue</span><br>b <span class="hljs-comment">#打断点  （可以是直接b &lt;func&gt;，也能是b *0xbalabala（某个地址）等等）</span><br>n <span class="hljs-comment">#单步步过（就是不进入调用函数内部）</span><br>s <span class="hljs-comment">#单步步入（进入调用函数内部）</span><br>file <span class="hljs-comment">#加载程序进调试器=&gt; gdb + file filename = gdb filename</span><br></code></pre></td></tr></table></figure>
 
 <p>可能大家没有听说过什么是调试器。</p>
-<p>调试器最直观的功能就是让本来飞速运转的程序停下来，停在某一条指令上。</p>
-<p>直接用处就是，如果你的程序出现了问题，你可以通过调试发现问题所在。</p>
-<p>比如这个程序由1000条指令，也可以理解成完成这个程序需要1000个步骤。而程序，你们可以理解为，一次性瞬间把整个1000条指令都执行完了，且但凡其中一个指令出错，整个程序都运行不了。现在你要找到出错的地方，你就需要通过调试，将程序半路停下，将每一个步骤拆分开来慢慢执行，直到你找到错误的地方。</p>
+<p>调试器最直观的功能就是让本来飞速运转的程序停下来，停在某一条指令上。直接用处就是，如果你的程序出现了问题，你可以通过调试发现问题所在。比如这个程序由1000条指令，也可以理解成完成这个程序需要1000个步骤。而程序一般都是瞬间运行1000次指令，且但凡其中一个步骤出错，整个程序都运行不了，现在你要找到出错的地方，你就需要通过调试，将每一个步骤慢慢执行，直到你找到错误的地方。</p>
 <p>此外在做二进制安全的题目的时候调试也是极其重要的，调试能让你看到一般来说看不到的内存空间里的信息，使你解题如虎添翼。</p>
-<p>如果有同学疑惑调试器是如何做到让程序在中途停下的话，可以参考这篇文章。</p>
 <h2 id="5）linux学习心得"><a href="#5）linux学习心得" class="headerlink" title="5）linux学习心得"></a><font color=#B19693>5）linux学习心得</font></h2><p>在熟练掌握最基础命令+善用搜素引擎之后，你已经能初步操作linux做你想做的事情了。</p>
 <p>但是上文中我也一直说在授课中我不想讲太多纯粹的指令。这些东西应该在课后自己折腾。就算课上讲了，有一说一一会儿就忘了。</p>
 <p>但是就“如何学习（或者记住）命令”这个问题，我认为还是有一定的窍门的，并不是纯粹的熟能生巧。</p>
@@ -330,15 +316,9 @@
 <p>在新人眼里这就是一串英文字母，但是沉下心来你会发现它由四个部分组成，具体的前文已经分析过了。</p>
 <p>然后你会逐渐发现这些指令都有共通的地方，学会了一条“语法”，就相当于学会了成百上千条指令。</p>
 <p>同时明白了指令的原理也能让你随机应变，找到你自己环境的差异然后有针对性的对指令进行修改。</p>
-<p>**ps：查资料的时候可以选一些看起来比较正规专业的网站来查询。如果是命令行或者代码语法首选类似官网文档，W3school或者菜鸟教程这种看起来就很正经的网站，可能相对于直接找别人写的博客来说比较慢，但是绝对准确。如果是做题等遇到的报错的话首先看有没有独立个人博客（不是csdn或者那种不知名广告网站，而是自己搭服务器或者xxpage建的个人网站），再看有无csdn博客园这种，当然如果有靠谱的参考书也行。具体原因的话，csdn这种网站门槛太低，什么牛马都有，鱼龙混杂，好坏参半，新手比较难分辨。除了各种无授权搬运、广告文、恶心的资源分享系统、占据互动半壁江山的机器人，还有部分文章内容会出现技术性错误，误导新人。而且ui不能自定义///////**。</p>
-<p>但出错也难免，因为门槛低，所以本身就有各种新人的试错笔记，既然是新人犯错难免。事实上就算是个人博客也会出现错误，放宽心就好。参考文章出错虽然是一件很难受的事情，但是在我眼中确是最能容忍的555</p>
-<p>所以希望大家不要因为害怕出错就不写笔记哇。</p>
-<p>说到查资料，那还是不得不提另外一个，提问的艺术。</p>
-<p>这个问题其实挺有趣，可以看看知乎上面一个问题“是不是程序员都比较傲慢”（大概这样）的回答。</p>
-<p>你喋喋不休问别人傻逼问题的时候你肯定不知道他十分恼火但是还要装出一副和颜悦色的表情的样子有多动人（）</p>
 <p>基础部分就到此结束啦！</p>
 <p>linux系统更加深奥的部分，将会由别的学姐在之后的课程中带领大家深入。希望下面简单的课后作业能使大家充满决心！</p>
-<h2 id="7）课后作业"><a href="#7）课后作业" class="headerlink" title="7）课后作业"></a><font color=#B19693>7）课后作业</font></h2><p>不用按顺序做，喜欢哪个做哪个。做完发邮箱<a href="mailto:&#102;&#117;&#x75;&#x72;&#x69;&#x6e;&#107;&#x6f;&#64;&#103;&#109;&#x61;&#105;&#108;&#46;&#99;&#x6f;&#109;">&#102;&#117;&#x75;&#x72;&#x69;&#x6e;&#107;&#x6f;&#64;&#103;&#109;&#x61;&#105;&#108;&#46;&#99;&#x6f;&#109;</a></p>
+<h2 id="7）课后作业"><a href="#7）课后作业" class="headerlink" title="7）课后作业"></a><font color=#B19693>7）课后作业</font></h2><p>不用按顺序做，喜欢哪个做哪个。做完发邮箱<a href="mailto:&#102;&#117;&#117;&#114;&#x69;&#110;&#107;&#x6f;&#x40;&#x67;&#109;&#x61;&#x69;&#108;&#46;&#x63;&#x6f;&#109;">&#102;&#117;&#117;&#114;&#x69;&#110;&#107;&#x6f;&#x40;&#x67;&#109;&#x61;&#x69;&#108;&#46;&#x63;&#x6f;&#109;</a></p>
 <h4 id="Level0"><a href="#Level0" class="headerlink" title="Level0 "></a><font color=#AB3B3A>Level0 </font></h4><p>利用（linux自带的）gcc编译器通过指令编译一个<code>hello world</code> c程序。</p>
 <p>（ps：程序的源码不会写的话直接网上复制，不过hello world这种程度的代码建议花十分钟学一学）</p>
 <p>做完附上运行的程序的截图。</p>
@@ -359,7 +339,7 @@
 <p>并通过nc连接到远端获得flag。</p>
 <p>不会做的话，复制题目名字直接搜，能搜出别人的解题步骤。</p>
 <p>做完以后附上你获得flag时的截图。</p>
-<h2 id="8）参考"><a href="#8）参考" class="headerlink" title="8）参考"></a><font color=#B19693>8）参考</font></h2><p><a target="_blank" rel="noopener" href="https://www.runoob.com/linux/linux-comm-apt.html">Linux apt 命令</a></p>
+<h2 id="8）参考"><a href="#8）参考" class="headerlink" title="8）参考"></a><font color=#B19693>8）参考</font></h2><p>[Linux apt 命令](</p>
 
             </div>
             <hr>
@@ -387,9 +367,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="../../09/io_file/">
+                      <a href="../linux%E5%9F%BA%E7%A1%80/">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">IO_FILE学习</span>
+                        <span class="hidden-mobile">Linux基础</span>
                         <span class="visible-mobile">Antaŭa afiŝo</span>
                       </a>
                     
@@ -397,8 +377,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="../linux%E5%9F%BA%E7%A1%80-%E4%B8%8A%E8%AF%BE%E7%89%88/">
-                        <span class="hidden-mobile">Linux基础</span>
+                      <a href="../../03/roputils/">
+                        <span class="hidden-mobile">roputils使用tips</span>
                         <span class="visible-mobile">Sekva afiŝo</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

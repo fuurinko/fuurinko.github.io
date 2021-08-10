@@ -18,7 +18,7 @@
   <meta name="author" content="Rin777">
   <meta name="keywords" content="">
   
-  <title>patch&#39;alarm - Rin777</title>
+  <title>Rin777</title>
 
   <link  rel="stylesheet" href="../../../../https:/cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
 
@@ -163,7 +163,7 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="patch'alarm">
+            <span class="h2" id="subtitle" title="">
               
             </span>
 
@@ -173,8 +173,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2021-08-03 14:56" pubdate>
-        August 3, 2021 pm
+      <time datetime="2021-08-10 11:03" pubdate>
+        August 10, 2021 am
       </time>
     </span>
   
@@ -185,7 +185,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      147 字
+      250 字
     </span>
   
 
@@ -195,7 +195,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      1
+      2
        分钟
     </span>
   
@@ -225,28 +225,31 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">patch&#39;alarm</h1>
+            <h1 style="display: none"></h1>
             
             <div class="markdown-body">
-              <p>比较弱智的一个操作，但是如果没注意到的话还是有一点点坑。</p>
-<p>一般来说许多题都喜欢在main函数里加alarm。</p>
-<p>alarm会导致调试的时候超时，如果没有解决的话基本不能调试。算最基础的的反调试手法了。</p>
-<p>ps:关于超时的那个报错当时还好好研究了一会儿来着。就是一个sigxxx，sigalarm好像，然后默认返回中止程序。</p>
-<p>解决方案也比较弱智。就是直接patch掉就好了。</p>
-<p>ida都关了懒得上图了。</p>
-
+              <h1 id="栈溢出基础"><a href="#栈溢出基础" class="headerlink" title="栈溢出基础"></a>栈溢出基础</h1><h2 id="0）唠嗑"><a href="#0）唠嗑" class="headerlink" title="0）唠嗑"></a>0）唠嗑</h2><p>从这里正式步入二进制漏洞挖掘利用。</p>
+<h2 id="1）栈？"><a href="#1）栈？" class="headerlink" title="1）栈？"></a>1）栈？</h2><p>栈是什么。</p>
+<h4 id="1）栈的10086种称谓"><a href="#1）栈的10086种称谓" class="headerlink" title="1）栈的10086种称谓"></a>1）栈的10086种称谓</h4><p>一般而言，栈有两种。</p>
+<p>一种是数据结构中的栈。另一种是计算机内存空间中的栈。</p>
+<p>我们以下讨论的时候皆为计算机内存中的栈。</p>
+<p>有时候网上的文章会将栈称为堆栈。记住，堆栈就单指栈，没有堆，把前面的堆忽略掉。</p>
+<h2 id="2）函数调用栈？"><a href="#2）函数调用栈？" class="headerlink" title="2）函数调用栈？"></a>2）函数调用栈？</h2><p>函数调用栈的具体过程</p>
+<h3 id="3）溢出？"><a href="#3）溢出？" class="headerlink" title="3）溢出？"></a>3）溢出？</h3><p>栈溢出原理</p>
+<h2 id="4）栈溢出利用原理"><a href="#4）栈溢出利用原理" class="headerlink" title="4）栈溢出利用原理"></a>4）栈溢出利用原理</h2><p>栈溢出利用</p>
+<h2 id="5）栈溢出利用实战"><a href="#5）栈溢出利用实战" class="headerlink" title="5）栈溢出利用实战"></a>5）栈溢出利用实战</h2><h3 id="5-1）一些好用的工具"><a href="#5-1）一些好用的工具" class="headerlink" title="5.1）一些好用的工具"></a>5.1）一些好用的工具</h3><p>Sublime text,pwndbg</p>
+<h3 id="5-2-一般解题流程"><a href="#5-2-一般解题流程" class="headerlink" title="5.2) 一般解题流程"></a>5.2) 一般解题流程</h3><p>checksec + ida pro确定大题思路。</p>
+<p>（ida直接看填充量就好）</p>
+<p>pwngbd确定脚本具体参数</p>
+<p>sublime写python脚本</p>
+<p>执行脚本getshell</p>
+<h3 id="5-3）例题-ret2shellcode"><a href="#5-3）例题-ret2shellcode" class="headerlink" title="5.3）例题-ret2shellcode"></a>5.3）例题-ret2shellcode</h3><h2 id="6）更多的栈溢出"><a href="#6）更多的栈溢出" class="headerlink" title="6）更多的栈溢出"></a>6）更多的栈溢出</h2><p>栈溢出方式总结。ret2xxx</p>
+<h2 id="7）总结与唠嗑2-0"><a href="#7）总结与唠嗑2-0" class="headerlink" title="7）总结与唠嗑2.0"></a>7）总结与唠嗑2.0</h2>
             </div>
             <hr>
             <div>
               <div class="post-metas mb-3">
                 
-                
-                  <div class="post-meta">
-                    <i class="iconfont icon-tags"></i>
-                    
-                      <a class="hover-with-bg" href="../../../../tags/mess/">mess</a>
-                    
-                  </div>
                 
               </div>
               
@@ -261,9 +264,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="../roputils/">
+                      <a href="../%E8%B0%83%E8%AF%95%E5%99%A8%E6%96%AD%E7%82%B9%E5%8E%9F%E7%90%86/">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">roputils使用tips</span>
+                        <span class="hidden-mobile">调试器断点原理</span>
                         <span class="visible-mobile">Antaŭa afiŝo</span>
                       </a>
                     
@@ -271,8 +274,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="../../02/summertask/">
-                        <span class="hidden-mobile">SummerTask</span>
+                      <a href="../../09/io_file/">
+                        <span class="hidden-mobile">IO_FILE学习</span>
                         <span class="visible-mobile">Sekva afiŝo</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

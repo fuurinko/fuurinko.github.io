@@ -18,7 +18,7 @@
   <meta name="author" content="Rin777">
   <meta name="keywords" content="">
   
-  <title>patch&#39;alarm - Rin777</title>
+  <title>调试器断点原理 - Rin777</title>
 
   <link  rel="stylesheet" href="../../../../https:/cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
 
@@ -163,7 +163,7 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="patch'alarm">
+            <span class="h2" id="subtitle" title="调试器断点原理">
               
             </span>
 
@@ -173,8 +173,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2021-08-03 14:56" pubdate>
-        August 3, 2021 pm
+      <time datetime="2021-08-10 15:57" pubdate>
+        August 10, 2021 pm
       </time>
     </span>
   
@@ -185,7 +185,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      147 字
+      182 字
     </span>
   
 
@@ -225,15 +225,11 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">patch&#39;alarm</h1>
+            <h1 style="display: none">调试器断点原理</h1>
             
             <div class="markdown-body">
-              <p>比较弱智的一个操作，但是如果没注意到的话还是有一点点坑。</p>
-<p>一般来说许多题都喜欢在main函数里加alarm。</p>
-<p>alarm会导致调试的时候超时，如果没有解决的话基本不能调试。算最基础的的反调试手法了。</p>
-<p>ps:关于超时的那个报错当时还好好研究了一会儿来着。就是一个sigxxx，sigalarm好像，然后默认返回中止程序。</p>
-<p>解决方案也比较弱智。就是直接patch掉就好了。</p>
-<p>ida都关了懒得上图了。</p>
+              <h2 id="1-review"><a href="#1-review" class="headerlink" title="1)review"></a>1)review</h2><p>夹带私货的科普文</p>
+<h3 id="2）调试器断点"><a href="#2）调试器断点" class="headerlink" title="2）调试器断点"></a>2）调试器断点</h3><p>　　调试器可以给程序打断点是怎么回事呢？调试器相信大家都很熟悉，但是调试器可以给程序打断点是怎么回事呢，下面就让小编带大家一起了解吧。<br>　　调试器可以给程序打断点，其实就是程序以为自己出错了，大家可能会很惊讶程序怎么可能以为自己会出错呢？但事实就是这样，小编也感到非常惊讶。<br>　　这就是关于调试器可以给程序打断点的事情了，大家有什么想法呢，欢迎在评论区告诉小编一起讨论哦！</p>
 
             </div>
             <hr>
@@ -261,18 +257,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="../roputils/">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">roputils使用tips</span>
-                        <span class="visible-mobile">Antaŭa afiŝo</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="../../02/summertask/">
-                        <span class="hidden-mobile">SummerTask</span>
+                      <a href="../%E6%A0%88%E6%BA%A2%E5%87%BA%E5%9F%BA%E7%A1%80/">
+                        <span class="hidden-mobile"></span>
                         <span class="visible-mobile">Sekva afiŝo</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

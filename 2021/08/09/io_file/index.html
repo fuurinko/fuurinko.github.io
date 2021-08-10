@@ -87,7 +87,7 @@
             <li class="nav-item">
               <a class="nav-link" href="../../../../index.html">
                 <i class="iconfont icon-home-fill"></i>
-                Startseite
+                Hejmpaĝo
               </a>
             </li>
           
@@ -99,7 +99,7 @@
             <li class="nav-item">
               <a class="nav-link" href="../../../../archives/">
                 <i class="iconfont icon-archive-fill"></i>
-                Archiv
+                Arkivoj
               </a>
             </li>
           
@@ -111,7 +111,7 @@
             <li class="nav-item">
               <a class="nav-link" href="../../../../categories/">
                 <i class="iconfont icon-category-fill"></i>
-                Kategorie
+                Kategorioj
               </a>
             </li>
           
@@ -123,7 +123,7 @@
             <li class="nav-item">
               <a class="nav-link" href="../../../../tags/">
                 <i class="iconfont icon-tags-fill"></i>
-                Etiketten
+                Etikedoj
               </a>
             </li>
           
@@ -135,7 +135,7 @@
             <li class="nav-item">
               <a class="nav-link" href="../../../../about/">
                 <i class="iconfont icon-user-fill"></i>
-                Über mich
+                Pri
               </a>
             </li>
           
@@ -185,7 +185,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      1.2k 字
+      1.3k 字
     </span>
   
 
@@ -195,7 +195,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      15
+      16
        分钟
     </span>
   
@@ -282,6 +282,10 @@
 
 <h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>伪造vtable算是io_file中比较简单好懂的一点了，只要对数据结构稍微熟悉一点就能很快理解。然后伪造的方式和思路也比较直接，可以说是经典pwn思路了////</p>
 <p>下一章我们将学习FSOP，感觉难度会比伪造vtable高出不少，其实只要沉下心来看都不难，最难的目前来说还是那些高版本的防护的绕过了。</p>
+<h3 id="FSOP"><a href="#FSOP" class="headerlink" title="FSOP"></a>FSOP</h3><p>上一part我们学习了如何通过伪造vtable加上打one_gsdget来getshell，理解起来比较简单，实际操作也并不复杂，只要能找到fake vtable的位置并且正确理解one gadget的用法就好。</p>
+<p>这一个part我们学习FSOP。</p>
+<p>ps：不管是fsop还是后面的glibc2.24下的伪造vtable在ctf中的考察都较少。但是不能说不重要吧///</p>
+<p>FSOP 的核心思想就是劫持_IO_list_all 的值来伪造链表和其中的_IO_FILE 项</p>
 
             </div>
             <hr>
@@ -309,13 +313,19 @@
                   <article class="post-prev col-6">
                     
                     
+                      <a href="../../10/%E6%A0%88%E6%BA%A2%E5%87%BA%E5%9F%BA%E7%A1%80/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile"></span>
+                        <span class="visible-mobile">Antaŭa afiŝo</span>
+                      </a>
+                    
                   </article>
                   <article class="post-next col-6">
                     
                     
                       <a href="../../07/linux%E5%9F%BA%E7%A1%80/">
                         <span class="hidden-mobile">Linux基础</span>
-                        <span class="visible-mobile">Nächster</span>
+                        <span class="visible-mobile">Sekva afiŝo</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
                     
@@ -332,7 +342,7 @@
     
       <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
         <div id="toc">
-  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;TOC</p>
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;Enhavtabelo</p>
   <div class="toc-body" id="toc-body"></div>
 </div>
 
@@ -358,7 +368,7 @@
   <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">Suchen</h4>
+        <h4 class="modal-title w-100 font-weight-bold">Serĉi</h4>
         <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -367,7 +377,7 @@
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
           <label data-error="x" data-success="v"
-                 for="local-search-input">Stichwort</label>
+                 for="local-search-input">ŝlosivorto</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>
