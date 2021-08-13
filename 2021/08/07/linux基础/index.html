@@ -87,7 +87,7 @@
             <li class="nav-item">
               <a class="nav-link" href="../../../../index.html">
                 <i class="iconfont icon-home-fill"></i>
-                Hejmpaĝo
+                Home
               </a>
             </li>
           
@@ -99,7 +99,7 @@
             <li class="nav-item">
               <a class="nav-link" href="../../../../archives/">
                 <i class="iconfont icon-archive-fill"></i>
-                Arkivoj
+                Archives
               </a>
             </li>
           
@@ -111,7 +111,7 @@
             <li class="nav-item">
               <a class="nav-link" href="../../../../categories/">
                 <i class="iconfont icon-category-fill"></i>
-                Kategorioj
+                Categories
               </a>
             </li>
           
@@ -123,7 +123,7 @@
             <li class="nav-item">
               <a class="nav-link" href="../../../../tags/">
                 <i class="iconfont icon-tags-fill"></i>
-                Etikedoj
+                Tags
               </a>
             </li>
           
@@ -135,7 +135,7 @@
             <li class="nav-item">
               <a class="nav-link" href="../../../../about/">
                 <i class="iconfont icon-user-fill"></i>
-                Pri
+                About
               </a>
             </li>
           
@@ -185,7 +185,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      5.1k 字
+      5.3k 字
     </span>
   
 
@@ -195,7 +195,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      54
+      57
        分钟
     </span>
   
@@ -270,8 +270,10 @@
 
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs bash">cat<br><span class="hljs-comment">#一次显示整个文件</span><br><span class="hljs-comment">#eg1:cat flag</span><br>cat &gt; filename<br><span class="hljs-comment">#从键盘创建一个文件</span><br>cat file1 file2 &gt; file<br><span class="hljs-comment">#将几个文件合并为一个文件</span><br><br></code></pre></td></tr></table></figure>
 
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment">#mess</span><br>chmod <span class="hljs-comment">#更改文件执行权限</span><br><span class="hljs-comment">#基本用法举例</span><br>chmod 700 &lt;file&gt;<br>修改文件权限为文件所有者可读写执行。<br><span class="hljs-comment">#其他用法可以自己学。专门讲只是因为当我还是个菜鸡的时候被这个东西坑过，当时做题，执行脚本一直报错，我以为是脚本的问题，结果是程序没有可执行权限。。。</span><br><br></code></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment">#mess</span><br>chmod <span class="hljs-comment">#更改文件执行权限</span><br><span class="hljs-comment">#基本用法举例</span><br>chmod 700 &lt;file&gt;<br>修改文件权限为文件所有者可读写执行。<br><span class="hljs-comment">#其他用法可以自己学。专门讲只是因为当我还是个菜鸡的时候被这个东西坑过，当时做题，执行脚本一直报错，我以为是脚本的问题，结果是程序没有可执行权限。。。</span><br><br><span class="hljs-comment">#使用ls -l命令可以查看当前桌面文件的权限情况。</span><br><br><br></code></pre></td></tr></table></figure>
 
+<p>![image-20210811091910279](/Users/rin/Library/Application Support/typora-user-images/image-20210811091910279.png)</p>
+<p>示例如图/我先用<code>ls-l</code>查看文件权限，发现是rw也就是只有可读可写权限胆识没有可执行权限，所以通过chmod 700将文件改为可执行后再次查看权限。发现文件可执行。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs bash">tar <span class="hljs-comment">#压缩或解压文件</span><br><span class="hljs-comment">#参数如下</span><br>-c 建立新的压缩文件<br>-f 指定压缩文件<br>-r 添加文件到已经压缩文件包中<br>-u 添加改了和现有的文件到压缩包中<br>-x 从压缩包中抽取文件<br>-t 显示压缩文件中的内容<br>-z 支持gzip压缩<br>-j 支持bzip2压缩<br>-Z 支持compress解压文件<br>-v 显示操作过程<br><br><span class="hljs-comment">#解压</span><br>tar -xzvf &lt;file&gt;<br><span class="hljs-comment">#压缩</span><br><span class="hljs-comment"># touch a.c       </span><br><span class="hljs-comment"># tar -czvf test.tar.gz a.c   </span><br><span class="hljs-comment">#压缩 a.c文件为test.tar.gz</span><br><br></code></pre></td></tr></table></figure>
 
 
@@ -305,7 +307,7 @@
 <p>还要注意的就是以后大家会遇到要安装pip的情况。</p>
 <p>pip是一个专门处理基于python语言程序的包管理器。但是一般来说ubuntu18及以上都是默认支持python3的，所以相对应的pip也应该安装pip3。具体的安装方法可自寻文章。</p>
 <h4 id="其他"><a href="#其他" class="headerlink" title="其他"></a><font color=#AB3B3A>其他</font></h4><p>奇奇怪怪（）的重要命令。不能说很重要，只能说特别重要。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs bash"><br><span class="hljs-comment">#gcc最简单的无脑编译指令 </span><br>gcc -o main main.c <span class="hljs-comment">#main.c是源码文件的名字，main是编译出来可执行文件的名字，这个名字可以随便取。</span><br><span class="hljs-comment">#也可以写成这样</span><br>gcc main.c -o main<br><span class="hljs-comment">#这样以默认参数编译出来的程序是比较安全的（）</span><br><span class="hljs-comment">#此外gcc还能生成编译各个阶段的文件，以及编译多个文件，还能通过控制参数改变程序的保护方式等等各种功能，具体参数可以自己查一查。</span><br><span class="hljs-comment">#https://www.runoob.com/w3cnote/gcc-parameter-detail.html里的命令比较全面。</span><br><br></code></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs bash">clear <span class="hljs-comment">#清屏</span><br><br><span class="hljs-comment">#gcc最简单的无脑编译指令 </span><br>gcc -o main main.c <span class="hljs-comment">#main.c是源码文件的名字，main是编译出来可执行文件的名字，这个名字可以随便取。</span><br><span class="hljs-comment">#也可以写成这样</span><br>gcc main.c -o main<br><span class="hljs-comment">#这样以默认参数编译出来的程序是比较安全的（）</span><br><span class="hljs-comment">#此外gcc还能生成编译各个阶段的文件，以及编译多个文件，还能通过控制参数改变程序的保护方式等等各种功能，具体参数可以自己查一查。</span><br><span class="hljs-comment">#https://www.runoob.com/w3cnote/gcc-parameter-detail.html里的命令比较全面。</span><br><br></code></pre></td></tr></table></figure>
 
 
 
@@ -318,7 +320,11 @@
 <p>直接用处就是，如果你的程序出现了问题，你可以通过调试发现问题所在。</p>
 <p>比如这个程序由1000条指令，也可以理解成完成这个程序需要1000个步骤。而程序，你们可以理解为，一次性瞬间把整个1000条指令都执行完了，且但凡其中一个指令出错，整个程序都运行不了。现在你要找到出错的地方，你就需要通过调试，将程序半路停下，将每一个步骤拆分开来慢慢执行，直到你找到错误的地方。</p>
 <p>此外在做二进制安全的题目的时候调试也是极其重要的，调试能让你看到一般来说看不到的内存空间里的信息，使你解题如虎添翼。</p>
-<p>如果有同学疑惑调试器是如何做到让程序在中途停下的话，可以参考这篇文章。</p>
+<p>如果有同学疑惑调试器是如何做到让程序在中途停下的话，可以参考这篇文章。 </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment">#vim的基本操作</span><br>在命令行中输入vim就自动跳转到了vim的界面。<br>和其他编辑器一样，vim分为输入模式和命令行模式。<br>首先按i，进入输入模式，输你想输的。<br>输完以后，按一下esc，进入命令行模式。<br>vim的一切文件的保存以及退出vim都是靠这个命令行。<br>比如：q是退出<br>：wq是保存后退出<br>记住每条指令前要加冒号。<br>如果保存不了（权限不够），可以在后面跟一个！<br>比如<br>：wq！<br>：w！<br>：q！<br></code></pre></td></tr></table></figure>
+
+
+
 <h2 id="5）linux学习心得"><a href="#5）linux学习心得" class="headerlink" title="5）linux学习心得"></a><font color=#B19693>5）linux学习心得</font></h2><p>在熟练掌握最基础命令+善用搜素引擎之后，你已经能初步操作linux做你想做的事情了。</p>
 <p>但是上文中我也一直说在授课中我不想讲太多纯粹的指令。这些东西应该在课后自己折腾。就算课上讲了，有一说一一会儿就忘了。</p>
 <p>但是就“如何学习（或者记住）命令”这个问题，我认为还是有一定的窍门的，并不是纯粹的熟能生巧。</p>
@@ -338,7 +344,7 @@
 <p>你喋喋不休问别人傻逼问题的时候你肯定不知道他十分恼火但是还要装出一副和颜悦色的表情的样子有多动人（）</p>
 <p>基础部分就到此结束啦！</p>
 <p>linux系统更加深奥的部分，将会由别的学姐在之后的课程中带领大家深入。希望下面简单的课后作业能使大家充满决心！</p>
-<h2 id="7）课后作业"><a href="#7）课后作业" class="headerlink" title="7）课后作业"></a><font color=#B19693>7）课后作业</font></h2><p>不用按顺序做，喜欢哪个做哪个。做完发邮箱<a href="mailto:&#102;&#117;&#x75;&#x72;&#x69;&#x6e;&#107;&#x6f;&#64;&#103;&#109;&#x61;&#105;&#108;&#46;&#99;&#x6f;&#109;">&#102;&#117;&#x75;&#x72;&#x69;&#x6e;&#107;&#x6f;&#64;&#103;&#109;&#x61;&#105;&#108;&#46;&#99;&#x6f;&#109;</a></p>
+<h2 id="7）课后作业"><a href="#7）课后作业" class="headerlink" title="7）课后作业"></a><font color=#B19693>7）课后作业</font></h2><p>不用按顺序做，喜欢哪个做哪个。做完发邮箱<a href="mailto:&#x66;&#x75;&#x75;&#114;&#x69;&#110;&#x6b;&#111;&#64;&#x67;&#x6d;&#97;&#105;&#x6c;&#x2e;&#99;&#111;&#x6d;">&#x66;&#x75;&#x75;&#114;&#x69;&#110;&#x6b;&#111;&#64;&#x67;&#x6d;&#97;&#105;&#x6c;&#x2e;&#99;&#111;&#x6d;</a></p>
 <h4 id="Level0"><a href="#Level0" class="headerlink" title="Level0 "></a><font color=#AB3B3A>Level0 </font></h4><p>利用（linux自带的）gcc编译器通过指令编译一个<code>hello world</code> c程序。</p>
 <p>（ps：程序的源码不会写的话直接网上复制，不过hello world这种程度的代码建议花十分钟学一学）</p>
 <p>做完附上运行的程序的截图。</p>
@@ -390,7 +396,7 @@
                       <a href="../../09/io_file/">
                         <i class="iconfont icon-arrowleft"></i>
                         <span class="hidden-mobile">IO_FILE学习</span>
-                        <span class="visible-mobile">Antaŭa afiŝo</span>
+                        <span class="visible-mobile">Previous</span>
                       </a>
                     
                   </article>
@@ -399,7 +405,7 @@
                     
                       <a href="../linux%E5%9F%BA%E7%A1%80-%E4%B8%8A%E8%AF%BE%E7%89%88/">
                         <span class="hidden-mobile">Linux基础</span>
-                        <span class="visible-mobile">Sekva afiŝo</span>
+                        <span class="visible-mobile">Next</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
                     
@@ -416,7 +422,7 @@
     
       <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
         <div id="toc">
-  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;Enhavtabelo</p>
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;TOC</p>
   <div class="toc-body" id="toc-body"></div>
 </div>
 
@@ -442,7 +448,7 @@
   <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">Serĉi</h4>
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
         <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -451,7 +457,7 @@
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
           <label data-error="x" data-success="v"
-                 for="local-search-input">ŝlosivorto</label>
+                 for="local-search-input">keyword</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>

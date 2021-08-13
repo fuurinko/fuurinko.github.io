@@ -173,8 +173,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2021-08-10 11:03" pubdate>
-        August 10, 2021 am
+      <time datetime="2021-08-13 15:54" pubdate>
+        August 13, 2021 pm
       </time>
     </span>
   
@@ -185,7 +185,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      1.5k 字
+      862 字
     </span>
   
 
@@ -195,7 +195,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      15
+      9
        分钟
     </span>
   
@@ -228,55 +228,30 @@
             <h1 style="display: none"></h1>
             
             <div class="markdown-body">
-              <h1 id="栈溢出基础"><a href="#栈溢出基础" class="headerlink" title="栈溢出基础"></a>栈溢出基础</h1><h2 id="0）唠嗑"><a href="#0）唠嗑" class="headerlink" title="0）唠嗑"></a>0）唠嗑</h2><p>从这里正式步入二进制漏洞挖掘利用。</p>
-<h2 id="1）栈？"><a href="#1）栈？" class="headerlink" title="1）栈？"></a>1）栈？</h2><h4 id="0）栈的10086种称谓"><a href="#0）栈的10086种称谓" class="headerlink" title="0）栈的10086种称谓"></a>0）栈的10086种称谓</h4><p>一般来说，栈有两种。</p>
-<p>一种是数据结构中的栈。另一种是计算机内存空间中的栈。</p>
-<p>有时候网上的文章会将栈称为堆栈。记住，堆栈就单指栈，没有堆，把前面的堆忽略掉。</p>
-<p>我们以下讨论的时候皆为计算机内存中的栈。</p>
-<h3 id="1）栈的基本概念"><a href="#1）栈的基本概念" class="headerlink" title="1）栈的基本概念"></a>1）栈的基本概念</h3><p>栈是什么。</p>
-<p>一般普遍性理论而言，栈是一种先进后出的数据结构。</p>
-<p>为了方便理解这里我们忽略掉“数据结构”这个抽象概念，将栈实体化为内存上的一段数据。</p>
-<p>就是想下图这样一个叠一个的数据叠成的区域，就叫栈。</p>
-<p>栈里的东西只能从栈顶取出，比如你要取出这个篓子里的苹果，必须先依次取出桃子，梨子和香蕉。</p>
-<p>取出的过程叫做出栈，放进的过程叫入栈（压栈），无论哪一种都是在栈顶进行操作。</p>
-<p><img src="/Users/rin/Documents/ctf/wp/Heap_%E5%A0%86%E5%AD%A6%E4%B9%A0/%E6%A0%88.png" srcset="/img/loading.gif" lazyload alt="栈"></p>
-<p>就是这么简单的一个结构/没什么好说的。</p>
-<h3 id="2）栈溢出？"><a href="#2）栈溢出？" class="headerlink" title="2）栈溢出？"></a>2）栈溢出？</h3><p>接着上一点。</p>
-<p>我们的篓子有四种水果，如果我们再往上放水果，篓子是装不下的。然后就溢出了。</p>
-<p>嗯，就是这么简单。装不下了，所以溢出了。</p>
-<p>回到内存空间。</p>
-<p>水果篓子满了溢出来很好理解，但是在内存空间中，怎么能溢出呢？溢出以后又会怎样呢？</p>
-<p>我们留下一些悬念。</p>
-<h3 id="3）函数调用栈？"><a href="#3）函数调用栈？" class="headerlink" title="3）函数调用栈？"></a>3）函数调用栈？</h3><p>虽然栈的概念比较好理解，但是函数调用栈对于萌新来说可能并不非常友好。</p>
-<p>函数调用栈关系到esp，ebp以及eip等栈指针寄存器，如果不熟悉汇编的同学可能会比较难受。</p>
-<p>理解函数调用栈虽然不是理解栈溢出的关键，却决定了你能不能对栈溢出进行利用率。</p>
-<p>可以说，如果你没有理解函数调用栈，你一道栈溢出也做不出。而栈溢出是目前来说国内ctfpwn最简单的漏洞，几乎没有之一。</p>
-<p>那么该如何快速理解这个概念呢？</p>
-<p>在之前的课程里，比如说学姐的csapp课，大家了解了一个程序要运行，首先程序的代码和数据是被一段一段地映射到了内存上。</p>
-<p>回忆一下，以运行时角度，一个程序从源码到它被计算机系统执行经历了哪些变化。</p>
-<p>编译-&gt;加载-&gt;链接</p>
-<p>然后我们具体地理解一下，程序是以二进制文件保存的，二进制文件说白了就是一堆0或1，但是当被加载到内存，这些0和1会被翻译成16进制，然后有的被翻译成指令，有的被翻译成数据。</p>
-<p>从ida pro里看。二进制文件被反编译成了一条一条的指令。在实际执行的时候，在很多情况下，这些指令就像我们看到的那样，是有顺序的一条一条地向下执行的。</p>
-<p>程序执行指令的方向被称作程序执行流，程序执行流是可能随时改变的。</p>
-<p>有没有同学举几个能让程序执行流改变的方式，</p>
-<h2 id="4）栈溢出利用原理"><a href="#4）栈溢出利用原理" class="headerlink" title="4）栈溢出利用原理"></a>4）栈溢出利用原理</h2><p>栈溢出利用</p>
-<h2 id="5）栈溢出利用实战"><a href="#5）栈溢出利用实战" class="headerlink" title="5）栈溢出利用实战"></a>5）栈溢出利用实战</h2><h3 id="5-1）一些好用的工具"><a href="#5-1）一些好用的工具" class="headerlink" title="5.1）一些好用的工具"></a>5.1）一些好用的工具</h3><p>Ida pro（反编译），Sublime text（写py脚本）,pwndbg（调试）。</p>
-<p>入门的话也不用其他什么工具了。只是基础栈溢出的话也没有太多调试的空间</p>
-<h3 id="5-2-一般解题流程"><a href="#5-2-一般解题流程" class="headerlink" title="5.2) 一般解题流程"></a>5.2) 一般解题流程</h3><p>checksec + ida pro确定大题思路。</p>
-<p>（ida直接看填充量就好）</p>
-<p>pwngbd确定脚本具体参数</p>
-<p>sublime写python脚本</p>
-<p>执行脚本getshell</p>
-<h3 id="5-3）例题-ret2text"><a href="#5-3）例题-ret2text" class="headerlink" title="5.3）例题-ret2text"></a>5.3）例题-ret2text</h3><p>在介绍题目之前，非常有必要介绍一下ctf wiki这个网站。</p>
-<blockquote>
-<p>作为一个自由的站点，围绕 <strong>CTF</strong> 近几年赛题，<strong>CTF Wiki</strong> 对 <strong>CTF</strong> 中的各个方向的知识和技术进行介绍，以便于初学者更好地学习 <strong>CTF</strong> 相关的知识</p>
-</blockquote>
-<p>节选自ctf-wiki的start，也算是介绍页。大概就是一个有体系的、由浅入深的ctf各种题型的介绍。别的方向我不是很清楚，但是pwn方向他们做得确实非常好。实际上就是好在一个“成体系”。你只要照着它的大纲把每一篇文章看完，国内pwn就差不多了，剩下的就是对于前沿技术的追求和自身水平的巩固。</p>
-<p>除了成体系好像这个网站也没有什么太过特别的地方，每一篇文章基本都是由国内的师傅无偿贡献的，因为贡献文章并没有什么过多的限制（你想投你也可以投那种），这些师傅的水平参差不齐，错漏并不多见，但一定不能完全避免，他们讲述的方式也不一定就简单易懂，但是它的体系结构是的确还是难能可贵的。如果ctf-wiki上某一篇文章你觉得你看不懂，你可以搜索别的师傅写的博客，但是大体跟着ctf-wiki走肯定不会出错。</p>
-<p>ps：实际上这种成体系的教程除了ctf-wiki还有很多，但是免费的就这家最出名。其他要么是要购买的实体书，要么只讲基础不深入，星盟安全在b站有一套类似ctf-wiki框架的pwn课，质量还可以（虽然也避免不了因为多人讲课导致的质量不均衡的问题），只是只看视频的话效果很微妙，配合文章一起食用吧。</p>
-<p>说了那么多，来看这道例题。</p>
-<h2 id="6）更多的栈溢出"><a href="#6）更多的栈溢出" class="headerlink" title="6）更多的栈溢出"></a>6）更多的栈溢出</h2><p>栈溢出方式总结。ret2xxx</p>
-<h2 id="7）总结与唠嗑2-0"><a href="#7）总结与唠嗑2-0" class="headerlink" title="7）总结与唠嗑2.0"></a>7）总结与唠嗑2.0</h2>
+              <h4 id="1）review"><a href="#1）review" class="headerlink" title="1）review"></a>1）review</h4><p> 这个问题困扰了我多年，之前年轻的时候不知道为什么有的是题我就是死活调不出，后来才知道呀原来用的ubunt的版本太高了。但是我一直忽视了这个问题以为并不是什么关键的因素。我是这么认为的–只要清楚了利用方法并记住对应的libc版本，无论是不是真的把这道题调试出来了都无所谓。</p>
+<p>然后我就是这样一步一步地变得不会调试的。</p>
+<p>但是完整地把一道题调出来。这才是关键。这才是pwn题的灵魂。</p>
+<p>呜呜呜，我居然一直忽略了它的灵魂</p>
+<p>所以这一次我一定要解决掉这个问题。</p>
+<p>之前做考核的时候，稍微研究过这个问题。但是因为下载的的libc并没有debug符号，最终还是放弃了。</p>
+<p>目前来说针对题目的调试，一般来说是本地，远程也不用考虑这个问题。</p>
+<h4 id="2）原理"><a href="#2）原理" class="headerlink" title="2）原理"></a>2）原理</h4><p>在这之前我们需要了解一下ld以及libc在动态链接中的具体作用。实际上这也是一个比较基础的概念，ld链接器，libc共享库没什么好说的。</p>
+<p>但是这里有一堆环境变量就很离谱。我们来依次列举一下并且搞清楚它们是做什么的。</p>
+<h5 id="1）LD-PRELOAD"><a href="#1）LD-PRELOAD" class="headerlink" title="1）LD_PRELOAD"></a>1）LD_PRELOAD</h5><p>首先就是我们在脚本前加载的<code>LD_PRELOAD</code>这个东西。一般的用法是<code>env=&#123;&quot;LD_PRELOAD&quot;:libc_path&#125;</code></p>
+<p>它可以影响程序的运行时的链接（Runtime linker），允许你定义在程序运行前优先加载的动态链接库。</p>
+<p>这个功能主要就是用来有选择性的载入不同动态链接库中的相同函数。通过这个环境变量，我们可以在主程序和其动态链接库的中间加载别的动态链接库，甚至覆盖正常的函数库。</p>
+<p>换句话说我们可以通过指定这个环境变量来指定特定的libc版本。</p>
+<h5 id="2）LD-LIBRARY-PATH和LIBRARY-PATH"><a href="#2）LD-LIBRARY-PATH和LIBRARY-PATH" class="headerlink" title="2）LD_LIBRARY_PATH和LIBRARY_PATH"></a>2）LD_LIBRARY_PATH和LIBRARY_PATH</h5><p>LD_LIBRARY_PATH用于在<em><strong>程序加载运行期间</strong></em>查找动态链接库时指定除了系统默认路径之外的其他路径.</p>
+<p>LIBRARY_PATH环境变量用于在<em><strong>程序编译期间</strong></em>查找动态链接库时指定查找共享库的路径</p>
+<p>其实可以发现这三个环境变量都是修改程序需要的共享库，但是生效的时间不一样。</p>
+<p>并且在pwn题中基本都是需要在运行前指定另外的共享库的，所以<code>LD_PRELOAD</code>还是比较常见。</p>
+<p>相关（？）环境变量大概就这么多，然后是某些特殊的段。</p>
+<h5 id="1）-PT-INTERP"><a href="#1）-PT-INTERP" class="headerlink" title="1） PT_INTERP"></a>1） PT_INTERP</h5><p>储存了程序使用的ld.so的路径，默认使用 /lib64/ld-linux-x86-64.so.2。</p>
+<p>我们可以修改这个段的内容来指定我们需要的链接器。</p>
+<h4 id="汇总"><a href="#汇总" class="headerlink" title="汇总"></a>汇总</h4><p>综上，我们首先要准备我们需要的libc和ld，libc可以是编译好的elf文件也可以通过源码自己编译，这个无所谓。ld文件比较诡异，似乎是一个ld能同时支持很多libc的小版本。并不是一对一的关系。</p>
+<p>准备好了以后我们通过脚本将题目<code>PT_INTERP</code>段修改，然后通过<code>LD_PRELOAD</code>指定我们需要的libc的路径即可。</p>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/net66/p/5609026.html"><a target="_blank" rel="noopener" href="https://www.cnblogs.com/net66/p/5609026.html">LD_PRELOAD的偷梁换柱之能</a></a></p>
+
             </div>
             <hr>
             <div>
@@ -296,18 +271,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="../%E8%B0%83%E8%AF%95%E5%99%A8%E6%96%AD%E7%82%B9%E5%8E%9F%E7%90%86/">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">调试器断点原理</span>
-                        <span class="visible-mobile">Previous</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="../../09/io_file/">
-                        <span class="hidden-mobile">IO_FILE学习</span>
+                      <a href="../../11/Heap%E2%80%94%E2%80%94Tcache%E5%AD%A6%E4%B9%A0/">
+                        <span class="hidden-mobile"></span>
                         <span class="visible-mobile">Next</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

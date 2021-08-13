@@ -71,7 +71,7 @@
             <li class="nav-item">
               <a class="nav-link" href="index.html">
                 <i class="iconfont icon-home-fill"></i>
-                Hejmpaĝo
+                Home
               </a>
             </li>
           
@@ -83,7 +83,7 @@
             <li class="nav-item">
               <a class="nav-link" href="/archives/">
                 <i class="iconfont icon-archive-fill"></i>
-                Arkivoj
+                Archives
               </a>
             </li>
           
@@ -95,7 +95,7 @@
             <li class="nav-item">
               <a class="nav-link" href="/categories/">
                 <i class="iconfont icon-category-fill"></i>
-                Kategorioj
+                Categories
               </a>
             </li>
           
@@ -107,7 +107,7 @@
             <li class="nav-item">
               <a class="nav-link" href="/tags/">
                 <i class="iconfont icon-tags-fill"></i>
-                Etikedoj
+                Tags
               </a>
             </li>
           
@@ -119,7 +119,7 @@
             <li class="nav-item">
               <a class="nav-link" href="/about/">
                 <i class="iconfont icon-user-fill"></i>
-                Pri
+                About
               </a>
             </li>
           
@@ -175,6 +175,84 @@
               <div class="col-12 col-md-10 m-auto">
                 
 
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="2021/08/13/ubuntu%E5%8A%A0%E8%BD%BD%E4%B8%8D%E5%90%8C%E7%89%88%E6%9C%AClibc/" target="_self">
+          
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="2021/08/13/ubuntu%E5%8A%A0%E8%BD%BD%E4%B8%8D%E5%90%8C%E7%89%88%E6%9C%AClibc/" target="_self">
+          
+          
+            
+          
+          1）review 这个问题困扰了我多年，之前年轻的时候不知道为什么有的是题我就是死活调不出，后来才知道呀原来用的ubunt的版本太高了。但是我一直忽视了这个问题以为并不是什么关键的因素。我是这么认为的–只要清楚了利用方法并记住对应的libc版本，无论是不是真的把这道题调试出来了都无所谓。
+然后我就是这样一步一步地变得不会调试的。
+但是完整地把一道题调出来。这才是关键。这才是pwn题的灵魂。
+呜呜呜
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-08-13 15:54" pubdate>
+              2021-08-13
+            </time>
+          </div>
+        
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="2021/08/11/Heap%E2%80%94%E2%80%94Tcache%E5%AD%A6%E4%B9%A0/" target="_self">
+          
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="2021/08/11/Heap%E2%80%94%E2%80%94Tcache%E5%AD%A6%E4%B9%A0/" target="_self">
+          
+          
+            
+          
+          Tcahce学习0）review说是Tcache学习，实际上是lonelywolf的复现。
+网上wp都是神仙写的，一点也不萌新友好。我都看不懂（）
+打开题发现这个菜单题好常规。
+但是libc是2.27，难度会稍微高一点。而且这个2.27是魔改过的，加入了2.29才有的key，为Tcache加入了检查机制。                                               
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-08-11 20:00" pubdate>
+              2021-08-11
+            </time>
+          </div>
+        
+        
+        
+      </div>
+    </article>
+  </div>
 
   <div class="row mx-auto index-card">
     
@@ -238,15 +316,13 @@
             
           
           栈溢出基础0）唠嗑从这里正式步入二进制漏洞挖掘利用。
-1）栈？栈是什么。
-1）栈的10086种称谓一般而言，栈有两种。
+1）栈？0）栈的10086种称谓一般来说，栈有两种。
 一种是数据结构中的栈。另一种是计算机内存空间中的栈。
-我们以下讨论的时候皆为计算机内存中的栈。
 有时候网上的文章会将栈称为堆栈。记住，堆栈就单指栈，没有堆，把前面的堆忽略掉。
-2）函数调用栈？函数调用栈的具体过程
-3）溢出？栈溢出原理
-4）栈溢出利用原理栈溢出利用
-5）栈溢出利用
+我们以下讨论的时候皆为计算机内存中的栈。
+1）栈的基本概念栈是什么。
+一般普遍性理论而言，栈是一种先进后出的数据结构。
+为了方便理解这里我们忽略掉“数据结构”
         </a>
       </p>
 
@@ -560,102 +636,13 @@ off by one/null
     </article>
   </div>
 
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="2021/08/02/ret2dl_advanced/" target="_self">
-          ret2dl_advanced
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="2021/08/02/ret2dl_advanced/" target="_self">
-          
-          
-            
-          
-          ret2dl_advanced1)review当FULL RELRO保护开启时，通过 dl_run_time来获取libc基址的方式几乎无解。
-但是我们仍然能够找到某种方式来getshell。
-相关论文中给出一种解决方案，即通过dt_bug入口找到突破点。
-(Ps:为什么找不到相关的中文文章)
-2）dt_dbg？dt_dbg这个概念实际上并不新鲜，简单来说它可以被包含在libc.so文件中，比如我
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-08-02 11:22" pubdate>
-              2021-08-02
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="tags/stack/">stack</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="2021/08/02/0CTF2018-babystack/" target="_self">
-          0CTF_2018_babystack
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="2021/08/02/0CTF2018-babystack/" target="_self">
-          
-          
-            
-          
-          1)review作为ret2dl的复习题。
-2）exploitation溢出0x28+0x4字节，但是由于rop空间太小需要栈迁移。
-并且没有aslr，relro为partial。
-非常典型的ret2dl。
-可以直接用roputils做
-1234567891011121314151617181920212223242526272829303132333435363738#coding:utf-8i
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-08-02 11:22" pubdate>
-              2021-08-02
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="tags/stack/">stack</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
 
 
+  <nav aria-label="navigation">
+    <span class="pagination" id="pagination">
+      <span class="page-number current">1</span><a class="page-number" href="page/2/#board">2</a><a class="extend next" rel="next" href="page/2/#board"><i class="iconfont icon-arrowright"></i></a>
+    </span>
+  </nav>
 
 
 
@@ -678,7 +665,7 @@ off by one/null
   <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">Serĉi</h4>
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
         <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -687,7 +674,7 @@ off by one/null
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
           <label data-error="x" data-success="v"
-                 for="local-search-input">ŝlosivorto</label>
+                 for="local-search-input">keyword</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>
