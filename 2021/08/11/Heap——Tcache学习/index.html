@@ -87,7 +87,7 @@
             <li class="nav-item">
               <a class="nav-link" href="../../../../index.html">
                 <i class="iconfont icon-home-fill"></i>
-                Home
+                Startseite
               </a>
             </li>
           
@@ -99,7 +99,7 @@
             <li class="nav-item">
               <a class="nav-link" href="../../../../archives/">
                 <i class="iconfont icon-archive-fill"></i>
-                Archives
+                Archiv
               </a>
             </li>
           
@@ -111,7 +111,7 @@
             <li class="nav-item">
               <a class="nav-link" href="../../../../categories/">
                 <i class="iconfont icon-category-fill"></i>
-                Categories
+                Kategorie
               </a>
             </li>
           
@@ -123,7 +123,7 @@
             <li class="nav-item">
               <a class="nav-link" href="../../../../tags/">
                 <i class="iconfont icon-tags-fill"></i>
-                Tags
+                Etiketten
               </a>
             </li>
           
@@ -135,7 +135,7 @@
             <li class="nav-item">
               <a class="nav-link" href="../../../../about/">
                 <i class="iconfont icon-user-fill"></i>
-                About
+                Über mich
               </a>
             </li>
           
@@ -185,7 +185,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      1.5k 字
+      1.7k 字
     </span>
   
 
@@ -195,7 +195,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      18
+      21
        分钟
     </span>
   
@@ -288,6 +288,14 @@
 <p>大致是</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python">add(<span class="hljs-number">0</span>,<span class="hljs-number">0x78</span>)<br>free(<span class="hljs-number">0</span>)<br>edit(<span class="hljs-number">0</span>,<span class="hljs-string">b&quot;aaaa&quot;</span>)<br>free(<span class="hljs-number">0</span>)<br>show(<span class="hljs-number">0</span>)<br></code></pre></td></tr></table></figure>
 
+<p>再进行接收，就能获取一个我们的堆地址。接着就能算出堆基址。</p>
+<p>然后我们需要构造出unsortedbin chunk、</p>
+<p>但是题目限制了分配堆块的大小，我们无法直接获得一个unsortedbin chunk。。</p>
+<p>那么有什么办法能构造出unsortedbin呢？<br>回到Tcache的控制堆块，并且想到我们存在的double free，我们是否能通过double free来造成Tcache的控制堆块的任意写然后来修改被控制的Tcache的信息？比如数量和地址和大小？</p>
+<p>如果我们把数量改成七，大小改成我们想要的其他的，然后再将其申请并释放，我们是不是就可以获得unsortedbin chukn了？</p>
+<p>然后可以直接通过unsortedbin中的地址来减去偏移获得libc基址，然后直接one_gadget打malloc_hook。</p>
+<p>总体的利用思路是比较常规的，尤其是获得unsortedbin的地址之后的操作基本上就是模版化。</p>
+<p>然后比较关键的就是前面对于Tcache 检测的绕过以及修改Tcache控制区域来构造unsorted’bin。</p>
 <h4 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h4><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/A951860555/article/details/116910945">2021第十四届全国大学生信息安全竞赛WP（CISCN）– pwn部分</a></p>
 <p><a target="_blank" rel="noopener" href="https://blog.csdn.net/chennbnbnb/article/details/109284780">glibc2.31下的新double free手法/字节跳动pwn题gun题解</a></p>
 <p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1Sy4y1W7h2">CISCN2021 lonelywolf</a></p>
@@ -314,7 +322,7 @@
                       <a href="../../13/ubuntu%E5%8A%A0%E8%BD%BD%E4%B8%8D%E5%90%8C%E7%89%88%E6%9C%AClibc/">
                         <i class="iconfont icon-arrowleft"></i>
                         <span class="hidden-mobile"></span>
-                        <span class="visible-mobile">Previous</span>
+                        <span class="visible-mobile">Vorheriger</span>
                       </a>
                     
                   </article>
@@ -323,7 +331,7 @@
                     
                       <a href="../../10/%E8%B0%83%E8%AF%95%E5%99%A8%E6%96%AD%E7%82%B9%E5%8E%9F%E7%90%86/">
                         <span class="hidden-mobile">调试器断点原理</span>
-                        <span class="visible-mobile">Next</span>
+                        <span class="visible-mobile">Nächster</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
                     
@@ -366,7 +374,7 @@
   <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <h4 class="modal-title w-100 font-weight-bold">Suchen</h4>
         <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -375,7 +383,7 @@
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
           <label data-error="x" data-success="v"
-                 for="local-search-input">keyword</label>
+                 for="local-search-input">Stichwort</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>

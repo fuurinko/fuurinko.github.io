@@ -848,6 +848,14 @@
 <p>大致是</p>
 <figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python">add(<span class="hljs-number">0</span>,<span class="hljs-number">0x78</span>)<br>free(<span class="hljs-number">0</span>)<br>edit(<span class="hljs-number">0</span>,<span class="hljs-string">b&quot;aaaa&quot;</span>)<br>free(<span class="hljs-number">0</span>)<br>show(<span class="hljs-number">0</span>)<br></code></pre></td></tr></table></figure>
 
+<p>再进行接收，就能获取一个我们的堆地址。接着就能算出堆基址。</p>
+<p>然后我们需要构造出unsortedbin chunk、</p>
+<p>但是题目限制了分配堆块的大小，我们无法直接获得一个unsortedbin chunk。。</p>
+<p>那么有什么办法能构造出unsortedbin呢？<br>回到Tcache的控制堆块，并且想到我们存在的double free，我们是否能通过double free来造成Tcache的控制堆块的任意写然后来修改被控制的Tcache的信息？比如数量和地址和大小？</p>
+<p>如果我们把数量改成七，大小改成我们想要的其他的，然后再将其申请并释放，我们是不是就可以获得unsortedbin chukn了？</p>
+<p>然后可以直接通过unsortedbin中的地址来减去偏移获得libc基址，然后直接one_gadget打malloc_hook。</p>
+<p>总体的利用思路是比较常规的，尤其是获得unsortedbin的地址之后的操作基本上就是模版化。</p>
+<p>然后比较关键的就是前面对于Tcache 检测的绕过以及修改Tcache控制区域来构造unsorted’bin。</p>
 <h4 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h4><p><a href="https://blog.csdn.net/A951860555/article/details/116910945">2021第十四届全国大学生信息安全竞赛WP（CISCN）– pwn部分</a></p>
 <p><a href="https://blog.csdn.net/chennbnbnb/article/details/109284780">glibc2.31下的新double free手法/字节跳动pwn题gun题解</a></p>
 <p><a href="https://www.bilibili.com/video/BV1Sy4y1W7h2">CISCN2021 lonelywolf</a></p>
