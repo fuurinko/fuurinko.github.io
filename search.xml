@@ -387,152 +387,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Linux基础</title>
-    <url>/2021/08/07/linux%E5%9F%BA%E7%A1%80/</url>
-    <content><![CDATA[<h1 id="linux基础"><a href="#linux基础" class="headerlink" title="linux基础"></a><font color=#86473F>linux基础</font></h1><p><font color=#BF6766>这节课的目的：</font></p>
-<ul>
-<li>让没有任何编程基础的萌新了解linux系统</li>
-<li>大致了解linux最基本文件操作指令以及软件的下载安装</li>
-</ul>
-<p><font color=#BF6766>并没有很多的指令的学习，主要是想为萌新们加深对于linux系统的理解。以及讲一些个人的比较奇怪的体会，所以可能内容会比较少。另一方面这样也能空出一些时间拿来实操，翻车了也不怕。</font></p>
-<h2 id="0）普通的介绍"><a href="#0）普通的介绍" class="headerlink" title="0）普通的介绍"></a><font color=#B19693>0）普通的介绍</font></h2><p>SRE第一节课，由我来给大家讲linux基础。讲课水平很菜，linux水平也就凑合做个ctf题。</p>
-<p>希望大佬不要炸鱼。</p>
-<h2 id="1）linux是什么？"><a href="#1）linux是什么？" class="headerlink" title="1）linux是什么？"></a><font color=#B19693>1）linux是什么？</font></h2><p>Linux是一类自由和开源的操作系统。</p>
-<p>通常情况下，我们接触到的linux都是被打包好的各种linux发行版，包括<a href="https://zh.wikipedia.org/wiki/Debian">Debian</a>（<font color=#A96360>及其派生版本<a href="https://zh.wikipedia.org/wiki/Ubuntu">Ubuntu</a>、Kali等</font>）、<a href="https://zh.wikipedia.org/wiki/Fedora">Fedora</a>（<font color=#A96360>及其相关版本<a href="https://zh.wikipedia.org/wiki/CentOS">CentOS</a>和<a href="https://zh.wikipedia.org/wiki/OpenSUSE">openSUSE</a>等。)和<a href="https://zh.wikipedia.org/wiki/OpenSUSE">openSUSE</a>等。</font></p>
-<p>也就是类似ubuntu，centos等操作系统，都属于linux。不同的发行版的命令格式以及依赖库都不太一样，在学习初期选择一种发行版使用就行，没有必要反复横跳。</p>
-<p>建议没有明确方向的同学统一装ubuntu20.04LTS。据说每年都有大量萌新装各种奇怪的发行版，用完都哭了。所以建议统一一下。</p>
-<h2 id="2）为什么要使用linux？"><a href="#2）为什么要使用linux？" class="headerlink" title="2）为什么要使用linux？"></a><font color=#B19693>2）为什么要使用linux？</font></h2><h3 id="1）免费"><a href="#1）免费" class="headerlink" title="1）免费"></a><font color=#AB3B3A>1）免费</font></h3><p>windoe10家庭版在中国官网售价<strong>1088rmb</strong>，Mac OS X正版则只随电脑附赠，最便宜的是mac mini，<strong>5299</strong>起。</p>
-<p><strong>然而作为三大操作系统之一的linux，完全免费</strong>（<font color=#A96360><a href="http://haacked.com/archive/2012/02/22/spirit-of-open-source.aspx/">关于开源协议以及开源精神</a></font>）</p>
-<h3 id="2）开源"><a href="#2）开源" class="headerlink" title="2）开源"></a><font color=#AB3B3A>2）开源</font></h3><p>开源意味着用户可以对linux 内核进行查看甚至修改，例如对于linux服务器来说，用户甚至可以自定义系统程序，为管理提供了便利。</p>
-<p>另一方面，内核开源使得我们有机会去分析内核代码，使得源码剖析成为可能。（在ctf pwn方向，完全开源的内核代码为glibc pwn以及kernel pwn学习提供了极大的便利）</p>
-<h3 id="3）软件生态丰富"><a href="#3）软件生态丰富" class="headerlink" title="3）软件生态丰富"></a><font color=#AB3B3A>3）软件生态丰富</font></h3><p>对于很多我们熟悉的桌面版软件（QQ，WX等），linux一众发行版的适配可以说是非常糟糕。比如你可能需要费非常大的力气才能在liunx上跑一个bug很多，ui很奇怪的qq。</p>
-<p>但是对于SRE的日常学习来说，linux是必不可少的。我们使用的非常多的程序基本都是原生支持linux而不一定支持其他操作系统，也就意味着可能在Linux上能顺利运行，在win或者macosx上就会出现很多奇怪的bug，或者根本就不支持。并且，承接上文说到的开源，开源且自由的环境让服务器状态几乎变得透明，我们可以很方便地进行服务器的管理，~~也希望同学们能多学习一点运维知识，就算以后不干这行也很有用，毕竟运维安全部，运维也是大头嘛。</p>
-<h3 id="4）ctf学习"><a href="#4）ctf学习" class="headerlink" title="4）ctf学习"></a><font color=#AB3B3A>4）ctf学习</font></h3><p>接上一点，Linux基本上是学习ctf竞赛道路中必备的工具，正确熟练地使用linux能使你学习效率大大提高。</p>
-<p>传说“kali学得好，牢饭少不了”，作为linux发行版其一的kali拥有超过600个预装的渗透测试程序，为不管是打ctf还是实战都提供了极大的便利。美剧Mr.robot中，男主就是靠一台kali打四方，其标志性的龙图标在剧中非常惹人注目。</p>
-<h2 id="3）安装一个linux系统"><a href="#3）安装一个linux系统" class="headerlink" title="3）安装一个linux系统"></a><font color=#B19693>3）安装一个linux系统</font></h2><p>这个应该上课前就要安装吧，过程也很简单，官网下载iso文件然后狂点下一步。<del>如果是用Parallel Desktop的同学装系统碰到问题不能解决的话可以问我，vm我也不会·（）。</del></p>
-<p>如果在物理机和虚拟机之间的文件交互上出了问题，尽量先在网上查一查。我也没有用过vm虚拟机。。不太清楚怎么搞。</p>
-<p>我就不再重新装了，但是有几点需要注意。</p>
-<p>之前提到，没有明确方向的同学建议装Ubuntu20.04LTS。</p>
-<p>原因很简单，好用，而且大家都在用，有问题能快速解决。</p>
-<p>虽然但是，我不敢说，但是Mac OS X 10.15的同学如果装ubuntu20.04LTS，我不敢说有多大概率，可能只有百分之一，会遇到日常崩系统（日常。指每天），我也不知道为什么，反正我遇到了，怎么想也想不通，所以我放弃了20.04（）。</p>
-<p>vm我没用过没有办法给出什么建设性的意见，但是如果是pd用户我只能说，一定要经常备份（拍快照）。等你系统崩了没办法恢复需要忍痛重装系统的时候你就知道有多苦了。</p>
-<p>还是Mac OS X 10.15 + ubuntu 20.04 LTS的环境，我当初重装了系统附加环境两次我才发现有快照这个东西，后面有一次我恢复快照都没办法解决系统崩盘的问题，然后心一狠把整个系统删除了，安装包也重新在官网下载了一个，果然稳定了，花了一上午把环境重新配好，开心地用了一个月，结果又又又开始崩。那个时候我就是，每天用完准备关闭系统让它休眠之前一定要拍快照，以至于现在环境很正常但是我还是养成了战战兢兢每隔几天备份系统的习惯</p>
-<p>但是我现在用的18.04挺稳定的，几个月都没有崩的痕迹。所以我诚挚地希望电脑是低配mba然后用pd的同学谨慎考虑20.04 lts。</p>
-<p> Ps：那个靠每天恢复快照苟活的20.04在我换电脑移植文件后彻底与我说再见了，不是我要抛弃它，是它自己怎么也恢复不了，错的不是big sur，也不是惨兮兮的ubuntu20.04 lts，是<del>这个世界</del>我。</p>
-<p>PPS：ubuntu官网那个下载界面真的好怪。</p>
-<p><img src="https://img-blog.csdnimg.cn/0b001a45034c4c2fa65b161b8e8c84c8.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L20wXzUxMTg3NTU4,size_16,color_FFFFFF,t_70" alt="1"></p>
-<p>就是这个界面，好怪，这还是中文站，设计得好像只有四个版本。结果是要点那个桌面系统进去。</p>
-<h2 id="4）linux基础知识及常见命令"><a href="#4）linux基础知识及常见命令" class="headerlink" title="4）linux基础知识及常见命令"></a><font color=#B19693>4）linux基础知识及常见命令</font></h2><p><strong>事实上这个东西就和记英文单词一样，没有必要记。用得多了自然就熟了，特别生僻的直接查就好了。所以我觉得学习初期记一些简单的命令就行。</strong></p>
-<h4 id="文件管理"><a href="#文件管理" class="headerlink" title="文件管理"></a><font color=#AB3B3A>文件管理</font></h4><figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><br>./filename  <span class="hljs-comment">#相当于双击打开文件</span><br><br>ls  <span class="hljs-comment">#列举出当前工作目录的内容（文件或文件夹）</span><br>  <br><span class="hljs-built_in">cd</span>  <span class="hljs-comment">#切换文件路径</span><br>    <br>mkdir  <span class="hljs-comment">#新建文件夹</span><br>  <br><span class="hljs-built_in">pwd</span> <span class="hljs-comment">#显示当前工作目录</span><br>  <br>rm  <span class="hljs-comment">#删除指定文件</span><br></code></pre></td></tr></table></figure>
-
-<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">cp <span class="hljs-comment">#复制。</span><br><br>-i <span class="hljs-comment">#提示</span><br>-r <span class="hljs-comment">#复制目录及目录内所有项目</span><br>-a <span class="hljs-comment">#复制的文件与原文件时间一样</span><br>cp -ai a.txt <span class="hljs-built_in">test</span>  <span class="hljs-comment">#复制 a.txt 到 test 目录下，保持原文件时间，如果原文件存在提示是否覆盖。</span><br><span class="hljs-comment">#注意：命令行复制，如果目标文件已经存在会提示是否覆盖，而在 shell 脚本中，如果不加 -i 参数，则不会提示，而是直接覆盖！</span><br></code></pre></td></tr></table></figure>
-
-<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">mv  <span class="hljs-comment">#移动文件或修改文件名，根据第二参数类型（如目录，则移动文件；如为文件则重命令该文件）。</span><br>mv test.log test1.txt <span class="hljs-comment">#重命名text.log 为 text1.txt</span><br>mv llog1.txt log2.txt log3.txt /test3 <span class="hljs-comment">#将文件 log1.txt,log2.txt,log3.txt 移动到根的 test3 目录中</span><br>mv -i log1.txt log2.txt <span class="hljs-comment">#将文件 file1 改名为 file2，如果 file2 已经存在，则询问是否覆盖</span><br></code></pre></td></tr></table></figure>
-
-<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">cat<br><span class="hljs-comment">#一次显示整个文件</span><br><span class="hljs-comment">#eg1:cat flag</span><br>cat &gt; filename<br><span class="hljs-comment">#从键盘创建一个文件</span><br>cat file1 file2 &gt; file<br><span class="hljs-comment">#将几个文件合并为一个文件</span><br><br></code></pre></td></tr></table></figure>
-
-<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-comment">#mess</span><br>chmod <span class="hljs-comment">#更改文件执行权限</span><br><span class="hljs-comment">#基本用法举例</span><br>chmod 700 &lt;file&gt;<br>修改文件权限为文件所有者可读写执行。<br><span class="hljs-comment">#其他用法可以自己学。专门讲只是因为当我还是个菜鸡的时候被这个东西坑过，当时做题，执行脚本一直报错，我以为是脚本的问题，结果是程序没有可执行权限。。。</span><br><br><span class="hljs-comment">#使用ls -l命令可以查看当前桌面文件的权限情况。</span><br><br><br></code></pre></td></tr></table></figure>
-
-<p>![image-20210811091910279](/Users/rin/Library/Application Support/typora-user-images/image-20210811091910279.png)</p>
-<p>示例如图/我先用<code>ls-l</code>查看文件权限，发现是rw也就是只有可读可写权限胆识没有可执行权限，所以通过chmod 700将文件改为可执行后再次查看权限。发现文件可执行。</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">tar <span class="hljs-comment">#压缩或解压文件</span><br><span class="hljs-comment">#参数如下</span><br>-c 建立新的压缩文件<br>-f 指定压缩文件<br>-r 添加文件到已经压缩文件包中<br>-u 添加改了和现有的文件到压缩包中<br>-x 从压缩包中抽取文件<br>-t 显示压缩文件中的内容<br>-z 支持gzip压缩<br>-j 支持bzip2压缩<br>-Z 支持compress解压文件<br>-v 显示操作过程<br><br><span class="hljs-comment">#解压</span><br>tar -xzvf &lt;file&gt;<br><span class="hljs-comment">#压缩</span><br><span class="hljs-comment"># touch a.c       </span><br><span class="hljs-comment"># tar -czvf test.tar.gz a.c   </span><br><span class="hljs-comment">#压缩 a.c文件为test.tar.gz</span><br><br></code></pre></td></tr></table></figure>
-
-
-
-<p>以上的指令只要记住最基本的ls，cd就好了（甚至可以不记住），大家只需要有一个比较模糊的印象就好。遇到问题直接搜就好。</p>
-<p>而且感觉大家大多数还是在用桌面版，桌面版的话ubuntu直接为文件管理提供了图形化界面，比较友好直观。像win那样操作就好了，但是如果是linux server就没办法啦。（好怪，不会真的有人拿云服学ctf吧）</p>
-<h4 id="安装-更新-包管理"><a href="#安装-更新-包管理" class="headerlink" title="安装/更新/包管理"></a><font color=#AB3B3A>安装/更新/包管理</font></h4><p>在了解相关指令之前，必须明确一个概念就是，抛开ubuntu贫瘠的应用市场不谈。ubuntu等一众发行版下载/安装程序基本都是通过shell来交互。</p>
-<p>也就是ubuntu下载某个程序，一般来说不是到某个应用市场下载安装包再一键安装（当然也行），而是通过<font color=#86473F>储存库 -&gt; 包管理器 -&gt;用户</font>的路径对软件包进行分发。</p>
-<p>比如我们要下载vim这个代码编辑器，只需要一条简单的指令就能实现自动下载和安装</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">sudo apt install vim<br></code></pre></td></tr></table></figure>
-
-
-
-<p>这里<code>sudo</code>表示以管理员身份指令后面的指令，如果你执行某条指令时报错了，不要慌张。认真看后面的报错的信息，（ps：如果使用的是ubuntu20.04，那么你可以调成中文，非常萌新友好）</p>
-<p><code>apt</code>则是ubuntu中的一个包管理器，可以自动下载，配置，安装二进制或者源代码格式的软件包。</p>
-<p>类似apt的包管理还有很多，ubuntu上就有特别常用的pip，npm之类，</p>
-<p><code>install</code>则是具体的指令，类似的还有<code>remove</code>，<code>update</code>，<code>upgrade</code>等。</p>
-<p>我们还忽略了一个叫储存库的东西，它比较大众的名字是“软件源”，负责储存各种软件下载的路径。</p>
-<p><img src="https://img-blog.csdnimg.cn/5af2332d07e440ff91ae335c9ed28cb9.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L20wXzUxMTg3NTU4,size_16,color_FFFFFF,t_70" alt="2"></p>
-<p>比如说这里。</p>
-<p>Do you want to continue？</p>
-<p>当我们选择yes，apt就开始自动从<code>http://cn.archive.ubuntu.com/ubuntu bionic-updates/main amd64 vim-runtime all</code>这个网址下载vim的安装包，这个网址就可以理解为是一个软件源。</p>
-<p>就像在手机上下载软件，有app store。软件源就类似app store，然后你需要通过包管理器将软件源上的东西下载并安装到本地。</p>
-<p>当然软件源是可以更换的，由于国内不能科学上网，如果用默认的源下载速度一般会很慢。推荐更换清华或者阿里源。</p>
-<p>具体的换源教程建议百度。</p>
-<p>然后列举一些最基本的指令，具体的指令实际上不用记住，只要知道有这么个东西，它大致是干什么的就行。以后遇到了再学习也不会迟。</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-comment">#apt</span><br>sudo apt update  <span class="hljs-comment">#查看可新的软件包</span><br>sudo apt upgrate  <span class="hljs-comment">#更新软件包</span><br>sudo apt remove  <span class="hljs-comment">#删除某个通过apt下载安装的软件包</span><br><br><span class="hljs-comment">#dpkg</span><br>dpkg -i package.deb     <span class="hljs-comment">#安装包</span><br>dpkg -r package         <span class="hljs-comment">#删除包</span><br><span class="hljs-comment">#dpkg也是包管理工具，但是一般来说用于处理本地下载好的包，就是从网上下载好deb文件，然后通过dpkg安装。</span><br><br></code></pre></td></tr></table></figure>
-
-
-
-<p>还要注意的就是以后大家会遇到要安装pip的情况。</p>
-<p>pip是一个专门处理基于python语言程序的包管理器。但是一般来说ubuntu18及以上都是默认支持python3的，所以相对应的pip也应该安装pip3。具体的安装方法可自寻文章。</p>
-<h4 id="其他"><a href="#其他" class="headerlink" title="其他"></a><font color=#AB3B3A>其他</font></h4><p>奇奇怪怪（）的重要命令。不能说很重要，只能说特别重要。</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">clear <span class="hljs-comment">#清屏</span><br><br><span class="hljs-comment">#gcc最简单的无脑编译指令 </span><br>gcc -o main main.c <span class="hljs-comment">#main.c是源码文件的名字，main是编译出来可执行文件的名字，这个名字可以随便取。</span><br><span class="hljs-comment">#也可以写成这样</span><br>gcc main.c -o main<br><span class="hljs-comment">#这样以默认参数编译出来的程序是比较安全的（）</span><br><span class="hljs-comment">#此外gcc还能生成编译各个阶段的文件，以及编译多个文件，还能通过控制参数改变程序的保护方式等等各种功能，具体参数可以自己查一查。</span><br><span class="hljs-comment">#https://www.runoob.com/w3cnote/gcc-parameter-detail.html里的命令比较全面。</span><br><br></code></pre></td></tr></table></figure>
-
-
-
-<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">checksec &lt;filename&gt;<span class="hljs-comment">#检查文件保护措施，一般用于打pwn题</span><br></code></pre></td></tr></table></figure>
-
-<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">gdb &lt;filename&gt;<span class="hljs-comment">#调试器</span><br><span class="hljs-comment">#加载程序进调试器，此时程序并未运行</span><br>r <span class="hljs-comment">#runing</span><br>c <span class="hljs-comment">#continue</span><br>b <span class="hljs-comment">#打断点  （可以是直接b &lt;func&gt;，也能是b *0xbalabala（某个地址）等等）</span><br>n <span class="hljs-comment">#单步步过（就是不进入调用函数内部）</span><br>s <span class="hljs-comment">#单步步入（进入调用函数内部）</span><br>file <span class="hljs-comment">#加载程序进调试器=&gt; gdb + file filename = gdb filename</span><br></code></pre></td></tr></table></figure>
-
-<p>可能大家没有听说过什么是调试器。</p>
-<p>调试器最直观的功能就是让本来飞速运转的程序停下来，停在某一条指令上。</p>
-<p>直接用处就是，如果你的程序出现了问题，你可以通过调试发现问题所在。</p>
-<p>比如这个程序由1000条指令，也可以理解成完成这个程序需要1000个步骤。而程序，你们可以理解为，一次性瞬间把整个1000条指令都执行完了，且但凡其中一个指令出错，整个程序都运行不了。现在你要找到出错的地方，你就需要通过调试，将程序半路停下，将每一个步骤拆分开来慢慢执行，直到你找到错误的地方。</p>
-<p>此外在做二进制安全的题目的时候调试也是极其重要的，调试能让你看到一般来说看不到的内存空间里的信息，使你解题如虎添翼。</p>
-<p>如果有同学疑惑调试器是如何做到让程序在中途停下的话，可以参考这篇文章。 </p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-comment">#vim的基本操作</span><br>在命令行中输入vim就自动跳转到了vim的界面。<br>和其他编辑器一样，vim分为输入模式和命令行模式。<br>首先按i，进入输入模式，输你想输的。<br>输完以后，按一下esc，进入命令行模式。<br>vim的一切文件的保存以及退出vim都是靠这个命令行。<br>比如：q是退出<br>：wq是保存后退出<br>记住每条指令前要加冒号。<br>如果保存不了（权限不够），可以在后面跟一个！<br>比如<br>：wq！<br>：w！<br>：q！<br></code></pre></td></tr></table></figure>
-
-
-
-<h2 id="5）linux学习心得"><a href="#5）linux学习心得" class="headerlink" title="5）linux学习心得"></a><font color=#B19693>5）linux学习心得</font></h2><p>在熟练掌握最基础命令+善用搜素引擎之后，你已经能初步操作linux做你想做的事情了。</p>
-<p>但是上文中我也一直说在授课中我不想讲太多纯粹的指令。这些东西应该在课后自己折腾。就算课上讲了，有一说一一会儿就忘了。</p>
-<p>但是就“如何学习（或者记住）命令”这个问题，我认为还是有一定的窍门的，并不是纯粹的熟能生巧。</p>
-<p>比如一般通过萌新大概会对代码有天然的恐惧，给他一篇再清楚再详细的文章，也可能报错连连。犯诸如打错字，复制别人的用户名，行号等等。由于这种对于自己看不懂的东西天生的抵触，他可能在很长一段时间里都只是纯粹地对教程上的指令进行复制粘贴，而不去探究，哪怕只是搜一下，这个命令为什么是这样的，这个pip和pip3有什么区别等等。</p>
-<p>所以我希望大家在学习某一条指令的时候，尽量先把每一条指令拆分开来，分别查对应的功能或者意思。</p>
-<p>就比如我在前面写到的</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">sudo apt install vim<br></code></pre></td></tr></table></figure>
-
-<p>在新人眼里这就是一串英文字母，但是沉下心来你会发现它由四个部分组成，具体的前文已经分析过了。</p>
-<p>然后你会逐渐发现这些指令都有共通的地方，学会了一条“语法”，就相当于学会了成百上千条指令。</p>
-<p>同时明白了指令的原理也能让你随机应变，找到你自己环境的差异然后有针对性的对指令进行修改。</p>
-<p>**ps：查资料的时候可以选一些看起来比较正规专业的网站来查询。如果是命令行或者代码语法首选类似官网文档，W3school或者菜鸟教程这种看起来就很正经的网站，可能相对于直接找别人写的博客来说比较慢，但是绝对准确。如果是做题等遇到的报错的话首先看有没有独立个人博客（不是csdn或者那种不知名广告网站，而是自己搭服务器或者xxpage建的个人网站），再看有无csdn博客园这种，当然如果有靠谱的参考书也行。具体原因的话，csdn这种网站门槛太低，什么牛马都有，鱼龙混杂，好坏参半，新手比较难分辨。除了各种无授权搬运、广告文、恶心的资源分享系统、占据互动半壁江山的机器人，还有部分文章内容会出现技术性错误，误导新人。而且ui不能自定义///////**。</p>
-<p>但出错也难免，因为门槛低，所以本身就有各种新人的试错笔记，既然是新人犯错难免。事实上就算是个人博客也会出现错误，放宽心就好。参考文章出错虽然是一件很难受的事情，但是在我眼中确是最能容忍的555</p>
-<p>所以希望大家不要因为害怕出错就不写笔记哇。</p>
-<p>说到查资料，那还是不得不提另外一个，提问的艺术。</p>
-<p>这个问题其实挺有趣，可以看看知乎上面一个问题“是不是程序员都比较傲慢”（大概这样）的回答。</p>
-<p>你喋喋不休问别人傻逼问题的时候你肯定不知道他十分恼火但是还要装出一副和颜悦色的表情的样子有多动人（）</p>
-<p>基础部分就到此结束啦！</p>
-<p>linux系统更加深奥的部分，将会由别的学姐在之后的课程中带领大家深入。希望下面简单的课后作业能使大家充满决心！</p>
-<h2 id="7）课后作业"><a href="#7）课后作业" class="headerlink" title="7）课后作业"></a><font color=#B19693>7）课后作业</font></h2><p>不用按顺序做，喜欢哪个做哪个。做完发邮箱<a href="mailto:&#x66;&#x75;&#x75;&#114;&#x69;&#110;&#x6b;&#111;&#64;&#x67;&#x6d;&#97;&#105;&#x6c;&#x2e;&#99;&#111;&#x6d;">&#x66;&#x75;&#x75;&#114;&#x69;&#110;&#x6b;&#111;&#64;&#x67;&#x6d;&#97;&#105;&#x6c;&#x2e;&#99;&#111;&#x6d;</a></p>
-<h4 id="Level0"><a href="#Level0" class="headerlink" title="Level0 "></a><font color=#AB3B3A>Level0 </font></h4><p>利用（linux自带的）gcc编译器通过指令编译一个<code>hello world</code> c程序。</p>
-<p>（ps：程序的源码不会写的话直接网上复制，不过hello world这种程度的代码建议花十分钟学一学）</p>
-<p>做完附上运行的程序的截图。</p>
-<p>示例如下。</p>
-<p>![image-20210810105759326](/Users/rin/Library/Application Support/typora-user-images/image-20210810105759326.png)</p>
-<h4 id="Level1"><a href="#Level1" class="headerlink" title="Level1 "></a><font color=#AB3B3A>Level1 </font></h4><p>使用gdb（linux系统自带的一个调试器）调试你的hello world程序，随便在哪里下一个断点，然后单步调试，感受单步调试的神圣感，将你看到的东西记在心里，也许以后会用上。</p>
-<p>大概就是输入：</p>
-<figure class="highlight ebnf"><table><tr><td class="code"><pre><code class="hljs ebnf"><span class="hljs-attribute">gdb helloworld</span><br></code></pre></td></tr></table></figure>
-
-<p>然后断点下在哪怎么下就自由发挥咯。</p>
-<p>做完后附上截图</p>
-<p>示例如下。你们的可能和我颜色搭配和功能不太一样，但是意思对了就行。</p>
-<p>![image-20210810105941611](/Users/rin/Library/Application Support/typora-user-images/image-20210810105941611.png)</p>
-<h4 id="Level2"><a href="#Level2" class="headerlink" title="Level2 "></a><font color=#AB3B3A>Level2 </font></h4><p><strong><font color=#9F353A>夹带私货环节，不想学pwn的同学可以直接跳过。 </font></strong></p>
-<p>一道不叫题的pwn题</p>
-<p><a href="https://buuoj.cn/challenges#test_your_nc">https://buuoj.cn/challenges#test_your_nc</a></p>
-<p>利用pip3安装一个pwntools。</p>
-<p>并通过nc连接到远端获得flag。</p>
-<p>不会做的话，复制题目名字直接搜，能搜出别人的解题步骤。</p>
-<p>做完以后附上你获得flag时的截图。</p>
-<h2 id="8）参考"><a href="#8）参考" class="headerlink" title="8）参考"></a><font color=#B19693>8）参考</font></h2><p><a href="https://www.runoob.com/linux/linux-comm-apt.html">Linux apt 命令</a></p>
-]]></content>
-      <tags>
-        <tag>mess</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>IO_FILE学习</title>
     <url>/2021/08/09/io_file/</url>
     <content><![CDATA[<p>io_file学习笔记</p>
@@ -599,183 +453,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Linux基础</title>
-    <url>/2021/08/07/linux%E5%9F%BA%E7%A1%80-%E4%B8%8A%E8%AF%BE%E7%89%88/</url>
-    <content><![CDATA[<h1 id="linux基础"><a href="#linux基础" class="headerlink" title="linux基础"></a><font color=#86473F>linux基础</font></h1><p><font color=#BF6766>这节课的目的：</font></p>
-<ul>
-<li>让没有任何编程基础的萌新了解linux系统</li>
-<li>大致了解linux最基本文件操作指令以及软件的下载安装</li>
-</ul>
-<h2 id="0）普通的介绍"><a href="#0）普通的介绍" class="headerlink" title="0）普通的介绍"></a><font color=#B19693>0）普通的介绍</font></h2><p>SRE第一节课，由我来给大家讲linux基础。讲课水平很菜，linux水平也就凑合做个ctf题。</p>
-<p>希望大佬不要炸鱼。</p>
-<h2 id="1）linux是什么？"><a href="#1）linux是什么？" class="headerlink" title="1）linux是什么？"></a><font color=#B19693>1）linux是什么？</font></h2><p>Linux是一类自由和开源的操作系统。</p>
-<p>通常情况下，我们接触到的linux都是被打包好的各种linux发行版，包括<a href="https://zh.wikipedia.org/wiki/Debian">Debian</a>（<font color=#A96360>及其派生版本<a href="https://zh.wikipedia.org/wiki/Ubuntu">Ubuntu</a>、Kali等</font>）、<a href="https://zh.wikipedia.org/wiki/Fedora">Fedora</a>（<font color=#A96360>及其相关版本<a href="https://zh.wikipedia.org/wiki/CentOS">CentOS</a>和<a href="https://zh.wikipedia.org/wiki/OpenSUSE">openSUSE</a>等。)和<a href="https://zh.wikipedia.org/wiki/OpenSUSE">openSUSE</a>等。</font></p>
-<p>也就是类似ubuntu，centos等操作系统，都属于linux。不同的发行版的命令格式以及依赖库都不太一样，在学习初期选择一种发行版使用就行，没有必要反复横跳。</p>
-<p>建议没有明确方向的同学统一装ubuntu20.04LTS。据说每年都有大量萌新装各种奇怪的发行版，用完都哭了。所以建议统一一下。</p>
-<h2 id="2）为什么要使用linux？"><a href="#2）为什么要使用linux？" class="headerlink" title="2）为什么要使用linux？"></a><font color=#B19693>2）为什么要使用linux？</font></h2><h3 id="1）免费"><a href="#1）免费" class="headerlink" title="1）免费"></a><font color=#AB3B3A>1）免费</font></h3><p>windoe10家庭版在中国官网售价<strong>1088rmb</strong>，Mac OS X正版则只随电脑附赠，最便宜的是mac mini，<strong>5299</strong>起。</p>
-<p><strong>然而作为三大操作系统之一的linux，完全免费</strong>（<font color=#A96360><a href="http://haacked.com/archive/2012/02/22/spirit-of-open-source.aspx/">关于开源协议以及开源精神</a></font>）</p>
-<h3 id="2）开源"><a href="#2）开源" class="headerlink" title="2）开源"></a><font color=#AB3B3A>2）开源</font></h3><p>开源意味着用户可以对linux 内核进行查看甚至修改，例如对于linux服务器来说，用户甚至可以自定义系统程序，为管理提供了便利。</p>
-<p>另一方面，内核开源使得我们有机会去分析内核代码，使得源码剖析成为可能。（在ctf pwn方向，完全开源的内核代码为glibc pwn以及kernel pwn学习提供了极大的便利）</p>
-<h3 id="3）软件生态丰富"><a href="#3）软件生态丰富" class="headerlink" title="3）软件生态丰富"></a><font color=#AB3B3A>3）软件生态丰富</font></h3><p>对于很多我们熟悉的桌面版软件（QQ，WX等），linux一众发行版的适配可以说是非常糟糕。比如你可能需要费非常大的力气才能在liunx上跑一个bug很多，ui很奇怪的qq。</p>
-<p>但是对于SRE的日常学习来说，linux是必不可少的。我们使用的非常多的程序基本都是原生支持linux而不一定支持其他操作系统，也就意味着可能在Linux上能顺利运行，在win或者macosx上就会出现很多奇怪的bug，或者根本就不支持。并且，承接上文说到的开源，开源且自由的环境让服务器状态几乎变得透明，我们可以很方便地进行服务器的管理，~~也希望同学们能多学习一点运维知识，就算以后不干这行也很有用，毕竟运维安全部，运维也是大头嘛。</p>
-<h3 id="4）ctf学习"><a href="#4）ctf学习" class="headerlink" title="4）ctf学习"></a><font color=#AB3B3A>4）ctf学习</font></h3><p>接上一点，Linux基本上是学习ctf竞赛道路中必备的工具，正确熟练地使用linux能使你学习效率大大提高。</p>
-<p>传说“kali学得好，牢饭少不了”，作为linux发行版其一的kali拥有超过600个预装的渗透测试程序，为不管是打ctf还是实战都提供了极大的便利。美剧Mr.robot中，男主就是靠一台kali打四方，其标志性的龙图标在剧中非常惹人注目。</p>
-<h2 id="3）安装一个linux系统"><a href="#3）安装一个linux系统" class="headerlink" title="3）安装一个linux系统"></a><font color=#B19693>3）安装一个linux系统</font></h2><p>这个应该上课前就要安装吧，过程也很简单，官网下载iso文件然后狂点下一步。<del>如果是用Parallel Desktop的同学装系统碰到问题不能解决的话可以问我，vm我也不会·（）。</del></p>
-<p>如果在物理机和虚拟机之间的文件交互上出了问题，尽量先在网上查一查。我也没有用过vm虚拟机。。不太清楚怎么搞。</p>
-<p><img src="https://img-blog.csdnimg.cn/0b001a45034c4c2fa65b161b8e8c84c8.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L20wXzUxMTg3NTU4,size_16,color_FFFFFF,t_70" alt="1"></p>
-<h2 id="4）linux基础知识及常见命令"><a href="#4）linux基础知识及常见命令" class="headerlink" title="4）linux基础知识及常见命令"></a><font color=#B19693>4）linux基础知识及常见命令</font></h2><p><strong>事实上这个东西就和记英文单词一样，没有必要记。用得多了自然就熟了，特别生僻的直接查就好了。所以我觉得学习初期记一些简单的命令就行。</strong></p>
-<h4 id="文件管理"><a href="#文件管理" class="headerlink" title="文件管理"></a><font color=#AB3B3A>文件管理</font></h4><figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">./filename  <span class="hljs-comment">#相当于双击打开文件</span><br><br>ls  <span class="hljs-comment">#列举出当前工作目录的内容（文件或文件夹）list的缩写</span><br>  <br><span class="hljs-built_in">cd</span>  <span class="hljs-comment">#切换文件路径</span><br>    <br>mkdir  <span class="hljs-comment">#新建文件夹</span><br>  <br><span class="hljs-built_in">pwd</span> <span class="hljs-comment">#显示当前工作目录</span><br>  <br>rm  <span class="hljs-comment">#删除指定文件</span><br></code></pre></td></tr></table></figure>
-
-<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">cp <span class="hljs-comment">#复制。</span><br><br>-i <span class="hljs-comment">#提示</span><br>-r <span class="hljs-comment">#复制目录及目录内所有项目</span><br>-a <span class="hljs-comment">#复制的文件与原文件时间一样</span><br>cp -ai a.txt <span class="hljs-built_in">test</span>  <span class="hljs-comment">#复制 a.txt 到 test 目录下，保持原文件时间，如果原文件存在提示是否覆盖。</span><br><span class="hljs-comment">#注意：命令行复制，如果目标文件已经存在会提示是否覆盖，而在 shell 脚本中，如果不加 -i 参数，则不会提示，而是直接覆盖！</span><br></code></pre></td></tr></table></figure>
-
-<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">mv  <span class="hljs-comment">#移动文件或修改文件名，根据第二参数类型（如目录，则移动文件；如为文件则重命令该文件）。</span><br>mv test.log test1.txt <span class="hljs-comment">#重命名text.log 为 text1.txt</span><br>mv llog1.txt log2.txt log3.txt /test3 <span class="hljs-comment">#将文件 log1.txt,log2.txt,log3.txt 移动到根的 test3 目录中</span><br>mv -i log1.txt log2.txt <span class="hljs-comment">#将文件 file1 改名为 file2，如果 file2 已经存在，则询问是否覆盖</span><br></code></pre></td></tr></table></figure>
-
-<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">cat<br><span class="hljs-comment">#一次显示整个文件</span><br><span class="hljs-comment">#eg1:cat flag</span><br>cat &gt; filename<br><span class="hljs-comment">#从键盘创建一个文件</span><br>cat file1 file2 &gt; file<br><span class="hljs-comment">#将几个文件合并为一个文件</span><br><br></code></pre></td></tr></table></figure>
-
-<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-comment">#mess</span><br>chmod <span class="hljs-comment">#更改文件执行权限</span><br><span class="hljs-comment">#基本用法举例</span><br>chmod 700 &lt;file&gt;<br>修改文件权限为文件所有者可读写执行。<br><span class="hljs-comment">#其他用法可以自己学。专门讲只是因为当我还是个菜鸡的时候被这个东西坑过，当时做题，执行脚本一直报错，我以为是脚本的问题，结果是程序没有可执行权限。。。</span><br><br></code></pre></td></tr></table></figure>
-
-<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">tar <span class="hljs-comment">#压缩或解压文件</span><br><span class="hljs-comment">#参数如下</span><br>-c 建立新的压缩文件<br>-f 指定压缩文件<br>-r 添加文件到已经压缩文件包中<br>-u 添加改了和现有的文件到压缩包中<br>-x 从压缩包中抽取文件<br>-t 显示压缩文件中的内容<br>-z 支持gzip压缩<br>-j 支持bzip2压缩<br>-Z 支持compress解压文件<br>-v 显示操作过程<br><br><span class="hljs-comment">#解压</span><br>tar -xzvf &lt;file&gt;<br><span class="hljs-comment">#压缩</span><br><span class="hljs-comment"># touch a.c       </span><br><span class="hljs-comment"># tar -czvf test.tar.gz a.c   </span><br><span class="hljs-comment">#压缩 a.c文件为test.tar.gz</span><br><br></code></pre></td></tr></table></figure>
-
-
-
-<p>以上的指令只要记住最基本的ls，cd就好了（甚至可以不记住），大家只需要有一个比较模糊的印象就好。遇到问题直接搜就好。</p>
-<p>而且感觉大家大多数还是在用桌面版，桌面版的话ubuntu直接为文件管理提供了图形化界面，比较友好直观。像win那样操作就好了，但是如果是linux server就没办法啦。（好怪，不会真的有人拿云服学ctf吧）</p>
-<h4 id="安装-更新-包管理"><a href="#安装-更新-包管理" class="headerlink" title="安装/更新/包管理"></a><font color=#AB3B3A>安装/更新/包管理</font></h4><p>在了解相关指令之前，必须明确一个概念就是，抛开ubuntu贫瘠的应用市场不谈。ubuntu等一众发行版下载/安装程序基本都是通过shell来交互。</p>
-<p>也就是ubuntu下载某个程序，一般来说不是到某个应用市场下载安装包再一键安装（当然也行），而是通过<font color=#86473F>储存库 -&gt; 包管理器 -&gt;用户</font>的路径对软件包进行分发。</p>
-<p>比如我们要下载vim这个代码编辑器，只需要一条简单的指令就能实现自动下载和安装</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">sudo apt install vim<br></code></pre></td></tr></table></figure>
-
-
-
-<p>这里<code>sudo</code>表示以管理员身份指令后面的指令，如果你执行某条指令时报错了，不要慌张。认真看后面的报错的信息，（ps：如果使用的是ubuntu20.04，那么你可以调成中文，非常萌新友好）</p>
-<p><code>apt</code>则是ubuntu中的一个包管理器，可以自动下载，配置，安装二进制或者源代码格式的软件包。</p>
-<p>类似apt的包管理还有很多，ubuntu上就有特别常用的pip，npm之类，</p>
-<p><code>install</code>则是具体的指令，类似的还有<code>remove</code>，<code>update</code>，<code>upgrade</code>等。</p>
-<p>我们还忽略了一个叫储存库的东西，它比较大众的名字是“软件源”，负责储存各种软件下载的路径。</p>
-<p><img src="https://img-blog.csdnimg.cn/5af2332d07e440ff91ae335c9ed28cb9.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L20wXzUxMTg3NTU4,size_16,color_FFFFFF,t_70" alt="2"></p>
-<p>比如说这里。</p>
-<p>Do you want to continue？</p>
-<p>当我们选择yes，apt就开始自动从<code>http://cn.archive.ubuntu.com/ubuntu bionic-updates/main amd64 vim-runtime all</code>这个网址下载vim的安装包，这个网址就可以理解为是一个软件源。</p>
-<p>就像在手机上下载软件，有app store。软件源就类似app store，然后你需要通过包管理器将软件源上的东西下载并安装到本地。</p>
-<p>当然软件源是可以更换的，由于国内不能科学上网，如果用默认的源下载速度一般会很慢。推荐更换清华或者阿里源。</p>
-<p>具体的换源教程建议百度。</p>
-<p>然后列举一些最基本的指令，具体的指令实际上不用记住，只要知道有这么个东西，它大致是干什么的就行。以后遇到了再学习也不会迟。</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-comment">#apt</span><br>sudo apt update  <span class="hljs-comment">#查看可新的软件包</span><br>sudo apt upgrate  <span class="hljs-comment">#更新软件包</span><br>sudo apt remove  <span class="hljs-comment">#删除某个通过apt下载安装的软件包</span><br><br><span class="hljs-comment">#dpkg</span><br>dpkg -i package.deb     <span class="hljs-comment">#安装包</span><br>dpkg -r package         <span class="hljs-comment">#删除包</span><br><span class="hljs-comment">#dpkg也是包管理工具，但是一般来说用于处理本地下载好的包，就是从网上下载好deb文件，然后通过dpkg安装。</span><br><br></code></pre></td></tr></table></figure>
-
-
-
-<p>还要注意的就是以后大家会遇到要安装pip的情况。</p>
-<p>pip是一个专门处理基于python语言程序的包管理器。但是一般来说ubuntu18及以上都是默认支持python3的，所以相对应的pip也应该安装pip3。具体的安装方法可自寻文章。</p>
-<h4 id="其他"><a href="#其他" class="headerlink" title="其他"></a><font color=#AB3B3A>其他</font></h4><p>奇奇怪怪（）的重要命令。不能说很重要，只能说特别重要。</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">clear <span class="hljs-comment">#清屏</span><br><br><br><span class="hljs-comment">#gcc编译#最简单的无脑编译指令 </span><br>gcc -o main main.c <span class="hljs-comment">#main.c是源码文件的名字，main是编译出来可执行文件的名字，这个名字可以随便取。</span><br><span class="hljs-comment">#也可以写成这样</span><br>gcc main.c -o main<br><span class="hljs-comment">#这样以默认参数编译出来的程序是比较安全的（）</span><br><span class="hljs-comment">#此外gcc还能生成编译各个阶段的文件，以及编译多个文件，还能通过控制参数改变程序的保护方式等等各种功能，具体参数可以自己查一查。</span><br><span class="hljs-comment">#https://www.runoob.com/w3cnote/gcc-parameter-detail.html里的命令比较全面。</span><br></code></pre></td></tr></table></figure>
-
-
-
-<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">checksec &lt;filename&gt;<span class="hljs-comment">#检查文件保护措施，一般用于打pwn题</span><br></code></pre></td></tr></table></figure>
-
-<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">gdb &lt;filename&gt;<span class="hljs-comment">#调试器</span><br><span class="hljs-comment">#加载程序进调试器，此时程序并未运行</span><br>r <span class="hljs-comment">#runing</span><br>c <span class="hljs-comment">#continue</span><br>b <span class="hljs-comment">#打断点  （可以是直接b &lt;func&gt;，也能是b *0xbalabala（某个地址）等等）</span><br>n <span class="hljs-comment">#单步步过（就是不进入调用函数内部）</span><br>s <span class="hljs-comment">#单步步入（进入调用函数内部）</span><br>file <span class="hljs-comment">#加载程序进调试器=&gt; gdb + file filename = gdb filename</span><br></code></pre></td></tr></table></figure>
-
-<p>可能大家没有听说过什么是调试器。</p>
-<p>调试器最直观的功能就是让本来飞速运转的程序停下来，停在某一条指令上。直接用处就是，如果你的程序出现了问题，你可以通过调试发现问题所在。比如这个程序由1000条指令，也可以理解成完成这个程序需要1000个步骤。而程序一般都是瞬间运行1000次指令，且但凡其中一个步骤出错，整个程序都运行不了，现在你要找到出错的地方，你就需要通过调试，将每一个步骤慢慢执行，直到你找到错误的地方。</p>
-<p>此外在做二进制安全的题目的时候调试也是极其重要的，调试能让你看到一般来说看不到的内存空间里的信息，使你解题如虎添翼。</p>
-<p>如果有同学疑惑调试器是如何做到让程序在中途停下的话，可以参考这篇文章。 </p>
-<p>[调试器断点原理]<a href="https://fuurinko.github.io/2021/08/10/%E8%B0%83%E8%AF%95%E5%99%A8%E6%96%AD%E7%82%B9%E5%8E%9F%E7%90%86/">https://fuurinko.github.io/2021/08/10/调试器断点原理/</a></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-comment">#vim的基本操作</span><br>在命令行中输入vim就自动跳转到了vim的界面。<br>和其他编辑器一样，vim分为输入模式和命令行模式。<br>首先按i，进入输入模式，输你想输的。<br>输完以后，按一下esc，进入命令行模式。<br>vim的一切文件的保存以及退出vim都是靠这个命令行。<br>比如：q是退出<br>：wq是保存后退出<br>记住每条指令前要加冒号。<br>如果保存不了（权限不够），可以在后面跟一个！<br>比如<br>：wq！<br>：w！<br>：q！<br></code></pre></td></tr></table></figure>
-
-<h2 id="5）linux学习心得"><a href="#5）linux学习心得" class="headerlink" title="5）linux学习心得"></a><font color=#B19693>5）linux学习心得</font></h2><p>在熟练掌握最基础命令+善用搜素引擎之后，你已经能初步操作linux做你想做的事情了。</p>
-<p>但是上文中我也一直说在授课中我不想讲太多纯粹的指令。这些东西应该在课后自己折腾。就算课上讲了，有一说一一会儿就忘了。</p>
-<p>但是就“如何学习（或者记住）命令”这个问题，我认为还是有一定的窍门的，并不是纯粹的熟能生巧。</p>
-<p>比如一般通过萌新大概会对代码有天然的恐惧，给他一篇再清楚再详细的文章，也可能报错连连。犯诸如打错字，复制别人的用户名，行号等等。由于这种对于自己看不懂的东西天生的抵触，他可能在很长一段时间里都只是纯粹地对教程上的指令进行复制粘贴，而不去探究，哪怕只是搜一下，这个命令为什么是这样的，这个pip和pip3有什么区别等等。</p>
-<p>所以我希望大家在学习某一条指令的时候，尽量先把每一条指令拆分开来，分别查对应的功能或者意思。</p>
-<p>就比如我在前面写到的</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">sudo apt install vim<br></code></pre></td></tr></table></figure>
-
-<p>在新人眼里这就是一串英文字母，但是沉下心来你会发现它由四个部分组成，具体的前文已经分析过了。</p>
-<p>然后你会逐渐发现这些指令都有共通的地方，学会了一条“语法”，就相当于学会了成百上千条指令。</p>
-<p>同时明白了指令的原理也能让你随机应变，找到你自己环境的差异然后有针对性的对指令进行修改。</p>
-<p>基础部分就到此结束啦！</p>
-<p>linux系统更加深奥的部分，将会由别的学姐在之后的课程中带领大家深入。希望下面简单的课后作业能使大家充满决心！</p>
-<h2 id="7）课后作业"><a href="#7）课后作业" class="headerlink" title="7）课后作业"></a><font color=#B19693>7）课后作业</font></h2><p>不用按顺序做，喜欢哪个做哪个。做完发邮箱<a href="mailto:&#102;&#x75;&#x75;&#114;&#x69;&#x6e;&#x6b;&#111;&#64;&#103;&#x6d;&#97;&#105;&#108;&#46;&#x63;&#x6f;&#x6d;">&#102;&#x75;&#x75;&#114;&#x69;&#x6e;&#x6b;&#111;&#64;&#103;&#x6d;&#97;&#105;&#108;&#46;&#x63;&#x6f;&#x6d;</a></p>
-<h4 id="Level0"><a href="#Level0" class="headerlink" title="Level0 "></a><font color=#AB3B3A>Level0 </font></h4><p>利用（linux自带的）gcc编译器通过指令编译一个<code>hello world</code> c程序。</p>
-<p>（ps：程序的源码不会写的话直接网上复制，不过hello world这种程度的代码建议花十分钟学一学）</p>
-<p>做完附上运行的程序的截图。</p>
-<p>示例如下。</p>
-<p>![image-20210810105759326](/Users/rin/Library/Application Support/typora-user-images/image-20210810105759326.png)</p>
-<h4 id="Level1"><a href="#Level1" class="headerlink" title="Level1 "></a><font color=#AB3B3A>Level1 </font></h4><p>使用gdb（linux系统自带的一个调试器）调试你的hello world程序，随便在哪里下一个断点，然后单步调试，感受单步调试的神圣感，将你看到的东西记在心里，也许以后会用上。</p>
-<p>大概就是输入：</p>
-<figure class="highlight ebnf"><table><tr><td class="code"><pre><code class="hljs ebnf"><span class="hljs-attribute">gdb helloworld</span><br></code></pre></td></tr></table></figure>
-
-<p>然后断点下在哪怎么下就自由发挥咯。</p>
-<p>做完后附上截图</p>
-<p>示例如下。你们的可能和我颜色搭配和功能不太一样，但是意思对了就行。</p>
-<p>![image-20210810105941611](/Users/rin/Library/Application Support/typora-user-images/image-20210810105941611.png)</p>
-<h4 id="Level2"><a href="#Level2" class="headerlink" title="Level2 "></a><font color=#AB3B3A>Level2 </font></h4><p><strong><font color=#9F353A>夹带私货环节，不想学pwn的同学可以直接跳过。 </font></strong></p>
-<p>一道不叫题的pwn题</p>
-<p><a href="https://buuoj.cn/challenges#test_your_nc">https://buuoj.cn/challenges#test_your_nc</a></p>
-<p>利用pip3安装一个pwntools。</p>
-<p>并通过nc连接到远端获得flag。</p>
-<p>不会做的话，复制题目名字直接搜，能搜出别人的解题步骤。</p>
-<p>做完以后附上你获得flag时的截图。</p>
-<h2 id="8）参考"><a href="#8）参考" class="headerlink" title="8）参考"></a><font color=#B19693>8）参考</font></h2><p>[Linux apt 命令](</p>
-]]></content>
-      <tags>
-        <tag>mess</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title></title>
-    <url>/2021/08/10/%E6%A0%88%E6%BA%A2%E5%87%BA%E5%9F%BA%E7%A1%80/</url>
-    <content><![CDATA[<h1 id="栈溢出基础"><a href="#栈溢出基础" class="headerlink" title="栈溢出基础"></a>栈溢出基础</h1><h2 id="0）唠嗑"><a href="#0）唠嗑" class="headerlink" title="0）唠嗑"></a>0）唠嗑</h2><p>从这里正式步入二进制漏洞挖掘利用。</p>
-<h2 id="1）栈？"><a href="#1）栈？" class="headerlink" title="1）栈？"></a>1）栈？</h2><h4 id="0）栈的10086种称谓"><a href="#0）栈的10086种称谓" class="headerlink" title="0）栈的10086种称谓"></a>0）栈的10086种称谓</h4><p>一般来说，栈有两种。</p>
-<p>一种是数据结构中的栈。另一种是计算机内存空间中的栈。</p>
-<p>有时候网上的文章会将栈称为堆栈。记住，堆栈就单指栈，没有堆，把前面的堆忽略掉。</p>
-<p>我们以下讨论的时候皆为计算机内存中的栈。</p>
-<h3 id="1）栈的基本概念"><a href="#1）栈的基本概念" class="headerlink" title="1）栈的基本概念"></a>1）栈的基本概念</h3><p>栈是什么。</p>
-<p>一般普遍性理论而言，栈是一种先进后出的数据结构。</p>
-<p>为了方便理解这里我们忽略掉“数据结构”这个抽象概念，将栈实体化为内存上的一段数据。</p>
-<p>就是想下图这样一个叠一个的数据叠成的区域，就叫栈。</p>
-<p>栈里的东西只能从栈顶取出，比如你要取出这个篓子里的苹果，必须先依次取出桃子，梨子和香蕉。</p>
-<p>取出的过程叫做出栈，放进的过程叫入栈（压栈），无论哪一种都是在栈顶进行操作。</p>
-<p><img src="/Users/rin/Documents/ctf/wp/Heap_%E5%A0%86%E5%AD%A6%E4%B9%A0/%E6%A0%88.png" alt="栈"></p>
-<p>就是这么简单的一个结构/没什么好说的。</p>
-<h3 id="2）栈溢出？"><a href="#2）栈溢出？" class="headerlink" title="2）栈溢出？"></a>2）栈溢出？</h3><p>接着上一点。</p>
-<p>我们的篓子有四种水果，如果我们再往上放水果，篓子是装不下的。然后就溢出了。</p>
-<p>嗯，就是这么简单。装不下了，所以溢出了。</p>
-<p>回到内存空间。</p>
-<p>水果篓子满了溢出来很好理解，但是在内存空间中，怎么能溢出呢？溢出以后又会怎样呢？</p>
-<p>我们留下一些悬念。</p>
-<h3 id="3）函数调用栈？"><a href="#3）函数调用栈？" class="headerlink" title="3）函数调用栈？"></a>3）函数调用栈？</h3><p>虽然栈的概念比较好理解，但是函数调用栈对于萌新来说可能并不非常友好。</p>
-<p>函数调用栈关系到esp，ebp以及eip等栈指针寄存器，如果不熟悉汇编的同学可能会比较难受。</p>
-<p>理解函数调用栈虽然不是理解栈溢出的关键，却决定了你能不能对栈溢出进行利用率。</p>
-<p>可以说，如果你没有理解函数调用栈，你一道栈溢出也做不出。而栈溢出是目前来说国内ctfpwn最简单的漏洞，几乎没有之一。</p>
-<p>那么该如何快速理解这个概念呢？</p>
-<p>在之前的课程里，比如说学姐的csapp课，大家了解了一个程序要运行，首先程序的代码和数据是被一段一段地映射到了内存上。</p>
-<p>回忆一下，以运行时角度，一个程序从源码到它被计算机系统执行经历了哪些变化。</p>
-<p>编译-&gt;加载-&gt;链接</p>
-<p>然后我们具体地理解一下，程序是以二进制文件保存的，二进制文件说白了就是一堆0或1，但是当被加载到内存，这些0和1会被翻译成16进制，然后有的被翻译成指令，有的被翻译成数据。</p>
-<p>从ida pro里看。二进制文件被反编译成了一条一条的指令。在实际执行的时候，在很多情况下，这些指令就像我们看到的那样，是有顺序的一条一条地向下执行的。</p>
-<p>程序执行指令的方向被称作程序执行流，程序执行流是可能随时改变的。</p>
-<p>有没有同学举几个能让程序执行流改变的方式，</p>
-<h2 id="4）栈溢出利用原理"><a href="#4）栈溢出利用原理" class="headerlink" title="4）栈溢出利用原理"></a>4）栈溢出利用原理</h2><p>栈溢出利用</p>
-<h2 id="5）栈溢出利用实战"><a href="#5）栈溢出利用实战" class="headerlink" title="5）栈溢出利用实战"></a>5）栈溢出利用实战</h2><h3 id="5-1）一些好用的工具"><a href="#5-1）一些好用的工具" class="headerlink" title="5.1）一些好用的工具"></a>5.1）一些好用的工具</h3><p>Ida pro（反编译），Sublime text（写py脚本）,pwndbg（调试）。</p>
-<p>入门的话也不用其他什么工具了。只是基础栈溢出的话也没有太多调试的空间</p>
-<h3 id="5-2-一般解题流程"><a href="#5-2-一般解题流程" class="headerlink" title="5.2) 一般解题流程"></a>5.2) 一般解题流程</h3><p>checksec + ida pro确定大题思路。</p>
-<p>（ida直接看填充量就好）</p>
-<p>pwngbd确定脚本具体参数</p>
-<p>sublime写python脚本</p>
-<p>执行脚本getshell</p>
-<h3 id="5-3）例题-ret2text"><a href="#5-3）例题-ret2text" class="headerlink" title="5.3）例题-ret2text"></a>5.3）例题-ret2text</h3><p>在介绍题目之前，非常有必要介绍一下ctf wiki这个网站。</p>
-<blockquote>
-<p>作为一个自由的站点，围绕 <strong>CTF</strong> 近几年赛题，<strong>CTF Wiki</strong> 对 <strong>CTF</strong> 中的各个方向的知识和技术进行介绍，以便于初学者更好地学习 <strong>CTF</strong> 相关的知识</p>
-</blockquote>
-<p>节选自ctf-wiki的start，也算是介绍页。大概就是一个有体系的、由浅入深的ctf各种题型的介绍。别的方向我不是很清楚，但是pwn方向他们做得确实非常好。实际上就是好在一个“成体系”。你只要照着它的大纲把每一篇文章看完，国内pwn就差不多了，剩下的就是对于前沿技术的追求和自身水平的巩固。</p>
-<p>除了成体系好像这个网站也没有什么太过特别的地方，每一篇文章基本都是由国内的师傅无偿贡献的，因为贡献文章并没有什么过多的限制（你想投你也可以投那种），这些师傅的水平参差不齐，错漏并不多见，但一定不能完全避免，他们讲述的方式也不一定就简单易懂，但是它的体系结构是的确还是难能可贵的。如果ctf-wiki上某一篇文章你觉得你看不懂，你可以搜索别的师傅写的博客，但是大体跟着ctf-wiki走肯定不会出错。</p>
-<p>ps：实际上这种成体系的教程除了ctf-wiki还有很多，但是免费的就这家最出名。其他要么是要购买的实体书，要么只讲基础不深入，星盟安全在b站有一套类似ctf-wiki框架的pwn课，质量还可以（虽然也避免不了因为多人讲课导致的质量不均衡的问题），只是只看视频的话效果很微妙，配合文章一起食用吧。</p>
-<p>说了那么多，来看这道例题。</p>
-<h2 id="6）更多的栈溢出"><a href="#6）更多的栈溢出" class="headerlink" title="6）更多的栈溢出"></a>6）更多的栈溢出</h2><p>栈溢出方式总结。ret2xxx</p>
-<h2 id="7）总结与唠嗑2-0"><a href="#7）总结与唠嗑2-0" class="headerlink" title="7）总结与唠嗑2.0"></a>7）总结与唠嗑2.0</h2>]]></content>
-  </entry>
-  <entry>
     <title>调试器断点原理</title>
     <url>/2021/08/10/%E8%B0%83%E8%AF%95%E5%99%A8%E6%96%AD%E7%82%B9%E5%8E%9F%E7%90%86/</url>
     <content><![CDATA[<h2 id="1-review"><a href="#1-review" class="headerlink" title="1)review"></a>1)review</h2><p>夹带私货的科普文</p>
@@ -786,9 +463,9 @@
       </tags>
   </entry>
   <entry>
-    <title></title>
-    <url>/2021/08/11/Heap%E2%80%94%E2%80%94Tcache%E5%AD%A6%E4%B9%A0/</url>
-    <content><![CDATA[<h1 id="Tcahce学习"><a href="#Tcahce学习" class="headerlink" title="Tcahce学习"></a>Tcahce学习</h1><h2 id="0）review"><a href="#0）review" class="headerlink" title="0）review"></a>0）review</h2><p>说是Tcache学习，实际上是lonelywolf的复现。</p>
+    <title>Tcahce学习</title>
+    <url>/2021/08/17/Heap%E2%80%94%E2%80%94Tcache%E5%AD%A6%E4%B9%A0/</url>
+    <content><![CDATA[<h2 id=""><a href="#" class="headerlink" title=""></a></h2><h1 id="Tcahce学习"><a href="#Tcahce学习" class="headerlink" title="Tcahce学习"></a>Tcahce学习</h1><h2 id="0）review"><a href="#0）review" class="headerlink" title="0）review"></a>0）review</h2><p>说是Tcache学习，实际上是lonelywolf的复现。</p>
 <p>网上wp都是神仙写的，一点也不萌新友好。我都看不懂（）</p>
 <p>打开题发现这个菜单题好常规。</p>
 <p>但是libc是2.27，难度会稍微高一点。而且这个2.27是魔改过的，加入了2.29才有的key，为Tcache加入了检查机制。                                                                                                   具体的参考可以看<a href="https://blog.csdn.net/chennbnbnb/article/details/109284780">glibc2.31下的新double free手法/字节跳动pwn题gun题解</a>。但是在这道题里面充其量算一个trick而不是核心考点。</p>
@@ -856,15 +533,20 @@
 <p>然后可以直接通过unsortedbin中的地址来减去偏移获得libc基址，然后直接one_gadget打malloc_hook。</p>
 <p>总体的利用思路是比较常规的，尤其是获得unsortedbin的地址之后的操作基本上就是模版化。</p>
 <p>然后比较关键的就是前面对于Tcache 检测的绕过以及修改Tcache控制区域来构造unsorted’bin。</p>
+<h4 id="调试"><a href="#调试" class="headerlink" title="调试"></a>调试</h4><p>接下来是具体的调试部分，我力争把每道题都完整地调出来，只清楚原理不能实战是没有任何意义的。</p>
+<p>但是我们首先就是要解决libc的问题。虽然我们已经找到解决问题的方法，但是中途是否会出现其他的问题这个还不得而知。</p>
 <h4 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h4><p><a href="https://blog.csdn.net/A951860555/article/details/116910945">2021第十四届全国大学生信息安全竞赛WP（CISCN）– pwn部分</a></p>
 <p><a href="https://blog.csdn.net/chennbnbnb/article/details/109284780">glibc2.31下的新double free手法/字节跳动pwn题gun题解</a></p>
 <p><a href="https://www.bilibili.com/video/BV1Sy4y1W7h2">CISCN2021 lonelywolf</a></p>
 ]]></content>
+      <tags>
+        <tag>heap</tag>
+      </tags>
   </entry>
   <entry>
-    <title></title>
-    <url>/2021/08/13/ubuntu%E5%8A%A0%E8%BD%BD%E4%B8%8D%E5%90%8C%E7%89%88%E6%9C%AClibc/</url>
-    <content><![CDATA[<h4 id="1）review"><a href="#1）review" class="headerlink" title="1）review"></a>1）review</h4><p> 这个问题困扰了我多年，之前年轻的时候不知道为什么有的是题我就是死活调不出，后来才知道呀原来用的ubunt的版本太高了。但是我一直忽视了这个问题以为并不是什么关键的因素。我是这么认为的–只要清楚了利用方法并记住对应的libc版本，无论是不是真的把这道题调试出来了都无所谓。</p>
+    <title>ubuntu加载不同版本libc</title>
+    <url>/2021/08/17/ubuntu%E5%8A%A0%E8%BD%BD%E4%B8%8D%E5%90%8C%E7%89%88%E6%9C%AClibc/</url>
+    <content><![CDATA[<h2 id=""><a href="#" class="headerlink" title=""></a></h2><h4 id="1）review"><a href="#1）review" class="headerlink" title="1）review"></a>1）review</h4><p> 这个问题困扰了我多年，之前年轻的时候不知道为什么有的是题我就是死活调不出，后来才知道呀原来用的ubunt的版本太高了。但是我一直忽视了这个问题以为并不是什么关键的因素。我是这么认为的–只要清楚了利用方法并记住对应的libc版本，无论是不是真的把这道题调试出来了都无所谓。</p>
 <p>然后我就是这样一步一步地变得不会调试的。</p>
 <p>但是完整地把一道题调出来。这才是关键。这才是pwn题的灵魂。</p>
 <p>呜呜呜，我居然一直忽略了它的灵魂</p>
@@ -886,7 +568,34 @@
 <p>我们可以修改这个段的内容来指定我们需要的链接器。</p>
 <h4 id="汇总"><a href="#汇总" class="headerlink" title="汇总"></a>汇总</h4><p>综上，我们首先要准备我们需要的libc和ld，libc可以是编译好的elf文件也可以通过源码自己编译，这个无所谓。ld文件比较诡异，似乎是一个ld能同时支持很多libc的小版本。并不是一对一的关系。</p>
 <p>准备好了以后我们通过脚本将题目<code>PT_INTERP</code>段修改，然后通过<code>LD_PRELOAD</code>指定我们需要的libc的路径即可。</p>
+<h4 id="实际操作"><a href="#实际操作" class="headerlink" title="实际操作"></a>实际操作</h4><p>我们以lonelywolf为例。</p>
+<p>有一个很尴尬的事实就是，我找不到比赛提供的libc了。当时存了，但是没有了。</p>
 <h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="https://www.cnblogs.com/net66/p/5609026.html"><a href="https://www.cnblogs.com/net66/p/5609026.html">LD_PRELOAD的偷梁换柱之能</a></a></p>
 ]]></content>
+      <tags>
+        <tag>heap</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title></title>
+    <url>/2021/08/16/Heap_Unsorted%20bin/</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
+    <title>Tcache利用</title>
+    <url>/2021/08/13/Heap-Tcache%E5%88%A9%E7%94%A8/</url>
+    <content><![CDATA[<h3 id="Tcache-利用"><a href="#Tcache-利用" class="headerlink" title="Tcache 利用"></a>Tcache 利用</h3><p>不是学习不是学习不是学习，</p>
+<p>例题是lctf2018的easyheap。</p>
+<h4 id="漏洞点"><a href="#漏洞点" class="headerlink" title="漏洞点"></a>漏洞点</h4><p>一个又明显又不明显的漏洞、来自于输入后会把chunk_ptr置为0。</p>
+<p>然后联想到malloc的内存分配机制，如果我们malloc一个16*n+8型的chunk，由于ptmalloc的内存复用机制，我们可以利用这个置零的漏洞使得物理相邻的下一个chunk的prevsize位包括previnuse位为0。然后构造堆叠。</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-function"><span class="hljs-keyword">unsigned</span> __int64 __fastcall <span class="hljs-title">sub_BEC</span><span class="hljs-params">(_BYTE *a1, <span class="hljs-keyword">int</span> a2)</span></span><br><span class="hljs-function"></span>&#123;<br>  <span class="hljs-keyword">signed</span> <span class="hljs-keyword">int</span> v3; <span class="hljs-comment">// [rsp+14h] [rbp-Ch]</span><br>  <span class="hljs-keyword">unsigned</span> __int64 v4; <span class="hljs-comment">// [rsp+18h] [rbp-8h]</span><br><br>  v4 = __readfsqword(<span class="hljs-number">0x28</span>u);<br>  v3 = <span class="hljs-number">0</span>;<br>  <span class="hljs-keyword">if</span> ( a2 )<br>  &#123;<br>    <span class="hljs-keyword">while</span> ( <span class="hljs-number">1</span> )<br>    &#123;<br>      read(<span class="hljs-number">0</span>, &amp;a1[v3], <span class="hljs-number">1uLL</span>);<br>      <span class="hljs-keyword">if</span> ( a2 - <span class="hljs-number">1</span> &lt; (<span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">int</span>)v3 || !a1[v3] || a1[v3] == <span class="hljs-number">10</span> )<br>        <span class="hljs-keyword">break</span>;<br>      ++v3;<br>    &#125;<br>    a1[v3] = <span class="hljs-number">0</span>;<br>    a1[a2] = <span class="hljs-number">0</span>;<span class="hljs-comment">//loophole</span><br>  &#125;<br>  <span class="hljs-keyword">else</span><br>  &#123;<br>    *a1 = <span class="hljs-number">0</span>;<br>  &#125;<br>  <span class="hljs-keyword">return</span> __readfsqword(<span class="hljs-number">0x28</span>u) ^ v4;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>然后又注意到我们最多只能分配十个堆块，除去需要填满Tcache的七个堆块，也就是我们只能分配十个相同大小的堆块。</p>
+<p>在完成这道题之前我们需要先理解unsortedbin 泄漏libc的原理。</p>
+<p>包括ciscn lonelywolf也是利用到了这一点。</p>
+]]></content>
+      <tags>
+        <tag>heap</tag>
+      </tags>
   </entry>
 </search>
