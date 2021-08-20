@@ -598,4 +598,31 @@
         <tag>heap</tag>
       </tags>
   </entry>
+  <entry>
+    <title>main_arena与多线程</title>
+    <url>/2021/08/20/main_arana%20%E4%B8%8E%E5%A4%9A%E7%BA%BF%E7%A8%8B/</url>
+    <content><![CDATA[<p>在学习Tcache的时候遇到了一些比较奇怪的点，ctf权威指南pwn篇中对于Tcache的解释中第一段如下：</p>
+<blockquote>
+<p>Tcache全名为Thread Local Caching，它为每个线程创建一个缓存，里面包含了一些小堆块，无需对main_arena上锁即可使用。</p>
+</blockquote>
+<p>首先让我感到不解的就是，“无需对main_arena上锁即可使用”这句话。什么叫对main_arana上锁？之前也遇见过很多文章提到过这个”锁“的相关概念，但是它们从来都不是问题的重点，但是通常来说，正是一个个不懂的”无关紧要“的问题导致最后啥也看不懂的。</p>
+<p>所以在这篇文章中我们有必要从ctf pwn的角度去理解线程 main_arena。</p>
+<h4 id="加锁"><a href="#加锁" class="headerlink" title="加锁"></a>加锁</h4><p>当<strong>多个线程同时操作同一个共享全局变量</strong>的时候，对线程上锁，保证同一时间一个对象只有一个线程在访问，可以解决资源占用问题，同时保证了数据的安全性。</p>
+<h4 id="线程"><a href="#线程" class="headerlink" title="线程"></a>线程</h4><p>线程一般来说被进程包含：一个进程可以有很多线程来处理，每条线程并行执行不同的任务。</p>
+<p>比如说ptmalloc2这个是个进程，然后其中包含很多很多线程。</p>
+<p>其中会有一个<code>main_arena</code>,是整个ptmalloc2进程中的主线程，然后main_arena会有很多子线程，每个子线程包含很多连续的内存片段，被称为heap。每一个heap都有自己的heap_header，它们通过链表互相连接，且其中保存了指向其所属arena的指针。</p>
+<p>这么讲似乎有一些太过抽象。具体一点讲就是，在只有一个main_arena的时候，ptmalloc只能通过mmap和sbrk申请堆内存。</p>
+<blockquote>
+<p>在多线程的情况下，显然让所有的线程公用一个数据结构来获取内存块会造成十分惨烈的对锁的竞争，所以 ptmalloc 中间多了一层组织结构——arena。每个arena包含一些可用的内存区块，用一个 arena 级别的锁来控制访问。当线程比较少的时候，每个可以拥有自己的arena，而当 arena 数目超过允许最大值时，多个线程共享一个 arena 了。个线程第一次 malloc 的时候都会 attach 一个 arena 。除非这个 arena 被标记为破坏的（ARENA_CORRUPTION_BIT），否则该线程以后再 malloc 都会继续用这个 arena。</p>
+</blockquote>
+<p>之前ctf权威指南中有讲到，每一个子线程包含很多连续的内存片段，被称为heap。它们都有自己所属的arena。这句话很容易让人觉得——每一个子线程有且只有一个arena，但是还存在多对一的情况。</p>
+<p>但是对于ctf pwn来说，实际情况远远没有这么复杂，基本我们操作的所谓的堆，chunk这些概念，考点基本都是建立在单线程的情况下的，它们的arena也都是<code>main_arena</code>而并不是什么<code>non_main_arena</code>。并且只有<code>main_arena</code>    能够访问<code>heap</code>段，<code>non_main_arena</code>只能访问<code>mmap</code>映射区域。</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>用比较简单的话来说，main_arena就是主线程中一个管理所有链表的关键的数据结构，我们可以通过它获得各个bins的偏移。以及利用指向它的fd来做一些不好的事情（）。承接之前的内容，我们在利用main_arena的同时也需要对其进行上锁，防止别的线程与它共用一个资源，然后之前Tcahce里的“无需对main_arena上锁”意思也很清楚了，因为考虑到效率。所以抛弃了一定的安全性。</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="https://zhuanlan.zhihu.com/p/24909781">malloc x 线程</a></p>
+<p><a href="https://www.wangan.com/docs/1741">GLibcHeap</a></p>
+]]></content>
+      <tags>
+        <tag>heap</tag>
+      </tags>
+  </entry>
 </search>
