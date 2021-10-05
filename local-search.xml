@@ -4,6 +4,19 @@
   
   
   <entry>
+    <title>SRE第一节课预习作业--linux基础预习作业</title>
+    <link href="/2021/10/05/SRE%E7%AC%AC%E4%B8%80%E8%8A%82%E8%AF%BE%E9%A2%84%E4%B9%A0%E4%BD%9C%E4%B8%9A--linux%E5%9F%BA%E7%A1%80%E9%A2%84%E4%B9%A0%E4%BD%9C%E4%B8%9A/"/>
+    <url>/2021/10/05/SRE%E7%AC%AC%E4%B8%80%E8%8A%82%E8%AF%BE%E9%A2%84%E4%B9%A0%E4%BD%9C%E4%B8%9A--linux%E5%9F%BA%E7%A1%80%E9%A2%84%E4%B9%A0%E4%BD%9C%E4%B8%9A/</url>
+    
+    <content type="html"><![CDATA[<h2 id="SRE第一节课预习作业–linux基础预习作业"><a href="#SRE第一节课预习作业–linux基础预习作业" class="headerlink" title="SRE第一节课预习作业–linux基础预习作业"></a>SRE第一节课预习作业–linux基础预习作业</h2><h4 id="Level2-1"><a href="#Level2-1" class="headerlink" title="Level2.1"></a>Level2.1</h4><p>下载安装typora，并简单熟悉markdown格式的基本语法与typora先进的快捷键。</p><p><a href="https://typora.io/">戳这里下载typora</a></p><p><a href="https://www.runoob.com/markdown/md-tutorial.html">戳这里看markdown语法</a></p><h4 id="level2-2"><a href="#level2-2" class="headerlink" title="level2.2"></a>level2.2</h4><p>回到配置好的ubuntu，对它进行一个简单的换源。</p><p><a href="https://www.jianshu.com/p/eaaa24dd8115">换源参考教程</a></p><h6 id="什么是软件源"><a href="#什么是软件源" class="headerlink" title="什么是软件源"></a>什么是软件源</h6><p>简单理解就是一个放着各种应用程序的仓库，类似appstore。</p><h6 id="为什么要换源"><a href="#为什么要换源" class="headerlink" title="为什么要换源"></a>为什么要换源</h6><p>ubuntu默认的软件源服务器部署在国外，如果没有科学上网下载东西会非常慢。所以需要把软件源换成国内源。</p><h4 id="Level2-3"><a href="#Level2-3" class="headerlink" title="Level2.3"></a>Level2.3</h4><p>简单熟悉linux指令，安装vim，并使用vim写一个hello world程序，利用gcc编译并在shell中运行它。</p><p><a href="https://www.runoob.com/linux/linux-vim.html">vim使用教程</a></p><p><a href="https://www.runoob.com/w3cnote/gcc-parameter-detail.html">gcc编译</a></p><h4 id="level3"><a href="#level3" class="headerlink" title="level3"></a>level3</h4><p>购买vps（阿里云腾讯云等等的都可以），为vps配置一个linux环境，如果不太清楚安装哪个linux发行版的话，统一安装ubuntu20.04lts，有能力的同学可以随意折腾。</p>]]></content>
+    
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>name_your_cat</title>
     <link href="/2021/09/24/2021_9_20_name_your_cat/"/>
     <url>/2021/09/24/2021_9_20_name_your_cat/</url>
