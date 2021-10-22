@@ -193,7 +193,7 @@
       <div>
       </div>
     </div>
-    <p>做ret2dl的时候难免会偷懒使用工具。</p>
+    <html><head></head><body><p>做ret2dl的时候难免会偷懒使用工具。</p>
 <p>但是这个工具并没有看起来那么和善。</p>
 <p>就怎么使用utils包我都研究了一会儿，然后发现只需要<code>import roputils</code>然后把相对应的那个py脚本放到同一路径下就好。</p>
 <p>但是紧接着第二问个问题，这个py脚本通篇是python2，而我日常无论哪个系统都是py3。</p>
@@ -206,12 +206,22 @@
 <p>具体参数可以google。</p>
 <p>然后又来了第三个问题。</p>
 <p>来看我的报错。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs python">[+] Starting local process <span class="hljs-string">&#x27;./babystack&#x27;</span>: pid <span class="hljs-number">745</span><br>Traceback (most recent call last):<br>  File <span class="hljs-string">&quot;babystack.py&quot;</span>, line <span class="hljs-number">23</span>, <span class="hljs-keyword">in</span> &lt;module&gt;<br>    rop = roputils.ROP(<span class="hljs-string">&#x27;./babystack&#x27;</span>)<br>  File <span class="hljs-string">&quot;/home/fur1n/pwn/week1/roputils.py&quot;</span>, line <span class="hljs-number">440</span>, <span class="hljs-keyword">in</span> __init__<br>    ELF.__init__(self, *args, **kwargs)<br>  File <span class="hljs-string">&quot;/home/fur1n/pwn/week1/roputils.py&quot;</span>, line <span class="hljs-number">85</span>, <span class="hljs-keyword">in</span> __init__<br>    m = re.search(<span class="hljs-string">r&#x27;^\s*(?P&lt;key&gt;[^:]+):\s+(?P&lt;value&gt;.+)$&#x27;</span>, line)<br>  File <span class="hljs-string">&quot;/usr/lib/python3.6/re.py&quot;</span>, line <span class="hljs-number">182</span>, <span class="hljs-keyword">in</span> search<br>    <span class="hljs-keyword">return</span> _<span class="hljs-built_in">compile</span>(pattern, flags).search(string)<br>TypeError: cannot use a string pattern on a <span class="hljs-built_in">bytes</span>-like <span class="hljs-built_in">object</span><br></code></pre></td></tr></table></figure>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token punctuation">[</span><span class="token operator">+</span><span class="token punctuation">]</span> Starting local process <span class="token string">'./babystack'</span><span class="token punctuation">:</span> pid <span class="token number">745</span>
+Traceback <span class="token punctuation">(</span>most recent call last<span class="token punctuation">)</span><span class="token punctuation">:</span>
+  File <span class="token string">"babystack.py"</span><span class="token punctuation">,</span> line <span class="token number">23</span><span class="token punctuation">,</span> <span class="token keyword">in</span> <span class="token operator">&lt;</span>module<span class="token operator">&gt;</span>
+    rop <span class="token operator">=</span> roputils<span class="token punctuation">.</span>ROP<span class="token punctuation">(</span><span class="token string">'./babystack'</span><span class="token punctuation">)</span>
+  File <span class="token string">"/home/fur1n/pwn/week1/roputils.py"</span><span class="token punctuation">,</span> line <span class="token number">440</span><span class="token punctuation">,</span> <span class="token keyword">in</span> __init__
+    ELF<span class="token punctuation">.</span>__init__<span class="token punctuation">(</span>self<span class="token punctuation">,</span> <span class="token operator">*</span>args<span class="token punctuation">,</span> <span class="token operator">**</span>kwargs<span class="token punctuation">)</span>
+  File <span class="token string">"/home/fur1n/pwn/week1/roputils.py"</span><span class="token punctuation">,</span> line <span class="token number">85</span><span class="token punctuation">,</span> <span class="token keyword">in</span> __init__
+    m <span class="token operator">=</span> re<span class="token punctuation">.</span>search<span class="token punctuation">(</span><span class="token string">r'^\s*(?P&lt;key&gt;[^:]+):\s+(?P&lt;value&gt;.+)$'</span><span class="token punctuation">,</span> line<span class="token punctuation">)</span>
+  File <span class="token string">"/usr/lib/python3.6/re.py"</span><span class="token punctuation">,</span> line <span class="token number">182</span><span class="token punctuation">,</span> <span class="token keyword">in</span> search
+    <span class="token keyword">return</span> _compile<span class="token punctuation">(</span>pattern<span class="token punctuation">,</span> flags<span class="token punctuation">)</span><span class="token punctuation">.</span>search<span class="token punctuation">(</span>string<span class="token punctuation">)</span>
+TypeError<span class="token punctuation">:</span> cannot use a string pattern on a <span class="token builtin">bytes</span><span class="token operator">-</span>like <span class="token builtin">object</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>这个功能好像并不会在byte前加b。。。</p>
 <p>目前来说并没有发现解决方法。</p>
 <p>所以只能尝试更换默认的py版本。具体可以google</p>
-
+</body></html>
 
   
     <div class="post-reward">

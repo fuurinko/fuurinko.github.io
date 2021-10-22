@@ -198,16 +198,40 @@
       <div>
       </div>
     </div>
-    <h3 id="Tcache-利用"><a href="#Tcache-利用" class="headerlink" title="Tcache 利用"></a>Tcache 利用</h3><p>不是学习不是学习不是学习，</p>
+    <html><head></head><body><h3 id="Tcache-利用">Tcache 利用<a class="post-anchor" href="#Tcache-利用"></a></h3><p>不是学习不是学习不是学习，</p>
 <p>例题是lctf2018的easyheap。</p>
-<h4 id="漏洞点"><a href="#漏洞点" class="headerlink" title="漏洞点"></a>漏洞点</h4><p>一个又明显又不明显的漏洞、来自于输入后会把chunk_ptr置为0。</p>
+<h4 id="漏洞点">漏洞点<a class="post-anchor" href="#漏洞点"></a></h4><p>一个又明显又不明显的漏洞、来自于输入后会把chunk_ptr置为0。</p>
 <p>然后联想到malloc的内存分配机制，如果我们malloc一个16*n+8型的chunk，由于ptmalloc的内存复用机制，我们可以利用这个置零的漏洞使得物理相邻的下一个chunk的prevsize位包括previnuse位为0。然后构造堆叠。</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-function"><span class="hljs-keyword">unsigned</span> __int64 __fastcall <span class="hljs-title">sub_BEC</span><span class="hljs-params">(_BYTE *a1, <span class="hljs-keyword">int</span> a2)</span></span><br><span class="hljs-function"></span>&#123;<br>  <span class="hljs-keyword">signed</span> <span class="hljs-keyword">int</span> v3; <span class="hljs-comment">// [rsp+14h] [rbp-Ch]</span><br>  <span class="hljs-keyword">unsigned</span> __int64 v4; <span class="hljs-comment">// [rsp+18h] [rbp-8h]</span><br><br>  v4 = __readfsqword(<span class="hljs-number">0x28</span>u);<br>  v3 = <span class="hljs-number">0</span>;<br>  <span class="hljs-keyword">if</span> ( a2 )<br>  &#123;<br>    <span class="hljs-keyword">while</span> ( <span class="hljs-number">1</span> )<br>    &#123;<br>      read(<span class="hljs-number">0</span>, &amp;a1[v3], <span class="hljs-number">1uLL</span>);<br>      <span class="hljs-keyword">if</span> ( a2 - <span class="hljs-number">1</span> &lt; (<span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">int</span>)v3 || !a1[v3] || a1[v3] == <span class="hljs-number">10</span> )<br>        <span class="hljs-keyword">break</span>;<br>      ++v3;<br>    &#125;<br>    a1[v3] = <span class="hljs-number">0</span>;<br>    a1[a2] = <span class="hljs-number">0</span>;<span class="hljs-comment">//loophole</span><br>  &#125;<br>  <span class="hljs-keyword">else</span><br>  &#123;<br>    *a1 = <span class="hljs-number">0</span>;<br>  &#125;<br>  <span class="hljs-keyword">return</span> __readfsqword(<span class="hljs-number">0x28</span>u) ^ v4;<br>&#125;<br></code></pre></td></tr></table></figure>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">unsigned</span> __int64 __fastcall <span class="token function">sub_BEC</span><span class="token punctuation">(</span>_BYTE <span class="token operator">*</span>a1<span class="token punctuation">,</span> <span class="token keyword">int</span> a2<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+  <span class="token keyword">signed</span> <span class="token keyword">int</span> v3<span class="token punctuation">;</span> <span class="token comment">// [rsp+14h] [rbp-Ch]</span>
+  <span class="token keyword">unsigned</span> __int64 v4<span class="token punctuation">;</span> <span class="token comment">// [rsp+18h] [rbp-8h]</span>
+
+  v4 <span class="token operator">=</span> <span class="token function">__readfsqword</span><span class="token punctuation">(</span><span class="token number">0x28u</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  v3 <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span> a2 <span class="token punctuation">)</span>
+  <span class="token punctuation">{</span>
+    <span class="token keyword">while</span> <span class="token punctuation">(</span> <span class="token number">1</span> <span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+      <span class="token function">read</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>a1<span class="token punctuation">[</span>v3<span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token number">1uLL</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token keyword">if</span> <span class="token punctuation">(</span> a2 <span class="token operator">-</span> <span class="token number">1</span> <span class="token operator">&lt;</span> <span class="token punctuation">(</span><span class="token keyword">unsigned</span> <span class="token keyword">int</span><span class="token punctuation">)</span>v3 <span class="token operator">||</span> <span class="token operator">!</span>a1<span class="token punctuation">[</span>v3<span class="token punctuation">]</span> <span class="token operator">||</span> a1<span class="token punctuation">[</span>v3<span class="token punctuation">]</span> <span class="token operator">==</span> <span class="token number">10</span> <span class="token punctuation">)</span>
+        <span class="token keyword">break</span><span class="token punctuation">;</span>
+      <span class="token operator">++</span>v3<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    a1<span class="token punctuation">[</span>v3<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    a1<span class="token punctuation">[</span>a2<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span><span class="token comment">//loophole</span>
+  <span class="token punctuation">}</span>
+  <span class="token keyword">else</span>
+  <span class="token punctuation">{</span>
+    <span class="token operator">*</span>a1 <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+  <span class="token keyword">return</span> <span class="token function">__readfsqword</span><span class="token punctuation">(</span><span class="token number">0x28u</span><span class="token punctuation">)</span> <span class="token operator">^</span> v4<span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>然后又注意到我们最多只能分配十个堆块，除去需要填满Tcache的七个堆块，也就是我们只能分配十个相同大小的堆块。</p>
 <p>在完成这道题之前我们需要先理解unsortedbin 泄漏libc的原理。</p>
 <p>包括ciscn lonelywolf也是利用到了这一点。</p>
-
+</body></html>
 
   
     <div class="post-reward">
