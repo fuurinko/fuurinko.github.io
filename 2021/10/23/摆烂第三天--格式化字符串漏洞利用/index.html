@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <script>
+  var _hmt = _hmt || []
+  ;(function() {
+    var hm = document.createElement('script')
+    hm.src = 'https://hm.baidu.com/hm.js?5a0acc897fd96474a2c8f4deac84611a'
+    var s = document.getElementsByTagName('script')[0]
+    s.parentNode.insertBefore(hm, s)
+  })()
+</script> 
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    
+    <title>
+      重探fmt - Rin777
+    </title>
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon" />
+    
+<link rel="stylesheet" href="../../../../style/style.css">
+
+  <meta name="generator" content="Hexo 5.4.0"></head>
+  <body>
+    <canvas id='pagemap'></canvas>
+    
+    <div id="post-toc" class="animated hiddenToc hide">
+      <span class="title">Toc</span>
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-text"></span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1%EF%BC%89%E5%89%8D%E8%A8%80"><span class="toc-text">1）前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2%EF%BC%89%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86"><span class="toc-text">2）格式化字符串基本原理</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%8F%82%E6%95%B0%E3%80%82"><span class="toc-text">格式化字符串参数。</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8"><span class="toc-text">格式化字符串漏洞利用</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E4%BE%8B1-goodluck"><span class="toc-text">3)例1:goodluck</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A8%8B%E5%BA%8F%E9%80%BB%E8%BE%91%E5%88%86%E6%9E%90"><span class="toc-text">程序逻辑分析</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BC%93%E5%86%B2%E5%8C%BA"><span class="toc-text">缓冲区</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%BC%93%E5%86%B2%E5%8C%BA%E7%9A%84%E5%88%86%E7%B1%BB"><span class="toc-text">缓冲区的分类</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#1-%E5%85%A8%E7%BC%93%E5%86%B2%E3%80%82"><span class="toc-text">1:全缓冲。</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#2-%E8%A1%8C%E7%BC%93%E5%86%B2"><span class="toc-text">2:行缓冲</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#3-%E6%97%A0%E7%BC%93%E5%86%B2"><span class="toc-text">3:无缓冲</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#fflush%E5%87%BD%E6%95%B0"><span class="toc-text">fflush函数</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#pwntools%E4%B8%8E%E7%BC%93%E5%86%B2%E5%8C%BA%E6%9C%BA%E5%88%B6"><span class="toc-text">pwntools与缓冲区机制</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ms%EF%BC%9F"><span class="toc-text">%ms？</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8"><span class="toc-text">漏洞利用</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-text">参考</span></a>
+    </div>
+    
+    <div id="fixed-menu-wrap">
+      <span class="iconfont icon-sousuo search-box menu-reset"></span>
+      <span class="icon-toc menu-reset">Toc</span>
+      <span class="iconfont icon-arrowup menu-reset"></span>
+    </div>
+    <div id="fixed-menu">
+      <span class="iconfont icon-menu-"></span>
+    </div>
+    <div id="progress">
+      <div class="line"></div>
+    </div>
+    <div id="search-shade" class="animated hiddenSearch hide">
+      <div class="input-wrap">
+        <span class="iconfont icon-sousuo search-box"></span>
+        <input type="text" placeholder="Search" />
+        <span class="iconfont icon-close"></span>
+      </div>
+      <div class="search-result">
+        <div class="meta">
+          <span><b id="result-count">0</b> results found</span>
+          <img src="/images/logo.jpeg" />
+        </div>
+        <ul id="result-box"></ul>
+      </div>
+    </div>
+    <div id="menu-mask" class="animated hideMenuMask hide">
+      <span class="iconfont icon-close"></span>
+      <div class="nav">
+        
+        <a href="../../../../index.html" class="">
+          Home
+        </a>
+        
+        <a href="../../../../archives" class="">
+          Archives
+        </a>
+        
+        <a href="../../../../categories" class="">
+          Categories
+        </a>
+        
+        <a href="../../../../tags" class="">
+          Tags
+        </a>
+        
+        <a href="../../../../friends" class="">
+          Friends
+        </a>
+        
+        <a href="../../../../about" class="">
+          About
+        </a>
+        
+      </div>
+    </div>
+    <div id="header">
+      <div class="intro">
+        <a href="/" class="logo" style="background-image: url('/images/logo.jpeg')"></a>
+        <div class="author"></div>
+      </div>
+      <div class="nav">
+        <span class="iconfont icon-menu menu-icon"></span>
+        <a href="#" class="search-box">
+          <span class="iconfont icon-sousuo"></span>
+        </a>
+      </div>
+    </div>
+    <div id="side" class="animated bounceInLeft">
+      <div class="shrink">
+        <a href="/" class="logo" style="background-image: url('/images/logo.jpeg')"></a>
+        <span class="iconfont icon-menu toggle-icon"></span>
+        <a href="#" class="search-box">
+          <span class="iconfont icon-sousuo"></span>
+        </a>
+      </div>
+      <div class="magnify">
+        <div class="about">
+          <div class="author"></div>
+          <a href="/" class="logo" style="background-image: url('/images/logo.jpeg')"></a>
+        </div>
+
+        <div class="nav">
+          
+          <a href="../../../../index.html" class="">
+            Home
+          </a>
+          
+          <a href="../../../../archives" class="">
+            Archives
+          </a>
+          
+          <a href="../../../../categories" class="">
+            Categories
+          </a>
+          
+          <a href="../../../../tags" class="">
+            Tags
+          </a>
+          
+          <a href="../../../../friends" class="">
+            Friends
+          </a>
+          
+          <a href="../../../../about" class="">
+            About
+          </a>
+          
+          <a href="#" class="search-box">
+            <span class="iconfont icon-sousuo"></span>
+          </a>
+        </div>
+        <div class="bottom">
+          <div class="follow">
+            
+            <a href="https://github.com" target="_block">
+              <span class="iconfont icon-github"></span>
+            </a>
+             
+            <a href="/atom.xml" target="_block">
+              <span class="iconfont icon-rss"></span>
+            </a>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="container">
+      <div class="main animated bounceInRight delay-0.7s">
+        <article class="post-entry">
+    <div class="header">
+      
+      <div class="title">重探fmt</div>
+      <div class="meta">
+        <span class="item">
+          <span class="iconfont icon-time-circle"></span>
+          <span>2021/10/23</span>
+        </span>
+
+        
+
+        
+        
+         
+          <span class="item">
+            <span class="iconfont icon-tag1"></span>
+            <span>
+                
+                  
+                    <a href="/tags/stack_pro">stack_pro</a>
+                  
+                
+            </span>
+          </span>
+         
+      </div>
+      <div>
+      </div>
+    </div>
+    <html><head></head><body><h3 id=""><a class="post-anchor" href="#"></a></h3><h2 id="1）前言">1）前言<a class="post-anchor" href="#1）前言"></a></h2><p>绿盟杯pwn1，格式化字符串+沙盒orw。保护全开。</p>
+<p>首先对于格式化字符串我的理解就不是很深刻，甚至从来没有完整地刷过一道格式化字符串的题目。</p>
+<p>所以碰到这道题，算是又给我敲了第nn个警钟。</p>
+<p>非常清晰地告诉我：我是垃圾。</p>
+<h2 id="2）格式化字符串基本原理">2）格式化字符串基本原理<a class="post-anchor" href="#2）格式化字符串基本原理"></a></h2><p>ctfwiki上的格式化字符串教程写得挺好的，可以参考。</p>
+<h5 id="格式化字符串参数。">格式化字符串参数。<a class="post-anchor" href="#格式化字符串参数。"></a></h5><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token operator">%</span><span class="token punctuation">[</span>parameter<span class="token punctuation">]</span><span class="token punctuation">[</span>flags<span class="token punctuation">]</span><span class="token punctuation">[</span>field width<span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">.</span>precision<span class="token punctuation">]</span><span class="token punctuation">[</span>length<span class="token punctuation">]</span>type<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<ul>
+<li><p>parameter</p>
+<ul>
+<li>n$，获取格式化字符串中的指定参数</li>
+</ul>
+</li>
+<li><p>flag</p>
+</li>
+<li><p>field width</p>
+<ul>
+<li>输出的最小宽度</li>
+</ul>
+</li>
+<li><p>precision</p>
+<ul>
+<li>输出的最大长度</li>
+</ul>
+</li>
+<li><p>length，输出的长度</p>
+<ul>
+<li>hh，输出一个字节</li>
+<li>h，输出一个双字节</li>
+</ul>
+</li>
+<li><p>type</p>
+<ul>
+<li>d/i，有符号整数</li>
+<li>u，无符号整数</li>
+<li>x/X，16 进制 unsigned int 。x 使用小写字母；X 使用大写字母。如果指定了精度，则输出的数字不足时在左侧补 0。默认精度为 1。精度为 0 且值为 0，则输出为空。</li>
+<li>o，8 进制 unsigned int 。如果指定了精度，则输出的数字不足时在左侧补 0。默认精度为 1。精度为 0 且值为 0，则输出为空。</li>
+<li>s，如果没有用 l 标志，输出 null结尾字符串直到精度规定的上限；如果没有指定精度，则输出所有字节。如果用了 l 标志，则对应函数参数指向 wchar_t 型的数组，输出时把每个宽字符转化为多字节字符，相当于调用 wcrtomb 函数。</li>
+<li>c，如果没有用 l 标志，把 int 参数转为 unsigned char 型输出；如果用了 l 标志，把 wint_t 参数转为包含两个元素的 wchart_t 数组，其中第一个元素包含要输出的字符，第二个元素为 null 宽字符。</li>
+<li><strong>p， void * 型，输出对应变量的值</strong>。printf(“%p”,a) 用地址的格式打印变量 a 的值，printf(“%p”, &amp;a) 打印变量 a 所在的地址。</li>
+<li>n，不输出字符，<strong>但是把已经成功输出的字符个数写入对应的整型指针参数所指的变量</strong>。</li>
+</ul>
+<h5 id="格式化字符串漏洞利用">格式化字符串漏洞利用<a class="post-anchor" href="#格式化字符串漏洞利用"></a></h5><p>一般来说就是打印变量的时候并没有对变量进行格式化，或者格式化的方式并不正确。</p>
+<p>一般来说不正确的方式有这几种</p>
+<ol>
+<li>一直%s，容易引用不合法的地址，造成程序崩溃   </li>
+<li>通过打印的相关内存信息，泄露内存布局，获得有用的信息</li>
+</ol>
+<h2 id="3-例1-goodluck">3)例1:goodluck<a class="post-anchor" href="#3-例1-goodluck"></a></h2><p>话不多说，直接上例子。</p>
+<h3 id="程序逻辑分析">程序逻辑分析<a class="post-anchor" href="#程序逻辑分析"></a></h3><p>第一步，清晰而准确的逆向是漏洞点利用的基础。</p>
+<p>首先，程序读取flag，通过<code>_IO_getc(fp)</code>，一个字符一个字符地将flag读入v10。</p>
+<p>然后将flag的首地址给v9。</p>
+<p>然后刷新缓冲区。这里这个fflush函数，以前没有怎么深入了解过（</p>
+<p>然后看一个关于fflush的详解</p>
+<p><a target="_blank" rel="noopener" href="http://c.biancheng.net/cpp/html/2506.html">C语言fflush()函数：清空文件缓冲区（或标准输入输出缓冲区）</a></p>
+<p>但是文章中讲的是stdin，和这里的bss段关联感觉并不大，我疑惑的地方不是为什么要fflush，而是疑惑bss段有什么东西。</p>
+<p>bss段存储未初始化的全局变量，也不是缓冲区吧。</p>
+<h4 id="缓冲区">缓冲区<a class="post-anchor" href="#缓冲区"></a></h4><p><em>从一个简单的fflush函数中，我们试图理解缓冲区的原理和这个函数被设置的意义。</em></p>
+<p>为了减少cpu对磁盘的读写次数，提高运行速度，缓冲区（这里特指buf）存储了我们的键盘，屏幕输入输出。当我们将字符通过键盘输入到缓冲区中，<code>cingetchar</code>函数再从缓冲区中读取我们的键盘输入，从而进行数据的操作。屏幕输出也是同理。</p>
+<h5 id="缓冲区的分类">缓冲区的分类<a class="post-anchor" href="#缓冲区的分类"></a></h5><h6 id="1-全缓冲。">1:全缓冲。<a class="post-anchor" href="#1-全缓冲。"></a></h6><p>只有在缓冲区被填满之后才会进行<code>I/O</code>操作；最典型的全缓冲就是对磁盘文件的读写。</p>
+<h6 id="2-行缓冲">2:行缓冲<a class="post-anchor" href="#2-行缓冲"></a></h6><p>只有在输入或者是输出中遇到换行符的时候才会进行<code>I/O</code>操作；这忠允许我们一次写一个字符，但是只有在写完一行之后才做<code>I/O</code>操作。一般来说，标准输入流(<code>stdin</code>)和标准输出流(<code>stdout</code>)是行缓冲</p>
+<h6 id="3-无缓冲">3:无缓冲<a class="post-anchor" href="#3-无缓冲"></a></h6><ol>
+<li>无缓冲；标准<code>I/O</code>不缓存字符；其中表现最明显的就是标准错误输出流(<code>stderr</code>)，这使得出错信息尽快的返回给用户。</li>
+</ol>
+<p>（我以前一直不是很能理解为什么要专门设置一个标准错误，现在知道了，如果error的输出有缓冲区的话，可能要等程序执行到最后才会报错，这样就不能即时地接收到报错）</p>
+<h5 id="fflush函数">fflush函数<a class="post-anchor" href="#fflush函数"></a></h5><p>然后是关于fflush函数的glibc源码。</p>
+<p>fflush实际是调用vtable中的函数<code>_IO_new_file_sync</code>，这个函数的源码如图：</p>
+<p>（<code>/glibc-2.23/libio/fileops.c:867</code>）</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span>
+<span class="token function">_IO_new_file_sync</span> <span class="token punctuation">(</span>_IO_FILE <span class="token operator">*</span>fp<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+  _IO_ssize_t delta<span class="token punctuation">;</span>
+  <span class="token keyword">int</span> retval <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+
+  <span class="token comment">/*    char* ptr = cur_ptr(); */</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>fp<span class="token operator">-&gt;</span>_IO_write_ptr <span class="token operator">&gt;</span> fp<span class="token operator">-&gt;</span>_IO_write_base<span class="token punctuation">)</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">_IO_do_flush</span><span class="token punctuation">(</span>fp<span class="token punctuation">)</span><span class="token punctuation">)</span> 
+    <span class="token keyword">return</span> <span class="token constant">EOF</span><span class="token punctuation">;</span><span class="token comment">//end of file</span>
+  delta <span class="token operator">=</span> fp<span class="token operator">-&gt;</span>_IO_read_ptr <span class="token operator">-</span> fp<span class="token operator">-&gt;</span>_IO_read_end<span class="token punctuation">;</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>delta <span class="token operator">!=</span> <span class="token number">0</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">ifdef</span> <span class="token expression">TODO</span></span>
+      <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">_IO_in_backup</span> <span class="token punctuation">(</span>fp<span class="token punctuation">)</span><span class="token punctuation">)</span>
+	delta <span class="token operator">-=</span> <span class="token function">eGptr</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span> <span class="token function">Gbase</span> <span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">endif</span></span>
+      _IO_off64_t new_pos <span class="token operator">=</span> <span class="token function">_IO_SYSSEEK</span> <span class="token punctuation">(</span>fp<span class="token punctuation">,</span> delta<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token keyword">if</span> <span class="token punctuation">(</span>new_pos <span class="token operator">!=</span> <span class="token punctuation">(</span>_IO_off64_t<span class="token punctuation">)</span> <span class="token constant">EOF</span><span class="token punctuation">)</span>
+	fp<span class="token operator">-&gt;</span>_IO_read_end <span class="token operator">=</span> fp<span class="token operator">-&gt;</span>_IO_read_ptr<span class="token punctuation">;</span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">ifdef</span> <span class="token expression">ESPIPE</span></span>
+      <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>errno <span class="token operator">==</span> ESPIPE<span class="token punctuation">)</span>
+	<span class="token punctuation">;</span> <span class="token comment">/* Ignore error from unseekable devices. */</span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">endif</span></span>
+      <span class="token keyword">else</span>
+	retval <span class="token operator">=</span> <span class="token constant">EOF</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>retval <span class="token operator">!=</span> <span class="token constant">EOF</span><span class="token punctuation">)</span>
+    fp<span class="token operator">-&gt;</span>_offset <span class="token operator">=</span> _IO_pos_BAD<span class="token punctuation">;</span>
+  <span class="token comment">/* FIXME: Cleanup - can this be shared? */</span>
+  <span class="token comment">/*    setg(base(), ptr, ptr); */</span>
+  <span class="token keyword">return</span> retval<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token function">libc_hidden_ver</span> <span class="token punctuation">(</span>_IO_new_file_sync<span class="token punctuation">,</span> _IO_file_sync<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>虽然但是，真的看不懂，那些调用的函数是啥功能都不知道。</p>
+<h5 id="pwntools与缓冲区机制">pwntools与缓冲区机制<a class="post-anchor" href="#pwntools与缓冲区机制"></a></h5><p>某些pwn题为了增加难度，会设置题目默认缓冲区存在，从而使pwntools的对于数据的发送与接收产生问题，一是远端的输出并不会及时回显，另外是数据累积在缓冲区内，对远端数据的正常接收造成影响。</p>
+<p>为了搞清这种影响是如何产生的，以及如何解决，我们将从pwntools的源码层面研究pwntools与远端服务器的交互，从而彻底探明这一问题。</p>
+<h4 id="ms？">%ms？<a class="post-anchor" href="#ms？"></a></h4><p>从缓冲区的研究回到程序的简单逻辑分析上。</p>
+<p><code>__isoc99_scanf("%ms", &amp;format);</code></p>
+<p>接着就来了这么一句，我第一次听说m这个参数，其实就是动态的分配了scanf的缓冲区，有效避免了溢出。（stackoverflow上回答废话一堆，说得云里雾里）</p>
+<p>然后接着又是一个手写的read函数，再将输入的字符串赋给v4，再将v4与flag比较，如果错误，就来一个格式化字符串的漏洞。</p>
+<h3 id="漏洞利用">漏洞利用<a class="post-anchor" href="#漏洞利用"></a></h3><p>因为程序其实已经拿到flag了，所以这道题并不需要考虑getshell。只需要通过刚才的格式化字符串漏洞，将flag打印出来。</p>
+<p>那么如何打印这个flag呢？</p>
+<p>我们首先肯定要输入一个错误的flag（废话），然后进入与flag的比较，这个时候，flag的具体的值也在内存中。所以随便动调一下。</p>
+<p><a target="_blank" rel="noopener" href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-26%20%E4%B8%8B%E5%8D%8810.31.45.png" data-caption="截屏2021-10-26 下午10.31.45" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-26%20%E4%B8%8B%E5%8D%8810.31.45.png" alt="截屏2021-10-26 下午10.31.45"></a></p>
+<p>flag其实就已经出来了，但是为了学习，我们还需要将它打印出来。</p>
+<p>这时候就需要计算这个flag字符串与栈顶的偏移。</p>
+<p>![截屏2021-10-26 下午10.35.39](/Users/rin/Library/Application Support/typora-user-images/截屏2021-10-26 下午10.35.39.png)</p>
+<p>显然flag在栈顶第四个参数的位置，除去第一行的返回地址，也就是第三个。但是由于64位程序，前6个参数是由寄存器传参，所以需要+6，也就是第九个参数。</p>
+<p>利用%n$s打印参数，即可获得flag。</p>
+<h2 id="参考">参考<a class="post-anchor" href="#参考"></a></h2><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/79504011">缓冲区机制详解</a></p>
+<p><a target="_blank" rel="noopener" href="http://c.biancheng.net/cpp/html/2506.html">C语言fflush()函数：清空文件缓冲区（或标准输入输出缓冲区）</a></p>
+<p><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/38685724/difference-between-ms-and-s-scanf">difference between %ms and %s scanf</a></p>
+</li>
+</ul>
+</body></html>
+
+  
+    <div class="post-reward">
+    <div id="reward-button">打赏</div>
+      <div id="qr">
+        <div class="wrap">
+            
+            <div class="bg-wrap">
+              <a href="../../../../images/zhifubao.png" target="_block" class="bg" style="background-image:url('/images/zhifubao.png')"></a>
+              支付宝
+            </div>
+            
+            
+            <div class="bg-wrap">
+                <a href="../../../../images/weixin.png" target="_block" class="bg" style="background-image:url('/images/weixin.png')"></a>
+              微信
+            </div>
+            
+        </div>
+      </div>
+    </div>
+  
+  <div class="post-guide">
+    <div class="item left">
+        
+    </div>
+    <div class="item right">
+        
+          <a href="../../../09/24/2021_9_20_name_your_cat/">name_your_cat</a>
+        
+    </div>
+  </div>
+
+  
+
+  <div class="post-copyright">
+    <div class="auth">
+      本文作者：<a href="../../../../https:/fuurinko.github.io">Rin777</a>
+    </div>
+    <div class="link">
+      永久链接：<a href="../../../../https:/fuurinko.github.io">../../../../https:/fuurinko.github.io</a>
+    </div>
+    <div class="declare">
+      版权声明：本文首发于<a href="../../../../https:/fuurinko.github.io">Rin777</a>的博客，转载请注明出处！
+    </div>
+  </div>
+
+  <div id="comment"></div>
+
+  
+  
+</article>
+        <footer>
+          <div class="copyright">
+            ©2021
+            <a href="https://fuurinko.github.io">Rin777</a> Powered by <a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a> |
+            <a target="_blank" rel="noopener" href="https://github.com/shixiaohu2206/hexo-theme-huhu">hexo-theme-huhu</a>
+          </div>
+          
+        </footer>
+      </div>
+    </div>
+  </body>
+  
+</html>
+<script type="text/javascript">
+                  window.HUHU_CONFIG = JSON.parse("{\"share\":[\"weibo\",\"weixin\",\"qqkongjian\",\"QQ\",\"douban\",\"facebook\",\"twitter\",\"google\"],\"service_worker\":{\"open\":false}}")
+                </script> <script type="text/javascript">window.addEventListener('load', function() {
+    
+    window.loadJs = function(d, m, a) {
+      var c = document.getElementsByTagName('head')[0] || document.head || document.documentElement
+      var b = document.createElement('script')
+      b.defer = true
+      b.setAttribute('type', 'text/javascript')
+      b.setAttribute('charset', 'UTF-8')
+      b.setAttribute('async', 'true')
+      b.setAttribute('src', d)
+      m && b.setAttribute('data-main', '/scripts/app-built')
+      if (typeof a === 'function') {
+        if (window.attachEvent) {
+          b.onreadystatechange = function() {
+            var e = b.readyState
+            if (e === 'loaded' || e === 'complete') {
+              b.onreadystatechange = null
+              a()
+            }
+          }
+        } else {
+          b.onload = a
+        }
+      }
+      c.appendChild(b)
+    }
+    window.loadJs && window.loadJs('https://cdn.bootcss.com/require.js/2.3.6/require.min.js', true, function() {require.config({"paths":{"util":"util","share":"share","search":"search","pagemap":"pagemap.min","registerSW":"registerSW","valine":"cdn/Valine.min","av":["https://cdn.jsdelivr.net/npm/leancloud-storage/dist/av-min"],"pjax":["https://cdn.bootcss.com/jquery.pjax/2.0.1/jquery.pjax.min"],"jquery":["https://cdn.bootcss.com/jquery/3.4.1/jquery.min"],"confirm":["https://cdn.bootcss.com/jquery-confirm/3.3.4/jquery-confirm.min"],"fancybox":["https://cdn.bootcss.com/fancybox/3.5.7/jquery.fancybox.min"],"chart":["https://cdn.bootcss.com/Chart.js/2.8.0-rc.1/Chart.bundle.min"]},"map":{"*":{"css":"https://cdn.bootcss.com/require-css/0.1.10/css.min.js"}},"shim":{"fancybox":{"deps":["css!https://cdn.bootcss.com/fancybox/3.5.7/jquery.fancybox.min.css"]},"confirm":{"deps":["css!https://cdn.bootcss.com/jquery-confirm/3.3.4/jquery-confirm.min.css"]},"chart":{"deps":["css!https://cdn.bootcss.com/Chart.js/2.8.0-rc.1/Chart.min.css"]}},"waitSeconds":3})})
+  })</script>  
