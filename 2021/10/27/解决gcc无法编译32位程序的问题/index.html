@@ -16,7 +16,7 @@
     <meta name="description" content="" />
     
     <title>
-      格式化字符串偏移计算原理 - Rin777
+      解决gcc无法编译32位程序的问题 - Rin777
     </title>
     <link rel="manifest" href="/manifest.json" />
     <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon" />
@@ -29,7 +29,7 @@
     
     <div id="post-toc" class="animated hiddenToc hide">
       <span class="title">Toc</span>
-      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1%EF%BC%8932%E4%BD%8D%E5%81%8F%E7%A7%BB%E8%AE%A1%E7%AE%97%E5%8E%9F%E7%90%86"><span class="toc-text">1）32位偏移计算原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2%EF%BC%8964%E4%BD%8D%E5%81%8F%E7%A7%BB%E8%AE%A1%E7%AE%97%E5%8E%9F%E7%90%86"><span class="toc-text">2）64位偏移计算原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3%EF%BC%89-pwntools-fmtstr%E5%B7%A5%E5%85%B7"><span class="toc-text">3） pwntools_fmtstr工具</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%EF%BC%89%E5%8F%82%E8%80%83"><span class="toc-text">）参考</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1%EF%BC%89preview"><span class="toc-text">1）preview</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3%EF%BC%89%E6%80%BB%E7%BB%93"><span class="toc-text">3）总结</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4%EF%BC%89%E5%8F%82%E8%80%83"><span class="toc-text">4）参考</span></a></li></ol>
     </div>
     
     <div id="fixed-menu-wrap">
@@ -163,7 +163,7 @@
         <article class="post-entry">
     <div class="header">
       
-      <div class="title">格式化字符串偏移计算原理</div>
+      <div class="title">解决gcc无法编译32位程序的问题</div>
       <div class="meta">
         <span class="item">
           <span class="iconfont icon-time-circle"></span>
@@ -179,10 +179,56 @@
       <div>
       </div>
     </div>
-    <html><head></head><body><p>重点研究如何计算32/64位程序中格式化字符串在栈上的偏移，以及研究自动化求偏移的实现</p>
-<h3 id="1）32位偏移计算原理">1）32位偏移计算原理<a class="post-anchor" href="#1）32位偏移计算原理"></a></h3><p>​    其实这个计算确实是有手就行，只需要在栈上找到对应的格式化字符串，然后数是第几个，再减去返回地址所占的一个位置，就是偏移量。</p>
-<p>​    准确来说应该是格式化字符串在栈上的偏移。</p>
-<h3 id="2）64位偏移计算原理">2）64位偏移计算原理<a class="post-anchor" href="#2）64位偏移计算原理"></a></h3><h3 id="3）-pwntools-fmtstr工具">3） pwntools_fmtstr工具<a class="post-anchor" href="#3）-pwntools-fmtstr工具"></a></h3><h3 id="）参考">）参考<a class="post-anchor" href="#）参考"></a></h3><p>​    <a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43092232/article/details/105647076">格式化字符串利器fmtstr_payload | 攻防世界 pwn进阶区 实时数据监测</a></p>
+    <html><head></head><body><h3 id="1）preview">1）preview<a class="post-anchor" href="#1）preview"></a></h3><p>​    之前一直被gcc无法编译32位程序而困扰，但是问题一直拖着没有解决，趁着今天比较闲，把这个问题彻底解决一下。</p>
+<p>​    首先我们尝试编译32位程序，gcc报错：<a target="_blank" rel="noopener" href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-27%20%E4%B8%8B%E5%8D%888.29.31.png" data-caption="截屏2021-10-27 下午8.29.31" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-27%20%E4%B8%8B%E5%8D%888.29.31.png" alt="截屏2021-10-27 下午8.29.31"></a></p>
+<p>​    缺少头文件，实则是没有安装多架构gcc。</p>
+<p>​    试图安装，失败，报错如下：<a target="_blank" rel="noopener" href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-27%20%E4%B8%8B%E5%8D%888.30.23.png" data-caption="截屏2021-10-27 下午8.30.23" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-27%20%E4%B8%8B%E5%8D%888.30.23.png" alt="截屏2021-10-27 下午8.30.23"></a></p>
+<p>​    这里有个坑了我好久的东西，就是这个报错</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">E: Unable to correct problems, you have held broken packages.<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>​    无法修正问题，你持有held broken的软件包。</p>
+<p>​    我一直没有理解正确这个held的意思，我以为是持有的意思，所以一直以来这句话在我眼中的意思是，你已经有这个软件包了，但是你不能安装。</p>
+<p>​    但实际上，但凡熟悉过apt或者dkpg的一些命令，或者但凡对linux文件系统稍微熟悉一点都知道其实hold是为了防止更新不想更新的软件包，而特殊设置的功能。通过apt- mark或者dpkg命令 ，从apt-get中将特定的软件包的更新排除。而这道题的报错就是源于这点–gcc-7-multilib等依赖的软件包版本不对，但是由于held，所以并没有被更新。</p>
+<p>​    但是通过<code>dpkg --get-selections | grep hold</code>指令查找held的软件包，并没有任何结果。</p>
+<p>​    经过各种试错，找到了一个快速解决的方法。</p>
+<pre><code><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">aptitude</span> <span class="token function">install</span> gcc-multilib<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+</code></pre>
+<p><code> aptitude</code>与apt类似，也是包管理器。但是通过<code>aptitude</code>进行包管理，对于软件包依赖问题的处理更加细节。</p>
+<p>​    下面是一些常用的命令</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">aptitude</span> update <span class="token comment">#更新可用的包列表</span>
+<span class="token function">aptitude</span> purge <span class="token operator">&lt;</span>pkgname<span class="token operator">&gt;</span> <span class="token comment">#删除包及其配置文件</span>
+<span class="token function">aptitude</span> search <span class="token operator">&lt;</span>pkgname<span class="token operator">&gt;</span> <span class="token comment">#搜索包</span>
+<span class="token function">aptitude</span> clean <span class="token comment">#删除下载的包文件</span>
+<span class="token function">aptitude</span> autoclean <span class="token comment">#删除过期的包文件</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<p><code> aptitude</code>执行起来和<code>apt</code>其实不太一样，比如    <code>sudo aptitude install gcc-multilib </code>这个命令其实执行起来长这样：</p>
+<p><a target="_blank" rel="noopener" href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-27%20%E4%B8%8B%E5%8D%8810.58.52.png" data-caption="截屏2021-10-27 下午10.58.52" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-27%20%E4%B8%8B%E5%8D%8810.58.52.png" alt="截屏2021-10-27 下午10.58.52"></a></p>
+<p>​    然后<code>aptitude</code>会问你</p>
+<p><a target="_blank" rel="noopener" href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-27%20%E4%B8%8B%E5%8D%8811.00.00.png" data-caption="截屏2021-10-27 下午11.00.00" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-27%20%E4%B8%8B%E5%8D%8811.00.00.png" alt="截屏2021-10-27 下午11.00.00"></a></p>
+<p>​    这里是最大的坑。如果是像我这种不想看英文按照习惯输Y的人，这里会踩一个大坑。</p>
+<p>​    明确地告诉了我：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">The following actions will resolve these dependencies:
+
+      Keep the following packages at their current version:
+      <span class="token punctuation">..</span>.
+      <span class="token punctuation">..</span>.
+      <span class="token punctuation">..</span>.
+      Accept this solution? <span class="token punctuation">[</span>Y/n/q/?<span class="token punctuation">]</span> 
+
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>保持下面软件包的版本不变，你接受这个解决方式吗？</p>
+<p>显然我不接受，只要摁下N，问题就解决了。</p>
+<p><a target="_blank" rel="noopener" href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-27%20%E4%B8%8B%E5%8D%8811.00.00.png" data-caption="" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-27%20%E4%B8%8B%E5%8D%8811.00.00.png" alt=""></a></p>
+<p>然后。自动执行gdb-multilib的安装。</p>
+<p><a target="_blank" rel="noopener" href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/image-20211027230403989.png" data-caption="image-20211027230403989" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/image-20211027230403989.png" alt="image-20211027230403989"></a></p>
+<p>问题解决。</p>
+<h3 id="3）总结">3）总结<a class="post-anchor" href="#3）总结"></a></h3><p>​    这个问题回过头来想，其实非常简单，如果清楚问题所在的话，只需要一行命令就能解决。当然并不是每个人都经验丰富，但是没有经验，可以积累经验，然而在积累的过程中，有些愚蠢的错误确实是不应该犯的。比如说，不认真看报错信息，或者提示，凭着感觉装。这是我在处理这种问题上最大的弱点。</p>
+<p>​    一个原因是我骄傲自满了，我确实认为在这一步不会出错，但是实际上问题就是发生在这一步上，另外就是，全英文的屏显，没有人愿意仔细阅读，但是这点没有办法，绝对不可能调成中文，这里只能是说，慢慢看，仔细看 ，然后提升一下英语水平。（但是有一说一，英语母语的人可能都不愿意看吧）</p>
+<h3 id="4）参考">4）参考<a class="post-anchor" href="#4）参考"></a></h3><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/White_Idiot/article/details/58348957">【Ubuntu】aptitude命令详解</a></p>
+<p><a target="_blank" rel="noopener" href="https://askubuntu.com/questions/223237/unable-to-correct-problems-you-have-held-broken-packages">Unable to correct problems, you have held broken packages</a></p>
 </body></html>
 
   
@@ -209,12 +255,10 @@
   <div class="post-guide">
     <div class="item left">
         
-          <a href="../%E8%A7%A3%E5%86%B3gcc%E6%97%A0%E6%B3%95%E7%BC%96%E8%AF%9132%E4%BD%8D%E7%A8%8B%E5%BA%8F%E7%9A%84%E9%97%AE%E9%A2%98/">解决gcc无法编译32位程序的问题</a>
-        
     </div>
     <div class="item right">
         
-          <a href="../%E6%91%86%E7%83%82%E7%AC%AC%E4%BA%94%E5%A4%A9--pwntools%E6%BA%90%20%E7%A0%81%20%E5%89%96%20%E6%9E%90--%E4%BB%A5%E6%BA%90%E7%A0%81%E7%9A%84%E8%A7%92%E5%BA%A6%E5%88%86%E6%9E%90io%E4%BA%A4%E4%BA%92%E5%8E%9F%E7%90%86/">pwntools源码剖析（1）--以源码的角度分析io交互原理</a>
+          <a href="../%E6%91%86%E7%83%82%E7%AC%AC%E5%85%AD%E5%A4%A9--%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%81%8F%E7%A7%BB%E8%AE%A1%E7%AE%97%E5%8E%9F%E7%90%86/">格式化字符串偏移计算原理</a>
         
     </div>
   </div>
