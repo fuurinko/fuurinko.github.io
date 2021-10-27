@@ -16,16 +16,21 @@
     <meta name="description" content="" />
     
     <title>
-      Archives2021 - Rin777
+      pwntools源码剖析（1）--以源码的角度分析io交互原理 - Rin777
     </title>
     <link rel="manifest" href="/manifest.json" />
     <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon" />
     
-<link rel="stylesheet" href="../../style/style.css">
+<link rel="stylesheet" href="../../../../style/style.css">
 
   <meta name="generator" content="Hexo 5.4.0"></head>
   <body>
     <canvas id='pagemap'></canvas>
+    
+    <div id="post-toc" class="animated hiddenToc hide">
+      <span class="title">Toc</span>
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-text"></span></a></li></ol>
+    </div>
     
     <div id="fixed-menu-wrap">
       <span class="iconfont icon-sousuo search-box menu-reset"></span>
@@ -56,27 +61,27 @@
       <span class="iconfont icon-close"></span>
       <div class="nav">
         
-        <a href="../../index.html" class="">
+        <a href="../../../../index.html" class="">
           Home
         </a>
         
-        <a href="../../archives" class="current">
+        <a href="../../../../archives" class="">
           Archives
         </a>
         
-        <a href="../../categories" class="">
+        <a href="../../../../categories" class="">
           Categories
         </a>
         
-        <a href="../../tags" class="">
+        <a href="../../../../tags" class="">
           Tags
         </a>
         
-        <a href="../../friends" class="">
+        <a href="../../../../friends" class="">
           Friends
         </a>
         
-        <a href="../../about" class="">
+        <a href="../../../../about" class="">
           About
         </a>
         
@@ -110,27 +115,27 @@
 
         <div class="nav">
           
-          <a href="../../index.html" class="">
+          <a href="../../../../index.html" class="">
             Home
           </a>
           
-          <a href="../../archives" class="current">
+          <a href="../../../../archives" class="">
             Archives
           </a>
           
-          <a href="../../categories" class="">
+          <a href="../../../../categories" class="">
             Categories
           </a>
           
-          <a href="../../tags" class="">
+          <a href="../../../../tags" class="">
             Tags
           </a>
           
-          <a href="../../friends" class="">
+          <a href="../../../../friends" class="">
             Friends
           </a>
           
-          <a href="../../about" class="">
+          <a href="../../../../about" class="">
             About
           </a>
           
@@ -155,124 +160,89 @@
     </div>
     <div id="container">
       <div class="main animated bounceInRight delay-0.7s">
-        <div id="archives">
-    
-        <div class="title">
-            Archives 
-             - 2021
-        </div>
-    
-
-
-
-
-    
-    
-    <section class="wrap">
-        <div class="meta">
-            <a href="" >
-                2021
-            </a>
-        </div>
-        <div class="year">
-            
-            <article class="item">
-            <a href="../../2021/10/27/%E6%91%86%E7%83%82%E7%AC%AC%E4%BA%94%E5%A4%A9--pwntools%E6%BA%90%20%E7%A0%81%20%E5%89%96%20%E6%9E%90--%E4%BB%A5%E6%BA%90%E7%A0%81%E7%9A%84%E8%A7%92%E5%BA%A6%E5%88%86%E6%9E%90io%E4%BA%A4%E4%BA%92%E5%8E%9F%E7%90%86/" title="pwntools源码剖析（1）--以源码的角度分析io交互原理">
-                <span>2021/10/27</span>
-                <span>pwntools源码剖析（1）--以源码的角度分析io交互原理</span>
-            </a>
-            </article>
-            
-
-
-            <article class="item">
-            <a href="../../2021/10/27/%E6%91%86%E7%83%82%E7%AC%AC%E5%9B%9B%E5%A4%A9--gdb%E9%99%84%E5%8A%A0%E8%B0%83%E8%AF%95%E7%9A%84%E4%B8%80%E4%BA%9B%E9%BB%91%E9%AD%94%E6%B3%95/" title="gdb附加调试的一些黑魔法">
-                <span>2021/10/27</span>
-                <span>gdb附加调试的一些黑魔法</span>
-            </a>
-            </article>
-            
-
-
-            <article class="item">
-            <a href="../../2021/10/23/%E6%91%86%E7%83%82%E7%AC%AC%E4%B8%89%E5%A4%A9--%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8/" title="重探fmt">
-                <span>2021/10/23</span>
-                <span>重探fmt</span>
-            </a>
-            </article>
-            
-
-
-            <article class="item">
-            <a href="../../2021/09/24/2021_9_20_name_your_cat/" title="name_your_cat">
-                <span>2021/09/24</span>
-                <span>name_your_cat</span>
-            </a>
-            </article>
-            
-
-
-            <article class="item">
-            <a href="../../2021/09/15/2021_09_15_ciscn_2019_n_1/" title="ciscn_2019_n_1">
-                <span>2021/09/15</span>
-                <span>ciscn_2019_n_1</span>
-            </a>
-            </article>
-            
-
-
-            <article class="item">
-            <a href="../../2021/08/20/main_arana%20%E4%B8%8E%E5%A4%9A%E7%BA%BF%E7%A8%8B/" title="main_arena与多线程">
-                <span>2021/08/20</span>
-                <span>main_arena与多线程</span>
-            </a>
-            </article>
-            
-
-
-            <article class="item">
-            <a href="../../2021/08/17/Heap%E2%80%94%E2%80%94Tcache%E5%AD%A6%E4%B9%A0/" title="Tcahce学习">
-                <span>2021/08/17</span>
-                <span>Tcahce学习</span>
-            </a>
-            </article>
-            
-
-
-            <article class="item">
-            <a href="../../2021/08/17/ubuntu%E5%8A%A0%E8%BD%BD%E4%B8%8D%E5%90%8C%E7%89%88%E6%9C%AClibc/" title="ubuntu加载不同版本libc">
-                <span>2021/08/17</span>
-                <span>ubuntu加载不同版本libc</span>
-            </a>
-            </article>
-            
-
-
-            <article class="item">
-            <a href="../../2021/08/13/Heap-Tcache%E5%88%A9%E7%94%A8/" title="Tcache利用">
-                <span>2021/08/13</span>
-                <span>Tcache利用</span>
-            </a>
-            </article>
-            
-
-
-            <article class="item">
-            <a href="../../2021/08/10/%E8%B0%83%E8%AF%95%E5%99%A8%E6%96%AD%E7%82%B9%E5%8E%9F%E7%90%86/" title="调试器断点原理">
-                <span>2021/08/10</span>
-                <span>调试器断点原理</span>
-            </a>
-            </article>
-            
-    
-        </div>
-    </section>
+        <article class="post-entry">
+    <div class="header">
       
-<div class="paginator">
-    <span class="page-number current">1</span><a class="page-number" href="page/2/">2</a>
-</div>
-</div>
+      <div class="title">pwntools源码剖析（1）--以源码的角度分析io交互原理</div>
+      <div class="meta">
+        <span class="item">
+          <span class="iconfont icon-time-circle"></span>
+          <span>2021/10/27</span>
+        </span>
 
+        
+
+        
+        
+         
+          <span class="item">
+            <span class="iconfont icon-tag1"></span>
+            <span>
+                
+                  
+                    <a href="/tags/stack_pro">stack_pro</a>
+                  
+                
+            </span>
+          </span>
+         
+      </div>
+      <div>
+      </div>
+    </div>
+    <html><head></head><body><h3 id=""><a class="post-anchor" href="#"></a></h3></body></html>
+
+  
+    <div class="post-reward">
+    <div id="reward-button">打赏</div>
+      <div id="qr">
+        <div class="wrap">
+            
+            <div class="bg-wrap">
+              <a href="../../../../images/zhifubao.png" target="_block" class="bg" style="background-image:url('/images/zhifubao.png')"></a>
+              支付宝
+            </div>
+            
+            
+            <div class="bg-wrap">
+                <a href="../../../../images/weixin.png" target="_block" class="bg" style="background-image:url('/images/weixin.png')"></a>
+              微信
+            </div>
+            
+        </div>
+      </div>
+    </div>
+  
+  <div class="post-guide">
+    <div class="item left">
+        
+    </div>
+    <div class="item right">
+        
+          <a href="../%E6%91%86%E7%83%82%E7%AC%AC%E5%9B%9B%E5%A4%A9--gdb%E9%99%84%E5%8A%A0%E8%B0%83%E8%AF%95%E7%9A%84%E4%B8%80%E4%BA%9B%E9%BB%91%E9%AD%94%E6%B3%95/">gdb附加调试的一些黑魔法</a>
+        
+    </div>
+  </div>
+
+  
+
+  <div class="post-copyright">
+    <div class="auth">
+      本文作者：<a href="../../../../https:/fuurinko.github.io">Rin777</a>
+    </div>
+    <div class="link">
+      永久链接：<a href="../../../../https:/fuurinko.github.io">../../../../https:/fuurinko.github.io</a>
+    </div>
+    <div class="declare">
+      版权声明：本文首发于<a href="../../../../https:/fuurinko.github.io">Rin777</a>的博客，转载请注明出处！
+    </div>
+  </div>
+
+  <div id="comment"></div>
+
+  
+  
+</article>
         <footer>
           <div class="copyright">
             ©2021

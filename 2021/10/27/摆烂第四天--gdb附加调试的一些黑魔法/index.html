@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <script>
+  var _hmt = _hmt || []
+  ;(function() {
+    var hm = document.createElement('script')
+    hm.src = 'https://hm.baidu.com/hm.js?5a0acc897fd96474a2c8f4deac84611a'
+    var s = document.getElementsByTagName('script')[0]
+    s.parentNode.insertBefore(hm, s)
+  })()
+</script> 
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    
+    <title>
+      gdb附加调试的一些黑魔法 - Rin777
+    </title>
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon" />
+    
+<link rel="stylesheet" href="../../../../style/style.css">
+
+  <meta name="generator" content="Hexo 5.4.0"></head>
+  <body>
+    <canvas id='pagemap'></canvas>
+    
+    <div id="post-toc" class="animated hiddenToc hide">
+      <span class="title">Toc</span>
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-text"></span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1%EF%BC%89abstract"><span class="toc-text">1）abstract</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2%EF%BC%89%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2-cctf-pwn3"><span class="toc-text">2）格式化字符串-cctf-pwn3</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1%EF%BC%89pause%EF%BC%88p%EF%BC%89%E5%AF%BC%E8%87%B4ERROR-Could-not-find-ELF-base"><span class="toc-text">1）pause（p）导致ERROR: Could not find ELF base</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3%EF%BC%89-kernel-vsyscall%EF%BC%9F"><span class="toc-text">3）__kernel_vsyscall？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%EF%BC%89%E5%8F%82%E8%80%83"><span class="toc-text">）参考</span></a>
+    </div>
+    
+    <div id="fixed-menu-wrap">
+      <span class="iconfont icon-sousuo search-box menu-reset"></span>
+      <span class="icon-toc menu-reset">Toc</span>
+      <span class="iconfont icon-arrowup menu-reset"></span>
+    </div>
+    <div id="fixed-menu">
+      <span class="iconfont icon-menu-"></span>
+    </div>
+    <div id="progress">
+      <div class="line"></div>
+    </div>
+    <div id="search-shade" class="animated hiddenSearch hide">
+      <div class="input-wrap">
+        <span class="iconfont icon-sousuo search-box"></span>
+        <input type="text" placeholder="Search" />
+        <span class="iconfont icon-close"></span>
+      </div>
+      <div class="search-result">
+        <div class="meta">
+          <span><b id="result-count">0</b> results found</span>
+          <img src="/images/logo.jpeg" />
+        </div>
+        <ul id="result-box"></ul>
+      </div>
+    </div>
+    <div id="menu-mask" class="animated hideMenuMask hide">
+      <span class="iconfont icon-close"></span>
+      <div class="nav">
+        
+        <a href="../../../../index.html" class="">
+          Home
+        </a>
+        
+        <a href="../../../../archives" class="">
+          Archives
+        </a>
+        
+        <a href="../../../../categories" class="">
+          Categories
+        </a>
+        
+        <a href="../../../../tags" class="">
+          Tags
+        </a>
+        
+        <a href="../../../../friends" class="">
+          Friends
+        </a>
+        
+        <a href="../../../../about" class="">
+          About
+        </a>
+        
+      </div>
+    </div>
+    <div id="header">
+      <div class="intro">
+        <a href="/" class="logo" style="background-image: url('/images/logo.jpeg')"></a>
+        <div class="author"></div>
+      </div>
+      <div class="nav">
+        <span class="iconfont icon-menu menu-icon"></span>
+        <a href="#" class="search-box">
+          <span class="iconfont icon-sousuo"></span>
+        </a>
+      </div>
+    </div>
+    <div id="side" class="animated bounceInLeft">
+      <div class="shrink">
+        <a href="/" class="logo" style="background-image: url('/images/logo.jpeg')"></a>
+        <span class="iconfont icon-menu toggle-icon"></span>
+        <a href="#" class="search-box">
+          <span class="iconfont icon-sousuo"></span>
+        </a>
+      </div>
+      <div class="magnify">
+        <div class="about">
+          <div class="author"></div>
+          <a href="/" class="logo" style="background-image: url('/images/logo.jpeg')"></a>
+        </div>
+
+        <div class="nav">
+          
+          <a href="../../../../index.html" class="">
+            Home
+          </a>
+          
+          <a href="../../../../archives" class="">
+            Archives
+          </a>
+          
+          <a href="../../../../categories" class="">
+            Categories
+          </a>
+          
+          <a href="../../../../tags" class="">
+            Tags
+          </a>
+          
+          <a href="../../../../friends" class="">
+            Friends
+          </a>
+          
+          <a href="../../../../about" class="">
+            About
+          </a>
+          
+          <a href="#" class="search-box">
+            <span class="iconfont icon-sousuo"></span>
+          </a>
+        </div>
+        <div class="bottom">
+          <div class="follow">
+            
+            <a href="https://github.com" target="_block">
+              <span class="iconfont icon-github"></span>
+            </a>
+             
+            <a href="/atom.xml" target="_block">
+              <span class="iconfont icon-rss"></span>
+            </a>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="container">
+      <div class="main animated bounceInRight delay-0.7s">
+        <article class="post-entry">
+    <div class="header">
+      
+      <div class="title">gdb附加调试的一些黑魔法</div>
+      <div class="meta">
+        <span class="item">
+          <span class="iconfont icon-time-circle"></span>
+          <span>2021/10/27</span>
+        </span>
+
+        
+
+        
+        
+         
+          <span class="item">
+            <span class="iconfont icon-tag1"></span>
+            <span>
+                
+                  
+                    <a href="/tags/stack_pro">stack_pro</a>
+                  
+                
+            </span>
+          </span>
+         
+      </div>
+      <div>
+      </div>
+    </div>
+    <html><head></head><body><h3 id=""><a class="post-anchor" href="#"></a></h3><h2 id="1）abstract">1）abstract<a class="post-anchor" href="#1）abstract"></a></h2><p>​    这个part主要综合了一些奇怪的调试中遇到的问题，不定期更新。</p>
+<h2 id="2）格式化字符串-cctf-pwn3">2）格式化字符串-cctf-pwn3<a class="post-anchor" href="#2）格式化字符串-cctf-pwn3"></a></h2><h3 id="1）pause（p）导致ERROR-Could-not-find-ELF-base">1）pause（p）导致ERROR: Could not find ELF base<a class="post-anchor" href="#1）pause（p）导致ERROR-Could-not-find-ELF-base"></a></h3><p>​    在开始动调这个exp的时候，发现一个很奇怪的点就是如果下的断点的模式是pause（p），（这个是我以前瞎几把写的，但是那时候一直没问题，所以就养成了习惯，但是现在发现果然是非常不好的习惯捏），那么程序会异常退出，大概是这样：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">Attaching to program: /home/rin/pwn/ctf-wiki/format/cctf-pwn3/pwn3, process <span class="token number">27837</span>
+Reading symbols from /lib/i386-linux-gnu/libc.so.6<span class="token punctuation">..</span>.Reading symbols from /usr/lib/debug//lib/i386-linux-gnu/libc-2.27.so<span class="token punctuation">..</span>.done.
+ERROR: Could not <span class="token function">find</span> ELF base<span class="token operator">!</span>
+done.
+Reading symbols from /lib/ld-linux.so.2<span class="token punctuation">..</span>.Reading symbols from /usr/lib/debug//lib/i386-linux-gnu/ld-2.27.so<span class="token punctuation">..</span>.done.
+done.
+Cannot access memory at address 0xf7fad924
+
+warning: Unable to <span class="token function">find</span> dynamic linker breakpoint function.
+GDB will be unable to debug shared library initializers
+and track explicitly loaded dynamic code.
+Failed to <span class="token builtin class-name">read</span> a valid object <span class="token function">file</span> image from memory.
+ERROR: Could not <span class="token function">find</span> ELF base<span class="token operator">!</span>
+ERROR: Could not <span class="token function">find</span> ELF base<span class="token operator">!</span>
+ERROR: Could not <span class="token function">find</span> ELF base<span class="token operator">!</span>
+ERROR: Could not <span class="token function">find</span> ELF base<span class="token operator">!</span>
+ERROR: Could not <span class="token function">find</span> ELF base<span class="token operator">!</span>
+ERROR: Could not <span class="token function">find</span> ELF base<span class="token operator">!</span>
+ERROR: Could not <span class="token function">find</span> ELF base<span class="token operator">!</span>
+0xf7f85b59 <span class="token keyword">in</span> ?? <span class="token punctuation">(</span><span class="token punctuation">)</span>
+ERROR: Could not <span class="token function">find</span> ELF base<span class="token operator">!</span>
+ERROR: Could not <span class="token function">find</span> ELF base<span class="token operator">!</span>
+ERROR: Could not <span class="token function">find</span> ELF base<span class="token operator">!</span>
+ERROR: Could not <span class="token function">find</span> ELF base<span class="token operator">!</span>
+
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<p><a target="_blank" rel="noopener" href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-27%20%E4%B8%8A%E5%8D%8811.17.59.png" data-caption="截屏2021-10-27 上午11.17.59" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-27%20%E4%B8%8A%E5%8D%8811.17.59.png" alt="截屏2021-10-27 上午11.17.59"></a></p>
+<p>首先需要知道这个报错的原因。</p>
+<p>虽然我并没有查到<code>ERROR: Could not find ELF base!</code>这个报错发生的直接trigger，但是很显然这个报错发生是因为程序进程中止，因此无法找到elf base。</p>
+<p>那么进程中止的原因何在？</p>
+<p>如果只是输入pause（），那么程序会断在<code>__kernel_vsyscall</code>这个函数上，原因我们稍后讨论。</p>
+<p>所以现在讨论的其实是pause（）与pause（p）的差别。</p>
+<p>其实在任何资料上都很难找到pause(p)这一用法，但是我敢肯定我知道这一用法并不是我瞎编，而是看了某一篇垃圾文章的后遗症，而我要做的就是搞清楚，pause（p）这个毒瘤对我的系统做了什么，导致进程意外退出。</p>
+<h3 id="3）-kernel-vsyscall？">3）__kernel_vsyscall？<a class="post-anchor" href="#3）-kernel-vsyscall？"></a></h3><p>​    上一个问题中提到，如果我们只是输入pause（），那么程序会断在<code>__kernel_vsyscall</code>这个函数上。遇见这个函数也是不止一次了，但是从未想过要了解它，今天我决定一探究竟。</p>
+<p>​    我们期望我们的进程暂停在puts payload之前，实际上确实，在此之前，exp没几乎没有任何与远端的io交互，所以断在奇怪的地方也可以理解，那么<code>__kernel_vsyscall</code>是一个怎样的函数，为什么偏偏就断在它的身上呢？ </p>
+<p>​    在stackoverflow上，我们能够看出一些端倪。</p>
+<blockquote>
+<p>​    <code>__kernel_vsyscal</code> is the method used by linux-gate.so (a part of the Linux kernel) to make a system call using the fastest available method, preferably the <code>sysenter</code> instruction. </p>
+</blockquote>
+<p>这其实就是个系统调用方法，回想一下在srop中的知识点，其实每个系统调用都是一个中断，然后系统切换至内核态进行工作，完成后再切换回用户态，并将结果返回至用户态。</p>
+<p>所以出现   <code>__kernel_vsyscal</code> 意味着此刻程序正在进行系统调用。</p>
+<p>关于系统调用我想又可以写一篇专门的博客来研究，这里就不费笔墨了，详情可见：</p>
+<p>当然要结束这个函数我们只需要gdb finish。</p>
+<p>或者直接使用gdb.attach(sh,”break xxx”)</p>
+<p>​    </p>
+<p>​    </p>
+<p>​    </p>
+<h2 id="）参考">）参考<a class="post-anchor" href="#）参考"></a></h2><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/fjh1997/article/details/105434992">如何做到一边使用pwntools一边使用gdb下断点到main函数前</a></p>
+</body></html>
+
+  
+    <div class="post-reward">
+    <div id="reward-button">打赏</div>
+      <div id="qr">
+        <div class="wrap">
+            
+            <div class="bg-wrap">
+              <a href="../../../../images/zhifubao.png" target="_block" class="bg" style="background-image:url('/images/zhifubao.png')"></a>
+              支付宝
+            </div>
+            
+            
+            <div class="bg-wrap">
+                <a href="../../../../images/weixin.png" target="_block" class="bg" style="background-image:url('/images/weixin.png')"></a>
+              微信
+            </div>
+            
+        </div>
+      </div>
+    </div>
+  
+  <div class="post-guide">
+    <div class="item left">
+        
+          <a href="../%E6%91%86%E7%83%82%E7%AC%AC%E4%BA%94%E5%A4%A9--pwntools%E6%BA%90%20%E7%A0%81%20%E5%89%96%20%E6%9E%90--%E4%BB%A5%E6%BA%90%E7%A0%81%E7%9A%84%E8%A7%92%E5%BA%A6%E5%88%86%E6%9E%90io%E4%BA%A4%E4%BA%92%E5%8E%9F%E7%90%86/">pwntools源码剖析（1）--以源码的角度分析io交互原理</a>
+        
+    </div>
+    <div class="item right">
+        
+          <a href="../../23/%E6%91%86%E7%83%82%E7%AC%AC%E4%B8%89%E5%A4%A9--%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8/">重探fmt</a>
+        
+    </div>
+  </div>
+
+  
+
+  <div class="post-copyright">
+    <div class="auth">
+      本文作者：<a href="../../../../https:/fuurinko.github.io">Rin777</a>
+    </div>
+    <div class="link">
+      永久链接：<a href="../../../../https:/fuurinko.github.io">../../../../https:/fuurinko.github.io</a>
+    </div>
+    <div class="declare">
+      版权声明：本文首发于<a href="../../../../https:/fuurinko.github.io">Rin777</a>的博客，转载请注明出处！
+    </div>
+  </div>
+
+  <div id="comment"></div>
+
+  
+  
+</article>
+        <footer>
+          <div class="copyright">
+            ©2021
+            <a href="https://fuurinko.github.io">Rin777</a> Powered by <a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a> |
+            <a target="_blank" rel="noopener" href="https://github.com/shixiaohu2206/hexo-theme-huhu">hexo-theme-huhu</a>
+          </div>
+          
+        </footer>
+      </div>
+    </div>
+  </body>
+  
+</html>
+<script type="text/javascript">
+                  window.HUHU_CONFIG = JSON.parse("{\"share\":[\"weibo\",\"weixin\",\"qqkongjian\",\"QQ\",\"douban\",\"facebook\",\"twitter\",\"google\"],\"service_worker\":{\"open\":false}}")
+                </script> <script type="text/javascript">window.addEventListener('load', function() {
+    
+    window.loadJs = function(d, m, a) {
+      var c = document.getElementsByTagName('head')[0] || document.head || document.documentElement
+      var b = document.createElement('script')
+      b.defer = true
+      b.setAttribute('type', 'text/javascript')
+      b.setAttribute('charset', 'UTF-8')
+      b.setAttribute('async', 'true')
+      b.setAttribute('src', d)
+      m && b.setAttribute('data-main', '/scripts/app-built')
+      if (typeof a === 'function') {
+        if (window.attachEvent) {
+          b.onreadystatechange = function() {
+            var e = b.readyState
+            if (e === 'loaded' || e === 'complete') {
+              b.onreadystatechange = null
+              a()
+            }
+          }
+        } else {
+          b.onload = a
+        }
+      }
+      c.appendChild(b)
+    }
+    window.loadJs && window.loadJs('https://cdn.bootcss.com/require.js/2.3.6/require.min.js', true, function() {require.config({"paths":{"util":"util","share":"share","search":"search","pagemap":"pagemap.min","registerSW":"registerSW","valine":"cdn/Valine.min","av":["https://cdn.jsdelivr.net/npm/leancloud-storage/dist/av-min"],"pjax":["https://cdn.bootcss.com/jquery.pjax/2.0.1/jquery.pjax.min"],"jquery":["https://cdn.bootcss.com/jquery/3.4.1/jquery.min"],"confirm":["https://cdn.bootcss.com/jquery-confirm/3.3.4/jquery-confirm.min"],"fancybox":["https://cdn.bootcss.com/fancybox/3.5.7/jquery.fancybox.min"],"chart":["https://cdn.bootcss.com/Chart.js/2.8.0-rc.1/Chart.bundle.min"]},"map":{"*":{"css":"https://cdn.bootcss.com/require-css/0.1.10/css.min.js"}},"shim":{"fancybox":{"deps":["css!https://cdn.bootcss.com/fancybox/3.5.7/jquery.fancybox.min.css"]},"confirm":{"deps":["css!https://cdn.bootcss.com/jquery-confirm/3.3.4/jquery-confirm.min.css"]},"chart":{"deps":["css!https://cdn.bootcss.com/Chart.js/2.8.0-rc.1/Chart.min.css"]}},"waitSeconds":3})})
+  })</script>  
