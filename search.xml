@@ -1767,8 +1767,8 @@ show<span class="token punctuation">(</span><span class="token number">0</span><
   <entry>
     <title>解决gcc无法编译32位程序的问题</title>
     <url>/2021/10/27/%E8%A7%A3%E5%86%B3gcc%E6%97%A0%E6%B3%95%E7%BC%96%E8%AF%9132%E4%BD%8D%E7%A8%8B%E5%BA%8F%E7%9A%84%E9%97%AE%E9%A2%98/</url>
-    <content><![CDATA[<html><head></head><body><h3 id="1）preview">1）preview<a class="post-anchor" href="#1）preview"></a></h3><p>​    之前一直被gcc无法编译32位程序而困扰，但是问题一直拖着没有解决，趁着今天比较闲，把这个问题彻底解决一下。</p>
-<p>​    首先我们尝试编译32位程序，gcc报错：<a href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-27%20%E4%B8%8B%E5%8D%888.29.31.png" data-caption="截屏2021-10-27 下午8.29.31" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-27%20%E4%B8%8B%E5%8D%888.29.31.png" alt="截屏2021-10-27 下午8.29.31"></a></p>
+    <content><![CDATA[<html><head></head><body><h3 id="1）前言">1）前言<a class="post-anchor" href="#1）前言"></a></h3><p>​    之前一直被gcc无法编译32位程序而困扰，但是问题一直拖着没有解决，趁着今天比较闲，把这个问题彻底解决一下。</p>
+<h3 id="2-过程">2)过程<a class="post-anchor" href="#2-过程"></a></h3><p>​    首先我们尝试编译32位程序，gcc报错：<a href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-27%20%E4%B8%8B%E5%8D%888.29.31.png" data-caption="截屏2021-10-27 下午8.29.31" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-27%20%E4%B8%8B%E5%8D%888.29.31.png" alt="截屏2021-10-27 下午8.29.31"></a></p>
 <p>​    缺少头文件，实则是没有安装多架构gcc。</p>
 <p>​    试图安装，失败，报错如下：<a href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-27%20%E4%B8%8B%E5%8D%888.30.23.png" data-caption="截屏2021-10-27 下午8.30.23" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-27%20%E4%B8%8B%E5%8D%888.30.23.png" alt="截屏2021-10-27 下午8.30.23"></a></p>
 <p>​    这里有个坑了我好久的东西，就是这个报错</p>
