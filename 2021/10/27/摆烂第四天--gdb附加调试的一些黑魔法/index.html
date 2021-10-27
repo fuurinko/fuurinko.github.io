@@ -29,7 +29,7 @@
     
     <div id="post-toc" class="animated hiddenToc hide">
       <span class="title">Toc</span>
-      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-text"></span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1%EF%BC%89abstract"><span class="toc-text">1）abstract</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2%EF%BC%89%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2-cctf-pwn3"><span class="toc-text">2）格式化字符串-cctf-pwn3</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1%EF%BC%89pause%EF%BC%88p%EF%BC%89%E5%AF%BC%E8%87%B4ERROR-Could-not-find-ELF-base"><span class="toc-text">1）pause（p）导致ERROR: Could not find ELF base</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3%EF%BC%89-kernel-vsyscall%EF%BC%9F"><span class="toc-text">3）__kernel_vsyscall？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%EF%BC%89%E5%8F%82%E8%80%83"><span class="toc-text">）参考</span></a>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1%EF%BC%89abstract"><span class="toc-text">1）abstract</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2%EF%BC%89%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2-cctf-pwn3"><span class="toc-text">2）格式化字符串-cctf-pwn3</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1%EF%BC%89pause%EF%BC%88p%EF%BC%89%E5%AF%BC%E8%87%B4ERROR-Could-not-find-ELF-base"><span class="toc-text">1）pause（p）导致ERROR: Could not find ELF base</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3%EF%BC%89-kernel-vsyscall%EF%BC%9F"><span class="toc-text">3）__kernel_vsyscall？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%EF%BC%89%E5%8F%82%E8%80%83"><span class="toc-text">）参考</span></a></li></ol>
     </div>
     
     <div id="fixed-menu-wrap">
@@ -179,8 +179,8 @@
       <div>
       </div>
     </div>
-    <html><head></head><body><h3 id=""><a class="post-anchor" href="#"></a></h3><h2 id="1）abstract">1）abstract<a class="post-anchor" href="#1）abstract"></a></h2><p>​    这个part主要综合了一些奇怪的调试中遇到的问题，不定期更新。</p>
-<h2 id="2）格式化字符串-cctf-pwn3">2）格式化字符串-cctf-pwn3<a class="post-anchor" href="#2）格式化字符串-cctf-pwn3"></a></h2><h3 id="1）pause（p）导致ERROR-Could-not-find-ELF-base">1）pause（p）导致ERROR: Could not find ELF base<a class="post-anchor" href="#1）pause（p）导致ERROR-Could-not-find-ELF-base"></a></h3><p>​    在开始动调这个exp的时候，发现一个很奇怪的点就是如果下的断点的模式是pause（p），（这个是我以前瞎几把写的，但是那时候一直没问题，所以就养成了习惯，但是现在发现果然是非常不好的习惯捏），那么程序会异常退出，大概是这样：</p>
+    <html><head></head><body><h2 id="1）abstract">1）abstract<a class="post-anchor" href="#1）abstract"></a></h2><p>​    这个part主要综合了一些奇怪的调试中遇到的问题，不定期更新。</p>
+<h2 id="2）格式化字符串-cctf-pwn3">2）格式化字符串-cctf-pwn3<a class="post-anchor" href="#2）格式化字符串-cctf-pwn3"></a></h2><h3 id="1）pause（p）导致ERROR-Could-not-find-ELF-base">1）pause（p）导致ERROR: Could not find ELF base<a class="post-anchor" href="#1）pause（p）导致ERROR-Could-not-find-ELF-base"></a></h3><p>​    在开始动调这个exp的时候，发现一个很奇怪的点就是如果下的断点的模式gdb.attach(sh)，那么程序会异常退出，大概是这样：</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">Attaching to program: /home/rin/pwn/ctf-wiki/format/cctf-pwn3/pwn3, process <span class="token number">27837</span>
 Reading symbols from /lib/i386-linux-gnu/libc.so.6<span class="token punctuation">..</span>.Reading symbols from /usr/lib/debug//lib/i386-linux-gnu/libc-2.27.so<span class="token punctuation">..</span>.done.
 ERROR: Could not <span class="token function">find</span> ELF base<span class="token operator">!</span>
@@ -214,10 +214,10 @@ ERROR: Could not <span class="token function">find</span> ELF base<span class="t
 <p>首先需要知道这个报错的原因。</p>
 <p>虽然我并没有查到<code>ERROR: Could not find ELF base!</code>这个报错发生的直接trigger，但是很显然这个报错发生是因为程序进程中止，因此无法找到elf base。</p>
 <p>那么进程中止的原因何在？</p>
-<p>如果只是输入pause（），那么程序会断在<code>__kernel_vsyscall</code>这个函数上，原因我们稍后讨论。</p>
-<p>所以现在讨论的其实是pause（）与pause（p）的差别。</p>
-<p>其实在任何资料上都很难找到pause(p)这一用法，但是我敢肯定我知道这一用法并不是我瞎编，而是看了某一篇垃圾文章的后遗症，而我要做的就是搞清楚，pause（p）这个毒瘤对我的系统做了什么，导致进程意外退出。</p>
-<h3 id="3）-kernel-vsyscall？">3）__kernel_vsyscall？<a class="post-anchor" href="#3）-kernel-vsyscall？"></a></h3><p>​    上一个问题中提到，如果我们只是输入pause（），那么程序会断在<code>__kernel_vsyscall</code>这个函数上。遇见这个函数也是不止一次了，但是从未想过要了解它，今天我决定一探究竟。</p>
+<p>如果只是输入gdb.attach()，那么程序会断在<code>__kernel_vsyscall</code>这个函数上，原因我们稍后讨论。</p>
+<p>所以现在讨论的其实是gdb.attach(）与gdb.attach(sh)的差别。</p>
+<p>gdb.attach(sh)这一用法，理论上是没有问题的，我看网上很多人都是这么做并且没有报错，但我要做的是搞清楚，gdb.attach(sh)对我的系统做了什么，导致进程意外退出。</p>
+<h3 id="3）-kernel-vsyscall？">3）__kernel_vsyscall？<a class="post-anchor" href="#3）-kernel-vsyscall？"></a></h3><p>​    上一个问题中提到，如果我们只是输入gdb.attach()，那么程序会断在<code>__kernel_vsyscall</code>这个函数上。遇见这个函数也是不止一次了，但是从未想过要了解它，今天我决定一探究竟。</p>
 <p>​    我们期望我们的进程暂停在puts payload之前，实际上确实，在此之前，exp没几乎没有任何与远端的io交互，所以断在奇怪的地方也可以理解，那么<code>__kernel_vsyscall</code>是一个怎样的函数，为什么偏偏就断在它的身上呢？ </p>
 <p>​    在stackoverflow上，我们能够看出一些端倪。</p>
 <blockquote>

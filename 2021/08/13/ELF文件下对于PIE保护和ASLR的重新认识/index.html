@@ -16,7 +16,7 @@
     <meta name="description" content="" />
     
     <title>
-      Tcache利用 - Rin777
+      ELF文件下对于PIE保护和ASLR的重新认识 - Rin777
     </title>
     <link rel="manifest" href="/manifest.json" />
     <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon" />
@@ -29,7 +29,7 @@
     
     <div id="post-toc" class="animated hiddenToc hide">
       <span class="title">Toc</span>
-      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Tcache-%E5%88%A9%E7%94%A8"><span class="toc-text">Tcache 利用</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%BC%8F%E6%B4%9E%E7%82%B9"><span class="toc-text">漏洞点</span></a></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-text"></span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ELF%E6%96%87%E4%BB%B6%E4%B8%8B%E5%AF%B9%E4%BA%8EPIE%E4%BF%9D%E6%8A%A4%E5%92%8CASLR%E7%9A%84%E9%87%8D%E6%96%B0%E8%AE%A4%E8%AF%86"><span class="toc-text">ELF文件下对于PIE保护和ASLR的重新认识</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#0%EF%BC%89"><span class="toc-text">0）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1%EF%BC%89"><span class="toc-text">1）</span></a></li></ol></li></ol>
     </div>
     
     <div id="fixed-menu-wrap">
@@ -163,7 +163,7 @@
         <article class="post-entry">
     <div class="header">
       
-      <div class="title">Tcache利用</div>
+      <div class="title">ELF文件下对于PIE保护和ASLR的重新认识</div>
       <div class="meta">
         <span class="item">
           <span class="iconfont icon-time-circle"></span>
@@ -179,39 +179,14 @@
       <div>
       </div>
     </div>
-    <html><head></head><body><h3 id="Tcache-利用">Tcache 利用<a class="post-anchor" href="#Tcache-利用"></a></h3><p>不是学习不是学习不是学习，</p>
-<p>例题是lctf2018的easyheap。</p>
-<h4 id="漏洞点">漏洞点<a class="post-anchor" href="#漏洞点"></a></h4><p>一个又明显又不明显的漏洞、来自于输入后会把chunk_ptr置为0。</p>
-<p>然后联想到malloc的内存分配机制，如果我们malloc一个16*n+8型的chunk，由于ptmalloc的内存复用机制，我们可以利用这个置零的漏洞使得物理相邻的下一个chunk的prevsize位包括previnuse位为0。然后构造堆叠。</p>
-<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">unsigned</span> __int64 __fastcall <span class="token function">sub_BEC</span><span class="token punctuation">(</span>_BYTE <span class="token operator">*</span>a1<span class="token punctuation">,</span> <span class="token keyword">int</span> a2<span class="token punctuation">)</span>
-<span class="token punctuation">{</span>
-  <span class="token keyword">signed</span> <span class="token keyword">int</span> v3<span class="token punctuation">;</span> <span class="token comment">// [rsp+14h] [rbp-Ch]</span>
-  <span class="token keyword">unsigned</span> __int64 v4<span class="token punctuation">;</span> <span class="token comment">// [rsp+18h] [rbp-8h]</span>
-
-  v4 <span class="token operator">=</span> <span class="token function">__readfsqword</span><span class="token punctuation">(</span><span class="token number">0x28u</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  v3 <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
-  <span class="token keyword">if</span> <span class="token punctuation">(</span> a2 <span class="token punctuation">)</span>
-  <span class="token punctuation">{</span>
-    <span class="token keyword">while</span> <span class="token punctuation">(</span> <span class="token number">1</span> <span class="token punctuation">)</span>
-    <span class="token punctuation">{</span>
-      <span class="token function">read</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>a1<span class="token punctuation">[</span>v3<span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token number">1uLL</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-      <span class="token keyword">if</span> <span class="token punctuation">(</span> a2 <span class="token operator">-</span> <span class="token number">1</span> <span class="token operator">&lt;</span> <span class="token punctuation">(</span><span class="token keyword">unsigned</span> <span class="token keyword">int</span><span class="token punctuation">)</span>v3 <span class="token operator">||</span> <span class="token operator">!</span>a1<span class="token punctuation">[</span>v3<span class="token punctuation">]</span> <span class="token operator">||</span> a1<span class="token punctuation">[</span>v3<span class="token punctuation">]</span> <span class="token operator">==</span> <span class="token number">10</span> <span class="token punctuation">)</span>
-        <span class="token keyword">break</span><span class="token punctuation">;</span>
-      <span class="token operator">++</span>v3<span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-    a1<span class="token punctuation">[</span>v3<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
-    a1<span class="token punctuation">[</span>a2<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span><span class="token comment">//loophole</span>
-  <span class="token punctuation">}</span>
-  <span class="token keyword">else</span>
-  <span class="token punctuation">{</span>
-    <span class="token operator">*</span>a1 <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
-  <span class="token punctuation">}</span>
-  <span class="token keyword">return</span> <span class="token function">__readfsqword</span><span class="token punctuation">(</span><span class="token number">0x28u</span><span class="token punctuation">)</span> <span class="token operator">^</span> v4<span class="token punctuation">;</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>然后又注意到我们最多只能分配十个堆块，除去需要填满Tcache的七个堆块，也就是我们只能分配十个相同大小的堆块。</p>
-<p>在完成这道题之前我们需要先理解unsortedbin 泄漏libc的原理。</p>
-<p>包括ciscn lonelywolf也是利用到了这一点。</p>
+    <html><head></head><body><h3 id=""><a class="post-anchor" href="#"></a></h3><h3 id="ELF文件下对于PIE保护和ASLR的重新认识">ELF文件下对于PIE保护和ASLR的重新认识<a class="post-anchor" href="#ELF文件下对于PIE保护和ASLR的重新认识"></a></h3><h4 id="0）">0）<a class="post-anchor" href="#0）"></a></h4><p>​    复现红色高跟鞋的时候，在ida修复swithc结构的时候碰见了一个问题。因为题目的源文件是有pie保护的，所以ida中的地址是很难看的随机化模式。虽然这些随机化的地址对于我们patch文件毫无影响，但是就是突发奇想，看看能不能找到方法来通过patch将elf文件的pie保护给禁用。</p>
+<h4 id="1）">1）<a class="post-anchor" href="#1）"></a></h4><p>​    如果用010editor打开一个PE文件，我们能够很方便的通过修改PE头来禁用掉Windows程序的ASLR保护。这是因为程序本身其实并不是位置无关的。</p>
+<p>ASLR在PE文件上的开启与否实际上就是PE头上标识符的区分，总的来说ASLR是操作系统的功能，而不是程序本身的特性，以ASLR ON 编译，也只是给程序加上了能被ASLR保护识别的标识符。所以我们只需要patch掉这个标识符，就能够改变程序的地址随机化状态。</p>
+<p>也正是在寻找方法的过程中，我逐渐认识到虽然PIE保护和ASLR表现形式都是地址随机化，但是两者的原理以及实现的方式并不一样，甚至大相径庭。</p>
+<p>在维基百科上，我们能够清楚地看到PIE的全称是Position-independence Executable，位置无关可执行文件。</p>
+<p>这个概念并不是很常见，相对更为常见的是PIC，Position-independence Code，位置无关代码。</p>
+<p>PIC和PIE只差了一个字母，意思也相近。但PIC更多的是在重定位中被提及。源码通过汇编器生成可重定位目标文件，此时它的代码就是位置无关，从0开始的，PIE和PIC的概念相近，当编译完成，可执行文件的便是位置无关了，我们无法改变这一点，也就是说，被PIE保护的文件，并不是通过给头文件加上标识符，使系统开启或关闭随机，而是文件本身便是位置无关吗，是随机的。</p>
+<p>​    然而，虽然文件本身是位置无关的，但是实际地址是否随机，还是要看进程中aslr是否开启，如果将进程aslr关闭，那么调试时我们看到的地址依旧不是随机的。这里主要涉及到重定位的相关知识，之后会写一篇笔记来试图深入系统重定位过程与地址随机化之间的关系。</p>
 </body></html>
 
   
@@ -238,12 +213,12 @@
   <div class="post-guide">
     <div class="item left">
         
-          <a href="../../17/ubuntu%E5%8A%A0%E8%BD%BD%E4%B8%8D%E5%90%8C%E7%89%88%E6%9C%AClibc/">ubuntu加载不同版本libc</a>
+          <a href="../../17/Tcache%E5%AD%A6%E4%B9%A0/">Tcahce学习</a>
         
     </div>
     <div class="item right">
         
-          <a href="../../10/%E8%B0%83%E8%AF%95%E5%99%A8%E6%96%AD%E7%82%B9%E5%8E%9F%E7%90%86/">调试器断点原理</a>
+          <a href="../../09/io_file/">IO_FILE学习</a>
         
     </div>
   </div>

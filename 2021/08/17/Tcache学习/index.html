@@ -29,7 +29,7 @@
     
     <div id="post-toc" class="animated hiddenToc hide">
       <span class="title">Toc</span>
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text"></span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Tcahce%E5%AD%A6%E4%B9%A0"><span class="toc-text">Tcahce学习</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#0%EF%BC%89review"><span class="toc-text">0）review</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1%EF%BC%89%E6%BC%8F%E6%B4%9E%E7%82%B9"><span class="toc-text">1）漏洞点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2%EF%BC%89%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8"><span class="toc-text">2）漏洞利用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1%EF%BC%89Tcache-double-free"><span class="toc-text">1）Tcache double free</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-29%E4%B8%8BTcahce-double-free%E7%9A%84%E6%A3%80%E6%B5%8B"><span class="toc-text">2.29下Tcahce double free的检测</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%B0%83%E8%AF%95"><span class="toc-text">调试</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-text">参考</span></a></li></ol></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text"></span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Tcahce%E5%AD%A6%E4%B9%A0"><span class="toc-text">Tcahce学习</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#0%EF%BC%89review"><span class="toc-text">0）review</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1%EF%BC%89%E6%BC%8F%E6%B4%9E%E7%82%B9"><span class="toc-text">1）漏洞点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2%EF%BC%89%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8"><span class="toc-text">2）漏洞利用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1%EF%BC%89Tcache-double-free"><span class="toc-text">1）Tcache double free</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-29%E4%B8%8BTcahce-double-free%E7%9A%84%E6%A3%80%E6%B5%8B"><span class="toc-text">2.29下Tcahce double free的检测</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%B0%83%E8%AF%95"><span class="toc-text">调试</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Tcache-%E5%88%A9%E7%94%A8"><span class="toc-text">Tcache 利用</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%BC%8F%E6%B4%9E%E7%82%B9"><span class="toc-text">漏洞点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-text">参考</span></a></li></ol></li></ol></li></ol>
     </div>
     
     <div id="fixed-menu-wrap">
@@ -375,6 +375,39 @@ show<span class="token punctuation">(</span><span class="token number">0</span><
 <p>然后比较关键的就是前面对于Tcache 检测的绕过以及修改Tcache控制区域来构造unsorted’bin。</p>
 <h4 id="调试">调试<a class="post-anchor" href="#调试"></a></h4><p>接下来是具体的调试部分，我力争把每道题都完整地调出来，只清楚原理不能实战是没有任何意义的。</p>
 <p>但是我们首先就是要解决libc的问题。虽然我们已经找到解决问题的方法，但是中途是否会出现其他的问题这个还不得而知。</p>
+<h3 id="Tcache-利用">Tcache 利用<a class="post-anchor" href="#Tcache-利用"></a></h3><p>不是学习不是学习不是学习，</p>
+<p>例题是lctf2018的easyheap。</p>
+<h4 id="漏洞点">漏洞点<a class="post-anchor" href="#漏洞点"></a></h4><p>一个又明显又不明显的漏洞、来自于输入后会把chunk_ptr置为0。</p>
+<p>然后联想到malloc的内存分配机制，如果我们malloc一个16*n+8型的chunk，由于ptmalloc的内存复用机制，我们可以利用这个置零的漏洞使得物理相邻的下一个chunk的prevsize位包括previnuse位为0。然后构造堆叠。</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">unsigned</span> __int64 __fastcall <span class="token function">sub_BEC</span><span class="token punctuation">(</span>_BYTE <span class="token operator">*</span>a1<span class="token punctuation">,</span> <span class="token keyword">int</span> a2<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+  <span class="token keyword">signed</span> <span class="token keyword">int</span> v3<span class="token punctuation">;</span> <span class="token comment">// [rsp+14h] [rbp-Ch]</span>
+  <span class="token keyword">unsigned</span> __int64 v4<span class="token punctuation">;</span> <span class="token comment">// [rsp+18h] [rbp-8h]</span>
+
+  v4 <span class="token operator">=</span> <span class="token function">__readfsqword</span><span class="token punctuation">(</span><span class="token number">0x28u</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  v3 <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span> a2 <span class="token punctuation">)</span>
+  <span class="token punctuation">{</span>
+    <span class="token keyword">while</span> <span class="token punctuation">(</span> <span class="token number">1</span> <span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+      <span class="token function">read</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>a1<span class="token punctuation">[</span>v3<span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token number">1uLL</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token keyword">if</span> <span class="token punctuation">(</span> a2 <span class="token operator">-</span> <span class="token number">1</span> <span class="token operator">&lt;</span> <span class="token punctuation">(</span><span class="token keyword">unsigned</span> <span class="token keyword">int</span><span class="token punctuation">)</span>v3 <span class="token operator">||</span> <span class="token operator">!</span>a1<span class="token punctuation">[</span>v3<span class="token punctuation">]</span> <span class="token operator">||</span> a1<span class="token punctuation">[</span>v3<span class="token punctuation">]</span> <span class="token operator">==</span> <span class="token number">10</span> <span class="token punctuation">)</span>
+        <span class="token keyword">break</span><span class="token punctuation">;</span>
+      <span class="token operator">++</span>v3<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    a1<span class="token punctuation">[</span>v3<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    a1<span class="token punctuation">[</span>a2<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span><span class="token comment">//loophole</span>
+  <span class="token punctuation">}</span>
+  <span class="token keyword">else</span>
+  <span class="token punctuation">{</span>
+    <span class="token operator">*</span>a1 <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+  <span class="token keyword">return</span> <span class="token function">__readfsqword</span><span class="token punctuation">(</span><span class="token number">0x28u</span><span class="token punctuation">)</span> <span class="token operator">^</span> v4<span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>然后又注意到我们最多只能分配十个堆块，除去需要填满Tcache的七个堆块，也就是我们只能分配十个相同大小的堆块。</p>
+<p>在完成这道题之前我们需要先理解unsortedbin 泄漏libc的原理。</p>
+<p>包括ciscn lonelywolf也是利用到了这一点。</p>
 <h4 id="参考">参考<a class="post-anchor" href="#参考"></a></h4><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/A951860555/article/details/116910945">2021第十四届全国大学生信息安全竞赛WP（CISCN）– pwn部分</a></p>
 <p><a target="_blank" rel="noopener" href="https://blog.csdn.net/chennbnbnb/article/details/109284780">glibc2.31下的新double free手法/字节跳动pwn题gun题解</a></p>
 <p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1Sy4y1W7h2">CISCN2021 lonelywolf</a></p>
@@ -404,12 +437,12 @@ show<span class="token punctuation">(</span><span class="token number">0</span><
   <div class="post-guide">
     <div class="item left">
         
-          <a href="../../20/main_arana%20%E4%B8%8E%E5%A4%9A%E7%BA%BF%E7%A8%8B/">main_arena与多线程</a>
+          <a href="../ubuntu%E5%8A%A0%E8%BD%BD%E4%B8%8D%E5%90%8C%E7%89%88%E6%9C%AClibc/">ubuntu加载不同版本libc</a>
         
     </div>
     <div class="item right">
         
-          <a href="../ubuntu%E5%8A%A0%E8%BD%BD%E4%B8%8D%E5%90%8C%E7%89%88%E6%9C%AClibc/">ubuntu加载不同版本libc</a>
+          <a href="../../13/ELF%E6%96%87%E4%BB%B6%E4%B8%8B%E5%AF%B9%E4%BA%8EPIE%E4%BF%9D%E6%8A%A4%E5%92%8CASLR%E7%9A%84%E9%87%8D%E6%96%B0%E8%AE%A4%E8%AF%86/">ELF文件下对于PIE保护和ASLR的重新认识</a>
         
     </div>
   </div>

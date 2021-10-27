@@ -316,6 +316,26 @@
 <p>首先我们确定字符串偏移。</p>
 <h5 id="gdb动调的一些坑">gdb动调的一些坑<a class="post-anchor" href="#gdb动调的一些坑"></a></h5><p>用wiki给的exp动调一下，把断点下在发送payload之前。如果调试不当可能会造成<code> ERROR: Could not find ELF base!</code></p>
 <p>原因详见<a href="https://fuurinko.github.io/2021/10/27/%E6%91%86%E7%83%82%E7%AC%AC%E5%9B%9B%E5%A4%A9--gdb%E9%99%84%E5%8A%A0%E8%B0%83%E8%AF%95%E7%9A%84%E4%B8%80%E4%BA%9B%E9%BB%91%E9%AD%94%E6%B3%95/">摆烂第四天–gdb附加调试的一些黑魔法</a>的2.1节。</p>
+<p>因为一下断点，程序就异常退出，所以这道题又非常不幸地沦为了看，而不是调。</p>
+<p>等问题解决了在再来调。</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">tmp <span class="token operator">=</span> <span class="token string">'sysbdmin'</span>
+name <span class="token operator">=</span> <span class="token string">""</span>
+<span class="token keyword">for</span> i <span class="token keyword">in</span> tmp<span class="token punctuation">:</span>
+    name <span class="token operator">+=</span> <span class="token builtin">chr</span><span class="token punctuation">(</span><span class="token builtin">ord</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span> <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span>
+
+
+<span class="token comment">## password</span>
+<span class="token keyword">def</span> <span class="token function">password</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    sh<span class="token punctuation">.</span>recvuntil<span class="token punctuation">(</span><span class="token string">'Name (ftp.hacker.server:Rainism):'</span><span class="token punctuation">)</span>
+    sh<span class="token punctuation">.</span>sendline<span class="token punctuation">(</span>name<span class="token punctuation">)</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>绕过密码的关键函数。其实绕过的核心思路就是strcmp的返回值，strcmp是以asc2码做比较的，然后如果str1比str2小，则返回一个负值。题目的检测显然需要我们返回一个负值，所以我们需要输入比sysbdmin的asc2小，但字符长度相等的字符。</p>
+<p>这样就有了代码中的公式。</p>
+<p>当我们绕过了密码，然后就需要打印puts函数的真实地址。</p>
+<p>打印真实地址，第一步需要找到格式化字符串在栈中的偏移。</p>
+<p>关于这个偏移的寻找，其实背公式的话非常简单，但是我们需要了解其中的原理。在上一个简单的例子中我们并没有对这个原理进行一个详细的说明，是因为题目步骤实在过于简单，但是如果碰到较为复杂的题目，盲人摸象并不可取。</p>
+<p>原理参见：</p>
 <h2 id="参考">参考<a class="post-anchor" href="#参考"></a></h2><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/79504011">缓冲区机制详解</a></p>
 <p><a target="_blank" rel="noopener" href="http://c.biancheng.net/cpp/html/2506.html">C语言fflush()函数：清空文件缓冲区（或标准输入输出缓冲区）</a></p>
 <p><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/38685724/difference-between-ms-and-s-scanf">difference between %ms and %s scanf</a></p>
