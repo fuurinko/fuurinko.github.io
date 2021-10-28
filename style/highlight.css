@@ -1,170 +1,100 @@
 /*
+  Theme: StackOverflow Dark
+  Description: Dark theme as used on stackoverflow.com
+  Author: stackoverflow.com
+  Maintainer: @Hirse
+  Website: https://github.com/StackExchange/Stacks
+  License: MIT
+  Updated: 2021-05-15
 
-Night Owl for highlight.js (c) Carl Baxter <carl@cbax.tech>
-
-An adaptation of Sarah Drasner's Night Owl VS Code Theme 
-https://github.com/sdras/night-owl-vscode-theme 
-
-Copyright (c) 2018 Sarah Drasner
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-
+  Updated for @stackoverflow/stacks v0.64.0
+  Code Blocks: /blob/v0.64.0/lib/css/components/_stacks-code-blocks.less
+  Colors: /blob/v0.64.0/lib/css/exports/_stacks-constants-colors.less
 */
 .hljs {
-  display: block;
-  overflow-x: auto;
-  padding: 0.5em;
-  background: #011627;
-  color: #d6deeb;
-}
-/* General Purpose */
-.hljs-keyword {
-  color: #c792ea;
-  font-style: italic;
-}
-.hljs-built_in {
-  color: #addb67;
-  font-style: italic;
-}
-.hljs-type {
-  color: #82aaff;
-}
-.hljs-literal {
-  color: #ff5874;
-}
-.hljs-number {
-  color: #f78c6c;
-}
-.hljs-regexp {
-  color: #5ca7e4;
-}
-.hljs-string {
-  color: #ecc48d;
+/* var(--highlight-color) */
+  color: #fff;
+/* var(--highlight-bg) */
+  background: #1c1b1b;
 }
 .hljs-subst {
-  color: #d3423e;
+/* var(--highlight-color) */
+  color: #fff;
 }
-.hljs-symbol {
-  color: #82aaff;
-}
-.hljs-class {
-  color: #ffcb8b;
-}
-.hljs-function {
-  color: #82aaff;
-}
-.hljs-title {
-  color: #dcdcaa;
-  font-style: italic;
-}
-.hljs-params {
-  color: #7fdbca;
-}
-/* Meta */
 .hljs-comment {
-  color: #637777;
-  font-style: italic;
+/* var(--highlight-comment) */
+  color: #999;
 }
-.hljs-doctag {
-  color: #7fdbca;
-}
-.hljs-meta {
-  color: #82aaff;
-}
-.hljs-meta-keyword {
-  color: #82aaff;
-}
-.hljs-meta-string {
-  color: #ecc48d;
-}
-/* Tags, attributes, config */
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-meta .hljs-keyword,
+.hljs-doctag,
 .hljs-section {
-  color: #82b1ff;
-}
-.hljs-tag,
-.hljs-name,
-.hljs-builtin-name {
-  color: #7fdbca;
+/* var(--highlight-keyword) */
+  color: #88aece;
 }
 .hljs-attr {
-  color: #7fdbca;
+/* var(--highlight-attribute); */
+  color: #88aece;
 }
 .hljs-attribute {
-  color: #80cbc4;
+/* var(--highlight-symbol) */
+  color: #c59bc1;
 }
-.hljs-variable {
-  color: #addb67;
+.hljs-name,
+.hljs-type,
+.hljs-number,
+.hljs-selector-id,
+.hljs-quote,
+.hljs-template-tag {
+/* var(--highlight-namespace) */
+  color: #f08d49;
 }
-/* Markup */
-.hljs-bullet {
-  color: #d9f5dd;
+.hljs-selector-class {
+/* var(--highlight-keyword) */
+  color: #88aece;
 }
+.hljs-string,
+.hljs-regexp,
+.hljs-symbol,
+.hljs-variable,
+.hljs-template-variable,
+.hljs-link,
+.hljs-selector-attr {
+/* var(--highlight-variable) */
+  color: #b5bd68;
+}
+.hljs-meta,
+.hljs-selector-pseudo {
+/* var(--highlight-keyword) */
+  color: #88aece;
+}
+.hljs-built_in,
+.hljs-title,
+.hljs-literal {
+/* var(--highlight-literal) */
+  color: #f08d49;
+}
+.hljs-bullet,
 .hljs-code {
-  color: #80cbc4;
+/* var(--highlight-punctuation) */
+  color: #ccc;
+}
+.hljs-meta .hljs-string {
+/* var(--highlight-variable) */
+  color: #b5bd68;
+}
+.hljs-deletion {
+/* var(--highlight-deletion) */
+  color: #de7176;
+}
+.hljs-addition {
+/* var(--highlight-addition) */
+  color: #76c490;
 }
 .hljs-emphasis {
-  color: #c792ea;
   font-style: italic;
 }
 .hljs-strong {
-  color: #addb67;
   font-weight: bold;
-}
-.hljs-formula {
-  color: #c792ea;
-}
-.hljs-link {
-  color: #ff869a;
-}
-.hljs-quote {
-  color: #697098;
-  font-style: italic;
-}
-/* CSS */
-.hljs-selector-tag {
-  color: #ff6363;
-}
-.hljs-selector-id {
-  color: #fad430;
-}
-.hljs-selector-class {
-  color: #addb67;
-  font-style: italic;
-}
-.hljs-selector-attr,
-.hljs-selector-pseudo {
-  color: #c792ea;
-  font-style: italic;
-}
-/* Templates */
-.hljs-template-tag {
-  color: #c792ea;
-}
-.hljs-template-variable {
-  color: #addb67;
-}
-/* diff */
-.hljs-addition {
-  color: #addb67;
-  font-style: italic;
-}
-.hljs-deletion {
-  color: rgba(239,83,80,0.565);
-  font-style: italic;
 }
