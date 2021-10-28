@@ -1761,9 +1761,7 @@ show<span class="token punctuation">(</span><span class="token number">0</span><
     <content><![CDATA[<html><head></head><body><p>重点研究如何计算32/64位程序中格式化字符串在栈上的偏移，以及研究自动化求偏移的实现</p>
 <h3 id="1）32位偏移计算原理">1）32位偏移计算原理<a class="post-anchor" href="#1）32位偏移计算原理"></a></h3><p>​    其实这个计算确实是有手就行，只需要在栈上找到对应的格式化字符串，然后数是第几个，再减去返回地址所占的一个位置，就是偏移量。</p>
 <p>​    准确来说应该是格式化字符串在栈上的偏移。</p>
-<h3 id="2）64位偏移计算原理">2）64位偏移计算原理<a class="post-anchor" href="#2）64位偏移计算原理"></a></h3><pre class="line-numbers language-none"><div class="caption"><span>[python] [] [url] [link text]</span></div><code class="language-none">Test()<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<h3 id="3）-pwntools-fmtstr工具">3） pwntools_fmtstr工具<a class="post-anchor" href="#3）-pwntools-fmtstr工具"></a></h3><h3 id="）参考">）参考<a class="post-anchor" href="#）参考"></a></h3><p>​    <a href="https://blog.csdn.net/weixin_43092232/article/details/105647076">格式化字符串利器fmtstr_payload | 攻防世界 pwn进阶区 实时数据监测</a></p>
+<h3 id="2）64位偏移计算原理">2）64位偏移计算原理<a class="post-anchor" href="#2）64位偏移计算原理"></a></h3><h3 id="3）-pwntools-fmtstr工具">3） pwntools_fmtstr工具<a class="post-anchor" href="#3）-pwntools-fmtstr工具"></a></h3><h3 id="）参考">）参考<a class="post-anchor" href="#）参考"></a></h3><p>​    <a href="https://blog.csdn.net/weixin_43092232/article/details/105647076">格式化字符串利器fmtstr_payload | 攻防世界 pwn进阶区 实时数据监测</a></p>
 </body></html>]]></content>
   </entry>
   <entry>
@@ -1818,6 +1816,32 @@ show<span class="token punctuation">(</span><span class="token number">0</span><
 <p>​    一个原因是我骄傲自满了，我确实认为在这一步不会出错，但是实际上问题就是发生在这一步上，另外就是，全英文的屏显，没有人愿意仔细阅读，但是这点没有办法，绝对不可能调成中文，这里只能是说，慢慢看，仔细看 ，然后提升一下英语水平。（但是有一说一，英语母语的人可能都不愿意看吧）</p>
 <h3 id="4）参考">4）参考<a class="post-anchor" href="#4）参考"></a></h3><p><a href="https://blog.csdn.net/White_Idiot/article/details/58348957">【Ubuntu】aptitude命令详解</a></p>
 <p><a href="https://askubuntu.com/questions/223237/unable-to-correct-problems-you-have-held-broken-packages">Unable to correct problems, you have held broken packages</a></p>
+</body></html>]]></content>
+  </entry>
+  <entry>
+    <title>解决hexo无法显示高亮问题</title>
+    <url>/2021/10/28/%E8%A7%A3%E5%86%B3hexo%E6%97%A0%E6%B3%95%E6%98%BE%E7%A4%BA%E9%AB%98%E4%BA%AE%E9%97%AE%E9%A2%98/</url>
+    <content><![CDATA[<html><head></head><body><p>​    博客搭了有快一年了，一直是hexo+git page的配置（不过这个搭配现在绝版了2333），但是一直荒废着，差不多到大一暑假的时候才想起要好好经营。</p>
+<p>​    但是代码高亮这个一直没有解决。</p>
+<p>​    之前我以为是博客主题配置的问题（就是highlight对象的值的问题），但是无论用怎么样的方法都不太行。</p>
+<p>​    在研究代码高亮的过程中，我才知道原来有个项目叫highlight.js,里面有各种各样的代码高亮的css文件。</p>
+<p>​    一开始我是将博客原本的代码高亮的css文件替换成我想要的样式，但是无论替换成什么样式，博客中代码都是蓝色，清一色的蓝色。然后我意识到，这根本不是什么代码高亮的样式，这根本就是，没有代码高亮。</p>
+<p>​    然后我开始在网上寻找解决方案，搜索的关键词是hexo 无法显示代码高亮，辗转来回，找到了一篇文章。</p>
+<p>​    <a href="https://igeek.cloud/2021/01/13/hexo%E4%B8%ADhighlight-js%E4%BB%A3%E7%A0%81%E9%AB%98%E4%BA%AE%E7%9A%84%E4%BF%AE%E6%94%B9%E6%96%B9%E6%B3%95/">hexo中highlight.js代码高亮的修改方法</a></p>
+<p>​    按照文章中的方法，我在主题layout文件夹中的_post.ejs文件随便找了个角落，把</p>
+<pre><code class="html">COPY&lt;!-- Highlight.js --&gt;
+&lt;link rel="stylesheet"
+        href="//highlightjs.org/static/demo/styles/night-owl.css"&gt;
+&lt;script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"&gt;
+&lt;/script&gt;
+&lt;script&gt;
+    hljs.initHighlightingOnLoad();
+&lt;/script
+</code></pre>
+<p>丢了进去。</p>
+<p>​    然后我的博客就成功的显示了代码高亮。</p>
+<p>​    这样看其实看不出什么端倪，具体功能的实现还是要看脚本的内容，但是估计我也看不懂（）。</p>
+<p>​    </p>
 </body></html>]]></content>
   </entry>
 </search>
