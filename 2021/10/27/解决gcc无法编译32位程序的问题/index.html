@@ -65,18 +65,6 @@
           Home
         </a>
         
-        <a href="../../../../archives" class="">
-          Archives
-        </a>
-        
-        <a href="../../../../categories" class="">
-          Categories
-        </a>
-        
-        <a href="../../../../tags" class="">
-          Tags
-        </a>
-        
         <a href="../../../../friends" class="">
           Friends
         </a>
@@ -117,18 +105,6 @@
           
           <a href="../../../../index.html" class="">
             Home
-          </a>
-          
-          <a href="../../../../archives" class="">
-            Archives
-          </a>
-          
-          <a href="../../../../categories" class="">
-            Categories
-          </a>
-          
-          <a href="../../../../tags" class="">
-            Tags
           </a>
           
           <a href="../../../../friends" class="">
@@ -184,15 +160,14 @@
 <p>​    缺少头文件，实则是没有安装多架构gcc。</p>
 <p>​    试图安装，失败，报错如下：<a target="_blank" rel="noopener" href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-27%20%E4%B8%8B%E5%8D%888.30.23.png" data-caption="截屏2021-10-27 下午8.30.23" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-27%20%E4%B8%8B%E5%8D%888.30.23.png" alt="截屏2021-10-27 下午8.30.23"></a></p>
 <p>​    这里有个坑了我好久的东西，就是这个报错</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">E: Unable to correct problems, you have held broken packages.<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
+<p>E: Unable to correct problems, you have held broken packages.</p>
 <p>​    无法修正问题，你持有held broken的软件包。</p>
 <p>​    我一直没有理解正确这个held的意思，我以为是持有的意思，所以一直以来这句话在我眼中的意思是，你已经有这个软件包了，但是你不能安装。</p>
 <p>​    但实际上，但凡熟悉过apt或者dkpg的一些命令，或者但凡对linux文件系统稍微熟悉一点都知道其实hold是为了防止更新不想更新的软件包，而特殊设置的功能。通过apt- mark或者dpkg命令 ，从apt-get中将特定的软件包的更新排除。而这道题的报错就是源于这点–gcc-7-multilib等依赖的软件包版本不对，但是由于held，所以并没有被更新。</p>
 <p>​    但是通过<code>dpkg --get-selections | grep hold</code>指令查找held的软件包，并没有任何结果。</p>
 <p>​    经过各种试错，找到了一个快速解决的方法。</p>
-<pre><code><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">aptitude</span> <span class="token function">install</span> gcc-multilib<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-</code></pre>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">aptitude</span> <span class="token function">install</span> gcc-multilib<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <p><code> aptitude</code>与apt类似，也是包管理器。但是通过<code>aptitude</code>进行包管理，对于软件包依赖问题的处理更加细节。</p>
 <p>​    下面是一些常用的命令</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">aptitude</span> update <span class="token comment">#更新可用的包列表</span>
@@ -232,26 +207,6 @@
 </body></html>
 
   
-    <div class="post-reward">
-    <div id="reward-button">打赏</div>
-      <div id="qr">
-        <div class="wrap">
-            
-            <div class="bg-wrap">
-              <a href="../../../../images/zhifubao.png" target="_block" class="bg" style="background-image:url('/images/zhifubao.png')"></a>
-              支付宝
-            </div>
-            
-            
-            <div class="bg-wrap">
-                <a href="../../../../images/weixin.png" target="_block" class="bg" style="background-image:url('/images/weixin.png')"></a>
-              微信
-            </div>
-            
-        </div>
-      </div>
-    </div>
-  
   <div class="post-guide">
     <div class="item left">
         
@@ -265,17 +220,6 @@
 
   
 
-  <div class="post-copyright">
-    <div class="auth">
-      本文作者：<a href="../../../../https:/fuurinko.github.io">Rin777</a>
-    </div>
-    <div class="link">
-      永久链接：<a href="../../../../https:/fuurinko.github.io">../../../../https:/fuurinko.github.io</a>
-    </div>
-    <div class="declare">
-      版权声明：本文首发于<a href="../../../../https:/fuurinko.github.io">Rin777</a>的博客，转载请注明出处！
-    </div>
-  </div>
 
   <div id="comment"></div>
 
