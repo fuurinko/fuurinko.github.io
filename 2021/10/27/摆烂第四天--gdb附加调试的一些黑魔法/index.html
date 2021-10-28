@@ -29,7 +29,7 @@
     
     <div id="post-toc" class="animated hiddenToc hide">
       <span class="title">Toc</span>
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1%EF%BC%89abstract"><span class="toc-text">1）abstract</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2%EF%BC%89%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2-cctf-pwn3"><span class="toc-text">2）格式化字符串-cctf-pwn3</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1%EF%BC%89pause%EF%BC%88p%EF%BC%89%E5%AF%BC%E8%87%B4ERROR-Could-not-find-ELF-base"><span class="toc-text">1）pause（p）导致ERROR: Could not find ELF base</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3%EF%BC%89-kernel-vsyscall%EF%BC%9F"><span class="toc-text">3）__kernel_vsyscall？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%EF%BC%89%E5%8F%82%E8%80%83"><span class="toc-text">）参考</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1%EF%BC%89abstract"><span class="toc-text">1）abstract</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2%EF%BC%89%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2-cctf-pwn3"><span class="toc-text">2）格式化字符串-cctf-pwn3</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1%EF%BC%89pause%EF%BC%88p%EF%BC%89%E5%AF%BC%E8%87%B4ERROR-Could-not-find-ELF-base"><span class="toc-text">1）pause（p）导致ERROR: Could not find ELF base</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%97%AE%E9%A2%98"><span class="toc-text">问题</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="toc-text">解决方案</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-text">总结</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3%EF%BC%89-kernel-vsyscall%EF%BC%9F"><span class="toc-text">3）__kernel_vsyscall？</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%97%AE%E9%A2%98-1"><span class="toc-text">问题</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%A7%A3%E5%86%B3"><span class="toc-text">解决</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4%EF%BC%89gdb%E9%99%84%E5%8A%A0%E8%B0%83%E8%AF%95%E4%B8%8B%E6%96%AD%E7%82%B9%E7%9A%84%E5%87%A0%E7%A7%8D%E5%A7%BF%E5%8A%BF%E3%80%82"><span class="toc-text">4）gdb附加调试下断点的几种姿势。</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1%EF%BC%89gdb-attach-p"><span class="toc-text">1）gdb.attach(p)</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2%EF%BC%89gdb-attach-p-%E2%80%9Dbreak-lt-func-name-gt-%E2%80%9D"><span class="toc-text">2）gdb.attach(p,”break &lt;func name&gt;”)</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3%EF%BC%89p-gdb-debug-%E2%80%9Celf%E2%80%9D-%E2%80%9Dbreak-lt-func-name-gt-%E2%80%9D"><span class="toc-text">3）p &#x3D; gdb.debug(“elf”,”break &lt;func name&gt;” )</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%EF%BC%89%E5%8F%82%E8%80%83"><span class="toc-text">）参考</span></a></li></ol>
     </div>
     
     <div id="fixed-menu-wrap">
@@ -156,55 +156,52 @@
       </div>
     </div>
     <html><head></head><body><h2 id="1）abstract">1）abstract<a class="post-anchor" href="#1）abstract"></a></h2><p>​    这个part主要综合了一些奇怪的调试中遇到的问题，不定期更新。</p>
-<h2 id="2）格式化字符串-cctf-pwn3">2）格式化字符串-cctf-pwn3<a class="post-anchor" href="#2）格式化字符串-cctf-pwn3"></a></h2><h3 id="1）pause（p）导致ERROR-Could-not-find-ELF-base">1）pause（p）导致ERROR: Could not find ELF base<a class="post-anchor" href="#1）pause（p）导致ERROR-Could-not-find-ELF-base"></a></h3><p>​    在开始动调这个exp的时候，发现一个很奇怪的点就是如果下的断点的模式gdb.attach(sh)，那么程序会异常退出，大概是这样：</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">Attaching to program: /home/rin/pwn/ctf-wiki/format/cctf-pwn3/pwn3, process <span class="token number">27837</span>
-Reading symbols from /lib/i386-linux-gnu/libc.so.6<span class="token punctuation">..</span>.Reading symbols from /usr/lib/debug//lib/i386-linux-gnu/libc-2.27.so<span class="token punctuation">..</span>.done.
-ERROR: Could not <span class="token function">find</span> ELF base<span class="token operator">!</span>
+<h2 id="2）格式化字符串-cctf-pwn3">2）格式化字符串-cctf-pwn3<a class="post-anchor" href="#2）格式化字符串-cctf-pwn3"></a></h2><h3 id="1）pause（p）导致ERROR-Could-not-find-ELF-base">1）pause（p）导致ERROR: Could not find ELF base<a class="post-anchor" href="#1）pause（p）导致ERROR-Could-not-find-ELF-base"></a></h3><h5 id="问题">问题<a class="post-anchor" href="#问题"></a></h5><p>​    在开始动调这个exp的时候，发现一个很奇怪的点就是如果下的断点的模式gdb.attach(sh)，那么程序会异常退出，大概是这样：</p>
+<pre><code class="bash">Attaching to program: /home/rin/pwn/ctf-wiki/format/cctf-pwn3/pwn3, process 27837
+Reading symbols from /lib/i386-linux-gnu/libc.so.6...Reading symbols from /usr/lib/debug//lib/i386-linux-gnu/libc-2.27.so...done.
+ERROR: Could not find ELF base!
 done.
-Reading symbols from /lib/ld-linux.so.2<span class="token punctuation">..</span>.Reading symbols from /usr/lib/debug//lib/i386-linux-gnu/ld-2.27.so<span class="token punctuation">..</span>.done.
+Reading symbols from /lib/ld-linux.so.2...Reading symbols from /usr/lib/debug//lib/i386-linux-gnu/ld-2.27.so...done.
 done.
 Cannot access memory at address 0xf7fad924
 
-warning: Unable to <span class="token function">find</span> dynamic linker breakpoint function.
+warning: Unable to find dynamic linker breakpoint function.
 GDB will be unable to debug shared library initializers
 and track explicitly loaded dynamic code.
-Failed to <span class="token builtin class-name">read</span> a valid object <span class="token function">file</span> image from memory.
-ERROR: Could not <span class="token function">find</span> ELF base<span class="token operator">!</span>
-ERROR: Could not <span class="token function">find</span> ELF base<span class="token operator">!</span>
-ERROR: Could not <span class="token function">find</span> ELF base<span class="token operator">!</span>
-ERROR: Could not <span class="token function">find</span> ELF base<span class="token operator">!</span>
-ERROR: Could not <span class="token function">find</span> ELF base<span class="token operator">!</span>
-ERROR: Could not <span class="token function">find</span> ELF base<span class="token operator">!</span>
-ERROR: Could not <span class="token function">find</span> ELF base<span class="token operator">!</span>
-0xf7f85b59 <span class="token keyword">in</span> ?? <span class="token punctuation">(</span><span class="token punctuation">)</span>
-ERROR: Could not <span class="token function">find</span> ELF base<span class="token operator">!</span>
-ERROR: Could not <span class="token function">find</span> ELF base<span class="token operator">!</span>
-ERROR: Could not <span class="token function">find</span> ELF base<span class="token operator">!</span>
-ERROR: Could not <span class="token function">find</span> ELF base<span class="token operator">!</span>
+Failed to read a valid object file image from memory.
+ERROR: Could not find ELF base!
+ERROR: Could not find ELF base!
+ERROR: Could not find ELF base!
+ERROR: Could not find ELF base!
+ERROR: Could not find ELF base!
+ERROR: Could not find ELF base!
+ERROR: Could not find ELF base!
+0xf7f85b59 in ?? ()
+ERROR: Could not find ELF base!
+ERROR: Could not find ELF base!
+ERROR: Could not find ELF base!
+ERROR: Could not find ELF base!
 
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
+</code></pre>
 <p><a target="_blank" rel="noopener" href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-27%20%E4%B8%8A%E5%8D%8811.17.59.png" data-caption="截屏2021-10-27 上午11.17.59" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-27%20%E4%B8%8A%E5%8D%8811.17.59.png" alt="截屏2021-10-27 上午11.17.59"></a></p>
-<p>首先需要知道这个报错的原因。</p>
-<p>虽然我并没有查到<code>ERROR: Could not find ELF base!</code>这个报错发生的直接trigger，但是很显然这个报错发生是因为程序进程中止，因此无法找到elf base。</p>
-<p>那么进程中止的原因何在？</p>
-<p>如果只是输入gdb.attach()，那么程序会断在<code>__kernel_vsyscall</code>这个函数上，原因我们稍后讨论。</p>
-<p>所以现在讨论的其实是gdb.attach(）与gdb.attach(sh)的差别。</p>
-<p>gdb.attach(sh)这一用法，理论上是没有问题的，我看网上很多人都是这么做并且没有报错，但我要做的是搞清楚，gdb.attach(sh)对我的系统做了什么，导致进程意外退出。</p>
-<h3 id="3）-kernel-vsyscall？">3）__kernel_vsyscall？<a class="post-anchor" href="#3）-kernel-vsyscall？"></a></h3><p>​    上一个问题中提到，如果我们只是输入gdb.attach()，那么程序会断在<code>__kernel_vsyscall</code>这个函数上。遇见这个函数也是不止一次了，但是从未想过要了解它，今天我决定一探究竟。</p>
+<p>​    首先需要知道这个报错的原因。</p>
+<p>​    虽然我并没有查到<code>ERROR: Could not find ELF base!</code>这个报错发生的直接trigger，但是很显然这个报错发生是因为程序进程中止，因此无法找到elf base。</p>
+<p>​    那么进程中止的原因何在？</p>
+<h5 id="解决方案">解决方案<a class="post-anchor" href="#解决方案"></a></h5><p>​     经过大师指点，这个问题其实是因为exp错误（</p>
+<p>​    这里的问题是在断点之后，我引用了未经定义的payload，导致程序异常退出，然后这个退出反映在gdb中则是<code>elf base not found</code>。    </p>
+<h5 id="总结">总结<a class="post-anchor" href="#总结"></a></h5><p>​    如果exp正确，这个报错其实并不会存在。可以反推，如果再次碰到类似的报错，十有八九是exp的问题，而并不能把一切锅推给环境。</p>
+<h3 id="3）-kernel-vsyscall？">3）__kernel_vsyscall？<a class="post-anchor" href="#3）-kernel-vsyscall？"></a></h3><h5 id="问题-1">问题<a class="post-anchor" href="#问题-1"></a></h5><p>​    上一个问题中提到，如果我们只是输入gdb.attach()，那么程序会断在<code>__kernel_vsyscall</code>这个函数上。遇见这个函数也是不止一次了，但是从未想过要了解它，今天我决定一探究竟。</p>
 <p>​    我们期望我们的进程暂停在puts payload之前，实际上确实，在此之前，exp没几乎没有任何与远端的io交互，所以断在奇怪的地方也可以理解，那么<code>__kernel_vsyscall</code>是一个怎样的函数，为什么偏偏就断在它的身上呢？ </p>
-<p>​    在stackoverflow上，我们能够看出一些端倪。</p>
+<h5 id="解决">解决<a class="post-anchor" href="#解决"></a></h5><p>​    在stackoverflow上，我们能够看出一些端倪。</p>
 <blockquote>
 <p>​    <code>__kernel_vsyscal</code> is the method used by linux-gate.so (a part of the Linux kernel) to make a system call using the fastest available method, preferably the <code>sysenter</code> instruction. </p>
 </blockquote>
-<p>这其实就是个系统调用方法，回想一下在srop中的知识点，其实每个系统调用都是一个中断，然后系统切换至内核态进行工作，完成后再切换回用户态，并将结果返回至用户态。</p>
-<p>所以出现   <code>__kernel_vsyscal</code> 意味着此刻程序正在进行系统调用。</p>
-<p>关于系统调用我想又可以写一篇专门的博客来研究，这里就不费笔墨了，详情可见：</p>
+<p>​    这其实就是个系统调用方法，回想一下在srop中的知识点，其实每个系统调用都是一个中断，然后系统切换至内核态进行工作，完成后再切换回用户态，并将结果返回至用户态。</p>
+<p>​    所以出现   <code>__kernel_vsyscal</code> 意味着此刻程序正在进行系统调用。我们同时可以注意到，当  <code>__kernel_vsyscal</code> 函数执行完成，下一个函数则是<code>read</code>函数，也符合我们程序的逻辑–一个菜单题，exp中任何一条语句的结束都将使得函数执行流回到main函数，等待我们的指令。</p>
 <p>当然要结束这个函数我们只需要gdb finish。</p>
 <p>或者直接使用gdb.attach(sh,”break xxx”)。</p>
-<p>​    </p>
+<p>关于系统调用我想又可以写一篇专门的博客来研究，这里就不费笔墨了，详情可见：</p>
+<h3 id="4）gdb附加调试下断点的几种姿势。">4）gdb附加调试下断点的几种姿势。<a class="post-anchor" href="#4）gdb附加调试下断点的几种姿势。"></a></h3><h5 id="1）gdb-attach-p">1）gdb.attach(p)<a class="post-anchor" href="#1）gdb-attach-p"></a></h5><h5 id="2）gdb-attach-p-”break-lt-func-name-gt-”">2）gdb.attach(p,”break &lt;func name&gt;”)<a class="post-anchor" href="#2）gdb-attach-p-”break-lt-func-name-gt-”"></a></h5><h5 id="3）p-gdb-debug-“elf”-”break-lt-func-name-gt-”">3）p = gdb.debug(“elf”,”break &lt;func name&gt;” )<a class="post-anchor" href="#3）p-gdb-debug-“elf”-”break-lt-func-name-gt-”"></a></h5><p>​    </p>
 <p>​    </p>
 <p>​    </p>
 <h2 id="）参考">）参考<a class="post-anchor" href="#）参考"></a></h2><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/fjh1997/article/details/105434992">如何做到一边使用pwntools一边使用gdb下断点到main函数前</a></p>
@@ -219,7 +216,7 @@ ERROR: Could not <span class="token function">find</span> ELF base<span class="t
     </div>
     <div class="item right">
         
-          <a href="../../23/%E6%91%86%E7%83%82%E7%AC%AC%E4%B8%89%E5%A4%A9--%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8/">重探fmt</a>
+          <a href="../../23/%E6%91%86%E7%83%82%E7%AC%AC%E4%B8%89%E5%A4%A9--%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8/">格式化字符串漏洞学习</a>
         
     </div>
   </div>

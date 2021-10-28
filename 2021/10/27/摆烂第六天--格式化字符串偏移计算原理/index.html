@@ -158,7 +158,35 @@
     <html><head></head><body><p>重点研究如何计算32/64位程序中格式化字符串在栈上的偏移，以及研究自动化求偏移的实现</p>
 <h3 id="1）32位偏移计算原理">1）32位偏移计算原理<a class="post-anchor" href="#1）32位偏移计算原理"></a></h3><p>​    其实这个计算确实是有手就行，只需要在栈上找到对应的格式化字符串，然后数是第几个，再减去返回地址所占的一个位置，就是偏移量。</p>
 <p>​    准确来说应该是格式化字符串在栈上的偏移。</p>
-<h3 id="2）64位偏移计算原理">2）64位偏移计算原理<a class="post-anchor" href="#2）64位偏移计算原理"></a></h3><h3 id="3）-pwntools-fmtstr工具">3） pwntools_fmtstr工具<a class="post-anchor" href="#3）-pwntools-fmtstr工具"></a></h3><h3 id="）参考">）参考<a class="post-anchor" href="#）参考"></a></h3><p>​    <a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43092232/article/details/105647076">格式化字符串利器fmtstr_payload | 攻防世界 pwn进阶区 实时数据监测</a></p>
+<p>​    原理也比较简单。x86架构下，格式化字符串时通过栈传递的。</p>
+<p>​    然后联想一下函数调用栈的知识点，格式化字符串本身和printf的参数一样，从右到左依次被压栈。</p>
+<p>​    举一个例子，源码来源于<a target="_blank" rel="noopener" href="https://firmianay.gitbooks.io/ctf-all-in-one/content/doc/3.1.1_format_string.html">3.1.1 格式化字符串漏洞</a></p>
+<pre><code class="c">//test1.c
+#include&lt;stdio.h&gt;
+void main() {
+    printf("%s %d %s", "Hello World!", 233, "\n");
+}
+</code></pre>
+<p>​    这个程序没有任何的漏洞，只是因为非常简单直观，拿来研究printf函数参数的传参。</p>
+<p>​    我们以32位编译。</p>
+<pre><code class="bash">gcc -m32 test1.c -o test1
+</code></pre>
+<p>​    在main函数处下一个断点。然后执行到断点处。</p>
+<p><a target="_blank" rel="noopener" href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-28%20%E4%B8%8B%E5%8D%8811.35.36.png" data-caption="截屏2021-10-28 下午11.35.36" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-28%20%E4%B8%8B%E5%8D%8811.35.36.png" alt="截屏2021-10-28 下午11.35.36"></a></p>
+<p>​    随便多单步几次，可以看到push指令，此刻主调函数已经开始向栈中压入参数了，从<code>stack</code></p>
+<p>部分我们可以看到，此时栈里已经有一个参数”\n”。</p>
+<p><a target="_blank" rel="noopener" href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-28%20%E4%B8%8B%E5%8D%8811.38.15.png" data-caption="截屏2021-10-28 下午11.38.15" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-28%20%E4%B8%8B%E5%8D%8811.38.15.png" alt="截屏2021-10-28 下午11.38.15"></a>    </p>
+<p>​    继续单步，观察栈的变化，此时栈顶已经扩大了很多，printf的所有需要的参数都在栈中。然后我们需要调用printf函数。</p>
+<p><a target="_blank" rel="noopener" href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-28%20%E4%B8%8B%E5%8D%8811.40.00.png" data-caption="截屏2021-10-28 下午11.40.00" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-28%20%E4%B8%8B%E5%8D%8811.40.00.png" alt="截屏2021-10-28 下午11.40.00"></a></p>
+<p>​    可以看到，这条指令call printf，我们刚刚压栈的参数此时被printf使用。执行完后的下一条指令使esp加0x10，栈空间缩小，回到最初的样子：</p>
+<p><a target="_blank" rel="noopener" href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-28%20%E4%B8%8B%E5%8D%8811.41.43.png" data-caption="截屏2021-10-28 下午11.41.43" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-28%20%E4%B8%8B%E5%8D%8811.41.43.png" alt="截屏2021-10-28 下午11.41.43"></a></p>
+<p>​    </p>
+<p>​    然后回忆一下被调函数参数和局部变量压栈的过程：</p>
+<p>​    主调函数将被调函数参数从右到左压入栈中，随后将返回地址压栈，此时，栈上的参数偏移的计算就非常清晰了。</p>
+<p>​    这里可能有些弯需要理解一下。大致就是刚刚说到的，主调函数首先将printf需要的函数从右到左依次压栈，（正好栈是从高地址向低地址增长的，所以在gdb stack中呈现的顺序是正常理解的从左到右的先后次序），当将printf需要的参数全部存到栈中后，即可调用printf使用这些参数，此时的栈帧尚属于主调函数，在这个程序中我们不考虑返回地址，所以当参数全部入栈，printf即被调用，栈顶也指向格式化字符串所在的地址。在这里，格式化字符串就是栈上的第一个参数，偏移量就是1。当printf调用完毕，参数即出栈，也就不存在什么格式化字符串偏移了。    </p>
+<h3 id="2）64位偏移计算原理">2）64位偏移计算原理<a class="post-anchor" href="#2）64位偏移计算原理"></a></h3><p>​        原理同32位，但是由于64位传参的规则，是先用6个寄存器传参，如果不够再使用栈，但格式化字符串参数被设置是通过栈传递的，所以实际上格式化字符串在栈上是第n+6个参数。</p>
+<h3 id="3）-pwntools-fmtstr工具">3） pwntools_fmtstr工具<a class="post-anchor" href="#3）-pwntools-fmtstr工具"></a></h3><p>​    tbc。。。</p>
+<h3 id="）参考">）参考<a class="post-anchor" href="#）参考"></a></h3><p>​    <a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43092232/article/details/105647076">格式化字符串利器fmtstr_payload | 攻防世界 pwn进阶区 实时数据监测</a></p>
 </body></html>
 
   
