@@ -156,7 +156,7 @@
             <span>
                 
                   
-                    <a href="/tags/heap">heap</a>
+                    <a href="/tags/Heap">Heap</a>
                   
                 
             </span>
@@ -170,31 +170,31 @@
 <p>网上wp都是神仙写的，一点也不萌新友好。我都看不懂（）</p>
 <p>打开题发现这个菜单题好常规。</p>
 <p>但是libc是2.27，难度会稍微高一点。而且这个2.27是魔改过的，加入了2.29才有的key，为Tcache加入了检查机制。                                                                                                   具体的参考可以看<a target="_blank" rel="noopener" href="https://blog.csdn.net/chennbnbnb/article/details/109284780">glibc2.31下的新double free手法/字节跳动pwn题gun题解</a>。但是在这道题里面充其量算一个trick而不是核心考点。</p>
-<h2 id="1）漏洞点">1）漏洞点<a class="post-anchor" href="#1）漏洞点"></a></h2><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">unsigned</span> __int64 <span class="token function">delete</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-<span class="token punctuation">{</span>
-  __int64 v1<span class="token punctuation">;</span> <span class="token comment">// [rsp+0h] [rbp-18h]</span>
-  <span class="token keyword">unsigned</span> __int64 v2<span class="token punctuation">;</span> <span class="token comment">// [rsp+8h] [rbp-10h]</span>
+<h2 id="1）漏洞点">1）漏洞点<a class="post-anchor" href="#1）漏洞点"></a></h2><pre><code class="c">unsigned __int64 delete()
+{
+  __int64 v1; // [rsp+0h] [rbp-18h]
+  unsigned __int64 v2; // [rsp+8h] [rbp-10h]
 
-  v2 <span class="token operator">=</span> <span class="token function">__readfsqword</span><span class="token punctuation">(</span><span class="token number">0x28u</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token function">__printf_chk</span><span class="token punctuation">(</span><span class="token number">1LL</span><span class="token punctuation">,</span> <span class="token string">"Index: "</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token function">__isoc99_scanf</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>number<span class="token punctuation">,</span> <span class="token operator">&amp;</span>v1<span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token keyword">if</span> <span class="token punctuation">(</span> <span class="token operator">!</span>v1 <span class="token operator">&amp;&amp;</span> buf <span class="token punctuation">)</span>
-    <span class="token function">free</span><span class="token punctuation">(</span>buf<span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token keyword">return</span> <span class="token function">__readfsqword</span><span class="token punctuation">(</span><span class="token number">0x28u</span><span class="token punctuation">)</span> <span class="token operator">^</span> v2<span class="token punctuation">;</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
+  v2 = __readfsqword(0x28u);
+  __printf_chk(1LL, "Index: ");
+  __isoc99_scanf(&amp;number, &amp;v1);
+  if ( !v1 &amp;&amp; buf )
+    free(buf);
+  return __readfsqword(0x28u) ^ v2;
+}
+</code></pre>
 <p>漏洞点。经典uaf。</p>
 <p>之前看wp有人说edit函数里面有空字节溢出，问题大概出在++v == v1上，正确写法应该是v0++，不然判断结束但是v0多加了一次。</p>
-<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">while</span> <span class="token punctuation">(</span> <span class="token number">1</span> <span class="token punctuation">)</span>
-        <span class="token punctuation">{</span>
-          <span class="token function">read</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> v0<span class="token punctuation">,</span> <span class="token number">1uLL</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-          <span class="token keyword">if</span> <span class="token punctuation">(</span> <span class="token operator">*</span>v0 <span class="token operator">==</span> <span class="token string">'\n'</span> <span class="token punctuation">)</span>
-            <span class="token keyword">break</span><span class="token punctuation">;</span>
-          <span class="token keyword">if</span> <span class="token punctuation">(</span> <span class="token operator">++</span>v0 <span class="token operator">==</span> v1 <span class="token punctuation">)</span>
-            <span class="token keyword">return</span> <span class="token function">__readfsqword</span><span class="token punctuation">(</span><span class="token number">0x28u</span><span class="token punctuation">)</span> <span class="token operator">^</span> v4<span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
-        <span class="token operator">*</span>v0 <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
+<pre><code class="c">while ( 1 )
+        {
+          read(0, v0, 1uLL);
+          if ( *v0 == '\n' )
+            break;
+          if ( ++v0 == v1 )
+            return __readfsqword(0x28u) ^ v4;
+        }
+        *v0 = 0;
+</code></pre>
 <p>然后有一个比较怪的点就是这里的 <code> __readfsqword();</code>。很明显他是一个和读取有关的函数，但是ida根本点不进去。</p>
 <p>后面我才知道这个函数是和canary保护有关。</p>
 <p>根据微软官方文档<a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/cpp/intrinsics/readfsbyte-readfsdword-readfsqword-readfsword?view=msvc-160">…</a>这个函数的功能是【通过FS段开头的偏移来读取内存中的数据】，这里的FS段是段寄存器。定义大概是运行时被赋予功能，然后在64位win下指向运行中的os的被定义的结构，被os用来加载特定线程段内存数据。</p>
@@ -203,15 +203,13 @@
 <p>![image-20210811161707509](/Users/rin/Library/Application Support/typora-user-images/image-20210811161707509.png)</p>
 <h2 id="2）漏洞利用">2）漏洞利用<a class="post-anchor" href="#2）漏洞利用"></a></h2><h3 id="1）Tcache-double-free">1）Tcache double free<a class="post-anchor" href="#1）Tcache-double-free"></a></h3><p>之前也说过了，这个libc是魔改过的，增加了2.29才有的key，所以需要绕过。</p>
 <p>虽然但是，我连普通的Tcache的题都不太清楚，正好找到一个讲得特别详细的视频，那就跟着做好了，顺便复习一下。</p>
-<pre class="line-numbers language-python" data-language="python"><code class="language-python">add<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">0x68</span><span class="token punctuation">)</span>
-free<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span>
-gdb<span class="token punctuation">.</span>attach<span class="token punctuation">(</span>p<span class="token punctuation">)</span>
-pause<span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
+<pre><code class="python">add(0,0x68)
+free(0)
+gdb.attach(p)
+pause()
+</code></pre>
 <p>首先先分配再释放一下，看看这个题具体的内存分布有什么特点。</p>
-<pre class="line-numbers language-c#" data-language="c#"><code class="language-c#">pwndbg&gt; hea
+<pre><code class="c#">pwndbg&gt; hea
 Allocated chunk | PREV_INUSE
 Addr: 0x55e9c994c000
 Size: 0x251
@@ -242,105 +240,100 @@ smallbins
 empty
 largebins
 empty
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
+</code></pre>
 <p>之前一直不是很清楚</p>
-<pre class="line-numbers language-c" data-language="c"><code class="language-c">Allocated chunk <span class="token operator">|</span> PREV_INUSE
-Addr<span class="token operator">:</span> <span class="token number">0x55e9c994c000</span>
-Size<span class="token operator">:</span> <span class="token number">0x251</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-
+<pre><code class="c">Allocated chunk | PREV_INUSE
+Addr: 0x55e9c994c000
+Size: 0x251
+</code></pre>
 <p>这个堆块的作用，之前问学委，学委说是一些被缓存的函数啥的？？实际上是tcache的控制区域。大概就是保存Tcache chunk的一些信息。</p>
 <p>然后这边</p>
-<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token number">0x70</span> <span class="token punctuation">[</span>  <span class="token number">1</span><span class="token punctuation">]</span><span class="token operator">:</span> <span class="token number">0x55e9c994c260</span> ◂— <span class="token number">0x0</span> <span class="token comment">//说明0x70大小的Tcache里只有一个Tcache chunk，</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<pre class="line-numbers language-none"><code class="language-none">pwndbg&gt; x/300gx 0x562fcfd39000
-0x562fcfd39000:	0x0000000000000000	0x0000000000000251
-0x562fcfd39010:	0x0000010000000000	0x0000000000000000
-0x562fcfd39020:	0x0000000000000000	0x0000000000000000
-0x562fcfd39030:	0x0000000000000000	0x0000000000000000
-0x562fcfd39040:	0x0000000000000000	0x0000000000000000
-0x562fcfd39050:	0x0000000000000000	0x0000000000000000
-0x562fcfd39060:	0x0000000000000000	0x0000000000000000
-0x562fcfd39070:	0x0000000000000000	0x0000562fcfd39260
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
+<pre><code class="c">0x70 [  1]: 0x55e9c994c260 ◂— 0x0 //说明0x70大小的Tcache里只有一个Tcache chunk，
+</code></pre>
+<pre><code>pwndbg&gt; x/300gx 0x562fcfd39000
+0x562fcfd39000:    0x0000000000000000    0x0000000000000251
+0x562fcfd39010:    0x0000010000000000    0x0000000000000000
+0x562fcfd39020:    0x0000000000000000    0x0000000000000000
+0x562fcfd39030:    0x0000000000000000    0x0000000000000000
+0x562fcfd39040:    0x0000000000000000    0x0000000000000000
+0x562fcfd39050:    0x0000000000000000    0x0000000000000000
+0x562fcfd39060:    0x0000000000000000    0x0000000000000000
+0x562fcfd39070:    0x0000000000000000    0x0000562fcfd39260
+</code></pre>
 <p>这是控制堆块的部分结构</p>
 <p><code>0x562fcfd39010:    0x0000010000000000    0x0000000000000000</code>中，1说明只有一个Tcache。</p>
 <p>T擦车堆块的首地址也记录在内。从<code>0x562fcfd39050</code>开始分别记录0x20到0x70的Tcache chunk的首地址，比如<code>0x562fcfd39070:    0x0000000000000000    0x0000562fcfd39260</code>,记录的就是0x70大小chunk的首地址。</p>
 <blockquote>
 <p>喜闻乐见地被一个奇怪的知识点带偏了，大概就是setvbuf在pwn题中的原理。其实这个也是不陌生的一个概念了，但是一直没有深究，有机会可以写一篇文章探讨一下。</p>
 </blockquote>
-<pre class="line-numbers language-none"><code class="language-none">pwndbg&gt; x/20gx 0x56533012f250
-0x56533012f250:	0x0000000000000000	0x0000000000000071
-0x56533012f260:	0x0000000000000000	0x000056533012f010<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-
+<pre><code>pwndbg&gt; x/20gx 0x56533012f250
+0x56533012f250:    0x0000000000000000    0x0000000000000071
+0x56533012f260:    0x0000000000000000    0x000056533012f010
+</code></pre>
 <p>我们到Tcache的地址中看一看，会发现<code>0x56533012f260:    0x0000000000000000    0x000056533012f010</code>处的<code>0x000056533012f010</code>，这是一个key值。</p>
 <h4 id="2-29下Tcahce-double-free的检测">2.29下Tcahce double free的检测<a class="post-anchor" href="#2-29下Tcahce-double-free的检测"></a></h4><p>之前也说过在2.29中新增了对于Tcahce double free的检测，也就是这里的key。检测的大致思路是</p>
 <p>对于每一个tcache中的chunk，增加了一个key指针，用于指向所属的tcache结构体(也就是修改的原本只有一行的tcache_entry)</p>
-<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">typedef</span> <span class="token keyword">struct</span> <span class="token class-name">tcache_entry</span>
-<span class="token punctuation">{</span>
-  <span class="token keyword">struct</span> <span class="token class-name">tcache_entry</span> <span class="token operator">*</span>next<span class="token punctuation">;</span>  <span class="token comment">//链表指针，对应chunk中的fd字段</span>
-  <span class="token comment">/* This field exists to detect double frees.  */</span>
-  <span class="token keyword">struct</span> <span class="token class-name">tcache_perthread_struct</span> <span class="token operator">*</span>key<span class="token punctuation">;</span>  <span class="token comment">//指向所属的tcache结构体，对应chunk中的bk字段</span>
-<span class="token punctuation">}</span> tcache_entry<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
+<pre><code class="c">typedef struct tcache_entry
+{
+  struct tcache_entry *next;  //链表指针，对应chunk中的fd字段
+  /* This field exists to detect double frees.  */
+  struct tcache_perthread_struct *key;  //指向所属的tcache结构体，对应chunk中的bk字段
+} tcache_entry;
+</code></pre>
 <p>也就是所谓的key对应的就是chunk的bk字段。</p>
 <p>当chunk被free，放入Tcache链表时，操作如下。</p>
-<pre class="line-numbers language-c" data-language="c"><code class="language-c"> 
-<span class="token keyword">static</span> __always_inline <span class="token keyword">void</span>
-<span class="token function">tcache_put</span><span class="token punctuation">(</span>mchunkptr chunk<span class="token punctuation">,</span> <span class="token class-name">size_t</span> tc_idx<span class="token punctuation">)</span>
-<span class="token punctuation">{</span>
-  tcache_entry <span class="token operator">*</span>e <span class="token operator">=</span> <span class="token punctuation">(</span>tcache_entry <span class="token operator">*</span><span class="token punctuation">)</span><span class="token function">chunk2mem</span><span class="token punctuation">(</span>chunk<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<pre><code class="c"> 
+static __always_inline void
+tcache_put(mchunkptr chunk, size_t tc_idx)
+{
+  tcache_entry *e = (tcache_entry *)chunk2mem(chunk);
  
-  <span class="token comment">/* Mark this chunk as "in the tcache" so the test in _int_free will
-     detect a double free.  */</span>
-  e<span class="token operator">-&gt;</span>key <span class="token operator">=</span> tcache<span class="token punctuation">;</span>  <span class="token comment">//设置所属的tcache</span>
+  /* Mark this chunk as "in the tcache" so the test in _int_free will
+     detect a double free.  */
+  e-&gt;key = tcache;  //设置所属的tcache
  
-  e<span class="token operator">-&gt;</span>next <span class="token operator">=</span> tcache<span class="token operator">-&gt;</span>entries<span class="token punctuation">[</span>tc_idx<span class="token punctuation">]</span><span class="token punctuation">;</span><span class="token comment">//单链表头插法</span>
-  tcache<span class="token operator">-&gt;</span>entries<span class="token punctuation">[</span>tc_idx<span class="token punctuation">]</span> <span class="token operator">=</span> e<span class="token punctuation">;</span>  
+  e-&gt;next = tcache-&gt;entries[tc_idx];//单链表头插法
+  tcache-&gt;entries[tc_idx] = e;  
  
-  <span class="token operator">++</span><span class="token punctuation">(</span>tcache<span class="token operator">-&gt;</span>counts<span class="token punctuation">[</span>tc_idx<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">//计数增加</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
+  ++(tcache-&gt;counts[tc_idx]); //计数增加
+}
+</code></pre>
 <p>然后进行free操作</p>
-<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token class-name">size_t</span> tc_idx <span class="token operator">=</span> <span class="token function">csize2tidx</span><span class="token punctuation">(</span>size<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token comment">//只要tcache不为空，并且这个chunk属于tcache管辖范围，那么这个chunk就有可能已经在tcache中了，所以需要double free检查</span>
-<span class="token keyword">if</span> <span class="token punctuation">(</span>tcache <span class="token operator">!=</span> <span class="token constant">NULL</span> <span class="token operator">&amp;&amp;</span> tc_idx <span class="token operator">&lt;</span> mp_<span class="token punctuation">.</span>tcache_bins<span class="token punctuation">)</span>
-<span class="token punctuation">{</span>
-  <span class="token comment">/* Check to see if it's already in the tcache.  */</span>
-  tcache_entry <span class="token operator">*</span>e <span class="token operator">=</span> <span class="token punctuation">(</span>tcache_entry <span class="token operator">*</span><span class="token punctuation">)</span><span class="token function">chunk2mem</span><span class="token punctuation">(</span>p<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<pre><code class="c">    size_t tc_idx = csize2tidx(size);
+    //只要tcache不为空，并且这个chunk属于tcache管辖范围，那么这个chunk就有可能已经在tcache中了，所以需要double free检查
+    if (tcache != NULL &amp;&amp; tc_idx &lt; mp_.tcache_bins)
+    {
+      /* Check to see if it's already in the tcache.  */
+      tcache_entry *e = (tcache_entry *)chunk2mem(p);
  
-  <span class="token comment">/*
-    如果是double free，那么put时key字段被设置了tcache，就会进入循环被检查出来
-    如果不是，那么key字段就是用户数据区域，可以视为随机的，只有1/(2^size_t)的可能行进入循环，然后循环发现并不是double free
-  */</span>
-  <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">__glibc_unlikely</span><span class="token punctuation">(</span>e<span class="token operator">-&gt;</span>key <span class="token operator">==</span> tcache<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token comment">//剪枝</span>
-  <span class="token punctuation">{</span>
-    tcache_entry <span class="token operator">*</span>tmp<span class="token punctuation">;</span>
-    <span class="token function">LIBC_PROBE</span><span class="token punctuation">(</span>memory_tcache_double_free<span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> e<span class="token punctuation">,</span> tc_idx<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">for</span> <span class="token punctuation">(</span>tmp <span class="token operator">=</span> tcache<span class="token operator">-&gt;</span>entries<span class="token punctuation">[</span>tc_idx<span class="token punctuation">]</span><span class="token punctuation">;</span> tmp<span class="token punctuation">;</span> tmp <span class="token operator">=</span> tmp<span class="token operator">-&gt;</span>next<span class="token punctuation">)</span>
-      <span class="token keyword">if</span> <span class="token punctuation">(</span>tmp <span class="token operator">==</span> e<span class="token punctuation">)</span>
-        <span class="token function">malloc_printerr</span><span class="token punctuation">(</span><span class="token string">"free(): double free detected in tcache 2"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token punctuation">}</span>
+      /*
+        如果是double free，那么put时key字段被设置了tcache，就会进入循环被检查出来
+        如果不是，那么key字段就是用户数据区域，可以视为随机的，只有1/(2^size_t)的可能行进入循环，然后循环发现并不是double free
+      */
+      if (__glibc_unlikely(e-&gt;key == tcache))//剪枝
+      {
+        tcache_entry *tmp;
+        LIBC_PROBE(memory_tcache_double_free, 2, e, tc_idx);
+        for (tmp = tcache-&gt;entries[tc_idx]; tmp; tmp = tmp-&gt;next)
+          if (tmp == e)
+            malloc_printerr("free(): double free detected in tcache 2");
+      }
  
-  <span class="token keyword">if</span> <span class="token punctuation">(</span>tcache<span class="token operator">-&gt;</span>counts<span class="token punctuation">[</span>tc_idx<span class="token punctuation">]</span> <span class="token operator">&lt;</span> mp_<span class="token punctuation">.</span>tcache_count<span class="token punctuation">)</span>  <span class="token comment">//通过检查，放入tcahce中</span>
-  <span class="token punctuation">{</span>
-    <span class="token function">tcache_put</span><span class="token punctuation">(</span>p<span class="token punctuation">,</span> tc_idx<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">return</span><span class="token punctuation">;</span>
-  <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
+      if (tcache-&gt;counts[tc_idx] &lt; mp_.tcache_count)  //通过检查，放入tcahce中
+      {
+        tcache_put(p, tc_idx);
+        return;
+      }
+    }
+</code></pre>
 <p>源码太长不看，其实就是bk位相当于一个key。如果double free了就会报错。绕过方式就是把这个bk位改成其他的东西。比较简单。所以我们可以通过edit绕过这个检测。</p>
 <p>大致是</p>
-<pre class="line-numbers language-python" data-language="python"><code class="language-python">add<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">0x78</span><span class="token punctuation">)</span>
-free<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span>
-edit<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token string">b"aaaa"</span><span class="token punctuation">)</span>
-free<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span>
-show<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
+<pre><code class="python">add(0,0x78)
+free(0)
+edit(0,b"aaaa")
+free(0)
+show(0)
+</code></pre>
 <p>再进行接收，就能获取一个我们的堆地址。接着就能算出堆基址。</p>
 <p>然后我们需要构造出unsortedbin chunk、</p>
 <p>但是题目限制了分配堆块的大小，我们无法直接获得一个unsortedbin chunk。。</p>
@@ -355,32 +348,32 @@ show<span class="token punctuation">(</span><span class="token number">0</span><
 <p>例题是lctf2018的easyheap。</p>
 <h4 id="漏洞点">漏洞点<a class="post-anchor" href="#漏洞点"></a></h4><p>一个又明显又不明显的漏洞、来自于输入后会把chunk_ptr置为0。</p>
 <p>然后联想到malloc的内存分配机制，如果我们malloc一个16*n+8型的chunk，由于ptmalloc的内存复用机制，我们可以利用这个置零的漏洞使得物理相邻的下一个chunk的prevsize位包括previnuse位为0。然后构造堆叠。</p>
-<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">unsigned</span> __int64 __fastcall <span class="token function">sub_BEC</span><span class="token punctuation">(</span>_BYTE <span class="token operator">*</span>a1<span class="token punctuation">,</span> <span class="token keyword">int</span> a2<span class="token punctuation">)</span>
-<span class="token punctuation">{</span>
-  <span class="token keyword">signed</span> <span class="token keyword">int</span> v3<span class="token punctuation">;</span> <span class="token comment">// [rsp+14h] [rbp-Ch]</span>
-  <span class="token keyword">unsigned</span> __int64 v4<span class="token punctuation">;</span> <span class="token comment">// [rsp+18h] [rbp-8h]</span>
+<pre><code class="c">unsigned __int64 __fastcall sub_BEC(_BYTE *a1, int a2)
+{
+  signed int v3; // [rsp+14h] [rbp-Ch]
+  unsigned __int64 v4; // [rsp+18h] [rbp-8h]
 
-  v4 <span class="token operator">=</span> <span class="token function">__readfsqword</span><span class="token punctuation">(</span><span class="token number">0x28u</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  v3 <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
-  <span class="token keyword">if</span> <span class="token punctuation">(</span> a2 <span class="token punctuation">)</span>
-  <span class="token punctuation">{</span>
-    <span class="token keyword">while</span> <span class="token punctuation">(</span> <span class="token number">1</span> <span class="token punctuation">)</span>
-    <span class="token punctuation">{</span>
-      <span class="token function">read</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>a1<span class="token punctuation">[</span>v3<span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token number">1uLL</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-      <span class="token keyword">if</span> <span class="token punctuation">(</span> a2 <span class="token operator">-</span> <span class="token number">1</span> <span class="token operator">&lt;</span> <span class="token punctuation">(</span><span class="token keyword">unsigned</span> <span class="token keyword">int</span><span class="token punctuation">)</span>v3 <span class="token operator">||</span> <span class="token operator">!</span>a1<span class="token punctuation">[</span>v3<span class="token punctuation">]</span> <span class="token operator">||</span> a1<span class="token punctuation">[</span>v3<span class="token punctuation">]</span> <span class="token operator">==</span> <span class="token number">10</span> <span class="token punctuation">)</span>
-        <span class="token keyword">break</span><span class="token punctuation">;</span>
-      <span class="token operator">++</span>v3<span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-    a1<span class="token punctuation">[</span>v3<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
-    a1<span class="token punctuation">[</span>a2<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span><span class="token comment">//loophole</span>
-  <span class="token punctuation">}</span>
-  <span class="token keyword">else</span>
-  <span class="token punctuation">{</span>
-    <span class="token operator">*</span>a1 <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
-  <span class="token punctuation">}</span>
-  <span class="token keyword">return</span> <span class="token function">__readfsqword</span><span class="token punctuation">(</span><span class="token number">0x28u</span><span class="token punctuation">)</span> <span class="token operator">^</span> v4<span class="token punctuation">;</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
+  v4 = __readfsqword(0x28u);
+  v3 = 0;
+  if ( a2 )
+  {
+    while ( 1 )
+    {
+      read(0, &amp;a1[v3], 1uLL);
+      if ( a2 - 1 &lt; (unsigned int)v3 || !a1[v3] || a1[v3] == 10 )
+        break;
+      ++v3;
+    }
+    a1[v3] = 0;
+    a1[a2] = 0;//loophole
+  }
+  else
+  {
+    *a1 = 0;
+  }
+  return __readfsqword(0x28u) ^ v4;
+}
+</code></pre>
 <p>然后又注意到我们最多只能分配十个堆块，除去需要填满Tcache的七个堆块，也就是我们只能分配十个相同大小的堆块。</p>
 <p>在完成这道题之前我们需要先理解unsortedbin 泄漏libc的原理。</p>
 <p>包括ciscn lonelywolf也是利用到了这一点。</p>

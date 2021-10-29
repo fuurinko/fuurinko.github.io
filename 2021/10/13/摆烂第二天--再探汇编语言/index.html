@@ -16,7 +16,7 @@
     <meta name="description" content="" />
     
     <title>
-          Rin
+      简单的汇编语言复习 - Rin
     </title>
     <link rel="manifest" href="/manifest.json" />
     <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon" />
@@ -29,7 +29,7 @@
     
     <div id="post-toc" class="animated hiddenToc hide">
       <span class="title">Toc</span>
-      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1%EF%BC%89%E5%AF%BB%E5%9D%80"><span class="toc-text">1）寻址</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1-%E7%9B%B4%E6%8E%A5%E5%AF%BB%E5%9D%80"><span class="toc-text">1&#x2F;直接寻址</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-%E9%97%B4%E6%8E%A5%E5%AF%BB%E5%9D%80"><span class="toc-text">2&#x2F;间接寻址</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3-%E6%AF%94%E4%BE%8B%E5%AF%BB%E5%9D%80"><span class="toc-text">3&#x2F;比例寻址</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2%EF%BC%89%E6%AE%B5%E5%AF%84%E5%AD%98%E5%99%A8"><span class="toc-text">2）段寄存器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3%EF%BC%89%E5%9F%BA%E7%A1%80%E6%8C%87%E4%BB%A4"><span class="toc-text">3）基础指令</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E6%95%B0%E6%8D%AE%E4%BC%A0%E8%BE%93"><span class="toc-text">1&#x2F;数据传输</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#mov"><span class="toc-text">mov</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#movzx"><span class="toc-text">movzx</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#movsx"><span class="toc-text">movsx</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%9B%B8%E5%85%B3%E7%9A%84%E8%BF%90%E7%AE%97%E7%AC%A6%E5%92%8C%E4%BC%AA%E6%8C%87%E4%BB%A4"><span class="toc-text">2&#x2F;与数据相关的运算符和伪指令</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#offset"><span class="toc-text">offset</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#align"><span class="toc-text">align</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ptr"><span class="toc-text">ptr</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#type"><span class="toc-text">type</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#lengthof"><span class="toc-text">lengthof</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#sizeof"><span class="toc-text">sizeof</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-text"></span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-text"></span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1%EF%BC%89%E5%AF%BB%E5%9D%80"><span class="toc-text">1）寻址</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1-%E7%9B%B4%E6%8E%A5%E5%AF%BB%E5%9D%80"><span class="toc-text">1&#x2F;直接寻址</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-%E9%97%B4%E6%8E%A5%E5%AF%BB%E5%9D%80"><span class="toc-text">2&#x2F;间接寻址</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3-%E6%AF%94%E4%BE%8B%E5%AF%BB%E5%9D%80"><span class="toc-text">3&#x2F;比例寻址</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2%EF%BC%89%E6%AE%B5%E5%AF%84%E5%AD%98%E5%99%A8"><span class="toc-text">2）段寄存器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3%EF%BC%89%E5%9F%BA%E7%A1%80%E6%8C%87%E4%BB%A4"><span class="toc-text">3）基础指令</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E6%95%B0%E6%8D%AE%E4%BC%A0%E8%BE%93"><span class="toc-text">1&#x2F;数据传输</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#mov"><span class="toc-text">mov</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#movzx"><span class="toc-text">movzx</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#movsx"><span class="toc-text">movsx</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%9B%B8%E5%85%B3%E7%9A%84%E8%BF%90%E7%AE%97%E7%AC%A6%E5%92%8C%E4%BC%AA%E6%8C%87%E4%BB%A4"><span class="toc-text">2&#x2F;与数据相关的运算符和伪指令</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#offset"><span class="toc-text">offset</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#align"><span class="toc-text">align</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ptr"><span class="toc-text">ptr</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#type"><span class="toc-text">type</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#lengthof"><span class="toc-text">lengthof</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#sizeof"><span class="toc-text">sizeof</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#-1"><span class="toc-text"></span></a></li></ol>
     </div>
     
     <div id="fixed-menu-wrap">
@@ -139,7 +139,7 @@
         <article class="post-entry">
     <div class="header">
       
-      <div class="title"></div>
+      <div class="title">简单的汇编语言复习</div>
       <div class="meta">
         <span class="item">
           <span class="iconfont icon-time-circle"></span>
@@ -150,12 +150,23 @@
 
         
         
-        
+         
+          <span class="item">
+            <span class="iconfont icon-tag1"></span>
+            <span>
+                
+                  
+                    <a href="/tags/asm Primary">asm Primary</a>
+                  
+                
+            </span>
+          </span>
+         
       </div>
       <div>
       </div>
     </div>
-    <html><head></head><body><h3 id="1）寻址">1）寻址<a class="post-anchor" href="#1）寻址"></a></h3><h5 id="1-直接寻址">1/直接寻址<a class="post-anchor" href="#1-直接寻址"></a></h5><pre><code class="asm">mov     rax, fs:28h #直接寻址，fs段寄存器+偏移量。这里其实是一个canary的值。
+    <html><head></head><body><h3 id=""><a class="post-anchor" href="#"></a></h3><h3 id="1）寻址">1）寻址<a class="post-anchor" href="#1）寻址"></a></h3><h5 id="1-直接寻址">1/直接寻址<a class="post-anchor" href="#1-直接寻址"></a></h5><pre><code class="asm">mov     rax, fs:28h #直接寻址，fs段寄存器+偏移量。这里其实是一个canary的值。
 </code></pre>
 <h5 id="2-间接寻址">2/间接寻址<a class="post-anchor" href="#2-间接寻址"></a></h5><p>间接在使用指针以及解引用的形式</p>
 <pre><code class="asm">mov     [rbp+var_8], rax # 寄存器相对寻址。相当于把rax，也就是这个canary值放到rbp+var_8的地方。
@@ -180,7 +191,7 @@ mov eax,arrayD[esi*4]                    ;eax = 4
 <h4 id="type">type<a class="post-anchor" href="#type"></a></h4><p>返回变量单个元素的大小</p>
 <h4 id="lengthof">lengthof<a class="post-anchor" href="#lengthof"></a></h4><p>计算数组中元素的个数</p>
 <h4 id="sizeof">sizeof<a class="post-anchor" href="#sizeof"></a></h4><p>返回lengthof和type的乘积</p>
-<h3 id=""><a class="post-anchor" href="#"></a></h3></body></html>
+<h3 id="-1"><a class="post-anchor" href="#-1"></a></h3></body></html>
 
   
   <div class="post-guide">
@@ -191,7 +202,7 @@ mov eax,arrayD[esi*4]                    ;eax = 4
     </div>
     <div class="item right">
         
-          <a href="../../12/%E6%91%86%E7%83%82%E7%AC%AC%E4%B8%80%E5%A4%A9--%E5%86%8D%E6%8E%A2%E5%87%BD%E6%95%B0%E8%B0%83%E7%94%A8%E6%A0%88/"></a>
+          <a href="../../12/%E6%91%86%E7%83%82%E7%AC%AC%E4%B8%80%E5%A4%A9--%E5%86%8D%E6%8E%A2%E5%87%BD%E6%95%B0%E8%B0%83%E7%94%A8%E6%A0%88/">简单的函数调用栈基础</a>
         
     </div>
   </div>

