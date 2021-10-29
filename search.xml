@@ -1804,7 +1804,7 @@ offset = auto.offset
             log.error("Could not find offset to format string on stack")
             return None, None
 </code></pre>
-<p>​    这里pwntools源码中关于自动寻找偏移量的一段代码。</p>
+<p>​    这里pwntools源码中关于自动寻找偏移量的一段代码。其实还是很好理解。主要就是cyclic的应用。感觉会类似使用cyclic</p>
 <p>​        </p>
 <h3 id="）参考">）参考<a class="post-anchor" href="#）参考"></a></h3><p>​    <a href="https://blog.csdn.net/weixin_43092232/article/details/105647076">格式化字符串利器fmtstr_payload | 攻防世界 pwn进阶区 实时数据监测</a></p>
 <p>​    <a href="https://blog.csdn.net/qq_33976344/article/details/113503914">pwntools中fmtstr的使用</a></p>
