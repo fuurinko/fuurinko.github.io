@@ -16,7 +16,7 @@
     <meta name="description" content="" />
     
     <title>
-      格式化字符串偏移计算原理 - Rin
+      格式化字符串偏移计算原理及pwntools fmtstr功能源码剖析 - Rin
     </title>
     <link rel="manifest" href="/manifest.json" />
     <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon" />
@@ -139,7 +139,7 @@
         <article class="post-entry">
     <div class="header">
       
-      <div class="title">格式化字符串偏移计算原理</div>
+      <div class="title">格式化字符串偏移计算原理及pwntools fmtstr功能源码剖析</div>
       <div class="meta">
         <span class="item">
           <span class="iconfont icon-time-circle"></span>
@@ -180,13 +180,37 @@ void main() {
 <p><a target="_blank" rel="noopener" href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-28%20%E4%B8%8B%E5%8D%8811.40.00.png" data-caption="截屏2021-10-28 下午11.40.00" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-28%20%E4%B8%8B%E5%8D%8811.40.00.png" alt="截屏2021-10-28 下午11.40.00"></a></p>
 <p>​    可以看到，这条指令call printf，我们刚刚压栈的参数此时被printf使用。执行完后的下一条指令使esp加0x10，栈空间缩小，回到最初的样子：</p>
 <p><a target="_blank" rel="noopener" href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-28%20%E4%B8%8B%E5%8D%8811.41.43.png" data-caption="截屏2021-10-28 下午11.41.43" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-28%20%E4%B8%8B%E5%8D%8811.41.43.png" alt="截屏2021-10-28 下午11.41.43"></a></p>
-<p>​    </p>
 <p>​    然后回忆一下被调函数参数和局部变量压栈的过程：</p>
 <p>​    主调函数将被调函数参数从右到左压入栈中，随后将返回地址压栈，此时，栈上的参数偏移的计算就非常清晰了。</p>
 <p>​    这里可能有些弯需要理解一下。大致就是刚刚说到的，主调函数首先将printf需要的函数从右到左依次压栈，（正好栈是从高地址向低地址增长的，所以在gdb stack中呈现的顺序是正常理解的从左到右的先后次序），当将printf需要的参数全部存到栈中后，即可调用printf使用这些参数，此时的栈帧尚属于主调函数，在这个程序中我们不考虑返回地址，所以当参数全部入栈，printf即被调用，栈顶也指向格式化字符串所在的地址。在这里，格式化字符串就是栈上的第一个参数，偏移量就是1。当printf调用完毕，参数即出栈，也就不存在什么格式化字符串偏移了。    </p>
 <h3 id="2）64位偏移计算原理">2）64位偏移计算原理<a class="post-anchor" href="#2）64位偏移计算原理"></a></h3><p>​        原理同32位，但是由于64位传参的规则，是先用6个寄存器传参，如果不够再使用栈，但格式化字符串参数被设置是通过栈传递的，所以实际上格式化字符串在栈上是第n+6个参数。</p>
-<h3 id="3）-pwntools-fmtstr工具">3） pwntools_fmtstr工具<a class="post-anchor" href="#3）-pwntools-fmtstr工具"></a></h3><p>​    tbc。。。</p>
+<h3 id="3）-pwntools-fmtstr工具">3） pwntools_fmtstr工具<a class="post-anchor" href="#3）-pwntools-fmtstr工具"></a></h3><p>​    在前面的分析中我们可以看到，其实找到格式化字符串的偏移量是一件非常简单的事情，都1202年了，既然是简单的步骤，我们应该需要学会运用自动化工具，使做题步骤简化，比如偏移量的寻找，以及与格式化字符串利用相关的一些事。</p>
+<p>​    pwntools就非常人性化地为我们集成了格式化字符串偏移量寻找，got表覆盖等非常常见好用的操作，这里我们通过简单的例子，着重讨论这些自动化脚本编写的原理。</p>
+<pre><code class="python">def exec_fmt(payload):
+    r.sendline(payload)
+    info = r.recv()
+    return info
+auto = FmtStr(exec_fmt)
+offset = auto.offset
+</code></pre>
+<p>​    这是一段自动求偏移的脚本.</p>
+<pre><code class="python"> def find_offset(self):
+        marker = cyclic(20)
+        for off in range(1,1000):
+            leak = self.leak_stack(off, marker)
+            leak = pack(leak)
+
+            pad = cyclic_find(leak[:4])
+            if pad &gt;= 0 and pad &lt; 20:
+                return off, pad
+        else:
+            log.error("Could not find offset to format string on stack")
+            return None, None
+</code></pre>
+<p>​    这里pwntools源码中关于自动寻找偏移量的一段代码。</p>
+<p>​        </p>
 <h3 id="）参考">）参考<a class="post-anchor" href="#）参考"></a></h3><p>​    <a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43092232/article/details/105647076">格式化字符串利器fmtstr_payload | 攻防世界 pwn进阶区 实时数据监测</a></p>
+<p>​    <a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_33976344/article/details/113503914">pwntools中fmtstr的使用</a></p>
 </body></html>
 
   
