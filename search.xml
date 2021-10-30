@@ -2040,7 +2040,501 @@ mov eax,arrayD[esi*4]                    ;eax = 4
 <p>​    然后需要修改的是代码高亮的一些相关配色，typora的代码高亮是直接用的css而不是引用<code>highlight.js</code>（感觉也差不多233）。</p>
 <p>​    然后我们找到代码高亮的css元素（其他的基本都是字体以及留白的一些样式，没有需求可以不用管）,找到对应的元素就可以开始魔改（</p>
 <p>​    其实魔改以后感觉变化也不是特别大，但是魔改的过程还是很有意思。</p>
-<p><a href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-30%20%E4%B8%8A%E5%8D%8811.36.11.png" data-caption="截屏2021-10-30 上午11.36.11" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-30%20%E4%B8%8A%E5%8D%8811.36.11.png" alt="截屏2021-10-30 上午11.36.11"></a></p>
+<p><a href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-30%20%E4%B8%8B%E5%8D%882.46.50.png" data-caption="截屏2021-10-30 下午2.46.50" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-30%20%E4%B8%8B%E5%8D%882.46.50.png" alt="截屏2021-10-30 下午2.46.50"></a></p>
+<p>​        顺便附上它的css</p>
+<pre><code class="css"> :root {
+    --side-bar-bg-color: #ffffff;
+    --control-text-color: #424242;
+    --active-file-bg-color: #ffffff;
+    --active-file-border-color: #6B6B6B;
+    --active-file-text-color: #7eadad;
+    --table-even-row-color:#555555;
+    --table-head-color:#7a7979;
+    --deep-theme-color: #343a41;
+    --code-block-bg-color: #292424;
+    
+}
+
+/*serif*/
+@font-face {
+    font-family: 'Lexend';
+    font-weight: normal;
+    font-style: normal;
+    src: url('./mint/Lexend-Regular.ttf') 
+}
+
+@font-face {
+    font-family: 'Lexend';
+    font-weight: bold;
+    font-style: normal;
+    src: url('./mint/Lexend-Bold.ttf') 
+}
+
+/*monospace*/
+@font-face {
+    font-family: 'SourceCodePro';
+    font-weight: normal;
+    font-style: normal;
+    src: local(SourceCodePro), url('./mint/SourceCodePro-Regular.ttf')
+}
+
+/*Chinese*/
+@font-face {
+    font-family: 'NotoSansSC';
+    font-weight: normal;
+    font-style: normal;
+    src: url('./mint/NotoSansSC-Regular.otf')
+}
+
+@font-face {
+    font-family: 'NotoSansSC';
+    font-weight: bold;
+    font-style: normal;
+    src: url('./mint/NotoSansSC-Bold.otf')
+}
+
+html{
+    font-size: 16px;
+}
+
+body {
+    font-family: 'Lexend','SourceCodePro','NotoSansSC';
+    font-weight: normal;
+    line-height: 1.5rem;
+    letter-spacing: 0;
+    margin: 0;
+}
+
+#write {
+    max-width: 900px;
+    padding: 30px 50px 20px;
+}
+
+#write p{
+    text-align:left;
+}
+
+#write pre.md-meta-block {
+    padding: 1rem;
+    font-size: 85%;
+    line-height: 1.45;
+    background-color: #ffffff;
+    border: 0;
+    border-radius: 3px;
+    color: #141414;
+    margin-top: 0 !important;
+}
+
+.md-image&gt;.md-meta {
+    color: #141414;
+    font-size: 0.9rem;
+    font-family: 'Lexend';
+    padding: 4px 0;
+}
+
+
+@media print {
+  html,body {
+    font-size: 14px;
+  }
+
+  table,
+  pre {
+    page-break-inside: avoid;
+  }
+
+  pre {
+    word-wrap: break-word;
+  }
+  
+}
+@page {
+  size: A4; 
+  margin: 8mm 0mm;
+}
+
+/*toc*/
+.md-toc { 
+    margin-top:20px;
+    padding-bottom:20px;
+    color: var(--deep-theme-color);
+}
+
+a {
+    color: var(--deep-theme-color);
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/*headers*/
+h1,h2,h3,h4,h5,h6 {
+    display: block;
+    font-weight:bold;
+}
+
+h1 {
+    font-size: 2em;
+    margin-top: 0.67em;
+    margin-bottom: 0.67em;
+}
+
+h2 {
+    font-size: 1.5em;
+    margin-top: 0.83em;
+    margin-bottom: 0.83em;
+}
+
+h3 {
+    font-size: 1.17em;
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+h4 {
+    font-size: 1em;
+    margin-top: 1.33em;
+    margin-bottom: 1.33em;
+}
+
+h5 {
+    font-size: 1em;
+    margin-top: 1.33em;
+    margin-bottom: 1.33em;
+    color: #777777;
+}
+
+h6 {
+    font-size: 1em;
+    margin-top: 1.33em;
+    margin-bottom: 1.33em;
+    color: #adadad;
+}
+
+p,
+blockquote,
+ul,
+ol,
+dl,
+table {
+    margin: 0.8rem 0;
+}
+
+/*table*/
+table {
+    border-collapse: collapse;
+    padding: 0;
+    word-break: initial;
+    table-layout: fixed;
+    width: 100%;
+}
+
+table tr:nth-child(even){
+    background-color: var(--table-even-row-color);
+}
+
+thead{
+    background-color: var(--table-head-color);
+}
+
+table th{
+    text-align: center;
+    padding:6px 13px;
+    border: 1px solid var(--table-head-color);
+}
+
+table td{
+    padding:6px 13px;
+    border: 1px solid var(--table-head-color);
+}
+table tr{
+    padding:6px 13px;
+    border: 1px solid var(--table-head-color);
+}
+
+/*blockquote*/
+blockquote {
+    border-left: 0.2rem solid var(--side-bar-bg-color);
+    color: #b4d8e9;
+    font-family: 'Lexend','NotoSansSC';
+    font-size: 0.9rem;
+    padding-left: 2rem;
+}
+
+
+/*list*/
+
+li p.first {
+    display: inline-block;
+}
+ul,
+ol {
+    padding-left: 30px;
+}
+ul:first-child,
+ol:first-child {
+    margin-top: 0;
+}
+ul:last-child,
+ol:last-child {
+    margin-bottom: 0;
+}
+
+.md-task-list-item:hover &gt; input:before,
+input[type='checkbox']:hover:before {
+    opacity: 1;
+    transition: 0.5s;
+    background-color: var(--side-bar-bg-color);
+}
+
+.task-list-item input::before {
+    content: "";
+    display: inline-block;
+    border-radius: 1.1rem;
+    vertical-align: middle;
+    border: 1.2px solid var(--deep-theme-color);
+    background-color: #ffffff;
+    width: 1.1rem;
+    height: 1.1rem;
+    margin-left: -0.1rem;
+    margin-right: 0.1rem;
+    margin-top: -0.68rem; 
+}
+
+
+.task-list-item input:checked::before {
+    padding-left: 0.125em;
+    content: '✔';
+    color:white;
+    background-color: var(--deep-theme-color);
+    font-size: 0.8rem;
+    line-height: 0.95rem;
+    margin-top: -0.68rem;
+    transition: background-color 200ms ease-in-out;
+}
+
+
+
+.task-list-done {
+    text-decoration: line-through;
+    color: #343a41;
+}
+
+hr {
+    border-style: none;
+    border-top-style: solid;
+    border-color: #e7e7e7;
+    border-width: 1px;
+    margin: 2rem 0;
+}
+
+
+/*highlight*/
+#write mark {
+    background-color: #c7ffe8;
+    border-radius: 2px;
+    color: rgb(44, 39, 39);
+    padding: 0 4px;
+    margin: 0 2px;
+}
+
+/*inline code*/
+#write code,tt {
+    padding: 0.6px 4px;
+    border-radius: 2px;
+    background-color: rgba(238, 238, 238, 0.39);
+    font-family: 'SourceCodePro',Consolas,Courier, Monospace;
+    font-size: 0.9rem;
+    color: #666666;
+    margin: 0 2px;
+}
+
+/*footnote*/
+#write .md-footnote {
+    color: #343a41;
+    background-color: #e4e4e4;
+}
+
+/*source code mode*/
+.cm-s-typora-default .cm-header {
+    color: #524a4a;
+}
+.cm-s-typora-default .cm-link {
+    color:var(--deep-theme-color);
+
+}
+
+
+/*code block*/
+#write .md-fences {
+    font-size: 1rem;
+    margin: 0.2em 0;
+    padding: 0.5em;
+    border-radius: 3px;
+    font-size: 0.9em;
+    font-family: 'SourceCodePro',Consolas,Courier, Monospace ;
+    background-color: #fffdfd;
+    color: #a3a3a3;
+    border: none;
+    text-shadow: none;
+}
+
+.md-fences .code-tooltip {
+    background-color: #ffffff;
+}
+
+/*
+  Name:       material-ocean
+  Author:     Mattia Astorino (http://github.com/equinusocio)
+  Website:    https://material-theme.site/
+*/
+
+.cm-s-inner.CodeMirror {
+  background-color: #ffffff;
+  color: #343a41;
+}
+
+/*.cm-s-inner .CodeMirror-gutters {
+  background: #ffffff;
+  color: #ffffff;
+  border: none;
+}
+*/
+.cm-s-inner .CodeMirror-linenumber {color: #343a41;}
+.cm-s-inner .CodeMirror-guttermarker { color: #FFEE80; }
+.cm-s-inner .CodeMirror-guttermarker-subtle { color: #D0D0D0; }
+
+/*
+.cm-s-inner .CodeMirror-cursor {
+  border-left: 1px solid #FFCC00;
+}
+.cm-s-inner.cm-fat-cursor .CodeMirror-cursor {
+  background-color: #FFCC00 !important;
+}
+.cm-s-inner .cm-animate-fat-cursor {
+  background-color: #FFCC00 !important;
+}
+*/
+
+.cm-s-inner .CodeMirror-cursor { border-left: 1px solid #A9B7C6; }
+.cm-s-inner div.CodeMirror-cursor { border-left: 1px solid #ffffff; }
+.cm-s-inner div.CodeMirror-selected {
+  background: rgba(58, 58, 59, 0.2);
+}
+
+.cm-s-inner.CodeMirror-focused div.CodeMirror-selected {
+  background: rgba(221, 224, 241, 0.2);
+}
+
+.cm-s-inner .CodeMirror-selected{ background: #d6dce7 !important; }
+.cm-s-inner .CodeMirror-selectedtext { background: #dbdee6 !important; }
+.cm-overlay.CodeMirror-selectedtext { background: #B5D6FC !important; }
+
+.cm-s-inner .CodeMirror-line::selection,
+.cm-s-inner .CodeMirror-line&gt;span::selection,
+.cm-s-inner .CodeMirror-line&gt;span&gt;span::selection {
+  background: rgba(221, 224, 241, 0.2);
+}
+
+.cm-s-inner .CodeMirror-line::-moz-selection,
+.cm-s-inner .CodeMirror-line&gt;span::-moz-selection,
+.cm-s-inner .CodeMirror-line&gt;span&gt;span::-moz-selection {
+  background: rgba(221, 224, 241, 0.2);
+}
+
+.cm-s-inner .CodeMirror-activeline-background {
+  background: #ffffff;
+}
+
+.cm-s-inner .cm-keyword {
+  color: #8979c0;
+}
+
+.cm-s-inner .cm-operator {
+  color: #25c494;
+}
+
+.cm-s-inner .cm-variable-2 {
+  color: #4f5481;
+}
+
+.cm-s-inner .cm-variable-3,
+.cm-s-inner .cm-type {
+  color: #f84f57;
+}
+
+.cm-s-inner .cm-builtin {
+  color: #eca622;
+}
+
+.cm-s-inner .cm-atom {
+  color: #F78C6C;
+}
+
+.cm-s-inner .cm-number {
+  color: #ad7a83;
+}
+
+.cm-s-inner .cm-def {
+  color: #82AAFF;
+}
+
+.cm-s-inner .cm-string {
+  color: #70be26;
+}
+
+.cm-s-inner .cm-string-2 {
+  color: #7a232e;
+}
+
+.cm-s-inner .cm-comment {
+  color: #3a4677;
+}
+
+.cm-s-inner .cm-variable {
+  color: #bb584b;
+}
+
+.cm-s-inner .cm-tag {
+  color: #b44457;
+}
+
+.cm-s-inner .cm-meta {
+  color: #b9b717;
+}
+
+.cm-s-inner .cm-attribute {
+  color: #71498a;
+}
+
+.cm-s-inner .cm-property {
+  color: #a075be;
+}
+
+.cm-s-inner .cm-qualifier {
+  color: #f8ce11;
+}
+
+.cm-s-inner .cm-variable-3,
+.cm-s-inner .cm-type {
+  color: #fce470;
+}
+
+
+.cm-s-inner .cm-error {
+  color: rgba(255, 255, 255, 1.0);
+  background-color: #FF5370;
+}
+
+.cm-s-inner .CodeMirror-matchingbracket {
+  text-decoration: underline;
+  color: white !important;
+}
+
+
+</code></pre>
 </body></html>]]></content>
       <tags>
         <tag>mess</tag>
