@@ -174,18 +174,18 @@
 <p>具体参数可以google。</p>
 <p>然后又来了第三个问题。</p>
 <p>来看我的报错。</p>
-<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token punctuation">[</span><span class="token operator">+</span><span class="token punctuation">]</span> Starting local process <span class="token string">'./babystack'</span><span class="token punctuation">:</span> pid <span class="token number">745</span>
-Traceback <span class="token punctuation">(</span>most recent call last<span class="token punctuation">)</span><span class="token punctuation">:</span>
-  File <span class="token string">"babystack.py"</span><span class="token punctuation">,</span> line <span class="token number">23</span><span class="token punctuation">,</span> <span class="token keyword">in</span> <span class="token operator">&lt;</span>module<span class="token operator">&gt;</span>
-    rop <span class="token operator">=</span> roputils<span class="token punctuation">.</span>ROP<span class="token punctuation">(</span><span class="token string">'./babystack'</span><span class="token punctuation">)</span>
-  File <span class="token string">"/home/fur1n/pwn/week1/roputils.py"</span><span class="token punctuation">,</span> line <span class="token number">440</span><span class="token punctuation">,</span> <span class="token keyword">in</span> __init__
-    ELF<span class="token punctuation">.</span>__init__<span class="token punctuation">(</span>self<span class="token punctuation">,</span> <span class="token operator">*</span>args<span class="token punctuation">,</span> <span class="token operator">**</span>kwargs<span class="token punctuation">)</span>
-  File <span class="token string">"/home/fur1n/pwn/week1/roputils.py"</span><span class="token punctuation">,</span> line <span class="token number">85</span><span class="token punctuation">,</span> <span class="token keyword">in</span> __init__
-    m <span class="token operator">=</span> re<span class="token punctuation">.</span>search<span class="token punctuation">(</span><span class="token string">r'^\s*(?P&lt;key&gt;[^:]+):\s+(?P&lt;value&gt;.+)$'</span><span class="token punctuation">,</span> line<span class="token punctuation">)</span>
-  File <span class="token string">"/usr/lib/python3.6/re.py"</span><span class="token punctuation">,</span> line <span class="token number">182</span><span class="token punctuation">,</span> <span class="token keyword">in</span> search
-    <span class="token keyword">return</span> _compile<span class="token punctuation">(</span>pattern<span class="token punctuation">,</span> flags<span class="token punctuation">)</span><span class="token punctuation">.</span>search<span class="token punctuation">(</span>string<span class="token punctuation">)</span>
-TypeError<span class="token punctuation">:</span> cannot use a string pattern on a <span class="token builtin">bytes</span><span class="token operator">-</span>like <span class="token builtin">object</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
+<pre><code class="python">[+] Starting local process './babystack': pid 745
+Traceback (most recent call last):
+  File "babystack.py", line 23, in &lt;module&gt;
+    rop = roputils.ROP('./babystack')
+  File "/home/fur1n/pwn/week1/roputils.py", line 440, in __init__
+    ELF.__init__(self, *args, **kwargs)
+  File "/home/fur1n/pwn/week1/roputils.py", line 85, in __init__
+    m = re.search(r'^\s*(?P&lt;key&gt;[^:]+):\s+(?P&lt;value&gt;.+)$', line)
+  File "/usr/lib/python3.6/re.py", line 182, in search
+    return _compile(pattern, flags).search(string)
+TypeError: cannot use a string pattern on a bytes-like object
+</code></pre>
 <p>这个功能好像并不会在byte前加b。。。</p>
 <p>目前来说并没有发现解决方法。</p>
 <p>所以只能尝试更换默认的py版本。具体可以google</p>

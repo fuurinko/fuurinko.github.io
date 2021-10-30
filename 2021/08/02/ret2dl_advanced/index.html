@@ -175,63 +175,61 @@
 <p>此外，这个结构体的<code>r_map</code>域保存了指向<code>link_map</code>的链接表表头的指针。</p>
 <p>也就是<code>dt_dbg</code>指向<code>type_r_debug</code>，且<code>type_r_debug</code>维护了指向<code>link_map</code>的指针。</p>
 <p><code>r_debug</code>具体代码如下:</p>
-<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token comment">/* Rendezvous structure used by the run-time dynamic linker to communicate details of shared object loading to the debugger. If the executable's dynamic section has a DT_DEBUG element, the run-time linker sets that element's value to the address where this structure can be found. */</span>
+<pre><code class="c">/* Rendezvous structure used by the run-time dynamic linker to communicate details of shared object loading to the debugger. If the executable's dynamic section has a DT_DEBUG element, the run-time linker sets that element's value to the address where this structure can be found. */
 
-<span class="token keyword">struct</span> <span class="token class-name">r_debug</span>
-  <span class="token punctuation">{</span> 
-    <span class="token keyword">int</span> r_version<span class="token punctuation">;</span>              <span class="token comment">/* Version number for this protocol. */</span>
+struct r_debug
+  { 
+    int r_version;              /* Version number for this protocol. */
 
-    <span class="token keyword">struct</span> <span class="token class-name">link_map</span> <span class="token operator">*</span>r_map<span class="token punctuation">;</span>     <span class="token comment">/* Head of the chain of loaded objects. */</span>
+    struct link_map *r_map;     /* Head of the chain of loaded objects. */
 
-    <span class="token comment">/* This is the address of a function internal to the run-time linker, that will always be called when the linker begins to map in a library or unmap it, and again when the mapping change is complete. The debugger can set a breakpoint at this address if it wants to notice shared object mapping changes. */</span>
-    <span class="token function">ElfW</span><span class="token punctuation">(</span>Addr<span class="token punctuation">)</span> r_brk<span class="token punctuation">;</span>
-    <span class="token keyword">enum</span>
-      <span class="token punctuation">{</span> 
-        <span class="token comment">/* This state value describes the mapping change taking place when the `r_brk' address is called. */</span>
-        RT_CONSISTENT<span class="token punctuation">,</span>          <span class="token comment">/* Mapping change is complete. */</span>
-        RT_ADD<span class="token punctuation">,</span>                 <span class="token comment">/* Beginning to add a new object. */</span>
-        RT_DELETE               <span class="token comment">/* Beginning to remove an object mapping. */</span>
-      <span class="token punctuation">}</span> r_state<span class="token punctuation">;</span>
+    /* This is the address of a function internal to the run-time linker, that will always be called when the linker begins to map in a library or unmap it, and again when the mapping change is complete. The debugger can set a breakpoint at this address if it wants to notice shared object mapping changes. */
+    ElfW(Addr) r_brk;
+    enum
+      { 
+        /* This state value describes the mapping change taking place when the `r_brk' address is called. */
+        RT_CONSISTENT,          /* Mapping change is complete. */
+        RT_ADD,                 /* Beginning to add a new object. */
+        RT_DELETE               /* Beginning to remove an object mapping. */
+      } r_state;
 
-    <span class="token function">ElfW</span><span class="token punctuation">(</span>Addr<span class="token punctuation">)</span> r_ldbase<span class="token punctuation">;</span>        <span class="token comment">/* Base address the linker is loaded at. */</span>
-  <span class="token punctuation">}</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
+    ElfW(Addr) r_ldbase;        /* Base address the linker is loaded at. */
+  };
+</code></pre>
 <p>实操一遍</p>
 <p>随便写一个无output的栈溢出。</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">fur1n@ubuntu:~/pwn$ readelf -d ret2dl
+<pre><code class="bash">fur1n@ubuntu:~/pwn$ readelf -d ret2dl
 
-Dynamic section at offset 0xdb8 contains <span class="token number">27</span> entries:
+Dynamic section at offset 0xdb8 contains 27 entries:
   Tag        Type                         Name/Value
-<span class="token punctuation">..</span>.
- 0x0000000000000015 <span class="token punctuation">(</span>DEBUG<span class="token punctuation">)</span>              0x0
+...
+ 0x0000000000000015 (DEBUG)              0x0
 
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
+</code></pre>
 <p>在没有运行的时候<code>dt_dbg</code>为空。</p>
 <p>在关闭aslr的情况下找到<code>dt_debug</code>并不困难。</p>
 <p>gdb使用<code>elfheader</code>命令查看相关elfheader的地址，可以找到<code>.dynamic</code></p>
 <p>段的地址。</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">pwndbg<span class="token operator">&gt;</span> x/50gx 0x600e20
-<span class="token punctuation">..</span>.
-0x600ee0:	0x0000000000000015	0x00007ffff7ffe140<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-
+<pre><code class="bash">pwndbg&gt; x/50gx 0x600e20
+...
+0x600ee0:    0x0000000000000015    0x00007ffff7ffe140
+</code></pre>
 <p>0x00007ffff7ffe140也就是<code>dt_debug</code>指向的<code>r_debug</code>的地址。</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">pwndbg<span class="token operator">&gt;</span> x/20gx 0x00007ffff7ffe140
-0x7ffff7ffe140 <span class="token operator">&lt;</span>_r_debug<span class="token operator">&gt;</span>:	0x0000000000000001	0x00007ffff7ffe170
-0x7ffff7ffe150 <span class="token operator">&lt;</span>_r_debug+1<span class="token operator"><span class="token file-descriptor important">6</span>&gt;</span>:	0x00007ffff7de3f40	0x0000000000000000
-0x7ffff7ffe160 <span class="token operator">&lt;</span>_r_debug+3<span class="token operator"><span class="token file-descriptor important">2</span>&gt;</span>:	0x00007ffff7dd3000	0x0000000000000000
-0x7ffff7ffe170:	0x0000000000000000	0x00007ffff7ffe700
-0x7ffff7ffe180:	0x0000000000600e20	0x00007ffff7ffe710
-0x7ffff7ffe190:	0x0000000000000000	0x00007ffff7ffe170
-0x7ffff7ffe1a0:	0x0000000000000000	0x00007ffff7ffe6e8
-0x7ffff7ffe1b0:	0x0000000000000000	0x0000000000600e20
-0x7ffff7ffe1c0:	0x0000000000600f00	0x0000000000600ef0
-0x7ffff7ffe1d0:	0x0000000000000000	0x0000000000600ea0
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
+<pre><code class="bash">pwndbg&gt; x/20gx 0x00007ffff7ffe140
+0x7ffff7ffe140 &lt;_r_debug&gt;:    0x0000000000000001    0x00007ffff7ffe170
+0x7ffff7ffe150 &lt;_r_debug+16&gt;:    0x00007ffff7de3f40    0x0000000000000000
+0x7ffff7ffe160 &lt;_r_debug+32&gt;:    0x00007ffff7dd3000    0x0000000000000000
+0x7ffff7ffe170:    0x0000000000000000    0x00007ffff7ffe700
+0x7ffff7ffe180:    0x0000000000600e20    0x00007ffff7ffe710
+0x7ffff7ffe190:    0x0000000000000000    0x00007ffff7ffe170
+0x7ffff7ffe1a0:    0x0000000000000000    0x00007ffff7ffe6e8
+0x7ffff7ffe1b0:    0x0000000000000000    0x0000000000600e20
+0x7ffff7ffe1c0:    0x0000000000600f00    0x0000000000600ef0
+0x7ffff7ffe1d0:    0x0000000000000000    0x0000000000600ea0
+</code></pre>
 <p><code>r_debug</code>维护的第一个结构体，也就是<code>link_map</code>地址，即<code>0x00007ffff7ffe170</code></p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">0x7ffff7ffe140 <span class="token operator">&lt;</span>_r_debug<span class="token operator">&gt;</span>:	0x0000000000000001	0x00007ffff7ffe170<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
+<pre><code class="bash">0x7ffff7ffe140 &lt;_r_debug&gt;:    0x0000000000000001    0x00007ffff7ffe170
+</code></pre>
 <p>这样我们就从<code>dt_debug</code>找到了<code>link_map</code>的地址。</p>
 <p>虽然但是。</p>
 <p>只是找到<code>link_map</code>没啥用。</p>
@@ -242,58 +240,53 @@ Dynamic section at offset 0xdb8 contains <span class="token number">27</span> en
 <p>上一个section我们找到了<code>link_map</code>的地址，接下来我们通过<code>link_map</code>逐步找到</p>
 <p><code>dl_runtime_resolve</code>。</p>
 <p>首先我们找到<code>libc.so.6</code>文件。</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">pwndbg<span class="token operator">&gt;</span> x/20gx 0x00007ffff7ffe170
-0x7ffff7ffe170:	0x0000000000000000	0x00007ffff7ffe700
-0x7ffff7ffe180:	0x0000000000600e20	0x00007ffff7ffe710
+<pre><code class="bash">pwndbg&gt; x/20gx 0x00007ffff7ffe170
+0x7ffff7ffe170:    0x0000000000000000    0x00007ffff7ffe700
+0x7ffff7ffe180:    0x0000000000600e20    0x00007ffff7ffe710
 ---
-pwndbg<span class="token operator">&gt;</span> x/20gx 0x00007ffff7ffe700
-0x7ffff7ffe700:	0x0000000000000000	0x0000000000000000
-0x7ffff7ffe710:	0x00007ffff7ffb000	0x00007ffff7ffebb0
+pwndbg&gt; x/20gx 0x00007ffff7ffe700
+0x7ffff7ffe700:    0x0000000000000000    0x0000000000000000
+0x7ffff7ffe710:    0x00007ffff7ffb000    0x00007ffff7ffebb0
 ---
-pwndbg<span class="token operator">&gt;</span> x/s 0x00007ffff7ffebb0
-0x7ffff7ffebb0:	<span class="token string">"linux-vdso.so.1"</span>
+pwndbg&gt; x/s 0x00007ffff7ffebb0
+0x7ffff7ffebb0:    "linux-vdso.so.1"
 ---
-pwndbg<span class="token operator">&gt;</span> x/10gx 0x00007ffff7ffe710
-0x7ffff7ffe710:	0x00007ffff7ffb000	0x00007ffff7ffebb0
-0x7ffff7ffe720:	0x00007ffff7ffb3a0	0x00007ffff7fe2000
+pwndbg&gt; x/10gx 0x00007ffff7ffe710
+0x7ffff7ffe710:    0x00007ffff7ffb000    0x00007ffff7ffebb0
+0x7ffff7ffe720:    0x00007ffff7ffb3a0    0x00007ffff7fe2000
 ---
-pwndbg<span class="token operator">&gt;</span> x/10gx 0x00007ffff7fe2000
-0x7ffff7fe2000:	0x00007ffff79e2000	0x00007ffff7ffedd0
+pwndbg&gt; x/10gx 0x00007ffff7fe2000
+0x7ffff7fe2000:    0x00007ffff79e2000    0x00007ffff7ffedd0
 ---
-pwndbg<span class="token operator">&gt;</span> x/s 0x00007ffff7ffedd0
-0x7ffff7ffedd0:	<span class="token string">"/lib/x86_64-linux-gnu/libc.so.6"</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
+pwndbg&gt; x/s 0x00007ffff7ffedd0
+0x7ffff7ffedd0:    "/lib/x86_64-linux-gnu/libc.so.6"
+</code></pre>
 <p>即<code>0x00007ffff7ffedd0</code>。</p>
 <p>0x3即<code>GOT[]</code>入口</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">pwndbg<span class="token operator">&gt;</span> x/30gx 0x00007ffff7dccb80
-<span class="token punctuation">..</span>.
-0x7ffff7dccc30:	0x0000000000000003	0x00007ffff7dcd000
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-
+<pre><code class="bash">pwndbg&gt; x/30gx 0x00007ffff7dccb80
+...
+0x7ffff7dccc30:    0x0000000000000003    0x00007ffff7dcd000
+</code></pre>
 <p>找到GOT[3]</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">pwndbg<span class="token operator">&gt;</span> x/5gx 0x00007ffff7dcd000
-0x7ffff7dcd000:	0x00000000003eab80	0x00007ffff7fe2000
-0x7ffff7dcd010:	0x00007ffff7dea8f0	0x00007ffff7b70a10<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-
-
-
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">pwndbg<span class="token operator">&gt;</span> xinfo 0x00007ffff7dea8f0
-Extended information <span class="token keyword">for</span> virtual address 0x7ffff7dea8f0:
+<pre><code class="bash">pwndbg&gt; x/5gx 0x00007ffff7dcd000
+0x7ffff7dcd000:    0x00000000003eab80    0x00007ffff7fe2000
+0x7ffff7dcd010:    0x00007ffff7dea8f0    0x00007ffff7b70a10
+</code></pre>
+<pre><code class="bash">pwndbg&gt; xinfo 0x00007ffff7dea8f0
+Extended information for virtual address 0x7ffff7dea8f0:
 
   Containing mapping:
-    0x7ffff7dd3000     0x7ffff7dfc000 r-xp    <span class="token number">29000</span> <span class="token number">0</span>      /lib/x86_64-linux-gnu/ld-2.27.so
+    0x7ffff7dd3000     0x7ffff7dfc000 r-xp    29000 0      /lib/x86_64-linux-gnu/ld-2.27.so
 
   Offset information:
-         Mapped Area 0x7ffff7dea8f0 <span class="token operator">=</span> 0x7ffff7dd3000 + 0x178f0
-         File <span class="token punctuation">(</span>Base<span class="token punctuation">)</span> 0x7ffff7dea8f0 <span class="token operator">=</span> 0x7ffff7dd3000 + 0x178f0
-      File <span class="token punctuation">(</span>Segment<span class="token punctuation">)</span> 0x7ffff7dea8f0 <span class="token operator">=</span> 0x7ffff7dd3000 + 0x178f0
-         File <span class="token punctuation">(</span>Disk<span class="token punctuation">)</span> 0x7ffff7dea8f0 <span class="token operator">=</span> /lib/x86_64-linux-gnu/ld-2.27.so + 0x178f0
+         Mapped Area 0x7ffff7dea8f0 = 0x7ffff7dd3000 + 0x178f0
+         File (Base) 0x7ffff7dea8f0 = 0x7ffff7dd3000 + 0x178f0
+      File (Segment) 0x7ffff7dea8f0 = 0x7ffff7dd3000 + 0x178f0
+         File (Disk) 0x7ffff7dea8f0 = /lib/x86_64-linux-gnu/ld-2.27.so + 0x178f0
 
  Containing ELF sections:
-               .text 0x7ffff7dea8f0 <span class="token operator">=</span> 0x7ffff7dd3f10 + 0x169e0
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
+               .text 0x7ffff7dea8f0 = 0x7ffff7dd3f10 + 0x169e0
+</code></pre>
 <h3 id="3）exploitation">3）exploitation<a class="post-anchor" href="#3）exploitation"></a></h3><p>在无aslr并已经获取到<code>dl_runtime_resolve</code>的情况下的利用和patial relro相似。</p>
 <p>有aslr的情况。。</p>
 <p>我也不会。</p>

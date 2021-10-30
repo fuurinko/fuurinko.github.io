@@ -168,7 +168,7 @@
     </div>
     <html><head></head><body><p>![触控栏快照2021-10-29 下午11.50.07](/Users/rin/Desktop/触控栏快照2021-10-29 下午11.50.07.png)</p>
 <h4 id="1）">1）<a class="post-anchor" href="#1）"></a></h4><p>​    由于看腻了typora原主题的python高亮的丑兮兮的屎黄色注释，决定换个主题。然而找遍整个主题列表，并没有我看得上的主题。本来打算作罢，但想起最近因为写小程序，学了一些简单的css，是不是可以尝试一下修改某些主题的css文件，打造一个自己喜欢的主题捏。</p>
-<h4 id="2）">2）<a class="post-anchor" href="#2）"></a></h4><p>​    在下载主题的过程中我大致了解了一下typora主题开发的大致内容，其实主体感觉就是css（所以typora似乎是不支持在导航栏等留白的地方插入图片的，虽然感觉可以魔改，但是感觉工程量会稍微大些）。除了css，就是各种需要的字体。</p>
+<h4 id="2）">2）<a class="post-anchor" href="#2）"></a></h4><p>​    在下载主题的过程中我大致了解了一下typora主题开发的大致内容，其实主体感觉就是css（除了css，就是各种需要的字体。</p>
 <p>​    这里以主题<code>mint</code>为例，css中<code>:root</code>元素声明了全局css变量，如下：</p>
 <pre><code class="css"> :root {
   --side-bar-bg-color: #ffffff;//边栏颜色
@@ -187,6 +187,7 @@
 <p>​    这个比较难搞的是猜测各种元素对应的含义（（需要手动去尝试。但是就算是这样还是有几个元素没有试出来到底是哪一块的配色，似乎typora也没有类似的官方文档来规定每个div的名字（（</p>
 <p>​    然后需要修改的是代码高亮的一些相关配色，typora的代码高亮是直接用的css而不是引用<code>highlight.js</code>（感觉也差不多233）。</p>
 <p>​    然后我们找到代码高亮的css元素（其他的基本都是字体以及留白的一些样式，没有需求可以不用管）,找到对应的元素就可以开始魔改（</p>
+<p>​    (ps:感觉typora还有很多主题的方法可以使用，比如说backgroud = url（），通过这个 插入图片等，但是好像并没有找到类似的文档，我也不想再切图，于是作罢)</p>
 <p>​    其实魔改以后感觉变化也不是特别大，但是魔改的过程还是很有意思。</p>
 <p><a target="_blank" rel="noopener" href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-30%20%E4%B8%8B%E5%8D%882.46.50.png" data-caption="截屏2021-10-30 下午2.46.50" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-30%20%E4%B8%8B%E5%8D%882.46.50.png" alt="截屏2021-10-30 下午2.46.50"></a></p>
 <p>​        顺便附上它的css</p>
