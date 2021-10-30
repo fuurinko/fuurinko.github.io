@@ -240,14 +240,13 @@ r.interactive()
 <p>​    所以下图中的代码也就能够理解了，就是将参数传入实例本身。</p>
 <p><a target="_blank" rel="noopener" href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-29%20%E4%B8%8B%E5%8D%882.08.21.png" data-caption="截屏2021-10-29 下午2.08.21" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-29%20%E4%B8%8B%E5%8D%882.08.21.png" alt="截屏2021-10-29 下午2.08.21"></a></p>
 <p>​    然后，是功能实现的第一步–偏移的寻找，也是这篇笔记重点要分析的部分，完整的源码分析会写成一个新的系列。</p>
-<p>​    很显然这个功能的实现是基于<code>find_offset</code>函数。</p>
-<p>​    函数的内容其实比较简单</p>
+<p>​    很显然这个功能的实现是基于<code>find_offset</code>方法。</p>
+<p>​    方法的内容其实比较简单：</p>
 <pre><code class="python">  def find_offset(self):
         marker = cyclic(20)#cyclic 20个字符
         for off in range(1,1000):#从1-1000，爆破偏移量
             leak = self.leak_stack(off, marker)
             leak = pack(leak)#leak = p(leak_stack)
-
             pad = cyclic_find(leak[:4])
             if pad &gt;= 0 and pad &lt; 20:
                 return off, pad
@@ -255,7 +254,7 @@ r.interactive()
             log.error("Could not find offset to format string on stack")
             return None, None
 </code></pre>
-<p>​    而实现函数<code>find_offset</code>，又依靠函数<code>leak_stack</code></p>
+<p>​    而实现方法<code>find_offset</code>，又依靠方法<code>leak_stack</code></p>
 <pre><code class="python">    def leak_stack(self, offset, prefix=b""):
         payload = b"START%%%d$pEND" % offset
         leak = self.execute_fmt(prefix + payload)
@@ -266,6 +265,34 @@ r.interactive()
             leak = 0
         return leak
 </code></pre>
+<p>​    <code>cyclic</code>的代码也顺便放一放（</p>
+<pre><code class="python">def cyclic_find(subseq, alphabet = None, n = None): 
+  if n is None:
+        n = context.cyclic_size
+
+    if isinstance(subseq, six.integer_types):
+        subseq = packing.pack(subseq, bytes=n)
+    subseq = packing._need_bytes(subseq, 2, 0x80)
+
+    if len(subseq) != n:
+        log.warn_once("cyclic_find() expects %i-byte subsequences by default, you gave %r\n"
+            "Unless you specified cyclic(..., n=%i), you probably just want the first 4 bytes.\n"
+            "Truncating the data at 4 bytes.  Specify cyclic_find(..., n=%i) to override this.",
+            n, subseq, len(subseq), len(subseq))
+        subseq = subseq[:n]
+
+    if alphabet is None:
+        alphabet = context.cyclic_alphabet
+    alphabet = packing._need_bytes(alphabet, 2, 0x80)
+
+    if any(c not in alphabet for c in subseq):
+        return -1
+
+    n = n or len(subseq)
+
+    return _gen_find(subseq, de_bruijn(alphabet, n))
+</code></pre>
+<p>​    之前一直对<code>cyclic</code>的实现抱有兴趣，抽个时间可以看看源码分析。</p>
 <p>​    </p>
 <p>​        </p>
 <h3 id="4）总结">4）总结<a class="post-anchor" href="#4）总结"></a></h3><p>​    part1和part2主要涉及汇编对函数调用栈知识，如果对栈溢出熟悉的话其实理解起来真的非常轻松，也没有什么好说的。</p>
