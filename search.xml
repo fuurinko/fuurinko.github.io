@@ -1426,14 +1426,6 @@ sh.sendline('/bin/sh;')
       </tags>
   </entry>
   <entry>
-    <title>pwntools源码剖析（1）--以源码的角度分析io交互原理</title>
-    <url>/2021/10/27/%E6%91%86%E7%83%82%E7%AC%AC%E4%BA%94%E5%A4%A9--pwntools%E6%BA%90%20%E7%A0%81%20%E5%89%96%20%E6%9E%90--%E4%BB%A5%E6%BA%90%E7%A0%81%E7%9A%84%E8%A7%92%E5%BA%A6%E5%88%86%E6%9E%90io%E4%BA%A4%E4%BA%92%E5%8E%9F%E7%90%86/</url>
-    <content><![CDATA[<html><head></head><body><h3 id=""><a class="post-anchor" href="#"></a></h3></body></html>]]></content>
-      <tags>
-        <tag>pwntools</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>gdb附加调试的一些黑魔法</title>
     <url>/2021/10/27/%E6%91%86%E7%83%82%E7%AC%AC%E5%9B%9B%E5%A4%A9--gdb%E9%99%84%E5%8A%A0%E8%B0%83%E8%AF%95%E7%9A%84%E4%B8%80%E4%BA%9B%E9%BB%91%E9%AD%94%E6%B3%95/</url>
     <content><![CDATA[<html><head></head><body><h2 id="1）abstract">1）abstract<a class="post-anchor" href="#1）abstract"></a></h2><p>​    这个part主要综合了一些奇怪的调试中遇到的问题，不定期更新。</p>
@@ -1961,7 +1953,7 @@ aptitude autoclean #删除过期的包文件
   <entry>
     <title>简单的函数调用栈基础</title>
     <url>/2021/10/12/%E6%91%86%E7%83%82%E7%AC%AC%E4%B8%80%E5%A4%A9--%E5%86%8D%E6%8E%A2%E5%87%BD%E6%95%B0%E8%B0%83%E7%94%A8%E6%A0%88/</url>
-    <content><![CDATA[<html><head></head><body><h3 id=""><a class="post-anchor" href="#"></a></h3><h3 id="1）前言">1）前言<a class="post-anchor" href="#1）前言"></a></h3><p>stack_pro力求从最底层的角度深究每一道简单的栈溢出题背后的原理。而第一章则从栈溢出的理论基础–函数调用栈开始。</p>
+    <content><![CDATA[<html><head></head><body><h3 id="1）前言">1）前言<a class="post-anchor" href="#1）前言"></a></h3><p>stack_pro力求从最底层的角度深究每一道简单的栈溢出题背后的原理。而第一章则从栈溢出的理论基础–函数调用栈开始。</p>
 <h3 id="2）函数调用栈">2）函数调用栈<a class="post-anchor" href="#2）函数调用栈"></a></h3><p>从一个简单的程序入手。</p>
 <p>程序来自你邮萌新赛pwn1-人类补习计划。</p>
 <p><a href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/image-20211012194601557.png" data-caption="image-20211012194601557" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/image-20211012194601557.png" alt="image-20211012194601557"></a></p>
@@ -2559,6 +2551,64 @@ hr {
 </body></html>]]></content>
       <tags>
         <tag>mess</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>docker学习笔记</title>
+    <url>/2021/11/01/docker%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
+    <content><![CDATA[<html><head></head><body><p>​    还是最近需要部署pwn题至平台，所以需要学习一定的docker容器知识。我发现如果纯粹按照网上框架的一件脚本运行的话，遇到报错根本无法解决，所以看图说话之外我还需要较为系统地学习docker知识。</p>
+<h3 id="1-docker基础架构">1  docker基础架构<a class="post-anchor" href="#1-docker基础架构"></a></h3><p>​    对于docker，在了解基础命令之前我们需要了解的就是，容器以及虚拟化的大致架构与关系。</p>
+<p>​    首先需要知道镜像，容器与仓库的关系。就像面向对象程序设计中，类与实例的关系相似，镜像是一个静态的概念，包含了一套完整的root文件系统，当镜像运行时，它被称为容器。</p>
+<p>​    </p>
+<p>​    </p>
+</body></html>]]></content>
+      <tags>
+        <tag>mess</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title></title>
+    <url>/2021/10/31/%E5%9F%BA%E4%BA%8Ectf%20pwn%E7%8E%AF%E5%A2%83%E7%9A%84docker%E9%85%8D%E7%BD%AE/</url>
+    <content><![CDATA[<html><head></head><body><p>title: 基于ctf pwn环境的docker搭建<br>tags: mess</p>
+<h2 id="1）">1）<a class="post-anchor" href="#1）"></a></h2><p>​    最近为了校内的萌新赛，需要出一些简单的pwn题，然后把它们搓进docker。虽然步骤并不是非常复杂，而且有现成的框架。</p>
+<h2 id="2）">2）<a class="post-anchor" href="#2）"></a></h2><p>​    首先是框架的选择，pwn的框架其实很多，这里随便选一个最基础的<code>ctf_xinted</code>。</p>
+<p>​    首先我们需要做的是把项目clone到本地。</p>
+<p><a href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-01%20%E4%B8%8B%E5%8D%885.11.41.png" data-caption="截屏2021-11-01 下午5.11.41" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-01%20%E4%B8%8B%E5%8D%885.11.41.png" alt="截屏2021-11-01 下午5.11.41"></a></p>
+<p>​    通过指令<code>cat Dockerfile</code>可以看到dockerfile。</p>
+<p>​    dockerfile是用来构建docker镜像的，里面包含了构建docker镜像构建的一些步骤和说明。一般来说如果要打包自己的环境的话，需要写dockerfile来供别人使用。</p>
+<pre><code> 这里我们直接切换到`ctf_xinetd`的文件夹下，然后执行     
+</code></pre>
+<pre><code class="bash">sudo docker build -t "helloworld" .
+</code></pre>
+<p>​    (注意后面的“.”)</p>
+<p>​    这个时候一般就会创建<code>helloworld</code>这个镜像，我们只需要等待创建结束，然后执行</p>
+<pre><code class="bash">sudo docker run -d -p "0.0.0.0:10001:9999" -h "helloworld" --name="helloworld" helloworld
+</code></pre>
+<p>​    <code>0.0.0.0</code>表示用户连接的ip地址，10001表示对用户开放的端口，9999指容器内部端口绑定到指定的主机端口。</p>
+<p>​    如果运行正常，此时我们是能够通过 <code>nc 0.0.0.0 10001</code>来连接我们的docker容器的。</p>
+<p>​    但是有时候docker会出现一些问题。比如说在创建镜像的时候有可能会出现软件源解释失败的问题，这时候你需要关闭你的vpn（如果有）。然后重启docker。就像这样</p>
+<pre><code class="bash">sudo service docker restart
+</code></pre>
+<p>​    这样这个pwn题的docker就算部署完成了，你只需要把你自己的题目放置在容器中，并修改对应的flag就行。</p>
+<p>​    但是目前来说这个框架存在一些局限性，比如说一次只能部署一道题等。</p>
+</body></html>]]></content>
+  </entry>
+  <entry>
+    <title>pwntools(1)-- pwnlib.tube</title>
+    <url>/2021/10/27/pwntools%EF%BC%881%EF%BC%89--pwnlib.tube/</url>
+    <content><![CDATA[<html><head></head><body><h3 id="0-preview">0)preview<a class="post-anchor" href="#0-preview"></a></h3><p>​    一般通过萌新一般在接触pwn的时候，一个必不可少的步骤就是下载pwntools，并且在自己人生第一个脚本上输入：</p>
+<pre><code class="python">from pwn import*
+</code></pre>
+<p>​    我也如此。</p>
+<p>​    在学习pwn知识快一年的今天，倘若还是对pwntools这个神一般的工具迷茫不解，那我确实还不是一个合格的pwn手。</p>
+<p>​    这个系列的目的是通过简单的源码剖析，辅以相应的例题，探究pwn题，gdb调试，以及pwntools本身的一些玄学。</p>
+<p>​    第一部分，则是一个至关重要的part–<code>pwnlib.tube</code></p>
+<h3 id="1-进程间通信">1)进程间通信<a class="post-anchor" href="#1-进程间通信"></a></h3><p>​    在了解<code>pwnlib.tube</code>之前，我们需要知道linux进程间通信的一些基础知识，以下所有内容均参考自《csapp》</p>
+<p>​    tbc…</p>
+<p>​    </p>
+</body></html>]]></content>
+      <tags>
+        <tag>pwntools</tag>
       </tags>
   </entry>
 </search>
