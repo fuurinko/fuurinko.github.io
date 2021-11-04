@@ -29,7 +29,7 @@
     
     <div id="post-toc" class="animated hiddenToc hide">
       <span class="title">Toc</span>
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-docker%E5%9F%BA%E7%A1%80%E6%9E%B6%E6%9E%84"><span class="toc-text">1  docker基础架构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E6%9C%89docker%EF%BC%9F"><span class="toc-text">1.1    为什么要有docker？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-docker%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86"><span class="toc-text">1.2 docker基础知识</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-docker%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4"><span class="toc-text">1.3 docker基础命令</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-text">参考</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-docker%E5%9F%BA%E7%A1%80%E6%9E%B6%E6%9E%84"><span class="toc-text">1  docker基础架构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E6%9C%89docker%EF%BC%9F"><span class="toc-text">1.1    为什么要有docker？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-docker%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86"><span class="toc-text">1.2 docker基础知识</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-docker%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4"><span class="toc-text">1.3 docker基础命令</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#docker-build"><span class="toc-text">docker build</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#docker-run"><span class="toc-text">docker run</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#docker-start-stop-retart"><span class="toc-text">docker start&#x2F;stop&#x2F;retart</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#docker-pause"><span class="toc-text">docker pause</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#docker-kill"><span class="toc-text">docker kill</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#docker-ps"><span class="toc-text">docker ps</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#docker-attach"><span class="toc-text">docker attach</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#docker-inspect"><span class="toc-text">docker inspect</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-text">参考</span></a></li></ol>
     </div>
     
     <div id="fixed-menu-wrap">
@@ -185,16 +185,43 @@
 <p>​    <a target="_blank" rel="noopener" href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-01%20%E4%B8%8B%E5%8D%8811.54.51.png" data-caption="截屏2021-11-01 下午11.54.51" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-01%20%E4%B8%8B%E5%8D%8811.54.51.png" alt="截屏2021-11-01 下午11.54.51"></a></p>
 <p>​    这个<code>hello world</code>其实就是被打包好的在特定环境下的程序，我们可以通过<code>docker cantainer run hello-world</code>指令将镜像创建为容器并运行。</p>
 <p><a target="_blank" rel="noopener" href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-01%20%E4%B8%8B%E5%8D%8811.59.12.png" data-caption="截屏2021-11-01 下午11.59.12" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-01%20%E4%B8%8B%E5%8D%8811.59.12.png" alt="截屏2021-11-01 下午11.59.12"></a></p>
-<p>​    </p>
+<h4 id="docker-build">docker build<a class="post-anchor" href="#docker-build"></a></h4><p>​    build指令使用dockerfile来创建新的容器。一般来说简单的构建命令就是</p>
+<pre><code class="bash">$ docker build -t imagename .
+</code></pre>
+<p>​    虽然我不是很理解这个<code>-t</code>    的参数意义何在，并且镜像名后面的“.”是干啥的。</p>
+<h4 id="docker-run">docker run<a class="post-anchor" href="#docker-run"></a></h4><p>​    创建一个新的容器并运行</p>
+<p>​    一般来说会有这几个参数</p>
+<pre><code class="bash">-d: 后台运行容器，并返回容器ID；
+
+-it: 以交互模式运行容器，并创建一个伪终端；
+
+-p: 指定端口映射，格式为：主机(宿主)端口:容器端口
+
+--name="nginx-lb": 为容器指定一个名称；
+
+-v：映射主机文件夹至容器内    
+</code></pre>
+<h4 id="docker-start-stop-retart">docker start/stop/retart<a class="post-anchor" href="#docker-start-stop-retart"></a></h4><p>​    启动或停止容器。</p>
+<p>​    指令为<code>docker start/stop/retart containerID</code></p>
+<h4 id="docker-pause">docker pause<a class="post-anchor" href="#docker-pause"></a></h4><p>​    暂停容器内全部进程。</p>
+<h4 id="docker-kill">docker kill<a class="post-anchor" href="#docker-kill"></a></h4><p>​    kill 运行的容器进程</p>
+<h4 id="docker-ps">docker ps<a class="post-anchor" href="#docker-ps"></a></h4><p>​    列出容器。</p>
+<pre><code class="bash">-a :显示所有的容器，包括未运行的。
+</code></pre>
+<h4 id="docker-attach">docker attach<a class="post-anchor" href="#docker-attach"></a></h4><p>​    连接到正在运行中的容器。</p>
+<p><code>docker attach containerID</code></p>
+<h4 id="docker-inspect">docker inspect<a class="post-anchor" href="#docker-inspect"></a></h4><p>​    获取容器/镜像的元数据。</p>
 <h2 id="参考">参考<a class="post-anchor" href="#参考"></a></h2><p><a target="_blank" rel="noopener" href="https://www.ruanyifeng.com/blog/2018/02/docker-tutorial.html">Docker 入门教程</a></p>
 <p><a target="_blank" rel="noopener" href="https://www.runoob.com/docker/docker-image-usage.html">Docker 镜像使用</a></p>
+<p>​    </p>
+<p>​    </p>
 </body></html>
 
   
   <div class="post-guide">
     <div class="item left">
         
-          <a href="../../02/pwnable-start/">pawnable -- start</a>
+          <a href="../../02/pwndocker%E7%9A%84pwn%E9%A2%98%E4%BD%93%E9%AA%8C/">pwndocker的pwn题体验</a>
         
     </div>
     <div class="item right">
