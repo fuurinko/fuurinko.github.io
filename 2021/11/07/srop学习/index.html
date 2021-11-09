@@ -16,7 +16,7 @@
     <meta name="description" content="" />
     
     <title>
-      简单的函数调用栈基础 - Rin
+      SROP学习 - Rin
     </title>
     <link rel="manifest" href="/manifest.json" />
     <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon" />
@@ -26,11 +26,6 @@
   <meta name="generator" content="Hexo 5.4.0"></head>
   <body>
     <canvas id='pagemap'></canvas>
-    
-    <div id="post-toc" class="animated hiddenToc hide">
-      <span class="title">Toc</span>
-      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1%EF%BC%89%E5%89%8D%E8%A8%80"><span class="toc-text">1）前言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2%EF%BC%89%E5%87%BD%E6%95%B0%E8%B0%83%E7%94%A8%E6%A0%88"><span class="toc-text">2）函数调用栈</span></a></li></ol>
-    </div>
     
     <div id="fixed-menu-wrap">
       <span class="iconfont icon-sousuo search-box menu-reset"></span>
@@ -139,11 +134,11 @@
         <article class="post-entry">
     <div class="header">
       
-      <div class="title">简单的函数调用栈基础</div>
+      <div class="title">SROP学习</div>
       <div class="meta">
         <span class="item">
           <span class="iconfont icon-time-circle"></span>
-          <span>2021/10/12</span>
+          <span>2021/11/07</span>
         </span>
 
         
@@ -156,7 +151,7 @@
             <span>
                 
                   
-                    <a href="/tags/asm Primary">asm Primary</a>
+                    <a href="/tags/stack">stack</a>
                   
                 
             </span>
@@ -166,54 +161,16 @@
       <div>
       </div>
     </div>
-    <html><head></head><body><h3 id="1）前言">1）前言<a class="post-anchor" href="#1）前言"></a></h3><p>stack_pro力求从最底层的角度深究每一道简单的栈溢出题背后的原理。而第一章则从栈溢出的理论基础–函数调用栈开始。</p>
-<h3 id="2）函数调用栈">2）函数调用栈<a class="post-anchor" href="#2）函数调用栈"></a></h3><p>从一个简单的程序入手。</p>
-<p>程序来自你邮萌新赛pwn1-人类补习计划。</p>
-<p><a target="_blank" rel="noopener" href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/image-20211012194601557.png" data-caption="image-20211012194601557" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/image-20211012194601557.png" alt="image-20211012194601557"></a></p>
-<p>​    可以看到对栈空间进行一个初始化的操作的三行关键代码。</p>
-<pre><code class="asm">push    rbp
-mov     rbp, rsp
-sub     rsp, 30h
-</code></pre>
-<p>然后就是人神共愤的函数调用栈环节。</p>
-<blockquote>
-<p>rbp ： 栈基址指针寄存器 。</p>
-<p>rsp ： 栈顶指针寄存器。</p>
-</blockquote>
-<p>​    之前也提到，栈是一种先进后出的数据结构，所以肯定有一端是固定的，然后另一端用来操作。这里rbp就对应固定的栈底（高地址），rsp对应一直在变化的栈顶（低地址）。</p>
-<p>​    并且因为rbp通常是固定的，所以函数的一些局部变量的索引的基址就是rbp。</p>
-<p>​    值得一提的是，以静态调试的角度来看一个程序的二进制文件，内存地址都是由低地址向高地址增长的，所以在ida中，stack的结构大致如下。</p>
-<p><a target="_blank" rel="noopener" href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-12%20%E4%B8%8B%E5%8D%8811.11.18.png" data-caption="截屏2021-10-12 下午11.11.18" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-12%20%E4%B8%8B%E5%8D%8811.11.18.png" alt="截屏2021-10-12 下午11.11.18"></a></p>
-<p>​     ebp也就是s的位置，很显然在esp之下。</p>
-<p>​     然而实际上，在内存空间中，栈上的数据是由高地址向低地址增长。也就是地址越小，实际离ebp越远。</p>
-<blockquote>
-<p>主调函数将参数按照调用约定依次入栈(图中为从右到左)，然后将指令指针EIP入栈以保存主调函数的返回地址(下一条待执行指令的地址)。进入被调函数时，被调函数将主调函数的帧基指针EBP入栈，并将主调函数的栈顶指针ESP值赋给被调函数的EBP(作为被调函数的栈底)，接着改变ESP值来为函数局部变量预留空间。此时被调函数帧基指针指向被调函数的栈底。以该地址为基准，向上(栈底方向)可获取主调函数的返回地址、参数值，向下(栈顶方向)能获取被调函数的局部变量值，而该地址处又存放着上一层主调函数的帧基指针值。本级调用结束后，将EBP指针值赋给ESP，使ESP再次指向被调函数栈底以释放局部变量；再将已压栈的主调函数帧基指针弹出到EBP，并弹出返回地址到EIP。ESP继续上移越过参数，最终回到函数调用前的状态，即恢复原来主调函数的栈帧。如此递归便形成函数调用栈。</p>
-</blockquote>
-<p>这段话说得非常玄学，而csapp中说得就非常简单清晰</p>
-<p><a target="_blank" rel="noopener" href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-13%20%E4%B8%8B%E5%8D%888.01.32.png" data-caption="截屏2021-10-13 下午8.01.32" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-13%20%E4%B8%8B%E5%8D%888.01.32.png" alt="截屏2021-10-13 下午8.01.32"></a></p>
-<blockquote>
-<p>当前正在执行的过程的帧总是在栈 顶。当过程P调用过程Q时，会把返回地址压人栈中，指明当Q返回时，要从P程序的哪 个位置继续执行。我们把这个返回地址当做P的栈帧的一部分，因为它存放的是与P相关 的状态。Q的代码会扩展当前栈的边界，分配它的栈帧所需的空间。在这个空间中，它可 以保存寄存器的值，分配局部变量空间，为它调用的过程设置参数。</p>
-</blockquote>
-<p>​    还有一点就是，之前也没有很正确地理解何为局部变量。虽然众所周知的知识点是说，局部变量是函数内部定义的变量，离开这个函数就无法被引用，然而我总是没有将局部变量与buf 联系起来，实际上buf，这个缓冲区，就是被调函数的局部变量。</p>
-<p>​    那么直接从动态调试的角度来研究函数调用栈。</p>
-<p>​    关于压栈的一些传参方式，可以参见<a href="https://fuurinko.github.io/2021/10/27/%E6%91%86%E7%83%82%E7%AC%AC%E5%85%AD%E5%A4%A9--%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%81%8F%E7%A7%BB%E8%AE%A1%E7%AE%97%E5%8E%9F%E7%90%86/">格式化字符串偏移计算原理及pwntools fmtstr功能源码剖析</a>，这里主要讨论传参以后，有关返回地址以及栈顶栈指针变化的一些操作，以及一些奇怪的初始化相关函数的运行姿势。</p>
-<p><a target="_blank" rel="noopener" href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-13%20%E4%B8%8B%E5%8D%885.14.08.png" data-caption="截屏2021-10-13 下午5.14.08" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-13%20%E4%B8%8B%E5%8D%885.14.08.png" alt="截屏2021-10-13 下午5.14.08"></a></p>
-<p>当执行完push rbp以及 sub rsp ，0x30以后，栈空间为0x30。</p>
-<p>此时可以注意到整个栈上存的指针都非常奇怪，也就是libc中的一些初始化函数的指令。</p>
-<p>可以联系一下ret2csu中的知识点，也就是main函数执行前_libc_start_main执行点一系列初始化操作。</p>
-<p>tbc</p>
-</body></html>
+    
 
   
   <div class="post-guide">
     <div class="item left">
         
-          <a href="../../13/%E6%91%86%E7%83%82%E7%AC%AC%E4%BA%8C%E5%A4%A9--%E5%86%8D%E6%8E%A2%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80/">简单的汇编语言复习</a>
-        
     </div>
     <div class="item right">
         
-          <a href="../../../08/20/main_arana%20%E4%B8%8E%E5%A4%9A%E7%BA%BF%E7%A8%8B/">main_arena与多线程</a>
+          <a href="../../02/pwndocker%E7%9A%84pwn%E9%A2%98%E4%BD%93%E9%AA%8C/">pwndocker的pwn题体验</a>
         
     </div>
   </div>

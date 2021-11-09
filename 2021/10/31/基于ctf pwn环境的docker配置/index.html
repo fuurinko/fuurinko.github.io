@@ -178,7 +178,7 @@
 <p>​    这个时候一般就会创建<code>helloworld</code>这个镜像，我们只需要等待创建结束，然后执行</p>
 <pre><code class="bash">sudo docker run -d -p "0.0.0.0:10001:9999" -h "helloworld" --name="helloworld" helloworld
 </code></pre>
-<p>​    <code>0.0.0.0</code>表示用户连接的ip地址，10001表示对用户开放的端口，9999指容器内部端口绑定到指定的主机端口。</p>
+<p>​    <code>0.0.0.0</code>表示用户连接的ip地址，10001表示对用户开放的端口，9999指容器内部端口绑定到指定的主机端口。一般来说最后会把<code>0.0.0.0</code>换成自己主机的ip地址，端口则任意选一个。</p>
 <p>​    如果运行正常，此时我们是能够通过 <code>nc 0.0.0.0 10001</code>来连接我们的docker容器的。</p>
 <p>​    但是有时候docker会出现一些问题。比如说在创建镜像的时候有可能会出现软件源解释失败的问题，这时候你需要关闭你的vpn（如果有）。然后重启docker。就像这样</p>
 <pre><code class="bash">sudo service docker restart
