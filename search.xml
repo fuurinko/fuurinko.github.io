@@ -2146,7 +2146,7 @@ hr {
 <p>​    这个时候一般就会创建<code>helloworld</code>这个镜像，我们只需要等待创建结束，然后执行</p>
 <pre><code class="bash">sudo docker run -d -p "0.0.0.0:10001:9999" -h "helloworld" --name="helloworld" helloworld
 </code></pre>
-<p>​    <code>0.0.0.0</code>表示用户连接的ip地址，10001表示对用户开放的端口，9999指容器内部端口绑定到指定的主机端口。一般来说最后会把<code>0.0.0.0</code>换成自己主机的ip地址，端口则任意选一个。</p>
+<p>​    <code>0.0.0.0</code>表示用户连接的ip地址，10001表示对用户开放的端口，9999指容器内部端口绑定到指定的主机端口。</p>
 <p>​    如果运行正常，此时我们是能够通过 <code>nc 0.0.0.0 10001</code>来连接我们的docker容器的。</p>
 <p>​    但是有时候docker会出现一些问题。比如说在创建镜像的时候有可能会出现软件源解释失败的问题，这时候你需要关闭你的vpn（如果有）。然后重启docker。就像这样</p>
 <pre><code class="bash">sudo service docker restart
@@ -2954,5 +2954,31 @@ mov eax,arrayD[esi*4]                    ;eax = 4
       <tags>
         <tag>asm Primary</tag>
       </tags>
+  </entry>
+  <entry>
+    <title></title>
+    <url>/2021/11/11/Untitled/</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
+    <title></title>
+    <url>/2021/11/11/ctfd+docker+pwn/</url>
+    <content><![CDATA[<html><head></head><body><p>title: 关于ctfd平台部署pwn题的吐槽<br>tags: mess</p>
+<p>​        </p>
+<p>​        还是萌新赛，整docker给我整傻了。</p>
+<p>​        因为我们的CTFd是二次开发的，一般的CTFd的题目分类是有个dynamic docker，但是我们的平台只有一个kube类型。但是里面的东西还是八九不离十，然后对于指定题目，你需要填写你的docker image。并且指定暴露端口。</p>
+<p>​        然后我这个萌新就被狠狠地坑了，一开始费了好大劲从0学习docker（虽然不难），然后通过别人的框架部署题目，创建好镜像，照猫画虎指定ip和端口运行容器，最后打开CTFd，就直接把docker image那一空给填成自己启动容器的那串ip了，然后端口也傻傻地不知道怎么搞，然后随便乱输一通，结果狠狠地靶机notready了。</p>
+<p>​        直到下午我突然意识到哪里不对，然后去搜了一下，发现别人填的和我填的好像不太一样，找胖爷爷确认了一下，果然是要填docker hub里的镜像名哇。</p>
+<p>​        然后又狠狠地push了镜像，在CTFd填了镜像的名字，这下总算靶机ready了。</p>
+<p>​        然后我还是心存侥幸地试着看看nodeport生成的那个ip和port能不能nc，这一测就出问题了，nc不能。</p>
+<p>​        但是这样我就没辙了。</p>
+<p>​        咋办捏？remake吧！</p>
+<p>​        我把所有不相关的镜像和容器狠狠地扬了，然后顺手把ctf_xinted也扬了，换了个高级的脚本，听说解决了ctf_xinted不能同时放几道题且不安全的问题。</p>
+<p>​        链接在这里：<a href="https://github.com/giantbranch/pwn_deploy_chroot.git">https://github.com/giantbranch/pwn_deploy_chroot.git</a></p>
+<p>​        然后用这个脚本一试，我超成了。</p>
+<p>​        然后就好了（</p>
+<p>​        </p>
+<p>​        </p>
+</body></html>]]></content>
   </entry>
 </search>

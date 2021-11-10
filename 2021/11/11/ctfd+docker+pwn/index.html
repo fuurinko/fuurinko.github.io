@@ -16,7 +16,7 @@
     <meta name="description" content="" />
     
     <title>
-      基于ctf pwn环境的docker搭建 - Rin
+          Rin
     </title>
     <link rel="manifest" href="/manifest.json" />
     <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon" />
@@ -26,11 +26,6 @@
   <meta name="generator" content="Hexo 5.4.0"></head>
   <body>
     <canvas id='pagemap'></canvas>
-    
-    <div id="post-toc" class="animated hiddenToc hide">
-      <span class="title">Toc</span>
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1%EF%BC%89"><span class="toc-text">1）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2%EF%BC%89"><span class="toc-text">2）</span></a></li></ol>
-    </div>
     
     <div id="fixed-menu-wrap">
       <span class="iconfont icon-sousuo search-box menu-reset"></span>
@@ -139,64 +134,48 @@
         <article class="post-entry">
     <div class="header">
       
-      <div class="title">基于ctf pwn环境的docker搭建</div>
+      <div class="title"></div>
       <div class="meta">
         <span class="item">
           <span class="iconfont icon-time-circle"></span>
-          <span>2021/10/31</span>
+          <span>2021/11/11</span>
         </span>
 
         
 
         
         
-         
-          <span class="item">
-            <span class="iconfont icon-tag1"></span>
-            <span>
-                
-                  
-                    <a href="/tags/mess">mess</a>
-                  
-                
-            </span>
-          </span>
-         
+        
       </div>
       <div>
       </div>
     </div>
-    <html><head></head><body><h2 id="1）">1）<a class="post-anchor" href="#1）"></a></h2><p>​    最近为了校内的萌新赛，需要出一些简单的pwn题，然后把它们搓进docker。虽然步骤并不是非常复杂，而且有现成的框架。</p>
-<h2 id="2）">2）<a class="post-anchor" href="#2）"></a></h2><p>​    首先是框架的选择，pwn的框架其实很多，这里随便选一个最基础的<code>ctf_xinted</code>。</p>
-<p>​    首先我们需要做的是把项目clone到本地。</p>
-<p><a target="_blank" rel="noopener" href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-01%20%E4%B8%8B%E5%8D%885.11.41.png" data-caption="截屏2021-11-01 下午5.11.41" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-01%20%E4%B8%8B%E5%8D%885.11.41.png" alt="截屏2021-11-01 下午5.11.41"></a></p>
-<p>​    通过指令<code>cat Dockerfile</code>可以看到dockerfile。</p>
-<p>​    dockerfile是用来构建docker镜像的，里面包含了构建docker镜像构建的一些步骤和说明。一般来说如果要打包自己的环境的话，需要写dockerfile来供别人使用。这里我们直接切换到<code>ctf_xinetd</code>的文件夹下，然后执行     </p>
-<pre><code class="bash">sudo docker build -t "helloworld" .
-</code></pre>
-<p>​    (注意后面的“.”)</p>
-<p>​    这个时候一般就会创建<code>helloworld</code>这个镜像，我们只需要等待创建结束，然后执行</p>
-<pre><code class="bash">sudo docker run -d -p "0.0.0.0:10001:9999" -h "helloworld" --name="helloworld" helloworld
-</code></pre>
-<p>​    <code>0.0.0.0</code>表示用户连接的ip地址，10001表示对用户开放的端口，9999指容器内部端口绑定到指定的主机端口。</p>
-<p>​    如果运行正常，此时我们是能够通过 <code>nc 0.0.0.0 10001</code>来连接我们的docker容器的。</p>
-<p>​    但是有时候docker会出现一些问题。比如说在创建镜像的时候有可能会出现软件源解释失败的问题，这时候你需要关闭你的vpn（如果有）。然后重启docker。就像这样</p>
-<pre><code class="bash">sudo service docker restart
-</code></pre>
-<p>​    这样这个pwn题的docker就算部署完成了，你只需要把你自己的题目放置在容器中，并修改对应的flag就行。</p>
-<p>​    但是目前来说这个框架存在一些局限性，比如说一次只能部署一道题等。</p>
+    <html><head></head><body><p>title: 关于ctfd平台部署pwn题的吐槽<br>tags: mess</p>
+<p>​        </p>
+<p>​        还是萌新赛，整docker给我整傻了。</p>
+<p>​        因为我们的CTFd是二次开发的，一般的CTFd的题目分类是有个dynamic docker，但是我们的平台只有一个kube类型。但是里面的东西还是八九不离十，然后对于指定题目，你需要填写你的docker image。并且指定暴露端口。</p>
+<p>​        然后我这个萌新就被狠狠地坑了，一开始费了好大劲从0学习docker（虽然不难），然后通过别人的框架部署题目，创建好镜像，照猫画虎指定ip和端口运行容器，最后打开CTFd，就直接把docker image那一空给填成自己启动容器的那串ip了，然后端口也傻傻地不知道怎么搞，然后随便乱输一通，结果狠狠地靶机notready了。</p>
+<p>​        直到下午我突然意识到哪里不对，然后去搜了一下，发现别人填的和我填的好像不太一样，找胖爷爷确认了一下，果然是要填docker hub里的镜像名哇。</p>
+<p>​        然后又狠狠地push了镜像，在CTFd填了镜像的名字，这下总算靶机ready了。</p>
+<p>​        然后我还是心存侥幸地试着看看nodeport生成的那个ip和port能不能nc，这一测就出问题了，nc不能。</p>
+<p>​        但是这样我就没辙了。</p>
+<p>​        咋办捏？remake吧！</p>
+<p>​        我把所有不相关的镜像和容器狠狠地扬了，然后顺手把ctf_xinted也扬了，换了个高级的脚本，听说解决了ctf_xinted不能同时放几道题且不安全的问题。</p>
+<p>​        链接在这里：<a target="_blank" rel="noopener" href="https://github.com/giantbranch/pwn_deploy_chroot.git">https://github.com/giantbranch/pwn_deploy_chroot.git</a></p>
+<p>​        然后用这个脚本一试，我超成了。</p>
+<p>​        然后就好了（</p>
+<p>​        </p>
+<p>​        </p>
 </body></html>
 
   
   <div class="post-guide">
     <div class="item left">
         
-          <a href="../../../11/01/docker%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">docker学习笔记</a>
-        
     </div>
     <div class="item right">
         
-          <a href="../../29/typora%E4%B8%BB%E9%A2%98%E9%85%8D%E7%BD%AE%E7%9A%84%E4%B8%80%E4%BA%9B%E5%BF%83%E5%BE%97/">typora主题配置的一些心得</a>
+          <a href="../Untitled/"></a>
         
     </div>
   </div>
