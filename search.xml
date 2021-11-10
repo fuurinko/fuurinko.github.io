@@ -2963,7 +2963,7 @@ mov eax,arrayD[esi*4]                    ;eax = 4
   <entry>
     <title></title>
     <url>/2021/11/11/ctfd+docker+pwn/</url>
-    <content><![CDATA[<html><head></head><body><p>title: 关于ctfd平台部署pwn题的吐槽<br>tags: mess</p>
+    <content><![CDATA[<html><head></head><body><p>title:  关于ctfd平台部署pwn题的吐槽<br>tags: mess</p>
 <p>​        </p>
 <p>​        还是萌新赛，整docker给我整傻了。</p>
 <p>​        因为我们的CTFd是二次开发的，一般的CTFd的题目分类是有个dynamic docker，但是我们的平台只有一个kube类型。但是里面的东西还是八九不离十，然后对于指定题目，你需要填写你的docker image。并且指定暴露端口。</p>
