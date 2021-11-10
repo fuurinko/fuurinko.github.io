@@ -2313,7 +2313,7 @@ p.interactive()
 <p>​        这时候并没有任何栈指针的操作，以至于esp的值很久没有变过。但是这里没有必要在意，直接第二次栈溢出。这里我们retn的地方就是刚刚获得的栈地址。但是因为我们已经输入了0x20个字符，所以需要stack_addr+20。（从动调中我们能够看出，<code>sys_read</code>会对栈指针进行操作，也就是把输入的每一个A压栈，这样我们原先的地址需要+20）</p>
 <p>​        然后直接溢出到栈地址。</p>
 <p>​        执行shellcode</p>
-<p>![截屏2021-11-04 下午10.23.18](/Users/rin/Library/Application Support/typora-user-images/截屏2021-11-04 下午10.23.43.png)</p>
+<p><a href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-04%20%E4%B8%8B%E5%8D%8810.23.43.png" data-caption="截屏2021-11-04 下午10.23.18" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-04%20%E4%B8%8B%E5%8D%8810.23.43.png" alt="截屏2021-11-04 下午10.23.18"></a></p>
 <p>​            hhx</p>
 <p><a href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-04%20%E4%B8%8B%E5%8D%8810.24.07.png" data-caption="截屏2021-11-04 下午10.24.07" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-04%20%E4%B8%8B%E5%8D%8810.24.07.png" alt="截屏2021-11-04 下午10.24.07"></a></p>
 <h3 id="4）总结">4）总结<a class="post-anchor" href="#4）总结"></a></h3><p>​        这道题以前做过。但是那个时候我还是个啥也不懂只会抄wp的傻子。那个时候基本问啥啥不懂，现在已经能完全通过exp将不理解的地方通过动调明确了。</p>
