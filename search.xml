@@ -3004,4 +3004,23 @@ mov eax,arrayD[esi*4]                    ;eax = 4
         <tag>mess</tag>
       </tags>
   </entry>
+  <entry>
+    <title>关于我被单双引号坑了这件事</title>
+    <url>/2021/11/11/%E5%85%B3%E4%BA%8E%E6%88%91%E8%A2%AB%E5%8D%95%E5%8F%8C%E5%BC%95%E5%8F%B7%E5%9D%91%E4%BA%86%E8%BF%99%E4%BB%B6%E4%BA%8B/</url>
+    <content><![CDATA[<html><head></head><body><p>​        还是回到萌新赛出题，出了一道非常简单的签到ret2text，但是非常疑惑地，怎么样都会EOF。</p>
+<p>​        然后索性调试一下，发现了奇点。</p>
+<p>​        <a href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/EDFE9E0C6D3BC173B417FE06A8F28E18.png" data-caption="EDFE9E0C6D3BC173B417FE06A8F28E18" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/EDFE9E0C6D3BC173B417FE06A8F28E18.png" alt="EDFE9E0C6D3BC173B417FE06A8F28E18"></a></p>
+<p>​        这边已经跳转到后门函数了，但是没有办法getshell。问题似乎出在参数上。本应该是<code>/bin/sh</code>，但是实际是<code>n/sh</code>，只有后面四个字节了。</p>
+<p>​        我去找了wiki上面类似题目做参考，发现正常情况下这里应该是这样：<a href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/DECB707DA78DA7002E7115E76713D24E.png" data-caption="DECB707DA78DA7002E7115E76713D24E" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/DECB707DA78DA7002E7115E76713D24E.png" alt="DECB707DA78DA7002E7115E76713D24E"></a></p>
+<p>​        但是我的程序是这样：</p>
+<p><a href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/328953ED3A08C20DD6E4E20828BB5B56.png" data-caption="328953ED3A08C20DD6E4E20828BB5B56" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/328953ED3A08C20DD6E4E20828BB5B56.png" alt="328953ED3A08C20DD6E4E20828BB5B56"></a></p>
+<p>​        然后发动传统艺能，控制变量找不同，发现问题出在<code>system('/bin/sh')</code>上。</p>
+<p>​        因为不怎么出这种直接给后门的题，我甚至不太清楚这个函数的写法，以至于想当然地认为这里单引号和双引号没有什么区别，就像在exp中的那些<code>('./')</code> <code>("./")</code>，看起来区别不大，实际上也没有什么影响。</p>
+<p>​        但是实际只要去查一查，就会发现其实区别很大。单引号压根就不是字符串。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。</p>
+<p>​        然后把单引号改成双引号之后，就getshell了。</p>
+</body></html>]]></content>
+      <tags>
+        <tag>pwnable</tag>
+      </tags>
+  </entry>
 </search>
