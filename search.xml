@@ -3102,11 +3102,17 @@ p.interactive()
       </tags>
   </entry>
   <entry>
-    <title></title>
+    <title>妙控鼠标卡顿问题</title>
     <url>/2021/11/17/%E5%A6%99%E6%8E%A7%E9%BC%A0%E6%A0%87%E5%8D%A1%E9%A1%BF%E9%97%AE%E9%A2%98/</url>
-    <content><![CDATA[<html><head></head><body><h3 id=""><a class="post-anchor" href="#"></a></h3><h2 id="-1"><a class="post-anchor" href="#-1"></a></h2></body></html>]]></content>
+    <content><![CDATA[<html><head></head><body><p>​        最近刚花了三百大洋从室友那里买回了白嫖了半个学期的妙控鼠标，钱转了不到两天，鼠标开始疯狂卡顿。</p>
+<p>​        最初以为是外接了太多东西，把键盘啥的都换成了线控，但是问题还是不见解决。</p>
+<p>​        最后是这篇文章解决了我的问题。</p>
+<p>​        <a href="https://www.jianshu.com/p/3e7bc675f673">macos系统里面，蓝牙鼠标偶尔卡顿，飘的问题</a></p>
+<p>​        解决方法也很简单，把网络中的蓝牙PAN的顺序调到最前。</p>
+<p>​        蓝牙PAN就是类似一种个人局域网，把连接顺序放到前面了，自然连接就更顺畅了（</p>
+</body></html>]]></content>
       <tags>
-        <tag>妙控鼠标</tag>
+        <tag>mess</tag>
       </tags>
   </entry>
 </search>
