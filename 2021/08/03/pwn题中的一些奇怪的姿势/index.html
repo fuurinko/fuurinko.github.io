@@ -16,7 +16,7 @@
     <meta name="description" content="" />
     
     <title>
-      patch&#39;alarm - Rin
+      pwn题中的一些奇怪的姿势 - Rin
     </title>
     <link rel="manifest" href="/manifest.json" />
     <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon" />
@@ -26,6 +26,11 @@
   <meta name="generator" content="Hexo 5.4.0"></head>
   <body>
     <canvas id='pagemap'></canvas>
+    
+    <div id="post-toc" class="animated hiddenToc hide">
+      <span class="title">Toc</span>
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#patch-alarm"><span class="toc-text">patch alarm</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%95%E5%8F%8C%E5%BC%95%E5%8F%B7%E9%97%AE%E9%A2%98"><span class="toc-text">单双引号问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#roputils"><span class="toc-text">roputils</span></a></li></ol>
+    </div>
     
     <div id="fixed-menu-wrap">
       <span class="iconfont icon-sousuo search-box menu-reset"></span>
@@ -134,7 +139,7 @@
         <article class="post-entry">
     <div class="header">
       
-      <div class="title">patch'alarm</div>
+      <div class="title">pwn题中的一些奇怪的姿势</div>
       <div class="meta">
         <span class="item">
           <span class="iconfont icon-time-circle"></span>
@@ -161,19 +166,58 @@
       <div>
       </div>
     </div>
-    <html><head></head><body><p>比较弱智的一个操作，但是如果没注意到的话还是有一点点坑。</p>
+    <html><head></head><body><h3 id="patch-alarm">patch alarm<a class="post-anchor" href="#patch-alarm"></a></h3><p>比较弱智的一个操作，但是如果没注意到的话还是有一点点坑。</p>
 <p>一般来说许多题都喜欢在main函数里加alarm。</p>
 <p>alarm会导致调试的时候超时，如果没有解决的话基本不能调试。算最基础的的反调试手法了。</p>
 <p>ps:关于超时的那个报错当时还好好研究了一会儿来着。就是一个sigxxx，sigalarm好像，然后默认返回中止程序。</p>
 <p>解决方案也比较弱智。就是直接patch掉就好了。</p>
 <p>ida都关了懒得上图了。</p>
+<h3 id="单双引号问题">单双引号问题<a class="post-anchor" href="#单双引号问题"></a></h3><p>​        萌新赛出题的时候，出了一道非常简单的签到ret2text，但是非常疑惑地，怎么样都会EOF。</p>
+<p>​        然后索性调试一下，发现了奇点。</p>
+<p>​        <a target="_blank" rel="noopener" href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/EDFE9E0C6D3BC173B417FE06A8F28E18.png" data-caption="EDFE9E0C6D3BC173B417FE06A8F28E18" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/EDFE9E0C6D3BC173B417FE06A8F28E18.png" alt="EDFE9E0C6D3BC173B417FE06A8F28E18"></a></p>
+<p>​        这边已经跳转到后门函数了，但是没有办法getshell。问题似乎出在参数上。本应该是<code>/bin/sh</code>，但是实际是<code>n/sh</code>，只有后面四个字节了。</p>
+<p>​        我去找了wiki上面类似题目做参考，发现正常情况下这里应该是这样：<a target="_blank" rel="noopener" href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/DECB707DA78DA7002E7115E76713D24E.png" data-caption="DECB707DA78DA7002E7115E76713D24E" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/DECB707DA78DA7002E7115E76713D24E.png" alt="DECB707DA78DA7002E7115E76713D24E"></a></p>
+<p>​        但是我的程序是这样：</p>
+<p><a target="_blank" rel="noopener" href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/328953ED3A08C20DD6E4E20828BB5B56.png" data-caption="328953ED3A08C20DD6E4E20828BB5B56" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/328953ED3A08C20DD6E4E20828BB5B56.png" alt="328953ED3A08C20DD6E4E20828BB5B56"></a></p>
+<p>​        然后发动传统艺能，控制变量找不同，发现问题出在<code>system('/bin/sh')</code>上。</p>
+<p>​        因为不怎么出这种直接给后门的题，我甚至不太清楚这个函数的写法，以至于想当然地认为这里单引号和双引号没有什么区别，就像在exp中的那些<code>('./')</code> <code>("./")</code>，看起来区别不大，实际上也没有什么影响。</p>
+<p>​        但是实际只要去查一查，就会发现其实区别很大。单引号压根就不是字符串。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。</p>
+<p>​        然后把单引号改成双引号之后，就getshell了。</p>
+<h3 id="roputils">roputils<a class="post-anchor" href="#roputils"></a></h3><p>做ret2dl的时候难免会偷懒使用工具。</p>
+<p>但是这个工具并没有看起来那么和善。</p>
+<p>就怎么使用utils包我都研究了一会儿，然后发现只需要<code>import roputils</code>然后把相对应的那个py脚本放到同一路径下就好。</p>
+<p>但是紧接着第二问个问题，这个py脚本通篇是python2，而我日常无论哪个系统都是py3。</p>
+<p>所以解决方式有2</p>
+<ol>
+<li> 将roputils转换为py3</li>
+<li> ubuntu切换py版本</li>
+</ol>
+<p>反正第一种就是用一个叫2to3的脚本。是py2自带的，使用需要先安装py2.7，我ubuntu18.04自带py2.7，所以就直接<code>2to3 -w roputils.py</code></p>
+<p>具体参数可以google。</p>
+<p>然后又来了第三个问题。</p>
+<p>来看我的报错。</p>
+<pre><code class="python">[+] Starting local process './babystack': pid 745
+Traceback (most recent call last):
+  File "babystack.py", line 23, in &lt;module&gt;
+    rop = roputils.ROP('./babystack')
+  File "/home/fur1n/pwn/week1/roputils.py", line 440, in __init__
+    ELF.__init__(self, *args, **kwargs)
+  File "/home/fur1n/pwn/week1/roputils.py", line 85, in __init__
+    m = re.search(r'^\s*(?P&lt;key&gt;[^:]+):\s+(?P&lt;value&gt;.+)$', line)
+  File "/usr/lib/python3.6/re.py", line 182, in search
+    return _compile(pattern, flags).search(string)
+TypeError: cannot use a string pattern on a bytes-like object
+</code></pre>
+<p>这个功能好像并不会在byte前加b。。。</p>
+<p>目前来说并没有发现解决方法。</p>
+<p>所以只能尝试更换默认的py版本。具体可以google</p>
 </body></html>
 
   
   <div class="post-guide">
     <div class="item left">
         
-          <a href="../roputils/">roputils使用tips</a>
+          <a href="../../09/io_file/">IO_FILE学习</a>
         
     </div>
     <div class="item right">
