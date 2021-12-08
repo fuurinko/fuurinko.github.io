@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <script>
+  var _hmt = _hmt || []
+  ;(function() {
+    var hm = document.createElement('script')
+    hm.src = 'https://hm.baidu.com/hm.js?5a0acc897fd96474a2c8f4deac84611a'
+    var s = document.getElementsByTagName('script')[0]
+    s.parentNode.insertBefore(hm, s)
+  })()
+</script> 
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    
+    <title>
+      csapp malloc lab - Rin
+    </title>
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon" />
+    
+<link rel="stylesheet" href="../../../../style/style.css">
+
+  <meta name="generator" content="Hexo 5.4.0"></head>
+  <body>
+    <canvas id='pagemap'></canvas>
+    
+    <div id="post-toc" class="animated hiddenToc hide">
+      <span class="title">Toc</span>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#0%EF%BC%89%E5%89%8D%E8%A8%80"><span class="toc-text">0）前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1%EF%BC%89%E5%A4%A7%E4%BD%93%E8%AE%BE%E8%AE%A1"><span class="toc-text">1）大体设计</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2%EF%BC%89%E5%88%A9%E7%94%A8%E5%AE%8F%E5%AE%9A%E4%B9%89%E7%AE%80%E5%8C%96%E6%8C%87%E9%92%88%E6%93%8D%E4%BD%9C"><span class="toc-text">2）利用宏定义简化指针操作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3%EF%BC%89level%C2%B71"><span class="toc-text">3）level·1</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#first-fit"><span class="toc-text">first_fit</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#mm-init"><span class="toc-text">mm_init()</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#mm-malloc"><span class="toc-text">mm_malloc()</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#mm-free"><span class="toc-text">mm_free()</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#coalesce"><span class="toc-text">coalesce()</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#find-fit"><span class="toc-text">find_fit()</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#place"><span class="toc-text">place()</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#next-fit"><span class="toc-text">next_fit</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#best-fit"><span class="toc-text">best_fit</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-level2"><span class="toc-text">4) level2</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"><span class="toc-text">数据结构</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%98%BE%E5%BC%8F%E7%A9%BA%E9%97%B2%E9%93%BE%E8%A1%A8"><span class="toc-text">显式空闲链表</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#chunk"><span class="toc-text">chunk</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#First-fit"><span class="toc-text">First_fit</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%86%E7%A6%BB%E9%80%82%E9%85%8D"><span class="toc-text">分离适配</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5%EF%BC%89%E7%BB%93%E6%9E%9C%E4%B8%8E%E6%94%B9%E8%BF%9B"><span class="toc-text">5）结果与改进</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6%EF%BC%89%E5%8F%8D%E6%80%9D%E4%B8%8E%E6%80%9D%E8%80%83"><span class="toc-text">6）反思与思考</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7%EF%BC%89%E5%8F%82%E8%80%83"><span class="toc-text">7）参考</span></a></li></ol>
+    </div>
+    
+    <div id="fixed-menu-wrap">
+      <span class="iconfont icon-sousuo search-box menu-reset"></span>
+      <span class="icon-toc menu-reset">Toc</span>
+      <span class="iconfont icon-arrowup menu-reset"></span>
+    </div>
+    <div id="fixed-menu">
+      <span class="iconfont icon-menu-"></span>
+    </div>
+    <div id="progress">
+      <div class="line"></div>
+    </div>
+    <div id="search-shade" class="animated hiddenSearch hide">
+      <div class="input-wrap">
+        <span class="iconfont icon-sousuo search-box"></span>
+        <input type="text" placeholder="Search" />
+        <span class="iconfont icon-close"></span>
+      </div>
+      <div class="search-result">
+        <div class="meta">
+          <span><b id="result-count">0</b> results found</span>
+          <img src="/images/logo.jpeg" />
+        </div>
+        <ul id="result-box"></ul>
+      </div>
+    </div>
+    <div id="menu-mask" class="animated hideMenuMask hide">
+      <span class="iconfont icon-close"></span>
+      <div class="nav">
+        
+        <a href="../../../../index.html" class="">
+          Home
+        </a>
+        
+        <a href="../../../../friends" class="">
+          Friends
+        </a>
+        
+        <a href="../../../../about" class="">
+          About
+        </a>
+        
+      </div>
+    </div>
+    <div id="header">
+      <div class="intro">
+        <a href="/" class="logo" style="background-image: url('/images/logo.jpeg')"></a>
+        <div class="author"></div>
+      </div>
+      <div class="nav">
+        <span class="iconfont icon-menu menu-icon"></span>
+        <a href="#" class="search-box">
+          <span class="iconfont icon-sousuo"></span>
+        </a>
+      </div>
+    </div>
+    <div id="side" class="animated bounceInLeft">
+      <div class="shrink">
+        <a href="/" class="logo" style="background-image: url('/images/logo.jpeg')"></a>
+        <span class="iconfont icon-menu toggle-icon"></span>
+        <a href="#" class="search-box">
+          <span class="iconfont icon-sousuo"></span>
+        </a>
+      </div>
+      <div class="magnify">
+        <div class="about">
+          <div class="author"></div>
+          <a href="/" class="logo" style="background-image: url('/images/logo.jpeg')"></a>
+        </div>
+
+        <div class="nav">
+          
+          <a href="../../../../index.html" class="">
+            Home
+          </a>
+          
+          <a href="../../../../friends" class="">
+            Friends
+          </a>
+          
+          <a href="../../../../about" class="">
+            About
+          </a>
+          
+          <a href="#" class="search-box">
+            <span class="iconfont icon-sousuo"></span>
+          </a>
+        </div>
+        <div class="bottom">
+          <div class="follow">
+            
+            <a href="https://github.com" target="_block">
+              <span class="iconfont icon-github"></span>
+            </a>
+             
+            <a href="/atom.xml" target="_block">
+              <span class="iconfont icon-rss"></span>
+            </a>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="container">
+      <div class="main animated bounceInRight delay-0.7s">
+        <article class="post-entry">
+    <div class="header">
+      
+      <div class="title">csapp malloc lab</div>
+      <div class="meta">
+        <span class="item">
+          <span class="iconfont icon-time-circle"></span>
+          <span>2021/12/03</span>
+        </span>
+
+        
+
+        
+        
+         
+          <span class="item">
+            <span class="iconfont icon-tag1"></span>
+            <span>
+                
+                  
+                    <a href="/tags/csapp lab">csapp lab</a>
+                  
+                
+            </span>
+          </span>
+         
+      </div>
+      <div>
+      </div>
+    </div>
+    <html><head></head><body><h2 id="0）前言">0）前言<a class="post-anchor" href="#0）前言"></a></h2><p>​        鸽了三个月的malloc lab，作为复习堆题的开始。</p>
+<p>​        计画完成时间是12.5之前，也就是三天。</p>
+<h2 id="1）大体设计">1）大体设计<a class="post-anchor" href="#1）大体设计"></a></h2><p>​        对于整体的操作的大致模型以及allocater和freer需要做的工作如下：</p>
+<p>​        分配器：</p>
+<ol>
+<li><p>在第一次分配chunk时，对堆空间进行初始化=&gt;<code>mm_init()</code>    </p>
+</li>
+<li><p>创建指定类型的chunk。</p>
+<p>​    free</p>
+</li>
+<li><p>利用隐式空闲链表，将free状态的chunk链接。</p>
+</li>
+<li><p>利用合适的机制，对物理地址相邻的free chunk进行合并</p>
+</li>
+<li><p>利用合适的机制，在分配器有需求的时候分割相对应的free chunk，并将其标识为allocated。</p>
+</li>
+</ol>
+<p>​        其他的驱动代码以及头文件已经给出，我们只需在<code>mm.c</code>中进行编写。</p>
+<p>​        在这个模型中，分配器的分配的chunk的结构大致如下，运用带边界标记的chunk使堆块合并更加优雅。</p>
+<p>​                <a target="_blank" rel="noopener" href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-12-03%20%E4%B8%8B%E5%8D%885.33.23.png" data-caption="截屏2021-12-03 下午5.33.23" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-12-03%20%E4%B8%8B%E5%8D%885.33.23.png" alt="截屏2021-12-03 下午5.33.23"></a></p>
+<p>​        </p>
+<h2 id="2）利用宏定义简化指针操作">2）利用宏定义简化指针操作<a class="post-anchor" href="#2）利用宏定义简化指针操作"></a></h2><p>​        为了简化在操作chunk在链表中的一些与指针相关的行为，我们可以定义一系列宏来将这些操作打包，使得代码更为简洁，同时一些基本的常数也将被定义。</p>
+<p>​    </p>
+<p>​        <a target="_blank" rel="noopener" href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-12-04%20%E4%B8%8B%E5%8D%885.05.59.png" data-caption="截屏2021-12-04 下午5.05.59" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-12-04%20%E4%B8%8B%E5%8D%885.05.59.png" alt="截屏2021-12-04 下午5.05.59"></a></p>
+<p>​            </p>
+<h2 id="3）level·1">3）level·1<a class="post-anchor" href="#3）level·1"></a></h2><p>​        level1利用隐式空闲链表+首次/下一次/最佳适配三种方式实现。</p>
+<h3 id="first-fit">first_fit<a class="post-anchor" href="#first-fit"></a></h3><h4 id="mm-init">mm_init()<a class="post-anchor" href="#mm-init"></a></h4><p>​        首先是<code>mm_init()</code>函数，利用<code>mm_sbrk()</code>创建一个4字的空闲链表，将链表第一个双字的首尾分别标记为序言块的header和footer，然后将第三个字标记为结尾块，然后调用<code>extend_heap()</code>函数初始化堆空间。被初始化的size为<code>CHUNKSIZE/WSIZE</code>也就是<code>1*10^12 / 4</code>。</p>
+<p>​        然后是<code>extend_heap()</code>函数，利用<code>mm_sbrk()</code>创建size大小的空间，size由之前初始化的size决定。并且将整个空chunk的对应位标记头和脚部。最后，在很可能出现的前一个堆以一个空闲块结束的情况，我们调用coalesce函数来合并两个空闲块 ，并返回指向合并后的块的块指针。coalesce函数将在后面的部分被详细分析。</p>
+<h4 id="mm-malloc">mm_malloc()<a class="post-anchor" href="#mm-malloc"></a></h4><p>​        堆空间初始化之后，我们首先设计<code>mm_malloc()</code>。</p>
+<p>​        函数大致功能是：</p>
+<ol>
+<li><p>检查请求真假，然后准备分配chunk</p>
+</li>
+<li><p>调整chunk size，在请求size的基础上加入8字节的对齐和8字节的chunk头和chunk脚。也就是说，一个chunk至少会有16字节。</p>
+</li>
+<li><p>在free list中寻找符合size要求的chunk。</p>
+</li>
+<li><p>如果没有在free list中找到，则直接调用<code>extend_heap()    </code>生成对应的空间。</p>
+<p>​    </p>
+<p><a target="_blank" rel="noopener" href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-12-04%20%E4%B8%8B%E5%8D%887.21.02.png" data-caption="截屏2021-12-04 下午7.21.02" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-12-04%20%E4%B8%8B%E5%8D%887.21.02.png" alt="截屏2021-12-04 下午7.21.02"></a>    </p>
+<p>这里csapp没有为我们提供<code>find_fit()</code>以及<code>place()</code>的例子,需要我们自己编写。我们先放着，之后再来讨论。</p>
+</li>
+</ol>
+<h4 id="mm-free">mm_free()<a class="post-anchor" href="#mm-free"></a></h4><p>​        <code>mm_malloc()</code>之后，我们来看<code>mm_free()</code></p>
+<p>​        它被用来释放已被分配的chunk，相当于释放malloc所请求的bp，然后需要将被释放的chunk与其物理领接的free chunk合并。</p>
+<p>​        </p>
+<p>​        <a target="_blank" rel="noopener" href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-12-04%20%E4%B8%8B%E5%8D%885.40.53.png" data-caption="截屏2021-12-04 下午5.40.53" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-12-04%20%E4%B8%8B%E5%8D%885.40.53.png" alt="截屏2021-12-04 下午5.40.53"></a></p>
+<h4 id="coalesce">coalesce()<a class="post-anchor" href="#coalesce"></a></h4><p>​        重点来看<code>coalesce()</code></p>
+<p>​        这里用到的合并方式的构思图表如下：</p>
+<p>​        <a target="_blank" rel="noopener" href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-12-03%20%E4%B8%8B%E5%8D%885.35.04.png" data-caption="截屏2021-12-03 下午5.35.04" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-12-03%20%E4%B8%8B%E5%8D%885.35.04.png" alt="截屏2021-12-03 下午5.35.04"></a></p>
+<p>​        也是非常地直观容易理解。</p>
+<p>​        它的代码实现也直观地被分为如图四种情况，所以我们先要定义对应图中几种状态的bp状态。</p>
+<pre><code class="c">        size_t prev_alloc = GET_ALLOC(FTRP(PREV_BLKP(bp)));
+    size_t next_alloc = GET_ALLOC(HDRP(NEXT_BLKP(bp)));
+    size_t size = GET_SIZE(HDRP(bp));
+</code></pre>
+<p>​        大致框架如下：</p>
+<p><a target="_blank" rel="noopener" href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-12-04%20%E4%B8%8B%E5%8D%886.00.07.png" data-caption="截屏2021-12-04 下午6.00.07" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-12-04%20%E4%B8%8B%E5%8D%886.00.07.png" alt="截屏2021-12-04 下午6.00.07"></a></p>
+<p>​        </p>
+<h4 id="find-fit">find_fit()<a class="post-anchor" href="#find-fit"></a></h4><p>​        整个malloc lab的重点，需要自己实现一个free chunk的适配寻找。</p>
+<p>​        一些常见的方法有</p>
+<ol>
+<li>首次适配</li>
+<li>下一次适配</li>
+<li>最佳适配</li>
+<li>分离式（复杂）</li>
+</ol>
+<p>​        其实这些并不是完全先进或者落后，各有各的优缺点。在这里为了简单我们选择首次适配，即使用在free list中找到的第一个符合条件的chunk。</p>
+<p>​        按照首次适配的原理，我们的思路是，从头到尾搜索链表，如果遇到合适的free chunk，则按照size将其头和尾部标记。</p>
+<p>​        实现大致是：</p>
+<p>​        指定一个size，在链表中通过判断头部inuse位，找到第一个free chunk的bp,，然后计算next bp是否大于bp + size</p>
+<p>,且状态为free，如果是，将bp标记为allocated，在bp+size的地方标记为footer，分割该chunk，虽然会留下一定的碎片，但这也是首次适配无法避免的缺点。如果不是，则继续寻找下一个free chunk并判断。</p>
+<p>​        然后来研究代码实现：</p>
+<p>​        自己瞎写了一个，问题不大。</p>
+<h4 id="place">place()<a class="post-anchor" href="#place"></a></h4><p>​        函数功能是将请求块放置在空闲块的起始位置，只有当剩余部分的大小等于或者超出最小块的大小时，才进行分割。</p>
+<pre><code class="c">
+
+static void place(void *bp, size_t asize)
+{
+    size_t size = GET_SIZE(HDRP(bp));
+    
+    if ((size - asize) &gt;= (2*DSIZE)) {
+        PUT(HDRP(bp),PACK(asize,1));
+        PUT(FTRP(bp),PACK(asize,1));
+        PUT(HDRP(NEXT_BLKP(bp)),PACK(size - asize,0));
+        PUT(FTRP(NEXT_BLKP(bp)),PACK(size - asize,0));
+    } else {
+        PUT(HDRP(bp),PACK(size,1));
+        PUT(FTRP(bp),PACK(size,1));
+    }
+}
+</code></pre>
+<p>问题不大</p>
+<p><a target="_blank" rel="noopener" href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-12-05%20%E4%B8%8A%E5%8D%8811.46.52.png" data-caption="截屏2021-12-05 上午11.46.52" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-12-05%20%E4%B8%8A%E5%8D%8811.46.52.png" alt="截屏2021-12-05 上午11.46.52"></a></p>
+<h3 id="next-fit">next_fit<a class="post-anchor" href="#next-fit"></a></h3><p>​        下一次适配，主要特点是在第一次在空闲链表中找到合适的chunk以后，下一次搜索就不再是从头到尾，而是从上一次搜索的chunk开始继续搜索。</p>
+<p>​        相比于首次适配，写循环时就不能嗯搞，要处理第一次找到fit chunk后的状态。大致的思路是：先按照首次适配的方式找到第一个适合的chunk，然后记录下chunk的bp，下一次寻找时则从记录的bp开始寻找。</p>
+<p>​            那么肯定需要定义一个外部变量来记录每次找到的bp。</p>
+<pre><code class="c">static void *next_find_fit(size_t asize)
+{  
+    char * bp = heap_listp;
+    size_t ALLOC_STATUS;
+    size_t SIZE;
+    while (GET_SIZE(HDRP(NEXT_BLKP(bp))) &gt; 0)
+    {   if(mark_bp)
+        {
+            bp = NEXT_BLKP(mark_bp);
+            ALLOC_STATUS = GET_ALLOC(HDRP(bp));
+            if (ALLOC_STATUS)
+            continue;
+            if(SIZE &lt; asize) 
+            continue;
+            mark_bp = bp;
+            return bp; 
+            continue;
+        }
+        bp = NEXT_BLKP(bp); 
+        ALLOC_STATUS = GET_ALLOC(HDRP(bp));
+        if (ALLOC_STATUS)
+        continue;
+        if(SIZE &lt; asize) 
+        continue;
+        mark_bp = bp;
+        return bp; 
+    }
+    return NULL;
+}
+</code></pre>
+<p>​        问题不大。</p>
+<h4 id="best-fit">best_fit<a class="post-anchor" href="#best-fit"></a></h4><p>​        搜索链表中的每一个堆块，选择符合条件的最小空闲块。目前来说思路是这样的：</p>
+<p>​        对整个堆空间进行搜索，标记合适的chunk，并将size储存在数组中，在搜索结束后进行排序，选择最适合的chunk，并将bp返回。</p>
+<p>​        对堆空间进行搜索，大概只需要在原本的算法上去掉结束循环的判定条件。然后排序的话随意找个排序算法来就行，图方便我复制了一个冒泡排序，虽然时间复杂度不太行。</p>
+<p>​        但是存在一个问题就是，排序肯定是以chunk的size为标准，但是如何关联size和bp呢？我将所有符合条件的chunksize排序之后，如何找到对应的bp？</p>
+<p>​        一个比较直观的解决方法就是二维数组，将bp和size同时存放，同时排序，当然也许可以使用类似PACK的宏，或者为每一个size增加一个idx，也是二维数组的思路，但是并不是直接将bp存放，而是存放bp的idx。</p>
+<p>​        考虑到二维数组排序有一些麻烦，故直接定义结构体来存放size与bp的idx。</p>
+<pre><code class="c">static void *best_find_fit(size_t asize)
+{   
+    char * bp = heap_listp;
+    size_t ALLOC_STATUS;
+    size_t SIZE;
+    struct bp_list list[];
+    
+    while (GET_SIZE(HDRP(NEXT_BLKP(bp))) &gt; 0)
+    {
+        for ( int i = 0; i &lt; CHUNKSIZE/WSIZE; i++)
+        {   
+            bp = NEXT_BLKP(bp);
+            ALLOC_STATUS = GET_ALLOC(HDRP(bp));
+            if (ALLOC_STATUS) continue;
+            if(SIZE &lt; asize) continue
+            list[i].bp_size = GET_SIZE(HDRP(bp));
+            list[i].bp_idx = i;
+            list[i].bp = HDRP(bp);
+            
+        } 
+
+        bubble_sort(int list[i].bp_size,int i);
+        return list[i].bp;
+            
+
+    }
+    return NULL;
+}
+</code></pre>
+<h2 id="4-level2">4) level2<a class="post-anchor" href="#4-level2"></a></h2><p>​        level2利用显式链表和分离适配来实现，同时这种方法也是非常接近ptmalloc2的，所以学习这种方法的思想是十分必要的。</p>
+<h3 id="数据结构">数据结构<a class="post-anchor" href="#数据结构"></a></h3><h4 id="显式空闲链表">显式空闲链表<a class="post-anchor" href="#显式空闲链表"></a></h4><p>​        相比于隐式空闲链表没有实际的链表去管理空闲块，显式空闲链表使用新增的双向循环链表，通过在chunk头添加指向逻辑上相邻的chunk的指针来相互连接。显式链表为chunk指针操作增添了更多姿势，突破了隐式性能的局限性。当然这个方案也不是完全没有缺点，为了包含指针和可能的脚部，显式空闲链表的chunk通常会更大一些，潜在地提高了内存碎片的程序。</p>
+<h4 id="chunk">chunk<a class="post-anchor" href="#chunk"></a></h4><p>​        显式链表chunk结构如图：</p>
+<p><a target="_blank" rel="noopener" href="https://pic1.zhimg.com/80/v2-c0cb0926ad2e469833bfff9e3fffd2e4_720w.jpg" data-caption="img" data-fancybox="images"><img src="https://pic1.zhimg.com/80/v2-c0cb0926ad2e469833bfff9e3fffd2e4_720w.jpg" alt="img"></a></p>
+<p>​        有点类似ptalloc的机制，当chunk为allocated状态，中间为padding，当为free状态，会在padding开始前，也就是之前方案中的<code>bp</code>指向的地方增添两个指针：<code>next_bp</code>， <code>prev_bp</code>。</p>
+<h3 id="First-fit">First_fit<a class="post-anchor" href="#First-fit"></a></h3><p>​        首先是完成显式空闲链表下first_fit的实现，这种方案目的是熟悉如何通过创建一个双向循环链表来管理空闲块。</p>
+<p>​        第一步是创建空闲链表。然后编写将chunk插入和取出双向循环链表的操作。</p>
+<p>​        将已分配块释放，chunk bp 被插入free list。</p>
+<p><a target="_blank" rel="noopener" href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-12-05%20%E4%B8%8B%E5%8D%8811.31.31.png" data-caption="截屏2021-12-05 下午11.31.31" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-12-05%20%E4%B8%8B%E5%8D%8811.31.31.png" alt="截屏2021-12-05 下午11.31.31"></a>        </p>
+<p>​        在free list中拿出chunk。与隐式链表类似，分为四种情况。</p>
+<p><a target="_blank" rel="noopener" href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-12-05%20%E4%B8%8B%E5%8D%8811.47.40.png" data-caption="截屏2021-12-05 下午11.47.40" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-12-05%20%E4%B8%8B%E5%8D%8811.47.40.png" alt="截屏2021-12-05 下午11.47.40"></a></p>
+<p>问题有点大，但是先不管。</p>
+<h3 id="分离适配">分离适配<a class="post-anchor" href="#分离适配"></a></h3><p>​        分离适配的特点就是利用很多储存不同大小范围的chunk的链表来管理free chunk，很大程度上减小了内存碎片的产生。</p>
+<p>​        根据参考资料，我们可以将大小以2^n划分。</p>
+<p>​        <a target="_blank" rel="noopener" href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-12-05%20%E4%B8%8B%E5%8D%8811.52.48.png" data-caption="截屏2021-12-05 下午11.52.48" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-12-05%20%E4%B8%8B%E5%8D%8811.52.48.png" alt="截屏2021-12-05 下午11.52.48"></a></p>
+<p><a target="_blank" rel="noopener" href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-12-05%20%E4%B8%8B%E5%8D%8811.52.59.png" data-caption="截屏2021-12-05 下午11.52.59" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-12-05%20%E4%B8%8B%E5%8D%8811.52.59.png" alt="截屏2021-12-05 下午11.52.59"></a></p>
+<p>​        其次就是chunk的结构。要如何把逻辑相邻的chunk的指针写入free chunk的bp上。</p>
+<p>​        第一步是要获取逻辑相邻的chunk的指针。隐式空闲链表中获取相邻的块指针是直接使用size相加：</p>
+<pre><code class="c">#define NEXT_BLKP(bp) ((char *)(bp)+ GET_SIZE(((char *)(bp)-WSIZE))) //指向下一个chunk的bp
+#define PREV_BLKP(bp) ((char *)(bp) - GET_SIZE(((char *)(bp) - DSIZE))) //指向上一个chunk的bp
+</code></pre>
+<p>​        显然在显式中这不可行。显式的逻辑链接分为free chunk的邻接和allocated chunk的邻接，且考虑到分离适配，每个不同范围内的free chunk又将被连接到不同的双向循环链表中，这显然为如何寻找到某一chunk到逻辑相邻堆块增加了难度。</p>
+<p>​        从初始分配的逻辑思考，在堆块被初始化之后，链表中显然没有多余的已分配块，这时候我们想要申请一个size大小的chunk，然后free它。思考这两个动作对于空闲链表的影响。</p>
+<p>​        假设size在链表A规定的范围内，所以按照<code>mm_malloc</code>的逻辑，程序会先在空闲链表链表A</p>
+<p>​        </p>
+<h2 id="5）结果与改进">5）结果与改进<a class="post-anchor" href="#5）结果与改进"></a></h2><p>​        </p>
+<p>​        </p>
+<h2 id="6）反思与思考">6）反思与思考<a class="post-anchor" href="#6）反思与思考"></a></h2><p>​        本来应该是在今年暑假就要完成的东西，因为太过懒散而拖到了现在。不得不说如果沉下心来做，这个lab其实不算很难，最难的实际上是对这个简单的内存分配器从0到逐渐熟悉架构的过程。如果不去认真读csapp，了解程序的大致架构的话，就会一头雾水从而放弃，暑假便是因此。</p>
+<p>​        其实大多数代码并不需要自己完成，也是确实没有这个水平，但是也有我们自己需要思考，然后实现的地方，就比如说适配的方法。我从来没有学过数据结构或者算法，也没有刷过类似的题，c语言也就是局限于看得懂这样的普通计算机专业学生水平，对于这种大面积的指针操作一时确实有些摸不着头脑，但是csapp给了我们一种解：利用宏，将复杂的指针运算以及强制类型转换封装，变得简单易用，这使得在我操作指针时，几乎感受不到指针的复杂所在，也是我觉得收获最大之所在。</p>
+<p>​        关于三种适配方法，第一种我在编写时并不太理解如何实现“继续寻找下一个chunk”，于是自己按照感觉写了一个版本，然后寻找了一些参考，发现我写的除了这一步，其他都问题不大，然后就把自己的版本修正了。之后的两种适配方法都是基于首次适配的代码加以适当的条件修改而成，不得不说其实十分有趣。最佳适配牵涉到数组的排序以及结构体的定义，说实话上一次编写带结构体的c程序还是上学期起哦期末的暑假考核，但是也没有遇到什么障碍，就这么顺着写了。现在想来我们大一上的c语言大作业真是简单捏。</p>
+<p>​        </p>
+<h2 id="7）参考">7）参考<a class="post-anchor" href="#7）参考"></a></h2><p>​        <a target="_blank" rel="noopener" href="https://www.jianshu.com/p/48d5d0554b3b">六 Malloc Lab</a></p>
+<p>​    <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/150100073">CSAPP:Lab5-Malloc Lab</a></p>
+</body></html>
+
+  
+  <div class="post-guide">
+    <div class="item left">
+        
+          <a href="../../06/fastbin_attack/"></a>
+        
+    </div>
+    <div class="item right">
+        
+          <a href="../../../11/22/openstack%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">openstack学习笔记</a>
+        
+    </div>
+  </div>
+
+  
+
+
+  <div id="comment"></div>
+
+  
+  <!-- Highlight.js -->
+
+<link rel="stylesheet"
+href="//highlightjs.org/static/demo/styles/night-owl.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js">
+</script>
+<script>
+hljs.initHighlightingOnLoad();
+
+</script>
+</article>
+        <footer>
+          <div class="copyright">
+            ©2021
+            <a href="https://fuurinko.github.io">Rin777</a> Powered by <a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a> |
+            <a target="_blank" rel="noopener" href="https://github.com/shixiaohu2206/hexo-theme-huhu">hexo-theme-huhu</a>
+          </div>
+          
+        </footer>
+      </div>
+    </div>
+  </body>
+  
+</html>
+<script type="text/javascript">
+                  window.HUHU_CONFIG = JSON.parse("{\"share\":[\"weibo\",\"weixin\",\"qqkongjian\",\"QQ\",\"douban\",\"facebook\",\"twitter\",\"google\"],\"service_worker\":{\"open\":false}}")
+                </script> <script type="text/javascript">window.addEventListener('load', function() {
+    
+    window.loadJs = function(d, m, a) {
+      var c = document.getElementsByTagName('head')[0] || document.head || document.documentElement
+      var b = document.createElement('script')
+      b.defer = true
+      b.setAttribute('type', 'text/javascript')
+      b.setAttribute('charset', 'UTF-8')
+      b.setAttribute('async', 'true')
+      b.setAttribute('src', d)
+      m && b.setAttribute('data-main', '/scripts/app-built')
+      if (typeof a === 'function') {
+        if (window.attachEvent) {
+          b.onreadystatechange = function() {
+            var e = b.readyState
+            if (e === 'loaded' || e === 'complete') {
+              b.onreadystatechange = null
+              a()
+            }
+          }
+        } else {
+          b.onload = a
+        }
+      }
+      c.appendChild(b)
+    }
+    window.loadJs && window.loadJs('https://cdn.bootcss.com/require.js/2.3.6/require.min.js', true, function() {require.config({"paths":{"util":"util","share":"share","search":"search","pagemap":"pagemap.min","registerSW":"registerSW","valine":"cdn/Valine.min","av":["https://cdn.jsdelivr.net/npm/leancloud-storage/dist/av-min"],"pjax":["https://cdn.bootcss.com/jquery.pjax/2.0.1/jquery.pjax.min"],"jquery":["https://cdn.bootcss.com/jquery/3.4.1/jquery.min"],"confirm":["https://cdn.bootcss.com/jquery-confirm/3.3.4/jquery-confirm.min"],"fancybox":["https://cdn.bootcss.com/fancybox/3.5.7/jquery.fancybox.min"],"chart":["https://cdn.bootcss.com/Chart.js/2.8.0-rc.1/Chart.bundle.min"]},"map":{"*":{"css":"https://cdn.bootcss.com/require-css/0.1.10/css.min.js"}},"shim":{"fancybox":{"deps":["css!https://cdn.bootcss.com/fancybox/3.5.7/jquery.fancybox.min.css"]},"confirm":{"deps":["css!https://cdn.bootcss.com/jquery-confirm/3.3.4/jquery-confirm.min.css"]},"chart":{"deps":["css!https://cdn.bootcss.com/Chart.js/2.8.0-rc.1/Chart.min.css"]}},"waitSeconds":3})})
+  })</script>  

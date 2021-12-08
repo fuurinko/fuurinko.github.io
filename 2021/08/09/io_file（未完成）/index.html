@@ -328,7 +328,7 @@ p.sendline("exec /bin/sh 1&gt;&amp;0")
 
 p.interactive()
 </code></pre>
-<h4 id="总结">总结<a class="post-anchor" href="#总结"></a></h4><p>伪造vtable算是io_file中比较简单好懂的一点了，只要对数据结构稍微熟悉一点就能很快理解。然后伪造的方式和思路也比较直接，可以说是经典pwn思路了////</p>
+<h4 id="总结">总结<a class="post-anchor" href="#总结"></a></h4><p>伪造vtable算是io_file中比较简单好懂的一点了，只要对数据结构稍微熟悉一点就能很快理解。然后伪造的方式和思路也比较直接，可以说是经典pwn思路了。</p>
 <p>下一章我们将学习FSOP，感觉难度会比伪造vtable高出不少，其实只要沉下心来看都不难，最难的目前来说还是那些高版本的防护的绕过了。</p>
 <h3 id="FSOP">FSOP<a class="post-anchor" href="#FSOP"></a></h3><p>上一part我们学习了如何通过伪造vtable加上打one_gsdget来getshell，理解起来比较简单，实际操作也并不复杂，只要能找到fake vtable的位置并且正确理解one gadget的用法就好。</p>
 <p>这一个part我们学习FSOP。</p>

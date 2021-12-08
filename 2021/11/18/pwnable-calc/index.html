@@ -16,7 +16,7 @@
     <meta name="description" content="" />
     
     <title>
-      简单的汇编语言复习 - Rin
+      pwnable-calc - Rin
     </title>
     <link rel="manifest" href="/manifest.json" />
     <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon" />
@@ -29,7 +29,7 @@
     
     <div id="post-toc" class="animated hiddenToc hide">
       <span class="title">Toc</span>
-      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-text"></span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1%EF%BC%89%E5%AF%BB%E5%9D%80"><span class="toc-text">1）寻址</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1-%E7%9B%B4%E6%8E%A5%E5%AF%BB%E5%9D%80"><span class="toc-text">1&#x2F;直接寻址</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-%E9%97%B4%E6%8E%A5%E5%AF%BB%E5%9D%80"><span class="toc-text">2&#x2F;间接寻址</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3-%E6%AF%94%E4%BE%8B%E5%AF%BB%E5%9D%80"><span class="toc-text">3&#x2F;比例寻址</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2%EF%BC%89%E6%AE%B5%E5%AF%84%E5%AD%98%E5%99%A8"><span class="toc-text">2）段寄存器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3%EF%BC%89%E5%9F%BA%E7%A1%80%E6%8C%87%E4%BB%A4"><span class="toc-text">3）基础指令</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E6%95%B0%E6%8D%AE%E4%BC%A0%E8%BE%93"><span class="toc-text">1&#x2F;数据传输</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#mov"><span class="toc-text">mov</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#movzx"><span class="toc-text">movzx</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#movsx"><span class="toc-text">movsx</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%9B%B8%E5%85%B3%E7%9A%84%E8%BF%90%E7%AE%97%E7%AC%A6%E5%92%8C%E4%BC%AA%E6%8C%87%E4%BB%A4"><span class="toc-text">2&#x2F;与数据相关的运算符和伪指令</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#offset"><span class="toc-text">offset</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#align"><span class="toc-text">align</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ptr"><span class="toc-text">ptr</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#type"><span class="toc-text">type</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#lengthof"><span class="toc-text">lengthof</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#sizeof"><span class="toc-text">sizeof</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#-1"><span class="toc-text"></span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%86%E5%90%91"><span class="toc-text">逆向</span></a></li></ol>
     </div>
     
     <div id="fixed-menu-wrap">
@@ -139,11 +139,11 @@
         <article class="post-entry">
     <div class="header">
       
-      <div class="title">简单的汇编语言复习</div>
+      <div class="title">pwnable-calc</div>
       <div class="meta">
         <span class="item">
           <span class="iconfont icon-time-circle"></span>
-          <span>2021/10/13</span>
+          <span>2021/11/18</span>
         </span>
 
         
@@ -156,7 +156,7 @@
             <span>
                 
                   
-                    <a href="/tags/asm Primary">asm Primary</a>
+                    <a href="/tags/pwnable">pwnable</a>
                   
                 
             </span>
@@ -166,43 +166,110 @@
       <div>
       </div>
     </div>
-    <html><head></head><body><h3 id=""><a class="post-anchor" href="#"></a></h3><h3 id="1）寻址">1）寻址<a class="post-anchor" href="#1）寻址"></a></h3><h5 id="1-直接寻址">1/直接寻址<a class="post-anchor" href="#1-直接寻址"></a></h5><pre><code class="asm">mov     rax, fs:28h #直接寻址，fs段寄存器+偏移量。这里其实是一个canary的值。
+    <html><head></head><body><h3 id="逆向">逆向<a class="post-anchor" href="#逆向"></a></h3><p>​        程序实现了一个简单的计算器功能。运算有加减乘除四种。</p>
+<p>​        <a target="_blank" rel="noopener" href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-18%20%E4%B8%8A%E5%8D%8810.33.21.png" data-caption="截屏2021-11-18 上午10.33.21" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-18%20%E4%B8%8A%E5%8D%8810.33.21.png" alt="截屏2021-11-18 上午10.33.21"></a></p>
+<p>​        并且程序再次自带计时功能，需要patch。</p>
+<p>​        <a target="_blank" rel="noopener" href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-20%20%E4%B8%8A%E5%8D%889.57.37.png" data-caption="截屏2021-11-20 上午9.57.37" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-20%20%E4%B8%8A%E5%8D%889.57.37.png" alt="截屏2021-11-20 上午9.57.37"></a></p>
+<p>​        静态链接，所以肯定不能用ret2libc那一套，只能试图ROP一下。</p>
+<p>​        程序主要功能通过<code>get_expr</code>和<code>calculate</code>（原本不叫这个）两个函数实现。</p>
+<p>​        <code>get_expr</code>主要用于定位我们输入的字符串中运算符的位置。修改过的ida伪代码如下:</p>
+<pre><code class="c">int __cdecl get_expr(int input_str, int _1024)
+{
+  int idx_0; // eax
+  char operator; // [esp+1Bh] [ebp-Dh]
+  int i; // [esp+1Ch] [ebp-Ch]
+
+  i = 0;
+  while ( i &lt; _1024 &amp;&amp; read(0, &amp;operator, 1) != -1 &amp;&amp; operator != '\n' ) //栈溢出
+  {
+    if ( operator == '+'
+      || operator == '-'
+      || operator == '*'
+      || operator == '/'
+      || operator == '%'
+      || operator &gt; '/' &amp;&amp; operator &lt;= '9' )
+    {
+      idx_0 = i++;
+      *(_BYTE *)(input_str + idx_0) = operator; // 通过循坏找到运算符的位置
+                                                 
+    }
+  }
+  *(_BYTE *)(i + input_str) = 0;
+  return i;
 </code></pre>
-<h5 id="2-间接寻址">2/间接寻址<a class="post-anchor" href="#2-间接寻址"></a></h5><p>间接在使用指针以及解引用的形式</p>
-<pre><code class="asm">mov     [rbp+var_8], rax # 寄存器相对寻址。相当于把rax，也就是这个canary值放到rbp+var_8的地方。
+<p>​        在这之后还有一个<code>init_pool</code>函数。函数参数为表达式数组的索引。大致就是初始化一个大小的100的字符串数组。</p>
+<p>​        <code>calculate</code>函数则负责进行运算。    </p>
+<p>​        实在是没有思路，于是找到了wp。不得不说pwnable.tw上面的题目每个都出得很好，几乎没有板子题，而且漏洞点都丝毫不传统。</p>
+<p>​        主要的问题还是在这个运算的逻辑上</p>
+<pre><code class="c">DWORD *__cdecl eval(_DWORD *num, char operator)
+{
+  _DWORD *result; // eax
+
+  if ( operator == '+' )
+  {
+    num[*num - 1] += num[*num];
+  }
+  else if ( operator &gt; '+' )
+  {
+    if ( operator == '-' )
+    {
+      num[*num - 1] -= num[*num];
+    }
+    else if ( operator == '/' )
+    {
+      num[*num - 1] /= num[*num];
+    }
+  }
+  else if ( operator == '*' )
+  {
+    num[*num - 1] *= num[*num];
+  }
+  result = num;
+  --*num;
+  return result;
+}
 </code></pre>
-<h5 id="3-比例寻址">3/比例寻址<a class="post-anchor" href="#3-比例寻址"></a></h5><p>例如在数组遍历中</p>
-<pre><code class="asm">.data
-arrayD 1,2,3,4
-.code
-mov esi,3
-mov eax,arrayD[esi*4]                    ;eax = 4
+<p>​        这里<code>*num</code>，也就是<code>num[0]</code>的值，是检测到的表达式中数字的数量。</p>
+<p>​        比如我输入了1+2，那么，num[0]的值为2，如果输入+2，num[0]的值为1。</p>
+<p>​        所以根据这个计算的逻辑，如果输入+50，num[0]是1，num[1]是50，num[*num-1]就是num[1-1] = num[0] = num[0] + num[1]=50。</p>
+<p>​        如果输入的是+50+1，处理第一个加号时，num[0] = 2,num[1] = 50 ,num[2].= 1，</p>
+<p>然后num[1] += num[2] =&gt; num[1] = 51，接着处理第二个加号，也就是,num[50] += num[51]。</p>
+<p>​        num[51]显然应该是一个栈上的还没有被利用到的位置，但是这样我们已经能够将其覆盖为任意内容了，四舍五入形成了一个栈上任意地址读。</p>
+<p>​        然后后面还有一个对数组的内容的输出，相当于栈上任意地址写。</p>
+<p>​        这样我们就找到了不通过栈溢出而对栈上地址进行任意读写的方法，但想要控制程序执行流，我们注意到，存放进行计算的数字的数组不算很大，完全能够填写东西覆盖返回地址。</p>
+<p>​        </p>
+<p>​        <a target="_blank" rel="noopener" href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-12-02%20%E4%B8%8B%E5%8D%8811.57.33.png" data-caption="截屏2021-12-02 下午11.57.33" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-12-02%20%E4%B8%8B%E5%8D%8811.57.33.png" alt="截屏2021-12-02 下午11.57.33"></a></p>
+<p>​            </p>
+<p>​        </p>
+<p>​        也就是0x5A0 + 0x4 = 0x5A4 = 1444。数组存放int类型，32位下一个int占4个字节，所以返回地址所在的位置是idx[1444/4=361]</p>
+<p>​        也就是说如果我们能够将想要的东西写入idx[361]就能控制程序执行流。但是并不能ret2libc，所以需要在栈上手动构造寄存器状态来进行系统调用。</p>
+<p>​        所以我们需要的并不是在idx[361]上填某个值，而是需要连续修改这之后一串的空间来进行rop。</p>
+<p>​        借一张图来表示我们需要的布栈状况：</p>
+<p>​        <a target="_blank" rel="noopener" href="https://v1ckydxp.github.io/images/stack.jpg" data-caption="stack" data-fancybox="images"><img src="https://v1ckydxp.github.io/images/stack.jpg" alt="stack"></a></p>
+<p>​        </p>
+<p>​        其他的gadgets都可以通过ROPgadget来找到，但是字符串<code>"/bin/sh"</code>需要输入并确定它们在栈上的地址。</p>
+<p>​        <a target="_blank" rel="noopener" href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-12-03%20%E4%B8%8A%E5%8D%8812.45.13.png" data-caption="截屏2021-12-03 上午12.45.13" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-12-03%20%E4%B8%8A%E5%8D%8812.45.13.png" alt="截屏2021-12-03 上午12.45.13"></a></p>
+<p>​    </p>
+<p>​        对于这个地址，首先我们可以利用我们之前的栈上任意地址读写的能力泄露calc函数的ebp地址，也即是idx[360]    ,但是我们需要的字符串是在main函数调用栈中的，所以我们需要知道main函数调用栈的esp。</p>
+<p>​        通过观察可以发现main的esp正好就是idx[361],而calc ebp和main esp的关系如下：</p>
+<pre><code class="asm">     mov     ebp, esp
+  and     esp, 0FFFFFFF0h
+    sub     esp, 10h
 </code></pre>
-<p>其中，比例因子“4”代表数组的元素个数，esi的值代表下标。</p>
-<h2 id="2）段寄存器">2）段寄存器<a class="post-anchor" href="#2）段寄存器"></a></h2><p>其实就是段的基址，起寻址索引作用。例子就比如上一个mov rax fs：28h</p>
-<h2 id="3）基础指令">3）基础指令<a class="post-anchor" href="#3）基础指令"></a></h2><h3 id="1-数据传输">1/数据传输<a class="post-anchor" href="#1-数据传输"></a></h3><h4 id="mov">mov<a class="post-anchor" href="#mov"></a></h4><p>为了实现各种数据的传输，mov还有一下几种派生指令</p>
-<h5 id="movzx">movzx<a class="post-anchor" href="#movzx"></a></h5><p>对目的操作数进行全0拓展并且复制。</p>
-<h5 id="movsx">movsx<a class="post-anchor" href="#movsx"></a></h5><p>同上，但是是用1拓展而不是0。</p>
-<p>与数据传输相关的指令还有很多，以后待补充。</p>
-<h3 id="2-与数据相关的运算符和伪指令">2/与数据相关的运算符和伪指令<a class="post-anchor" href="#2-与数据相关的运算符和伪指令"></a></h3><h4 id="offset">offset<a class="post-anchor" href="#offset"></a></h4><p>返回一个偏移量</p>
-<h4 id="align">align<a class="post-anchor" href="#align"></a></h4><p>将一个变量对齐到边界。</p>
-<p>ps：对于cpu来说，处理偶地址速度会快于奇地址。</p>
-<h4 id="ptr">ptr<a class="post-anchor" href="#ptr"></a></h4><p>重写一个已经被声明过操作数的大小类型。</p>
-<h4 id="type">type<a class="post-anchor" href="#type"></a></h4><p>返回变量单个元素的大小</p>
-<h4 id="lengthof">lengthof<a class="post-anchor" href="#lengthof"></a></h4><p>计算数组中元素的个数</p>
-<h4 id="sizeof">sizeof<a class="post-anchor" href="#sizeof"></a></h4><p>返回lengthof和type的乘积</p>
-<h3 id="-1"><a class="post-anchor" href="#-1"></a></h3></body></html>
+<p>​        也即是我们可以通过calc ebp的值来求出main esp，从而通过偏移获得<code>"/bin/sh"</code>的地址。</p>
+<p>​        然后根据布栈将地址依次写入栈中就行。</p>
+</body></html>
 
   
   <div class="post-guide">
     <div class="item left">
         
-          <a href="../../23/%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8/">格式化字符串漏洞学习</a>
+          <a href="../../22/openstack%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">openstack学习笔记</a>
         
     </div>
     <div class="item right">
         
-          <a href="../../12/%E5%86%8D%E6%8E%A2%E5%87%BD%E6%95%B0%E8%B0%83%E7%94%A8%E6%A0%88/">简单的函数调用栈基础</a>
+          <a href="../../17/%E5%A6%99%E6%8E%A7%E9%BC%A0%E6%A0%87%E5%8D%A1%E9%A1%BF%E9%97%AE%E9%A2%98/">妙控鼠标卡顿问题</a>
         
     </div>
   </div>

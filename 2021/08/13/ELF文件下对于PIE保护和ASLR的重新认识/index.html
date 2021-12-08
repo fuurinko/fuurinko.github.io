@@ -29,7 +29,7 @@
     
     <div id="post-toc" class="animated hiddenToc hide">
       <span class="title">Toc</span>
-      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-text"></span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ELF%E6%96%87%E4%BB%B6%E4%B8%8B%E5%AF%B9%E4%BA%8EPIE%E4%BF%9D%E6%8A%A4%E5%92%8CASLR%E7%9A%84%E9%87%8D%E6%96%B0%E8%AE%A4%E8%AF%86"><span class="toc-text">ELF文件下对于PIE保护和ASLR的重新认识</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#0%EF%BC%89"><span class="toc-text">0）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1%EF%BC%89"><span class="toc-text">1）</span></a></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#ELF%E6%96%87%E4%BB%B6%E4%B8%8B%E5%AF%B9%E4%BA%8EPIE%E4%BF%9D%E6%8A%A4%E5%92%8CASLR%E7%9A%84%E9%87%8D%E6%96%B0%E8%AE%A4%E8%AF%86"><span class="toc-text">ELF文件下对于PIE保护和ASLR的重新认识</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#0%EF%BC%89"><span class="toc-text">0）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1%EF%BC%89"><span class="toc-text">1）</span></a></li></ol></li></ol>
     </div>
     
     <div id="fixed-menu-wrap">
@@ -166,7 +166,7 @@
       <div>
       </div>
     </div>
-    <html><head></head><body><h3 id=""><a class="post-anchor" href="#"></a></h3><h3 id="ELF文件下对于PIE保护和ASLR的重新认识">ELF文件下对于PIE保护和ASLR的重新认识<a class="post-anchor" href="#ELF文件下对于PIE保护和ASLR的重新认识"></a></h3><h4 id="0）">0）<a class="post-anchor" href="#0）"></a></h4><p>​    复现红色高跟鞋的时候，在ida修复swithc结构的时候碰见了一个问题。因为题目的源文件是有pie保护的，所以ida中的地址是很难看的随机化模式。虽然这些随机化的地址对于我们patch文件毫无影响，但是就是突发奇想，看看能不能找到方法来通过patch将elf文件的pie保护给禁用。</p>
+    <html><head></head><body><h3 id="ELF文件下对于PIE保护和ASLR的重新认识">ELF文件下对于PIE保护和ASLR的重新认识<a class="post-anchor" href="#ELF文件下对于PIE保护和ASLR的重新认识"></a></h3><h4 id="0）">0）<a class="post-anchor" href="#0）"></a></h4><p>​    复现红色高跟鞋的时候，在ida修复swithc结构的时候碰见了一个问题。因为题目的源文件是有pie保护的，所以ida中的地址是很难看的随机化模式。虽然这些随机化的地址对于我们patch文件毫无影响，但是就是突发奇想，看看能不能找到方法来通过patch将elf文件的pie保护给禁用。</p>
 <h4 id="1）">1）<a class="post-anchor" href="#1）"></a></h4><p>​    如果用010editor打开一个PE文件，我们能够很方便的通过修改PE头来禁用掉Windows程序的ASLR保护。这是因为程序本身其实并不是位置无关的。</p>
 <p>ASLR在PE文件上的开启与否实际上就是PE头上标识符的区分，总的来说ASLR是操作系统的功能，而不是程序本身的特性，以ASLR ON 编译，也只是给程序加上了能被ASLR保护识别的标识符。所以我们只需要patch掉这个标识符，就能够改变程序的地址随机化状态。</p>
 <p>也正是在寻找方法的过程中，我逐渐认识到虽然PIE保护和ASLR表现形式都是地址随机化，但是两者的原理以及实现的方式并不一样，甚至大相径庭。</p>
@@ -185,7 +185,7 @@
     </div>
     <div class="item right">
         
-          <a href="../../09/io_file/">IO_FILE学习</a>
+          <a href="../../09/io_file%EF%BC%88%E6%9C%AA%E5%AE%8C%E6%88%90%EF%BC%89/">IO_FILE学习</a>
         
     </div>
   </div>
