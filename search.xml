@@ -2023,11 +2023,6 @@ TypeError: cannot use a string pattern on a bytes-like object
       </tags>
   </entry>
   <entry>
-    <title></title>
-    <url>/2021/12/08/Untitled/</url>
-    <content><![CDATA[]]></content>
-  </entry>
-  <entry>
     <title>IO_FILE学习</title>
     <url>/2021/08/09/io_file%EF%BC%88%E6%9C%AA%E5%AE%8C%E6%88%90%EF%BC%89/</url>
     <content><![CDATA[<html><head></head><body><p>io_file学习笔记</p>
@@ -2204,12 +2199,9 @@ p.interactive()
       </tags>
   </entry>
   <entry>
-    <title></title>
+    <title>fastbin attack</title>
     <url>/2021/12/06/fastbin_attack/</url>
-    <content><![CDATA[<html><head></head><body><hr>
-<p>title： fastbin attack<br>tags： heap_pro</p>
-<hr>
-<h2 id="fastbin？">fastbin？<a class="post-anchor" href="#fastbin？"></a></h2><p>​    </p>
+    <content><![CDATA[<html><head></head><body><h2 id="fastbin？">fastbin？<a class="post-anchor" href="#fastbin？"></a></h2><p>​    </p>
 <h2 id=""><a class="post-anchor" href="#"></a></h2><p>​    长度在<code>32-160</code>(32位系统是<code>16-80</code>)的free堆块。通过fastbinlist储存，单向链表，所以fast。fastbin attack一个最简单的利用就是UAF，其次就是fastbin double free。ctf pwn中与fastbin相关的还有就是在unsortedbin attack中涉及到的，也是ptmalloc机制中的一种的malloc_consolidate，其中也有可以攻击的机会，但是这个内容日后再在unsortedbin attack的笔记中再进行研究吧。</p>
 <h2 id="UAF">UAF<a class="post-anchor" href="#UAF"></a></h2><p>​        先从一个简单的例子开始：</p>
 <h4 id="hacknote">hacknote<a class="post-anchor" href="#hacknote"></a></h4><p><a href="https://github.com/ctf-wiki/ctf-challenges/tree/master/pwn/heap/use_after_free/hitcon-training-hacknote">题目链接</a></p>
@@ -2475,6 +2467,9 @@ edit(6,0xDEADBEEF)
 <h3 id="总结">总结<a class="post-anchor" href="#总结"></a></h3><p>​        感觉每个入门堆题的人首先开始做的题目都是fastbin attack以及UAF，因为确实相对来说简单易懂。但是反观我半年前写的fastbin attack的wp，我的评价是：狗屁不通。</p>
 <p>​        所以我对于堆题，或者是整个ctf pwn的学习其实是走了很多弯路的。比如说对于动调的惧怕，导致我做了很多题，但又没完全做。比如我学习堆题，却不愿意沉下心来，从了解ptmalloc开始，而是摁刷题，导致知识点被割裂得完全串联不上，学完就忘。现在从csapp malloc lab开始逐步琢磨glibc，然后睡前再看半个小时源码剖析，再辅以ctf pwn的一些题目的分析，对于各种知识点好歹是有了一个足以将它们串联起来的体系，从而做题是不再那么一头雾水了。如果在半年前我能意识到这一点就好了。但是我还是觉得任何在pwn学习过程中踩过的坑，无论是知识点本身的坑，还是学习方案上的坑，都是宝贵的，无可替代的学习经验捏。</p>
 </body></html>]]></content>
+      <tags>
+        <tag>heap_pro</tag>
+      </tags>
   </entry>
   <entry>
     <title>csapp malloc lab</title>

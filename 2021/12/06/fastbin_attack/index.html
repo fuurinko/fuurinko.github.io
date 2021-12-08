@@ -16,7 +16,7 @@
     <meta name="description" content="" />
     
     <title>
-          Rin
+      fastbin attack - Rin
     </title>
     <link rel="manifest" href="/manifest.json" />
     <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon" />
@@ -139,7 +139,7 @@
         <article class="post-entry">
     <div class="header">
       
-      <div class="title"></div>
+      <div class="title">fastbin attack</div>
       <div class="meta">
         <span class="item">
           <span class="iconfont icon-time-circle"></span>
@@ -150,15 +150,23 @@
 
         
         
-        
+         
+          <span class="item">
+            <span class="iconfont icon-tag1"></span>
+            <span>
+                
+                  
+                    <a href="/tags/heap_pro">heap_pro</a>
+                  
+                
+            </span>
+          </span>
+         
       </div>
       <div>
       </div>
     </div>
-    <html><head></head><body><hr>
-<p>title： fastbin attack<br>tags： heap_pro</p>
-<hr>
-<h2 id="fastbin？">fastbin？<a class="post-anchor" href="#fastbin？"></a></h2><p>​    </p>
+    <html><head></head><body><h2 id="fastbin？">fastbin？<a class="post-anchor" href="#fastbin？"></a></h2><p>​    </p>
 <h2 id=""><a class="post-anchor" href="#"></a></h2><p>​    长度在<code>32-160</code>(32位系统是<code>16-80</code>)的free堆块。通过fastbinlist储存，单向链表，所以fast。fastbin attack一个最简单的利用就是UAF，其次就是fastbin double free。ctf pwn中与fastbin相关的还有就是在unsortedbin attack中涉及到的，也是ptmalloc机制中的一种的malloc_consolidate，其中也有可以攻击的机会，但是这个内容日后再在unsortedbin attack的笔记中再进行研究吧。</p>
 <h2 id="UAF">UAF<a class="post-anchor" href="#UAF"></a></h2><p>​        先从一个简单的例子开始：</p>
 <h4 id="hacknote">hacknote<a class="post-anchor" href="#hacknote"></a></h4><p><a target="_blank" rel="noopener" href="https://github.com/ctf-wiki/ctf-challenges/tree/master/pwn/heap/use_after_free/hitcon-training-hacknote">题目链接</a></p>
@@ -428,8 +436,6 @@ edit(6,0xDEADBEEF)
   
   <div class="post-guide">
     <div class="item left">
-        
-          <a href="../../08/Untitled/"></a>
         
     </div>
     <div class="item right">
