@@ -3055,4 +3055,80 @@ chunk1/content#0x10
         <tag>heap_pro</tag>
       </tags>
   </entry>
+  <entry>
+    <title>Assembly_Refresher</title>
+    <url>/2022/01/29/Assembly_Refresher/</url>
+    <content><![CDATA[<html><head></head><body><h4 id="Level1">Level1<a class="post-anchor" href="#Level1"></a></h4><p>需要设置<code>*rdi = 0x1337</code>，</p>
+<p>如果是按照目的意思程序的汇编代码长这样子：</p>
+<pre><code class="asm">.section .text
+    .intel_syntax noprefix
+    .global _start
+    _start :
+        mov rdi, 0x1337
+</code></pre>
+<p>但是可以直接用pwntools传输<code>mov rdi, 0x1337</code>这一句。</p>
+<pre><code class="python">#!/usr/bin/env python3
+import pwn
+pwn.context.log_level = "INFO"
+pwn.context.encoding = "latin"
+pwn.context.arch = "amd64"
+pwn.warnings.simplefilter("ignore")
+
+assembly = """mov rdi, 0x1337"""
+
+proc = pwn.process("/challenge/embryoasm_level1")
+print(proc.readrepeat(1).decode())
+proc.send(pwn.asm(assembly))
+print(proc.readrepeat(1).decode())
+</code></pre>
+<p>一个好用的exp，可以直接在非根目录下执行。</p>
+<h4 id="Level2">Level2<a class="post-anchor" href="#Level2"></a></h4><p><code>add rdi, 0x331337</code></p>
+<h4 id="Level3">Level3<a class="post-anchor" href="#Level3"></a></h4><p><a href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-01-30%20%E4%B8%8A%E5%8D%8811.38.12.png" data-caption="截屏2022-01-30 上午11.38.12" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-01-30%20%E4%B8%8A%E5%8D%8811.38.12.png" alt="截屏2022-01-30 上午11.38.12"></a></p>
+<p>出师未捷身先死。</p>
+<p>这里应该是对于汇编乘法对于寄存器的改变不太清楚<a href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-01-30%20%E4%B8%8A%E5%8D%8811.48.15.png" data-caption="截屏2022-01-30 上午11.48.15" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-01-30%20%E4%B8%8A%E5%8D%8811.48.15.png" alt="截屏2022-01-30 上午11.48.15"></a></p>
+<p>​        问题出在64位乘法会产生128位乘积，储存在<code>rdx:rax</code>中由于题目给的都是低32位的所以高32位全部是0，相当于<code>mul</code>之后<code>rdx</code>就变成了0，自然拿不到flag。</p>
+<h4 id="Level4">Level4<a class="post-anchor" href="#Level4"></a></h4><p>​        简单的64位汇编除法。相关的指令都已经给出了，抄作业就行。</p>
+<h4 id="Level5">Level5<a class="post-anchor" href="#Level5"></a></h4><p>​        依然是简单的除法，涉及到余数的处理。既然余数存在<code>rdx</code>，<code>mov rax，rdx</code>就行。</p>
+<h4 id="Level6">Level6<a class="post-anchor" href="#Level6"></a></h4><p>​        对于低位的数字运算（好烦），</p>
+<pre><code class="asm">rax = rdi modulo 256             ;2^8
+rbx = rsi module 65536        ;2^16
+</code></pre>
+<p>​        <a href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-01-30%20%E4%B8%8B%E5%8D%882.47.33.png" data-caption="截屏2022-01-30 下午2.47.33" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-01-30%20%E4%B8%8B%E5%8D%882.47.33.png" alt="截屏2022-01-30 下午2.47.33"></a></p>
+<p>所以edi和esi没有低八位吗？</p>
+<p>可能是吧，就像正常来说ebp和esp也没有低八位。</p>
+<h4 id="Level7">Level7<a class="post-anchor" href="#Level7"></a></h4><p>​        进行移位操作的练习，需要让rax为rdi的b3位的值</p>
+<p>​        </p>
+<p><a href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-01-30%20%E4%B8%8B%E5%8D%883.37.16.png" data-caption="截屏2022-01-30 下午3.37.16" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-01-30%20%E4%B8%8B%E5%8D%883.37.16.png" alt="截屏2022-01-30 下午3.37.16"></a></p>
+<h4 id="Level8">Level8<a class="post-anchor" href="#Level8"></a></h4><p>​        与操作。</p>
+<p><a href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-01-30%20%E4%B8%8B%E5%8D%883.46.06.png" data-caption="截屏2022-01-30 下午3.46.06" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-01-30%20%E4%B8%8B%E5%8D%883.46.06.png" alt="截屏2022-01-30 下午3.46.06"></a></p>
+<h4 id="Level9">Level9<a class="post-anchor" href="#Level9"></a></h4><p>​        简单的奇偶判断，rax应该是1与rdi lsb异或后的结果。</p>
+<p><a href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-01-30%20%E4%B8%8B%E5%8D%885.13.57.png" data-caption="截屏2022-01-30 下午5.13.57" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-01-30%20%E4%B8%8B%E5%8D%885.13.57.png" alt="截屏2022-01-30 下午5.13.57"></a></p>
+<h4 id="Level10">Level10<a class="post-anchor" href="#Level10"></a></h4><p>​        简单的间接寻址。</p>
+<p><a href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-01-30%20%E4%B8%8B%E5%8D%885.33.10.png" data-caption="截屏2022-01-30 下午5.33.10" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-01-30%20%E4%B8%8B%E5%8D%885.33.10.png" alt="截屏2022-01-30 下午5.33.10"></a></p>
+<p>​            要注意的是这里面有一些规范，大概就是不能<code>mov [register],number;</code>。也就是说涉及到寄存器间接寻址的操作都不能用立即数，而是需要利用寄存器。</p>
+<h4 id="Level11">Level11<a class="post-anchor" href="#Level11"></a></h4><p>​        涉及对byte，word ，dword和qword的size的理解。<a href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-01-30%20%E4%B8%8B%E5%8D%885.42.02.png" data-caption="截屏2022-01-30 下午5.42.02" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-01-30%20%E4%B8%8B%E5%8D%885.42.02.png" alt="截屏2022-01-30 下午5.42.02"></a></p>
+<h4 id="Level12">Level12<a class="post-anchor" href="#Level12"></a></h4><p>​        <del>我发现这个东西最恼人的不是做本身而是看题，不想看题好烦，题好长。但是只看问题又不能瞬间找到思路。。。</del></p>
+<p>​        考点是利用寄存器间接寻址设置寄存器的值为指定值。<del>（本来以为要考虑小端序造成的影响但其实不用考虑）</del></p>
+<p>​        <a href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-01-30%20%E4%B8%8B%E5%8D%885.52.50.png" data-caption="截屏2022-01-30 下午5.52.50" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-01-30%20%E4%B8%8B%E5%8D%885.52.50.png" alt="截屏2022-01-30 下午5.52.50"></a></p>
+<h4 id="Level13">Level13<a class="post-anchor" href="#Level13"></a></h4><p>​        也就是一个按照地址偏移寻址的方式的理解。（基址寻址）</p>
+<p><a href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-01-30%20%E4%B8%8B%E5%8D%889.46.14.png" data-caption="截屏2022-01-30 下午9.46.14" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-01-30%20%E4%B8%8B%E5%8D%889.46.14.png" alt="截屏2022-01-30 下午9.46.14"></a></p>
+<h4 id="Level14">Level14<a class="post-anchor" href="#Level14"></a></h4><p>​        对于出入栈相关指令的简单理解。</p>
+<p>​        做题的时候卡了一下，因为没有正确理解题意，我以为是需要把栈顶值减去rdi后的值存到rax中就行，但是题意其实是让我们改变栈顶的值，所以我们将rax取出减rdi后还需要push回去。（还是吃了英语不好的亏捏）</p>
+<p><a href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-01-30%20%E4%B8%8B%E5%8D%8810.11.05.png" data-caption="截屏2022-01-30 下午10.11.05" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-01-30%20%E4%B8%8B%E5%8D%8810.11.05.png" alt="截屏2022-01-30 下午10.11.05"></a></p>
+<p>​        </p>
+<h4 id="Level15">Level15<a class="post-anchor" href="#Level15"></a></h4><p>​        还是围绕栈的先入后出的练习。</p>
+<p>​        <a href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-01-30%20%E4%B8%8B%E5%8D%8810.19.15.png" data-caption="截屏2022-01-30 下午10.19.15" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-01-30%20%E4%B8%8B%E5%8D%8810.19.15.png" alt="截屏2022-01-30 下午10.19.15"></a></p>
+<p>​            </p>
+<h4 id="Level16">Level16<a class="post-anchor" href="#Level16"></a></h4><p>​        利用rsp来寻址。</p>
+<p><a href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-01-30%20%E4%B8%8B%E5%8D%8810.36.37.png" data-caption="截屏2022-01-30 下午10.36.37" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-01-30%20%E4%B8%8B%E5%8D%8810.36.37.png" alt="截屏2022-01-30 下午10.36.37"></a></p>
+<p>​        </p>
+<p>​        这里我把rdx清零了，属于是多此一举。</p>
+<h4 id="Level17">Level17<a class="post-anchor" href="#Level17"></a></h4><p>​        这题干怎么越来越长。</p>
+<p>​        等会儿再做。</p>
+<p>​        </p>
+</body></html>]]></content>
+      <tags>
+        <tag>pwncollege</tag>
+      </tags>
+  </entry>
 </search>

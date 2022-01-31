@@ -16,12 +16,12 @@
     <meta name="description" content="" />
     
     <title>
-      解决hexo无法显示高亮问题 - Rin
+      Tags - Rin
     </title>
     <link rel="manifest" href="/manifest.json" />
     <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon" />
     
-<link rel="stylesheet" href="../../../../style/style.css">
+<link rel="stylesheet" href="../../style/style.css">
 
   <meta name="generator" content="Hexo 5.4.0"></head>
   <body>
@@ -56,15 +56,15 @@
       <span class="iconfont icon-close"></span>
       <div class="nav">
         
-        <a href="../../../../index.html" class="">
+        <a href="../../index.html" class="">
           Home
         </a>
         
-        <a href="../../../../friends" class="">
+        <a href="../../friends" class="">
           Friends
         </a>
         
-        <a href="../../../../about" class="">
+        <a href="../../about" class="">
           About
         </a>
         
@@ -98,15 +98,15 @@
 
         <div class="nav">
           
-          <a href="../../../../index.html" class="">
+          <a href="../../index.html" class="">
             Home
           </a>
           
-          <a href="../../../../friends" class="">
+          <a href="../../friends" class="">
             Friends
           </a>
           
-          <a href="../../../../about" class="">
+          <a href="../../about" class="">
             About
           </a>
           
@@ -131,90 +131,42 @@
     </div>
     <div id="container">
       <div class="main animated bounceInRight delay-0.7s">
-        <article class="post-entry">
-    <div class="header">
+        <div id="archives">
+    
+        <div class="title">
+            Tags - pwncollege
+        </div>
+    
+
+
+
+
+    
+    
+    <section class="wrap">
+        <div class="meta">
+            <a href="../../archives/2022" >
+                2022
+            </a>
+        </div>
+        <div class="year">
+            
+            <article class="item">
+            <a href="../../2022/01/29/Assembly_Refresher/" title="Assembly_Refresher">
+                <span>2022/01/29</span>
+                <span>Assembly_Refresher</span>
+            </a>
+            </article>
+            
+    
+        </div>
+    </section>
       
-      <div class="title">解决hexo无法显示高亮问题</div>
-      <div class="meta">
-        <span class="item">
-          <span class="iconfont icon-time-circle"></span>
-          <span>2021/10/28</span>
-        </span>
+<div class="paginator">
+    <span class="page-number current">1</span>
+</div>
+</div>
 
-        
-
-        
-        
-         
-          <span class="item">
-            <span class="iconfont icon-tag1"></span>
-            <span>
-                
-                  
-                    <a href="/tags/mess">mess</a>
-                  
-                
-            </span>
-          </span>
-         
-      </div>
-      <div>
-      </div>
-    </div>
-    <html><head></head><body><p>​    博客搭了有快一年了，一直是hexo+git page的配置（不过这个搭配现在绝版了2333），但是一直荒废着，差不多到大一暑假的时候才想起要好好经营。</p>
-<p>​    但是代码高亮这个一直没有解决。</p>
-<p>​    之前我以为是博客主题配置的问题（就是highlight对象的值的问题），但是无论用怎么样的方法都不太行。</p>
-<p>​    在研究代码高亮的过程中，我才知道原来有个项目叫highlight.js,里面有各种各样的代码高亮的css文件。</p>
-<p>​    一开始我是将博客原本的代码高亮的css文件替换成我想要的样式，但是无论替换成什么样式，博客中代码都是蓝色，清一色的蓝色。然后我意识到，这根本不是什么代码高亮的样式，这根本就是，没有代码高亮。</p>
-<p>​    然后我开始在网上寻找解决方案，搜索的关键词是hexo 无法显示代码高亮，辗转来回，找到了一篇文章。</p>
-<p>​    <a target="_blank" rel="noopener" href="https://igeek.cloud/2021/01/13/hexo%E4%B8%ADhighlight-js%E4%BB%A3%E7%A0%81%E9%AB%98%E4%BA%AE%E7%9A%84%E4%BF%AE%E6%94%B9%E6%96%B9%E6%B3%95/">hexo中highlight.js代码高亮的修改方法</a></p>
-<p>​    按照文章中的方法，我在主题layout文件夹中的_post.ejs文件随便找了个角落，把</p>
-<pre><code class="html">COPY&lt;!-- Highlight.js --&gt;
-&lt;link rel="stylesheet"
-        href="//highlightjs.org/static/demo/styles/night-owl.css"&gt;
-&lt;script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"&gt;
-&lt;/script&gt;
-&lt;script&gt;
-    hljs.initHighlightingOnLoad();
-&lt;/script
-</code></pre>
-<p>丢了进去。</p>
-<p>​    然后我的博客就成功的显示了代码高亮。</p>
-<p>​    这样看其实看不出什么端倪，具体功能的实现还是要看脚本的内容，但是估计我也看不懂（）。</p>
-<p>​    </p>
-</body></html>
-
-  
-  <div class="post-guide">
-    <div class="item left">
-        
-          <a href="../../29/typora%E4%B8%BB%E9%A2%98%E9%85%8D%E7%BD%AE%E7%9A%84%E4%B8%80%E4%BA%9B%E5%BF%83%E5%BE%97/">typora主题配置的一些心得</a>
-        
-    </div>
-    <div class="item right">
-        
-          <a href="../../27/%E8%A7%A3%E5%86%B3gcc%E6%97%A0%E6%B3%95%E7%BC%96%E8%AF%9132%E4%BD%8D%E7%A8%8B%E5%BA%8F%E7%9A%84%E9%97%AE%E9%A2%98/">解决gcc无法编译32位程序的问题</a>
-        
-    </div>
-  </div>
-
-  
-
-
-  <div id="comment"></div>
-
-  
-  <!-- Highlight.js -->
-
-<link rel="stylesheet"
-href="//highlightjs.org/static/demo/styles/night-owl.css">
-<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js">
-</script>
-<script>
-hljs.initHighlightingOnLoad();
-
-</script>
-</article>
         <footer>
           <div class="copyright">
             ©2022
