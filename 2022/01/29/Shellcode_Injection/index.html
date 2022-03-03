@@ -16,16 +16,21 @@
     <meta name="description" content="" />
     
     <title>
-      Tags - Rin
+      Shellcode_Injection - Rin
     </title>
     <link rel="manifest" href="/manifest.json" />
     <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon" />
     
-<link rel="stylesheet" href="../../style/style.css">
+<link rel="stylesheet" href="../../../../style/style.css">
 
   <meta name="generator" content="Hexo 5.4.0"></head>
   <body>
     <canvas id='pagemap'></canvas>
+    
+    <div id="post-toc" class="animated hiddenToc hide">
+      <span class="title">Toc</span>
+      <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#Level1"><span class="toc-text">Level1</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Level2"><span class="toc-text">Level2</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Level3"><span class="toc-text">Level3</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Level4"><span class="toc-text">Level4</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Level5"><span class="toc-text">Level5</span></a></li></ol>
+    </div>
     
     <div id="fixed-menu-wrap">
       <span class="iconfont icon-sousuo search-box menu-reset"></span>
@@ -56,15 +61,15 @@
       <span class="iconfont icon-close"></span>
       <div class="nav">
         
-        <a href="../../index.html" class="">
+        <a href="../../../../index.html" class="">
           Home
         </a>
         
-        <a href="../../friends" class="">
+        <a href="../../../../friends" class="">
           Friends
         </a>
         
-        <a href="../../about" class="">
+        <a href="../../../../about" class="">
           About
         </a>
         
@@ -98,15 +103,15 @@
 
         <div class="nav">
           
-          <a href="../../index.html" class="">
+          <a href="../../../../index.html" class="">
             Home
           </a>
           
-          <a href="../../friends" class="">
+          <a href="../../../../friends" class="">
             Friends
           </a>
           
-          <a href="../../about" class="">
+          <a href="../../../../about" class="">
             About
           </a>
           
@@ -131,96 +136,92 @@
     </div>
     <div id="container">
       <div class="main animated bounceInRight delay-0.7s">
-        <div id="archives">
-    
-        <div class="title">
-            Tags - pwncollege
-        </div>
-    
-
-
-
-
-    
-    
-    <section class="wrap">
-        <div class="meta">
-            <a href="../../archives/2022" >
-                2022
-            </a>
-        </div>
-        <div class="year">
-            
-            <article class="item">
-            <a href="../../2022/03/03/pwncollege_ProgramMisuse/" title="ProgramMisuse">
-                <span>2022/03/03</span>
-                <span>ProgramMisuse</span>
-            </a>
-            </article>
-            
-
-
-            <article class="item">
-            <a href="../../2022/02/28/Sandboxing/" title="Sandboxing">
-                <span>2022/02/28</span>
-                <span>Sandboxing</span>
-            </a>
-            </article>
-            
-
-
-            <article class="item">
-            <a href="../../2022/02/15/ReverseEngineering/" title="ReverseEngineering">
-                <span>2022/02/15</span>
-                <span>ReverseEngineering</span>
-            </a>
-            </article>
-            
-
-
-            <article class="item">
-            <a href="../../2022/02/14/Debugging%20Refresher/" title="Debugging Refresher">
-                <span>2022/02/14</span>
-                <span>Debugging Refresher</span>
-            </a>
-            </article>
-            
-
-
-            <article class="item">
-            <a href="../../2022/01/29/pwncollege_Assembly_Refresher/" title="Assembly_Refresher">
-                <span>2022/01/29</span>
-                <span>Assembly_Refresher</span>
-            </a>
-            </article>
-            
-
-
-            <article class="item">
-            <a href="../../2022/01/29/Shellcode_Injection/" title="Shellcode_Injection">
-                <span>2022/01/29</span>
-                <span>Shellcode_Injection</span>
-            </a>
-            </article>
-            
-
-
-            <article class="item">
-            <a href="../../2022/01/17/Program_interaction/" title="Program_interaction">
-                <span>2022/01/17</span>
-                <span>Program_interaction</span>
-            </a>
-            </article>
-            
-    
-        </div>
-    </section>
+        <article class="post-entry">
+    <div class="header">
       
-<div class="paginator">
-    <span class="page-number current">1</span>
-</div>
-</div>
+      <div class="title">Shellcode_Injection</div>
+      <div class="meta">
+        <span class="item">
+          <span class="iconfont icon-time-circle"></span>
+          <span>2022/01/29</span>
+        </span>
 
+        
+
+        
+        
+         
+          <span class="item">
+            <span class="iconfont icon-tag1"></span>
+            <span>
+                
+                  
+                    <a href="/tags/pwncollege">pwncollege</a>
+                  
+                
+            </span>
+          </span>
+         
+      </div>
+      <div>
+      </div>
+    </div>
+    <html><head></head><body><p>​        整个专题其实就是一个shellcode编写的小练习，并不需要自己寻找漏洞点，写好shellcode直接注入就行。</p>
+<p>​        如果要将服务器的文件传输到本地的话可以使用:</p>
+<pre><code class="bash"> scp -i key -r hacker@dojo.pwn.college:/challenge [本地路径]
+</code></pre>
+<h4 id="Level1">Level1<a class="post-anchor" href="#Level1"></a></h4><p>​        可以用pwntools的shellcraft模块，但是也可以手写shellcode。</p>
+<p>​        这道题可以用简单的orw的思路做。但是shellcode的地址需要在规定的地方。</p>
+<pre><code class="python">shellcode = shellcraft.amd64.open("/flag")        
+shellcode += shellcraft.amd64.read('rax', stack + 0x100, 0x100)
+shellcode += shellcraft.amd64.write(1, stack + 0x100, 0x100)
+</code></pre>
+<h4 id="Level2">Level2<a class="post-anchor" href="#Level2"></a></h4><pre><code class="python">shellcode = shellcraft.amd64.nop()*0x800
+shellcode = shellcraft.amd64.open("/flag")        
+shellcode += shellcraft.amd64.read('rax', stack + 0x100, 0x100)
+shellcode += shellcraft.amd64.write(1, stack + 0x100, 0x100)
+</code></pre>
+<h4 id="Level3">Level3<a class="post-anchor" href="#Level3"></a></h4><p>​        换个地址就行</p>
+<h4 id="Level4">Level4<a class="post-anchor" href="#Level4"></a></h4><p>​        shellcode不能含有”H”。</p>
+<p>​        第一个想到的就是不能含有<code>push</code>，其他指令似乎也没有h了。想要完成的话第一个思路是手写不含push的shellcode，另外一个思路是构造跳板读取其他位置的shellcode（这种思路其实比较常见并且配套的视频中也提到过）</p>
+<p>​        但是实际做题体验极差，写了read()后，读取的shellcode无论怎样都无法读到flag，明明已经getshell了，也没有eof，但是就是没办法。以后再想吧。</p>
+<h4 id="Level5">Level5<a class="post-anchor" href="#Level5"></a></h4><p><a target="_blank" rel="noopener" href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-02-18%20%E4%B8%8B%E5%8D%8810.02.44.png" data-caption="截屏2022-02-18 下午10.02.44" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-02-18%20%E4%B8%8B%E5%8D%8810.02.44.png" alt="截屏2022-02-18 下午10.02.44"></a></p>
+<p>​        需要让shellcode在运行时生成<code>syscall()</code>。</p>
+<p>一个比较自然的想法就是把对应的机器码储存在寄存器中，然后拿出来用。</p>
+<p><code>int 0x80</code>对应的机器码<code>CD 80 </code></p>
+</body></html>
+
+  
+  <div class="post-guide">
+    <div class="item left">
+        
+          <a href="../pwncollege_Assembly_Refresher/">Assembly_Refresher</a>
+        
+    </div>
+    <div class="item right">
+        
+          <a href="../../17/Program_interaction/">Program_interaction</a>
+        
+    </div>
+  </div>
+
+  
+
+
+  <div id="comment"></div>
+
+  
+  <!-- Highlight.js -->
+
+<link rel="stylesheet"
+href="//highlightjs.org/static/demo/styles/night-owl.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js">
+</script>
+<script>
+hljs.initHighlightingOnLoad();
+
+</script>
+</article>
         <footer>
           <div class="copyright">
             ©2022
