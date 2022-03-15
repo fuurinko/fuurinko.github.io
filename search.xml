@@ -3851,10 +3851,40 @@ p.send(payload)
 
 p.interactive()
 </code></pre>
-<p>‘</p>
-<h4 id="level5">level5<a class="post-anchor" href="#level5"></a></h4></body></html>]]></content>
+<h4 id="level5">level5<a class="post-anchor" href="#level5"></a></h4><p>​        这个题也蛮魔怔，和上一个level没有什么区别，但是没有print input buffer，对于我来说也差不多，但是就相对更麻烦了。</p>
+<p>​        </p>
+</body></html>]]></content>
       <tags>
         <tag>pwncollege</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>pwn中的python字符串处理问题</title>
+    <url>/2022/03/12/pwn%E4%B8%AD%E7%9A%84python%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%A4%84%E7%90%86%E9%97%AE%E9%A2%98/</url>
+    <content><![CDATA[<html><head></head><body><p>​        最近在pwncollege做题的时候常常遇到接收的字符串处理不当的问题，故总结整理一下。</p>
+<h3 id="字符串截取">字符串截取<a class="post-anchor" href="#字符串截取"></a></h3><pre><code class="python">p.recv()[0:6]        #截取1-5个字符串
+
+p.recv()[2:6]        #截取2-5个字符串
+
+p.recv()[:]        #截取完整字符串
+
+p.recv()[2:]        #从第二个索引开始截取
+</code></pre>
+<p>​        </p>
+<h3 id="字符串处理">字符串处理<a class="post-anchor" href="#字符串处理"></a></h3><p>​        一般来说我们接收到的数据是字符串的字节流，然后利用pwntools的unpack  module来转换为int型。并且</p>
+<p>​        所以一般来说这样的payload是不会出问题的。</p>
+<pre><code class="python">canary = u64(p.recv()[41:49])
+</code></pre>
+<p>​        </p>
+<p><a href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-12%20%E4%B8%8A%E5%8D%8811.04.36.png" data-caption="截屏2022-03-12 上午11.04.36" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-12%20%E4%B8%8A%E5%8D%8811.04.36.png" alt="截屏2022-03-12 上午11.04.36"></a></p>
+<p>​        所以当接收到类似以下的报错：</p>
+<p><a href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-12%20%E4%B8%8A%E5%8D%8811.07.11.png" data-caption="截屏2022-03-12 上午11.07.11" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-12%20%E4%B8%8A%E5%8D%8811.07.11.png" alt="截屏2022-03-12 上午11.07.11"></a></p>
+<p>​        </p>
+<p>​        很大概率并不是数据类型转换的问题，而是本身接收的数据存在问题，比如说接收的数据范围错了，或者根本就没有有效的数据。这个时候关注的重点应该是payload的逻辑本身而不是语法问题。</p>
+<p>​        </p>
+</body></html>]]></content>
+      <tags>
+        <tag>mess</tag>
       </tags>
   </entry>
 </search>

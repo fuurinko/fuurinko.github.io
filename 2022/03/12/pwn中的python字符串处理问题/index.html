@@ -16,7 +16,7 @@
     <meta name="description" content="" />
     
     <title>
-      Sandboxing - Rin
+      pwn中的python字符串处理问题 - Rin
     </title>
     <link rel="manifest" href="/manifest.json" />
     <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon" />
@@ -29,7 +29,7 @@
     
     <div id="post-toc" class="animated hiddenToc hide">
       <span class="title">Toc</span>
-      <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#Level1"><span class="toc-text">Level1</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Level2"><span class="toc-text">Level2</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Level3"><span class="toc-text">Level3</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%88%AA%E5%8F%96"><span class="toc-text">字符串截取</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%A4%84%E7%90%86"><span class="toc-text">字符串处理</span></a></li></ol>
     </div>
     
     <div id="fixed-menu-wrap">
@@ -143,11 +143,11 @@
         <article class="post-entry">
     <div class="header">
       
-      <div class="title">Sandboxing</div>
+      <div class="title">pwn中的python字符串处理问题</div>
       <div class="meta">
         <span class="item">
           <span class="iconfont icon-time-circle"></span>
-          <span>2022/02/28</span>
+          <span>2022/03/12</span>
         </span>
 
         
@@ -160,7 +160,7 @@
             <span>
                 
                   
-                    <a href="/tags/pwncollege">pwncollege</a>
+                    <a href="/tags/mess">mess</a>
                   
                 
             </span>
@@ -170,52 +170,37 @@
       <div>
       </div>
     </div>
-    <html><head></head><body><h4 id="Level1">Level1<a class="post-anchor" href="#Level1"></a></h4><p>​        首先考察<code>chroot</code></p>
-<p>​        因为程序在将根目录设置为<code>/jail</code>的时候并没有切换当前工作目录为<code>/jail</code>，所以我们实际上还是在<code>/</code>目录，因此可以直接通过<code>argv[1]</code>    读取flag。</p>
-<p>​        执行脚本的时候需要添加<code>cwd</code>参数，使其工作目录为<code>/</code></p>
-<h4 id="Level2">Level2<a class="post-anchor" href="#Level2"></a></h4><pre><code class="python">shellcode = asm(shellcraft.readfile('flag',1))
-p = process(["/challenge/babyjail_level2", "/"],cwd='/')
-p.send(shellcode)
+    <html><head></head><body><p>​        最近在pwncollege做题的时候常常遇到接收的字符串处理不当的问题，故总结整理一下。</p>
+<h3 id="字符串截取">字符串截取<a class="post-anchor" href="#字符串截取"></a></h3><pre><code class="python">p.recv()[0:6]        #截取1-5个字符串
+
+p.recv()[2:6]        #截取2-5个字符串
+
+p.recv()[:]        #截取完整字符串
+
+p.recv()[2:]        #从第二个索引开始截取
 </code></pre>
-<h4 id="Level3">Level3<a class="post-anchor" href="#Level3"></a></h4><p>​            关键源码：</p>
-<pre><code class="c"> assert(argc &gt; 1);
-
-    puts("Checking to make sure you're not trying to open the flag.\n");
-    assert(strstr(argv[1], "flag") == NULL);
-
-    int fd = open(argv[1], O_RDONLY|O_NOFOLLOW);
-    if (fd &lt; 0)
-        printf("Failed to open the file located at `%s`.\n", argv[1]);
-    else
-        printf("Successfully opened the file located at `%s`.\n", argv[1]);
-
-    char jail_path[] = "/tmp/jail-XXXXXX";
-    assert(mkdtemp(jail_path) != NULL);
-
-    printf("Creating a jail at `%s`.\n", jail_path);
-
-    assert(chroot(jail_path) == 0);
-
-    puts("Moving the current working directory into the jail.\n");
-    assert(chdir("/") == 0);
-
-    int fffd = open("/flag", O_WRONLY | O_CREAT);
-    write(fffd, "FLAG{FAKE}", 10);
-    close(fffd);
-
+<p>​        </p>
+<h3 id="字符串处理">字符串处理<a class="post-anchor" href="#字符串处理"></a></h3><p>​        一般来说我们接收到的数据是字符串的字节流，然后利用pwntools的unpack  module来转换为int型。并且</p>
+<p>​        所以一般来说这样的payload是不会出问题的。</p>
+<pre><code class="python">canary = u64(p.recv()[41:49])
 </code></pre>
+<p>​        </p>
+<p><a target="_blank" rel="noopener" href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-12%20%E4%B8%8A%E5%8D%8811.04.36.png" data-caption="截屏2022-03-12 上午11.04.36" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-12%20%E4%B8%8A%E5%8D%8811.04.36.png" alt="截屏2022-03-12 上午11.04.36"></a></p>
+<p>​        所以当接收到类似以下的报错：</p>
+<p><a target="_blank" rel="noopener" href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-12%20%E4%B8%8A%E5%8D%8811.07.11.png" data-caption="截屏2022-03-12 上午11.07.11" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-12%20%E4%B8%8A%E5%8D%8811.07.11.png" alt="截屏2022-03-12 上午11.07.11"></a></p>
+<p>​        </p>
+<p>​        很大概率并不是数据类型转换的问题，而是本身接收的数据存在问题，比如说接收的数据范围错了，或者根本就没有有效的数据。这个时候关注的重点应该是payload的逻辑本身而不是语法问题。</p>
+<p>​        </p>
 </body></html>
 
   
   <div class="post-guide">
     <div class="item left">
         
-          <a href="../../../03/03/pwncollege_ProgramMisuse/">ProgramMisuse</a>
-        
     </div>
     <div class="item right">
         
-          <a href="../../15/ReverseEngineering/">ReverseEngineering</a>
+          <a href="../../10/ROP/">ROP</a>
         
     </div>
   </div>
