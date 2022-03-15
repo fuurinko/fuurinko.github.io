@@ -29,7 +29,7 @@
     
     <div id="post-toc" class="animated hiddenToc hide">
       <span class="title">Toc</span>
-      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#0%EF%BC%89"><span class="toc-text">0）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1%EF%BC%89%E9%97%AE%E9%A2%98"><span class="toc-text">1）问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3%EF%BC%89%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88%EF%BC%9F"><span class="toc-text">3）解决方案？</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1"><span class="toc-text">1</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2"><span class="toc-text">2</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3"><span class="toc-text">3</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4"><span class="toc-text">4</span></a></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#0%EF%BC%89"><span class="toc-text">0）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1%EF%BC%89%E9%97%AE%E9%A2%98"><span class="toc-text">1）问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3%EF%BC%89%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88%EF%BC%9F"><span class="toc-text">3）解决方案？</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1"><span class="toc-text">1</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2"><span class="toc-text">2</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3"><span class="toc-text">3</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4"><span class="toc-text">4</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5"><span class="toc-text">5</span></a></li></ol></li></ol>
     </div>
     
     <div id="fixed-menu-wrap">
@@ -185,8 +185,14 @@
 <h4 id="2">2<a class="post-anchor" href="#2"></a></h4><p>​        挂载文件不同步，网上所有方案亲测无效。目前的解决方案是，不解决。用vim，或者出现问题就重启。</p>
 <p>​        2021-11-14更新：这个问题突然就没有了（</p>
 <h4 id="3">3<a class="post-anchor" href="#3"></a></h4><p>​        这个可以整个一件push脚本</p>
+<p>ps：可以直接<code>docker commit -p</code> ，也算生成了快照，并且耗时比较短，就是有一点点没有安全感。</p>
 <h4 id="4">4<a class="post-anchor" href="#4"></a></h4><p>​        直接写shell脚本，然后放在默认路径下。</p>
 <p><a target="_blank" rel="noopener" href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-11%20%E4%B8%8B%E5%8D%889.09.46.png" data-caption="截屏2021-11-11 下午9.09.46" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-11%20%E4%B8%8B%E5%8D%889.09.46.png" alt="截屏2021-11-11 下午9.09.46"></a></p>
+<h4 id="5">5<a class="post-anchor" href="#5"></a></h4><pre><code class="bash">cp /glibc/2.27/64/lib/ld-2.27.so /tmp/ld-2.27.so
+patchelf --set-interpreter /tmp/ld-2.27.so ./test
+LD_PRELOAD=./libc.so.6 ./test
+</code></pre>
+<p>好东西</p>
 </body></html>
 
   
