@@ -4221,7 +4221,7 @@ p.interactive()
   </entry>
   <entry>
     <title>DynELF学习</title>
-    <url>/2021/08/13/DynELF/</url>
+    <url>/2022/03/16/DynELF/</url>
     <content><![CDATA[<html><head></head><body><h3 id="0">0<a class="post-anchor" href="#0"></a></h3><p>​        我发现我居然还不太会用这个东西，可以用不上，但是不能不会。</p>
 <h4 id="1">1<a class="post-anchor" href="#1"></a></h4><p>​        DynELF的意义在于当我们无法找到目标libc中具体的符号偏移时，可以利用它来搜索内存中的函数地址,而不需要再通过libc来获取。</p>
 <h5 id="如何使用？">如何使用？<a class="post-anchor" href="#如何使用？"></a></h5><pre><code class="python">p = process('./pwnme')
