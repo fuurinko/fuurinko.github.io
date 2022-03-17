@@ -4219,4 +4219,68 @@ p.interactive()
         <tag>week</tag>
       </tags>
   </entry>
+  <entry>
+    <title>DynELF学习</title>
+    <url>/2021/08/13/DynELF/</url>
+    <content><![CDATA[<html><head></head><body><h3 id="0">0<a class="post-anchor" href="#0"></a></h3><p>​        我发现我居然还不太会用这个东西，可以用不上，但是不能不会。</p>
+<h4 id="1">1<a class="post-anchor" href="#1"></a></h4><p>​        DynELF的意义在于当我们无法找到目标libc中具体的符号偏移时，可以利用它来搜索内存中的函数地址,而不需要再通过libc来获取。</p>
+<h5 id="如何使用？">如何使用？<a class="post-anchor" href="#如何使用？"></a></h5><pre><code class="python">p = process('./pwnme')
+
+# Declare a function that takes a single address, and
+# leaks at least one byte at that address.
+def leak(address):
+    data = p.read(address, 4)
+    log.debug("%#x =&gt; %s" % (address, (data or '').encode('hex')))
+    return data
+
+# For the sake of this example, let's say that we
+# have any of these pointers.  One is a pointer into
+# the target binary, the other two are pointers into libc
+main   = 0xfeedf4ce
+libc   = 0xdeadb000
+system = 0xdeadbeef
+
+# With our leaker, and a pointer into our target binary,
+# we can resolve the address of anything.
+#
+# We do not actually need to have a copy of the target
+# binary for this to work.
+d = DynELF(leak, main)
+assert d.lookup(None,     'libc') == libc
+assert d.lookup('system', 'libc') == system
+
+# However, if we *do* have a copy of the target binary,
+# we can speed up some of the steps.
+d = DynELF(leak, main, elf=ELF('./pwnme'))
+assert d.lookup(None,     'libc') == libc
+assert d.lookup('system', 'libc') == system
+
+# Alternately, we can resolve symbols inside another library,
+# given a pointer into it.
+d = DynELF(leak, libc + 0x1234)
+assert d.lookup('system')      == system
+</code></pre>
+<p>​            </p>
+<p>​        大致描述一下，就是先用<code>leak()</code>函数按照原本ret2xx的方法用stdout函数来打印addr的数据，然后</p>
+<pre><code class="python">d = DynELF(leak, main)
+system_addr = d.lookup('system', 'libc')
+</code></pre>
+<p>​        来找到system的地址。</p>
+<p>​        </p>
+<h5 id="原理？">原理？<a class="post-anchor" href="#原理？"></a></h5><p>​        这个module其实非常好用，指不知道原理也能用。</p>
+<p>​        DynELF泄露地址的过程原理通常分为两步，首先通过暴力对比找到libc的内存加载基址。</p>
+<p>​        在找libc之前还需要找到elf文件在内存中的加载基址。</p>
+<h6 id="寻找elf文件加载基址">寻找elf文件加载基址<a class="post-anchor" href="#寻找elf文件加载基址"></a></h6><p>​        基地址内存页起始的字符串为<code>\0x7fELF</code>，所以可以指定内存中的地址，然后对地址进行页对齐，再与当前内存页起始字符串进行对比，如果不符合则不断与更低地址内存页的起始字符串对比，直到找到。</p>
+<h6 id="寻找glibc加载基址">寻找glibc加载基址<a class="post-anchor" href="#寻找glibc加载基址"></a></h6><p>​        efl在内存中有一个叫做<code>link_map</code>的双向链表，在学习ret2dl的时候遇见过，大致是指向elf的一些表项相关数据结构的链表。</p>
+<p>​        对于如何找到<code>link_map</code>    ,一般来说有两种方式，在full relro以外的elf中，可以在<code>Dynamic</code>段的<code>.got.plt</code>节中找到，对于启用full relro的elf，可以在<code>Dynamic</code>段的<code>DT_DEBUG</code>中找到。</p>
+<p>​        <code>Dynamic</code>段的地址则需要通过ELF文件的段表得到，由于我们已经获得了ELF的内存基地址，所以也能得到段表的地址。</p>
+<h6 id="在libc中寻找hash表，动态符号表与字符串表基地址">在libc中寻找hash表，动态符号表与字符串表基地址<a class="post-anchor" href="#在libc中寻找hash表，动态符号表与字符串表基地址"></a></h6><p>​        通过上面两步我们已经获得了libc的基地址，因此很容易得到所有与函数相关的hash表，动态符号表以及字符串表的基地址。最后，可以通过hash表得到system的地址。</p>
+<p>​        </p>
+<h4 id="参考">参考<a class="post-anchor" href="#参考"></a></h4><p>​    <a href="https://www.freebuf.com/articles/system/193646.html">Pwntools之DynELF原理探究</a></p>
+<p>​        </p>
+</body></html>]]></content>
+      <tags>
+        <tag>mess</tag>
+      </tags>
+  </entry>
 </search>
