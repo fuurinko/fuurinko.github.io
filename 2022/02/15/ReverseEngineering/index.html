@@ -33,8 +33,6 @@
     <link rel="alternate" href="/atom.xml" title="Rin" type="application/atom+xml">
     <link rel="stylesheet" href="/css/all.css" media="screen" type="text/css">
     
-    <link rel="stylesheet" href="/highlightjs/vs.css" type="text/css">
-    
 
     <!--[if IE 8]>
     <link rel="stylesheet" type="text/css" href="/css/ie8.css" />
@@ -56,7 +54,7 @@
   
 
   <style>.col-md-8.col-md-offset-2.opening-statement img{display:none;}</style>
-</head>
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
 
 <!--
 <body class="post-template">
@@ -294,7 +292,16 @@ for i in range(15):
     </div>
 </section>
 
+<!-- Highlight.js -->
 
+<link rel="stylesheet"
+href="//highlightjs.org/static/demo/styles/atom-one-light.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js">
+</script>
+<script>
+hljs.initHighlightingOnLoad();
+
+</script>
       
 <!-- ============================ Footer =========================== -->
 
