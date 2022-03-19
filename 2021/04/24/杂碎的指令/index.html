@@ -29,7 +29,7 @@
     
     <div id="post-toc" class="animated hiddenToc hide">
       <span class="title">Toc</span>
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9D%82%E7%A2%8E%E7%9A%84%E7%9F%A5%E8%AF%86%E7%82%B9"><span class="toc-text">杂碎的知识点</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1%EF%BC%89%E8%B0%83%E8%AF%95%E7%9B%B8%E5%85%B3"><span class="toc-text">1）调试相关</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1%EF%BC%89gdb"><span class="toc-text">1）gdb</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2%EF%BC%89%E5%86%85%E5%AD%98%E6%96%AD%E7%82%B9%EF%BC%9F%E7%A1%AC%E4%BB%B6%E6%96%AD%E7%82%B9%EF%BC%9F"><span class="toc-text">2）内存断点？硬件断点？</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#%E5%8E%9F%E7%90%86"><span class="toc-text">原理</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E8%AE%BE%E7%BD%AE%E6%96%B9%E5%BC%8F"><span class="toc-text">设置方式</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%8A%A0%E8%BD%BD%E8%B0%83%E8%AF%95%E7%AC%A6%E5%8F%B7"><span class="toc-text">加载调试符号</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2%EF%BC%89%E5%87%BD%E6%95%B0%E8%B0%83%E7%94%A8%E6%A0%88%E7%9B%B8%E5%85%B3"><span class="toc-text">2）函数调用栈相关</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3%EF%BC%89%E7%BC%96%E8%AF%91%E6%8C%87%E4%BB%A4"><span class="toc-text">3）编译指令</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1%EF%BC%89gcc%E7%BC%96%E8%AF%91"><span class="toc-text">1）gcc编译</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4%EF%BC%89linux%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8%E5%8F%B7"><span class="toc-text">4）linux系统调用号</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1%EF%BC%8932bit"><span class="toc-text">1）32bit</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2%EF%BC%8964bit"><span class="toc-text">2）64bit</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5%EF%BC%89tools"><span class="toc-text">5）tools</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#1%EF%BC%89seccomp-tools"><span class="toc-text">1）seccomp-tools</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#2%EF%BC%89scyllahide"><span class="toc-text">2）scyllahide</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#3%EF%BC%89ollydump"><span class="toc-text">3）ollydump</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#4%EF%BC%89%E6%96%87%E4%BB%B6dump%E5%86%85%E5%AD%98%E4%BF%A1%E6%81%AF%E3%80%82"><span class="toc-text">4）文件dump内存信息。</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#5%EF%BC%89capstone"><span class="toc-text">5）capstone</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#6%EF%BC%89qemu-stastic-x64"><span class="toc-text">6）qemu_stastic_x64</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#7%EF%BC%89angr"><span class="toc-text">7）angr</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6%EF%BC%89pwntools%E7%BB%84%E4%BB%B6"><span class="toc-text">6）pwntools组件</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1%EF%BC%89pwntools%E6%8C%87%E5%AE%9Aglibc%E7%89%88%E6%9C%AC"><span class="toc-text">1）pwntools指定glibc版本</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E4%B8%8D%E5%90%8C%E7%89%88%E6%9C%ACglibc"><span class="toc-text">获取不同版本glibc</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2%EF%BC%89%E5%9F%BA%E6%9C%AC%E6%A8%A1%E5%9D%97"><span class="toc-text">2）基本模块</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#1%EF%BC%89asm-shellcraft"><span class="toc-text">1）asm&#x2F;shellcraft</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#2%EF%BC%89dynelf"><span class="toc-text">2）dynelf</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#3%EF%BC%89gdb"><span class="toc-text">3）gdb</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#5%EF%BC%89memleak"><span class="toc-text">5）memleak</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#5%EF%BC%89rop"><span class="toc-text">5）rop</span></a></li></ol></li></ol></li></ol></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9D%82%E7%A2%8E%E7%9A%84%E7%9F%A5%E8%AF%86%E7%82%B9"><span class="toc-text">杂碎的知识点</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1%EF%BC%89%E8%B0%83%E8%AF%95%E7%9B%B8%E5%85%B3"><span class="toc-text">1）调试相关</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1%EF%BC%89gdb"><span class="toc-text">1）gdb</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2%EF%BC%89%E5%86%85%E5%AD%98%E6%96%AD%E7%82%B9%EF%BC%9F%E7%A1%AC%E4%BB%B6%E6%96%AD%E7%82%B9%EF%BC%9F"><span class="toc-text">2）内存断点？硬件断点？</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#%E5%8E%9F%E7%90%86"><span class="toc-text">原理</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E8%AE%BE%E7%BD%AE%E6%96%B9%E5%BC%8F"><span class="toc-text">设置方式</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%8A%A0%E8%BD%BD%E8%B0%83%E8%AF%95%E7%AC%A6%E5%8F%B7"><span class="toc-text">加载调试符号</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2%EF%BC%89%E6%B1%87%E7%BC%96%E6%8C%87%E4%BB%A4"><span class="toc-text">2）汇编指令</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%B7%B3%E8%BD%AC%E6%8C%87%E4%BB%A4"><span class="toc-text">跳转指令</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E8%B0%83%E7%94%A8%E6%A0%88"><span class="toc-text">函数调用栈</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3%EF%BC%89%E7%BC%96%E8%AF%91%E6%8C%87%E4%BB%A4"><span class="toc-text">3）编译指令</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1%EF%BC%89gcc%E7%BC%96%E8%AF%91"><span class="toc-text">1）gcc编译</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4%EF%BC%89linux%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8%E5%8F%B7"><span class="toc-text">4）linux系统调用号</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1%EF%BC%8932bit"><span class="toc-text">1）32bit</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2%EF%BC%8964bit"><span class="toc-text">2）64bit</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5%EF%BC%89tools"><span class="toc-text">5）tools</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#1%EF%BC%89seccomp-tools"><span class="toc-text">1）seccomp-tools</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#2%EF%BC%89scyllahide"><span class="toc-text">2）scyllahide</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#3%EF%BC%89ollydump"><span class="toc-text">3）ollydump</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#4%EF%BC%89%E6%96%87%E4%BB%B6dump%E5%86%85%E5%AD%98%E4%BF%A1%E6%81%AF%E3%80%82"><span class="toc-text">4）文件dump内存信息。</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#5%EF%BC%89capstone"><span class="toc-text">5）capstone</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#6%EF%BC%89qemu-stastic-x64"><span class="toc-text">6）qemu_stastic_x64</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#7%EF%BC%89angr"><span class="toc-text">7）angr</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6%EF%BC%89pwntools%E7%BB%84%E4%BB%B6"><span class="toc-text">6）pwntools组件</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1%EF%BC%89pwntools%E6%8C%87%E5%AE%9Aglibc%E7%89%88%E6%9C%AC"><span class="toc-text">1）pwntools指定glibc版本</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E4%B8%8D%E5%90%8C%E7%89%88%E6%9C%ACglibc"><span class="toc-text">获取不同版本glibc</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2%EF%BC%89%E5%9F%BA%E6%9C%AC%E6%A8%A1%E5%9D%97"><span class="toc-text">2）基本模块</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#1%EF%BC%89asm-shellcraft"><span class="toc-text">1）asm&#x2F;shellcraft</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#2%EF%BC%89dynelf"><span class="toc-text">2）dynelf</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#3%EF%BC%89gdb"><span class="toc-text">3）gdb</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#5%EF%BC%89memleak"><span class="toc-text">5）memleak</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#5%EF%BC%89rop"><span class="toc-text">5）rop</span></a></li></ol></li></ol></li></ol></li></ol></li></ol>
     </div>
     
     <div id="fixed-menu-wrap">
@@ -186,7 +186,52 @@
 <p>直接为ELF文件添加符号表链接</p>
 <pre><code class="bash">objcopy --add-gnu-debuglink=xx.symbol ELF_RELEASE
 </code></pre>
-<h3 id="2）函数调用栈相关">2）函数调用栈相关<a class="post-anchor" href="#2）函数调用栈相关"></a></h3><p>Leave等价于：</p>
+<h3 id="2）汇编指令">2）汇编指令<a class="post-anchor" href="#2）汇编指令"></a></h3><h4 id="跳转指令">跳转指令<a class="post-anchor" href="#跳转指令"></a></h4><pre><code class="asm">
+JE   ;等于则跳转
+JNE  ;不等于则跳转
+
+JZ   ;为 0 则跳转
+JNZ  ;不为 0 则跳转
+
+JS   ;为负则跳转
+JNS  ;不为负则跳转
+
+JC   ;进位则跳转
+JNC  ;不进位则跳转
+
+JO   ;溢出则跳转
+JNO  ;不溢出则跳转
+
+JA   ;无符号大于则跳转
+JNA  ;无符号不大于则跳转
+JAE  ;无符号大于等于则跳转
+JNAE ;无符号不大于等于则跳转
+
+JG   ;有符号大于则跳转
+JNG  ;有符号不大于则跳转
+JGE  ;有符号大于等于则跳转
+JNGE ;有符号不大于等于则跳转
+
+JB   ;无符号小于则跳转
+JNB  ;无符号不小于则跳转
+JBE  ;无符号小于等于则跳转
+JNBE ;无符号不小于等于则跳转
+
+ps:
+；rax = 2
+cmp rax,1; =&gt;jump
+
+JL   ;有符号小于则跳转
+JNL  ;有符号不小于则跳转
+JLE  ;有符号小于等于则跳转
+JNLE ;有符号不小于等于则跳转
+
+JP   ;奇偶位置位则跳转
+JNP  ;奇偶位清除则跳转
+JPE  ;奇偶位相等则跳转
+JPO  ;奇偶位不等则跳转
+</code></pre>
+<h4 id="函数调用栈">函数调用栈<a class="post-anchor" href="#函数调用栈"></a></h4><p>Leave等价于：</p>
 <pre><code class="asm">        mov esp ebp
         pop ebp
 </code></pre>

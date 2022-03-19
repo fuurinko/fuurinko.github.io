@@ -278,7 +278,7 @@ libc_hidden_ver (_IO_new_file_sync, _IO_file_sync)
 <p><a target="_blank" rel="noopener" href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-26%20%E4%B8%8B%E5%8D%8810.31.45.png" data-caption="截屏2021-10-26 下午10.31.45" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-26%20%E4%B8%8B%E5%8D%8810.31.45.png" alt="截屏2021-10-26 下午10.31.45"></a></p>
 <p>flag其实就已经出来了，但是为了学习，我们还需要将它打印出来。</p>
 <p>这时候就需要计算这个flag字符串与栈顶的偏移。</p>
-<p>![截屏2021-10-26 下午10.35.39](/Users/rin/Library/Application Support/typora-user-images/截屏2021-10-26 下午10.35.39.png)</p>
+<p><a target="_blank" rel="noopener" href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-26%20%E4%B8%8B%E5%8D%8810.35.39.png" data-caption="截屏2021-10-26 下午10.35.39" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-26%20%E4%B8%8B%E5%8D%8810.35.39.png" alt="截屏2021-10-26 下午10.35.39"></a></p>
 <p>显然flag在栈顶第四个参数的位置，除去第一行的返回地址，也就是第三个。但是由于64位程序，前6个参数是由寄存器传参，所以需要+6，也就是第九个参数。</p>
 <p>利用%n$s打印参数，即可获得flag。</p>
 <h2 id="4-例2">4)例2<a class="post-anchor" href="#4-例2"></a></h2><p>经过刚才的开胃菜，我们总算进入了正题。</p>

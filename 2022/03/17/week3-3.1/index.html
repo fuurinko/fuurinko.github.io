@@ -29,7 +29,7 @@
     
     <div id="post-toc" class="animated hiddenToc hide">
       <span class="title">Toc</span>
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#xdctf2015-pwn200"><span class="toc-text">xdctf2015_pwn200</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#xdctf2015-pwn200"><span class="toc-text">xdctf2015_pwn200</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#mrctf2020-shellcode-revenge"><span class="toc-text">mrctf2020_shellcode_revenge</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#overview"><span class="toc-text">overview</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%80%86%E5%90%91"><span class="toc-text">逆向</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%A9%E7%94%A8"><span class="toc-text">利用</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#echo"><span class="toc-text">echo</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%80%86%E5%90%91-1"><span class="toc-text">逆向</span></a></li></ol></li></ol></li></ol>
     </div>
     
     <div id="fixed-menu-wrap">
@@ -162,7 +162,8 @@
       <div>
       </div>
     </div>
-    <html><head></head><body><p>​    </p>
+    <html><head></head><body><p><a target="_blank" rel="noopener" href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-19%20%E4%B8%8B%E5%8D%885.35.57.png" data-caption="截屏2022-03-19 下午5.35.57" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-19%20%E4%B8%8B%E5%8D%885.35.57.png" alt="截屏2022-03-19 下午5.35.57"></a></p>
+<p>​    </p>
 <h2 id="xdctf2015-pwn200">xdctf2015_pwn200<a class="post-anchor" href="#xdctf2015-pwn200"></a></h2><p>​    </p>
 <p>​        练习一下DynELF。</p>
 <p>​        看起来像ret2csu+DynELF。</p>
@@ -188,6 +189,21 @@ log.info("system address: 0x%x" % system_addr)
 <p>​        </p>
 <p>​        一般来说这个模块的利用就是通过stdout的函数来泄露某个地址，然后再暴力寻找，相对普通的ret2libc其实更为方便快捷，我不知道为什么感觉用的人很少。</p>
 <p>ps：关于整体布栈还是有一些小的疑问。</p>
+<h3 id="mrctf2020-shellcode-revenge">mrctf2020_shellcode_revenge<a class="post-anchor" href="#mrctf2020-shellcode-revenge"></a></h3><h4 id="overview">overview<a class="post-anchor" href="#overview"></a></h4><p><a target="_blank" rel="noopener" href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-19%20%E4%B8%8B%E5%8D%884.33.15.png" data-caption="截屏2022-03-19 下午4.33.15" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-19%20%E4%B8%8B%E5%8D%884.33.15.png" alt="截屏2022-03-19 下午4.33.15"></a></p>
+<p>看起来像ret2shellcode。</p>
+<p><a target="_blank" rel="noopener" href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-19%20%E4%B8%8B%E5%8D%884.36.32.png" data-caption="截屏2022-03-19 下午4.36.32" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-19%20%E4%B8%8B%E5%8D%884.36.32.png" alt="截屏2022-03-19 下午4.36.32"></a></p>
+<h4 id="逆向">逆向<a class="post-anchor" href="#逆向"></a></h4><p>​        不知道为什么ida不能一键f5，不过也懒得修了，程序逻辑也比较简单，就是一个write和read。然后程序会对输入的字符进行ascii码的大小的比较，<a target="_blank" rel="noopener" href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-19%20%E4%B8%8B%E5%8D%885.00.43.png" data-caption="截屏2022-03-19 下午5.00.43" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-19%20%E4%B8%8B%E5%8D%885.00.43.png" alt="截屏2022-03-19 下午5.00.43"></a></p>
+<p>​        <a target="_blank" rel="noopener" href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-19%20%E4%B8%8B%E5%8D%884.52.21.png" data-caption="截屏2022-03-19 下午4.52.21" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-19%20%E4%B8%8B%E5%8D%884.52.21.png" alt="截屏2022-03-19 下午4.52.21"></a></p>
+<p>​        分析一下这个流程图，我们的目的是执行<code>loc_1236</code>，一共有三个箭头指向它，归纳以后分别是<code>(0x60,0x7A)</code>,<code>(0x2f,0x5A)</code>,ascii在这些范围内的字符会被读入buf，然后<code>call rax</code>，也就是执行了我们输入的shellcode。</p>
+<h4 id="利用">利用<a class="post-anchor" href="#利用"></a></h4><p>​        由于题目本身的设置，我们并不需要像常规那样先泄露什么栈上的地址，只需要绕过题目的检测。虽然但是，搞不懂这个字符ackii码的限制意义何在。去摸了一下ackii表，发现这个范围内的字符都是数字或者字母。</p>
+<p>​        所以把shellcode转换成这些范围内的字符，然后直接传输就行。</p>
+<h3 id="echo">echo<a class="post-anchor" href="#echo"></a></h3><p>​        两个题一起做（</p>
+<p>​        <a target="_blank" rel="noopener" href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-19%20%E4%B8%8B%E5%8D%885.35.57.png" data-caption="截屏2022-03-19 下午5.35.57" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-19%20%E4%B8%8B%E5%8D%885.35.57.png" alt="截屏2022-03-19 下午5.35.57"></a></p>
+<p>​        看起来非常像格式化字符串（</p>
+<p><a target="_blank" rel="noopener" href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-19%20%E4%B8%8B%E5%8D%885.37.33.png" data-caption="截屏2022-03-19 下午5.37.33" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-19%20%E4%B8%8B%E5%8D%885.37.33.png" alt="截屏2022-03-19 下午5.37.33"></a></p>
+<h4 id="逆向-1">逆向<a class="post-anchor" href="#逆向-1"></a></h4><p>​        没啥好逆的，纯纯格式化字符串。</p>
+<p>​        虽然但是，太久没有做过格式化字符串了，利用方式都给整忘了。</p>
+<p>​        </p>
 </body></html>
 
   
