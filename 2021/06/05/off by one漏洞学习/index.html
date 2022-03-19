@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+<!--[if lte IE 8 ]>
+<html class="ie" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US">
+<![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!-->
+<!--
+***************  *      *     *
+      8          *    *       *
+      8          *  *         *
+      8          **           *
+      8          *  *         *
+      8          *    *       *
+      8          *      *     *
+      8          *        *   ***********    -----Theme By Kieran(http://go.kieran.top)
+-->
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
+<!--<![endif]-->
+
+<head>
+  <title>off by one漏洞学习 | Rin</title>
+  <!-- Meta data -->
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content="Rin">
+    <meta name="author" content="Rin777">
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+
+    <!-- Favicon, (keep icon in root folder) -->
+    <link rel="Shortcut Icon" href="/img/favicon.ico" type="image/ico">
+
+    <link rel="alternate" href="/atom.xml" title="Rin" type="application/atom+xml">
+    <link rel="stylesheet" href="/css/all.css" media="screen" type="text/css">
+    
+
+    <!--[if IE 8]>
+    <link rel="stylesheet" type="text/css" href="/css/ie8.css" />
+    <![endif]-->
+
+    <!-- jQuery | Load our jQuery, with an alternative source fallback to a local version if request is unavailable -->
+    <script src="/js/jquery-1.11.1.min.js"></script>
+    <script>window.jQuery || document.write('<script src="js/jquery-1.11.1.min.js"><\/script>')</script>
+
+    <!-- Load these in the <head> for quicker IE8+ load times -->
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="/js/html5shiv.min.js"></script>
+    <script src="/js/respond.min.js"></script>
+    <![endif]-->
+
+  
+  
+  
+
+  <style>.col-md-8.col-md-offset-2.opening-statement img{display:none;}</style>
+<link rel="stylesheet" href="/css/prism.css" type="text/css"></head>
+
+<!--
+<body class="post-template">
+-->
+<body id="index" class="lightnav animsition">
+
+      <!-- ============================ Off-canvas navigation =========================== -->
+
+    <div class="sb-slidebar sb-right sb-style-overlay sb-momentum-scrolling">
+        <div class="sb-close" aria-label="Close Menu" aria-hidden="true">
+            <img src="/img/close.png" alt="Close"/>
+        </div>
+        <!-- Lists in Slidebars -->
+        <ul class="sb-menu">
+            <li><a href="/" class="animsition-link" title="Home">Home</a></li>
+            <li><a href="/archives" class="animsition-link" title="archive">archives</a></li>
+            <!-- Dropdown Menu -->
+			 
+            
+        	<li>
+        		<a class="sb-toggle-submenu">Categories<span class="sb-caret"></span></a>
+            	<ul class="sb-submenu">
+				  	
+				    <li><a href="/categories/CSAPP-LAB/" class="animsition-link">CSAPP LAB<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/HEAP-Fastbin-Attack/" class="animsition-link">HEAP - Fastbin Attack<small>(7)</small></a></li>
+				    
+				    <li><a href="/categories/HEAP-Off-By-One/" class="animsition-link">HEAP - Off By One<small>(2)</small></a></li>
+				    
+				    <li><a href="/categories/HEAP-Tcache/" class="animsition-link">HEAP - Tcache<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/HEAP-UNLINK/" class="animsition-link">HEAP - UNLINK<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/HEAP-Unsortedbin/" class="animsition-link">HEAP - Unsortedbin<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/MESS/" class="animsition-link">MESS<small>(20)</small></a></li>
+				    
+				    <li><a href="/categories/OTHER-IO-FILE/" class="animsition-link">OTHER - IO FILE<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/PWN-COLLEGE/" class="animsition-link">PWN.COLLEGE<small>(8)</small></a></li>
+				    
+				    <li><a href="/categories/Pwn-college/" class="animsition-link">Pwn.college<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/STACK-DynELF/" class="animsition-link">STACK - DynELF<small>(2)</small></a></li>
+				    
+				    <li><a href="/categories/STACK-Format/" class="animsition-link">STACK - Format<small>(3)</small></a></li>
+				    
+				    <li><a href="/categories/STACK-OTHERS/" class="animsition-link">STACK - OTHERS<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/STACK-ROP/" class="animsition-link">STACK - ROP<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/STACK-SROP/" class="animsition-link">STACK - SROP<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/STACK-Stack-Overflow/" class="animsition-link">STACK - Stack Overflow<small>(3)</small></a></li>
+				    
+				    <li><a href="/categories/STACK-ret2dlsolve/" class="animsition-link">STACK - ret2dlsolve<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/STACK-sandbox/" class="animsition-link">STACK - sandbox<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/深夜高速/" class="animsition-link">深夜高速<small>(1)</small></a></li>
+				    
+				</ul>
+        	</li>
+			
+            
+            <li>
+                <a class="sb-toggle-submenu">Links<span class="sb-caret"></span></a>
+                <ul class="sb-submenu">
+                    
+                    <li><a target="_blank" rel="noopener" href="http://www.2323bb.ltd" class="animsition-link">cc_sakura</a></li>
+                    
+                    <li><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_36995313" class="animsition-link">F@LLe0</a></li>
+                    
+                    <li><a target="_blank" rel="noopener" href="https://yyz9.cn" class="animsition-link">YYZ</a></li>
+                    
+                    <li><a target="_blank" rel="noopener" href="https://www.star123.top" class="animsition-link">star</a></li>
+                    
+                </ul>
+            </li>
+            
+        </ul>
+        <!-- Lists in Slidebars -->
+        <ul class="sb-menu secondary">
+            
+            <li><a href="javascript:;" class="popup-trigger" title="Search"><span class="search-icon"></span>Search</a></li>
+            
+            <li><a href="/about.html" class="animsition-link" title="about">About</a></li>
+            <li><a href="/atom.xml" class="animsition-link" title="rss">RSS</a></li>
+        </ul>
+    </div>
+    
+    <!-- ============================ END Off-canvas navigation =========================== -->
+
+    <!-- ============================ #sb-site Main Page Wrapper =========================== -->
+
+    <div id="sb-site">
+        <!-- #sb-site - All page content should be contained within this id, except the off-canvas navigation itself -->
+
+        <!-- ============================ Header & Logo bar =========================== -->
+
+        <div id="navigation" class="navbar navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="container">
+                    <!-- Nav logo -->
+                    <div class="logo">
+                        <a href="/" title="Logo" class="animsition-link">
+                         <img src="/img/logo.png" alt="Logo" width="35px;"/> 
+                        </a>
+                    </div>
+                    <!-- // Nav logo -->
+                    <!-- Info-bar -->
+                    <nav>
+                        <ul class="nav">
+                            <li><a href="/" class="animsition-link">Rin</a></li>
+                            <li class="nolink"><span>Always </span>Creative.</li>
+                            
+                            <li><a href="https://github.com/" title="Github" target="_blank"><i class="icon-github"></i></a></li>
+                            
+                            
+                            
+                            
+                            
+                            <li class="nolink"><span>Welcome!</span></li>
+                        </ul>
+                    </nav>
+                    <!--// Info-bar -->
+                </div>
+                <!-- // .container -->
+                <div class="learnmore sb-toggle-right">More</div>
+                <button type="button" class="navbar-toggle menu-icon sb-toggle-right" title="More">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar before"></span>
+                <span class="icon-bar main"></span>
+                <span class="icon-bar after"></span>
+                </button>
+            </div>
+            <!-- // .navbar-inner -->
+        </div>
+
+        <!-- ============================ Header & Logo bar =========================== -->
+
+
+      
+<section id="intro">
+    <div class="container">
+        <div class="row col-md-offset-2">
+            <div class="col-md-8">
+    			<span class="post-meta">
+      <time datetime="2021-06-04T16:38:55.000Z" itemprop="datePublished">
+          2021-06-05
+      </time>
+    
+    
+    | 
+    <a href='/tags/heap/'>heap</a>
+    
+    
+</span>
+                <h1>off by one漏洞学习</h1>
+            </div>
+        </div>
+        <div class="col-md-8 col-md-offset-2">
+      		<h3 id=""><a href="#" class="headerlink" title=""></a></h3><p> 学习编写一个堆内存管理程序。</p>
+<p>但是这道题其实是ctf-wiki上关于chunk-overlapping的题。。。</p>
+<p>先看源码。我以后学堆题必从看源码开始。。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">read_input</span><span class="params">(<span class="keyword">char</span> *buf,<span class="keyword">size_t</span> size)</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> ret ;</span><br><span class="line">  ret = read(<span class="number">0</span>,buf,size);</span><br><span class="line">  <span class="keyword">if</span>(ret &lt;=<span class="number">0</span>)&#123;</span><br><span class="line">      <span class="built_in">puts</span>(<span class="string">&quot;Error&quot;</span>);</span><br><span class="line">      _exit(<span class="number">-1</span>);</span><br><span class="line">    &#125;	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>众所周知基础的off by one出题的时候都是在输入或者字符比较的地方搞名堂，这里也不例外。</p>
+<p>好好的read不用，搞一个readinput制造刻意的漏洞（bushi）</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">heap</span> &#123;</span></span><br><span class="line">	<span class="keyword">size_t</span> size ;</span><br><span class="line">	<span class="keyword">char</span> *content ;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">heap</span> *<span class="title">heaparray</span>[10];</span></span><br></pre></td></tr></table></figure>
+
+<p>没什么好说的，定义一个管理堆块属性的结构体。以及定义堆指针结构。这里是一个11byte的数组。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">create_heap</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> i ;</span><br><span class="line">	<span class="keyword">char</span> buf[<span class="number">8</span>];</span><br><span class="line">	<span class="keyword">size_t</span> size = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span>(i = <span class="number">0</span> ; i &lt; <span class="number">10</span> ; i++)&#123;</span><br><span class="line">		<span class="keyword">if</span>(!heaparray[i])&#123;</span><br><span class="line">			heaparray[i] = (struct heap *)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(struct heap));</span><br><span class="line">			<span class="keyword">if</span>(!heaparray[i])&#123;</span><br><span class="line">				<span class="built_in">puts</span>(<span class="string">&quot;Allocate Error&quot;</span>);</span><br><span class="line">				<span class="built_in">exit</span>(<span class="number">1</span>);</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">&quot;Size of Heap : &quot;</span>);</span><br><span class="line">			read(<span class="number">0</span>,buf,<span class="number">8</span>);</span><br><span class="line">			size = atoi(buf);</span><br><span class="line">			heaparray[i]-&gt;content = (<span class="keyword">char</span> *)<span class="built_in">malloc</span>(size);</span><br><span class="line">			<span class="keyword">if</span>(!heaparray[i]-&gt;content)&#123;</span><br><span class="line">				<span class="built_in">puts</span>(<span class="string">&quot;Allocate Error&quot;</span>);</span><br><span class="line">				<span class="built_in">exit</span>(<span class="number">2</span>);</span><br><span class="line">			&#125;</span><br><span class="line">			heaparray[i]-&gt;size = size ;</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">&quot;Content of heap:&quot;</span>);</span><br><span class="line">			read_input(heaparray[i]-&gt;content,size);</span><br><span class="line">			<span class="built_in">puts</span>(<span class="string">&quot;SuccessFul&quot;</span>);</span><br><span class="line">			<span class="keyword">break</span> ;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>创建新堆。</p>
+<p>初始化定义一些缓冲区。</p>
+<p>关于这个</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(i = <span class="number">0</span> ; i &lt; <span class="number">10</span> ; i++)&#123;</span><br><span class="line">		<span class="keyword">if</span>(!heaparray[i])&#123;</span><br><span class="line">			heaparray[i] = (struct heap *)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(struct heap));</span><br><span class="line">			<span class="keyword">if</span>(!heaparray[i])&#123;</span><br><span class="line">				<span class="built_in">puts</span>(<span class="string">&quot;Allocate Error&quot;</span>);</span><br><span class="line">				<span class="built_in">exit</span>(<span class="number">1</span>);</span><br></pre></td></tr></table></figure>
+
+<p>之前一直不是很懂，但是好好看了一下逻辑其实也不难。</p>
+<p>heaparray就是一个数组，应该要储存相应数据的地址（指针），</p>
+<p>我们malloc的时候如果malloc成功的话这个数组会被赋值为被分配内存的地址，但是如果分配失败的话数组就还是数组本身，所以会有下一个if判断，如果还是本身便打印malloc失败。</p>
+<p>也就是说这应该是一个初始化的过程，我们需要将heap结构赋值。</p>
+<p>先留着，下一段需要我们设置heap的size。程序为我们分配了8字节的空间来储存这个size的值，然后就是比较关键的内容了。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">heaparray[i]-&gt;content = (<span class="keyword">char</span> *)<span class="built_in">malloc</span>(size);</span><br><span class="line">			<span class="keyword">if</span>(!heaparray[i]-&gt;content)&#123;</span><br><span class="line">				<span class="built_in">puts</span>(<span class="string">&quot;Allocate Error&quot;</span>);</span><br><span class="line">				<span class="built_in">exit</span>(<span class="number">2</span>);</span><br><span class="line">			&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<p>这里涉及到一个新的操作符<code>-&gt;</code>.</p>
+<blockquote>
+<p>“-&gt;”是一个整体，它是用于指向结构体子数据的指针，用来取子数据。</p>
+<p>换种说法，如果我们在C语言中定义了一个结构体，然后申明一个指针指向这个结构体，那么我们要用指针取出结构体中的数据，就要用到“-&gt;”</p>
+</blockquote>
+<p>在这个程序里，因为content是结构体heap中的一个被定义的子数据，所以当我们要使用它的时候，我们需要用这个操作符来取出它。具体来说就是取出结构体heap中的子结构content，然后把<code>(char *)malloc(size)</code>赋值给它。</p>
+<p>当然，如果下一步操作打发现并不是<code>heaparray[i]-&gt;content</code>的话就打印allocate失败。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">heaparray[i]-&gt;size = size ;</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">&quot;Content of heap:&quot;</span>);</span><br><span class="line">			read_input(heaparray[i]-&gt;content,size);</span><br><span class="line">			<span class="built_in">puts</span>(<span class="string">&quot;SuccessFul&quot;</span>);</span><br><span class="line">			<span class="keyword">break</span> </span><br></pre></td></tr></table></figure>
+
+<p>我们先给size赋值。这里应该和前面的代码是一个代码段。。</p>
+<p>然后是输入content。这里就是我们的漏洞点，我们把结构体中点content取出并用myread给它赋值。</p>
+<p>话说这里为什么没有失败的报错提醒呢，可能是为了防止无法利用漏洞？</p>
+<p>之前还有一个疑问就是heap初始化处为什么需要for循环，看完以后发现是我太局限于这一个代码块并且忽视了结尾处的break，这个for循环其实是针对于整个add函数的，我们总共只能分配十个堆结构，这个for正好就是控制我们在需要的时候分配的。。。。</p>
+<p>add函数看完以后我们来研究下一个函数</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">edit_heap</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> idx ;</span><br><span class="line">	<span class="keyword">char</span> buf[<span class="number">4</span>];</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;Index :&quot;</span>);</span><br><span class="line">	read(<span class="number">0</span>,buf,<span class="number">4</span>);</span><br><span class="line">	idx = atoi(buf);</span><br><span class="line">	<span class="keyword">if</span>(idx &lt; <span class="number">0</span> || idx &gt;= <span class="number">10</span>)&#123;</span><br><span class="line">		<span class="built_in">puts</span>(<span class="string">&quot;Out of bound!&quot;</span>);</span><br><span class="line">		_exit(<span class="number">0</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span>(heaparray[idx])&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;Content of heap : &quot;</span>);</span><br><span class="line">		read_input(heaparray[idx]-&gt;content,heaparray[idx]-&gt;size+<span class="number">1</span>);</span><br><span class="line">		<span class="built_in">puts</span>(<span class="string">&quot;Done !&quot;</span>);</span><br><span class="line">	&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">		<span class="built_in">puts</span>(<span class="string">&quot;No such heap !&quot;</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>编辑</p>
+<p>分析完add函数以后再看就感觉信手拈来了。</p>
+<p>首先创建一个4byte的buf来储存我们的idx，<code>idx = atoi(buf);</code>这个操作之前没有说到，大概是将buf的大小转变为一个int类型的数。</p>
+<p>应该不是考点，但是值得关注。</p>
+<p>然后接着一个普通的范围限定，接下来就是输入idx然后修改heap的content。没什么好说的。</p>
+<p>这个<code>if(heaparray[idx])</code>，它不是逻辑运算语句，所以只要括号里不是什么奇怪的东西一般就能成立。</p>
+<p>show和edit基本异曲同工，这里直接省略。</p>
+<p>看delete。</p>
+<p>堆题最需要关注的感觉还是增和删。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">delete_heap</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> idx ;</span><br><span class="line">	<span class="keyword">char</span> buf[<span class="number">4</span>];</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;Index :&quot;</span>);</span><br><span class="line">	read(<span class="number">0</span>,buf,<span class="number">4</span>);</span><br><span class="line">	idx = atoi(buf);</span><br><span class="line">	<span class="keyword">if</span>(idx &lt; <span class="number">0</span> || idx &gt;= <span class="number">10</span>)&#123;</span><br><span class="line">		<span class="built_in">puts</span>(<span class="string">&quot;Out of bound!&quot;</span>);</span><br><span class="line">		_exit(<span class="number">0</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span>(heaparray[idx])&#123;</span><br><span class="line">		<span class="built_in">free</span>(heaparray[idx]-&gt;content);</span><br><span class="line">		<span class="built_in">free</span>(heaparray[idx]);</span><br><span class="line">		heaparray[idx] = <span class="literal">NULL</span> ;</span><br><span class="line">		<span class="built_in">puts</span>(<span class="string">&quot;Done !&quot;</span>);	</span><br><span class="line">	&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">		<span class="built_in">puts</span>(<span class="string">&quot;No such heap !&quot;</span>);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>还是先储存idx，以及范围限定。</p>
+<p>然后这里是调用free函数，把content以及整个指向heap的指针都free了，并且还将指针置null。</p>
+<p>至此比较关键的一些函数都看完了。main函数里值的注意的就是开头的setbuf。</p>
+<p>虽然做题的时候知道这个东西不是考点，也没啥存在感，但是如果要写程序的话掌握还是必要的。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">setvbuf</span><span class="params">(FILE *stream, <span class="keyword">char</span> *buffer, <span class="keyword">int</span> mode, <span class="keyword">size_t</span> size)</span></span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>四个参数，流，buf指针，模式，大小</p>
+<blockquote>
+<ul>
+<li><strong>参数</strong><br>stream** – 这是指向 FILE 对象的指针，该 FILE 对象标识了一个打开的流。</li>
+<li><strong>buffer</strong> – 这是分配给用户的缓冲。如果设置为 NULL，该函数会自动分配一个指定大小的缓冲。</li>
+<li><strong>mode</strong> – 这指定了文件缓冲的模式：</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th align="left">模式</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">_IOFBF</td>
+<td align="left"><strong>全缓冲</strong>：对于输出，数据在缓冲填满时被一次性写入。对于输入，缓冲会在请求输入且缓冲为空时被填充。</td>
+</tr>
+<tr>
+<td align="left">_IOLBF</td>
+<td align="left"><strong>行缓冲</strong>：对于输出，数据在遇到换行符或者在缓冲填满时被写入，具体视情况而定。对于输入，缓冲会在请求输入且缓冲为空时被填充，直到遇到下一个换行符。</td>
+</tr>
+<tr>
+<td align="left">_IONBF</td>
+<td align="left"><strong>无缓冲</strong>：不使用缓冲。每个 I/O 操作都被即时写入。buffer 和 size 参数被忽略。</td>
+</tr>
+</tbody></table>
+<ul>
+<li><strong>size</strong> –这是缓冲的大小，以字节为单位</li>
+</ul>
+</blockquote>
+<p>但是还是不清楚调用这个函数的意义在哪里。</p>
+<p>查了一下好像是可以加快访问速度。。因为一般做题的时候遇到的setbuf的mode都是0，应该是无缓冲吧，然后对应不使用缓冲。每个 I/O 操作都被即时写入。。。还真的是为了加快速度？</p>
+<p>还有就是switch操作的时候并没有使用for循坏来控制case的值，而是read加atoi的操作，也是为了性能吗？</p>
+<p>贴一下学委的解答，setbuf是为了取消缓冲区，而防止各种奇怪的bug。</p>
+<p>然后来看这道题的漏洞利用。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;Content of heap:&quot;</span>);</span><br><span class="line">     read_input(*((_QWORD *)*(&amp;heaparray + i) + <span class="number">1</span>), size);</span><br><span class="line">     <span class="built_in">puts</span>(<span class="string">&quot;SuccessFul&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>可以看到输入的时候是多输入了一个字节的，这就造成了（非常刻意）的off by one。</p>
+<p>我们创建两个chunk来验证这个漏洞</p>
+<p>![image-20210605154056881](/Users/rin/Library/Application Support/typora-user-images/image-20210605154056881.png)</p>
+<p>如图，</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">x603290:	0x0000000000000000	0x0000000000000021</span><br><span class="line">0x6032a0:	0x0000000000000004	0x00000000006032c0<span class="comment">#chunk0 size</span></span><br><span class="line">0x6032b0:	0x0000000000000000	0x0000000000000021</span><br><span class="line">0x6032c0:	0x0000000061616161	0x0000000000000000<span class="comment">#chunk0 content1</span></span><br><span class="line">0x6032d0:	0x0000000000000000	0x0000000000000021</span><br><span class="line">0x6032e0:	0x0000000000000004	0x0000000000603300<span class="comment">#chunk2 size</span></span><br><span class="line">0x6032f0:	0x0000000000000000	0x0000000000000021</span><br><span class="line">0x603300:	0x0000000062626262	0x0000000000000000<span class="comment">#chunk2 content</span></span><br><span class="line">0x603310:	0x0000000000000000	0x0000000000020cf1</span><br><span class="line">0x603320:	0x0000000000000000	0x0000000000000000<span class="comment">#top chunk</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>当我们尝试修改chunk0的话又会出现什么呢。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">0x145e290:	0x0000000000000000	0x0000000000000021<span class="comment">#chunk0 size</span></span><br><span class="line">0x145e2a0:	0x0000000000000018	0x000000000145e2c0</span><br><span class="line">0x145e2b0:	0x0000000000000000	0x0000000000000021<span class="comment">#chunk0 content</span></span><br><span class="line">0x145e2c0:	0x6161616161616161	0x6161616161616161</span><br><span class="line">0x145e2d0:	0x6161616161616161	0x0000000000000041<span class="comment">#repaired chunk1 size</span></span><br><span class="line">0x145e2e0:	0x0000000000000010	0x000000000145e300</span><br><span class="line">0x145e2f0:	0x0000000000000000	0x0000000000000021<span class="comment">#chunk1 content</span></span><br><span class="line">0x145e300:	0x0000000a62626262	0x0000000000000000</span><br><span class="line">0x145e310:	0x0000000000000000	0x0000000000000021<span class="comment">#chunk2 size</span></span><br><span class="line">0x145e320:	0x0000000000000010	0x000000000145e340</span><br><span class="line">0x145e330:	0x0000000000000000	0x0000000000000021<span class="comment">#chunk2 content</span></span><br><span class="line">0x145e340:	0x0000000a63636363	0x0000000000000000</span><br></pre></td></tr></table></figure>
+
+<p>可以看到我们申请了三个堆块，原本chunk1的size的size位应该是0x21，而且presize位应该是空，但是由于我们修改chunk0的content的时候输入了0x18个a之后还输入了0x41，而正是由于输入时多比缓冲区多出来了一个字节，导致字节溢出到了下一个chunk，也就是chunk1的presize位。</p>
+<blockquote>
+<p>这里巩固一个人尽皆知的知识点</p>
+<ul>
+<li><strong>prev_size</strong>, 如果该 chunk 的<strong>物理相邻的前一地址 chunk（两个指针的地址差值为前一 chunk 大小）</strong>是空闲的话，那该字段记录的是前一个 chunk 的大小 (包括 chunk 头)。否则，该字段可以用来存储物理相邻的前一个 chunk 的数据。<strong>这里的前一 chunk 指的是较低地址的 chunk</strong> </li>
+</ul>
+</blockquote>
+<p>放在这道题就是我们单字节溢出到了chunk1的prevsize位，但是由于此时chunk0是allocated状态，所以并没有太大的影响，但是当我们释放掉chunk0，也就是当我们溢出了一个字节到presize位，并且将上一个chunk（chunk0）free了以后，我们的chunk1的大小就会变为我们设置的溢出的字节的数。</p>
+<p>这里我们选择溢出数是0x41.</p>
+<p>所以结果就如刚才gdb里面所显示的，我们的chunk1的size变成了0x41.</p>
+<p>但是变成0x41又有什么用呢？我们改怎么利用它呢/</p>
+<p>一个最直观的用处就是我们可以通过修改chunk1的内容来加入一些我们想要的东西。</p>
+<p>虽然经过off by one漏洞的利用后我们的chunk1的size是0x41，但是实际上在内存里chunk2的指针并不是向下顺移了0x20，而是还在原地。所以当我们修改chunk1的内容的时候其实就是修改了chunk2的指针。</p>
+<p>那么修改chunk2指针有啥用呢。</p>
+<p>当我们show一个chunk的时候是不是能够显示出这个chunk的content？</p>
+<p>因为这个程序没有给后门，所以我们需要手动泄露出libc。所以我们需要先泄露某个函数的真实地址。那么我们完全可以通过先把某个函数的got表写进去再show出来。</p>
+<p>show出来后我们就能计算函数system的真实地址，并且再次将chunk1的指针修改成system函数。</p>
+<p>修改以后当我们free chunk0，相当于chunk0的内容是函数参数，然后因为指针已经指向system，所以直接调用system（‘/bin/sh’）</p>
+<p>到这里就能够解释之前的0x41</p>
+<p>0x41其实就是为了让编辑chunk0的内容可以直接覆盖掉chunk1的指针，其实把数弄得更大也行，只不过没什么意义了。</p>
+<p>exp懒得写了</p>
+
+            <div class="clearfix"></div>
+            <hr class="nogutter">
+        </div>
+        <nav class="m-pagination col-md-8 col-md-offset-2 col-sm-24" role="pagination">
+    
+    <a class="pull-left" href="../../../08/02/ret2dl_advanced/" style="float: left;">
+        ← ret2dl_advanced
+    </a>
+    
+    
+    <a class="pull-right" href="../../../05/24/message/">
+        Message →
+    </a>
+    
+</nav>
+
+        <div class="col-md-8 col-md-offset-2 col-sm-24"><script type="text/javascript">
+  /**
+   * 搜狐畅言
+   */
+
+  /*
+  document.write('<div id="SOHUCS" sid="' + window.location.pathname.slice(1) + '" ></div>');
+
+  window.onload = function () {
+    (function () {
+      var appid = 'cytXXXX';
+      var conf = 'prod_xxxxxxxxxxxxxxxxx';
+      var width = window.innerWidth || document.documentElement.clientWidth;
+      var loadJs = function (d, a, id) {
+        var c = document.getElementsByTagName("head")[0] || document.head || document.documentElement;
+        var b = document.createElement("script");
+        b.setAttribute("type", "text/javascript");
+        b.setAttribute("charset", "UTF-8");
+        b.setAttribute("src", d);
+        if (id) {
+          b.setAttribute("id", id);
+        }
+        if (typeof a === "function") {
+          if (window.attachEvent) {
+            b.onreadystatechange = function () {
+              var e = b.readyState;
+              if (e === "loaded" || e === "complete") {
+                b.onreadystatechange = null;
+                a()
+              }
+            }
+          } else {
+            b.onload = a
+          }
+        }
+        c.appendChild(b)
+      };
+
+      loadJs("https://changyan.sohu.com/upload/changyan.js", function () {
+        window.changyan.api.config({
+          appid: appid,
+          conf: conf
+        })
+      });
+    })();
+  }
+  */
+
+</script>
+</div>
+    </div>
+</section>
+
+<!-- Highlight.js -->
+
+<link rel="stylesheet"
+href="//highlightjs.org/static/demo/styles/atom-one-light.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js">
+</script>
+<script>
+hljs.initHighlightingOnLoad();
+
+</script>
+
+
+      
+<!-- ============================ Footer =========================== -->
+
+<footer>
+    <div class="container">
+            <div class="copy">
+                <p>
+                    &copy; 2014<script>new Date().getFullYear()>2010&&document.write("-"+new Date().getFullYear());</script>, Content By Rin777. All Rights Reserved.
+                </p>
+                <p>Theme By <a target="_blank" rel="noopener" href="//go.kieran.top" style="color: #767D84">Kieran</a></p>
+            </div>
+            <div class="social">
+                <ul>
+                    
+                    <li><a href="https://github.com/" title="Github" target="_blank"><i class="icon-github"></i></a>&nbsp;</li>
+                    
+                    
+                    
+                    
+                    
+                </ul>
+            </div>
+            <div class="clearfix"> </div>
+        </div>
+</footer>
+
+<!-- ============================ END Footer =========================== -->
+      <!-- Load our scripts -->
+<!-- Resizable 'on-demand' full-height hero -->
+<script type="text/javascript">
+    var resizeHero = function () {
+        var hero = $(".cover,.heightblock"),
+            window1 = $(window);
+        hero.css({
+            "height": window1.height()
+        });
+    };
+
+    resizeHero();
+
+    $(window).resize(function () {
+        resizeHero();
+    });
+</script>
+<script src="/js/plugins.min.js"></script><!-- Bootstrap core and concatenated plugins always load here -->
+<script src="/js/scripts.js"></script><!-- Theme scripts -->
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$('#intro').find('img').each(function(){
+  var alt = this.alt;
+
+  if (alt){
+    $(this).after('<span class="caption" style="display:none">' + alt + '</span>');
+  }
+
+  $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox" rel="gallery" />');
+});
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+      
+            <style>
+.local-search-popup {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  background: rgba(255, 255, 255, .9);
+  color: #333;
+  z-index: 9999;
+  border-radius: 5px;
+  overflow: scroll;
+}
+#local-search-input {
+  width: 100%;
+  border: none;
+  outline: none;
+  border-bottom: 1px solid #151515;
+  background-color: initial;
+}
+.search-result-list {
+  list-style: none;
+  padding-left: 0;
+}
+.search-result-list > li {
+  margin-top: 15px;
+  border-bottom: 1px solid #ddd;
+  transition: all ease .3s;
+}
+.search-result-list > li:hover {
+  border-bottom: 1px solid gray;
+}
+.search-result-title {
+  font-size: 16px;
+}
+.search-result {
+  line-height: 20px;
+}
+.search-keyword {
+  font-weight: normal;
+  color: #c00;
+}
+
+@media (min-width: 890px) {
+  .popup-btn-close {
+    position: absolute;
+    top: 15px;
+    left: 35px;
+    border: 1px solid #151515;
+    padding: 0px 10px;
+    border-top-left-radius: 8px;
+    cursor: pointer;
+    transition: all ease .3s;
+  }
+  .popup-btn-close:hover {
+    background: #151515;
+    opacity: .9;
+    color: #fff;
+  }
+}
+@media (max-width: 890px) {
+  .popup-btn-close {
+    font-size: 0;
+    position: fixed;
+    right: 20px;
+    bottom: 50px;
+    width: 50px;
+    height: 50px;
+    background: #fff;
+    border-radius: 50%;
+    box-shadow: 1px 1px 5px #888;
+    cursor: pointer;
+  }
+  .popup-btn-close::after {
+    content: '←';
+    color: #151515;
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-size: 20px;
+    width: 100%;
+    height: 100%;
+    line-height: 50px;
+    text-align: center;
+  }
+}
+</style>
+
+<div class="popup search-popup local-search-popup">
+  <span class="popup-btn-close">
+    ESC
+  </span>
+  <div class="container">
+    <div class="col-md-8 col-md-offset-2">
+      <div class="local-search-header clearfix">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="local-search-input-wrapper">
+          <input autocomplete="off" placeholder="Search..." type="text" id="local-search-input">
+        </div>
+      </div>
+      <div id="local-search-result"></div>
+    </div>
+  </div>
+</div>
+
+<script src="/js/ziploader.js"></script>
+
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.json";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').fadeOut(300);
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $('.popup').fadeIn(300);
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // get search zip version
+    $.get('/searchVersion.txt?t=' + (+new Date()), function(res) {
+      if (localStorage.getItem('searchVersion') !== res) {
+        localStorage.setItem('searchVersion', res);
+        initSearchJson();
+      }
+    });
+
+    function initSearchJson () {
+      initLoad(['/search.zip'], {
+        loadOptions: {
+          success: function(obj) {
+            localStorage.setItem('searchJson', obj['search.json'])
+          },
+          error: function(e) {
+            return console.log(e)
+          }
+        },
+        returnOptions: {
+          'json': TYPE_TEXT
+        },
+        mimeOptions:{
+          'json':'application/json'
+        }
+      })
+    }
+
+
+    // search function;
+    var searchFunc = function(search_id, content_id) {
+      'use strict';
+
+      isfetched = true;
+      var datas = JSON.parse(localStorage.getItem('searchJson'));
+      console.log(search_id)
+      var input = document.getElementById(search_id);
+      var resultContent = document.getElementById(content_id);
+      var inputEventFunction = function() {
+        var searchText = input.value.trim().toLowerCase();
+        var keywords = searchText.split(/[\s\-]+/);
+        if (keywords.length > 1) {
+          keywords.push(searchText);
+        }
+        var resultItems = [];
+        if (searchText.length > 0) {
+          // perform local searching
+          datas.forEach(function(data) {
+            var isMatch = false;
+            var hitCount = 0;
+            var searchTextCount = 0;
+            var title = data.title ? data.title.trim() : '';
+            var titleInLowerCase = title.toLowerCase();
+            var content = data.content ? data.content.trim().replace(/<[^>]+>/g,"") : '';
+            var contentInLowerCase = content.toLowerCase();
+            var articleUrl = decodeURIComponent(data.url);
+            var indexOfTitle = [];
+            var indexOfContent = [];
+            // only match articles with not empty titles
+            keywords.forEach(function(keyword) {
+              function getIndexByWord(word, text, caseSensitive) {
+                var wordLen = word.length;
+                if (wordLen === 0) {
+                  return [];
+                }
+                var startPosition = 0, position = [], index = [];
+                if (!caseSensitive) {
+                  text = text.toLowerCase();
+                  word = word.toLowerCase();
+                }
+                while ((position = text.indexOf(word, startPosition)) > -1) {
+                  index.push({position: position, word: word});
+                  startPosition = position + wordLen;
+                }
+                return index;
+              }
+
+              indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+              indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+            });
+            if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+              isMatch = true;
+              hitCount = indexOfTitle.length + indexOfContent.length;
+            }
+
+            // show search results
+
+            if (isMatch) {
+              // sort index by position of keyword
+
+              [indexOfTitle, indexOfContent].forEach(function (index) {
+                index.sort(function (itemLeft, itemRight) {
+                  if (itemRight.position !== itemLeft.position) {
+                    return itemRight.position - itemLeft.position;
+                  } else {
+                    return itemLeft.word.length - itemRight.word.length;
+                  }
+                });
+              });
+
+              // merge hits into slices
+
+              function mergeIntoSlice(text, start, end, index) {
+                var item = index[index.length - 1];
+                var position = item.position;
+                var word = item.word;
+                var hits = [];
+                var searchTextCountInSlice = 0;
+                while (position + word.length <= end && index.length != 0) {
+                  if (word === searchText) {
+                    searchTextCountInSlice++;
+                  }
+                  hits.push({position: position, length: word.length});
+                  var wordEnd = position + word.length;
+
+                  // move to next position of hit
+
+                  index.pop();
+                  while (index.length != 0) {
+                    item = index[index.length - 1];
+                    position = item.position;
+                    word = item.word;
+                    if (wordEnd > position) {
+                      index.pop();
+                    } else {
+                      break;
+                    }
+                  }
+                }
+                searchTextCount += searchTextCountInSlice;
+                return {
+                  hits: hits,
+                  start: start,
+                  end: end,
+                  searchTextCount: searchTextCountInSlice
+                };
+              }
+
+              var slicesOfTitle = [];
+              if (indexOfTitle.length != 0) {
+                slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+              }
+
+              var slicesOfContent = [];
+              while (indexOfContent.length != 0) {
+                var item = indexOfContent[indexOfContent.length - 1];
+                var position = item.position;
+                var word = item.word;
+                // cut out 100 characters
+                var start = position - 20;
+                var end = position + 80;
+                if(start < 0){
+                  start = 0;
+                }
+                if (end < position + word.length) {
+                  end = position + word.length;
+                }
+                if(end > content.length){
+                  end = content.length;
+                }
+                slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+              }
+
+              // sort slices in content by search text's count and hits' count
+
+              slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                  return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                  return sliceRight.hits.length - sliceLeft.hits.length;
+                } else {
+                  return sliceLeft.start - sliceRight.start;
+                }
+              });
+
+              // select top N slices in content
+
+              var upperBound = parseInt('2');
+              if (upperBound >= 0) {
+                slicesOfContent = slicesOfContent.slice(0, upperBound);
+              }
+
+              // highlight title and content
+
+              function highlightKeyword(text, slice) {
+                var result = '';
+                var prevEnd = slice.start;
+                slice.hits.forEach(function (hit) {
+                  result += text.substring(prevEnd, hit.position);
+                  var end = hit.position + hit.length;
+                  result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                  prevEnd = end;
+                });
+                result += text.substring(prevEnd, slice.end);
+                return result;
+              }
+
+              var resultItem = '';
+
+              if (slicesOfTitle.length != 0) {
+                resultItem += "<li><a target='_blank' href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+              } else {
+                resultItem += "<li><a target='_blank' href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+              }
+
+              slicesOfContent.forEach(function (slice) {
+                resultItem += "<a target='_blank' href='" + articleUrl + "'>" +
+                  "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                  "...</p>" + "</a>";
+              });
+
+              resultItem += "</li>";
+              resultItems.push({
+                item: resultItem,
+                searchTextCount: searchTextCount,
+                hitCount: hitCount,
+                id: resultItems.length
+              });
+            }
+          })
+        };
+        if (keywords.length === 1 && keywords[0] === "") {
+          resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+        } else if (resultItems.length === 0) {
+          resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+        } else {
+          resultItems.sort(function (resultLeft, resultRight) {
+            if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+              return resultRight.searchTextCount - resultLeft.searchTextCount;
+            } else if (resultLeft.hitCount !== resultRight.hitCount) {
+              return resultRight.hitCount - resultLeft.hitCount;
+            } else {
+              return resultRight.id - resultLeft.id;
+            }
+          });
+          var searchResultList = '<ul class=\"search-result-list\">';
+          resultItems.forEach(function (result) {
+            searchResultList += result.item;
+          })
+          searchResultList += "</ul>";
+          resultContent.innerHTML = searchResultList;
+        }
+      }
+
+      if ('auto' === 'auto') {
+        input.addEventListener('input', inputEventFunction);
+      } else {
+        $('.search-icon').click(inputEventFunction);
+        input.addEventListener('keypress', function (event) {
+          if (event.keyCode === 13) {
+            inputEventFunction();
+          }
+        });
+      }
+
+      // remove loading animation
+      $('body').css('overflow', '');
+
+      proceedsearch();
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        $('.sb-close').click();
+        searchFunc('local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+      
+</body>
+</html>

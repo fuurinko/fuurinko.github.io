@@ -80,21 +80,23 @@
 				  	
 				    <li><a href="/categories/CSAPP-LAB/" class="animsition-link">CSAPP LAB<small>(1)</small></a></li>
 				    
-				    <li><a href="/categories/HEAP-Fastbin-Attack/" class="animsition-link">HEAP - Fastbin Attack<small>(5)</small></a></li>
+				    <li><a href="/categories/HEAP-Fastbin-Attack/" class="animsition-link">HEAP - Fastbin Attack<small>(7)</small></a></li>
 				    
-				    <li><a href="/categories/Heap-Fastbin-Attack/" class="animsition-link">Heap - Fastbin Attack<small>(1)</small></a></li>
+				    <li><a href="/categories/HEAP-Off-By-One/" class="animsition-link">HEAP - Off By One<small>(2)</small></a></li>
 				    
-				    <li><a href="/categories/Heap-Off-By-One/" class="animsition-link">Heap - Off By One<small>(1)</small></a></li>
+				    <li><a href="/categories/HEAP-Tcache/" class="animsition-link">HEAP - Tcache<small>(1)</small></a></li>
 				    
-				    <li><a href="/categories/Heap-Tcache/" class="animsition-link">Heap - Tcache<small>(1)</small></a></li>
+				    <li><a href="/categories/HEAP-UNLINK/" class="animsition-link">HEAP - UNLINK<small>(1)</small></a></li>
 				    
-				    <li><a href="/categories/MESS/" class="animsition-link">MESS<small>(18)</small></a></li>
+				    <li><a href="/categories/HEAP-Unsortedbin/" class="animsition-link">HEAP - Unsortedbin<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/MESS/" class="animsition-link">MESS<small>(20)</small></a></li>
 				    
 				    <li><a href="/categories/OTHER-IO-FILE/" class="animsition-link">OTHER - IO FILE<small>(1)</small></a></li>
 				    
-				    <li><a href="/categories/PWN-COLLEGE/" class="animsition-link">PWN.COLLEGE<small>(5)</small></a></li>
+				    <li><a href="/categories/PWN-COLLEGE/" class="animsition-link">PWN.COLLEGE<small>(8)</small></a></li>
 				    
-				    <li><a href="/categories/Pwn-college/" class="animsition-link">Pwn.college<small>(4)</small></a></li>
+				    <li><a href="/categories/Pwn-college/" class="animsition-link">Pwn.college<small>(1)</small></a></li>
 				    
 				    <li><a href="/categories/STACK-DynELF/" class="animsition-link">STACK - DynELF<small>(2)</small></a></li>
 				    
@@ -111,6 +113,8 @@
 				    <li><a href="/categories/STACK-ret2dlsolve/" class="animsition-link">STACK - ret2dlsolve<small>(1)</small></a></li>
 				    
 				    <li><a href="/categories/STACK-sandbox/" class="animsition-link">STACK - sandbox<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/深夜高速/" class="animsition-link">深夜高速<small>(1)</small></a></li>
 				    
 				</ul>
         	</li>
@@ -227,6 +231,87 @@
 
 <section id="intro">
     <div class="container">
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2021/11/18/pwnable-calc/">pwnable-calc</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2021-11-18T02:30:24.678Z" itemprop="datePublished">
+          2021-11-18
+      </time>
+    
+    
+    | 
+    <a href='/tags/pwnable/'>pwnable</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        逆向​        程序实现了一个简单的计算器功能。运算有加减乘除四种。
+​        
+​        并且程序再次自带计时功能，需要patch。
+​        
+​        静态链接，所以肯定不能用ret2libc那一套，只能试图ROP一下。
+​        程序主要功能通过get_expr和calculate（原本不叫这个）两个函数实现。
+​        get_expr主要用于定位我们输入的字符串中运算符的
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2021/11/18/pwnable-calc/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2021/11/17/妙控鼠标卡顿问题/">妙控鼠标卡顿问题</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2021-11-17T13:59:33.427Z" itemprop="datePublished">
+          2021-11-17
+      </time>
+    
+    
+    | 
+    <a href='/tags/mess/'>mess</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        ​        最近刚花了三百大洋从室友那里买回了白嫖了半个学期的妙控鼠标，钱转了不到两天，鼠标开始疯狂卡顿。
+​        最初以为是外接了太多东西，把键盘啥的都换成了线控，但是问题还是不见解决。
+​        最后是这篇文章解决了我的问题。
+​        macos系统里面，蓝牙鼠标偶尔卡顿，飘的问题
+​        解决方法也很简单，把网络中的蓝牙PAN的顺序调到最前。
+​        蓝牙PAN就是类似一种个人
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2021/11/17/妙控鼠标卡顿问题/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
         
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
@@ -535,85 +620,6 @@ E: Unable to correct problems, you have held broken pack
                     
                     <p class="pull-right readMore">
                         <a href="/2021/10/27/解决gcc无法编译32位程序的问题/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2021/10/27/格式化字符串偏移计算原理/">格式化字符串偏移计算原理及pwntools fmtstr功能源码剖析</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2021-10-27T08:36:07.912Z" itemprop="datePublished">
-          2021-10-27
-      </time>
-    
-    
-    | 
-    <a href='/tags/FMT/'>FMT</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        重点研究如何计算32/64位程序中格式化字符串在栈上的偏移，以及研究自动化求偏移的实现
-1）32位偏移计算原理​    其实这个计算确实是有手就行，只需要在栈上找到对应的格式化字符串，然后数是第几个，再减去返回地址所占的一个位置，就是偏移量。
-​    准确来说应该是格式化字符串在栈上的偏移。
-​    原理也比较简单。x86架构下，格式化字符串时通过栈传递的。
-​    然后联想一下函数调用栈的知识点，格式化字符串本身和printf的
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2021/10/27/格式化字符串偏移计算原理/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2021/10/27/pwntools（1）--pwnlib.tube/">pwntools(1)-- pwnlib.tube</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2021-10-27T03:21:54.156Z" itemprop="datePublished">
-          2021-10-27
-      </time>
-    
-    
-    | 
-    <a href='/tags/pwntools/'>pwntools</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        0)preview​    一般通过萌新一般在接触pwn的时候，一个必不可少的步骤就是下载pwntools，并且在自己人生第一个脚本上输入：
-1from pwn import*
-
-​    我也如此。
-​    在学习pwn知识快一年的今天，倘若还是对pwntools这个神一般的工具迷茫不解，那我确实还不是一个合格的pwn手。
-​    这个系列的目的是通过简单的源码剖析，辅以相应的例题，探究pwn题，gdb调试，以及pwntools本
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2021/10/27/pwntools（1）--pwnlib.tube/">Read More...</a>
                     </p>
                     
                 </div>
