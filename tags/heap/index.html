@@ -74,6 +74,17 @@
             <!-- Dropdown Menu -->
 			 
             
+        	<li>
+        		<a class="sb-toggle-submenu">Categories<span class="sb-caret"></span></a>
+            	<ul class="sb-submenu">
+				  	
+				    <li><a href="/categories/heap/" class="animsition-link">heap<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/stack/" class="animsition-link">stack<small>(1)</small></a></li>
+				    
+				</ul>
+        	</li>
+			
             
             <li>
                 <a class="sb-toggle-submenu">Links<span class="sb-caret"></span></a>
@@ -495,18 +506,6 @@ $('#intro').find('img').each(function(){
                 }
                 while ((position = text.indexOf(word, startPosition)) > -1) {
                   index.push({position: position, word: word});
- tive) {
-                var wordLen = word.length;
-                if (wordLen === 0) {
-                  return [];
-                }
-                var startPosition = 0, position = [], index = [];
-                if (!caseSensitive) {
-                  text = text.toLowerCase();
-                  word = word.toLowerCase();
-                }
-                while ((position = text.indexOf(word, startPosition)) > -1) {
-                  index.push({position: position, word: word});
                   startPosition = position + wordLen;
                 }
                 return index;
@@ -702,6 +701,29 @@ $('#intro').find('img').each(function(){
       if (isfetched === false) {
         $('.sb-close').click();
         searchFunc('local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+      
+</body>
+</html>
+       searchFunc('local-search-input', 'local-search-result');
       } else {
         proceedsearch();
       };

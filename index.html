@@ -74,6 +74,17 @@
             <!-- Dropdown Menu -->
 			 
             
+        	<li>
+        		<a class="sb-toggle-submenu">Categories<span class="sb-caret"></span></a>
+            	<ul class="sb-submenu">
+				  	
+				    <li><a href="/categories/heap/" class="animsition-link">heap<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/stack/" class="animsition-link">stack<small>(1)</small></a></li>
+				    
+				</ul>
+        	</li>
+			
             
             <li>
                 <a class="sb-toggle-submenu">Links<span class="sb-caret"></span></a>
@@ -190,7 +201,7 @@
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
                 <div class="col-md-4">
-                    <h3><a href="/2022/03/18/week-4.1/"></a></h3>
+                    <h3><a href="/2022/03/18/week-4.1/">search engine</a></h3>
                     <span>
                         <span class="post-meta">
       <time datetime="2022-03-18T12:51:38.181Z" itemprop="datePublished">
@@ -408,7 +419,7 @@ def leak(addr):
     
     
     | 
-    <a href='/tags/week/'>week</a>
+    <a href='/tags/week-stack/'>week stack</a>
     
     
 </span>
@@ -420,11 +431,7 @@ def leak(addr):
                         ​    
 ccmc_pwnme2一道看起来人畜无害的栈题。但是有几个非常奇怪的函数。
 ​        所以这是一道相对有些奇怪的rop，控制这三个函数的其中两个的参数为指定字符串，就能较为方便地读取flag。
-from pwn import *
-p = remote('node4.buuoj.cn',27653)
-#p = process('./pwnme2')
-pop_edi_ebp_ret= 0x0804867f
-pop_ebp
+12345678910111213141516from pwn import *p = remote(&#x27;node4.buuoj.cn&#x27;,27653)#p = process(&#x27;./pwnme2&#
                       
                     </p>
                     

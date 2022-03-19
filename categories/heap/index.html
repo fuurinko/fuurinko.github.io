@@ -17,7 +17,7 @@
 <!--<![endif]-->
 
 <head>
-  <title>ELF文件下对于PIE保护和ASLR的重新认识 | Rin</title>
+  <title>Category: heap | Rin</title>
   <!-- Meta data -->
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -57,7 +57,7 @@
 <link rel="stylesheet" href="/css/prism.css" type="text/css"></head>
 
 <!--
-<body class="post-template">
+<body class="home-template">
 -->
 <body id="index" class="lightnav animsition">
 
@@ -163,116 +163,69 @@
         <!-- ============================ Header & Logo bar =========================== -->
 
 
-      
-<section id="intro">
-    <div class="container">
-        <div class="row col-md-offset-2">
-            <div class="col-md-8">
-    			<span class="post-meta">
-      <time datetime="2021-08-13T07:06:00.000Z" itemprop="datePublished">
-          2021-08-13
-      </time>
-    
-    
-    | 
-    <a href='/tags/mess/'>mess</a>
-    
-    
-</span>
-                <h1>ELF文件下对于PIE保护和ASLR的重新认识</h1>
+      <!-- ============================ Hero Image =========================== -->
+
+<section id="hero" class="scrollme">
+    <div class="container-fluid element-img" style="background: url(https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/cover.JPG) no-repeat center center fixed;background-size: cover">
+        <div class="row">
+            <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-8 col-md-offset-2 vertical-align cover boost text-center">
+                <div class="center-me animateme" data-when="exit" data-from="0" data-to="0.6" data-opacity="0" data-translatey="100">
+                    <div>
+                        
+                        <h2><span>RIN777</span></h2>
+                        <p></p>
+                        
+                        <h2></h2>
+                        <p>努力は嘘をつく、でも無駄にはならない</p>
+                        
+
+                    </div>
+                </div>
             </div>
+            <!-- // .col-md-12 -->
         </div>
-        <div class="col-md-8 col-md-offset-2">
-      		<html><head></head><body><h3 id="ELF文件下对于PIE保护和ASLR的重新认识">ELF文件下对于PIE保护和ASLR的重新认识<a class="post-anchor" href="#ELF文件下对于PIE保护和ASLR的重新认识"></a></h3><h4 id="0）">0）<a class="post-anchor" href="#0）"></a></h4><p>​    复现红色高跟鞋的时候，在ida修复swithc结构的时候碰见了一个问题。因为题目的源文件是有pie保护的，所以ida中的地址是很难看的随机化模式。虽然这些随机化的地址对于我们patch文件毫无影响，但是就是突发奇想，看看能不能找到方法来通过patch将elf文件的pie保护给禁用。</p>
-<h4 id="1）">1）<a class="post-anchor" href="#1）"></a></h4><p>​    如果用010editor打开一个PE文件，我们能够很方便的通过修改PE头来禁用掉Windows程序的ASLR保护。这是因为程序本身其实并不是位置无关的。</p>
-<p>ASLR在PE文件上的开启与否实际上就是PE头上标识符的区分，总的来说ASLR是操作系统的功能，而不是程序本身的特性，以ASLR ON 编译，也只是给程序加上了能被ASLR保护识别的标识符。所以我们只需要patch掉这个标识符，就能够改变程序的地址随机化状态。</p>
-<p>也正是在寻找方法的过程中，我逐渐认识到虽然PIE保护和ASLR表现形式都是地址随机化，但是两者的原理以及实现的方式并不一样，甚至大相径庭。</p>
-<p>在维基百科上，我们能够清楚地看到PIE的全称是Position-independence Executable，位置无关可执行文件。</p>
-<p>这个概念并不是很常见，相对更为常见的是PIC，Position-independence Code，位置无关代码。</p>
-<p>PIC和PIE只差了一个字母，意思也相近。但PIC更多的是在重定位中被提及。源码通过汇编器生成可重定位目标文件，此时它的代码就是位置无关，从0开始的，PIE和PIC的概念相近，当编译完成，可执行文件的便是位置无关了，我们无法改变这一点，也就是说，被PIE保护的文件，并不是通过给头文件加上标识符，使系统开启或关闭随机，而是文件本身便是位置无关吗，是随机的。</p>
-<p>​    然而，虽然文件本身是位置无关的，但是实际地址是否随机，还是要看进程中aslr是否开启，如果将进程aslr关闭，那么调试时我们看到的地址依旧不是随机的。这里主要涉及到重定位的相关知识，之后会写一篇笔记来试图深入系统重定位过程与地址随机化之间的关系。</p>
-</body></html>
-            <div class="clearfix"></div>
-            <hr class="nogutter">
-        </div>
-        <nav class="m-pagination col-md-8 col-md-offset-2 col-sm-24" role="pagination">
-    
-    <a class="pull-left" href="../../17/Tcache%E5%AD%A6%E4%B9%A0/" style="float: left;">
-        ← Tcahce学习
-    </a>
-    
-    
-    <a class="pull-right" href="../../09/io_file%EF%BC%88%E6%9C%AA%E5%AE%8C%E6%88%90%EF%BC%89/">
-        IO_FILE学习 →
-    </a>
-    
-</nav>
-
-        <div class="col-md-8 col-md-offset-2 col-sm-24"><script type="text/javascript">
-  /**
-   * 搜狐畅言
-   */
-
-  /*
-  document.write('<div id="SOHUCS" sid="' + window.location.pathname.slice(1) + '" ></div>');
-
-  window.onload = function () {
-    (function () {
-      var appid = 'cytXXXX';
-      var conf = 'prod_xxxxxxxxxxxxxxxxx';
-      var width = window.innerWidth || document.documentElement.clientWidth;
-      var loadJs = function (d, a, id) {
-        var c = document.getElementsByTagName("head")[0] || document.head || document.documentElement;
-        var b = document.createElement("script");
-        b.setAttribute("type", "text/javascript");
-        b.setAttribute("charset", "UTF-8");
-        b.setAttribute("src", d);
-        if (id) {
-          b.setAttribute("id", id);
-        }
-        if (typeof a === "function") {
-          if (window.attachEvent) {
-            b.onreadystatechange = function () {
-              var e = b.readyState;
-              if (e === "loaded" || e === "complete") {
-                b.onreadystatechange = null;
-                a()
-              }
-            }
-          } else {
-            b.onload = a
-          }
-        }
-        c.appendChild(b)
-      };
-
-      loadJs("https://changyan.sohu.com/upload/changyan.js", function () {
-        window.changyan.api.config({
-          appid: appid,
-          conf: conf
-        })
-      });
-    })();
-  }
-  */
-
-</script>
-</div>
+        <div class="herofade beige-dk"></div>
     </div>
 </section>
 
-<!-- Highlight.js -->
+<!-- Height spacing helper -->
+<div class="heightblock"></div>
+<!-- // End height spacing helper -->
 
-<link rel="stylesheet"
-href="//highlightjs.org/static/demo/styles/atom-one-light.css">
-<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js">
-</script>
-<script>
-hljs.initHighlightingOnLoad();
-
-</script>
+<!-- ============================ END Hero Image =========================== -->
 
 
+
+
+<section id="services">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1">
+                <div class="row boxes">
+                    
+                    
+                        
+                        
+                        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 wow fadeInUp" data-wow-delay="0.3s">
+                            
+                              <h4 class="title"><a href="/2022/03/16/week3-2.1/">hctf2016_fheap</a></h4>
+                            
+                            <p><time datetime="2022-03-16T03:48:29.784Z"><a href="/2022/03/16/week3-2.1/">2022-03-16</a></time></p>
+                        </div>
+                    
+                </div>
+            </div>    
+        </div>
+    </div>
+</section> 
+
+<section id="statement">
+    <div class="container text-center wow fadeInUp" data-wow-delay="0.5s">
+        <div class="row">
+            <p>“试着开心，好吗？”</p>
+        </div>
+    </div>
+</section>
       
 <!-- ============================ Footer =========================== -->
 
