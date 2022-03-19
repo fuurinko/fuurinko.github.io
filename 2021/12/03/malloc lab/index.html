@@ -78,9 +78,33 @@
         		<a class="sb-toggle-submenu">Categories<span class="sb-caret"></span></a>
             	<ul class="sb-submenu">
 				  	
-				    <li><a href="/categories/heap/" class="animsition-link">heap<small>(1)</small></a></li>
+				    <li><a href="/categories/CSAPP-LAB/" class="animsition-link">CSAPP LAB<small>(1)</small></a></li>
 				    
-				    <li><a href="/categories/stack/" class="animsition-link">stack<small>(1)</small></a></li>
+				    <li><a href="/categories/Heap-Fastbin-Attack/" class="animsition-link">Heap - Fastbin Attack<small>(6)</small></a></li>
+				    
+				    <li><a href="/categories/Heap-Off-By-One/" class="animsition-link">Heap - Off By One<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/Heap-Tcache/" class="animsition-link">Heap - Tcache<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/MESS/" class="animsition-link">MESS<small>(17)</small></a></li>
+				    
+				    <li><a href="/categories/OTHER-IO-FILE/" class="animsition-link">OTHER - IO FILE<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/Pwn-college/" class="animsition-link">Pwn.college<small>(9)</small></a></li>
+				    
+				    <li><a href="/categories/STACK-DynELF/" class="animsition-link">STACK - DynELF<small>(2)</small></a></li>
+				    
+				    <li><a href="/categories/STACK-Format/" class="animsition-link">STACK - Format<small>(3)</small></a></li>
+				    
+				    <li><a href="/categories/STACK-ROP/" class="animsition-link">STACK - ROP<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/STACK-SROP/" class="animsition-link">STACK - SROP<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/STACK-Stack-Overflow/" class="animsition-link">STACK - Stack Overflow<small>(4)</small></a></li>
+				    
+				    <li><a href="/categories/STACK-ret2dlsolve/" class="animsition-link">STACK - ret2dlsolve<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/STACK-sandbox/" class="animsition-link">STACK - sandbox<small>(1)</small></a></li>
 				    
 				</ul>
         	</li>
@@ -183,9 +207,9 @@
             </div>
         </div>
         <div class="col-md-8 col-md-offset-2">
-      		<html><head></head><body><h2 id="0）前言">0）前言<a class="post-anchor" href="#0）前言"></a></h2><p>​        鸽了三个月的malloc lab，作为复习堆题的开始。</p>
+      		<h2 id="0）前言"><a href="#0）前言" class="headerlink" title="0）前言"></a>0）前言</h2><p>​        鸽了三个月的malloc lab，作为复习堆题的开始。</p>
 <p>​        计画完成时间是12.5之前，也就是三天。</p>
-<h2 id="1）大体设计">1）大体设计<a class="post-anchor" href="#1）大体设计"></a></h2><p>​        对于整体的操作的大致模型以及allocater和freer需要做的工作如下：</p>
+<h2 id="1）大体设计"><a href="#1）大体设计" class="headerlink" title="1）大体设计"></a>1）大体设计</h2><p>​        对于整体的操作的大致模型以及allocater和freer需要做的工作如下：</p>
 <p>​        分配器：</p>
 <ol>
 <li><p>在第一次分配chunk时，对堆空间进行初始化=&gt;<code>mm_init()</code>    </p>
@@ -202,16 +226,16 @@
 </ol>
 <p>​        其他的驱动代码以及头文件已经给出，我们只需在<code>mm.c</code>中进行编写。</p>
 <p>​        在这个模型中，分配器的分配的chunk的结构大致如下，运用带边界标记的chunk使堆块合并更加优雅。</p>
-<p>​                <a target="_blank" rel="noopener" href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-12-03%20%E4%B8%8B%E5%8D%885.33.23.png" data-caption="截屏2021-12-03 下午5.33.23" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-12-03%20%E4%B8%8B%E5%8D%885.33.23.png" alt="截屏2021-12-03 下午5.33.23"></a></p>
+<p>​                <img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-12-03%20%E4%B8%8B%E5%8D%885.33.23.png" alt="截屏2021-12-03 下午5.33.23"></p>
 <p>​        </p>
-<h2 id="2）利用宏定义简化指针操作">2）利用宏定义简化指针操作<a class="post-anchor" href="#2）利用宏定义简化指针操作"></a></h2><p>​        为了简化在操作chunk在链表中的一些与指针相关的行为，我们可以定义一系列宏来将这些操作打包，使得代码更为简洁，同时一些基本的常数也将被定义。</p>
+<h2 id="2）利用宏定义简化指针操作"><a href="#2）利用宏定义简化指针操作" class="headerlink" title="2）利用宏定义简化指针操作"></a>2）利用宏定义简化指针操作</h2><p>​        为了简化在操作chunk在链表中的一些与指针相关的行为，我们可以定义一系列宏来将这些操作打包，使得代码更为简洁，同时一些基本的常数也将被定义。</p>
 <p>​    </p>
-<p>​        <a target="_blank" rel="noopener" href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-12-04%20%E4%B8%8B%E5%8D%885.05.59.png" data-caption="截屏2021-12-04 下午5.05.59" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-12-04%20%E4%B8%8B%E5%8D%885.05.59.png" alt="截屏2021-12-04 下午5.05.59"></a></p>
+<p>​        <img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-12-04%20%E4%B8%8B%E5%8D%885.05.59.png" alt="截屏2021-12-04 下午5.05.59"></p>
 <p>​            </p>
-<h2 id="3）level·1">3）level·1<a class="post-anchor" href="#3）level·1"></a></h2><p>​        level1利用隐式空闲链表+首次/下一次/最佳适配三种方式实现。</p>
-<h3 id="first-fit">first_fit<a class="post-anchor" href="#first-fit"></a></h3><h4 id="mm-init">mm_init()<a class="post-anchor" href="#mm-init"></a></h4><p>​        首先是<code>mm_init()</code>函数，利用<code>mm_sbrk()</code>创建一个4字的空闲链表，将链表第一个双字的首尾分别标记为序言块的header和footer，然后将第三个字标记为结尾块，然后调用<code>extend_heap()</code>函数初始化堆空间。被初始化的size为<code>CHUNKSIZE/WSIZE</code>也就是<code>1*10^12 / 4</code>。</p>
+<h2 id="3）level·1"><a href="#3）level·1" class="headerlink" title="3）level·1"></a>3）level·1</h2><p>​        level1利用隐式空闲链表+首次/下一次/最佳适配三种方式实现。</p>
+<h3 id="first-fit"><a href="#first-fit" class="headerlink" title="first_fit"></a>first_fit</h3><h4 id="mm-init"><a href="#mm-init" class="headerlink" title="mm_init()"></a>mm_init()</h4><p>​        首先是<code>mm_init()</code>函数，利用<code>mm_sbrk()</code>创建一个4字的空闲链表，将链表第一个双字的首尾分别标记为序言块的header和footer，然后将第三个字标记为结尾块，然后调用<code>extend_heap()</code>函数初始化堆空间。被初始化的size为<code>CHUNKSIZE/WSIZE</code>也就是<code>1*10^12 / 4</code>。</p>
 <p>​        然后是<code>extend_heap()</code>函数，利用<code>mm_sbrk()</code>创建size大小的空间，size由之前初始化的size决定。并且将整个空chunk的对应位标记头和脚部。最后，在很可能出现的前一个堆以一个空闲块结束的情况，我们调用coalesce函数来合并两个空闲块 ，并返回指向合并后的块的块指针。coalesce函数将在后面的部分被详细分析。</p>
-<h4 id="mm-malloc">mm_malloc()<a class="post-anchor" href="#mm-malloc"></a></h4><p>​        堆空间初始化之后，我们首先设计<code>mm_malloc()</code>。</p>
+<h4 id="mm-malloc"><a href="#mm-malloc" class="headerlink" title="mm_malloc()"></a>mm_malloc()</h4><p>​        堆空间初始化之后，我们首先设计<code>mm_malloc()</code>。</p>
 <p>​        函数大致功能是：</p>
 <ol>
 <li><p>检查请求真假，然后准备分配chunk</p>
@@ -222,27 +246,27 @@
 </li>
 <li><p>如果没有在free list中找到，则直接调用<code>extend_heap()    </code>生成对应的空间。</p>
 <p>​    </p>
-<p><a target="_blank" rel="noopener" href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-12-04%20%E4%B8%8B%E5%8D%887.21.02.png" data-caption="截屏2021-12-04 下午7.21.02" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-12-04%20%E4%B8%8B%E5%8D%887.21.02.png" alt="截屏2021-12-04 下午7.21.02"></a>    </p>
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-12-04%20%E4%B8%8B%E5%8D%887.21.02.png" alt="截屏2021-12-04 下午7.21.02">    </p>
 <p>这里csapp没有为我们提供<code>find_fit()</code>以及<code>place()</code>的例子,需要我们自己编写。我们先放着，之后再来讨论。</p>
 </li>
 </ol>
-<h4 id="mm-free">mm_free()<a class="post-anchor" href="#mm-free"></a></h4><p>​        <code>mm_malloc()</code>之后，我们来看<code>mm_free()</code></p>
+<h4 id="mm-free"><a href="#mm-free" class="headerlink" title="mm_free()"></a>mm_free()</h4><p>​        <code>mm_malloc()</code>之后，我们来看<code>mm_free()</code></p>
 <p>​        它被用来释放已被分配的chunk，相当于释放malloc所请求的bp，然后需要将被释放的chunk与其物理领接的free chunk合并。</p>
 <p>​        </p>
-<p>​        <a target="_blank" rel="noopener" href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-12-04%20%E4%B8%8B%E5%8D%885.40.53.png" data-caption="截屏2021-12-04 下午5.40.53" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-12-04%20%E4%B8%8B%E5%8D%885.40.53.png" alt="截屏2021-12-04 下午5.40.53"></a></p>
-<h4 id="coalesce">coalesce()<a class="post-anchor" href="#coalesce"></a></h4><p>​        重点来看<code>coalesce()</code></p>
+<p>​        <img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-12-04%20%E4%B8%8B%E5%8D%885.40.53.png" alt="截屏2021-12-04 下午5.40.53"></p>
+<h4 id="coalesce"><a href="#coalesce" class="headerlink" title="coalesce()"></a>coalesce()</h4><p>​        重点来看<code>coalesce()</code></p>
 <p>​        这里用到的合并方式的构思图表如下：</p>
-<p>​        <a target="_blank" rel="noopener" href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-12-03%20%E4%B8%8B%E5%8D%885.35.04.png" data-caption="截屏2021-12-03 下午5.35.04" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-12-03%20%E4%B8%8B%E5%8D%885.35.04.png" alt="截屏2021-12-03 下午5.35.04"></a></p>
+<p>​        <img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-12-03%20%E4%B8%8B%E5%8D%885.35.04.png" alt="截屏2021-12-03 下午5.35.04"></p>
 <p>​        也是非常地直观容易理解。</p>
 <p>​        它的代码实现也直观地被分为如图四种情况，所以我们先要定义对应图中几种状态的bp状态。</p>
-<pre><code class="c">        size_t prev_alloc = GET_ALLOC(FTRP(PREV_BLKP(bp)));
-    size_t next_alloc = GET_ALLOC(HDRP(NEXT_BLKP(bp)));
-    size_t size = GET_SIZE(HDRP(bp));
-</code></pre>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">size_t</span> prev_alloc = GET_ALLOC(FTRP(PREV_BLKP(bp)));</span><br><span class="line">  <span class="keyword">size_t</span> next_alloc = GET_ALLOC(HDRP(NEXT_BLKP(bp)));</span><br><span class="line">  <span class="keyword">size_t</span> size = GET_SIZE(HDRP(bp));</span><br></pre></td></tr></table></figure>
+
+
+
 <p>​        大致框架如下：</p>
-<p><a target="_blank" rel="noopener" href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-12-04%20%E4%B8%8B%E5%8D%886.00.07.png" data-caption="截屏2021-12-04 下午6.00.07" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-12-04%20%E4%B8%8B%E5%8D%886.00.07.png" alt="截屏2021-12-04 下午6.00.07"></a></p>
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-12-04%20%E4%B8%8B%E5%8D%886.00.07.png" alt="截屏2021-12-04 下午6.00.07"></p>
 <p>​        </p>
-<h4 id="find-fit">find_fit()<a class="post-anchor" href="#find-fit"></a></h4><p>​        整个malloc lab的重点，需要自己实现一个free chunk的适配寻找。</p>
+<h4 id="find-fit"><a href="#find-fit" class="headerlink" title="find_fit()"></a>find_fit()</h4><p>​        整个malloc lab的重点，需要自己实现一个free chunk的适配寻找。</p>
 <p>​        一些常见的方法有</p>
 <ol>
 <li>首次适配</li>
@@ -257,135 +281,70 @@
 <p>,且状态为free，如果是，将bp标记为allocated，在bp+size的地方标记为footer，分割该chunk，虽然会留下一定的碎片，但这也是首次适配无法避免的缺点。如果不是，则继续寻找下一个free chunk并判断。</p>
 <p>​        然后来研究代码实现：</p>
 <p>​        自己瞎写了一个，问题不大。</p>
-<h4 id="place">place()<a class="post-anchor" href="#place"></a></h4><p>​        函数功能是将请求块放置在空闲块的起始位置，只有当剩余部分的大小等于或者超出最小块的大小时，才进行分割。</p>
-<pre><code class="c">
+<h4 id="place"><a href="#place" class="headerlink" title="place()"></a>place()</h4><p>​        函数功能是将请求块放置在空闲块的起始位置，只有当剩余部分的大小等于或者超出最小块的大小时，才进行分割。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">place</span><span class="params">(<span class="keyword">void</span> *bp, <span class="keyword">size_t</span> asize)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">size_t</span> size = GET_SIZE(HDRP(bp));</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> ((size - asize) &gt;= (<span class="number">2</span>*DSIZE)) &#123;</span><br><span class="line">        PUT(HDRP(bp),PACK(asize,<span class="number">1</span>));</span><br><span class="line">        PUT(FTRP(bp),PACK(asize,<span class="number">1</span>));</span><br><span class="line">        PUT(HDRP(NEXT_BLKP(bp)),PACK(size - asize,<span class="number">0</span>));</span><br><span class="line">        PUT(FTRP(NEXT_BLKP(bp)),PACK(size - asize,<span class="number">0</span>));</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        PUT(HDRP(bp),PACK(size,<span class="number">1</span>));</span><br><span class="line">        PUT(FTRP(bp),PACK(size,<span class="number">1</span>));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-static void place(void *bp, size_t asize)
-{
-    size_t size = GET_SIZE(HDRP(bp));
-    
-    if ((size - asize) &gt;= (2*DSIZE)) {
-        PUT(HDRP(bp),PACK(asize,1));
-        PUT(FTRP(bp),PACK(asize,1));
-        PUT(HDRP(NEXT_BLKP(bp)),PACK(size - asize,0));
-        PUT(FTRP(NEXT_BLKP(bp)),PACK(size - asize,0));
-    } else {
-        PUT(HDRP(bp),PACK(size,1));
-        PUT(FTRP(bp),PACK(size,1));
-    }
-}
-</code></pre>
+
+
+
+
+
+
 <p>问题不大</p>
-<p><a target="_blank" rel="noopener" href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-12-05%20%E4%B8%8A%E5%8D%8811.46.52.png" data-caption="截屏2021-12-05 上午11.46.52" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-12-05%20%E4%B8%8A%E5%8D%8811.46.52.png" alt="截屏2021-12-05 上午11.46.52"></a></p>
-<h3 id="next-fit">next_fit<a class="post-anchor" href="#next-fit"></a></h3><p>​        下一次适配，主要特点是在第一次在空闲链表中找到合适的chunk以后，下一次搜索就不再是从头到尾，而是从上一次搜索的chunk开始继续搜索。</p>
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-12-05%20%E4%B8%8A%E5%8D%8811.46.52.png" alt="截屏2021-12-05 上午11.46.52"></p>
+<h3 id="next-fit"><a href="#next-fit" class="headerlink" title="next_fit"></a>next_fit</h3><p>​        下一次适配，主要特点是在第一次在空闲链表中找到合适的chunk以后，下一次搜索就不再是从头到尾，而是从上一次搜索的chunk开始继续搜索。</p>
 <p>​        相比于首次适配，写循环时就不能嗯搞，要处理第一次找到fit chunk后的状态。大致的思路是：先按照首次适配的方式找到第一个适合的chunk，然后记录下chunk的bp，下一次寻找时则从记录的bp开始寻找。</p>
 <p>​            那么肯定需要定义一个外部变量来记录每次找到的bp。</p>
-<pre><code class="c">static void *next_find_fit(size_t asize)
-{  
-    char * bp = heap_listp;
-    size_t ALLOC_STATUS;
-    size_t SIZE;
-    while (GET_SIZE(HDRP(NEXT_BLKP(bp))) &gt; 0)
-    {   if(mark_bp)
-        {
-            bp = NEXT_BLKP(mark_bp);
-            ALLOC_STATUS = GET_ALLOC(HDRP(bp));
-            if (ALLOC_STATUS)
-            continue;
-            if(SIZE &lt; asize) 
-            continue;
-            mark_bp = bp;
-            return bp; 
-            continue;
-        }
-        bp = NEXT_BLKP(bp); 
-        ALLOC_STATUS = GET_ALLOC(HDRP(bp));
-        if (ALLOC_STATUS)
-        continue;
-        if(SIZE &lt; asize) 
-        continue;
-        mark_bp = bp;
-        return bp; 
-    }
-    return NULL;
-}
-</code></pre>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> *<span class="title">next_find_fit</span><span class="params">(<span class="keyword">size_t</span> asize)</span></span></span><br><span class="line"><span class="function"></span>&#123;  </span><br><span class="line">    <span class="keyword">char</span> * bp = heap_listp;</span><br><span class="line">    <span class="keyword">size_t</span> ALLOC_STATUS;</span><br><span class="line">    <span class="keyword">size_t</span> SIZE;</span><br><span class="line">    <span class="keyword">while</span> (GET_SIZE(HDRP(NEXT_BLKP(bp))) &gt; <span class="number">0</span>)</span><br><span class="line">    &#123;   <span class="keyword">if</span>(mark_bp)</span><br><span class="line">        &#123;</span><br><span class="line">            bp = NEXT_BLKP(mark_bp);</span><br><span class="line">            ALLOC_STATUS = GET_ALLOC(HDRP(bp));</span><br><span class="line">            <span class="keyword">if</span> (ALLOC_STATUS)</span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line">            <span class="keyword">if</span>(SIZE &lt; asize) </span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line">            mark_bp = bp;</span><br><span class="line">            <span class="keyword">return</span> bp; </span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        bp = NEXT_BLKP(bp); </span><br><span class="line">        ALLOC_STATUS = GET_ALLOC(HDRP(bp));</span><br><span class="line">        <span class="keyword">if</span> (ALLOC_STATUS)</span><br><span class="line">        <span class="keyword">continue</span>;</span><br><span class="line">        <span class="keyword">if</span>(SIZE &lt; asize) </span><br><span class="line">        <span class="keyword">continue</span>;</span><br><span class="line">        mark_bp = bp;</span><br><span class="line">        <span class="keyword">return</span> bp; </span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>​        问题不大。</p>
-<h4 id="best-fit">best_fit<a class="post-anchor" href="#best-fit"></a></h4><p>​        搜索链表中的每一个堆块，选择符合条件的最小空闲块。目前来说思路是这样的：</p>
+<h4 id="best-fit"><a href="#best-fit" class="headerlink" title="best_fit"></a>best_fit</h4><p>​        搜索链表中的每一个堆块，选择符合条件的最小空闲块。目前来说思路是这样的：</p>
 <p>​        对整个堆空间进行搜索，标记合适的chunk，并将size储存在数组中，在搜索结束后进行排序，选择最适合的chunk，并将bp返回。</p>
 <p>​        对堆空间进行搜索，大概只需要在原本的算法上去掉结束循环的判定条件。然后排序的话随意找个排序算法来就行，图方便我复制了一个冒泡排序，虽然时间复杂度不太行。</p>
 <p>​        但是存在一个问题就是，排序肯定是以chunk的size为标准，但是如何关联size和bp呢？我将所有符合条件的chunksize排序之后，如何找到对应的bp？</p>
 <p>​        一个比较直观的解决方法就是二维数组，将bp和size同时存放，同时排序，当然也许可以使用类似PACK的宏，或者为每一个size增加一个idx，也是二维数组的思路，但是并不是直接将bp存放，而是存放bp的idx。</p>
 <p>​        考虑到二维数组排序有一些麻烦，故直接定义结构体来存放size与bp的idx。</p>
-<pre><code class="c">static void *best_find_fit(size_t asize)
-{   
-    char * bp = heap_listp;
-    size_t ALLOC_STATUS;
-    size_t SIZE;
-    struct bp_list list[];
-    
-    while (GET_SIZE(HDRP(NEXT_BLKP(bp))) &gt; 0)
-    {
-        for ( int i = 0; i &lt; CHUNKSIZE/WSIZE; i++)
-        {   
-            bp = NEXT_BLKP(bp);
-            ALLOC_STATUS = GET_ALLOC(HDRP(bp));
-            if (ALLOC_STATUS) continue;
-            if(SIZE &lt; asize) continue
-            list[i].bp_size = GET_SIZE(HDRP(bp));
-            list[i].bp_idx = i;
-            list[i].bp = HDRP(bp);
-            
-        } 
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> *<span class="title">best_find_fit</span><span class="params">(<span class="keyword">size_t</span> asize)</span></span></span><br><span class="line"><span class="function"></span>&#123;   </span><br><span class="line">    <span class="keyword">char</span> * bp = heap_listp;</span><br><span class="line">    <span class="keyword">size_t</span> ALLOC_STATUS;</span><br><span class="line">    <span class="keyword">size_t</span> SIZE;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">bp_list</span> <span class="title">list</span>[];</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">while</span> (GET_SIZE(HDRP(NEXT_BLKP(bp))) &gt; <span class="number">0</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">for</span> ( <span class="keyword">int</span> i = <span class="number">0</span>; i &lt; CHUNKSIZE/WSIZE; i++)</span><br><span class="line">        &#123;   </span><br><span class="line">            bp = NEXT_BLKP(bp);</span><br><span class="line">            ALLOC_STATUS = GET_ALLOC(HDRP(bp));</span><br><span class="line">            <span class="keyword">if</span> (ALLOC_STATUS) <span class="keyword">continue</span>;</span><br><span class="line">            <span class="keyword">if</span>(SIZE &lt; asize) <span class="keyword">continue</span></span><br><span class="line">            <span class="built_in">list</span>[i].bp_size = GET_SIZE(HDRP(bp));</span><br><span class="line">            <span class="built_in">list</span>[i].bp_idx = i;</span><br><span class="line">            <span class="built_in">list</span>[i].bp = HDRP(bp);</span><br><span class="line">            </span><br><span class="line">        &#125; </span><br><span class="line"></span><br><span class="line">        bubble_sort(<span class="keyword">int</span> <span class="built_in">list</span>[i].bp_size,<span class="keyword">int</span> i);</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">list</span>[i].bp;</span><br><span class="line">            </span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-        bubble_sort(int list[i].bp_size,int i);
-        return list[i].bp;
-            
-
-    }
-    return NULL;
-}
-</code></pre>
-<h2 id="4-level2">4) level2<a class="post-anchor" href="#4-level2"></a></h2><p>​        level2利用显式链表和分离适配来实现，同时这种方法也是非常接近ptmalloc2的，所以学习这种方法的思想是十分必要的。</p>
-<h3 id="数据结构">数据结构<a class="post-anchor" href="#数据结构"></a></h3><h4 id="显式空闲链表">显式空闲链表<a class="post-anchor" href="#显式空闲链表"></a></h4><p>​        相比于隐式空闲链表没有实际的链表去管理空闲块，显式空闲链表使用新增的双向循环链表，通过在chunk头添加指向逻辑上相邻的chunk的指针来相互连接。显式链表为chunk指针操作增添了更多姿势，突破了隐式性能的局限性。当然这个方案也不是完全没有缺点，为了包含指针和可能的脚部，显式空闲链表的chunk通常会更大一些，潜在地提高了内存碎片的程序。</p>
-<h4 id="chunk">chunk<a class="post-anchor" href="#chunk"></a></h4><p>​        显式链表chunk结构如图：</p>
-<p><a target="_blank" rel="noopener" href="https://pic1.zhimg.com/80/v2-c0cb0926ad2e469833bfff9e3fffd2e4_720w.jpg" data-caption="img" data-fancybox="images"><img src="https://pic1.zhimg.com/80/v2-c0cb0926ad2e469833bfff9e3fffd2e4_720w.jpg" alt="img"></a></p>
+<h2 id="4-level2"><a href="#4-level2" class="headerlink" title="4) level2"></a>4) level2</h2><p>​        level2利用显式链表和分离适配来实现，同时这种方法也是非常接近ptmalloc2的，所以学习这种方法的思想是十分必要的。</p>
+<h3 id="数据结构"><a href="#数据结构" class="headerlink" title="数据结构"></a>数据结构</h3><h4 id="显式空闲链表"><a href="#显式空闲链表" class="headerlink" title="显式空闲链表"></a>显式空闲链表</h4><p>​        相比于隐式空闲链表没有实际的链表去管理空闲块，显式空闲链表使用新增的双向循环链表，通过在chunk头添加指向逻辑上相邻的chunk的指针来相互连接。显式链表为chunk指针操作增添了更多姿势，突破了隐式性能的局限性。当然这个方案也不是完全没有缺点，为了包含指针和可能的脚部，显式空闲链表的chunk通常会更大一些，潜在地提高了内存碎片的程序。</p>
+<h4 id="chunk"><a href="#chunk" class="headerlink" title="chunk"></a>chunk</h4><p>​        显式链表chunk结构如图：</p>
+<p><img src="https://pic1.zhimg.com/80/v2-c0cb0926ad2e469833bfff9e3fffd2e4_720w.jpg" alt="img"></p>
 <p>​        有点类似ptalloc的机制，当chunk为allocated状态，中间为padding，当为free状态，会在padding开始前，也就是之前方案中的<code>bp</code>指向的地方增添两个指针：<code>next_bp</code>， <code>prev_bp</code>。</p>
-<h3 id="First-fit">First_fit<a class="post-anchor" href="#First-fit"></a></h3><p>​        因为确实不太会写，所以基本算是照着代码分析思路了。</p>
+<h3 id="First-fit"><a href="#First-fit" class="headerlink" title="First_fit"></a>First_fit</h3><p>​        因为确实不太会写，所以基本算是照着代码分析思路了。</p>
 <p>​        首先是完成显式空闲链表下first_fit的实现，这种方案目的是熟悉如何通过创建一个双向循环链表来管理空闲块。</p>
 <p>​        第一步是创建空闲链表。</p>
 <p>​        </p>
-<p><a target="_blank" rel="noopener" href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-12-09%20%E4%B8%8B%E5%8D%884.46.18.png" data-caption="截屏2021-12-09 下午4.46.18" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-12-09%20%E4%B8%8B%E5%8D%884.46.18.png" alt="截屏2021-12-09 下午4.46.18"></a></p>
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-12-09%20%E4%B8%8B%E5%8D%884.46.18.png" alt="截屏2021-12-09 下午4.46.18"></p>
 <p>​        显式链表下的<code>free()</code>也和隐式空闲链表没区别，都是把chunk 头的size置0，但是多出来了</p>
-<pre><code class="c">    SET_PREV(bp, 0);
-    SET_NEXT(bp, 0);
-</code></pre>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SET_PREV(bp, <span class="number">0</span>);</span><br><span class="line">SET_NEXT(bp, <span class="number">0</span>);</span><br></pre></td></tr></table></figure>
+
 <p>​        也就是先将需要free的chunk的fd和bk位全部设置为0，然后进行合并后放入空闲链表。</p>
 <p>​    </p>
 <p>​    </p>
 <p>然后编写将chunk插入和取出双向循环链表的操作。</p>
-<h4 id="insert-from-free-list">insert_from_free_list()<a class="post-anchor" href="#insert-from-free-list"></a></h4><p>​    将已分配块释放，chunk bp 被插入free list。</p>
-<p><a target="_blank" rel="noopener" href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-12-05%20%E4%B8%8B%E5%8D%8811.31.31.png" data-caption="截屏2021-12-05 下午11.31.31" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-12-05%20%E4%B8%8B%E5%8D%8811.31.31.png" alt="截屏2021-12-05 下午11.31.31"></a>        </p>
-<h4 id="remove-from-free-list">remove_from_free_list()<a class="post-anchor" href="#remove-from-free-list"></a></h4><p>​        在free list中拿出chunk。与隐式链表类似，分为四种情况。因为是双向循环链表，所以解链的过程也可以理解为unlink。</p>
+<h4 id="insert-from-free-list"><a href="#insert-from-free-list" class="headerlink" title="insert_from_free_list()"></a>insert_from_free_list()</h4><p>​    将已分配块释放，chunk bp 被插入free list。</p>
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-12-05%20%E4%B8%8B%E5%8D%8811.31.31.png" alt="截屏2021-12-05 下午11.31.31">        </p>
+<h4 id="remove-from-free-list"><a href="#remove-from-free-list" class="headerlink" title="remove_from_free_list()"></a>remove_from_free_list()</h4><p>​        在free list中拿出chunk。与隐式链表类似，分为四种情况。因为是双向循环链表，所以解链的过程也可以理解为unlink。</p>
 <p>​        第一种情况：<code>prev == NULL &amp;&amp; next == NULL</code>，chunk前后都是allocated chunk，双向链表中啥也没有，设置表头为空。</p>
 <p>​        第二种情况：<code>prev == NULL</code>    ，前一个chunk为allocated，前一项为空，说明此时chunk的前面没有chunk，那么bk本身就是空的，解链就需要设置fd为空，也就是next为0。</p>
 <p>​        第三种情况同理。</p>
 <p>​        第四种情况：chunk前后都有free chunk，那么解链相当于一个标准的unlink，就是将前一个chunk的bp的next位设置为下一个chunk的bp，然后下一个chunk的prev位设置为前一个chunk的bp。</p>
-<p><a target="_blank" rel="noopener" href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-12-05%20%E4%B8%8B%E5%8D%8811.47.40.png" data-caption="截屏2021-12-05 下午11.47.40" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-12-05%20%E4%B8%8B%E5%8D%8811.47.40.png" alt="截屏2021-12-05 下午11.47.40"></a></p>
-<h3 id="分离适配">分离适配<a class="post-anchor" href="#分离适配"></a></h3><p>​        分离适配的特点就是利用很多储存不同大小范围的chunk的链表来管理free chunk，很大程度上减小了内存碎片的产生。</p>
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-12-05%20%E4%B8%8B%E5%8D%8811.47.40.png" alt="截屏2021-12-05 下午11.47.40"></p>
+<h3 id="分离适配"><a href="#分离适配" class="headerlink" title="分离适配"></a>分离适配</h3><p>​        分离适配的特点就是利用很多储存不同大小范围的chunk的链表来管理free chunk，很大程度上减小了内存碎片的产生。</p>
 <p>​        根据参考资料，我们可以将大小以2^n划分。</p>
-<p>​        <a target="_blank" rel="noopener" href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-12-05%20%E4%B8%8B%E5%8D%8811.52.48.png" data-caption="截屏2021-12-05 下午11.52.48" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-12-05%20%E4%B8%8B%E5%8D%8811.52.48.png" alt="截屏2021-12-05 下午11.52.48"></a></p>
-<p><a target="_blank" rel="noopener" href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-12-05%20%E4%B8%8B%E5%8D%8811.52.59.png" data-caption="截屏2021-12-05 下午11.52.59" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-12-05%20%E4%B8%8B%E5%8D%8811.52.59.png" alt="截屏2021-12-05 下午11.52.59"></a></p>
+<p>​        <img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-12-05%20%E4%B8%8B%E5%8D%8811.52.48.png" alt="截屏2021-12-05 下午11.52.48"></p>
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-12-05%20%E4%B8%8B%E5%8D%8811.52.59.png" alt="截屏2021-12-05 下午11.52.59"></p>
 <p>​                    </p>
-<h2 id="5）结果与改进">5）结果与改进<a class="post-anchor" href="#5）结果与改进"></a></h2><p>​        </p>
+<h2 id="5）结果与改进"><a href="#5）结果与改进" class="headerlink" title="5）结果与改进"></a>5）结果与改进</h2><p>​        </p>
 <p>​        </p>
-<h2 id="6）反思与思考">6）反思与思考<a class="post-anchor" href="#6）反思与思考"></a></h2><p>​        本来应该是在今年暑假就要完成的东西，因为太过懒散而拖到了现在。不得不说如果沉下心来做，这个lab其实不算很难，最难的实际上是对这个简单的内存分配器从0到逐渐熟悉架构的过程。如果不去认真读csapp，了解程序的大致架构的话，就会一头雾水从而放弃，暑假便是因此。</p>
+<h2 id="6）反思与思考"><a href="#6）反思与思考" class="headerlink" title="6）反思与思考"></a>6）反思与思考</h2><p>​        本来应该是在今年暑假就要完成的东西，因为太过懒散而拖到了现在。不得不说如果沉下心来做，这个lab其实不算很难，最难的实际上是对这个简单的内存分配器从0到逐渐熟悉架构的过程。如果不去认真读csapp，了解程序的大致架构的话，就会一头雾水从而放弃，暑假便是因此。</p>
 <p>​        其实大多数代码并不需要自己完成，也是确实没有这个水平，但是也有我们自己需要思考，然后实现的地方，就比如说适配的方法。我从来没有学过数据结构或者算法，也没有刷过类似的题，c语言也就是局限于看得懂这样的普通计算机专业学生水平，对于这种大面积的指针操作一时确实有些摸不着头脑，但是csapp给了我们一种解：利用宏，将复杂的指针运算以及强制类型转换封装，变得简单易用，这使得在我操作指针时，几乎感受不到指针的复杂所在，也是我觉得收获最大之所在。</p>
 <p>​        关于三种适配方法，第一种我在编写时并不太理解如何实现“继续寻找下一个chunk”，于是自己按照感觉写了一个版本，然后寻找了一些参考，发现我写的除了这一步，其他都问题不大，然后就把自己的版本修正了。之后的两种适配方法都是基于首次适配的代码加以适当的条件修改而成，不得不说其实十分有趣。最佳适配牵涉到数组的排序以及结构体的定义，说实话上一次编写带结构体的c程序还是上学期起哦期末的暑假考核，但是也没有遇到什么障碍，就这么顺着写了。现在想来我们大一上的c语言大作业真是简单捏。</p>
 <p>​        </p>
-<h2 id="7）参考">7）参考<a class="post-anchor" href="#7）参考"></a></h2><p>​        <a target="_blank" rel="noopener" href="https://www.jianshu.com/p/48d5d0554b3b">六 Malloc Lab</a></p>
+<h2 id="7）参考"><a href="#7）参考" class="headerlink" title="7）参考"></a>7）参考</h2><p>​        <a target="_blank" rel="noopener" href="https://www.jianshu.com/p/48d5d0554b3b">六 Malloc Lab</a></p>
 <p>​    <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/150100073">CSAPP:Lab5-Malloc Lab</a></p>
-</body></html>
+
             <div class="clearfix"></div>
             <hr class="nogutter">
         </div>

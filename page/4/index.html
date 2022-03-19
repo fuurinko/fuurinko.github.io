@@ -78,9 +78,33 @@
         		<a class="sb-toggle-submenu">Categories<span class="sb-caret"></span></a>
             	<ul class="sb-submenu">
 				  	
-				    <li><a href="/categories/heap/" class="animsition-link">heap<small>(1)</small></a></li>
+				    <li><a href="/categories/CSAPP-LAB/" class="animsition-link">CSAPP LAB<small>(1)</small></a></li>
 				    
-				    <li><a href="/categories/stack/" class="animsition-link">stack<small>(1)</small></a></li>
+				    <li><a href="/categories/Heap-Fastbin-Attack/" class="animsition-link">Heap - Fastbin Attack<small>(6)</small></a></li>
+				    
+				    <li><a href="/categories/Heap-Off-By-One/" class="animsition-link">Heap - Off By One<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/Heap-Tcache/" class="animsition-link">Heap - Tcache<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/MESS/" class="animsition-link">MESS<small>(17)</small></a></li>
+				    
+				    <li><a href="/categories/OTHER-IO-FILE/" class="animsition-link">OTHER - IO FILE<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/Pwn-college/" class="animsition-link">Pwn.college<small>(9)</small></a></li>
+				    
+				    <li><a href="/categories/STACK-DynELF/" class="animsition-link">STACK - DynELF<small>(2)</small></a></li>
+				    
+				    <li><a href="/categories/STACK-Format/" class="animsition-link">STACK - Format<small>(3)</small></a></li>
+				    
+				    <li><a href="/categories/STACK-ROP/" class="animsition-link">STACK - ROP<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/STACK-SROP/" class="animsition-link">STACK - SROP<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/STACK-Stack-Overflow/" class="animsition-link">STACK - Stack Overflow<small>(4)</small></a></li>
+				    
+				    <li><a href="/categories/STACK-ret2dlsolve/" class="animsition-link">STACK - ret2dlsolve<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/STACK-sandbox/" class="animsition-link">STACK - sandbox<small>(1)</small></a></li>
 				    
 				</ul>
         	</li>
@@ -197,6 +221,169 @@
 
 <section id="intro">
     <div class="container">
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2021/11/11/Seccomp机制学习/">Seccomp机制学习</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2021-11-11T13:12:47.210Z" itemprop="datePublished">
+          2021-11-11
+      </time>
+    
+    
+    | 
+    <a href='/tags/pwnable/'>pwnable</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        1）Seccomp基础Seccomp简介​        就像ALSR，NX这样，Seccomp也是linux内核的一种安全机制。这种保护机制会禁用某些系统调用，有效避免了越权行为的发生。
+启动Seccomp​        如果要编写调用Seccomp的程序，需要先安装相应的头文件。
+1apt install libseccomp-dev libseccomp2 seccomp
+
+
+
+
+
+Seccomp的模式以及参数比较多，这里只总结
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2021/11/11/Seccomp机制学习/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2021/11/11/pwndocker的pwn题体验（下）/">pwndocker的pwn题体验（下</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2021-11-10T20:04:03.336Z" itemprop="datePublished">
+          2021-11-11
+      </time>
+    
+    
+    | 
+    <a href='/tags/mess/'>mess</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        0）​        哈哈，还是连续剧，我也想不到捏。我也不想捏。
+1）问题​        pwndocker体验了快一周，目前来说主要问题有这几个：
+
+启动tmux进行调试时机器发热严重，风扇狂转
+
+挂载文件夹内文件不同步
+
+快照的制作相对麻烦（时间久，步骤多）
+
+打开需要输入命令，有点烦。
+​    想了怪久的，就想到这三点，第三点纯属鸡蛋里挑骨头，主要pwndocker体验确实比较优雅，为了美观用vim编辑exp我都能忍。
+（看
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2021/11/11/pwndocker的pwn题体验（下）/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2021/11/07/srop学习/">SROP学习</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2021-11-07T11:11:19.208Z" itemprop="datePublished">
+          2021-11-07
+      </time>
+    
+    
+    | 
+    <a href='/tags/stack/'>stack</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        1)前言​        在看完csapp的异常控制流之后，对于信号以及系统调用有了更加深入的了解，故借此机会探明SROP，这个本身并不复杂的知识点。
+2）SROP原理​         当用户向内核发起signal时，此时系统切换为内核态，并且由内核保存进程的上下文（通常是一些寄存器状态）至用户栈，然后切换回用户态，执行信号处理程序。程序执行完毕后，再次切换成内核态，将保存的寄存器状态恢复后返回用户态。
+​        所以这一串来
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2021/11/07/srop学习/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2021/11/02/pwndocker的pwn题体验（上）/">pwndocker的pwn题体验（上）</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2021-11-02T14:54:29.012Z" itemprop="datePublished">
+          2021-11-02
+      </time>
+    
+    
+    | 
+    <a href='/tags/pwnable/'>pwnable</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        1）前言​        之前看到star大哥开始学pwn力，而且是使用的iterm+pwndocker的环境，觉得非常优雅，便一直想尝试一下，正好最近在研究docker的使用，可以拿来试一试。并且pwndocker也可以十分优雅地指定我们环境的glibc版本，所以是一个非常值得尝试的事。
+2）pwndocker启动​        首先是如何build pwndocker的问题。
+​        如果直接docker pull pw
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2021/11/02/pwndocker的pwn题体验（上）/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
         
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
@@ -362,7 +549,7 @@ E: Unable to correct problems, you have held broken pack
     
     
     | 
-    <a href='/tags/format/'>format</a>
+    <a href='/tags/FMT/'>FMT</a>
     
     
 </span>
@@ -411,178 +598,16 @@ E: Unable to correct problems, you have held broken pack
                     <p>
                       
                         0)preview​    一般通过萌新一般在接触pwn的时候，一个必不可少的步骤就是下载pwntools，并且在自己人生第一个脚本上输入：
-from pwn import*
+1from pwn import*
 
 ​    我也如此。
 ​    在学习pwn知识快一年的今天，倘若还是对pwntools这个神一般的工具迷茫不解，那我确实还不是一个合格的pwn手。
-​    这个系列的目的是通过简单的源码剖析，辅以相应的例题，探究pwn题，gdb调试，以及pwntools本身
+​    这个系列的目的是通过简单的源码剖析，辅以相应的例题，探究pwn题，gdb调试，以及pwntools本
                       
                     </p>
                     
                     <p class="pull-right readMore">
                         <a href="/2021/10/27/pwntools（1）--pwnlib.tube/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2021/10/27/gdb附加调试的一些黑魔法/">gdb附加调试的一些黑魔法</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2021-10-27T03:21:25.650Z" itemprop="datePublished">
-          2021-10-27
-      </time>
-    
-    
-    | 
-    <a href='/tags/gdb/'>gdb</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        1）abstract​    这个part主要综合了一些奇怪的调试中遇到的问题，不定期更新。
-2）格式化字符串-cctf-pwn31）pause（p）导致ERROR: Could not find ELF base问题​    在开始动调这个exp的时候，发现一个很奇怪的点就是如果下的断点的模式gdb.attach(sh)，那么程序会异常退出，大概是这样：
-Attaching to program: /home/rin/pwn/ctf-
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2021/10/27/gdb附加调试的一些黑魔法/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2021/10/23/格式化字符串漏洞利用/">格式化字符串漏洞学习</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2021-10-23T07:05:16.822Z" itemprop="datePublished">
-          2021-10-23
-      </time>
-    
-    
-    | 
-    <a href='/tags/format/'>format</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        1）前言绿盟杯pwn1，格式化字符串+沙盒orw。保护全开。
-首先对于格式化字符串我的理解就不是很深刻，甚至从来没有完整地刷过一道格式化字符串的题目。
-所以碰到这道题，算是又给我敲了第nn个警钟。
-非常清晰地告诉我：我是垃圾。
-2）格式化字符串基本原理ctfwiki上的格式化字符串教程写得挺好的，可以参考。
-格式化字符串参数%[parameter][flags][field width][.precision][length]type
-
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2021/10/23/格式化字符串漏洞利用/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2021/10/13/pwn基础/">pwn基础</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2021-10-13T09:25:43.372Z" itemprop="datePublished">
-          2021-10-13
-      </time>
-    
-    
-    | 
-    <a href='/tags/pwn-Primary/'>pwn Primary</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        [TOC]
-汇编语言1）寻址1/直接寻址mov     rax, fs:28h #直接寻址，fs段寄存器+偏移量。这里其实是一个canary的值。
-
-2/间接寻址间接在使用指针以及解引用的形式
-mov     [rbp+var_8], rax # 寄存器相对寻址。相当于把rax，也就是这个canary值放到rbp+var_8的地方。
-
-3/比例寻址例如在数组遍历中
-.data
-arrayD 1,2,3,4
-.code
-mov esi,3
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2021/10/13/pwn基础/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2021/08/17/ubuntu加载不同版本libc/">ubuntu加载不同版本libc</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2021-08-17T02:53:00.000Z" itemprop="datePublished">
-          2021-08-17
-      </time>
-    
-    
-    | 
-    <a href='/tags/linux-primary/'>linux primary</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        1）review 这个问题困扰了我多年，之前年轻的时候不知道为什么有的是题我就是死活调不出，后来才知道呀原来用的ubunt的版本太高了。但是我一直忽视了这个问题以为并不是什么关键的因素。我是这么认为的–只要清楚了利用方法并记住对应的libc版本，无论是不是真的把这道题调试出来了都无所谓。
-然后我就是这样一步一步地变得不会调试的。
-但是完整地把一道题调出来。这才是关键。这才是pwn题的灵魂。
-呜呜呜，我居然一直忽略了它的灵魂
-所以这一次我
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2021/08/17/ubuntu加载不同版本libc/">Read More...</a>
                     </p>
                     
                 </div>

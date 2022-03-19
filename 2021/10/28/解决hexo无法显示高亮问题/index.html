@@ -78,9 +78,33 @@
         		<a class="sb-toggle-submenu">Categories<span class="sb-caret"></span></a>
             	<ul class="sb-submenu">
 				  	
-				    <li><a href="/categories/heap/" class="animsition-link">heap<small>(1)</small></a></li>
+				    <li><a href="/categories/CSAPP-LAB/" class="animsition-link">CSAPP LAB<small>(1)</small></a></li>
 				    
-				    <li><a href="/categories/stack/" class="animsition-link">stack<small>(1)</small></a></li>
+				    <li><a href="/categories/Heap-Fastbin-Attack/" class="animsition-link">Heap - Fastbin Attack<small>(6)</small></a></li>
+				    
+				    <li><a href="/categories/Heap-Off-By-One/" class="animsition-link">Heap - Off By One<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/Heap-Tcache/" class="animsition-link">Heap - Tcache<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/MESS/" class="animsition-link">MESS<small>(17)</small></a></li>
+				    
+				    <li><a href="/categories/OTHER-IO-FILE/" class="animsition-link">OTHER - IO FILE<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/Pwn-college/" class="animsition-link">Pwn.college<small>(9)</small></a></li>
+				    
+				    <li><a href="/categories/STACK-DynELF/" class="animsition-link">STACK - DynELF<small>(2)</small></a></li>
+				    
+				    <li><a href="/categories/STACK-Format/" class="animsition-link">STACK - Format<small>(3)</small></a></li>
+				    
+				    <li><a href="/categories/STACK-ROP/" class="animsition-link">STACK - ROP<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/STACK-SROP/" class="animsition-link">STACK - SROP<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/STACK-Stack-Overflow/" class="animsition-link">STACK - Stack Overflow<small>(4)</small></a></li>
+				    
+				    <li><a href="/categories/STACK-ret2dlsolve/" class="animsition-link">STACK - ret2dlsolve<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/STACK-sandbox/" class="animsition-link">STACK - sandbox<small>(1)</small></a></li>
 				    
 				</ul>
         	</li>
@@ -183,7 +207,7 @@
             </div>
         </div>
         <div class="col-md-8 col-md-offset-2">
-      		<html><head></head><body><p>​    博客搭了有快一年了，一直是hexo+git page的配置（不过这个搭配现在绝版了2333），但是一直荒废着，差不多到大一暑假的时候才想起要好好经营。</p>
+      		<p>​    博客搭了有快一年了，一直是hexo+git page的配置（不过这个搭配现在绝版了2333），但是一直荒废着，差不多到大一暑假的时候才想起要好好经营。</p>
 <p>​    但是代码高亮这个一直没有解决。</p>
 <p>​    之前我以为是博客主题配置的问题（就是highlight对象的值的问题），但是无论用怎么样的方法都不太行。</p>
 <p>​    在研究代码高亮的过程中，我才知道原来有个项目叫highlight.js,里面有各种各样的代码高亮的css文件。</p>
@@ -191,20 +215,13 @@
 <p>​    然后我开始在网上寻找解决方案，搜索的关键词是hexo 无法显示代码高亮，辗转来回，找到了一篇文章。</p>
 <p>​    <a target="_blank" rel="noopener" href="https://igeek.cloud/2021/01/13/hexo%E4%B8%ADhighlight-js%E4%BB%A3%E7%A0%81%E9%AB%98%E4%BA%AE%E7%9A%84%E4%BF%AE%E6%94%B9%E6%96%B9%E6%B3%95/">hexo中highlight.js代码高亮的修改方法</a></p>
 <p>​    按照文章中的方法，我在主题layout文件夹中的_post.ejs文件随便找了个角落，把</p>
-<pre><code class="html">COPY&lt;!-- Highlight.js --&gt;
-&lt;link rel="stylesheet"
-        href="//highlightjs.org/static/demo/styles/night-owl.css"&gt;
-&lt;script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"&gt;
-&lt;/script&gt;
-&lt;script&gt;
-    hljs.initHighlightingOnLoad();
-&lt;/script
-</code></pre>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">COPY<span class="comment">&lt;!-- Highlight.js --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">&quot;stylesheet&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">href</span>=<span class="string">&quot;//highlightjs.org/static/demo/styles/night-owl.css&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line">    hljs.initHighlightingOnLoad();</span><br><span class="line">&lt;/script</span><br></pre></td></tr></table></figure>
+
 <p>丢了进去。</p>
 <p>​    然后我的博客就成功的显示了代码高亮。</p>
 <p>​    这样看其实看不出什么端倪，具体功能的实现还是要看脚本的内容，但是估计我也看不懂（）。</p>
 <p>​    </p>
-</body></html>
+
             <div class="clearfix"></div>
             <hr class="nogutter">
         </div>

@@ -78,9 +78,33 @@
         		<a class="sb-toggle-submenu">Categories<span class="sb-caret"></span></a>
             	<ul class="sb-submenu">
 				  	
-				    <li><a href="/categories/heap/" class="animsition-link">heap<small>(1)</small></a></li>
+				    <li><a href="/categories/CSAPP-LAB/" class="animsition-link">CSAPP LAB<small>(1)</small></a></li>
 				    
-				    <li><a href="/categories/stack/" class="animsition-link">stack<small>(1)</small></a></li>
+				    <li><a href="/categories/Heap-Fastbin-Attack/" class="animsition-link">Heap - Fastbin Attack<small>(6)</small></a></li>
+				    
+				    <li><a href="/categories/Heap-Off-By-One/" class="animsition-link">Heap - Off By One<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/Heap-Tcache/" class="animsition-link">Heap - Tcache<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/MESS/" class="animsition-link">MESS<small>(17)</small></a></li>
+				    
+				    <li><a href="/categories/OTHER-IO-FILE/" class="animsition-link">OTHER - IO FILE<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/Pwn-college/" class="animsition-link">Pwn.college<small>(9)</small></a></li>
+				    
+				    <li><a href="/categories/STACK-DynELF/" class="animsition-link">STACK - DynELF<small>(2)</small></a></li>
+				    
+				    <li><a href="/categories/STACK-Format/" class="animsition-link">STACK - Format<small>(3)</small></a></li>
+				    
+				    <li><a href="/categories/STACK-ROP/" class="animsition-link">STACK - ROP<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/STACK-SROP/" class="animsition-link">STACK - SROP<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/STACK-Stack-Overflow/" class="animsition-link">STACK - Stack Overflow<small>(4)</small></a></li>
+				    
+				    <li><a href="/categories/STACK-ret2dlsolve/" class="animsition-link">STACK - ret2dlsolve<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/STACK-sandbox/" class="animsition-link">STACK - sandbox<small>(1)</small></a></li>
 				    
 				</ul>
         	</li>
@@ -183,15 +207,15 @@
             </div>
         </div>
         <div class="col-md-8 col-md-offset-2">
-      		<html><head></head><body><h3 id="ELF文件下对于PIE保护和ASLR的重新认识">ELF文件下对于PIE保护和ASLR的重新认识<a class="post-anchor" href="#ELF文件下对于PIE保护和ASLR的重新认识"></a></h3><h4 id="0）">0）<a class="post-anchor" href="#0）"></a></h4><p>​    复现红色高跟鞋的时候，在ida修复swithc结构的时候碰见了一个问题。因为题目的源文件是有pie保护的，所以ida中的地址是很难看的随机化模式。虽然这些随机化的地址对于我们patch文件毫无影响，但是就是突发奇想，看看能不能找到方法来通过patch将elf文件的pie保护给禁用。</p>
-<h4 id="1）">1）<a class="post-anchor" href="#1）"></a></h4><p>​    如果用010editor打开一个PE文件，我们能够很方便的通过修改PE头来禁用掉Windows程序的ASLR保护。这是因为程序本身其实并不是位置无关的。</p>
+      		<h3 id="ELF文件下对于PIE保护和ASLR的重新认识"><a href="#ELF文件下对于PIE保护和ASLR的重新认识" class="headerlink" title="ELF文件下对于PIE保护和ASLR的重新认识"></a>ELF文件下对于PIE保护和ASLR的重新认识</h3><h4 id="0）"><a href="#0）" class="headerlink" title="0）"></a>0）</h4><p>​    复现红色高跟鞋的时候，在ida修复swithc结构的时候碰见了一个问题。因为题目的源文件是有pie保护的，所以ida中的地址是很难看的随机化模式。虽然这些随机化的地址对于我们patch文件毫无影响，但是就是突发奇想，看看能不能找到方法来通过patch将elf文件的pie保护给禁用。</p>
+<h4 id="1）"><a href="#1）" class="headerlink" title="1）"></a>1）</h4><p>​    如果用010editor打开一个PE文件，我们能够很方便的通过修改PE头来禁用掉Windows程序的ASLR保护。这是因为程序本身其实并不是位置无关的。</p>
 <p>ASLR在PE文件上的开启与否实际上就是PE头上标识符的区分，总的来说ASLR是操作系统的功能，而不是程序本身的特性，以ASLR ON 编译，也只是给程序加上了能被ASLR保护识别的标识符。所以我们只需要patch掉这个标识符，就能够改变程序的地址随机化状态。</p>
 <p>也正是在寻找方法的过程中，我逐渐认识到虽然PIE保护和ASLR表现形式都是地址随机化，但是两者的原理以及实现的方式并不一样，甚至大相径庭。</p>
 <p>在维基百科上，我们能够清楚地看到PIE的全称是Position-independence Executable，位置无关可执行文件。</p>
 <p>这个概念并不是很常见，相对更为常见的是PIC，Position-independence Code，位置无关代码。</p>
 <p>PIC和PIE只差了一个字母，意思也相近。但PIC更多的是在重定位中被提及。源码通过汇编器生成可重定位目标文件，此时它的代码就是位置无关，从0开始的，PIE和PIC的概念相近，当编译完成，可执行文件的便是位置无关了，我们无法改变这一点，也就是说，被PIE保护的文件，并不是通过给头文件加上标识符，使系统开启或关闭随机，而是文件本身便是位置无关吗，是随机的。</p>
 <p>​    然而，虽然文件本身是位置无关的，但是实际地址是否随机，还是要看进程中aslr是否开启，如果将进程aslr关闭，那么调试时我们看到的地址依旧不是随机的。这里主要涉及到重定位的相关知识，之后会写一篇笔记来试图深入系统重定位过程与地址随机化之间的关系。</p>
-</body></html>
+
             <div class="clearfix"></div>
             <hr class="nogutter">
         </div>

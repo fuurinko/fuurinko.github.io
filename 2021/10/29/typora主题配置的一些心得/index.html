@@ -78,9 +78,33 @@
         		<a class="sb-toggle-submenu">Categories<span class="sb-caret"></span></a>
             	<ul class="sb-submenu">
 				  	
-				    <li><a href="/categories/heap/" class="animsition-link">heap<small>(1)</small></a></li>
+				    <li><a href="/categories/CSAPP-LAB/" class="animsition-link">CSAPP LAB<small>(1)</small></a></li>
 				    
-				    <li><a href="/categories/stack/" class="animsition-link">stack<small>(1)</small></a></li>
+				    <li><a href="/categories/Heap-Fastbin-Attack/" class="animsition-link">Heap - Fastbin Attack<small>(6)</small></a></li>
+				    
+				    <li><a href="/categories/Heap-Off-By-One/" class="animsition-link">Heap - Off By One<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/Heap-Tcache/" class="animsition-link">Heap - Tcache<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/MESS/" class="animsition-link">MESS<small>(17)</small></a></li>
+				    
+				    <li><a href="/categories/OTHER-IO-FILE/" class="animsition-link">OTHER - IO FILE<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/Pwn-college/" class="animsition-link">Pwn.college<small>(9)</small></a></li>
+				    
+				    <li><a href="/categories/STACK-DynELF/" class="animsition-link">STACK - DynELF<small>(2)</small></a></li>
+				    
+				    <li><a href="/categories/STACK-Format/" class="animsition-link">STACK - Format<small>(3)</small></a></li>
+				    
+				    <li><a href="/categories/STACK-ROP/" class="animsition-link">STACK - ROP<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/STACK-SROP/" class="animsition-link">STACK - SROP<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/STACK-Stack-Overflow/" class="animsition-link">STACK - Stack Overflow<small>(4)</small></a></li>
+				    
+				    <li><a href="/categories/STACK-ret2dlsolve/" class="animsition-link">STACK - ret2dlsolve<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/STACK-sandbox/" class="animsition-link">STACK - sandbox<small>(1)</small></a></li>
 				    
 				</ul>
         	</li>
@@ -183,524 +207,22 @@
             </div>
         </div>
         <div class="col-md-8 col-md-offset-2">
-      		<html><head></head><body><h4 id="1）">1）<a class="post-anchor" href="#1）"></a></h4><p>​    由于看腻了typora原主题的python高亮的丑兮兮的屎黄色注释，决定换个主题。然而找遍整个主题列表，并没有我看得上的主题。本来打算作罢，但想起最近因为写小程序，学了一些简单的css，是不是可以尝试一下修改某些主题的css文件，打造一个自己喜欢的主题捏。</p>
-<h4 id="2）">2）<a class="post-anchor" href="#2）"></a></h4><p>​    在下载主题的过程中我大致了解了一下typora主题开发的大致内容，其实主体感觉就是css（除了css，就是各种需要的字体。</p>
+      		<h4 id="1）"><a href="#1）" class="headerlink" title="1）"></a>1）</h4><p>​    由于看腻了typora原主题的python高亮的丑兮兮的屎黄色注释，决定换个主题。然而找遍整个主题列表，并没有我看得上的主题。本来打算作罢，但想起最近因为写小程序，学了一些简单的css，是不是可以尝试一下修改某些主题的css文件，打造一个自己喜欢的主题捏。</p>
+<h4 id="2）"><a href="#2）" class="headerlink" title="2）"></a>2）</h4><p>​    在下载主题的过程中我大致了解了一下typora主题开发的大致内容，其实主体感觉就是css（除了css，就是各种需要的字体。</p>
 <p>​    这里以主题<code>mint</code>为例，css中<code>:root</code>元素声明了全局css变量，如下：</p>
-<pre><code class="css"> :root {
-  --side-bar-bg-color: #ffffff;//边栏颜色
-    --control-text-color: #6B6B6B;//边栏文件未选中字体颜色
-    --active-file-bg-color: #ecf6f2;//边栏文件背景颜色
-    --active-file-border-color: #6B6B6B;//不清楚是个啥
-    --active-file-text-color: #202020;//边栏文件选中后字体颜色
-    --table-even-row-color:#f8fcfa;//不清楚是个啥
-    --table-head-color:#d9ede5;//不清楚是个啥
-    --deep-theme-color: #c2e2d5;//深色模式主题色
-    --code-block-bg-color: #0F111A;//代码块字体颜色以及代码块边框颜色
-    
-}
-</code></pre>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"> <span class="selector-pseudo">:root</span> &#123;</span><br><span class="line">  --side-bar-bg-<span class="attribute">color</span>: <span class="number">#ffffff</span>;//边栏颜色</span><br><span class="line">	--control-text-<span class="attribute">color</span>: <span class="number">#6B6B6B</span>;//边栏文件未选中字体颜色</span><br><span class="line">	--active-file-bg-<span class="attribute">color</span>: <span class="number">#ecf6f2</span>;//边栏文件背景颜色</span><br><span class="line">	--active-file-<span class="attribute">border-color</span>: <span class="number">#6B6B6B</span>;//不清楚是个啥</span><br><span class="line">	--active-file-text-<span class="attribute">color</span>: <span class="number">#202020</span>;//边栏文件选中后字体颜色</span><br><span class="line">	--<span class="selector-tag">table</span>-even-row-<span class="attribute">color</span>:<span class="number">#f8fcfa</span>;//不清楚是个啥</span><br><span class="line">	--<span class="selector-tag">table</span>-head-<span class="attribute">color</span>:<span class="number">#d9ede5</span>;//不清楚是个啥</span><br><span class="line">	--deep-theme-<span class="attribute">color</span>: <span class="number">#c2e2d5</span>;//深色模式主题色</span><br><span class="line">	--<span class="selector-tag">code</span>-block-bg-<span class="attribute">color</span>: <span class="number">#0F111A</span>;//代码块字体颜色以及代码块边框颜色</span><br><span class="line">	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>​    所以如果想修改各种配色，只需要修改对应颜色的hex就行。</p>
 <p>​    这个比较难搞的是猜测各种元素对应的含义（（需要手动去尝试。但是就算是这样还是有几个元素没有试出来到底是哪一块的配色，似乎typora也没有类似的官方文档来规定每个div的名字（（</p>
 <p>​    然后需要修改的是代码高亮的一些相关配色，typora的代码高亮是直接用的css而不是引用<code>highlight.js</code>（感觉也差不多233）。</p>
 <p>​    然后我们找到代码高亮的css元素（其他的基本都是字体以及留白的一些样式，没有需求可以不用管）,找到对应的元素就可以开始魔改（</p>
 <p>​    (ps:感觉typora还有很多主题的方法可以使用，比如说backgroud = url（），通过这个 插入图片等，但是好像并没有找到类似的文档，我也不想再切图，于是作罢)</p>
 <p>​    其实魔改以后感觉变化也不是特别大，但是魔改的过程还是很有意思。</p>
-<p><a target="_blank" rel="noopener" href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-30%20%E4%B8%8B%E5%8D%882.46.50.png" data-caption="截屏2021-10-30 下午2.46.50" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-30%20%E4%B8%8B%E5%8D%882.46.50.png" alt="截屏2021-10-30 下午2.46.50"></a></p>
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-30%20%E4%B8%8B%E5%8D%882.46.50.png" alt="截屏2021-10-30 下午2.46.50"></p>
 <p>​        顺便附上它的css</p>
-<pre><code class="css"> :root {
-    --side-bar-bg-color: #ffffff;
-    --control-text-color: #424242;
-    --active-file-bg-color: #ffffff;
-    --active-file-border-color: #6B6B6B;
-    --active-file-text-color: #7eadad;
-    --table-even-row-color:#555555;
-    --table-head-color:#7a7979;
-    --deep-theme-color: #343a41;
-    --code-block-bg-color: #292424;
-    
-}
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br><span class="line">300</span><br><span class="line">301</span><br><span class="line">302</span><br><span class="line">303</span><br><span class="line">304</span><br><span class="line">305</span><br><span class="line">306</span><br><span class="line">307</span><br><span class="line">308</span><br><span class="line">309</span><br><span class="line">310</span><br><span class="line">311</span><br><span class="line">312</span><br><span class="line">313</span><br><span class="line">314</span><br><span class="line">315</span><br><span class="line">316</span><br><span class="line">317</span><br><span class="line">318</span><br><span class="line">319</span><br><span class="line">320</span><br><span class="line">321</span><br><span class="line">322</span><br><span class="line">323</span><br><span class="line">324</span><br><span class="line">325</span><br><span class="line">326</span><br><span class="line">327</span><br><span class="line">328</span><br><span class="line">329</span><br><span class="line">330</span><br><span class="line">331</span><br><span class="line">332</span><br><span class="line">333</span><br><span class="line">334</span><br><span class="line">335</span><br><span class="line">336</span><br><span class="line">337</span><br><span class="line">338</span><br><span class="line">339</span><br><span class="line">340</span><br><span class="line">341</span><br><span class="line">342</span><br><span class="line">343</span><br><span class="line">344</span><br><span class="line">345</span><br><span class="line">346</span><br><span class="line">347</span><br><span class="line">348</span><br><span class="line">349</span><br><span class="line">350</span><br><span class="line">351</span><br><span class="line">352</span><br><span class="line">353</span><br><span class="line">354</span><br><span class="line">355</span><br><span class="line">356</span><br><span class="line">357</span><br><span class="line">358</span><br><span class="line">359</span><br><span class="line">360</span><br><span class="line">361</span><br><span class="line">362</span><br><span class="line">363</span><br><span class="line">364</span><br><span class="line">365</span><br><span class="line">366</span><br><span class="line">367</span><br><span class="line">368</span><br><span class="line">369</span><br><span class="line">370</span><br><span class="line">371</span><br><span class="line">372</span><br><span class="line">373</span><br><span class="line">374</span><br><span class="line">375</span><br><span class="line">376</span><br><span class="line">377</span><br><span class="line">378</span><br><span class="line">379</span><br><span class="line">380</span><br><span class="line">381</span><br><span class="line">382</span><br><span class="line">383</span><br><span class="line">384</span><br><span class="line">385</span><br><span class="line">386</span><br><span class="line">387</span><br><span class="line">388</span><br><span class="line">389</span><br><span class="line">390</span><br><span class="line">391</span><br><span class="line">392</span><br><span class="line">393</span><br><span class="line">394</span><br><span class="line">395</span><br><span class="line">396</span><br><span class="line">397</span><br><span class="line">398</span><br><span class="line">399</span><br><span class="line">400</span><br><span class="line">401</span><br><span class="line">402</span><br><span class="line">403</span><br><span class="line">404</span><br><span class="line">405</span><br><span class="line">406</span><br><span class="line">407</span><br><span class="line">408</span><br><span class="line">409</span><br><span class="line">410</span><br><span class="line">411</span><br><span class="line">412</span><br><span class="line">413</span><br><span class="line">414</span><br><span class="line">415</span><br><span class="line">416</span><br><span class="line">417</span><br><span class="line">418</span><br><span class="line">419</span><br><span class="line">420</span><br><span class="line">421</span><br><span class="line">422</span><br><span class="line">423</span><br><span class="line">424</span><br><span class="line">425</span><br><span class="line">426</span><br><span class="line">427</span><br><span class="line">428</span><br><span class="line">429</span><br><span class="line">430</span><br><span class="line">431</span><br><span class="line">432</span><br><span class="line">433</span><br><span class="line">434</span><br><span class="line">435</span><br><span class="line">436</span><br><span class="line">437</span><br><span class="line">438</span><br><span class="line">439</span><br><span class="line">440</span><br><span class="line">441</span><br><span class="line">442</span><br><span class="line">443</span><br><span class="line">444</span><br><span class="line">445</span><br><span class="line">446</span><br><span class="line">447</span><br><span class="line">448</span><br><span class="line">449</span><br><span class="line">450</span><br><span class="line">451</span><br><span class="line">452</span><br><span class="line">453</span><br><span class="line">454</span><br><span class="line">455</span><br><span class="line">456</span><br><span class="line">457</span><br><span class="line">458</span><br><span class="line">459</span><br><span class="line">460</span><br><span class="line">461</span><br><span class="line">462</span><br><span class="line">463</span><br><span class="line">464</span><br><span class="line">465</span><br><span class="line">466</span><br><span class="line">467</span><br><span class="line">468</span><br><span class="line">469</span><br><span class="line">470</span><br><span class="line">471</span><br><span class="line">472</span><br><span class="line">473</span><br><span class="line">474</span><br><span class="line">475</span><br><span class="line">476</span><br><span class="line">477</span><br><span class="line">478</span><br><span class="line">479</span><br><span class="line">480</span><br><span class="line">481</span><br><span class="line">482</span><br><span class="line">483</span><br><span class="line">484</span><br><span class="line">485</span><br><span class="line">486</span><br><span class="line">487</span><br><span class="line">488</span><br><span class="line">489</span><br><span class="line">490</span><br><span class="line">491</span><br><span class="line">492</span><br><span class="line">493</span><br></pre></td><td class="code"><pre><span class="line"> <span class="selector-pseudo">:root</span> &#123;</span><br><span class="line">    --side-bar-bg-<span class="attribute">color</span>: <span class="number">#ffffff</span>;</span><br><span class="line">	--control-text-<span class="attribute">color</span>: <span class="number">#424242</span>;</span><br><span class="line">	--active-file-bg-<span class="attribute">color</span>: <span class="number">#ffffff</span>;</span><br><span class="line">	--active-file-<span class="attribute">border-color</span>: <span class="number">#6B6B6B</span>;</span><br><span class="line">	--active-file-text-<span class="attribute">color</span>: <span class="number">#7eadad</span>;</span><br><span class="line">	--<span class="selector-tag">table</span>-even-row-<span class="attribute">color</span>:<span class="number">#555555</span>;</span><br><span class="line">	--<span class="selector-tag">table</span>-head-<span class="attribute">color</span>:<span class="number">#7a7979</span>;</span><br><span class="line">	--deep-theme-<span class="attribute">color</span>: <span class="number">#343a41</span>;</span><br><span class="line">	--<span class="selector-tag">code</span>-block-bg-<span class="attribute">color</span>: <span class="number">#292424</span>;</span><br><span class="line">	</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*serif*/</span></span><br><span class="line"><span class="keyword">@font-face</span> &#123;</span><br><span class="line">    <span class="attribute">font-family</span>: <span class="string">&#x27;Lexend&#x27;</span>;</span><br><span class="line">    <span class="attribute">font-weight</span>: normal;</span><br><span class="line">    <span class="attribute">font-style</span>: normal;</span><br><span class="line">    <span class="attribute">src</span>: <span class="built_in">url</span>(<span class="string">&#x27;./mint/Lexend-Regular.ttf&#x27;</span>) </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@font-face</span> &#123;</span><br><span class="line">    <span class="attribute">font-family</span>: <span class="string">&#x27;Lexend&#x27;</span>;</span><br><span class="line">    <span class="attribute">font-weight</span>: bold;</span><br><span class="line">    <span class="attribute">font-style</span>: normal;</span><br><span class="line">    <span class="attribute">src</span>: <span class="built_in">url</span>(<span class="string">&#x27;./mint/Lexend-Bold.ttf&#x27;</span>) </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*monospace*/</span></span><br><span class="line"><span class="keyword">@font-face</span> &#123;</span><br><span class="line">    <span class="attribute">font-family</span>: <span class="string">&#x27;SourceCodePro&#x27;</span>;</span><br><span class="line">    <span class="attribute">font-weight</span>: normal;</span><br><span class="line">    <span class="attribute">font-style</span>: normal;</span><br><span class="line">    <span class="attribute">src</span>: <span class="built_in">local</span>(SourceCodePro), <span class="built_in">url</span>(<span class="string">&#x27;./mint/SourceCodePro-Regular.ttf&#x27;</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*Chinese*/</span></span><br><span class="line"><span class="keyword">@font-face</span> &#123;</span><br><span class="line">    <span class="attribute">font-family</span>: <span class="string">&#x27;NotoSansSC&#x27;</span>;</span><br><span class="line">    <span class="attribute">font-weight</span>: normal;</span><br><span class="line">    <span class="attribute">font-style</span>: normal;</span><br><span class="line">    <span class="attribute">src</span>: <span class="built_in">url</span>(<span class="string">&#x27;./mint/NotoSansSC-Regular.otf&#x27;</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@font-face</span> &#123;</span><br><span class="line">    <span class="attribute">font-family</span>: <span class="string">&#x27;NotoSansSC&#x27;</span>;</span><br><span class="line">    <span class="attribute">font-weight</span>: bold;</span><br><span class="line">    <span class="attribute">font-style</span>: normal;</span><br><span class="line">    <span class="attribute">src</span>: <span class="built_in">url</span>(<span class="string">&#x27;./mint/NotoSansSC-Bold.otf&#x27;</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">html</span>&#123;</span><br><span class="line">	<span class="attribute">font-size</span>: <span class="number">16px</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">body</span> &#123;</span><br><span class="line">    <span class="attribute">font-family</span>: <span class="string">&#x27;Lexend&#x27;</span>,<span class="string">&#x27;SourceCodePro&#x27;</span>,<span class="string">&#x27;NotoSansSC&#x27;</span>;</span><br><span class="line">	<span class="attribute">font-weight</span>: normal;</span><br><span class="line">	<span class="attribute">line-height</span>: <span class="number">1.5rem</span>;</span><br><span class="line">	<span class="attribute">letter-spacing</span>: <span class="number">0</span>;</span><br><span class="line">    <span class="attribute">margin</span>: <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-id">#write</span> &#123;</span><br><span class="line">	<span class="attribute">max-width</span>: <span class="number">900px</span>;</span><br><span class="line">    <span class="attribute">padding</span>: <span class="number">30px</span> <span class="number">50px</span> <span class="number">20px</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-id">#write</span> <span class="selector-tag">p</span>&#123;</span><br><span class="line">	<span class="attribute">text-align</span><span class="selector-pseudo">:left</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-id">#write</span> pre<span class="selector-class">.md-meta-block</span> &#123;</span><br><span class="line">	<span class="attribute">padding</span>: <span class="number">1rem</span>;</span><br><span class="line">	<span class="attribute">font-size</span>: <span class="number">85%</span>;</span><br><span class="line">	<span class="attribute">line-height</span>: <span class="number">1.45</span>;</span><br><span class="line">	<span class="attribute">background-color</span>: <span class="number">#ffffff</span>;</span><br><span class="line">	<span class="attribute">border</span>: <span class="number">0</span>;</span><br><span class="line">	<span class="attribute">border-radius</span>: <span class="number">3px</span>;</span><br><span class="line">	<span class="attribute">color</span>: <span class="number">#141414</span>;</span><br><span class="line">	<span class="attribute">margin-top</span>: <span class="number">0</span> <span class="meta">!important</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.md-image</span>&gt;<span class="selector-class">.md-meta</span> &#123;</span><br><span class="line">    <span class="attribute">color</span>: <span class="number">#141414</span>;</span><br><span class="line">    <span class="attribute">font-size</span>: <span class="number">0.9rem</span>;</span><br><span class="line">	<span class="attribute">font-family</span>: <span class="string">&#x27;Lexend&#x27;</span>;</span><br><span class="line">    <span class="attribute">padding</span>: <span class="number">4px</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">@media</span> print &#123;</span><br><span class="line">  <span class="selector-tag">html</span>,<span class="selector-tag">body</span> &#123;</span><br><span class="line">    <span class="attribute">font-size</span>: <span class="number">14px</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="selector-tag">table</span>,</span><br><span class="line">  pre &#123;</span><br><span class="line">    <span class="attribute">page-break-inside</span>: avoid;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  pre &#123;</span><br><span class="line">    <span class="attribute">word-wrap</span>: break-word;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">@page</span> &#123;</span><br><span class="line">  size: A4; </span><br><span class="line">  <span class="attribute">margin</span>: <span class="number">8mm</span> <span class="number">0mm</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*toc*/</span></span><br><span class="line"><span class="selector-class">.md-toc</span> &#123; </span><br><span class="line">    <span class="attribute">margin-top</span>:<span class="number">20px</span>;</span><br><span class="line">    <span class="attribute">padding-bottom</span>:<span class="number">20px</span>;</span><br><span class="line">	<span class="attribute">color</span>: <span class="built_in">var</span>(--deep-theme-color);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">a</span> &#123;</span><br><span class="line">	<span class="attribute">color</span>: <span class="built_in">var</span>(--deep-theme-color);</span><br><span class="line">	<span class="attribute">text-decoration</span>: none;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">a</span><span class="selector-pseudo">:hover</span> &#123;</span><br><span class="line">    <span class="attribute">text-decoration</span>: underline;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*headers*/</span></span><br><span class="line"><span class="selector-tag">h1</span>,<span class="selector-tag">h2</span>,<span class="selector-tag">h3</span>,<span class="selector-tag">h4</span>,<span class="selector-tag">h5</span>,<span class="selector-tag">h6</span> &#123;</span><br><span class="line">	<span class="attribute">display</span>: block;</span><br><span class="line">	<span class="attribute">font-weight</span>:bold;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">h1</span> &#123;</span><br><span class="line">	<span class="attribute">font-size</span>: <span class="number">2em</span>;</span><br><span class="line">	<span class="attribute">margin-top</span>: <span class="number">0.67em</span>;</span><br><span class="line">	<span class="attribute">margin-bottom</span>: <span class="number">0.67em</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">h2</span> &#123;</span><br><span class="line">	<span class="attribute">font-size</span>: <span class="number">1.5em</span>;</span><br><span class="line">	<span class="attribute">margin-top</span>: <span class="number">0.83em</span>;</span><br><span class="line">	<span class="attribute">margin-bottom</span>: <span class="number">0.83em</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">h3</span> &#123;</span><br><span class="line">	<span class="attribute">font-size</span>: <span class="number">1.17em</span>;</span><br><span class="line">	<span class="attribute">margin-top</span>: <span class="number">1em</span>;</span><br><span class="line">	<span class="attribute">margin-bottom</span>: <span class="number">1em</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">h4</span> &#123;</span><br><span class="line">	<span class="attribute">font-size</span>: <span class="number">1em</span>;</span><br><span class="line">	<span class="attribute">margin-top</span>: <span class="number">1.33em</span>;</span><br><span class="line">	<span class="attribute">margin-bottom</span>: <span class="number">1.33em</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">h5</span> &#123;</span><br><span class="line">	<span class="attribute">font-size</span>: <span class="number">1em</span>;</span><br><span class="line">	<span class="attribute">margin-top</span>: <span class="number">1.33em</span>;</span><br><span class="line">	<span class="attribute">margin-bottom</span>: <span class="number">1.33em</span>;</span><br><span class="line">	<span class="attribute">color</span>: <span class="number">#777777</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">h6</span> &#123;</span><br><span class="line">	<span class="attribute">font-size</span>: <span class="number">1em</span>;</span><br><span class="line">	<span class="attribute">margin-top</span>: <span class="number">1.33em</span>;</span><br><span class="line">	<span class="attribute">margin-bottom</span>: <span class="number">1.33em</span>;</span><br><span class="line">	<span class="attribute">color</span>: <span class="number">#adadad</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">p</span>,</span><br><span class="line"><span class="selector-tag">blockquote</span>,</span><br><span class="line"><span class="selector-tag">ul</span>,</span><br><span class="line"><span class="selector-tag">ol</span>,</span><br><span class="line"><span class="selector-tag">dl</span>,</span><br><span class="line"><span class="selector-tag">table</span> &#123;</span><br><span class="line">	<span class="attribute">margin</span>: <span class="number">0.8rem</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*table*/</span></span><br><span class="line"><span class="selector-tag">table</span> &#123;</span><br><span class="line">	<span class="attribute">border-collapse</span>: collapse;</span><br><span class="line">	<span class="attribute">padding</span>: <span class="number">0</span>;</span><br><span class="line">    <span class="attribute">word-break</span>: initial;</span><br><span class="line">	<span class="attribute">table-layout</span>: fixed;</span><br><span class="line">	<span class="attribute">width</span>: <span class="number">100%</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">table</span> <span class="selector-tag">tr</span><span class="selector-pseudo">:nth-child</span>(even)&#123;</span><br><span class="line">    <span class="attribute">background-color</span>: <span class="built_in">var</span>(--table-even-row-color);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">thead</span>&#123;</span><br><span class="line">	<span class="attribute">background-color</span>: <span class="built_in">var</span>(--table-head-color);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">table</span> <span class="selector-tag">th</span>&#123;</span><br><span class="line">	<span class="attribute">text-align</span>: center;</span><br><span class="line">	<span class="attribute">padding</span>:<span class="number">6px</span> <span class="number">13px</span>;</span><br><span class="line">	<span class="attribute">border</span>: <span class="number">1px</span> solid <span class="built_in">var</span>(--table-head-color);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">table</span> <span class="selector-tag">td</span>&#123;</span><br><span class="line">	<span class="attribute">padding</span>:<span class="number">6px</span> <span class="number">13px</span>;</span><br><span class="line">	<span class="attribute">border</span>: <span class="number">1px</span> solid <span class="built_in">var</span>(--table-head-color);</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-tag">table</span> <span class="selector-tag">tr</span>&#123;</span><br><span class="line">	<span class="attribute">padding</span>:<span class="number">6px</span> <span class="number">13px</span>;</span><br><span class="line">	<span class="attribute">border</span>: <span class="number">1px</span> solid <span class="built_in">var</span>(--table-head-color);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*blockquote*/</span></span><br><span class="line"><span class="selector-tag">blockquote</span> &#123;</span><br><span class="line">	<span class="attribute">border-left</span>: <span class="number">0.2rem</span> solid <span class="built_in">var</span>(--side-bar-bg-color);</span><br><span class="line">	<span class="attribute">color</span>: <span class="number">#b4d8e9</span>;</span><br><span class="line">	<span class="attribute">font-family</span>: <span class="string">&#x27;Lexend&#x27;</span>,<span class="string">&#x27;NotoSansSC&#x27;</span>;</span><br><span class="line">	<span class="attribute">font-size</span>: <span class="number">0.9rem</span>;</span><br><span class="line">	<span class="attribute">padding-left</span>: <span class="number">2rem</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/*list*/</span></span><br><span class="line"></span><br><span class="line"><span class="selector-tag">li</span> <span class="selector-tag">p</span><span class="selector-class">.first</span> &#123;</span><br><span class="line">    <span class="attribute">display</span>: inline-block;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-tag">ul</span>,</span><br><span class="line"><span class="selector-tag">ol</span> &#123;</span><br><span class="line">    <span class="attribute">padding-left</span>: <span class="number">30px</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-tag">ul</span><span class="selector-pseudo">:first</span>-child,</span><br><span class="line"><span class="selector-tag">ol</span><span class="selector-pseudo">:first</span>-child &#123;</span><br><span class="line">    <span class="attribute">margin-top</span>: <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-tag">ul</span><span class="selector-pseudo">:last-child</span>,</span><br><span class="line"><span class="selector-tag">ol</span><span class="selector-pseudo">:last-child</span> &#123;</span><br><span class="line">    <span class="attribute">margin-bottom</span>: <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.md-task-list-item</span><span class="selector-pseudo">:hover</span> &gt; <span class="selector-tag">input</span>:before,</span><br><span class="line">input[type=<span class="string">&#x27;checkbox&#x27;</span>]:hover:before &#123;</span><br><span class="line">	opacity: <span class="number">1</span>;</span><br><span class="line">	<span class="attribute">transition</span>: <span class="number">0.5s</span>;</span><br><span class="line">	<span class="attribute">background-color</span>: <span class="built_in">var</span>(--side-bar-bg-color);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.task-list-item</span> <span class="selector-tag">input</span><span class="selector-pseudo">::before</span> &#123;</span><br><span class="line">    <span class="attribute">content</span>: <span class="string">&quot;&quot;</span>;</span><br><span class="line">    <span class="attribute">display</span>: inline-block;</span><br><span class="line">	<span class="attribute">border-radius</span>: <span class="number">1.1rem</span>;</span><br><span class="line">    <span class="attribute">vertical-align</span>: middle;</span><br><span class="line">    <span class="attribute">border</span>: <span class="number">1.2px</span> solid <span class="built_in">var</span>(--deep-theme-color);</span><br><span class="line">    <span class="attribute">background-color</span>: <span class="number">#ffffff</span>;</span><br><span class="line">	<span class="attribute">width</span>: <span class="number">1.1rem</span>;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">1.1rem</span>;</span><br><span class="line">	<span class="attribute">margin-left</span>: -<span class="number">0.1rem</span>;</span><br><span class="line">    <span class="attribute">margin-right</span>: <span class="number">0.1rem</span>;</span><br><span class="line">    <span class="attribute">margin-top</span>: -<span class="number">0.68rem</span>; </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="selector-class">.task-list-item</span> <span class="selector-tag">input</span><span class="selector-pseudo">:checked</span><span class="selector-pseudo">::before</span> &#123;</span><br><span class="line">    <span class="attribute">padding-left</span>: <span class="number">0.125em</span>;</span><br><span class="line">    <span class="attribute">content</span>: <span class="string">&#x27;✔&#x27;</span>;</span><br><span class="line">    <span class="attribute">color</span>:white;</span><br><span class="line">	<span class="attribute">background-color</span>: <span class="built_in">var</span>(--deep-theme-color);</span><br><span class="line">    <span class="attribute">font-size</span>: <span class="number">0.8rem</span>;</span><br><span class="line">    <span class="attribute">line-height</span>: <span class="number">0.95rem</span>;</span><br><span class="line">    <span class="attribute">margin-top</span>: -<span class="number">0.68rem</span>;</span><br><span class="line">	<span class="attribute">transition</span>: background-color <span class="number">200ms</span> ease-in-out;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="selector-class">.task-list-done</span> &#123;</span><br><span class="line">    <span class="attribute">text-decoration</span>: line-through;</span><br><span class="line">    <span class="attribute">color</span>: <span class="number">#343a41</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">hr &#123;</span><br><span class="line">	<span class="attribute">border-style</span>: none;</span><br><span class="line">    <span class="attribute">border-top-style</span>: solid;</span><br><span class="line">    <span class="attribute">border-color</span>: <span class="number">#e7e7e7</span>;</span><br><span class="line">    <span class="attribute">border-width</span>: <span class="number">1px</span>;</span><br><span class="line">	<span class="attribute">margin</span>: <span class="number">2rem</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/*highlight*/</span></span><br><span class="line"><span class="selector-id">#write</span> <span class="selector-tag">mark</span> &#123;</span><br><span class="line">	<span class="attribute">background-color</span>: <span class="number">#c7ffe8</span>;</span><br><span class="line">	<span class="attribute">border-radius</span>: <span class="number">2px</span>;</span><br><span class="line">	<span class="attribute">color</span>: <span class="built_in">rgb</span>(<span class="number">44</span>, <span class="number">39</span>, <span class="number">39</span>);</span><br><span class="line">	<span class="attribute">padding</span>: <span class="number">0</span> <span class="number">4px</span>;</span><br><span class="line">	<span class="attribute">margin</span>: <span class="number">0</span> <span class="number">2px</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*inline code*/</span></span><br><span class="line"><span class="selector-id">#write</span> <span class="selector-tag">code</span>,tt &#123;</span><br><span class="line">	<span class="attribute">padding</span>: <span class="number">0.6px</span> <span class="number">4px</span>;</span><br><span class="line">	<span class="attribute">border-radius</span>: <span class="number">2px</span>;</span><br><span class="line">	<span class="attribute">background-color</span>: <span class="built_in">rgba</span>(<span class="number">238</span>, <span class="number">238</span>, <span class="number">238</span>, <span class="number">0.39</span>);</span><br><span class="line">	<span class="attribute">font-family</span>: <span class="string">&#x27;SourceCodePro&#x27;</span>,Consolas,Courier, Monospace;</span><br><span class="line">	<span class="attribute">font-size</span>: <span class="number">0.9rem</span>;</span><br><span class="line">	<span class="attribute">color</span>: <span class="number">#666666</span>;</span><br><span class="line">	<span class="attribute">margin</span>: <span class="number">0</span> <span class="number">2px</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*footnote*/</span></span><br><span class="line"><span class="selector-id">#write</span> <span class="selector-class">.md-footnote</span> &#123;</span><br><span class="line">	<span class="attribute">color</span>: <span class="number">#343a41</span>;</span><br><span class="line">	<span class="attribute">background-color</span>: <span class="number">#e4e4e4</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*source code mode*/</span></span><br><span class="line"><span class="selector-class">.cm-s-typora-default</span> <span class="selector-class">.cm-header</span> &#123;</span><br><span class="line">	<span class="attribute">color</span>: <span class="number">#524a4a</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.cm-s-typora-default</span> <span class="selector-class">.cm-link</span> &#123;</span><br><span class="line">	<span class="attribute">color</span>:<span class="built_in">var</span>(--deep-theme-color);</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/*code block*/</span></span><br><span class="line"><span class="selector-id">#write</span> <span class="selector-class">.md-fences</span> &#123;</span><br><span class="line">    <span class="attribute">font-size</span>: <span class="number">1rem</span>;</span><br><span class="line">    <span class="attribute">margin</span>: <span class="number">0.2em</span> <span class="number">0</span>;</span><br><span class="line">    <span class="attribute">padding</span>: <span class="number">0.5em</span>;</span><br><span class="line">    <span class="attribute">border-radius</span>: <span class="number">3px</span>;</span><br><span class="line">	<span class="attribute">font-size</span>: <span class="number">0.9em</span>;</span><br><span class="line">    <span class="attribute">font-family</span>: <span class="string">&#x27;SourceCodePro&#x27;</span>,Consolas,Courier, Monospace ;</span><br><span class="line">    <span class="attribute">background-color</span>: <span class="number">#fffdfd</span>;</span><br><span class="line">    <span class="attribute">color</span>: <span class="number">#a3a3a3</span>;</span><br><span class="line">    <span class="attribute">border</span>: none;</span><br><span class="line">	<span class="attribute">text-shadow</span>: none;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.md-fences</span> <span class="selector-class">.code-tooltip</span> &#123;</span><br><span class="line">	<span class="attribute">background-color</span>: <span class="number">#ffffff</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">  Name:       material-ocean</span></span><br><span class="line"><span class="comment">  Author:     Mattia Astorino (http://github.com/equinusocio)</span></span><br><span class="line"><span class="comment">  Website:    https://material-theme.site/</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br><span class="line"><span class="selector-class">.cm-s-inner</span><span class="selector-class">.CodeMirror</span> &#123;</span><br><span class="line">  <span class="attribute">background-color</span>: <span class="number">#ffffff</span>;</span><br><span class="line">  <span class="attribute">color</span>: <span class="number">#343a41</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*.cm-s-inner .CodeMirror-gutters &#123;</span></span><br><span class="line"><span class="comment">  background: #ffffff;</span></span><br><span class="line"><span class="comment">  color: #ffffff;</span></span><br><span class="line"><span class="comment">  border: none;</span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="selector-class">.cm-s-inner</span> <span class="selector-class">.CodeMirror-linenumber</span> &#123;<span class="attribute">color</span>: <span class="number">#343a41</span>;&#125;</span><br><span class="line"><span class="selector-class">.cm-s-inner</span> <span class="selector-class">.CodeMirror-guttermarker</span> &#123; <span class="attribute">color</span>: <span class="number">#FFEE80</span>; &#125;</span><br><span class="line"><span class="selector-class">.cm-s-inner</span> <span class="selector-class">.CodeMirror-guttermarker-subtle</span> &#123; <span class="attribute">color</span>: <span class="number">#D0D0D0</span>; &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">.cm-s-inner .CodeMirror-cursor &#123;</span></span><br><span class="line"><span class="comment">  border-left: 1px solid #FFCC00;</span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment">.cm-s-inner.cm-fat-cursor .CodeMirror-cursor &#123;</span></span><br><span class="line"><span class="comment">  background-color: #FFCC00 !important;</span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment">.cm-s-inner .cm-animate-fat-cursor &#123;</span></span><br><span class="line"><span class="comment">  background-color: #FFCC00 !important;</span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br><span class="line"><span class="selector-class">.cm-s-inner</span> <span class="selector-class">.CodeMirror-cursor</span> &#123; <span class="attribute">border-left</span>: <span class="number">1px</span> solid <span class="number">#A9B7C6</span>; &#125;</span><br><span class="line"><span class="selector-class">.cm-s-inner</span> <span class="selector-tag">div</span><span class="selector-class">.CodeMirror-cursor</span> &#123; <span class="attribute">border-left</span>: <span class="number">1px</span> solid <span class="number">#ffffff</span>; &#125;</span><br><span class="line"><span class="selector-class">.cm-s-inner</span> <span class="selector-tag">div</span><span class="selector-class">.CodeMirror-selected</span> &#123;</span><br><span class="line">  <span class="attribute">background</span>: <span class="built_in">rgba</span>(<span class="number">58</span>, <span class="number">58</span>, <span class="number">59</span>, <span class="number">0.2</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.cm-s-inner</span><span class="selector-class">.CodeMirror-focused</span> <span class="selector-tag">div</span><span class="selector-class">.CodeMirror-selected</span> &#123;</span><br><span class="line">  <span class="attribute">background</span>: <span class="built_in">rgba</span>(<span class="number">221</span>, <span class="number">224</span>, <span class="number">241</span>, <span class="number">0.2</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.cm-s-inner</span> <span class="selector-class">.CodeMirror-selected</span>&#123; <span class="attribute">background</span>: <span class="number">#d6dce7</span> <span class="meta">!important</span>; &#125;</span><br><span class="line"><span class="selector-class">.cm-s-inner</span> <span class="selector-class">.CodeMirror-selectedtext</span> &#123; <span class="attribute">background</span>: <span class="number">#dbdee6</span> <span class="meta">!important</span>; &#125;</span><br><span class="line"><span class="selector-class">.cm-overlay</span><span class="selector-class">.CodeMirror-selectedtext</span> &#123; <span class="attribute">background</span>: <span class="number">#B5D6FC</span> <span class="meta">!important</span>; &#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.cm-s-inner</span> <span class="selector-class">.CodeMirror-line</span><span class="selector-pseudo">::selection</span>,</span><br><span class="line"><span class="selector-class">.cm-s-inner</span> <span class="selector-class">.CodeMirror-line</span>&gt;<span class="selector-tag">span</span><span class="selector-pseudo">::selection</span>,</span><br><span class="line"><span class="selector-class">.cm-s-inner</span> <span class="selector-class">.CodeMirror-line</span>&gt;<span class="selector-tag">span</span>&gt;<span class="selector-tag">span</span><span class="selector-pseudo">::selection</span> &#123;</span><br><span class="line">  <span class="attribute">background</span>: <span class="built_in">rgba</span>(<span class="number">221</span>, <span class="number">224</span>, <span class="number">241</span>, <span class="number">0.2</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.cm-s-inner</span> <span class="selector-class">.CodeMirror-line</span>::-moz-selection,</span><br><span class="line">.cm-s-inner .CodeMirror-line&gt;span::-moz-selection,</span><br><span class="line">.cm-s-inner .CodeMirror-line&gt;span&gt;span::-moz-selection &#123;</span><br><span class="line">  background: <span class="built_in">rgba</span>(<span class="number">221</span>, <span class="number">224</span>, <span class="number">241</span>, <span class="number">0.2</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.cm-s-inner</span> <span class="selector-class">.CodeMirror-activeline-background</span> &#123;</span><br><span class="line">  <span class="attribute">background</span>: <span class="number">#ffffff</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.cm-s-inner</span> <span class="selector-class">.cm-keyword</span> &#123;</span><br><span class="line">  <span class="attribute">color</span>: <span class="number">#8979c0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.cm-s-inner</span> <span class="selector-class">.cm-operator</span> &#123;</span><br><span class="line">  <span class="attribute">color</span>: <span class="number">#25c494</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.cm-s-inner</span> <span class="selector-class">.cm-variable-2</span> &#123;</span><br><span class="line">  <span class="attribute">color</span>: <span class="number">#4f5481</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.cm-s-inner</span> <span class="selector-class">.cm-variable-3</span>,</span><br><span class="line"><span class="selector-class">.cm-s-inner</span> <span class="selector-class">.cm-type</span> &#123;</span><br><span class="line">  <span class="attribute">color</span>: <span class="number">#f84f57</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.cm-s-inner</span> <span class="selector-class">.cm-builtin</span> &#123;</span><br><span class="line">  <span class="attribute">color</span>: <span class="number">#eca622</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.cm-s-inner</span> <span class="selector-class">.cm-atom</span> &#123;</span><br><span class="line">  <span class="attribute">color</span>: <span class="number">#F78C6C</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.cm-s-inner</span> <span class="selector-class">.cm-number</span> &#123;</span><br><span class="line">  <span class="attribute">color</span>: <span class="number">#ad7a83</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.cm-s-inner</span> <span class="selector-class">.cm-def</span> &#123;</span><br><span class="line">  <span class="attribute">color</span>: <span class="number">#82AAFF</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.cm-s-inner</span> <span class="selector-class">.cm-string</span> &#123;</span><br><span class="line">  <span class="attribute">color</span>: <span class="number">#70be26</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.cm-s-inner</span> <span class="selector-class">.cm-string-2</span> &#123;</span><br><span class="line">  <span class="attribute">color</span>: <span class="number">#7a232e</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.cm-s-inner</span> <span class="selector-class">.cm-comment</span> &#123;</span><br><span class="line">  <span class="attribute">color</span>: <span class="number">#3a4677</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.cm-s-inner</span> <span class="selector-class">.cm-variable</span> &#123;</span><br><span class="line">  <span class="attribute">color</span>: <span class="number">#bb584b</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.cm-s-inner</span> <span class="selector-class">.cm-tag</span> &#123;</span><br><span class="line">  <span class="attribute">color</span>: <span class="number">#b44457</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.cm-s-inner</span> <span class="selector-class">.cm-meta</span> &#123;</span><br><span class="line">  <span class="attribute">color</span>: <span class="number">#b9b717</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.cm-s-inner</span> <span class="selector-class">.cm-attribute</span> &#123;</span><br><span class="line">  <span class="attribute">color</span>: <span class="number">#71498a</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.cm-s-inner</span> <span class="selector-class">.cm-property</span> &#123;</span><br><span class="line">  <span class="attribute">color</span>: <span class="number">#a075be</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.cm-s-inner</span> <span class="selector-class">.cm-qualifier</span> &#123;</span><br><span class="line">  <span class="attribute">color</span>: <span class="number">#f8ce11</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.cm-s-inner</span> <span class="selector-class">.cm-variable-3</span>,</span><br><span class="line"><span class="selector-class">.cm-s-inner</span> <span class="selector-class">.cm-type</span> &#123;</span><br><span class="line">  <span class="attribute">color</span>: <span class="number">#fce470</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="selector-class">.cm-s-inner</span> <span class="selector-class">.cm-error</span> &#123;</span><br><span class="line">  <span class="attribute">color</span>: <span class="built_in">rgba</span>(<span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">1.0</span>);</span><br><span class="line">  <span class="attribute">background-color</span>: <span class="number">#FF5370</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.cm-s-inner</span> <span class="selector-class">.CodeMirror-matchingbracket</span> &#123;</span><br><span class="line">  <span class="attribute">text-decoration</span>: underline;</span><br><span class="line">  <span class="attribute">color</span>: white <span class="meta">!important</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
-/*serif*/
-@font-face {
-    font-family: 'Lexend';
-    font-weight: normal;
-    font-style: normal;
-    src: url('./mint/Lexend-Regular.ttf') 
-}
 
-@font-face {
-    font-family: 'Lexend';
-    font-weight: bold;
-    font-style: normal;
-    src: url('./mint/Lexend-Bold.ttf') 
-}
-
-/*monospace*/
-@font-face {
-    font-family: 'SourceCodePro';
-    font-weight: normal;
-    font-style: normal;
-    src: local(SourceCodePro), url('./mint/SourceCodePro-Regular.ttf')
-}
-
-/*Chinese*/
-@font-face {
-    font-family: 'NotoSansSC';
-    font-weight: normal;
-    font-style: normal;
-    src: url('./mint/NotoSansSC-Regular.otf')
-}
-
-@font-face {
-    font-family: 'NotoSansSC';
-    font-weight: bold;
-    font-style: normal;
-    src: url('./mint/NotoSansSC-Bold.otf')
-}
-
-html{
-    font-size: 16px;
-}
-
-body {
-    font-family: 'Lexend','SourceCodePro','NotoSansSC';
-    font-weight: normal;
-    line-height: 1.5rem;
-    letter-spacing: 0;
-    margin: 0;
-}
-
-#write {
-    max-width: 900px;
-    padding: 30px 50px 20px;
-}
-
-#write p{
-    text-align:left;
-}
-
-#write pre.md-meta-block {
-    padding: 1rem;
-    font-size: 85%;
-    line-height: 1.45;
-    background-color: #ffffff;
-    border: 0;
-    border-radius: 3px;
-    color: #141414;
-    margin-top: 0 !important;
-}
-
-.md-image&gt;.md-meta {
-    color: #141414;
-    font-size: 0.9rem;
-    font-family: 'Lexend';
-    padding: 4px 0;
-}
-
-
-@media print {
-  html,body {
-    font-size: 14px;
-  }
-
-  table,
-  pre {
-    page-break-inside: avoid;
-  }
-
-  pre {
-    word-wrap: break-word;
-  }
-  
-}
-@page {
-  size: A4; 
-  margin: 8mm 0mm;
-}
-
-/*toc*/
-.md-toc { 
-    margin-top:20px;
-    padding-bottom:20px;
-    color: var(--deep-theme-color);
-}
-
-a {
-    color: var(--deep-theme-color);
-    text-decoration: none;
-}
-
-a:hover {
-    text-decoration: underline;
-}
-
-/*headers*/
-h1,h2,h3,h4,h5,h6 {
-    display: block;
-    font-weight:bold;
-}
-
-h1 {
-    font-size: 2em;
-    margin-top: 0.67em;
-    margin-bottom: 0.67em;
-}
-
-h2 {
-    font-size: 1.5em;
-    margin-top: 0.83em;
-    margin-bottom: 0.83em;
-}
-
-h3 {
-    font-size: 1.17em;
-    margin-top: 1em;
-    margin-bottom: 1em;
-}
-
-h4 {
-    font-size: 1em;
-    margin-top: 1.33em;
-    margin-bottom: 1.33em;
-}
-
-h5 {
-    font-size: 1em;
-    margin-top: 1.33em;
-    margin-bottom: 1.33em;
-    color: #777777;
-}
-
-h6 {
-    font-size: 1em;
-    margin-top: 1.33em;
-    margin-bottom: 1.33em;
-    color: #adadad;
-}
-
-p,
-blockquote,
-ul,
-ol,
-dl,
-table {
-    margin: 0.8rem 0;
-}
-
-/*table*/
-table {
-    border-collapse: collapse;
-    padding: 0;
-    word-break: initial;
-    table-layout: fixed;
-    width: 100%;
-}
-
-table tr:nth-child(even){
-    background-color: var(--table-even-row-color);
-}
-
-thead{
-    background-color: var(--table-head-color);
-}
-
-table th{
-    text-align: center;
-    padding:6px 13px;
-    border: 1px solid var(--table-head-color);
-}
-
-table td{
-    padding:6px 13px;
-    border: 1px solid var(--table-head-color);
-}
-table tr{
-    padding:6px 13px;
-    border: 1px solid var(--table-head-color);
-}
-
-/*blockquote*/
-blockquote {
-    border-left: 0.2rem solid var(--side-bar-bg-color);
-    color: #b4d8e9;
-    font-family: 'Lexend','NotoSansSC';
-    font-size: 0.9rem;
-    padding-left: 2rem;
-}
-
-
-/*list*/
-
-li p.first {
-    display: inline-block;
-}
-ul,
-ol {
-    padding-left: 30px;
-}
-ul:first-child,
-ol:first-child {
-    margin-top: 0;
-}
-ul:last-child,
-ol:last-child {
-    margin-bottom: 0;
-}
-
-.md-task-list-item:hover &gt; input:before,
-input[type='checkbox']:hover:before {
-    opacity: 1;
-    transition: 0.5s;
-    background-color: var(--side-bar-bg-color);
-}
-
-.task-list-item input::before {
-    content: "";
-    display: inline-block;
-    border-radius: 1.1rem;
-    vertical-align: middle;
-    border: 1.2px solid var(--deep-theme-color);
-    background-color: #ffffff;
-    width: 1.1rem;
-    height: 1.1rem;
-    margin-left: -0.1rem;
-    margin-right: 0.1rem;
-    margin-top: -0.68rem; 
-}
-
-
-.task-list-item input:checked::before {
-    padding-left: 0.125em;
-    content: '✔';
-    color:white;
-    background-color: var(--deep-theme-color);
-    font-size: 0.8rem;
-    line-height: 0.95rem;
-    margin-top: -0.68rem;
-    transition: background-color 200ms ease-in-out;
-}
-
-
-
-.task-list-done {
-    text-decoration: line-through;
-    color: #343a41;
-}
-
-hr {
-    border-style: none;
-    border-top-style: solid;
-    border-color: #e7e7e7;
-    border-width: 1px;
-    margin: 2rem 0;
-}
-
-
-/*highlight*/
-#write mark {
-    background-color: #c7ffe8;
-    border-radius: 2px;
-    color: rgb(44, 39, 39);
-    padding: 0 4px;
-    margin: 0 2px;
-}
-
-/*inline code*/
-#write code,tt {
-    padding: 0.6px 4px;
-    border-radius: 2px;
-    background-color: rgba(238, 238, 238, 0.39);
-    font-family: 'SourceCodePro',Consolas,Courier, Monospace;
-    font-size: 0.9rem;
-    color: #666666;
-    margin: 0 2px;
-}
-
-/*footnote*/
-#write .md-footnote {
-    color: #343a41;
-    background-color: #e4e4e4;
-}
-
-/*source code mode*/
-.cm-s-typora-default .cm-header {
-    color: #524a4a;
-}
-.cm-s-typora-default .cm-link {
-    color:var(--deep-theme-color);
-
-}
-
-
-/*code block*/
-#write .md-fences {
-    font-size: 1rem;
-    margin: 0.2em 0;
-    padding: 0.5em;
-    border-radius: 3px;
-    font-size: 0.9em;
-    font-family: 'SourceCodePro',Consolas,Courier, Monospace ;
-    background-color: #fffdfd;
-    color: #a3a3a3;
-    border: none;
-    text-shadow: none;
-}
-
-.md-fences .code-tooltip {
-    background-color: #ffffff;
-}
-
-/*
-  Name:       material-ocean
-  Author:     Mattia Astorino (http://github.com/equinusocio)
-  Website:    https://material-theme.site/
-*/
-
-.cm-s-inner.CodeMirror {
-  background-color: #ffffff;
-  color: #343a41;
-}
-
-/*.cm-s-inner .CodeMirror-gutters {
-  background: #ffffff;
-  color: #ffffff;
-  border: none;
-}
-*/
-.cm-s-inner .CodeMirror-linenumber {color: #343a41;}
-.cm-s-inner .CodeMirror-guttermarker { color: #FFEE80; }
-.cm-s-inner .CodeMirror-guttermarker-subtle { color: #D0D0D0; }
-
-/*
-.cm-s-inner .CodeMirror-cursor {
-  border-left: 1px solid #FFCC00;
-}
-.cm-s-inner.cm-fat-cursor .CodeMirror-cursor {
-  background-color: #FFCC00 !important;
-}
-.cm-s-inner .cm-animate-fat-cursor {
-  background-color: #FFCC00 !important;
-}
-*/
-
-.cm-s-inner .CodeMirror-cursor { border-left: 1px solid #A9B7C6; }
-.cm-s-inner div.CodeMirror-cursor { border-left: 1px solid #ffffff; }
-.cm-s-inner div.CodeMirror-selected {
-  background: rgba(58, 58, 59, 0.2);
-}
-
-.cm-s-inner.CodeMirror-focused div.CodeMirror-selected {
-  background: rgba(221, 224, 241, 0.2);
-}
-
-.cm-s-inner .CodeMirror-selected{ background: #d6dce7 !important; }
-.cm-s-inner .CodeMirror-selectedtext { background: #dbdee6 !important; }
-.cm-overlay.CodeMirror-selectedtext { background: #B5D6FC !important; }
-
-.cm-s-inner .CodeMirror-line::selection,
-.cm-s-inner .CodeMirror-line&gt;span::selection,
-.cm-s-inner .CodeMirror-line&gt;span&gt;span::selection {
-  background: rgba(221, 224, 241, 0.2);
-}
-
-.cm-s-inner .CodeMirror-line::-moz-selection,
-.cm-s-inner .CodeMirror-line&gt;span::-moz-selection,
-.cm-s-inner .CodeMirror-line&gt;span&gt;span::-moz-selection {
-  background: rgba(221, 224, 241, 0.2);
-}
-
-.cm-s-inner .CodeMirror-activeline-background {
-  background: #ffffff;
-}
-
-.cm-s-inner .cm-keyword {
-  color: #8979c0;
-}
-
-.cm-s-inner .cm-operator {
-  color: #25c494;
-}
-
-.cm-s-inner .cm-variable-2 {
-  color: #4f5481;
-}
-
-.cm-s-inner .cm-variable-3,
-.cm-s-inner .cm-type {
-  color: #f84f57;
-}
-
-.cm-s-inner .cm-builtin {
-  color: #eca622;
-}
-
-.cm-s-inner .cm-atom {
-  color: #F78C6C;
-}
-
-.cm-s-inner .cm-number {
-  color: #ad7a83;
-}
-
-.cm-s-inner .cm-def {
-  color: #82AAFF;
-}
-
-.cm-s-inner .cm-string {
-  color: #70be26;
-}
-
-.cm-s-inner .cm-string-2 {
-  color: #7a232e;
-}
-
-.cm-s-inner .cm-comment {
-  color: #3a4677;
-}
-
-.cm-s-inner .cm-variable {
-  color: #bb584b;
-}
-
-.cm-s-inner .cm-tag {
-  color: #b44457;
-}
-
-.cm-s-inner .cm-meta {
-  color: #b9b717;
-}
-
-.cm-s-inner .cm-attribute {
-  color: #71498a;
-}
-
-.cm-s-inner .cm-property {
-  color: #a075be;
-}
-
-.cm-s-inner .cm-qualifier {
-  color: #f8ce11;
-}
-
-.cm-s-inner .cm-variable-3,
-.cm-s-inner .cm-type {
-  color: #fce470;
-}
-
-
-.cm-s-inner .cm-error {
-  color: rgba(255, 255, 255, 1.0);
-  background-color: #FF5370;
-}
-
-.cm-s-inner .CodeMirror-matchingbracket {
-  text-decoration: underline;
-  color: white !important;
-}
-
-
-</code></pre>
-</body></html>
             <div class="clearfix"></div>
             <hr class="nogutter">
         </div>

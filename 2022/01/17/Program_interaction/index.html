@@ -78,9 +78,33 @@
         		<a class="sb-toggle-submenu">Categories<span class="sb-caret"></span></a>
             	<ul class="sb-submenu">
 				  	
-				    <li><a href="/categories/heap/" class="animsition-link">heap<small>(1)</small></a></li>
+				    <li><a href="/categories/CSAPP-LAB/" class="animsition-link">CSAPP LAB<small>(1)</small></a></li>
 				    
-				    <li><a href="/categories/stack/" class="animsition-link">stack<small>(1)</small></a></li>
+				    <li><a href="/categories/Heap-Fastbin-Attack/" class="animsition-link">Heap - Fastbin Attack<small>(6)</small></a></li>
+				    
+				    <li><a href="/categories/Heap-Off-By-One/" class="animsition-link">Heap - Off By One<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/Heap-Tcache/" class="animsition-link">Heap - Tcache<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/MESS/" class="animsition-link">MESS<small>(17)</small></a></li>
+				    
+				    <li><a href="/categories/OTHER-IO-FILE/" class="animsition-link">OTHER - IO FILE<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/Pwn-college/" class="animsition-link">Pwn.college<small>(9)</small></a></li>
+				    
+				    <li><a href="/categories/STACK-DynELF/" class="animsition-link">STACK - DynELF<small>(2)</small></a></li>
+				    
+				    <li><a href="/categories/STACK-Format/" class="animsition-link">STACK - Format<small>(3)</small></a></li>
+				    
+				    <li><a href="/categories/STACK-ROP/" class="animsition-link">STACK - ROP<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/STACK-SROP/" class="animsition-link">STACK - SROP<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/STACK-Stack-Overflow/" class="animsition-link">STACK - Stack Overflow<small>(4)</small></a></li>
+				    
+				    <li><a href="/categories/STACK-ret2dlsolve/" class="animsition-link">STACK - ret2dlsolve<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/STACK-sandbox/" class="animsition-link">STACK - sandbox<small>(1)</small></a></li>
 				    
 				</ul>
         	</li>
@@ -183,30 +207,29 @@
             </div>
         </div>
         <div class="col-md-8 col-md-offset-2">
-      		<html><head></head><body><p>「前面不太记得了，从level3记起」</p>
-<h3 id="level3">level3<a class="post-anchor" href="#level3"></a></h3><p><code> ./embryoio_level3  xkbdyoisnx</code>    </p>
-<h4 id="Level4">Level4<a class="post-anchor" href="#Level4"></a></h4><p><code>export jouixn = xxx</code></p>
-<h4 id="Level5">Level5<a class="post-anchor" href="#Level5"></a></h4><p>​    一个标准输入重定向的考察，</p>
+      		<p>「前面不太记得了，从level3记起」</p>
+<h3 id="level3"><a href="#level3" class="headerlink" title="level3"></a>level3</h3><p><code> ./embryoio_level3  xkbdyoisnx</code>    </p>
+<h4 id="Level4"><a href="#Level4" class="headerlink" title="Level4"></a>Level4</h4><p><code>export jouixn = xxx</code></p>
+<h4 id="Level5"><a href="#Level5" class="headerlink" title="Level5"></a>Level5</h4><p>​    一个标准输入重定向的考察，</p>
 <p><code>./embryoio_level5 &lt; /tmp/mihsjr</code></p>
 <p>​        还需要编辑<code>mihsjr </code>的内容为给的密码。</p>
-<h4 id="Level6">Level6<a class="post-anchor" href="#Level6"></a></h4><p>​        一个输出重定向，创建对应文件<code>./embryoio_level6 &gt; /tmp/ptyaid </code>，flag在<code>ptyaid</code>中。</p>
-<h4 id="Level7">Level7<a class="post-anchor" href="#Level7"></a></h4><p><code>env -i ./xxx</code></p>
-<h4 id="Level8">Level8<a class="post-anchor" href="#Level8"></a></h4><p>​        写个sh脚本，内容是打开这个题目。注意路径。</p>
-<pre><code class="bash">hacker@embryoio_level8:~$ cat my_script.sh 
-/challenge/embryoio_level8
-</code></pre>
-<h4 id="Level9">Level9<a class="post-anchor" href="#Level9"></a></h4><p>​        与level8同理，顺手输个密码就行。</p>
-<h4 id="Level10">Level10<a class="post-anchor" href="#Level10"></a></h4><p>​        同level3</p>
-<h4 id="Level11">Level11<a class="post-anchor" href="#Level11"></a></h4><p>​        同level4。</p>
-<h4 id="Level12">Level12<a class="post-anchor" href="#Level12"></a></h4><p>​        同level5</p>
-<h4 id="Level13">Level13<a class="post-anchor" href="#Level13"></a></h4><p>​        同level6</p>
-<h4 id="Level14">Level14<a class="post-anchor" href="#Level14"></a></h4><p>​        同level7</p>
-<h4 id="Level15">Level15<a class="post-anchor" href="#Level15"></a></h4><p>​        一言难尽，可以在ipython里用pwntools。</p>
-<h4 id="Level16">Level16<a class="post-anchor" href="#Level16"></a></h4><p>​        同15。</p>
-<h4 id="Level17">Level17<a class="post-anchor" href="#Level17"></a></h4><p>​        这几个level就是将python与之前level的命令行参数或者环境变量结合，虽然难度不高但是很考验pwntools运用的熟练度。所以我还没有找到做出来的方法。</p>
-<h4 id="Level18">Level18<a class="post-anchor" href="#Level18"></a></h4><p>​        利用python设置环境变量，主要利用到<code>os.environ</code>或者<code>os.putenv</code>函数。</p>
-<h4 id="Level19">Level19<a class="post-anchor" href="#Level19"></a></h4><p>​        </p>
-</body></html>
+<h4 id="Level6"><a href="#Level6" class="headerlink" title="Level6"></a>Level6</h4><p>​        一个输出重定向，创建对应文件<code>./embryoio_level6 &gt; /tmp/ptyaid </code>，flag在<code>ptyaid</code>中。</p>
+<h4 id="Level7"><a href="#Level7" class="headerlink" title="Level7"></a>Level7</h4><p><code>env -i ./xxx</code></p>
+<h4 id="Level8"><a href="#Level8" class="headerlink" title="Level8"></a>Level8</h4><p>​        写个sh脚本，内容是打开这个题目。注意路径。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hacker@embryoio_level8:~$ cat my_script.sh </span><br><span class="line">/challenge/embryoio_level8</span><br></pre></td></tr></table></figure>
+
+<h4 id="Level9"><a href="#Level9" class="headerlink" title="Level9"></a>Level9</h4><p>​        与level8同理，顺手输个密码就行。</p>
+<h4 id="Level10"><a href="#Level10" class="headerlink" title="Level10"></a>Level10</h4><p>​        同level3</p>
+<h4 id="Level11"><a href="#Level11" class="headerlink" title="Level11"></a>Level11</h4><p>​        同level4。</p>
+<h4 id="Level12"><a href="#Level12" class="headerlink" title="Level12"></a>Level12</h4><p>​        同level5</p>
+<h4 id="Level13"><a href="#Level13" class="headerlink" title="Level13"></a>Level13</h4><p>​        同level6</p>
+<h4 id="Level14"><a href="#Level14" class="headerlink" title="Level14"></a>Level14</h4><p>​        同level7</p>
+<h4 id="Level15"><a href="#Level15" class="headerlink" title="Level15"></a>Level15</h4><p>​        一言难尽，可以在ipython里用pwntools。</p>
+<h4 id="Level16"><a href="#Level16" class="headerlink" title="Level16"></a>Level16</h4><p>​        同15。</p>
+<h4 id="Level17"><a href="#Level17" class="headerlink" title="Level17"></a>Level17</h4><p>​        这几个level就是将python与之前level的命令行参数或者环境变量结合，虽然难度不高但是很考验pwntools运用的熟练度。所以我还没有找到做出来的方法。</p>
+<h4 id="Level18"><a href="#Level18" class="headerlink" title="Level18"></a>Level18</h4><p>​        利用python设置环境变量，主要利用到<code>os.environ</code>或者<code>os.putenv</code>函数。</p>
+<h4 id="Level19"><a href="#Level19" class="headerlink" title="Level19"></a>Level19</h4><p>​        </p>
+
             <div class="clearfix"></div>
             <hr class="nogutter">
         </div>

