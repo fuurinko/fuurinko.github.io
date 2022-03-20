@@ -96,6 +96,8 @@
 				    
 				    <li><a href="/categories/PWN-COLLEGE/" class="animsition-link">PWN.COLLEGE<small>(9)</small></a></li>
 				    
+				    <li><a href="/categories/STACK-ARRAY-OUT-OF-BOUNDS/" class="animsition-link">STACK - ARRAY OUT OF BOUNDS<small>(1)</small></a></li>
+				    
 				    <li><a href="/categories/STACK-DynELF/" class="animsition-link">STACK - DynELF<small>(2)</small></a></li>
 				    
 				    <li><a href="/categories/STACK-Format/" class="animsition-link">STACK - Format<small>(3)</small></a></li>
@@ -229,6 +231,51 @@
 
 <section id="intro">
     <div class="container">
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2021/12/03/malloc lab/">csapp malloc lab</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2021-12-03T08:46:22.570Z" itemprop="datePublished">
+          2021-12-03
+      </time>
+    
+    
+    | 
+    <a href='/tags/csapp-lab/'>csapp lab</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        0）前言​        鸽了三个月的malloc lab，作为复习堆题的开始。
+​        计画完成时间是12.5之前，也就是三天。
+1）大体设计​        对于整体的操作的大致模型以及allocater和freer需要做的工作如下：
+​        分配器：
+
+在第一次分配chunk时，对堆空间进行初始化=&gt;mm_init()    
+
+创建指定类型的chunk。
+​    free
+
+利用隐式空闲链表，将fre
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2021/12/03/malloc lab/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
         
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
@@ -579,44 +626,6 @@ docker基础架构​    对于docker，在了解基础命令之前我们需要�
                     
                     <p class="pull-right readMore">
                         <a href="/2021/10/29/typora主题配置的一些心得/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2021/10/28/解决hexo无法显示高亮问题/">解决hexo无法显示高亮问题</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2021-10-28T08:13:26.358Z" itemprop="datePublished">
-          2021-10-28
-      </time>
-    
-    
-    | 
-    <a href='/tags/mess/'>mess</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        ​    博客搭了有快一年了，一直是hexo+git page的配置（不过这个搭配现在绝版了2333），但是一直荒废着，差不多到大一暑假的时候才想起要好好经营。
-​    但是代码高亮这个一直没有解决。
-​    之前我以为是博客主题配置的问题（就是highlight对象的值的问题），但是无论用怎么样的方法都不太行。
-​    在研究代码高亮的过程中，我才知道原来有个项目叫highlight.js,里面有各种各样的代码高亮的css文件。
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2021/10/28/解决hexo无法显示高亮问题/">Read More...</a>
                     </p>
                     
                 </div>

