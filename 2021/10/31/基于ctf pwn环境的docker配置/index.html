@@ -54,6 +54,9 @@
   
 
   <style>.col-md-8.col-md-offset-2.opening-statement img{display:none;}</style>
+<link rel="stylesheet" href="/assets/css/APlayer.min.css" class="aplayer-style-marker">
+<script src="/assets/js/APlayer.min.js" class="aplayer-script-marker"></script>
+<script src="/assets/js/Meting.min.js" class="meting-script-marker"></script>
 <link rel="stylesheet" href="/css/prism.css" type="text/css"></head>
 
 <!--
@@ -217,7 +220,14 @@
             </div>
         </div>
         <div class="col-md-8 col-md-offset-2">
-      		<p>​    最近为了校内的萌新赛，需要出一些简单的pwn题，然后把它们搓进docker。虽然步骤并不是非常复杂，而且有现成的框架，但我发现如果纯粹按照网上框架的一件脚本运行的话，遇到报错根本无法解决，所以看图说话之外我还需要较为系统地学习docker知识。</p>
+      		
+    <div id="aplayer-rXOzeUcE" class="aplayer aplayer-tag-marker meting-tag-marker"
+         data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"
+    ></div> 
+
+
+
+<p>​    最近为了校内的萌新赛，需要出一些简单的pwn题，然后把它们搓进docker。虽然步骤并不是非常复杂，而且有现成的框架，但我发现如果纯粹按照网上框架的一件脚本运行的话，遇到报错根本无法解决，所以看图说话之外我还需要较为系统地学习docker知识。</p>
 <h2 id="docker基础架构"><a href="#docker基础架构" class="headerlink" title="docker基础架构"></a>docker基础架构</h2><p>​    对于docker，在了解基础命令之前我们需要了解的就是，容器以及虚拟化的大致概念。</p>
 <h3 id="1-1-为什么要有docker？"><a href="#1-1-为什么要有docker？" class="headerlink" title="1.1    为什么要有docker？"></a>1.1    为什么要有docker？</h3><p>​    一个程序运行也许需要严苛的环境条件，也许一个微小的环境变量的差异，将导致程序的崩溃，因此在软件开发的过程中，统一环境是一件很重要的事。</p>
 <p>​    为了解决这个问题，我们可以使用虚拟机，将程序同操作系统一起打包，这样确实避免了因为环境问题导致的程序的bug。</p>
@@ -872,12 +882,22 @@ $('#intro').find('img').each(function(){
 
       
       
-<!-- 加入APlayer音乐播放器 -->
+
+<!--
+
 <link rel="stylesheet" href="/dist/APlayer.min.css">
 <div id="aplayer"></div>
-<script type="text/javascript" src="/dist/APlayer.min.js"></script>
-<script type="text/javascript" src="/dist/music.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/meting@2.0.1/dist/Meting.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script>
+-->
+<!-- require MetingJS 
+<script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+<meting-js
+      server="netease"
+      type="playlist"
+      id="4904272454">
+</meting-js>
+
+-->
 
 </body>
 

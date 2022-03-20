@@ -54,6 +54,9 @@
   
 
   <style>.col-md-8.col-md-offset-2.opening-statement img{display:none;}</style>
+<link rel="stylesheet" href="/assets/css/APlayer.min.css" class="aplayer-style-marker">
+<script src="/assets/js/APlayer.min.js" class="aplayer-script-marker"></script>
+<script src="/assets/js/Meting.min.js" class="meting-script-marker"></script>
 <link rel="stylesheet" href="/css/prism.css" type="text/css"></head>
 
 <!--
@@ -217,7 +220,12 @@
             </div>
         </div>
         <div class="col-md-8 col-md-offset-2">
-      		<h4 id="1）review"><a href="#1）review" class="headerlink" title="1）review"></a>1）review</h4><p> 这个问题困扰了我多年，之前年轻的时候不知道为什么有的是题我就是死活调不出，后来才知道呀原来用的ubunt的版本太高了。但是我一直忽视了这个问题以为并不是什么关键的因素。我是这么认为的–只要清楚了利用方法并记住对应的libc版本，无论是不是真的把这道题调试出来了都无所谓。</p>
+      		
+    <div id="aplayer-VrOVGeUt" class="aplayer aplayer-tag-marker meting-tag-marker"
+         data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"
+    ></div> 
+
+<h4 id="1）review"><a href="#1）review" class="headerlink" title="1）review"></a>1）review</h4><p> 这个问题困扰了我多年，之前年轻的时候不知道为什么有的是题我就是死活调不出，后来才知道呀原来用的ubunt的版本太高了。但是我一直忽视了这个问题以为并不是什么关键的因素。我是这么认为的–只要清楚了利用方法并记住对应的libc版本，无论是不是真的把这道题调试出来了都无所谓。</p>
 <p>然后我就是这样一步一步地变得不会调试的。</p>
 <p>但是完整地把一道题调出来。这才是关键。这才是pwn题的灵魂。</p>
 <p>呜呜呜，我居然一直忽略了它的灵魂</p>
@@ -820,12 +828,22 @@ $('#intro').find('img').each(function(){
 
       
       
-<!-- 加入APlayer音乐播放器 -->
+
+<!--
+
 <link rel="stylesheet" href="/dist/APlayer.min.css">
 <div id="aplayer"></div>
-<script type="text/javascript" src="/dist/APlayer.min.js"></script>
-<script type="text/javascript" src="/dist/music.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/meting@2.0.1/dist/Meting.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script>
+-->
+<!-- require MetingJS 
+<script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+<meting-js
+      server="netease"
+      type="playlist"
+      id="4904272454">
+</meting-js>
+
+-->
 
 </body>
 

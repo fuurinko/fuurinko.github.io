@@ -6,7 +6,7 @@ const ap = new APlayer({
 	{
         name: "",
         artist: '',
-        url: 'https://1drv.ms/u/s!As6prNZhlPxycaAtwk2t7znzWVE?e=UbFAGi',
+        url: '"https://onedrive.live.com/embed?cid=72FC9461D6ACA9CE&resid=72FC9461D6ACA9CE%21113&authkey=AOvFlCDvEB8p8-Y"',
         cover: 'http://p1.music.126.net/W_5XiCv3rGS1-J7EXpHSCQ==/18885211718782327.jpg?param=130y130',
       }]
 });

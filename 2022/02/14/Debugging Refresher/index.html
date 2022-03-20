@@ -54,6 +54,9 @@
   
 
   <style>.col-md-8.col-md-offset-2.opening-statement img{display:none;}</style>
+<link rel="stylesheet" href="/assets/css/APlayer.min.css" class="aplayer-style-marker">
+<script src="/assets/js/APlayer.min.js" class="aplayer-script-marker"></script>
+<script src="/assets/js/Meting.min.js" class="meting-script-marker"></script>
 <link rel="stylesheet" href="/css/prism.css" type="text/css"></head>
 
 <!--
@@ -217,7 +220,12 @@
             </div>
         </div>
         <div class="col-md-8 col-md-offset-2">
-      		<h4 id="Level1"><a href="#Level1" class="headerlink" title="Level1"></a>Level1</h4><p>​        直接r，然后c到断点。</p>
+      		
+    <div id="aplayer-QzGMiCAT" class="aplayer aplayer-tag-marker meting-tag-marker"
+         data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"
+    ></div> 
+
+<h4 id="Level1"><a href="#Level1" class="headerlink" title="Level1"></a>Level1</h4><p>​        直接r，然后c到断点。</p>
 <h4 id="Level2"><a href="#Level2" class="headerlink" title="Level2"></a>Level2</h4><p>​        <code>p/x $r12</code></p>
 <h4 id="Level3"><a href="#Level3" class="headerlink" title="Level3"></a>Level3</h4><p>​        不好描述，可以根据后面的正确随机数在栈中找到对应的位置，然后重新执行并输入。</p>
 <h4 id="Level4"><a href="#Level4" class="headerlink" title="Level4"></a>Level4</h4><p>​        。。。。</p>
@@ -800,12 +808,22 @@ $('#intro').find('img').each(function(){
 
       
       
-<!-- 加入APlayer音乐播放器 -->
+
+<!--
+
 <link rel="stylesheet" href="/dist/APlayer.min.css">
 <div id="aplayer"></div>
-<script type="text/javascript" src="/dist/APlayer.min.js"></script>
-<script type="text/javascript" src="/dist/music.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/meting@2.0.1/dist/Meting.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script>
+-->
+<!-- require MetingJS 
+<script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+<meting-js
+      server="netease"
+      type="playlist"
+      id="4904272454">
+</meting-js>
+
+-->
 
 </body>
 

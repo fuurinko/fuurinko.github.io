@@ -54,6 +54,9 @@
   
 
   <style>.col-md-8.col-md-offset-2.opening-statement img{display:none;}</style>
+<link rel="stylesheet" href="/assets/css/APlayer.min.css" class="aplayer-style-marker">
+<script src="/assets/js/APlayer.min.js" class="aplayer-script-marker"></script>
+<script src="/assets/js/Meting.min.js" class="meting-script-marker"></script>
 <link rel="stylesheet" href="/css/prism.css" type="text/css"></head>
 
 <!--
@@ -217,7 +220,12 @@
             </div>
         </div>
         <div class="col-md-8 col-md-offset-2">
-      		<p>io_file学习笔记</p>
+      		
+    <div id="aplayer-eJQLkMPz" class="aplayer aplayer-tag-marker meting-tag-marker"
+         data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"
+    ></div> 
+
+<p>io_file学习笔记</p>
 <h3 id="0）review"><a href="#0）review" class="headerlink" title="0）review"></a>0）review</h3><p>glibc定义了<code>_IO_FILE</code>这样一个结构体来管理io file。io_file结构体里定义了一堆相关的变量，但是真正关键的是其中包含的<code>_IO_FILE_plus</code>结构</p>
 <p>结构源码如下</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> _<span class="title">IO_FILE_plus</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    _IO_FILE    file;</span><br><span class="line">    IO_jump_t   *vtable;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -853,12 +861,22 @@ $('#intro').find('img').each(function(){
 
       
       
-<!-- 加入APlayer音乐播放器 -->
+
+<!--
+
 <link rel="stylesheet" href="/dist/APlayer.min.css">
 <div id="aplayer"></div>
-<script type="text/javascript" src="/dist/APlayer.min.js"></script>
-<script type="text/javascript" src="/dist/music.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/meting@2.0.1/dist/Meting.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script>
+-->
+<!-- require MetingJS 
+<script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+<meting-js
+      server="netease"
+      type="playlist"
+      id="4904272454">
+</meting-js>
+
+-->
 
 </body>
 

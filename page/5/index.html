@@ -253,10 +253,13 @@
                 <div class="col-md-8">
                     <p>
                       
-                        ​    博客搭了有快一年了，一直是hexo+git page的配置（不过这个搭配现在绝版了2333），但是一直荒废着，差不多到大一暑假的时候才想起要好好经营。
+                          
+     
+
+  博客搭了有快一年了，一直是hexo+git page的配置（不过这个搭配现在绝版了2333），但是一直荒废着，差不多到大一暑假的时候才想起要好好经营。
 ​    但是代码高亮这个一直没有解决。
 ​    之前我以为是博客主题配置的问题（就是highlight对象的值的问题），但是无论用怎么样的方法都不太行。
-​    在研究代码高亮的过程中，我才知道原来有个项目叫highlight.js,里面有各种各样的代码高亮的css文件。
+​    在研究代码高亮的过程中，我才知道原来有个项目叫highlight.js,里面有各种各样的代码高亮
                       
                     </p>
                     
@@ -291,12 +294,15 @@
                 <div class="col-md-8">
                     <p>
                       
-                        1）前言​    之前一直被gcc无法编译32位程序而困扰，但是问题一直拖着没有解决，趁着今天比较闲，把这个问题彻底解决一下。
+                        
+     
+
+1）前言​    之前一直被gcc无法编译32位程序而困扰，但是问题一直拖着没有解决，趁着今天比较闲，把这个问题彻底解决一下。
 2)过程​    首先我们尝试编译32位程序，gcc报错：
 ​    缺少头文件，实则是没有安装多架构gcc。
 ​    试图安装，失败，报错如下：
 ​    这里有个坑了我好久的东西，就是这个报错
-E: Unable to correct problems, you have held broken pack
+E: Unable to correct problems, you have held bro
                       
                     </p>
                     
@@ -331,11 +337,14 @@ E: Unable to correct problems, you have held broken pack
                 <div class="col-md-8">
                     <p>
                       
-                        重点研究如何计算32/64位程序中格式化字符串在栈上的偏移，以及研究自动化求偏移的实现
+                        
+     
+
+重点研究如何计算32/64位程序中格式化字符串在栈上的偏移，以及研究自动化求偏移的实现
 1）32位偏移计算原理​    其实这个计算确实是有手就行，只需要在栈上找到对应的格式化字符串，然后数是第几个，再减去返回地址所占的一个位置，就是偏移量。
 ​    准确来说应该是格式化字符串在栈上的偏移。
 ​    原理也比较简单。x86架构下，格式化字符串时通过栈传递的。
-​    然后联想一下函数调用栈的知识点，格式化字符串本身和printf的
+​    然后联想一下函数调用栈的知识点，格式化字符串本身
                       
                     </p>
                     
@@ -370,12 +379,15 @@ E: Unable to correct problems, you have held broken pack
                 <div class="col-md-8">
                     <p>
                       
-                        0)preview​    一般通过萌新一般在接触pwn的时候，一个必不可少的步骤就是下载pwntools，并且在自己人生第一个脚本上输入：
+                        
+     
+
+0)preview​    一般通过萌新一般在接触pwn的时候，一个必不可少的步骤就是下载pwntools，并且在自己人生第一个脚本上输入：
 1from pwn import*
 
 ​    我也如此。
 ​    在学习pwn知识快一年的今天，倘若还是对pwntools这个神一般的工具迷茫不解，那我确实还不是一个合格的pwn手。
-​    这个系列的目的是通过简单的源码剖析，辅以相应的例题，探究pwn题，gdb调试，以及pwntools本
+​    这个系列的目的是通过简单的源码剖析，辅以相应的例题，探究pwn题，gdb调试，以及p
                       
                     </p>
                     
@@ -410,9 +422,12 @@ E: Unable to correct problems, you have held broken pack
                 <div class="col-md-8">
                     <p>
                       
-                        1）abstract​    这个part主要综合了一些奇怪的调试中遇到的问题，不定期更新。
+                        
+     
+
+1）abstract​    这个part主要综合了一些奇怪的调试中遇到的问题，不定期更新。
 2）格式化字符串-cctf-pwn31）pause（p）导致ERROR: Could not find ELF base问题​    在开始动调这个exp的时候，发现一个很奇怪的点就是如果下的断点的模式gdb.attach(sh)，那么程序会异常退出，大概是这样：
-1234567891011121314151617181920212223242
+12345678910111213141516171819202
                       
                     </p>
                     
@@ -447,12 +462,17 @@ E: Unable to correct problems, you have held broken pack
                 <div class="col-md-8">
                     <p>
                       
-                        1）前言绿盟杯pwn1，格式化字符串+沙盒orw。保护全开。
+                        
+     
+
+
+
+1）前言绿盟杯pwn1，格式化字符串+沙盒orw。保护全开。
 首先对于格式化字符串我的理解就不是很深刻，甚至从来没有完整地刷过一道格式化字符串的题目。
 所以碰到这道题，算是又给我敲了第nn个警钟。
 非常清晰地告诉我：我是垃圾。
 2）格式化字符串基本原理ctfwiki上的格式化字符串教程写得挺好的，可以参考。
-格式化字符串参数1%[parameter][flags][field width][.precision][length]type
+格式化字符串参数1%[parameter][flags][field width][.precision][l
                       
                     </p>
                     
@@ -487,14 +507,17 @@ E: Unable to correct problems, you have held broken pack
                 <div class="col-md-8">
                     <p>
                       
-                        [TOC]
+                        
+     
+
+[TOC]
 汇编语言1）寻址1/直接寻址12mov     rax, fs:28h #直接寻址，fs段寄存器+偏移量。这里其实是一个canary的值。
 
 2/间接寻址间接在使用指针以及解引用的形式
 1mov     [rbp+var_8], rax # 寄存器相对寻址。相当于把rax，也就是这个canary值放到rbp+var_8的地方。
 
 3/比例寻址例如在数组遍历中
-123456.dataarrayD 1,2,3,4.codemov
+123456.dataarrayD 1,2,3,4
                       
                     </p>
                     
@@ -529,10 +552,13 @@ E: Unable to correct problems, you have held broken pack
                 <div class="col-md-8">
                     <p>
                       
-                        在学习Tcache的时候遇到了一些比较奇怪的点，ctf权威指南pwn篇中对于Tcache的解释中第一段如下：
+                        
+     
+
+在学习Tcache的时候遇到了一些比较奇怪的点，ctf权威指南pwn篇中对于Tcache的解释中第一段如下：
 Tcache全名为Thread Local Caching，它为每个线程创建一个缓存，里面包含了一些小堆块，无需对main_arena上锁即可使用。
 
-首先让我感到不解的就是，“无需对main_arena上锁即可使用”这句话。什么叫对main_arana上锁？之前也遇见过很多文章提到过这个”锁“的相关概念，但是它们从来都不是问题
+首先让我感到不解的就是，“无需对main_arena上锁即可使用”这句话。什么叫对main_arana上锁？之前也遇见过很多文章提到过这个”锁“的相关概念，但是它
                       
                     </p>
                     
@@ -567,11 +593,13 @@ Tcache全名为Thread Local Caching，它为每个线程创建一个缓存，里
                 <div class="col-md-8">
                     <p>
                       
-                        1）review 这个问题困扰了我多年，之前年轻的时候不知道为什么有的是题我就是死活调不出，后来才知道呀原来用的ubunt的版本太高了。但是我一直忽视了这个问题以为并不是什么关键的因素。我是这么认为的–只要清楚了利用方法并记住对应的libc版本，无论是不是真的把这道题调试出来了都无所谓。
+                        
+     
+
+1）review 这个问题困扰了我多年，之前年轻的时候不知道为什么有的是题我就是死活调不出，后来才知道呀原来用的ubunt的版本太高了。但是我一直忽视了这个问题以为并不是什么关键的因素。我是这么认为的–只要清楚了利用方法并记住对应的libc版本，无论是不是真的把这道题调试出来了都无所谓。
 然后我就是这样一步一步地变得不会调试的。
 但是完整地把一道题调出来。这才是关键。这才是pwn题的灵魂。
-呜呜呜，我居然一直忽略了它的灵魂
-所以这一次我
+呜呜呜，我居然一直忽略了它的灵
                       
                     </p>
                     
@@ -606,10 +634,13 @@ Tcache全名为Thread Local Caching，它为每个线程创建一个缓存，里
                 <div class="col-md-8">
                     <p>
                       
-                        Tcahce学习0）review说是Tcache学习，实际上是lonelywolf的复现。
+                        
+     
+
+Tcahce学习0）review说是Tcache学习，实际上是lonelywolf的复现。
 网上wp都是神仙写的，一点也不萌新友好。我都看不懂（）
 打开题发现这个菜单题好常规。
-但是libc是2.27，难度会稍微高一点。而且这个2.27是魔改过的，加入了2.29才有的key，为Tcache加入了检查机制。                                                                   
+但是libc是2.27，难度会稍微高一点。而且这个2.27是魔改过的，加入了2.29才有的key，为Tcache加入了检查机制。                                                           
                       
                     </p>
                     
@@ -1134,12 +1165,22 @@ $('#intro').find('img').each(function(){
 
       
       
-<!-- 加入APlayer音乐播放器 -->
+
+<!--
+
 <link rel="stylesheet" href="/dist/APlayer.min.css">
 <div id="aplayer"></div>
-<script type="text/javascript" src="/dist/APlayer.min.js"></script>
-<script type="text/javascript" src="/dist/music.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/meting@2.0.1/dist/Meting.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script>
+-->
+<!-- require MetingJS 
+<script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+<meting-js
+      server="netease"
+      type="playlist"
+      id="4904272454">
+</meting-js>
+
+-->
 
 </body>
 

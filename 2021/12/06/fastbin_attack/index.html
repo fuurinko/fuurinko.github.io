@@ -54,6 +54,9 @@
   
 
   <style>.col-md-8.col-md-offset-2.opening-statement img{display:none;}</style>
+<link rel="stylesheet" href="/assets/css/APlayer.min.css" class="aplayer-style-marker">
+<script src="/assets/js/APlayer.min.js" class="aplayer-script-marker"></script>
+<script src="/assets/js/Meting.min.js" class="meting-script-marker"></script>
 <link rel="stylesheet" href="/css/prism.css" type="text/css"></head>
 
 <!--
@@ -217,7 +220,12 @@
             </div>
         </div>
         <div class="col-md-8 col-md-offset-2">
-      		<h2 id="fastbin？"><a href="#fastbin？" class="headerlink" title="fastbin？"></a>fastbin？</h2><p>​    </p>
+      		
+    <div id="aplayer-FCwQMhdY" class="aplayer aplayer-tag-marker meting-tag-marker"
+         data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"
+    ></div> 
+
+<h2 id="fastbin？"><a href="#fastbin？" class="headerlink" title="fastbin？"></a>fastbin？</h2><p>​    </p>
 <h2 id=""><a href="#" class="headerlink" title=""></a></h2><p>​    长度在<code>32-160</code>(32位系统是<code>16-80</code>)的free堆块。通过fastbinlist储存，单向链表，所以fast。fastbin attack一个最简单的利用就是UAF，其次就是fastbin double free。ctf pwn中与fastbin相关的还有就是在unsortedbin attack中涉及到的，也是ptmalloc机制中的一种的malloc_consolidate，其中也有可以攻击的机会，但是这个内容日后再在unsortedbin attack的笔记中再进行研究吧。</p>
 <h2 id="UAF"><a href="#UAF" class="headerlink" title="UAF"></a>UAF</h2><p>​        先从一个简单的例子开始：</p>
 <h4 id="hacknote"><a href="#hacknote" class="headerlink" title="hacknote"></a>hacknote</h4><p><a target="_blank" rel="noopener" href="https://github.com/ctf-wiki/ctf-challenges/tree/master/pwn/heap/use_after_free/hitcon-training-hacknote">题目链接</a></p>
@@ -880,12 +888,22 @@ $('#intro').find('img').each(function(){
 
       
       
-<!-- 加入APlayer音乐播放器 -->
+
+<!--
+
 <link rel="stylesheet" href="/dist/APlayer.min.css">
 <div id="aplayer"></div>
-<script type="text/javascript" src="/dist/APlayer.min.js"></script>
-<script type="text/javascript" src="/dist/music.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/meting@2.0.1/dist/Meting.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script>
+-->
+<!-- require MetingJS 
+<script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+<meting-js
+      server="netease"
+      type="playlist"
+      id="4904272454">
+</meting-js>
+
+-->
 
 </body>
 

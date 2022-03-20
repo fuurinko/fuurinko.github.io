@@ -253,7 +253,16 @@
                 <div class="col-md-8">
                     <p>
                       
-                        Level1.0
+                        
+     
+
+
+
+
+
+
+
+Level1.0
 Level1.1​        同上，一样的做法。
 Level2.0​        交换idx3和idx4的位置
 Level2.1​        交换idx1和idx4.
@@ -261,7 +270,7 @@ Level2.1​        交换idx1和idx4.
 
 ​        输入五个字符，转化为ascii后以int类型贮存，从栈布局可以看出v10大小是4个字，所以第五个字被储存在v11。
 Level3.0​        reverse
-Level3.1​       
+Le
                       
                     </p>
                     
@@ -296,7 +305,10 @@ Level3.1​
                 <div class="col-md-8">
                     <p>
                       
-                        Level1​        直接r，然后c到断点。
+                        
+     
+
+Level1​        直接r，然后c到断点。
 Level2​        p/x $r12
 Level3​        不好描述，可以根据后面的正确随机数在栈中找到对应的位置，然后重新执行并输入。
 Level4​        。。。。
@@ -336,12 +348,17 @@ Level5gdb脚本。
                 <div class="col-md-8">
                     <p>
                       
-                        Level1需要设置*rdi = 0x1337，
+                        
+     
+
+
+
+Level1需要设置*rdi = 0x1337，
 如果是按照目的意思程序的汇编代码长这样子：
 12345.section .text    .intel_syntax noprefix    .global _start    _start :        mov rdi, 0x1337
 
 但是可以直接用pwntools传输mov rdi, 0x1337这一句。
-12345678910111213#!/usr/bin/env pyth
+12345678910111213#!/usr/bi
                       
                     </p>
                     
@@ -376,14 +393,18 @@ Level5gdb脚本。
                 <div class="col-md-8">
                     <p>
                       
-                        ​        整个专题其实就是一个shellcode编写的小练习，并不需要自己寻找漏洞点，写好shellcode直接注入就行。
+                        
+     
+
+
+
+​        整个专题其实就是一个shellcode编写的小练习，并不需要自己寻找漏洞点，写好shellcode直接注入就行。
 ​        如果要将服务器的文件传输到本地的话可以使用:
 1scp -i key -r hacker@dojo.pwn.college:/challenge [本地路径]
 
 
 
-Level1​        可以用pwntools的shellcraft模块，但是也可以手写shellcode。
-​   
+Level1​        可以用pwntools的shellcraft模块，但是也可以手写shell
                       
                     </p>
                     
@@ -418,13 +439,16 @@ Level1​        可以用pwntools的shellcraft模块，但是也可以手写she
                 <div class="col-md-8">
                     <p>
                       
-                        「前面不太记得了，从level3记起」
+                        
+     
+
+「前面不太记得了，从level3记起」
 level3 ./embryoio_level3  xkbdyoisnx    
 Level4export jouixn = xxx
 Level5​    一个标准输入重定向的考察，
 ./embryoio_level5 &lt; /tmp/mihsjr
 ​        还需要编辑mihsjr 的内容为给的密码。
-Level6​        一个输出重定向，创建对应文件./embryoio_le
+Level6​        一个输出重定向，创建对应文件./emb
                       
                     </p>
                     
@@ -459,10 +483,11 @@ Level6​        一个输出重定向，创建对应文件./embryoio_le
                 <div class="col-md-8">
                     <p>
                       
-                        ​            
+                        ​        
+         
 ​    一个简单的trick。
 ​        并且在trick就是tcache，接下来就是刷题熟练，最后再简单学习一下largin bin和small bin的利用。
-​        unsortedbin  由双向循环链表管理，表头为main_arena，所以表末尾的chunk的fd会指回main_arena，这样我们就获得了main_arena结构体内部的的地址，通过调试我们就能得到main_ar
+​        unsortedbin  由双向循环链表管理，表头为main_arena，所以表末尾的chunk的fd会指回main_arena，这样我们就获得了main_arena结构体内部的的地址，通过调试我们就能得到m
                       
                     </p>
                     
@@ -497,9 +522,14 @@ Level6​        一个输出重定向，创建对应文件./embryoio_le
                 <div class="col-md-8">
                     <p>
                       
-                        0）​        自从抛弃虚拟机，利用ida for mac+pwndocker实现完全mac环境以后，深觉优雅的同时，也遇见了不少坑。
+                        
+     
+
+
+
+0）​        自从抛弃虚拟机，利用ida for mac+pwndocker实现完全mac环境以后，深觉优雅的同时，也遇见了不少坑。
 ​        其中ida的坑更是坑人于无形之中。因为如果不打开win的7.5（甚至7.6）做对比，你甚至不知道你遇见的一些奇怪的东西，是7.0 mac版特有的，已经被优化了的坑，还是自身逆向水平问题。
-​        作为一个逆向废物，7.0 for mac属实是给本来就逆不出的我雪上加霜，
+​        作为一个逆向废物，7.0 for mac属实是给本来就
                       
                     </p>
                     
@@ -529,13 +559,15 @@ Level6​        一个输出重定向，创建对应文件./embryoio_le
                 <div class="col-md-8">
                     <p>
                       
-                        ​    
+                        
+         
+
 UNLINK​        就是将free chunk从双向循环链表中解链的过程，当然这里的解链一般来说是指在对空闲块进行合并的时候的unlink。借用malloc lab中的简化的unlink的代码，就是：
 12SET_PREV(next,prev);SET_NEXT(prev,next)
 
 
 
-​        也就是把下一个chunk的PREV位设为上一个chunk的bp，把上一个chunk的next位设为下一个ch
+​        也就是把下一个chunk的PREV位设为上一个chunk的bp，把上一个chunk的next位设
                       
                     </p>
                     
@@ -570,11 +602,14 @@ UNLINK​        就是将free chunk从双向循环链表中解链的过程，�
                 <div class="col-md-8">
                     <p>
                       
-                        Off by one​        单/空字节溢出攻击。
+                        
+     
+
+Off by one​        单/空字节溢出攻击。
 ​        通常来说简单的off by one的漏洞点来自于编写时对边界控制不严格，导致每次输入的字符都能比规定的最大字符大那么一些（一个，或者几个）。这些字节溢出到物理地址相邻的下一个堆块，就能修改下一个chunk的size或者prev_inuse，通过这样的溢出，就能够整一些有趣的攻击。
 ​        通常单字节溢出的利用方式有如下几种：
 
-溢出字节任意可控制字节
+溢出字
                       
                     </p>
                     
@@ -609,8 +644,11 @@ UNLINK​        就是将free chunk从双向循环链表中解链的过程，�
                 <div class="col-md-8">
                     <p>
                       
-                        fastbin？​    
-​    长度在32-160(32位系统是16-80)的free堆块。通过fastbinlist储存，单向链表，所以fast。fastbin attack一个最简单的利用就是UAF，其次就是fastbin double free。ctf pwn中与fastbin相关的还有就是在unsortedbin attack中涉及到的，也是ptmalloc机制中的一种的malloc_consolidate，其中也有可以攻
+                        
+     
+
+fastbin？​    
+​    长度在32-160(32位系统是16-80)的free堆块。通过fastbinlist储存，单向链表，所以fast。fastbin attack一个最简单的利用就是UAF，其次就是fastbin double free。ctf pwn中与fastbin相关的还有就是在unsortedbin attack中涉及到的，也是ptmalloc机制中的一种的malloc_consolidate
                       
                     </p>
                     
@@ -1135,12 +1173,22 @@ $('#intro').find('img').each(function(){
 
       
       
-<!-- 加入APlayer音乐播放器 -->
+
+<!--
+
 <link rel="stylesheet" href="/dist/APlayer.min.css">
 <div id="aplayer"></div>
-<script type="text/javascript" src="/dist/APlayer.min.js"></script>
-<script type="text/javascript" src="/dist/music.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/meting@2.0.1/dist/Meting.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script>
+-->
+<!-- require MetingJS 
+<script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+<meting-js
+      server="netease"
+      type="playlist"
+      id="4904272454">
+</meting-js>
+
+-->
 
 </body>
 

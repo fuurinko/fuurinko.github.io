@@ -54,6 +54,9 @@
   
 
   <style>.col-md-8.col-md-offset-2.opening-statement img{display:none;}</style>
+<link rel="stylesheet" href="/assets/css/APlayer.min.css" class="aplayer-style-marker">
+<script src="/assets/js/APlayer.min.js" class="aplayer-script-marker"></script>
+<script src="/assets/js/Meting.min.js" class="meting-script-marker"></script>
 <link rel="stylesheet" href="/css/prism.css" type="text/css"></head>
 
 <!--
@@ -217,7 +220,12 @@
             </div>
         </div>
         <div class="col-md-8 col-md-offset-2">
-      		<h3 id="ELF文件下对于PIE保护和ASLR的重新认识"><a href="#ELF文件下对于PIE保护和ASLR的重新认识" class="headerlink" title="ELF文件下对于PIE保护和ASLR的重新认识"></a>ELF文件下对于PIE保护和ASLR的重新认识</h3><h4 id="0）"><a href="#0）" class="headerlink" title="0）"></a>0）</h4><p>​    复现红色高跟鞋的时候，在ida修复swithc结构的时候碰见了一个问题。因为题目的源文件是有pie保护的，所以ida中的地址是很难看的随机化模式。虽然这些随机化的地址对于我们patch文件毫无影响，但是就是突发奇想，看看能不能找到方法来通过patch将elf文件的pie保护给禁用。</p>
+      		
+    <div id="aplayer-PQrJuWeR" class="aplayer aplayer-tag-marker meting-tag-marker"
+         data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"
+    ></div> 
+
+<h3 id="ELF文件下对于PIE保护和ASLR的重新认识"><a href="#ELF文件下对于PIE保护和ASLR的重新认识" class="headerlink" title="ELF文件下对于PIE保护和ASLR的重新认识"></a>ELF文件下对于PIE保护和ASLR的重新认识</h3><h4 id="0）"><a href="#0）" class="headerlink" title="0）"></a>0）</h4><p>​    复现红色高跟鞋的时候，在ida修复swithc结构的时候碰见了一个问题。因为题目的源文件是有pie保护的，所以ida中的地址是很难看的随机化模式。虽然这些随机化的地址对于我们patch文件毫无影响，但是就是突发奇想，看看能不能找到方法来通过patch将elf文件的pie保护给禁用。</p>
 <h4 id="1）"><a href="#1）" class="headerlink" title="1）"></a>1）</h4><p>​    如果用010editor打开一个PE文件，我们能够很方便的通过修改PE头来禁用掉Windows程序的ASLR保护。这是因为程序本身其实并不是位置无关的。</p>
 <p>ASLR在PE文件上的开启与否实际上就是PE头上标识符的区分，总的来说ASLR是操作系统的功能，而不是程序本身的特性，以ASLR ON 编译，也只是给程序加上了能被ASLR保护识别的标识符。所以我们只需要patch掉这个标识符，就能够改变程序的地址随机化状态。</p>
 <p>也正是在寻找方法的过程中，我逐渐认识到虽然PIE保护和ASLR表现形式都是地址随机化，但是两者的原理以及实现的方式并不一样，甚至大相径庭。</p>
@@ -803,12 +811,22 @@ $('#intro').find('img').each(function(){
 
       
       
-<!-- 加入APlayer音乐播放器 -->
+
+<!--
+
 <link rel="stylesheet" href="/dist/APlayer.min.css">
 <div id="aplayer"></div>
-<script type="text/javascript" src="/dist/APlayer.min.js"></script>
-<script type="text/javascript" src="/dist/music.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/meting@2.0.1/dist/Meting.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script>
+-->
+<!-- require MetingJS 
+<script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+<meting-js
+      server="netease"
+      type="playlist"
+      id="4904272454">
+</meting-js>
+
+-->
 
 </body>
 

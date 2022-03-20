@@ -254,9 +254,10 @@
                     <p>
                       
                         ​    
+     
 ccmc_pwnme2一道看起来人畜无害的栈题。但是有几个非常奇怪的函数。
 ​        所以这是一道相对有些奇怪的rop，控制这三个函数的其中两个的参数为指定字符串，就能较为方便地读取flag。
-12345678910111213141516from pwn import *p = remote(&#x27;node4.buuoj.cn&#x27;,27653)#p = process(&#x27;./pwnme2&#
+12345678910111213141516from pwn import *p = remote(&#x27;node4.buuoj.cn&#x27;,27653)#p = process(&#x27;./pw
                       
                     </p>
                     
@@ -287,13 +288,14 @@ ccmc_pwnme2一道看起来人畜无害的栈题。但是有几个非常奇怪的
                     <p>
                       
                         ​    
+     
 ​        第三周第二天第一道堆题。应该是一道中等偏下的fastbinattack。
 ​        libc是2.23。
 ​        
 ​        保护全开，pie是个麻烦点。
 ​        逆向一下，这个程序的逻辑不算很复杂，但是也需要逆清楚。
 ​        
-​        程序在ptr+3的地方保存了一个有着free函数功能的指针，并且当delete str时，也是调用这个指针，而不是f
+​        程序在ptr+3的地方保存了一个有着free函数功能的指针，并且当delete str时，也是调用这个指
                       
                     </p>
                     
@@ -328,10 +330,13 @@ ccmc_pwnme2一道看起来人畜无害的栈题。但是有几个非常奇怪的
                 <div class="col-md-8">
                     <p>
                       
-                        ​        这个题已经做过好多遍了orz，因为不断的摆烂然后复健…..每次又是做这道
+                        
+     
+
+​        这个题已经做过好多遍了orz，因为不断的摆烂然后复健…..每次又是做这道
 ​        逆一下。
 ​        话说可以总结一下类似的题目的快速逆向方法。比如说一般肯定会定义一个结构体，结构体中包含比如content和指针的字段，然后如果有可以利用的uaf或者double free的话，就可以覆盖结构体中保存的指针字段，从而进一步攻击。
-​        回到这道题，这里的结构体包含两个字段，一个是 print
+​        回到这道题，这里的结构体包含两个字段，一
                       
                     </p>
                     
@@ -366,13 +371,16 @@ ccmc_pwnme2一道看起来人畜无害的栈题。但是有几个非常奇怪的
                 <div class="col-md-8">
                     <p>
                       
-                        2022-3-15
+                        
+     
+
+2022-3-15
 wustctf2020_easyfastchecksec :
 
 
 ​        简单逆向一下，有后门函数，当这个地址上储存的数小于等于0时getshell。整体的程序的话是一个没什么特别的菜单，free处有uaf，edit处能对堆指针任意写。
 ​        首先逆向以后大体的思路是利用这个UAF进行0x602090的地址处的覆盖。
-​        所以我们需要构造chunk pointer为0x602080
+​        所以我们需要构造chunk pointer为
                       
                     </p>
                     
@@ -407,10 +415,13 @@ wustctf2020_easyfastchecksec :
                 <div class="col-md-8">
                     <p>
                       
-                        ​        因为是数组越界，每次只能读取一个字节，所以脚本需要循环，首先计算出偏移获取函数的地址，一般来说比较常规的思路是拿libc_start_main    ,只是这里的偏移比较远。
+                        
+         
+
+​        因为是数组越界，每次只能读取一个字节，所以脚本需要循环，首先计算出偏移获取函数的地址，一般来说比较常规的思路是拿libc_start_main    ,只是这里的偏移比较远。
 ​    ps： 关于如何在看起来比较混乱的栈中找到偏移量这件事
 ​        首先要搞清楚函数逻辑，就是不管有多简单也不能想当然的那种搞清楚。
-​        这里一共有三个关键的变量，v4，idx和v2，idx是v4数组的索引，用来le
+​        这里一共有三个关键的变量，v4，idx和v2，idx是
                       
                     </p>
                     
@@ -445,11 +456,14 @@ wustctf2020_easyfastchecksec :
                 <div class="col-md-8">
                     <p>
                       
-                        ​        最近在pwncollege做题的时候常常遇到接收的字符串处理不当的问题，故总结整理一下。
+                        
+     
+
+​        最近在pwncollege做题的时候常常遇到接收的字符串处理不当的问题，故总结整理一下。
 字符串截取123456789p.recv()[0:6]		#截取1-5个字符串p.recv()[2:6]		#截取2-5个字符串p.recv()[:]		#截取完整字符串p.recv()[2:]#从第二个索引开始截取p.recv()[-4:]#截取最后四个字符
 
 ​        
-字符串处理​        一般来说我们接收到的
+字符串处理​        一般
                       
                     </p>
                     
@@ -484,10 +498,13 @@ wustctf2020_easyfastchecksec :
                 <div class="col-md-8">
                     <p>
                       
-                        写在前面：如果是普通的环境，运行程序可能需要capstone，可以直接在官网下载源码编译，然后将编译好的动态链接库cp到lib里
+                        
+     
+
+写在前面：如果是普通的环境，运行程序可能需要capstone，可以直接在官网下载源码编译，然后将编译好的动态链接库cp到lib里
  cp libcapstone.so.5 /lib/x86_64-linux-gnu/
 Level1​        最最最基础的rop了，和前前一个module的前面的有个level一模一样。
-1234567891011121314from pwn import*#context.terminal = [&
+1234567891011121314from pwn import*#context.termi
                       
                     </p>
                     
@@ -522,7 +539,10 @@ Level1​        最最最基础的rop了，和前前一个module的前面的有
                 <div class="col-md-8">
                     <p>
                       
-                        ​        视频主要介绍了栈溢出及其保护。保护的绕过包括canary和pie，并没有提到NX（那个似乎在后面一个module）
+                        
+     
+
+​        视频主要介绍了栈溢出及其保护。保护的绕过包括canary和pie，并没有提到NX（那个似乎在后面一个module）
 ​        传输题目到本地可以使用scp命令。
 1scp -i key -r hacker@dojo.pwn.college:/challenge/babymem_level4.1 /Users/rin/ctf/pwn/pwn_college/MemoryErrors
 
@@ -530,7 +550,7 @@ Level1​        最最最基础的rop了，和前前一个module的前面的有
 
 
 
-Level1.0​ 
+Le
                       
                     </p>
                     
@@ -565,10 +585,17 @@ Level1.0​
                 <div class="col-md-8">
                     <p>
                       
-                        ​        关于这个module，做出题目的话大致有两个思路，一个是利用/bin/sh    来对整个shell提权，另外一个是利用设置了suid的特殊程序来读取flag。一般来说是第二个方法比较简单，但是有时候只有第一个方法可以行得通。
+                        
+     
+
+
+
+
+
+​        关于这个module，做出题目的话大致有两个思路，一个是利用/bin/sh    来对整个shell提权，另外一个是利用设置了suid的特殊程序来读取flag。一般来说是第二个方法比较简单，但是有时候只有第一个方法可以行得通。
 Level1​        没有看视频，并不知道这个Misuse是什么意义，但是level1只要执行给的程序就能get flag。
 
-Level2​        到第二题大概懂它的用意了，来
+Level2​        到第
                       
                     </p>
                     
@@ -603,10 +630,13 @@ Level2​        到第二题大概懂它的用意了，来
                 <div class="col-md-8">
                     <p>
                       
-                        Level1​        首先考察chroot
+                        
+     
+
+Level1​        首先考察chroot
 ​        因为程序在将根目录设置为/jail的时候并没有切换当前工作目录为/jail，所以我们实际上还是在/目录，因此可以直接通过argv[1]    读取flag。
 ​        执行脚本的时候需要添加cwd参数，使其工作目录为/
-Level2123shellcode = asm(shellcraft.readfile(&#x27;flag&#x27;,1))p = pr
+Level2123shellcode = asm(shellcraft.readfile(&#x27;flag&#x27;,1
                       
                     </p>
                     
@@ -1131,12 +1161,22 @@ $('#intro').find('img').each(function(){
 
       
       
-<!-- 加入APlayer音乐播放器 -->
+
+<!--
+
 <link rel="stylesheet" href="/dist/APlayer.min.css">
 <div id="aplayer"></div>
-<script type="text/javascript" src="/dist/APlayer.min.js"></script>
-<script type="text/javascript" src="/dist/music.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/meting@2.0.1/dist/Meting.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script>
+-->
+<!-- require MetingJS 
+<script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+<meting-js
+      server="netease"
+      type="playlist"
+      id="4904272454">
+</meting-js>
+
+-->
 
 </body>
 

@@ -54,6 +54,9 @@
   
 
   <style>.col-md-8.col-md-offset-2.opening-statement img{display:none;}</style>
+<link rel="stylesheet" href="/assets/css/APlayer.min.css" class="aplayer-style-marker">
+<script src="/assets/js/APlayer.min.js" class="aplayer-script-marker"></script>
+<script src="/assets/js/Meting.min.js" class="meting-script-marker"></script>
 <link rel="stylesheet" href="/css/prism.css" type="text/css"></head>
 
 <!--
@@ -217,7 +220,12 @@
             </div>
         </div>
         <div class="col-md-8 col-md-offset-2">
-      		<h3 id="在学习Tcache的时候遇到了一些比较奇怪的点，ctf权威指南pwn篇中对于Tcache的解释中第一段如下："><a href="#在学习Tcache的时候遇到了一些比较奇怪的点，ctf权威指南pwn篇中对于Tcache的解释中第一段如下：" class="headerlink" title="在学习Tcache的时候遇到了一些比较奇怪的点，ctf权威指南pwn篇中对于Tcache的解释中第一段如下："></a>在学习Tcache的时候遇到了一些比较奇怪的点，ctf权威指南pwn篇中对于Tcache的解释中第一段如下：</h3><blockquote>
+      		
+    <div id="aplayer-rDGhzEpG" class="aplayer aplayer-tag-marker meting-tag-marker"
+         data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"
+    ></div> 
+
+<h3 id="在学习Tcache的时候遇到了一些比较奇怪的点，ctf权威指南pwn篇中对于Tcache的解释中第一段如下："><a href="#在学习Tcache的时候遇到了一些比较奇怪的点，ctf权威指南pwn篇中对于Tcache的解释中第一段如下：" class="headerlink" title="在学习Tcache的时候遇到了一些比较奇怪的点，ctf权威指南pwn篇中对于Tcache的解释中第一段如下："></a>在学习Tcache的时候遇到了一些比较奇怪的点，ctf权威指南pwn篇中对于Tcache的解释中第一段如下：</h3><blockquote>
 <p>Tcache全名为Thread Local Caching，它为每个线程创建一个缓存，里面包含了一些小堆块，无需对main_arena上锁即可使用。</p>
 </blockquote>
 <p>首先让我感到不解的就是，“无需对main_arena上锁即可使用”这句话。什么叫对main_arana上锁？之前也遇见过很多文章提到过这个”锁“的相关概念，但是它们从来都不是问题的重点，但是通常来说，正是一个个不懂的”无关紧要“的问题导致最后啥也看不懂的。</p>
@@ -813,12 +821,22 @@ $('#intro').find('img').each(function(){
 
       
       
-<!-- 加入APlayer音乐播放器 -->
+
+<!--
+
 <link rel="stylesheet" href="/dist/APlayer.min.css">
 <div id="aplayer"></div>
-<script type="text/javascript" src="/dist/APlayer.min.js"></script>
-<script type="text/javascript" src="/dist/music.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/meting@2.0.1/dist/Meting.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script>
+-->
+<!-- require MetingJS 
+<script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+<meting-js
+      server="netease"
+      type="playlist"
+      id="4904272454">
+</meting-js>
+
+-->
 
 </body>
 

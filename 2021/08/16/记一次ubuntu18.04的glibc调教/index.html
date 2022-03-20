@@ -54,6 +54,9 @@
   
 
   <style>.col-md-8.col-md-offset-2.opening-statement img{display:none;}</style>
+<link rel="stylesheet" href="/assets/css/APlayer.min.css" class="aplayer-style-marker">
+<script src="/assets/js/APlayer.min.js" class="aplayer-script-marker"></script>
+<script src="/assets/js/Meting.min.js" class="meting-script-marker"></script>
 <link rel="stylesheet" href="/css/prism.css" type="text/css"></head>
 
 <!--
@@ -217,7 +220,12 @@
             </div>
         </div>
         <div class="col-md-8 col-md-offset-2">
-      		<h4 id="1）概述"><a href="#1）概述" class="headerlink" title="1）概述"></a>1）概述</h4><p>这是一件悲伤的事情，我的ubuntu它又崩了。</p>
+      		
+    <div id="aplayer-OkYnucNG" class="aplayer aplayer-tag-marker meting-tag-marker"
+         data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"
+    ></div> 
+
+<h4 id="1）概述"><a href="#1）概述" class="headerlink" title="1）概述"></a>1）概述</h4><p>这是一件悲伤的事情，我的ubuntu它又崩了。</p>
 <p>最开始的时候，发现pwndbg无法查看heap等信息，这个问题我之前也遇到过，但是情况有非常大的区别。</p>
 <p>之前是我2.32的本地默认libc，执行程序时加载2.23，然后因为指定的lbc-2.23.so没有附带调试符号信息，所以也看不了heap，但是这一次，本机都看不了了？</p>
 <p>经过一番排查，我们认为是libc本身出现了问题。然后寻找libc-2.27.so的文件打算一探究竟，但找到本应该储存着它的文件夹时，惊奇地发现它居然从文件夹中消失了。</p>
@@ -868,12 +876,22 @@ $('#intro').find('img').each(function(){
 
       
       
-<!-- 加入APlayer音乐播放器 -->
+
+<!--
+
 <link rel="stylesheet" href="/dist/APlayer.min.css">
 <div id="aplayer"></div>
-<script type="text/javascript" src="/dist/APlayer.min.js"></script>
-<script type="text/javascript" src="/dist/music.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/meting@2.0.1/dist/Meting.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script>
+-->
+<!-- require MetingJS 
+<script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+<meting-js
+      server="netease"
+      type="playlist"
+      id="4904272454">
+</meting-js>
+
+-->
 
 </body>
 

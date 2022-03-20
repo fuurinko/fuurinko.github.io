@@ -253,10 +253,13 @@
                 <div class="col-md-8">
                     <p>
                       
-                        1）概述这是一件悲伤的事情，我的ubuntu它又崩了。
+                        
+     
+
+1）概述这是一件悲伤的事情，我的ubuntu它又崩了。
 最开始的时候，发现pwndbg无法查看heap等信息，这个问题我之前也遇到过，但是情况有非常大的区别。
 之前是我2.32的本地默认libc，执行程序时加载2.23，然后因为指定的lbc-2.23.so没有附带调试符号信息，所以也看不了heap，但是这一次，本机都看不了了？
-经过一番排查，我们认为是libc本身出现了问题。然后寻找libc-2.27.so的文件打算一探究竟，但找到本应
+经过一番排查，我们认为是libc本身出现了问题。然后寻找libc-2.27.so的文件打算一探
                       
                     </p>
                     
@@ -291,8 +294,11 @@
                 <div class="col-md-8">
                     <p>
                       
-                        ELF文件下对于PIE保护和ASLR的重新认识0）​    复现红色高跟鞋的时候，在ida修复swithc结构的时候碰见了一个问题。因为题目的源文件是有pie保护的，所以ida中的地址是很难看的随机化模式。虽然这些随机化的地址对于我们patch文件毫无影响，但是就是突发奇想，看看能不能找到方法来通过patch将elf文件的pie保护给禁用。
-1）​    如果用010editor打开一个PE文件，我们能够很方便的通过修改PE头来禁用掉W
+                        
+     
+
+ELF文件下对于PIE保护和ASLR的重新认识0）​    复现红色高跟鞋的时候，在ida修复swithc结构的时候碰见了一个问题。因为题目的源文件是有pie保护的，所以ida中的地址是很难看的随机化模式。虽然这些随机化的地址对于我们patch文件毫无影响，但是就是突发奇想，看看能不能找到方法来通过patch将elf文件的pie保护给禁用。
+1）​    如果用010editor打开一个PE文件，我们能够很方便的通过修改
                       
                     </p>
                     
@@ -327,12 +333,15 @@
                 <div class="col-md-8">
                     <p>
                       
-                        io_file学习笔记
+                        
+     
+
+io_file学习笔记
 0）reviewglibc定义了_IO_FILE这样一个结构体来管理io file。io_file结构体里定义了一堆相关的变量，但是真正关键的是其中包含的_IO_FILE_plus结构
 结构源码如下
 12345struct _IO_FILE_plus&#123;    _IO_FILE    file;    IO_jump_t   *vtable;&#125;
 
-这个结构包含了一个叫vtable的指针，指向实现
+这个结构包含了一个叫vtable
                       
                     </p>
                     
@@ -367,13 +376,16 @@
                 <div class="col-md-8">
                     <p>
                       
-                        patch alarm比较弱智的一个操作，但是如果没注意到的话还是有一点点坑。
+                        
+     
+
+patch alarm比较弱智的一个操作，但是如果没注意到的话还是有一点点坑。
 一般来说许多题都喜欢在main函数里加alarm。
 alarm会导致调试的时候超时，如果没有解决的话基本不能调试。算最基础的的反调试手法了。
 ps:关于超时的那个报错当时还好好研究了一会儿来着。就是一个sigxxx，sigalarm好像，然后默认返回中止程序。
 解决方案也比较弱智。就是直接patch掉就好了。
 ida都关了懒得上图了。
-单双引号问题​    
+单双引
                       
                     </p>
                     
@@ -408,11 +420,14 @@ ida都关了懒得上图了。
                 <div class="col-md-8">
                     <p>
                       
-                        ret2dl_advanced1)review当FULL RELRO保护开启时，通过 dl_run_time来获取libc基址的方式几乎无解。
+                        
+     
+
+ret2dl_advanced1)review当FULL RELRO保护开启时，通过 dl_run_time来获取libc基址的方式几乎无解。
 但是我们仍然能够找到某种方式来getshell。
 相关论文中给出一种解决方案，即通过dt_bug入口找到突破点。
 (Ps:为什么找不到相关的中文文章)
-2）dt_dbg？dt_dbg这个概念实际上并不新鲜，简单来说它可以被包含在libc.so文件中，比如我们指定一个特定的libc版本加载的时候，
+2）dt_dbg？dt_dbg这个概念实际上并不新鲜，简单来说它可以被包含在libc.so文件中，比如我们指定一个特定的libc
                       
                     </p>
                     
@@ -447,10 +462,13 @@ ida都关了懒得上图了。
                 <div class="col-md-8">
                     <p>
                       
-                         学习编写一个堆内存管理程序。
+                        
+     
+
+ 学习编写一个堆内存管理程序。
 但是这道题其实是ctf-wiki上关于chunk-overlapping的题。。。
 先看源码。我以后学堆题必从看源码开始。。
-12345678void read_input(char *buf,size_t size)&#123;	int ret ;  ret = read(0,buf,size);  if(ret &lt;=0)&#123;      puts(&quot;Error&quot;);  
+12345678void read_input(char *buf,size_t size)&#123;	int ret ;  ret = read(0,buf,size);  if(ret &lt;=0)&#123;      puts(&quot;Error&q
                       
                     </p>
                     
@@ -485,11 +503,14 @@ ida都关了懒得上图了。
                 <div class="col-md-8">
                     <p>
                       
-                        第二道fastbin double free。
+                        
+     
+
+第二道fastbin double free。
 123free(*(void **)&amp;dword_602060[4 * v1 + 2]);      dword_602060[4 * v1] = 0;      --dword_60204C;
 
 这里没有把指针置为null，所以会产生uaf漏洞。
-ida大体分析了一下就会发现，由于没有后门函数，这道题会比上一道难。而且由于RELRO的开启，got所在的数据段是只读的，这里研究一下
+ida大体分析了一下就会发现，由于没有后门函数，这道题会比上一道难。而且由于RELRO的开启，got所在的数据段是只读
                       
                     </p>
                     
@@ -524,10 +545,15 @@ ida大体分析了一下就会发现，由于没有后门函数，这道题会�
                 <div class="col-md-8">
                     <p>
                       
-                        属实破防了。
+                        
+     
+
+
+
+破防了。
 虽然我本身就对这个比赛没有什么过高的期待，但是确实还是非常失望。非常失望。
 可能我之前在buu上面刷的19年的题确实过于简单了，让我产生了“今年也会如此”的感觉。事实上这种不切实际的想法在我比赛前夕刷知乎看去年师傅们对于2020年的比赛的吐槽时就已经有所坍塌，只是当现实确实如此的时候，还是会觉得非常失望。
-现在我的心理压力事实上是不亚于高三时期的。虽然这个事情从侧面反映出我高三也不是绝对认真就是了。高三的时候虽然学习学科知
+现在我的心理压力事实上是不亚于高三时期的。虽然这个事情从侧面反映出我高三也不是绝对认真就是了。高三的时
                       
                     </p>
                     
@@ -562,16 +588,15 @@ ida大体分析了一下就会发现，由于没有后门函数，这道题会�
                 <div class="col-md-8">
                     <p>
                       
-                        
+                        [TOC]
 
+     
 
-[TOC]
 杂碎的知识点1）调试相关1）gdbropgagdet
 ROPgadget –binary （） –only “pop|ret” | grep rdi
 (基本适用于ret2csu这种万能gagdet的寻找)
 例如ROPgadget --binary calc --only &quot;pop|ret&quot; | grep eax
 2）内存断点？硬件断点？原理对所访问内存地址设置为不可读写，当访问时触发中断。
-设置方式
                       
                     </p>
                     
@@ -1096,12 +1121,22 @@ $('#intro').find('img').each(function(){
 
       
       
-<!-- 加入APlayer音乐播放器 -->
+
+<!--
+
 <link rel="stylesheet" href="/dist/APlayer.min.css">
 <div id="aplayer"></div>
-<script type="text/javascript" src="/dist/APlayer.min.js"></script>
-<script type="text/javascript" src="/dist/music.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/meting@2.0.1/dist/Meting.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script>
+-->
+<!-- require MetingJS 
+<script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+<meting-js
+      server="netease"
+      type="playlist"
+      id="4904272454">
+</meting-js>
+
+-->
 
 </body>
 

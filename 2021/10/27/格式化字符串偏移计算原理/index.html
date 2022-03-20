@@ -54,6 +54,9 @@
   
 
   <style>.col-md-8.col-md-offset-2.opening-statement img{display:none;}</style>
+<link rel="stylesheet" href="/assets/css/APlayer.min.css" class="aplayer-style-marker">
+<script src="/assets/js/APlayer.min.js" class="aplayer-script-marker"></script>
+<script src="/assets/js/Meting.min.js" class="meting-script-marker"></script>
 <link rel="stylesheet" href="/css/prism.css" type="text/css"></head>
 
 <!--
@@ -217,7 +220,12 @@
             </div>
         </div>
         <div class="col-md-8 col-md-offset-2">
-      		<p>重点研究如何计算32/64位程序中格式化字符串在栈上的偏移，以及研究自动化求偏移的实现</p>
+      		
+    <div id="aplayer-xlbHRiiR" class="aplayer aplayer-tag-marker meting-tag-marker"
+         data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"
+    ></div> 
+
+<p>重点研究如何计算32/64位程序中格式化字符串在栈上的偏移，以及研究自动化求偏移的实现</p>
 <h3 id="1）32位偏移计算原理"><a href="#1）32位偏移计算原理" class="headerlink" title="1）32位偏移计算原理"></a>1）32位偏移计算原理</h3><p>​    其实这个计算确实是有手就行，只需要在栈上找到对应的格式化字符串，然后数是第几个，再减去返回地址所占的一个位置，就是偏移量。</p>
 <p>​    准确来说应该是格式化字符串在栈上的偏移。</p>
 <p>​    原理也比较简单。x86架构下，格式化字符串时通过栈传递的。</p>
@@ -856,12 +864,22 @@ $('#intro').find('img').each(function(){
 
       
       
-<!-- 加入APlayer音乐播放器 -->
+
+<!--
+
 <link rel="stylesheet" href="/dist/APlayer.min.css">
 <div id="aplayer"></div>
-<script type="text/javascript" src="/dist/APlayer.min.js"></script>
-<script type="text/javascript" src="/dist/music.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/meting@2.0.1/dist/Meting.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script>
+-->
+<!-- require MetingJS 
+<script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+<meting-js
+      server="netease"
+      type="playlist"
+      id="4904272454">
+</meting-js>
+
+-->
 
 </body>
 

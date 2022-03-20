@@ -253,11 +253,12 @@
                 <div class="col-md-8">
                     <p>
                       
-                        ​        
+                        ​    
+         
 0:​        写下这些话的时候，不知不觉地，已经半夜两点了。
 ​        其实放在半个月之前的我看来，两点根本不是半夜，而是夜生活的开始。然而仅仅十五天，我将作息强行向前延伸了两小时，所以对于现在的我来说，两点已经是高程度的熬夜了。
 ​        熬夜并不是一件坏事，至少我如今也这么认为——只要不是因为玩手机等无意义的事情而浪费生命。
-​        最近的我一直在经受苦难，或者说，我一直认为我在
+​        最近的我一直在经受苦难，或者说，我
                       
                     </p>
                     
@@ -292,7 +293,10 @@
                 <div class="col-md-8">
                     <p>
                       
-                        echo​        两个题一起做（
+                        
+     
+
+echo​        两个题一起做（
 ​        
 ​        看起来非常像格式化字符串（
 
@@ -333,12 +337,15 @@
                 <div class="col-md-8">
                     <p>
                       
-                        mrctf2020_shellcode_revengeoverview
+                        
+     
+
+mrctf2020_shellcode_revengeoverview
 看起来像ret2shellcode。
 
 逆向​        不知道为什么ida不能一键f5，不过也懒得修了，程序逻辑也比较简单，就是一个write和read。然后程序会对输入的字符进行ascii码的大小的比较，
 ​        
-​        分析一下这个流程图，我们的目的是执行loc_1236，一共有三个箭头指向它，归纳以后分别是(0x60,0x7A),(
+​        分析一下这个流程图，我们的目的是执行loc_1236，一共有三个箭头指向它，归纳以后分别是(0x60
                       
                     </p>
                     
@@ -373,8 +380,11 @@
                 <div class="col-md-8">
                     <p>
                       
-                        jarvisoj_level5​        这个题吧，我好像以前做过，是个纯纯的ret2csu的板子题。
-12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364from pwn import*from LibcSearcher import LibcS
+                        
+     
+
+jarvisoj_level5​        这个题吧，我好像以前做过，是个纯纯的ret2csu的板子题。
+12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364from pwn import*from LibcSearcher impo
                       
                     </p>
                     
@@ -409,7 +419,10 @@
                 <div class="col-md-8">
                     <p>
                       
-                        PicoCTF_2018_got-shell​        虽然但是，这个题为什么这么pwncollege。guide的风格，函数的名字。。。完全一致好吧。
+                        
+     
+
+PicoCTF_2018_got-shell​        虽然但是，这个题为什么这么pwncollege。guide的风格，函数的名字。。。完全一致好吧。
 ​        可以写4字节，正好可以修改got表为后门函数。那就修改puts咯？
 
 
@@ -447,7 +460,10 @@
                 <div class="col-md-8">
                     <p>
                       
-                        ​    overview
+                        
+     
+
+​    overview
 
 
 逆向​        菜单中的功能比较少，但是比较奇怪。
@@ -491,9 +507,12 @@ searche word
                 <div class="col-md-8">
                     <p>
                       
-                        0​        最近发现做堆题最慢的不是调试，而是在逆向的过程中寻找思路，而一般堆题的菜单都是由结构体管理，所以如果能在ida中快速方便地查看结构体相关的指针操作就再好不过了。然而一般来说ida是无法直接识别结构体这种比较高级的数据结构的，所以需要我们手动去创建并修改。
+                        
+     
+
+0​        最近发现做堆题最慢的不是调试，而是在逆向的过程中寻找思路，而一般堆题的菜单都是由结构体管理，所以如果能在ida中快速方便地查看结构体相关的指针操作就再好不过了。然而一般来说ida是无法直接识别结构体这种比较高级的数据结构的，所以需要我们手动去创建并修改。
 1​        首先可以在idastructures的界面手动添加一些结构体
-​        右键空白处，选择add struct type，便可以新建结构体
+​        右键空白处，选择add struct type，
                       
                     </p>
                     
@@ -528,14 +547,16 @@ searche word
                 <div class="col-md-8">
                     <p>
                       
-                        ​    
+                        
+         
+
 overview​        
 ​        搞不懂为什么这么多题都要stripped。
 逆向add​        申请0x38大小的chunk，user space开始处存枪支的description,+0x19处存放枪支的name。
 ​        输入name的时候，最大长度为56，导致能够溢出，覆盖fd字段。
 ​        同时每输入信息以后都会有一个保存指针的操作：
 free
-​          
+​    
                       
                     </p>
                     
@@ -570,12 +591,14 @@ free
                 <div class="col-md-8">
                     <p>
                       
-                        ​    
+                        
+         
+
 xdctf2015_pwn200​    
 ​        练习一下DynELF。
 ​        看起来像ret2csu+DynELF。
 ​        没啥好分析的，溢出112,然后直接写leak函数。
-1234567891011121314151617def leak(addr):	payload = b&#x27;a&#x27;*offset	payload += p32(write_plt)	payload 
+1234567891011121314151617def leak(addr):	payload = b&#x27;a&#x27;*offset	payload += p32(write_plt)	pa
                       
                     </p>
                     
@@ -610,9 +633,12 @@ xdctf2015_pwn200​
                 <div class="col-md-8">
                     <p>
                       
-                        0​        我发现我居然还不太会用这个东西，可以用不上，但是不能不会。
+                        
+     
+
+0​        我发现我居然还不太会用这个东西，可以用不上，但是不能不会。
 1​        DynELF的意义在于当我们无法找到目标libc中具体的符号偏移时，可以利用它来搜索内存中的函数地址,而不需要再通过libc来获取。
-如何使用？1234567891011121314151617181920212223242526272829303132333435p = process(&#x27;./pwnme&#x27;)# Dec
+如何使用？1234567891011121314151617181920212223242526272829303132333435p = process(&#x27;./pwnme&#x2
                       
                     </p>
                     
@@ -1137,12 +1163,22 @@ $('#intro').find('img').each(function(){
 
       
       
-<!-- 加入APlayer音乐播放器 -->
+
+<!--
+
 <link rel="stylesheet" href="/dist/APlayer.min.css">
 <div id="aplayer"></div>
-<script type="text/javascript" src="/dist/APlayer.min.js"></script>
-<script type="text/javascript" src="/dist/music.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/meting@2.0.1/dist/Meting.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script>
+-->
+<!-- require MetingJS 
+<script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+<meting-js
+      server="netease"
+      type="playlist"
+      id="4904272454">
+</meting-js>
+
+-->
 
 </body>
 

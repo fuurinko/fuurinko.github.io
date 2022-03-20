@@ -54,6 +54,9 @@
   
 
   <style>.col-md-8.col-md-offset-2.opening-statement img{display:none;}</style>
+<link rel="stylesheet" href="/assets/css/APlayer.min.css" class="aplayer-style-marker">
+<script src="/assets/js/APlayer.min.js" class="aplayer-script-marker"></script>
+<script src="/assets/js/Meting.min.js" class="meting-script-marker"></script>
 <link rel="stylesheet" href="/css/prism.css" type="text/css"></head>
 
 <!--
@@ -217,7 +220,12 @@
             </div>
         </div>
         <div class="col-md-8 col-md-offset-2">
-      		<h2 id=""><a href="#" class="headerlink" title=""></a></h2><p>​        因为是数组越界，每次只能读取一个字节，所以脚本需要循环，首先计算出偏移获取函数的地址，一般来说比较常规的思路是拿<code>libc_start_main    </code>,只是这里的偏移比较远。</p>
+      		
+    <div id="aplayer-dIzImjUY" class="aplayer aplayer-tag-marker meting-tag-marker"
+         data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"
+    ></div>     
+
+<p>​        因为是数组越界，每次只能读取一个字节，所以脚本需要循环，首先计算出偏移获取函数的地址，一般来说比较常规的思路是拿<code>libc_start_main    </code>,只是这里的偏移比较远。</p>
 <p>​    ps： 关于如何在看起来比较混乱的栈中找到偏移量这件事</p>
 <p>​        首先要搞清楚函数逻辑，就是不管有多简单也不能想当然的那种搞清楚。</p>
 <p>​        这里一共有三个关键的变量，v4，idx和v2，idx是v4数组的索引，用来leak地址。v2用来填content，最后把v2赋给<code>v4[idx]</code>。</p>
@@ -807,12 +815,22 @@ $('#intro').find('img').each(function(){
 
       
       
-<!-- 加入APlayer音乐播放器 -->
+
+<!--
+
 <link rel="stylesheet" href="/dist/APlayer.min.css">
 <div id="aplayer"></div>
-<script type="text/javascript" src="/dist/APlayer.min.js"></script>
-<script type="text/javascript" src="/dist/music.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/meting@2.0.1/dist/Meting.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script>
+-->
+<!-- require MetingJS 
+<script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+<meting-js
+      server="netease"
+      type="playlist"
+      id="4904272454">
+</meting-js>
+
+-->
 
 </body>
 

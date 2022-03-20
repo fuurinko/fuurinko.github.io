@@ -54,6 +54,9 @@
   
 
   <style>.col-md-8.col-md-offset-2.opening-statement img{display:none;}</style>
+<link rel="stylesheet" href="/assets/css/APlayer.min.css" class="aplayer-style-marker">
+<script src="/assets/js/APlayer.min.js" class="aplayer-script-marker"></script>
+<script src="/assets/js/Meting.min.js" class="meting-script-marker"></script>
 <link rel="stylesheet" href="/css/prism.css" type="text/css"></head>
 
 <!--
@@ -217,7 +220,14 @@
             </div>
         </div>
         <div class="col-md-8 col-md-offset-2">
-      		<h2 id=""><a href="#" class="headerlink" title=""></a></h2><h3 id="0）"><a href="#0）" class="headerlink" title="0）"></a>0）</h3><p>​        自从抛弃虚拟机，利用ida for mac+pwndocker实现完全mac环境以后，深觉优雅的同时，也遇见了不少坑。</p>
+      		
+    <div id="aplayer-VvtYLuJf" class="aplayer aplayer-tag-marker meting-tag-marker"
+         data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"
+    ></div> 
+
+
+
+<h3 id="0）"><a href="#0）" class="headerlink" title="0）"></a>0）</h3><p>​        自从抛弃虚拟机，利用ida for mac+pwndocker实现完全mac环境以后，深觉优雅的同时，也遇见了不少坑。</p>
 <p>​        其中ida的坑更是坑人于无形之中。因为如果不打开win的7.5（甚至7.6）做对比，你甚至不知道你遇见的一些奇怪的东西，是7.0 mac版特有的，已经被优化了的坑，还是自身逆向水平问题。</p>
 <p>​        作为一个逆向废物，7.0 for mac属实是给本来就逆不出的我雪上加霜，但是就算是这样，我也宁愿花时间解决问题，而不是重新回到虚拟机win的悲惨过往，因为这不优雅。（优雅这个词到底害死了多少人捏）</p>
 <h3 id="1）"><a href="#1）" class="headerlink" title="1）"></a>1）</h3><p>​        目前碰到的最多的一个问题，就是：</p>
@@ -816,12 +826,22 @@ $('#intro').find('img').each(function(){
 
       
       
-<!-- 加入APlayer音乐播放器 -->
+
+<!--
+
 <link rel="stylesheet" href="/dist/APlayer.min.css">
 <div id="aplayer"></div>
-<script type="text/javascript" src="/dist/APlayer.min.js"></script>
-<script type="text/javascript" src="/dist/music.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/meting@2.0.1/dist/Meting.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script>
+-->
+<!-- require MetingJS 
+<script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+<meting-js
+      server="netease"
+      type="playlist"
+      id="4904272454">
+</meting-js>
+
+-->
 
 </body>
 

