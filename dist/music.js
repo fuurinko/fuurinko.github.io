@@ -4,9 +4,9 @@ const ap = new APlayer({
     autoplay: true,
     audio: [
 	{
-        name: "平凡之路",
-        artist: '朴树',
-        url: 'http://www.ytmp3.cn/down/59211.mp3',
+        name: "",
+        artist: '',
+        url: 'https://1drv.ms/u/s!As6prNZhlPxycaAtwk2t7znzWVE?e=UbFAGi',
         cover: 'http://p1.music.126.net/W_5XiCv3rGS1-J7EXpHSCQ==/18885211718782327.jpg?param=130y130',
-      },
+      }]
 });
