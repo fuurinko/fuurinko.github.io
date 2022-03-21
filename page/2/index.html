@@ -80,6 +80,8 @@
 				  	
 				    <li><a href="/categories/CSAPP-LAB/" class="animsition-link">CSAPP LAB<small>(1)</small></a></li>
 				    
+				    <li><a href="/categories/Generalization/" class="animsition-link">Generalization<small>(2)</small></a></li>
+				    
 				    <li><a href="/categories/HEAP-Fastbin-Attack/" class="animsition-link">HEAP - Fastbin Attack<small>(7)</small></a></li>
 				    
 				    <li><a href="/categories/HEAP-Off-By-One/" class="animsition-link">HEAP - Off By One<small>(2)</small></a></li>
@@ -231,6 +233,88 @@
 
 <section id="intro">
     <div class="container">
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2022/03/17/week3-3.1/">xdctf2015_pwn200</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-03-17T06:43:25.178Z" itemprop="datePublished">
+          2022-03-17
+      </time>
+    
+    
+    | 
+    <a href='/tags/DynELF/'>DynELF</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+         
+
+xdctf2015_pwn200​    
+​        练习一下DynELF。
+​        看起来像ret2csu+DynELF。
+​        没啥好分析的，溢出112,然后直接写leak函数。
+1234567891011121314151617def leak(addr):	payload = b&#x27;a&#x27;*offset	payload += p32(write_plt)	pa
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/03/17/week3-3.1/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2022/03/16/DynELF/">DynELF学习</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-03-16T14:06:44.306Z" itemprop="datePublished">
+          2022-03-16
+      </time>
+    
+    
+    | 
+    <a href='/tags/mess/'>mess</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+     
+
+0​        我发现我居然还不太会用这个东西，可以用不上，但是不能不会。
+1​        DynELF的意义在于当我们无法找到目标libc中具体的符号偏移时，可以利用它来搜索内存中的函数地址,而不需要再通过libc来获取。
+如何使用？1234567891011121314151617181920212223242526272829303132333435p = process(&#x27;./pwnme&#x2
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/03/16/DynELF/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
         
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
@@ -557,92 +641,6 @@ Le
                     
                     <p class="pull-right readMore">
                         <a href="/2022/03/03/MemoryErrors/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2022/03/03/pwncollege_ProgramMisuse/">ProgramMisuse</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2022-03-03T03:09:26.547Z" itemprop="datePublished">
-          2022-03-03
-      </time>
-    
-    
-    | 
-    <a href='/tags/pwncollege/'>pwncollege</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-     
-
-
-
-
-
-​        关于这个module，做出题目的话大致有两个思路，一个是利用/bin/sh    来对整个shell提权，另外一个是利用设置了suid的特殊程序来读取flag。一般来说是第二个方法比较简单，但是有时候只有第一个方法可以行得通。
-Level1​        没有看视频，并不知道这个Misuse是什么意义，但是level1只要执行给的程序就能get flag。
-
-Level2​        到第
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2022/03/03/pwncollege_ProgramMisuse/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2022/02/28/Sandboxing/">Sandboxing</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2022-02-28T13:59:27.326Z" itemprop="datePublished">
-          2022-02-28
-      </time>
-    
-    
-    | 
-    <a href='/tags/pwncollege/'>pwncollege</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-     
-
-Level1​        首先考察chroot
-​        因为程序在将根目录设置为/jail的时候并没有切换当前工作目录为/jail，所以我们实际上还是在/目录，因此可以直接通过argv[1]    读取flag。
-​        执行脚本的时候需要添加cwd参数，使其工作目录为/
-Level2123shellcode = asm(shellcraft.readfile(&#x27;flag&#x27;,1
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2022/02/28/Sandboxing/">Read More...</a>
                     </p>
                     
                 </div>

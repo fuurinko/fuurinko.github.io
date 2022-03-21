@@ -83,6 +83,8 @@
 				  	
 				    <li><a href="/categories/CSAPP-LAB/" class="animsition-link">CSAPP LAB<small>(1)</small></a></li>
 				    
+				    <li><a href="/categories/Generalization/" class="animsition-link">Generalization<small>(2)</small></a></li>
+				    
 				    <li><a href="/categories/HEAP-Fastbin-Attack/" class="animsition-link">HEAP - Fastbin Attack<small>(7)</small></a></li>
 				    
 				    <li><a href="/categories/HEAP-Off-By-One/" class="animsition-link">HEAP - Off By One<small>(2)</small></a></li>
@@ -221,7 +223,7 @@
         </div>
         <div class="col-md-8 col-md-offset-2">
       		
-    <div id="aplayer-NCtQhCyf" class="aplayer aplayer-tag-marker meting-tag-marker"
+    <div id="aplayer-qbwmWcQk" class="aplayer aplayer-tag-marker meting-tag-marker"
          data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"
     ></div> 
 
@@ -232,7 +234,7 @@
 <p>​        <code>docker pull registry.cn-hangzhou.aliyuncs.com/pwndocker/pwndocker-nocbtm:1.0</code>从阿里云上拉取镜像，使得速度变快。</p>
 <p>​        拉取完之后重命名镜像。<code>docker tag registry.cn-hangzhou.aliyuncs.com/pwndocker/pwndocker-nocbtm:1.0 skysider/pwndocker</code></p>
 <p>​        然后可以</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">docker run -d \</span><br><span class="line">--rm \</span><br><span class="line">-h <span class="variable">$&#123;ctf_name&#125;</span> \</span><br><span class="line">--name <span class="variable">$&#123;ctf_name&#125;</span> \</span><br><span class="line">-v $(<span class="built_in">pwd</span>)/<span class="variable">$&#123;ctf_name&#125;</span>:/ctf/work \</span><br><span class="line">-p 23947:23947 \</span><br><span class="line">--cap-add=SYS_PTRACE \</span><br><span class="line">--privileged \</span><br><span class="line">pwn6</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">docker run -d \</span><br><span class="line">--rm \</span><br><span class="line">-h <span class="variable">$&#123;ctf_name&#125;</span> \</span><br><span class="line">--name <span class="variable">$&#123;ctf_name&#125;</span> \</span><br><span class="line">-v $(<span class="built_in">pwd</span>)/<span class="variable">$&#123;ctf_name&#125;</span>:/ctf/work \</span><br><span class="line">-p 23947:23947 \</span><br><span class="line">--cap-add=SYS_PTRACE \</span><br><span class="line">--privileged \</span><br><span class="line">pwn</span><br></pre></td></tr></table></figure>
 
 <p>​        运行镜像。</p>
 <p>​        但是比较奇怪的是我使用这些指令运行容器并不成功，但是使用<code> docker run -it skysider/pwndocker /bin/bash</code>是能够进入容器并交互的，检查了一下一些环境也比较完善，但是并没有可以操作的二进制文件。    </p>

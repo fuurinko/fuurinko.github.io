@@ -80,6 +80,8 @@
 				  	
 				    <li><a href="/categories/CSAPP-LAB/" class="animsition-link">CSAPP LAB<small>(1)</small></a></li>
 				    
+				    <li><a href="/categories/Generalization/" class="animsition-link">Generalization<small>(2)</small></a></li>
+				    
 				    <li><a href="/categories/HEAP-Fastbin-Attack/" class="animsition-link">HEAP - Fastbin Attack<small>(7)</small></a></li>
 				    
 				    <li><a href="/categories/HEAP-Off-By-One/" class="animsition-link">HEAP - Off By One<small>(2)</small></a></li>
@@ -235,6 +237,86 @@
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
                 <div class="col-md-4">
+                    <h3><a href="/2022/03/21/一些板子/">一些板子</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-03-21T08:45:02.536Z" itemprop="datePublished">
+          2022-03-21
+      </time>
+    
+    
+    | 
+    <a href='/tags/summary/'>summary</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+     
+
+stackret2libc1234567891011121314151617181920212223242526272829303132333435363738from pwn import*from LibcSearcher import LibcSearchercontext.terminal = [&#x27;tmux&#x27;,&#x27;splitw&#x27;,&#x27;-h&#x27;]context.
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/03/21/一些板子/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2022/03/21/pwn知识点总结/">pwn知识点总结</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-03-21T07:55:07.636Z" itemprop="datePublished">
+          2022-03-21
+      </time>
+    
+    
+    | 
+    <a href='/tags/summary/'>summary</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+     
+
+
+
+stack漏洞点控制程序执行流栈溢出ret2syscall​        利用程序自带的gadget，构造syscall。
+​        对应板子
+ret2libcret2shellcode泄露内存格式化字符串1）泄露任意地址123456--------获取栈变量对应的地址------------%n$p #输出栈上第n+1个格式化字符串输出参数--------获取栈变量对应的字符串----------%n$s
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/03/21/pwn知识点总结/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
                     <h3><a href="/2022/03/20/深夜高速-1/">1</a></h3>
                     <span>
                         <span class="post-meta">
@@ -302,6 +384,8 @@ echo​        两个题一起做（
 
 逆向​        没啥好逆的，纯纯格式化字符串。
 ​        虽然但是，太久没有做过格式化字符串了，利用方式都给整忘了。
+利用​        大致复习一下，就是格式化字符串能够泄露栈上的内容，但是控制泄露具体的地址的话需要一些简单的计算。
+​        然后泄露了这样一个地址，具体能做什么呢？
 
                       
                     </p>
@@ -562,88 +646,6 @@ free
                     
                     <p class="pull-right readMore">
                         <a href="/2022/03/17/week3-3.2/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2022/03/17/week3-3.1/">xdctf2015_pwn200</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2022-03-17T06:43:25.178Z" itemprop="datePublished">
-          2022-03-17
-      </time>
-    
-    
-    | 
-    <a href='/tags/DynELF/'>DynELF</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-         
-
-xdctf2015_pwn200​    
-​        练习一下DynELF。
-​        看起来像ret2csu+DynELF。
-​        没啥好分析的，溢出112,然后直接写leak函数。
-1234567891011121314151617def leak(addr):	payload = b&#x27;a&#x27;*offset	payload += p32(write_plt)	pa
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2022/03/17/week3-3.1/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2022/03/16/DynELF/">DynELF学习</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2022-03-16T14:06:44.306Z" itemprop="datePublished">
-          2022-03-16
-      </time>
-    
-    
-    | 
-    <a href='/tags/mess/'>mess</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-     
-
-0​        我发现我居然还不太会用这个东西，可以用不上，但是不能不会。
-1​        DynELF的意义在于当我们无法找到目标libc中具体的符号偏移时，可以利用它来搜索内存中的函数地址,而不需要再通过libc来获取。
-如何使用？1234567891011121314151617181920212223242526272829303132333435p = process(&#x27;./pwnme&#x2
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2022/03/16/DynELF/">Read More...</a>
                     </p>
                     
                 </div>

@@ -80,6 +80,8 @@
 				  	
 				    <li><a href="/categories/CSAPP-LAB/" class="animsition-link">CSAPP LAB<small>(1)</small></a></li>
 				    
+				    <li><a href="/categories/Generalization/" class="animsition-link">Generalization<small>(2)</small></a></li>
+				    
 				    <li><a href="/categories/HEAP-Fastbin-Attack/" class="animsition-link">HEAP - Fastbin Attack<small>(7)</small></a></li>
 				    
 				    <li><a href="/categories/HEAP-Off-By-One/" class="animsition-link">HEAP - Off By One<small>(2)</small></a></li>
@@ -231,6 +233,92 @@
 
 <section id="intro">
     <div class="container">
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2022/03/03/pwncollege_ProgramMisuse/">ProgramMisuse</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-03-03T03:09:26.547Z" itemprop="datePublished">
+          2022-03-03
+      </time>
+    
+    
+    | 
+    <a href='/tags/pwncollege/'>pwncollege</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+     
+
+
+
+
+
+​        关于这个module，做出题目的话大致有两个思路，一个是利用/bin/sh    来对整个shell提权，另外一个是利用设置了suid的特殊程序来读取flag。一般来说是第二个方法比较简单，但是有时候只有第一个方法可以行得通。
+Level1​        没有看视频，并不知道这个Misuse是什么意义，但是level1只要执行给的程序就能get flag。
+
+Level2​        到第
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/03/03/pwncollege_ProgramMisuse/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2022/02/28/Sandboxing/">Sandboxing</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-02-28T13:59:27.326Z" itemprop="datePublished">
+          2022-02-28
+      </time>
+    
+    
+    | 
+    <a href='/tags/pwncollege/'>pwncollege</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+     
+
+Level1​        首先考察chroot
+​        因为程序在将根目录设置为/jail的时候并没有切换当前工作目录为/jail，所以我们实际上还是在/目录，因此可以直接通过argv[1]    读取flag。
+​        执行脚本的时候需要添加cwd参数，使其工作目录为/
+Level2123shellcode = asm(shellcraft.readfile(&#x27;flag&#x27;,1
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/02/28/Sandboxing/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
         
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
@@ -573,87 +661,6 @@ UNLINK​        就是将free chunk从双向循环链表中解链的过程，�
                     
                     <p class="pull-right readMore">
                         <a href="/2021/12/10/unlink/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2021/12/08/off by one/">off by one /chunk overlapping</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2021-12-08T02:30:31.469Z" itemprop="datePublished">
-          2021-12-08
-      </time>
-    
-    
-    | 
-    <a href='/tags/heap-pro/'>heap_pro</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-     
-
-Off by one​        单/空字节溢出攻击。
-​        通常来说简单的off by one的漏洞点来自于编写时对边界控制不严格，导致每次输入的字符都能比规定的最大字符大那么一些（一个，或者几个）。这些字节溢出到物理地址相邻的下一个堆块，就能修改下一个chunk的size或者prev_inuse，通过这样的溢出，就能够整一些有趣的攻击。
-​        通常单字节溢出的利用方式有如下几种：
-
-溢出字
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2021/12/08/off by one/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2021/12/06/fastbin_attack/">fastbin attack</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2021-12-06T08:17:00.507Z" itemprop="datePublished">
-          2021-12-06
-      </time>
-    
-    
-    | 
-    <a href='/tags/heap-pro/'>heap_pro</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-     
-
-fastbin？​    
-​    长度在32-160(32位系统是16-80)的free堆块。通过fastbinlist储存，单向链表，所以fast。fastbin attack一个最简单的利用就是UAF，其次就是fastbin double free。ctf pwn中与fastbin相关的还有就是在unsortedbin attack中涉及到的，也是ptmalloc机制中的一种的malloc_consolidate
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2021/12/06/fastbin_attack/">Read More...</a>
                     </p>
                     
                 </div>

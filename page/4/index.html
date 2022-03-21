@@ -80,6 +80,8 @@
 				  	
 				    <li><a href="/categories/CSAPP-LAB/" class="animsition-link">CSAPP LAB<small>(1)</small></a></li>
 				    
+				    <li><a href="/categories/Generalization/" class="animsition-link">Generalization<small>(2)</small></a></li>
+				    
 				    <li><a href="/categories/HEAP-Fastbin-Attack/" class="animsition-link">HEAP - Fastbin Attack<small>(7)</small></a></li>
 				    
 				    <li><a href="/categories/HEAP-Off-By-One/" class="animsition-link">HEAP - Off By One<small>(2)</small></a></li>
@@ -231,6 +233,87 @@
 
 <section id="intro">
     <div class="container">
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2021/12/08/off by one/">off by one /chunk overlapping</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2021-12-08T02:30:31.469Z" itemprop="datePublished">
+          2021-12-08
+      </time>
+    
+    
+    | 
+    <a href='/tags/heap-pro/'>heap_pro</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+     
+
+Off by one​        单/空字节溢出攻击。
+​        通常来说简单的off by one的漏洞点来自于编写时对边界控制不严格，导致每次输入的字符都能比规定的最大字符大那么一些（一个，或者几个）。这些字节溢出到物理地址相邻的下一个堆块，就能修改下一个chunk的size或者prev_inuse，通过这样的溢出，就能够整一些有趣的攻击。
+​        通常单字节溢出的利用方式有如下几种：
+
+溢出字
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2021/12/08/off by one/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2021/12/06/fastbin_attack/">fastbin attack</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2021-12-06T08:17:00.507Z" itemprop="datePublished">
+          2021-12-06
+      </time>
+    
+    
+    | 
+    <a href='/tags/heap-pro/'>heap_pro</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+     
+
+fastbin？​    
+​    长度在32-160(32位系统是16-80)的free堆块。通过fastbinlist储存，单向链表，所以fast。fastbin attack一个最简单的利用就是UAF，其次就是fastbin double free。ctf pwn中与fastbin相关的还有就是在unsortedbin attack中涉及到的，也是ptmalloc机制中的一种的malloc_consolidate
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2021/12/06/fastbin_attack/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
         
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
@@ -573,88 +656,6 @@ Seccomp的模式以及参数比
                     
                     <p class="pull-right readMore">
                         <a href="/2021/11/02/pwndocker的pwn题体验（上）/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2021/10/31/基于ctf pwn环境的docker配置/">基于ctf pwn环境的docker搭建</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2021-10-31T15:04:01.604Z" itemprop="datePublished">
-          2021-10-31
-      </time>
-    
-    
-    | 
-    <a href='/tags/mess/'>mess</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-     
-
-
-
-​    最近为了校内的萌新赛，需要出一些简单的pwn题，然后把它们搓进docker。虽然步骤并不是非常复杂，而且有现成的框架，但我发现如果纯粹按照网上框架的一件脚本运行的话，遇到报错根本无法解决，所以看图说话之外我还需要较为系统地学习docker知识。
-docker基础架构​    对于docker，在了解基础命令之前我们需要了解的就是，容器以及虚拟化的大致概念。
-1.1    为什么要有docker？​    一
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2021/10/31/基于ctf pwn环境的docker配置/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2021/10/29/typora主题配置的一些心得/">typora主题配置的一些心得</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2021-10-29T15:20:57.419Z" itemprop="datePublished">
-          2021-10-29
-      </time>
-    
-    
-    | 
-    <a href='/tags/mess/'>mess</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-     
-
-1）​    由于看腻了typora原主题的python高亮的丑兮兮的屎黄色注释，决定换个主题。然而找遍整个主题列表，并没有我看得上的主题。本来打算作罢，但想起最近因为写小程序，学了一些简单的css，是不是可以尝试一下修改某些主题的css文件，打造一个自己喜欢的主题捏。
-2）​    在下载主题的过程中我大致了解了一下typora主题开发的大致内容，其实主体感觉就是css（除了css，就是各种需要的字体。
-​    这里
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2021/10/29/typora主题配置的一些心得/">Read More...</a>
                     </p>
                     
                 </div>

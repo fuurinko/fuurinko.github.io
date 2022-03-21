@@ -80,6 +80,8 @@
 				  	
 				    <li><a href="/categories/CSAPP-LAB/" class="animsition-link">CSAPP LAB<small>(1)</small></a></li>
 				    
+				    <li><a href="/categories/Generalization/" class="animsition-link">Generalization<small>(2)</small></a></li>
+				    
 				    <li><a href="/categories/HEAP-Fastbin-Attack/" class="animsition-link">HEAP - Fastbin Attack<small>(7)</small></a></li>
 				    
 				    <li><a href="/categories/HEAP-Off-By-One/" class="animsition-link">HEAP - Off By One<small>(2)</small></a></li>
@@ -231,6 +233,88 @@
 
 <section id="intro">
     <div class="container">
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2021/08/17/ubuntu加载不同版本libc/">ubuntu加载不同版本libc</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2021-08-17T02:53:00.000Z" itemprop="datePublished">
+          2021-08-17
+      </time>
+    
+    
+    | 
+    <a href='/tags/linux-primary/'>linux primary</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+     
+
+1）review 这个问题困扰了我多年，之前年轻的时候不知道为什么有的是题我就是死活调不出，后来才知道呀原来用的ubunt的版本太高了。但是我一直忽视了这个问题以为并不是什么关键的因素。我是这么认为的–只要清楚了利用方法并记住对应的libc版本，无论是不是真的把这道题调试出来了都无所谓。
+然后我就是这样一步一步地变得不会调试的。
+但是完整地把一道题调出来。这才是关键。这才是pwn题的灵魂。
+呜呜呜，我居然一直忽略了它的灵
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2021/08/17/ubuntu加载不同版本libc/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2021/08/17/Tcache学习/">Tcahce学习</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2021-08-17T02:53:00.000Z" itemprop="datePublished">
+          2021-08-17
+      </time>
+    
+    
+    | 
+    <a href='/tags/Heap/'>Heap</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+     
+
+Tcahce学习0）review说是Tcache学习，实际上是lonelywolf的复现。
+网上wp都是神仙写的，一点也不萌新友好。我都看不懂（）
+打开题发现这个菜单题好常规。
+但是libc是2.27，难度会稍微高一点。而且这个2.27是魔改过的，加入了2.29才有的key，为Tcache加入了检查机制。                                                           
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2021/08/17/Tcache学习/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
         
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
@@ -567,52 +651,9 @@ ida大体分析了一下就会发现，由于没有后门函数，这道题会�
             </div>
         </div>
         
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2021/04/24/杂碎的指令/">杂碎的指令</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2021-04-23T16:50:26.062Z" itemprop="datePublished">
-          2021-04-24
-      </time>
-    
-    
-    | 
-    <a href='/tags/mess/'>mess</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        [TOC]
-
-     
-
-杂碎的知识点1）调试相关1）gdbropgagdet
-ROPgadget –binary （） –only “pop|ret” | grep rdi
-(基本适用于ret2csu这种万能gagdet的寻找)
-例如ROPgadget --binary calc --only &quot;pop|ret&quot; | grep eax
-2）内存断点？硬件断点？原理对所访问内存地址设置为不可读写，当访问时触发中断。
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2021/04/24/杂碎的指令/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
         <nav class="pagination" role="pagination">
           <a class="pull-left" href="../5/">← Newer Posts</a>
-          
+          <a class="pull-right" href="../7/">Older Posts →</a>
         </nav>
     </div>
 </section>
