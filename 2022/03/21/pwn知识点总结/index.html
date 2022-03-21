@@ -223,14 +223,13 @@
         </div>
         <div class="col-md-8 col-md-offset-2">
       		
-    <div id="aplayer-QcEImBOj" class="aplayer aplayer-tag-marker meting-tag-marker"
+    <div id="aplayer-NTLZQaFS" class="aplayer aplayer-tag-marker meting-tag-marker"
          data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"
     ></div> 
 
-
-
+<p>[TOC]</p>
 <h1 id="stack"><a href="#stack" class="headerlink" title="stack"></a>stack</h1><h2 id="漏洞点"><a href="#漏洞点" class="headerlink" title="漏洞点"></a>漏洞点</h2><h3 id="控制程序执行流"><a href="#控制程序执行流" class="headerlink" title="控制程序执行流"></a>控制程序执行流</h3><h4 id="栈溢出"><a href="#栈溢出" class="headerlink" title="栈溢出"></a>栈溢出</h4><h5 id="ret2syscall"><a href="#ret2syscall" class="headerlink" title="ret2syscall"></a>ret2syscall</h5><p>​        利用程序自带的gadget，构造syscall。</p>
-<p>​        对应板子</p>
+<p>​        <a href="https://fuurinko.github.io/2022/03/21/%E4%B8%80%E4%BA%9B%E6%9D%BF%E5%AD%90/">对应板子</a></p>
 <h5 id="ret2libc"><a href="#ret2libc" class="headerlink" title="ret2libc"></a>ret2libc</h5><h5 id="ret2shellcode"><a href="#ret2shellcode" class="headerlink" title="ret2shellcode"></a>ret2shellcode</h5><h3 id="泄露内存"><a href="#泄露内存" class="headerlink" title="泄露内存"></a>泄露内存</h3><h4 id="格式化字符串"><a href="#格式化字符串" class="headerlink" title="格式化字符串"></a>格式化字符串</h4><h5 id="1）泄露任意地址"><a href="#1）泄露任意地址" class="headerlink" title="1）泄露任意地址"></a>1）泄露任意地址</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">--------获取栈变量对应的地址------------</span><br><span class="line">%n<span class="variable">$p</span> <span class="comment">#输出栈上第n+1个格式化字符串输出参数</span></span><br><span class="line">--------获取栈变量对应的字符串----------</span><br><span class="line">%n<span class="variable">$s</span><span class="comment">#输出栈上第n+1个格式化字符串参数对应的字符串</span></span><br><span class="line">--------获取任意地址内容---------------</span><br><span class="line">addr%n<span class="variable">$s</span>	</span><br></pre></td></tr></table></figure>
 
 <h4 id="数组越界"><a href="#数组越界" class="headerlink" title="数组越界"></a>数组越界</h4><h4 id="覆盖空字节"><a href="#覆盖空字节" class="headerlink" title="覆盖空字节"></a>覆盖空字节</h4><p>​        </p>
