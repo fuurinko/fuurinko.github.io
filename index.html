@@ -102,7 +102,7 @@
 				    
 				    <li><a href="/categories/STACK-DynELF/" class="animsition-link">STACK - DynELF<small>(2)</small></a></li>
 				    
-				    <li><a href="/categories/STACK-Format/" class="animsition-link">STACK - Format<small>(3)</small></a></li>
+				    <li><a href="/categories/STACK-Format/" class="animsition-link">STACK - Format<small>(1)</small></a></li>
 				    
 				    <li><a href="/categories/STACK-OTHERS/" class="animsition-link">STACK - OTHERS<small>(1)</small></a></li>
 				    
@@ -396,52 +396,6 @@ ret2libcret2shellcode泄露内存格式化字符串1）泄露任意地址123456-
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
                 <div class="col-md-4">
-                    <h3><a href="/2022/03/20/echo1+2/">Echo 12</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2022-03-19T17:22:00.000Z" itemprop="datePublished">
-          2022-03-20
-      </time>
-    
-    
-    | 
-    <a href='/tags/FMT/'>FMT</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-     
-
-echo​        两个题一起做（
-​        
-​        看起来非常像格式化字符串（
-
-逆向​        没啥好逆的，纯纯格式化字符串。
-​        虽然但是，太久没有做过格式化字符串了，利用方式都给整忘了。
-利用​        大致复习一下，就是格式化字符串能够泄露栈上的内容，但是控制泄露具体的地址的话需要一些简单的计算。
-​        然后泄露了这样一个地址，具体能做什么呢？
-​
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2022/03/20/echo1+2/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
                     <h3><a href="/2022/03/20/mrctf2020_shellcode_revenge/">mrctf2020_shellcode_revenge</a></h3>
                     <span>
                         <span class="post-meta">
@@ -554,6 +508,51 @@ PicoCTF_2018_got-shell​        虽然但是，这个题为什么这么pwncolle
                     
                     <p class="pull-right readMore">
                         <a href="/2022/03/20/PicoCTF_2018_got-shell/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2022/03/19/fmt/">格式化字符串</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-03-18T17:22:00.000Z" itemprop="datePublished">
+          2022-03-19
+      </time>
+    
+    
+    | 
+    <a href='/tags/FMT/'>FMT</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+     
+
+
+
+1）前言​        绿盟杯pwn1，格式化字符串+沙盒orw。保护全开。
+​        首先对于格式化字符串我的理解就不是很深刻，甚至从来没有完整地刷过一道格式化字符串的题目。
+​        所以碰到这道题，算是又给我敲了第nn个警钟。
+​        非常清晰地告诉我：我是垃圾。
+2）格式化字符串基本原理​        ctfwiki上的格式化字符串教程写得挺好的，可以参考。
+格式化字符串参数1%
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/03/19/fmt/">Read More...</a>
                     </p>
                     
                 </div>

