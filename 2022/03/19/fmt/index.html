@@ -226,7 +226,7 @@
         </div>
         <div class="col-md-8 col-md-offset-2">
       		
-    <div id="aplayer-fqOFVCvm" class="aplayer aplayer-tag-marker meting-tag-marker"
+    <div id="aplayer-nTMrVttP" class="aplayer aplayer-tag-marker meting-tag-marker"
          data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"
     ></div> 
 
@@ -435,13 +435,11 @@
 <p>​        另外其实可以尝试一下手动修改。</p>
 <p>​        其实就是把<code>0x804A010</code>改成<code>0x8048400</code>。</p>
 <p>​        所以payload大概长这样</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">payload = p32(<span class="number">0x804A010</span>)  + <span class="string">b&#x27;%1d10c&#x27;</span>+ <span class="string">b&#x27;%6$hn&#x27;</span>  </span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">payload = p32(<span class="number">0x804A010</span>)  + <span class="string">b&#x27;%xxxxc&#x27;</span>+ <span class="string">b&#x27;%6$hn&#x27;</span>  </span><br></pre></td></tr></table></figure>
 
-
-
-<p>​        </p>
 <p>​        </p>
 <h3 id="echo2"><a href="#echo2" class="headerlink" title="echo2"></a>echo2</h3><p>​        </p>
+<p>​        </p>
 <p>​        </p>
 <h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>​    通过这篇笔记我确实是认识到自动化脚本的重要性，其实我觉得但凡真正入门了pwn，就不会再浪费时间于一些明明可以自动化完成的东西，就比如说rop有相应的脚本roputil，有onegadget，但是我总是拒绝去用这些东西，反而将大把时间浪费于无谓的调试以及历史脚本的复制粘贴上。</p>
 <p>​    然而简单的题目尚且可以通过手工构造，如果是实战或者盲打，上哪里手工构造呢？我总有一天要面对这个东西，为什么不早点接受呢？</p>

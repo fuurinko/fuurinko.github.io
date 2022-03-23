@@ -240,6 +240,97 @@
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
                 <div class="col-md-4">
+                    <h3><a href="/2022/03/03/MemoryErrors/">MemoryErrors</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-03-03T03:18:50.193Z" itemprop="datePublished">
+          2022-03-03
+      </time>
+    
+    
+    | 
+    <a href='/tags/pwncollege/'>pwncollege</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+     
+
+​        视频主要介绍了栈溢出及其保护。保护的绕过包括canary和pie，并没有提到NX（那个似乎在后面一个module）
+​        传输题目到本地可以使用scp命令。
+1scp -i key -r hacker@dojo.pwn.college:/challenge/babymem_level4.1 /Users/rin/ctf/pwn/pwn_college/MemoryErrors
+
+
+
+
+
+Le
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/03/03/MemoryErrors/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2022/03/03/pwncollege_ProgramMisuse/">ProgramMisuse</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-03-03T03:09:26.547Z" itemprop="datePublished">
+          2022-03-03
+      </time>
+    
+    
+    | 
+    <a href='/tags/pwncollege/'>pwncollege</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+     
+
+
+
+
+
+​        关于这个module，做出题目的话大致有两个思路，一个是利用/bin/sh    来对整个shell提权，另外一个是利用设置了suid的特殊程序来读取flag。一般来说是第二个方法比较简单，但是有时候只有第一个方法可以行得通。
+Level1​        没有看视频，并不知道这个Misuse是什么意义，但是level1只要执行给的程序就能get flag。
+
+Level2​        到第
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/03/03/pwncollege_ProgramMisuse/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
                     <h3><a href="/2022/02/28/Sandboxing/">Sandboxing</a></h3>
                     <span>
                         <span class="post-meta">
@@ -581,86 +672,6 @@ Level6​        一个输出重定向，创建对应文件./emb
                     
                     <p class="pull-right readMore">
                         <a href="/2021/12/10/ida 7.0 for mac疑难杂症： positive sp value has been found/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2021/12/10/unlink/">UNLINK</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2021-12-09T17:33:53.716Z" itemprop="datePublished">
-          2021-12-10
-      </time>
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-         
-
-UNLINK​        就是将free chunk从双向循环链表中解链的过程，当然这里的解链一般来说是指在对空闲块进行合并的时候的unlink。借用malloc lab中的简化的unlink的代码，就是：
-12SET_PREV(next,prev);SET_NEXT(prev,next)
-
-
-
-​        也就是把下一个chunk的PREV位设为上一个chunk的bp，把上一个chunk的next位设
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2021/12/10/unlink/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2021/12/08/off by one/">off by one /chunk overlapping</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2021-12-08T02:30:31.469Z" itemprop="datePublished">
-          2021-12-08
-      </time>
-    
-    
-    | 
-    <a href='/tags/heap-pro/'>heap_pro</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-     
-
-Off by one​        单/空字节溢出攻击。
-​        通常来说简单的off by one的漏洞点来自于编写时对边界控制不严格，导致每次输入的字符都能比规定的最大字符大那么一些（一个，或者几个）。这些字节溢出到物理地址相邻的下一个堆块，就能修改下一个chunk的size或者prev_inuse，通过这样的溢出，就能够整一些有趣的攻击。
-​        通常单字节溢出的利用方式有如下几种：
-
-溢出字
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2021/12/08/off by one/">Read More...</a>
                     </p>
                     
                 </div>

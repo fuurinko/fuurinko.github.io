@@ -240,6 +240,88 @@
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
                 <div class="col-md-4">
+                    <h3><a href="/2021/08/17/Tcache学习/">Tcahce学习</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2021-08-17T02:53:00.000Z" itemprop="datePublished">
+          2021-08-17
+      </time>
+    
+    
+    | 
+    <a href='/tags/Heap/'>Heap</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+     
+
+Tcahce学习0）review说是Tcache学习，实际上是lonelywolf的复现。
+网上wp都是神仙写的，一点也不萌新友好。我都看不懂（）
+打开题发现这个菜单题好常规。
+但是libc是2.27，难度会稍微高一点。而且这个2.27是魔改过的，加入了2.29才有的key，为Tcache加入了检查机制。                                                           
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2021/08/17/Tcache学习/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2021/08/16/记一次ubuntu18.04的glibc调教/">记一次ubuntu18.04的glibc调教</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2021-08-16T13:24:18.623Z" itemprop="datePublished">
+          2021-08-16
+      </time>
+    
+    
+    | 
+    <a href='/tags/mess/'>mess</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+     
+
+1）概述这是一件悲伤的事情，我的ubuntu它又崩了。
+最开始的时候，发现pwndbg无法查看heap等信息，这个问题我之前也遇到过，但是情况有非常大的区别。
+之前是我2.32的本地默认libc，执行程序时加载2.23，然后因为指定的lbc-2.23.so没有附带调试符号信息，所以也看不了heap，但是这一次，本机都看不了了？
+经过一番排查，我们认为是libc本身出现了问题。然后寻找libc-2.27.so的文件打算一探
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2021/08/16/记一次ubuntu18.04的glibc调教/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
                     <h3><a href="/2021/08/13/ELF文件下对于PIE保护和ASLR的重新认识/">ELF文件下对于PIE保护和ASLR的重新认识</a></h3>
                     <span>
                         <span class="post-meta">
@@ -566,86 +648,6 @@ ROPgadget –binary （） –only “pop|ret” | grep rdi
                     
                     <p class="pull-right readMore">
                         <a href="/1919/08/10/深夜高速-0/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/1919/08/10/深夜高速-1/">1</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="1919-08-09T15:34:14.000Z" itemprop="datePublished">
-          1919-08-10
-      </time>
-    
-    
-    | 
-    <a href='/tags/mess/'>mess</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        ​    
-         
-0:​        写下这些话的时候，不知不觉地，已经半夜两点了。
-​        其实放在半个月之前的我看来，两点根本不是半夜，而是夜生活的开始。然而仅仅十五天，我将作息强行向前延伸了两小时，所以对于现在的我来说，两点已经是高程度的熬夜了。
-​        熬夜并不是一件坏事，至少我如今也这么认为——只要不是因为玩手机等无意义的事情而浪费生命。
-​        最近的我一直在经受苦难，或者说，我
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/1919/08/10/深夜高速-1/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/1919/08/10/2/">2</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="1919-08-09T15:34:14.000Z" itemprop="datePublished">
-          1919-08-10
-      </time>
-    
-    
-    | 
-    <a href='/tags/mess/'>mess</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        ​    
-         
-​        深夜高速，但是是在白天。
-​        昨天看到了飞机失事的新闻，确实一晚上也没怎么睡好。
-​        确实还是能感受到，与纯粹的生命的流逝相比，我的所有痛苦都已经不值一提了。因为这件事，我甚至完全不难过了，我需要知道，世界上正在经历远比我更加深重的苦难的人数不胜数，他们有的能掌管自己的未来，但是有的甚至都没有机会去思考未来的一切就已经灰飞烟灭。
-​        相比之下我只
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/1919/08/10/2/">Read More...</a>
                     </p>
                     
                 </div>
