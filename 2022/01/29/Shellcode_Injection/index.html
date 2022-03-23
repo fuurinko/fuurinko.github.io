@@ -400,6 +400,140 @@ $('#intro').find('img').each(function(){
 
 
 
+      <!-- ============================ Hero Image =========================== -->
+
+<section id="hero" class="scrollme">
+    <div class="container-fluid element-img" style="background: url(https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/cover.jpg) no-repeat center center fixed;background-size: cover">
+        <div class="row">
+            <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-8 col-md-offset-2 vertical-align cover boost text-center">
+                <div class="center-me animateme" data-when="exit" data-from="0" data-to="0.6" data-opacity="0" data-translatey="100">
+                    <div>
+                        
+                        <h2><span>RIN777</span></h2>
+                        <p></p>
+                        
+                        <h2></h2>
+                        <p>努力は嘘をつく、でも無駄にはならない</p>
+                        
+
+                    </div>
+                </div>
+            </div>
+            <!-- // .col-md-12 -->
+        </div>
+        <div class="herofade beige-dk"></div>
+    </div>
+</section>
+
+<!-- Height spacing helper -->
+<div class="heightblock"></div>
+<!-- // End height spacing helper -->
+
+<!-- ============================ END Hero Image =========================== -->
+<section id="intro">
+    <div class="container">
+        <div class="row col-md-offset-2">
+            <div class="col-md-8">
+                <h1>Shellcode_Injection</h1>
+            </div>
+        </div>
+        <div class="col-md-8 col-md-offset-2">
+            
+    <div id="aplayer-gTnZoMeo" class="aplayer aplayer-tag-marker meting-tag-marker"
+         data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"
+    ></div> 
+
+
+
+<p>​        整个专题其实就是一个shellcode编写的小练习，并不需要自己寻找漏洞点，写好shellcode直接注入就行。</p>
+<p>​        如果要将服务器的文件传输到本地的话可以使用:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scp -i key -r hacker@dojo.pwn.college:/challenge [本地路径]</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="Level1"><a href="#Level1" class="headerlink" title="Level1"></a>Level1</h4><p>​        可以用pwntools的shellcraft模块，但是也可以手写shellcode。</p>
+<p>​        这道题可以用简单的orw的思路做。但是shellcode的地址需要在规定的地方。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">shellcode = shellcraft.amd64.<span class="built_in">open</span>(<span class="string">&quot;/flag&quot;</span>)		</span><br><span class="line">shellcode += shellcraft.amd64.read(<span class="string">&#x27;rax&#x27;</span>, stack + <span class="number">0x100</span>, <span class="number">0x100</span>)</span><br><span class="line">shellcode += shellcraft.amd64.write(<span class="number">1</span>, stack + <span class="number">0x100</span>, <span class="number">0x100</span>)</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="Level2"><a href="#Level2" class="headerlink" title="Level2"></a>Level2</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">shellcode = shellcraft.amd64.nop()*<span class="number">0x800</span></span><br><span class="line">shellcode = shellcraft.amd64.<span class="built_in">open</span>(<span class="string">&quot;/flag&quot;</span>)		</span><br><span class="line">shellcode += shellcraft.amd64.read(<span class="string">&#x27;rax&#x27;</span>, stack + <span class="number">0x100</span>, <span class="number">0x100</span>)</span><br><span class="line">shellcode += shellcraft.amd64.write(<span class="number">1</span>, stack + <span class="number">0x100</span>, <span class="number">0x100</span>)</span><br></pre></td></tr></table></figure>
+
+<h4 id="Level3"><a href="#Level3" class="headerlink" title="Level3"></a>Level3</h4><p>​        换个地址就行</p>
+<h4 id="Level4"><a href="#Level4" class="headerlink" title="Level4"></a>Level4</h4><p>​        shellcode不能含有”H”。</p>
+<p>​        第一个想到的就是不能含有<code>push</code>，其他指令似乎也没有h了。想要完成的话第一个思路是手写不含push的shellcode，另外一个思路是构造跳板读取其他位置的shellcode（这种思路其实比较常见并且配套的视频中也提到过）</p>
+<p>​        但是实际做题体验极差，写了read()后，读取的shellcode无论怎样都无法读到flag，明明已经getshell了，也没有eof，但是就是没办法。以后再想吧。</p>
+<h4 id="Level5"><a href="#Level5" class="headerlink" title="Level5"></a>Level5</h4><p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-02-18%20%E4%B8%8B%E5%8D%8810.02.44.png" alt="截屏2022-02-18 下午10.02.44"></p>
+<p>​        需要让shellcode在运行时生成<code>syscall()</code>。</p>
+<p>一个比较自然的想法就是把对应的机器码储存在寄存器中，然后拿出来用。</p>
+<p><code>int 0x80</code>对应的机器码<code>CD 80 </code></p>
+
+            <div class="clearfix"></div>
+        </div>
+        
+    </div>
+</section>
+<section id="process">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-8 col-md-offset-2">
+                <div class="timeline-centered">
+                    <div class="line"></div>
+                    <div class="present">Past</div>
+                    <div class="dot_tp"></div>
+                    <div class="born">Now</div>
+                    <div class="dot_bt"></div>
+                    
+                        <div class="timeline-entry">
+                            <div class="timeline-entry-inner">
+                                <div class="timeline-icon wow fadeInUp" data-wow-delay="0.2s">
+                                    <span class="number">1</span>
+                                </div>
+                                <div class="timeline-label wow fadeInUp" data-wow-delay="0.2s">
+                                    <p>2014/06/12-Start</p>
+                                </div>
+                            </div>
+                        </div>
+                    
+                        <div class="timeline-entry">
+                            <div class="timeline-entry-inner">
+                                <div class="timeline-icon wow fadeInUp" data-wow-delay="0.2s">
+                                    <span class="number">2</span>
+                                </div>
+                                <div class="timeline-label wow fadeInUp" data-wow-delay="0.2s">
+                                    <p>2014/11/29-XXX</p>
+                                </div>
+                            </div>
+                        </div>
+                    
+                        <div class="timeline-entry">
+                            <div class="timeline-entry-inner">
+                                <div class="timeline-icon wow fadeInUp" data-wow-delay="0.2s">
+                                    <span class="number">3</span>
+                                </div>
+                                <div class="timeline-label wow fadeInUp" data-wow-delay="0.2s">
+                                    <p>2015/02/18-DDD</p>
+                                </div>
+                            </div>
+                        </div>
+                    
+                        <div class="timeline-entry">
+                            <div class="timeline-entry-inner">
+                                <div class="timeline-icon wow fadeInUp" data-wow-delay="0.2s">
+                                    <span class="number">4</span>
+                                </div>
+                                <div class="timeline-label wow fadeInUp" data-wow-delay="0.2s">
+                                    <p>More</p>
+                                </div>
+                            </div>
+                        </div>
+                    
+                </div>
+                <!-- timeline-centered -->
+            </div>
+        </div>
+    </div>
+</section>
       
             <style>
 .local-search-popup {

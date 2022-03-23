@@ -394,6 +394,134 @@ $('#intro').find('img').each(function(){
 
 
 
+      <!-- ============================ Hero Image =========================== -->
+
+<section id="hero" class="scrollme">
+    <div class="container-fluid element-img" style="background: url(https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/cover.jpg) no-repeat center center fixed;background-size: cover">
+        <div class="row">
+            <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-8 col-md-offset-2 vertical-align cover boost text-center">
+                <div class="center-me animateme" data-when="exit" data-from="0" data-to="0.6" data-opacity="0" data-translatey="100">
+                    <div>
+                        
+                        <h2><span>RIN777</span></h2>
+                        <p></p>
+                        
+                        <h2></h2>
+                        <p>努力は嘘をつく、でも無駄にはならない</p>
+                        
+
+                    </div>
+                </div>
+            </div>
+            <!-- // .col-md-12 -->
+        </div>
+        <div class="herofade beige-dk"></div>
+    </div>
+</section>
+
+<!-- Height spacing helper -->
+<div class="heightblock"></div>
+<!-- // End height spacing helper -->
+
+<!-- ============================ END Hero Image =========================== -->
+<section id="intro">
+    <div class="container">
+        <div class="row col-md-offset-2">
+            <div class="col-md-8">
+                <h1>main_arana 与多线程</h1>
+            </div>
+        </div>
+        <div class="col-md-8 col-md-offset-2">
+            
+    <div id="aplayer-rDGhzEpG" class="aplayer aplayer-tag-marker meting-tag-marker"
+         data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"
+    ></div> 
+
+<h3 id="在学习Tcache的时候遇到了一些比较奇怪的点，ctf权威指南pwn篇中对于Tcache的解释中第一段如下："><a href="#在学习Tcache的时候遇到了一些比较奇怪的点，ctf权威指南pwn篇中对于Tcache的解释中第一段如下：" class="headerlink" title="在学习Tcache的时候遇到了一些比较奇怪的点，ctf权威指南pwn篇中对于Tcache的解释中第一段如下："></a>在学习Tcache的时候遇到了一些比较奇怪的点，ctf权威指南pwn篇中对于Tcache的解释中第一段如下：</h3><blockquote>
+<p>Tcache全名为Thread Local Caching，它为每个线程创建一个缓存，里面包含了一些小堆块，无需对main_arena上锁即可使用。</p>
+</blockquote>
+<p>首先让我感到不解的就是，“无需对main_arena上锁即可使用”这句话。什么叫对main_arana上锁？之前也遇见过很多文章提到过这个”锁“的相关概念，但是它们从来都不是问题的重点，但是通常来说，正是一个个不懂的”无关紧要“的问题导致最后啥也看不懂的。</p>
+<p>所以在这篇文章中我们有必要从ctf pwn的角度去理解线程 main_arena。</p>
+<h4 id="加锁"><a href="#加锁" class="headerlink" title="加锁"></a>加锁</h4><p>当<strong>多个线程同时操作同一个共享全局变量</strong>的时候，对线程上锁，保证同一时间一个对象只有一个线程在访问，可以解决资源占用问题，同时保证了数据的安全性。</p>
+<h4 id="线程"><a href="#线程" class="headerlink" title="线程"></a>线程</h4><p>线程一般来说被进程包含：一个进程可以有很多线程来处理，每条线程并行执行不同的任务。</p>
+<p>比如说ptmalloc2这个是个进程，然后其中包含很多很多线程。</p>
+<p>其中会有一个<code>main_arena</code>,是整个ptmalloc2进程中的主线程，然后main_arena会有很多子线程，每个子线程包含很多连续的内存片段，被称为heap。每一个heap都有自己的heap_header，它们通过链表互相连接，且其中保存了指向其所属arena的指针。</p>
+<p>这么讲似乎有一些太过抽象。具体一点讲就是，在只有一个main_arena的时候，ptmalloc只能通过mmap和sbrk申请堆内存。</p>
+<blockquote>
+<p>在多线程的情况下，显然让所有的线程公用一个数据结构来获取内存块会造成十分惨烈的对锁的竞争，所以 ptmalloc 中间多了一层组织结构——arena。每个arena包含一些可用的内存区块，用一个 arena 级别的锁来控制访问。当线程比较少的时候，每个可以拥有自己的arena，而当 arena 数目超过允许最大值时，多个线程共享一个 arena 了。个线程第一次 malloc 的时候都会 attach 一个 arena 。除非这个 arena 被标记为破坏的（ARENA_CORRUPTION_BIT），否则该线程以后再 malloc 都会继续用这个 arena。</p>
+</blockquote>
+<p>之前ctf权威指南中有讲到，每一个子线程包含很多连续的内存片段，被称为heap。它们都有自己所属的arena。这句话很容易让人觉得——每一个子线程有且只有一个arena，但是还存在多对一的情况。</p>
+<p>但是对于ctf pwn来说，实际情况远远没有这么复杂，基本我们操作的所谓的堆，chunk这些概念，考点基本都是建立在单线程的情况下的，它们的arena也都是<code>main_arena</code>而并不是什么<code>non_main_arena</code>。并且只有<code>main_arena</code>    能够访问<code>heap</code>段，<code>non_main_arena</code>只能访问<code>mmap</code>映射区域。</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>用比较简单的话来说，main_arena就是主线程中一个管理所有链表的关键的数据结构，我们可以通过它获得各个bins的偏移。以及利用指向它的fd来做一些不好的事情（）。承接之前的内容，我们在利用main_arena的同时也需要对其进行上锁，防止别的线程与它共用一个资源，然后之前Tcahce里的“无需对main_arena上锁”意思也很清楚了，因为考虑到效率。所以抛弃了一定的安全性。</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/24909781">malloc x 线程</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.wangan.com/docs/1741">GLibcHeap</a></p>
+
+            <div class="clearfix"></div>
+        </div>
+        
+    </div>
+</section>
+<section id="process">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-8 col-md-offset-2">
+                <div class="timeline-centered">
+                    <div class="line"></div>
+                    <div class="present">Past</div>
+                    <div class="dot_tp"></div>
+                    <div class="born">Now</div>
+                    <div class="dot_bt"></div>
+                    
+                        <div class="timeline-entry">
+                            <div class="timeline-entry-inner">
+                                <div class="timeline-icon wow fadeInUp" data-wow-delay="0.2s">
+                                    <span class="number">1</span>
+                                </div>
+                                <div class="timeline-label wow fadeInUp" data-wow-delay="0.2s">
+                                    <p>2014/06/12-Start</p>
+                                </div>
+                            </div>
+                        </div>
+                    
+                        <div class="timeline-entry">
+                            <div class="timeline-entry-inner">
+                                <div class="timeline-icon wow fadeInUp" data-wow-delay="0.2s">
+                                    <span class="number">2</span>
+                                </div>
+                                <div class="timeline-label wow fadeInUp" data-wow-delay="0.2s">
+                                    <p>2014/11/29-XXX</p>
+                                </div>
+                            </div>
+                        </div>
+                    
+                        <div class="timeline-entry">
+                            <div class="timeline-entry-inner">
+                                <div class="timeline-icon wow fadeInUp" data-wow-delay="0.2s">
+                                    <span class="number">3</span>
+                                </div>
+                                <div class="timeline-label wow fadeInUp" data-wow-delay="0.2s">
+                                    <p>2015/02/18-DDD</p>
+                                </div>
+                            </div>
+                        </div>
+                    
+                        <div class="timeline-entry">
+                            <div class="timeline-entry-inner">
+                                <div class="timeline-icon wow fadeInUp" data-wow-delay="0.2s">
+                                    <span class="number">4</span>
+                                </div>
+                                <div class="timeline-label wow fadeInUp" data-wow-delay="0.2s">
+                                    <p>More</p>
+                                </div>
+                            </div>
+                        </div>
+                    
+                </div>
+                <!-- timeline-centered -->
+            </div>
+        </div>
+    </div>
+</section>
       
             <style>
 .local-search-popup {

@@ -394,6 +394,134 @@ $('#intro').find('img').each(function(){
 
 
 
+      <!-- ============================ Hero Image =========================== -->
+
+<section id="hero" class="scrollme">
+    <div class="container-fluid element-img" style="background: url(https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/cover.jpg) no-repeat center center fixed;background-size: cover">
+        <div class="row">
+            <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-8 col-md-offset-2 vertical-align cover boost text-center">
+                <div class="center-me animateme" data-when="exit" data-from="0" data-to="0.6" data-opacity="0" data-translatey="100">
+                    <div>
+                        
+                        <h2><span>RIN777</span></h2>
+                        <p></p>
+                        
+                        <h2></h2>
+                        <p>努力は嘘をつく、でも無駄にはならない</p>
+                        
+
+                    </div>
+                </div>
+            </div>
+            <!-- // .col-md-12 -->
+        </div>
+        <div class="herofade beige-dk"></div>
+    </div>
+</section>
+
+<!-- Height spacing helper -->
+<div class="heightblock"></div>
+<!-- // End height spacing helper -->
+
+<!-- ============================ END Hero Image =========================== -->
+<section id="intro">
+    <div class="container">
+        <div class="row col-md-offset-2">
+            <div class="col-md-8">
+                <h1>pwn知识点总结</h1>
+            </div>
+        </div>
+        <div class="col-md-8 col-md-offset-2">
+            
+    <div id="aplayer-hAzaQBWj" class="aplayer aplayer-tag-marker meting-tag-marker"
+         data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"
+    ></div> 
+
+<p>[TOC]</p>
+<h1 id="stack"><a href="#stack" class="headerlink" title="stack"></a>stack</h1><h2 id="漏洞点"><a href="#漏洞点" class="headerlink" title="漏洞点"></a>漏洞点</h2><h3 id="控制程序执行流"><a href="#控制程序执行流" class="headerlink" title="控制程序执行流"></a>控制程序执行流</h3><h4 id="栈溢出"><a href="#栈溢出" class="headerlink" title="栈溢出"></a>栈溢出</h4><h5 id="ret2syscall"><a href="#ret2syscall" class="headerlink" title="ret2syscall"></a>ret2syscall</h5><p>​        利用程序自带的gadget，构造syscall。</p>
+<p>​        <a href="https://fuurinko.github.io/2022/03/21/%E4%B8%80%E4%BA%9B%E6%9D%BF%E5%AD%90/">对应板子</a></p>
+<h5 id="ret2libc"><a href="#ret2libc" class="headerlink" title="ret2libc"></a>ret2libc</h5><h5 id="ret2shellcode"><a href="#ret2shellcode" class="headerlink" title="ret2shellcode"></a>ret2shellcode</h5><h3 id="泄露内存"><a href="#泄露内存" class="headerlink" title="泄露内存"></a>泄露内存</h3><h4 id="格式化字符串"><a href="#格式化字符串" class="headerlink" title="格式化字符串"></a>格式化字符串</h4><h5 id="1）泄露任意地址"><a href="#1）泄露任意地址" class="headerlink" title="1）泄露任意地址"></a>1）泄露任意地址</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">--------获取栈变量对应的地址------------</span><br><span class="line">%n<span class="variable">$p</span> <span class="comment">#输出栈上第n+1个格式化字符串输出参数</span></span><br><span class="line">--------获取栈变量对应的字符串----------</span><br><span class="line">%n<span class="variable">$s</span><span class="comment">#输出栈上第n+1个格式化字符串参数对应的字符串</span></span><br><span class="line">--------获取任意地址内容---------------</span><br><span class="line">addr%n<span class="variable">$s</span>	</span><br></pre></td></tr></table></figure>
+
+<h6 id="Extra"><a href="#Extra" class="headerlink" title="Extra:"></a>Extra:</h6><p>​        对于格式化字符串地址偏移的计算，32位和64位并不完全相同，32位参数完全由栈传递，所以参数在栈上出现的位次即是偏移（要减去返回地址占的位次），但是64位传参前六位是由寄存器传参，因此在栈上找到的偏移需要加6。</p>
+<h4 id="数组越界"><a href="#数组越界" class="headerlink" title="数组越界"></a>数组越界</h4><h4 id="覆盖空字节"><a href="#覆盖空字节" class="headerlink" title="覆盖空字节"></a>覆盖空字节</h4><p>​        </p>
+<h3 id="修改内存"><a href="#修改内存" class="headerlink" title="修改内存"></a>修改内存</h3><h4 id="格式化字符串-1"><a href="#格式化字符串-1" class="headerlink" title="格式化字符串"></a>格式化字符串</h4><h5 id="利用fmt-payload模块自动化写入"><a href="#利用fmt-payload模块自动化写入" class="headerlink" title="利用fmt_payload模块自动化写入"></a>利用fmt_payload模块自动化写入</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">payload = fmtstr_payload(offset, &#123;func_got : system_addr&#125;)</span><br></pre></td></tr></table></figure>
+
+<h5 id="手工构造"><a href="#手工构造" class="headerlink" title="手工构造"></a>手工构造</h5><h6 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h6><p><code>%n</code>参数不输出字符，但是把已成功输出的字符个数写入对应整形指针参数所指的变量。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">addr%k<span class="variable">$n</span><span class="comment">#k为格式化字符串偏移，addr为需要覆盖的地址</span></span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">%hhn <span class="comment">#向地址写入单字节</span></span><br><span class="line">%hn <span class="comment">#向地址写入双字节</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+            <div class="clearfix"></div>
+        </div>
+        
+    </div>
+</section>
+<section id="process">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-8 col-md-offset-2">
+                <div class="timeline-centered">
+                    <div class="line"></div>
+                    <div class="present">Past</div>
+                    <div class="dot_tp"></div>
+                    <div class="born">Now</div>
+                    <div class="dot_bt"></div>
+                    
+                        <div class="timeline-entry">
+                            <div class="timeline-entry-inner">
+                                <div class="timeline-icon wow fadeInUp" data-wow-delay="0.2s">
+                                    <span class="number">1</span>
+                                </div>
+                                <div class="timeline-label wow fadeInUp" data-wow-delay="0.2s">
+                                    <p>2014/06/12-Start</p>
+                                </div>
+                            </div>
+                        </div>
+                    
+                        <div class="timeline-entry">
+                            <div class="timeline-entry-inner">
+                                <div class="timeline-icon wow fadeInUp" data-wow-delay="0.2s">
+                                    <span class="number">2</span>
+                                </div>
+                                <div class="timeline-label wow fadeInUp" data-wow-delay="0.2s">
+                                    <p>2014/11/29-XXX</p>
+                                </div>
+                            </div>
+                        </div>
+                    
+                        <div class="timeline-entry">
+                            <div class="timeline-entry-inner">
+                                <div class="timeline-icon wow fadeInUp" data-wow-delay="0.2s">
+                                    <span class="number">3</span>
+                                </div>
+                                <div class="timeline-label wow fadeInUp" data-wow-delay="0.2s">
+                                    <p>2015/02/18-DDD</p>
+                                </div>
+                            </div>
+                        </div>
+                    
+                        <div class="timeline-entry">
+                            <div class="timeline-entry-inner">
+                                <div class="timeline-icon wow fadeInUp" data-wow-delay="0.2s">
+                                    <span class="number">4</span>
+                                </div>
+                                <div class="timeline-label wow fadeInUp" data-wow-delay="0.2s">
+                                    <p>More</p>
+                                </div>
+                            </div>
+                        </div>
+                    
+                </div>
+                <!-- timeline-centered -->
+            </div>
+        </div>
+    </div>
+</section>
       
             <style>
 .local-search-popup {

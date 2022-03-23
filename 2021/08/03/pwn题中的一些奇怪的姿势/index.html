@@ -430,6 +430,170 @@ $('#intro').find('img').each(function(){
 
 
 
+      <!-- ============================ Hero Image =========================== -->
+
+<section id="hero" class="scrollme">
+    <div class="container-fluid element-img" style="background: url(https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/cover.jpg) no-repeat center center fixed;background-size: cover">
+        <div class="row">
+            <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-8 col-md-offset-2 vertical-align cover boost text-center">
+                <div class="center-me animateme" data-when="exit" data-from="0" data-to="0.6" data-opacity="0" data-translatey="100">
+                    <div>
+                        
+                        <h2><span>RIN777</span></h2>
+                        <p></p>
+                        
+                        <h2></h2>
+                        <p>努力は嘘をつく、でも無駄にはならない</p>
+                        
+
+                    </div>
+                </div>
+            </div>
+            <!-- // .col-md-12 -->
+        </div>
+        <div class="herofade beige-dk"></div>
+    </div>
+</section>
+
+<!-- Height spacing helper -->
+<div class="heightblock"></div>
+<!-- // End height spacing helper -->
+
+<!-- ============================ END Hero Image =========================== -->
+<section id="intro">
+    <div class="container">
+        <div class="row col-md-offset-2">
+            <div class="col-md-8">
+                <h1>pwn题中的一些奇怪的姿势</h1>
+            </div>
+        </div>
+        <div class="col-md-8 col-md-offset-2">
+            
+    <div id="aplayer-UgsHjUPL" class="aplayer aplayer-tag-marker meting-tag-marker"
+         data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"
+    ></div> 
+
+<h3 id="patch-alarm"><a href="#patch-alarm" class="headerlink" title="patch alarm"></a>patch alarm</h3><p>比较弱智的一个操作，但是如果没注意到的话还是有一点点坑。</p>
+<p>一般来说许多题都喜欢在main函数里加alarm。</p>
+<p>alarm会导致调试的时候超时，如果没有解决的话基本不能调试。算最基础的的反调试手法了。</p>
+<p>ps:关于超时的那个报错当时还好好研究了一会儿来着。就是一个sigxxx，sigalarm好像，然后默认返回中止程序。</p>
+<p>解决方案也比较弱智。就是直接patch掉就好了。</p>
+<p>ida都关了懒得上图了。</p>
+<h3 id="单双引号问题"><a href="#单双引号问题" class="headerlink" title="单双引号问题"></a>单双引号问题</h3><p>​        萌新赛出题的时候，出了一道非常简单的签到ret2text，但是非常疑惑地，怎么样都会EOF。</p>
+<p>​        然后索性调试一下，发现了奇点。</p>
+<p>​        <img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/EDFE9E0C6D3BC173B417FE06A8F28E18.png" alt="EDFE9E0C6D3BC173B417FE06A8F28E18"></p>
+<p>​        这边已经跳转到后门函数了，但是没有办法getshell。问题似乎出在参数上。本应该是<code>/bin/sh</code>，但是实际是<code>n/sh</code>，只有后面四个字节了。</p>
+<p>​        我去找了wiki上面类似题目做参考，发现正常情况下这里应该是这样：<img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/DECB707DA78DA7002E7115E76713D24E.png" alt="DECB707DA78DA7002E7115E76713D24E"></p>
+<p>​        但是我的程序是这样：</p>
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/328953ED3A08C20DD6E4E20828BB5B56.png" alt="328953ED3A08C20DD6E4E20828BB5B56"></p>
+<p>​        然后发动传统艺能，控制变量找不同，发现问题出在<code>system(&#39;/bin/sh&#39;)</code>上。</p>
+<p>​        因为不怎么出这种直接给后门的题，我甚至不太清楚这个函数的写法，以至于想当然地认为这里单引号和双引号没有什么区别，就像在exp中的那些<code>(&#39;./&#39;)</code> <code>(&quot;./&quot;)</code>，看起来区别不大，实际上也没有什么影响。</p>
+<p>​        但是实际只要去查一查，就会发现其实区别很大。单引号压根就不是字符串。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。</p>
+<p>​        然后把单引号改成双引号之后，就getshell了。</p>
+<h3 id="roputils"><a href="#roputils" class="headerlink" title="roputils"></a>roputils</h3><p>做ret2dl的时候难免会偷懒使用工具。</p>
+<p>但是这个工具并没有看起来那么和善。</p>
+<p>就怎么使用utils包我都研究了一会儿，然后发现只需要<code>import roputils</code>然后把相对应的那个py脚本放到同一路径下就好。</p>
+<p>但是紧接着第二问个问题，这个py脚本通篇是python2，而我日常无论哪个系统都是py3。</p>
+<p>所以解决方式有2</p>
+<ol>
+<li> 将roputils转换为py3</li>
+<li> ubuntu切换py版本</li>
+</ol>
+<p>反正第一种就是用一个叫2to3的脚本。是py2自带的，使用需要先安装py2.7，我ubuntu18.04自带py2.7，所以就直接<code>2to3 -w roputils.py</code></p>
+<p>具体参数可以google。</p>
+<p>然后又来了第三个问题。</p>
+<p>来看我的报错。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[+] Starting local process <span class="string">&#x27;./babystack&#x27;</span>: pid <span class="number">745</span></span><br><span class="line">Traceback (most recent call last):</span><br><span class="line">  File <span class="string">&quot;babystack.py&quot;</span>, line <span class="number">23</span>, <span class="keyword">in</span> &lt;module&gt;</span><br><span class="line">    rop = roputils.ROP(<span class="string">&#x27;./babystack&#x27;</span>)</span><br><span class="line">  File <span class="string">&quot;/home/fur1n/pwn/week1/roputils.py&quot;</span>, line <span class="number">440</span>, <span class="keyword">in</span> __init__</span><br><span class="line">    ELF.__init__(self, *args, **kwargs)</span><br><span class="line">  File <span class="string">&quot;/home/fur1n/pwn/week1/roputils.py&quot;</span>, line <span class="number">85</span>, <span class="keyword">in</span> __init__</span><br><span class="line">    m = re.search(<span class="string">r&#x27;^\s*(?P&lt;key&gt;[^:]+):\s+(?P&lt;value&gt;.+)$&#x27;</span>, line)</span><br><span class="line">  File <span class="string">&quot;/usr/lib/python3.6/re.py&quot;</span>, line <span class="number">182</span>, <span class="keyword">in</span> search</span><br><span class="line">    <span class="keyword">return</span> _<span class="built_in">compile</span>(pattern, flags).search(string)</span><br><span class="line">TypeError: cannot use a string pattern on a <span class="built_in">bytes</span>-like <span class="built_in">object</span></span><br></pre></td></tr></table></figure>
+
+<p>这个功能好像并不会在byte前加b。。。</p>
+<p>目前来说并没有发现解决方法。</p>
+<p>所以只能尝试更换默认的py版本。具体可以google</p>
+<h3 id="main-arena与多线程"><a href="#main-arena与多线程" class="headerlink" title="main_arena与多线程"></a>main_arena与多线程</h3><p>在学习Tcache的时候遇到了一些比较奇怪的点，ctf权威指南pwn篇中对于Tcache的解释中第一段如下：</p>
+<blockquote>
+<p>Tcache全名为Thread Local Caching，它为每个线程创建一个缓存，里面包含了一些小堆块，无需对main_arena上锁即可使用。</p>
+</blockquote>
+<p>首先让我感到不解的就是，“无需对main_arena上锁即可使用”这句话。什么叫对main_arana上锁？之前也遇见过很多文章提到过这个”锁“的相关概念，但是它们从来都不是问题的重点，但是通常来说，正是一个个不懂的”无关紧要“的问题导致最后啥也看不懂的。</p>
+<p>所以在这篇文章中我们有必要从ctf pwn的角度去理解线程 main_arena。</p>
+<h4 id="加锁"><a href="#加锁" class="headerlink" title="加锁"></a>加锁</h4><p>当<strong>多个线程同时操作同一个共享全局变量</strong>的时候，对线程上锁，保证同一时间一个对象只有一个线程在访问，可以解决资源占用问题，同时保证了数据的安全性。</p>
+<h4 id="线程"><a href="#线程" class="headerlink" title="线程"></a>线程</h4><p>线程一般来说被进程包含：一个进程可以有很多线程来处理，每条线程并行执行不同的任务。</p>
+<p>比如说ptmalloc2这个是个进程，然后其中包含很多很多线程。</p>
+<p>其中会有一个<code>main_arena</code>,是整个ptmalloc2进程中的主线程，然后main_arena会有很多子线程，每个子线程包含很多连续的内存片段，被称为heap。每一个heap都有自己的heap_header，它们通过链表互相连接，且其中保存了指向其所属arena的指针。</p>
+<p>这么讲似乎有一些太过抽象。具体一点讲就是，在只有一个main_arena的时候，ptmalloc只能通过mmap和sbrk申请堆内存。</p>
+<blockquote>
+<p>在多线程的情况下，显然让所有的线程公用一个数据结构来获取内存块会造成十分惨烈的对锁的竞争，所以 ptmalloc 中间多了一层组织结构——arena。每个arena包含一些可用的内存区块，用一个 arena 级别的锁来控制访问。当线程比较少的时候，每个可以拥有自己的arena，而当 arena 数目超过允许最大值时，多个线程共享一个 arena 了。个线程第一次 malloc 的时候都会 attach 一个 arena 。除非这个 arena 被标记为破坏的（ARENA_CORRUPTION_BIT），否则该线程以后再 malloc 都会继续用这个 arena。</p>
+</blockquote>
+<p>之前ctf权威指南中有讲到，每一个子线程包含很多连续的内存片段，被称为heap。它们都有自己所属的arena。这句话很容易让人觉得——每一个子线程有且只有一个arena，但是还存在多对一的情况。</p>
+<p>但是对于ctf pwn来说，实际情况远远没有这么复杂，基本我们操作的所谓的堆，chunk这些概念，考点基本都是建立在单线程的情况下的，它们的arena也都是<code>main_arena</code>而并不是什么<code>non_main_arena</code>。并且只有<code>main_arena</code>    能够访问<code>heap</code>段，<code>non_main_arena</code>只能访问<code>mmap</code>映射区域。</p>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>用比较简单的话来说，main_arena就是主线程中一个管理所有链表的关键的数据结构，我们可以通过它获得各个bins的偏移。以及利用指向它的fd来做一些不好的事情（）。承接之前的内容，我们在利用main_arena的同时也需要对其进行上锁，防止别的线程与它共用一个资源，然后之前Tcahce里的“无需对main_arena上锁”意思也很清楚了，因为考虑到效率。所以抛弃了一定的安全性。</p>
+<h4 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h4><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/24909781">malloc x 线程</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.wangan.com/docs/1741">GLibcHeap</a></p>
+
+            <div class="clearfix"></div>
+        </div>
+        
+    </div>
+</section>
+<section id="process">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-8 col-md-offset-2">
+                <div class="timeline-centered">
+                    <div class="line"></div>
+                    <div class="present">Past</div>
+                    <div class="dot_tp"></div>
+                    <div class="born">Now</div>
+                    <div class="dot_bt"></div>
+                    
+                        <div class="timeline-entry">
+                            <div class="timeline-entry-inner">
+                                <div class="timeline-icon wow fadeInUp" data-wow-delay="0.2s">
+                                    <span class="number">1</span>
+                                </div>
+                                <div class="timeline-label wow fadeInUp" data-wow-delay="0.2s">
+                                    <p>2014/06/12-Start</p>
+                                </div>
+                            </div>
+                        </div>
+                    
+                        <div class="timeline-entry">
+                            <div class="timeline-entry-inner">
+                                <div class="timeline-icon wow fadeInUp" data-wow-delay="0.2s">
+                                    <span class="number">2</span>
+                                </div>
+                                <div class="timeline-label wow fadeInUp" data-wow-delay="0.2s">
+                                    <p>2014/11/29-XXX</p>
+                                </div>
+                            </div>
+                        </div>
+                    
+                        <div class="timeline-entry">
+                            <div class="timeline-entry-inner">
+                                <div class="timeline-icon wow fadeInUp" data-wow-delay="0.2s">
+                                    <span class="number">3</span>
+                                </div>
+                                <div class="timeline-label wow fadeInUp" data-wow-delay="0.2s">
+                                    <p>2015/02/18-DDD</p>
+                                </div>
+                            </div>
+                        </div>
+                    
+                        <div class="timeline-entry">
+                            <div class="timeline-entry-inner">
+                                <div class="timeline-icon wow fadeInUp" data-wow-delay="0.2s">
+                                    <span class="number">4</span>
+                                </div>
+                                <div class="timeline-label wow fadeInUp" data-wow-delay="0.2s">
+                                    <p>More</p>
+                                </div>
+                            </div>
+                        </div>
+                    
+                </div>
+                <!-- timeline-centered -->
+            </div>
+        </div>
+    </div>
+</section>
       
             <style>
 .local-search-popup {

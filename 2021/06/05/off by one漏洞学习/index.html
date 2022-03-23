@@ -507,6 +507,247 @@ $('#intro').find('img').each(function(){
 
 
 
+      <!-- ============================ Hero Image =========================== -->
+
+<section id="hero" class="scrollme">
+    <div class="container-fluid element-img" style="background: url(https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/cover.jpg) no-repeat center center fixed;background-size: cover">
+        <div class="row">
+            <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-8 col-md-offset-2 vertical-align cover boost text-center">
+                <div class="center-me animateme" data-when="exit" data-from="0" data-to="0.6" data-opacity="0" data-translatey="100">
+                    <div>
+                        
+                        <h2><span>RIN777</span></h2>
+                        <p></p>
+                        
+                        <h2></h2>
+                        <p>努力は嘘をつく、でも無駄にはならない</p>
+                        
+
+                    </div>
+                </div>
+            </div>
+            <!-- // .col-md-12 -->
+        </div>
+        <div class="herofade beige-dk"></div>
+    </div>
+</section>
+
+<!-- Height spacing helper -->
+<div class="heightblock"></div>
+<!-- // End height spacing helper -->
+
+<!-- ============================ END Hero Image =========================== -->
+<section id="intro">
+    <div class="container">
+        <div class="row col-md-offset-2">
+            <div class="col-md-8">
+                <h1>off by one漏洞学习</h1>
+            </div>
+        </div>
+        <div class="col-md-8 col-md-offset-2">
+            
+    <div id="aplayer-aqBlwRke" class="aplayer aplayer-tag-marker meting-tag-marker"
+         data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"
+    ></div> 
+
+<p> 学习编写一个堆内存管理程序。</p>
+<p>但是这道题其实是ctf-wiki上关于chunk-overlapping的题。。。</p>
+<p>先看源码。我以后学堆题必从看源码开始。。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">read_input</span><span class="params">(<span class="keyword">char</span> *buf,<span class="keyword">size_t</span> size)</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> ret ;</span><br><span class="line">  ret = read(<span class="number">0</span>,buf,size);</span><br><span class="line">  <span class="keyword">if</span>(ret &lt;=<span class="number">0</span>)&#123;</span><br><span class="line">      <span class="built_in">puts</span>(<span class="string">&quot;Error&quot;</span>);</span><br><span class="line">      _exit(<span class="number">-1</span>);</span><br><span class="line">    &#125;	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>众所周知基础的off by one出题的时候都是在输入或者字符比较的地方搞名堂，这里也不例外。</p>
+<p>好好的read不用，搞一个readinput制造刻意的漏洞（bushi）</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">heap</span> &#123;</span></span><br><span class="line">	<span class="keyword">size_t</span> size ;</span><br><span class="line">	<span class="keyword">char</span> *content ;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">heap</span> *<span class="title">heaparray</span>[10];</span></span><br></pre></td></tr></table></figure>
+
+<p>没什么好说的，定义一个管理堆块属性的结构体。以及定义堆指针结构。这里是一个11byte的数组。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">create_heap</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> i ;</span><br><span class="line">	<span class="keyword">char</span> buf[<span class="number">8</span>];</span><br><span class="line">	<span class="keyword">size_t</span> size = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span>(i = <span class="number">0</span> ; i &lt; <span class="number">10</span> ; i++)&#123;</span><br><span class="line">		<span class="keyword">if</span>(!heaparray[i])&#123;</span><br><span class="line">			heaparray[i] = (struct heap *)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(struct heap));</span><br><span class="line">			<span class="keyword">if</span>(!heaparray[i])&#123;</span><br><span class="line">				<span class="built_in">puts</span>(<span class="string">&quot;Allocate Error&quot;</span>);</span><br><span class="line">				<span class="built_in">exit</span>(<span class="number">1</span>);</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">&quot;Size of Heap : &quot;</span>);</span><br><span class="line">			read(<span class="number">0</span>,buf,<span class="number">8</span>);</span><br><span class="line">			size = atoi(buf);</span><br><span class="line">			heaparray[i]-&gt;content = (<span class="keyword">char</span> *)<span class="built_in">malloc</span>(size);</span><br><span class="line">			<span class="keyword">if</span>(!heaparray[i]-&gt;content)&#123;</span><br><span class="line">				<span class="built_in">puts</span>(<span class="string">&quot;Allocate Error&quot;</span>);</span><br><span class="line">				<span class="built_in">exit</span>(<span class="number">2</span>);</span><br><span class="line">			&#125;</span><br><span class="line">			heaparray[i]-&gt;size = size ;</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">&quot;Content of heap:&quot;</span>);</span><br><span class="line">			read_input(heaparray[i]-&gt;content,size);</span><br><span class="line">			<span class="built_in">puts</span>(<span class="string">&quot;SuccessFul&quot;</span>);</span><br><span class="line">			<span class="keyword">break</span> ;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>创建新堆。</p>
+<p>初始化定义一些缓冲区。</p>
+<p>关于这个</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(i = <span class="number">0</span> ; i &lt; <span class="number">10</span> ; i++)&#123;</span><br><span class="line">		<span class="keyword">if</span>(!heaparray[i])&#123;</span><br><span class="line">			heaparray[i] = (struct heap *)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(struct heap));</span><br><span class="line">			<span class="keyword">if</span>(!heaparray[i])&#123;</span><br><span class="line">				<span class="built_in">puts</span>(<span class="string">&quot;Allocate Error&quot;</span>);</span><br><span class="line">				<span class="built_in">exit</span>(<span class="number">1</span>);</span><br></pre></td></tr></table></figure>
+
+<p>之前一直不是很懂，但是好好看了一下逻辑其实也不难。</p>
+<p>heaparray就是一个数组，应该要储存相应数据的地址（指针），</p>
+<p>我们malloc的时候如果malloc成功的话这个数组会被赋值为被分配内存的地址，但是如果分配失败的话数组就还是数组本身，所以会有下一个if判断，如果还是本身便打印malloc失败。</p>
+<p>也就是说这应该是一个初始化的过程，我们需要将heap结构赋值。</p>
+<p>先留着，下一段需要我们设置heap的size。程序为我们分配了8字节的空间来储存这个size的值，然后就是比较关键的内容了。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">heaparray[i]-&gt;content = (<span class="keyword">char</span> *)<span class="built_in">malloc</span>(size);</span><br><span class="line">			<span class="keyword">if</span>(!heaparray[i]-&gt;content)&#123;</span><br><span class="line">				<span class="built_in">puts</span>(<span class="string">&quot;Allocate Error&quot;</span>);</span><br><span class="line">				<span class="built_in">exit</span>(<span class="number">2</span>);</span><br><span class="line">			&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<p>这里涉及到一个新的操作符<code>-&gt;</code>.</p>
+<blockquote>
+<p>“-&gt;”是一个整体，它是用于指向结构体子数据的指针，用来取子数据。</p>
+<p>换种说法，如果我们在C语言中定义了一个结构体，然后申明一个指针指向这个结构体，那么我们要用指针取出结构体中的数据，就要用到“-&gt;”</p>
+</blockquote>
+<p>在这个程序里，因为content是结构体heap中的一个被定义的子数据，所以当我们要使用它的时候，我们需要用这个操作符来取出它。具体来说就是取出结构体heap中的子结构content，然后把<code>(char *)malloc(size)</code>赋值给它。</p>
+<p>当然，如果下一步操作打发现并不是<code>heaparray[i]-&gt;content</code>的话就打印allocate失败。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">heaparray[i]-&gt;size = size ;</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">&quot;Content of heap:&quot;</span>);</span><br><span class="line">			read_input(heaparray[i]-&gt;content,size);</span><br><span class="line">			<span class="built_in">puts</span>(<span class="string">&quot;SuccessFul&quot;</span>);</span><br><span class="line">			<span class="keyword">break</span> </span><br></pre></td></tr></table></figure>
+
+<p>我们先给size赋值。这里应该和前面的代码是一个代码段。。</p>
+<p>然后是输入content。这里就是我们的漏洞点，我们把结构体中点content取出并用myread给它赋值。</p>
+<p>话说这里为什么没有失败的报错提醒呢，可能是为了防止无法利用漏洞？</p>
+<p>之前还有一个疑问就是heap初始化处为什么需要for循环，看完以后发现是我太局限于这一个代码块并且忽视了结尾处的break，这个for循环其实是针对于整个add函数的，我们总共只能分配十个堆结构，这个for正好就是控制我们在需要的时候分配的。。。。</p>
+<p>add函数看完以后我们来研究下一个函数</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">edit_heap</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> idx ;</span><br><span class="line">	<span class="keyword">char</span> buf[<span class="number">4</span>];</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;Index :&quot;</span>);</span><br><span class="line">	read(<span class="number">0</span>,buf,<span class="number">4</span>);</span><br><span class="line">	idx = atoi(buf);</span><br><span class="line">	<span class="keyword">if</span>(idx &lt; <span class="number">0</span> || idx &gt;= <span class="number">10</span>)&#123;</span><br><span class="line">		<span class="built_in">puts</span>(<span class="string">&quot;Out of bound!&quot;</span>);</span><br><span class="line">		_exit(<span class="number">0</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span>(heaparray[idx])&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;Content of heap : &quot;</span>);</span><br><span class="line">		read_input(heaparray[idx]-&gt;content,heaparray[idx]-&gt;size+<span class="number">1</span>);</span><br><span class="line">		<span class="built_in">puts</span>(<span class="string">&quot;Done !&quot;</span>);</span><br><span class="line">	&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">		<span class="built_in">puts</span>(<span class="string">&quot;No such heap !&quot;</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>编辑</p>
+<p>分析完add函数以后再看就感觉信手拈来了。</p>
+<p>首先创建一个4byte的buf来储存我们的idx，<code>idx = atoi(buf);</code>这个操作之前没有说到，大概是将buf的大小转变为一个int类型的数。</p>
+<p>应该不是考点，但是值得关注。</p>
+<p>然后接着一个普通的范围限定，接下来就是输入idx然后修改heap的content。没什么好说的。</p>
+<p>这个<code>if(heaparray[idx])</code>，它不是逻辑运算语句，所以只要括号里不是什么奇怪的东西一般就能成立。</p>
+<p>show和edit基本异曲同工，这里直接省略。</p>
+<p>看delete。</p>
+<p>堆题最需要关注的感觉还是增和删。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">delete_heap</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> idx ;</span><br><span class="line">	<span class="keyword">char</span> buf[<span class="number">4</span>];</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;Index :&quot;</span>);</span><br><span class="line">	read(<span class="number">0</span>,buf,<span class="number">4</span>);</span><br><span class="line">	idx = atoi(buf);</span><br><span class="line">	<span class="keyword">if</span>(idx &lt; <span class="number">0</span> || idx &gt;= <span class="number">10</span>)&#123;</span><br><span class="line">		<span class="built_in">puts</span>(<span class="string">&quot;Out of bound!&quot;</span>);</span><br><span class="line">		_exit(<span class="number">0</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span>(heaparray[idx])&#123;</span><br><span class="line">		<span class="built_in">free</span>(heaparray[idx]-&gt;content);</span><br><span class="line">		<span class="built_in">free</span>(heaparray[idx]);</span><br><span class="line">		heaparray[idx] = <span class="literal">NULL</span> ;</span><br><span class="line">		<span class="built_in">puts</span>(<span class="string">&quot;Done !&quot;</span>);	</span><br><span class="line">	&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">		<span class="built_in">puts</span>(<span class="string">&quot;No such heap !&quot;</span>);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>还是先储存idx，以及范围限定。</p>
+<p>然后这里是调用free函数，把content以及整个指向heap的指针都free了，并且还将指针置null。</p>
+<p>至此比较关键的一些函数都看完了。main函数里值的注意的就是开头的setbuf。</p>
+<p>虽然做题的时候知道这个东西不是考点，也没啥存在感，但是如果要写程序的话掌握还是必要的。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">setvbuf</span><span class="params">(FILE *stream, <span class="keyword">char</span> *buffer, <span class="keyword">int</span> mode, <span class="keyword">size_t</span> size)</span></span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>四个参数，流，buf指针，模式，大小</p>
+<blockquote>
+<ul>
+<li><strong>参数</strong><br>stream** – 这是指向 FILE 对象的指针，该 FILE 对象标识了一个打开的流。</li>
+<li><strong>buffer</strong> – 这是分配给用户的缓冲。如果设置为 NULL，该函数会自动分配一个指定大小的缓冲。</li>
+<li><strong>mode</strong> – 这指定了文件缓冲的模式：</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th align="left">模式</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">_IOFBF</td>
+<td align="left"><strong>全缓冲</strong>：对于输出，数据在缓冲填满时被一次性写入。对于输入，缓冲会在请求输入且缓冲为空时被填充。</td>
+</tr>
+<tr>
+<td align="left">_IOLBF</td>
+<td align="left"><strong>行缓冲</strong>：对于输出，数据在遇到换行符或者在缓冲填满时被写入，具体视情况而定。对于输入，缓冲会在请求输入且缓冲为空时被填充，直到遇到下一个换行符。</td>
+</tr>
+<tr>
+<td align="left">_IONBF</td>
+<td align="left"><strong>无缓冲</strong>：不使用缓冲。每个 I/O 操作都被即时写入。buffer 和 size 参数被忽略。</td>
+</tr>
+</tbody></table>
+<ul>
+<li><strong>size</strong> –这是缓冲的大小，以字节为单位</li>
+</ul>
+</blockquote>
+<p>但是还是不清楚调用这个函数的意义在哪里。</p>
+<p>查了一下好像是可以加快访问速度。。因为一般做题的时候遇到的setbuf的mode都是0，应该是无缓冲吧，然后对应不使用缓冲。每个 I/O 操作都被即时写入。。。还真的是为了加快速度？</p>
+<p>还有就是switch操作的时候并没有使用for循坏来控制case的值，而是read加atoi的操作，也是为了性能吗？</p>
+<p>贴一下学委的解答，setbuf是为了取消缓冲区，而防止各种奇怪的bug。</p>
+<p>然后来看这道题的漏洞利用。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;Content of heap:&quot;</span>);</span><br><span class="line">     read_input(*((_QWORD *)*(&amp;heaparray + i) + <span class="number">1</span>), size);</span><br><span class="line">     <span class="built_in">puts</span>(<span class="string">&quot;SuccessFul&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>可以看到输入的时候是多输入了一个字节的，这就造成了（非常刻意）的off by one。</p>
+<p>我们创建两个chunk来验证这个漏洞</p>
+<p>![image-20210605154056881](/Users/rin/Library/Application Support/typora-user-images/image-20210605154056881.png)</p>
+<p>如图，</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">x603290:	0x0000000000000000	0x0000000000000021</span><br><span class="line">0x6032a0:	0x0000000000000004	0x00000000006032c0<span class="comment">#chunk0 size</span></span><br><span class="line">0x6032b0:	0x0000000000000000	0x0000000000000021</span><br><span class="line">0x6032c0:	0x0000000061616161	0x0000000000000000<span class="comment">#chunk0 content1</span></span><br><span class="line">0x6032d0:	0x0000000000000000	0x0000000000000021</span><br><span class="line">0x6032e0:	0x0000000000000004	0x0000000000603300<span class="comment">#chunk2 size</span></span><br><span class="line">0x6032f0:	0x0000000000000000	0x0000000000000021</span><br><span class="line">0x603300:	0x0000000062626262	0x0000000000000000<span class="comment">#chunk2 content</span></span><br><span class="line">0x603310:	0x0000000000000000	0x0000000000020cf1</span><br><span class="line">0x603320:	0x0000000000000000	0x0000000000000000<span class="comment">#top chunk</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>当我们尝试修改chunk0的话又会出现什么呢。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">0x145e290:	0x0000000000000000	0x0000000000000021<span class="comment">#chunk0 size</span></span><br><span class="line">0x145e2a0:	0x0000000000000018	0x000000000145e2c0</span><br><span class="line">0x145e2b0:	0x0000000000000000	0x0000000000000021<span class="comment">#chunk0 content</span></span><br><span class="line">0x145e2c0:	0x6161616161616161	0x6161616161616161</span><br><span class="line">0x145e2d0:	0x6161616161616161	0x0000000000000041<span class="comment">#repaired chunk1 size</span></span><br><span class="line">0x145e2e0:	0x0000000000000010	0x000000000145e300</span><br><span class="line">0x145e2f0:	0x0000000000000000	0x0000000000000021<span class="comment">#chunk1 content</span></span><br><span class="line">0x145e300:	0x0000000a62626262	0x0000000000000000</span><br><span class="line">0x145e310:	0x0000000000000000	0x0000000000000021<span class="comment">#chunk2 size</span></span><br><span class="line">0x145e320:	0x0000000000000010	0x000000000145e340</span><br><span class="line">0x145e330:	0x0000000000000000	0x0000000000000021<span class="comment">#chunk2 content</span></span><br><span class="line">0x145e340:	0x0000000a63636363	0x0000000000000000</span><br></pre></td></tr></table></figure>
+
+<p>可以看到我们申请了三个堆块，原本chunk1的size的size位应该是0x21，而且presize位应该是空，但是由于我们修改chunk0的content的时候输入了0x18个a之后还输入了0x41，而正是由于输入时多比缓冲区多出来了一个字节，导致字节溢出到了下一个chunk，也就是chunk1的presize位。</p>
+<blockquote>
+<p>这里巩固一个人尽皆知的知识点</p>
+<ul>
+<li><strong>prev_size</strong>, 如果该 chunk 的<strong>物理相邻的前一地址 chunk（两个指针的地址差值为前一 chunk 大小）</strong>是空闲的话，那该字段记录的是前一个 chunk 的大小 (包括 chunk 头)。否则，该字段可以用来存储物理相邻的前一个 chunk 的数据。<strong>这里的前一 chunk 指的是较低地址的 chunk</strong> </li>
+</ul>
+</blockquote>
+<p>放在这道题就是我们单字节溢出到了chunk1的prevsize位，但是由于此时chunk0是allocated状态，所以并没有太大的影响，但是当我们释放掉chunk0，也就是当我们溢出了一个字节到presize位，并且将上一个chunk（chunk0）free了以后，我们的chunk1的大小就会变为我们设置的溢出的字节的数。</p>
+<p>这里我们选择溢出数是0x41.</p>
+<p>所以结果就如刚才gdb里面所显示的，我们的chunk1的size变成了0x41.</p>
+<p>但是变成0x41又有什么用呢？我们改怎么利用它呢/</p>
+<p>一个最直观的用处就是我们可以通过修改chunk1的内容来加入一些我们想要的东西。</p>
+<p>虽然经过off by one漏洞的利用后我们的chunk1的size是0x41，但是实际上在内存里chunk2的指针并不是向下顺移了0x20，而是还在原地。所以当我们修改chunk1的内容的时候其实就是修改了chunk2的指针。</p>
+<p>那么修改chunk2指针有啥用呢。</p>
+<p>当我们show一个chunk的时候是不是能够显示出这个chunk的content？</p>
+<p>因为这个程序没有给后门，所以我们需要手动泄露出libc。所以我们需要先泄露某个函数的真实地址。那么我们完全可以通过先把某个函数的got表写进去再show出来。</p>
+<p>show出来后我们就能计算函数system的真实地址，并且再次将chunk1的指针修改成system函数。</p>
+<p>修改以后当我们free chunk0，相当于chunk0的内容是函数参数，然后因为指针已经指向system，所以直接调用system（‘/bin/sh’）</p>
+<p>到这里就能够解释之前的0x41</p>
+<p>0x41其实就是为了让编辑chunk0的内容可以直接覆盖掉chunk1的指针，其实把数弄得更大也行，只不过没什么意义了。</p>
+<p>exp懒得写了</p>
+
+            <div class="clearfix"></div>
+        </div>
+        
+    </div>
+</section>
+<section id="process">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-8 col-md-offset-2">
+                <div class="timeline-centered">
+                    <div class="line"></div>
+                    <div class="present">Past</div>
+                    <div class="dot_tp"></div>
+                    <div class="born">Now</div>
+                    <div class="dot_bt"></div>
+                    
+                        <div class="timeline-entry">
+                            <div class="timeline-entry-inner">
+                                <div class="timeline-icon wow fadeInUp" data-wow-delay="0.2s">
+                                    <span class="number">1</span>
+                                </div>
+                                <div class="timeline-label wow fadeInUp" data-wow-delay="0.2s">
+                                    <p>2014/06/12-Start</p>
+                                </div>
+                            </div>
+                        </div>
+                    
+                        <div class="timeline-entry">
+                            <div class="timeline-entry-inner">
+                                <div class="timeline-icon wow fadeInUp" data-wow-delay="0.2s">
+                                    <span class="number">2</span>
+                                </div>
+                                <div class="timeline-label wow fadeInUp" data-wow-delay="0.2s">
+                                    <p>2014/11/29-XXX</p>
+                                </div>
+                            </div>
+                        </div>
+                    
+                        <div class="timeline-entry">
+                            <div class="timeline-entry-inner">
+                                <div class="timeline-icon wow fadeInUp" data-wow-delay="0.2s">
+                                    <span class="number">3</span>
+                                </div>
+                                <div class="timeline-label wow fadeInUp" data-wow-delay="0.2s">
+                                    <p>2015/02/18-DDD</p>
+                                </div>
+                            </div>
+                        </div>
+                    
+                        <div class="timeline-entry">
+                            <div class="timeline-entry-inner">
+                                <div class="timeline-icon wow fadeInUp" data-wow-delay="0.2s">
+                                    <span class="number">4</span>
+                                </div>
+                                <div class="timeline-label wow fadeInUp" data-wow-delay="0.2s">
+                                    <p>More</p>
+                                </div>
+                            </div>
+                        </div>
+                    
+                </div>
+                <!-- timeline-centered -->
+            </div>
+        </div>
+    </div>
+</section>
       
             <style>
 .local-search-popup {

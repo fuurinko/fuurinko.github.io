@@ -412,6 +412,152 @@ $('#intro').find('img').each(function(){
 
 
 
+      <!-- ============================ Hero Image =========================== -->
+
+<section id="hero" class="scrollme">
+    <div class="container-fluid element-img" style="background: url(https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/cover.jpg) no-repeat center center fixed;background-size: cover">
+        <div class="row">
+            <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-8 col-md-offset-2 vertical-align cover boost text-center">
+                <div class="center-me animateme" data-when="exit" data-from="0" data-to="0.6" data-opacity="0" data-translatey="100">
+                    <div>
+                        
+                        <h2><span>RIN777</span></h2>
+                        <p></p>
+                        
+                        <h2></h2>
+                        <p>努力は嘘をつく、でも無駄にはならない</p>
+                        
+
+                    </div>
+                </div>
+            </div>
+            <!-- // .col-md-12 -->
+        </div>
+        <div class="herofade beige-dk"></div>
+    </div>
+</section>
+
+<!-- Height spacing helper -->
+<div class="heightblock"></div>
+<!-- // End height spacing helper -->
+
+<!-- ============================ END Hero Image =========================== -->
+<section id="intro">
+    <div class="container">
+        <div class="row col-md-offset-2">
+            <div class="col-md-8">
+                <h1>ProgramMisuse</h1>
+            </div>
+        </div>
+        <div class="col-md-8 col-md-offset-2">
+            
+    <div id="aplayer-ORdqQPpB" class="aplayer aplayer-tag-marker meting-tag-marker"
+         data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"
+    ></div> 
+
+
+
+
+
+<p>​        关于这个module，做出题目的话大致有两个思路，一个是利用<code>/bin/sh</code>    来对整个shell提权，另外一个是利用设置了suid的特殊程序来读取flag。一般来说是第二个方法比较简单，但是有时候只有第一个方法可以行得通。</p>
+<h4 id="Level1"><a href="#Level1" class="headerlink" title="Level1"></a>Level1</h4><p>​        没有看视频，并不知道这个Misuse是什么意义，但是level1只要执行给的程序就能get flag。</p>
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-01-26%20%E4%B8%8B%E5%8D%884.56.40.png" alt="截屏2022-01-26 下午4.56.40"></p>
+<h4 id="Level2"><a href="#Level2" class="headerlink" title="Level2"></a>Level2</h4><p>​        到第二题大概懂它的用意了，来补充一些知识吧。</p>
+<p>​        <img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-01-26%20%E4%B8%8B%E5%8D%884.57.44.png" alt="截屏2022-01-26 下午4.57.44"></p>
+<p>​        可以看到原本我们只用普通用户权限，但是由于可执行程序将 <code>/usr/bin/more</code>    设置为了超级权限，使得这个功能能够读取到flag的内容。</p>
+<p>​        然后关于SUID，也就是Set uid ID。如果将对应位设置为S，就能够以可执行文件的owner权限执行它们。</p>
+<p>​        （SUID）仅对二进制可执行文件有效。</p>
+<p>参考：[<a target="_blank" rel="noopener" href="https://www.cnblogs.com/sparkdev/p/9651622.html">Linux 特殊权限 SUID,SGID,SBIT </a>]</p>
+<h4 id="Level3-9"><a href="#Level3-9" class="headerlink" title="Level3-9"></a>Level3-9</h4><p>​        <code>xxx flag</code></p>
+<h4 id="Level-10"><a href="#Level-10" class="headerlink" title="Level 10"></a>Level 10</h4><p>​        指令为<code>rev</code>，所以对于获得的flag我们需要翻转一下，可以就直接用<code>rev</code>来。</p>
+<h4 id="Level-11"><a href="#Level-11" class="headerlink" title="Level 11"></a>Level 11</h4><p>​        控制<code>od</code>的参数，并需要简单的脚本处理字符串的空格。</p>
+<h4 id="Level12-17"><a href="#Level12-17" class="headerlink" title="Level12-17"></a>Level12-17</h4><p>​        按照给的可执行文件来。</p>
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-01-28%20%E4%B8%8B%E5%8D%886.34.25.png" alt="截屏2022-01-28 下午6.34.25"></p>
+<p>​        之前碰到这个问题的时候并咩有理解，现在算是理解了。</p>
+<h4 id="Level21"><a href="#Level21" class="headerlink" title="Level21"></a>Level21</h4><p><code>ar -r a flag</code></p>
+<p><code>cat a</code></p>
+<h4 id="Level27"><a href="#Level27" class="headerlink" title="Level27"></a>Level27</h4><p><code>nice /bin/sh -p</code></p>
+<h4 id="Level28"><a href="#Level28" class="headerlink" title="Level28"></a>Level28</h4><p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-02%20%E4%B8%8B%E5%8D%885.09.57.png" alt="截屏2022-03-02 下午5.09.57"></p>
+<h4 id="Level29"><a href="#Level29" class="headerlink" title="Level29"></a>Level29</h4><p>​        利用<code>stdbuf</code>设置输出缓冲为0，利用<code>/bin/sh</code>执行并提权。</p>
+<h4 id="Level30"><a href="#Level30" class="headerlink" title="Level30"></a>Level30</h4><p>​    </p>
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-03%20%E4%B8%8A%E5%8D%889.38.12.png" alt="截屏2022-03-03 上午9.38.12"></p>
+<h4 id="Level34"><a href="#Level34" class="headerlink" title="Level34"></a>Level34</h4><p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-03%20%E4%B8%8A%E5%8D%889.50.31.png" alt="截屏2022-03-03 上午9.50.31"></p>
+<h4 id="Level35"><a href="#Level35" class="headerlink" title="Level35"></a>Level35</h4><p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-03%20%E4%B8%8A%E5%8D%889.55.21.png" alt="截屏2022-03-03 上午9.55.21"></p>
+<h4 id="Level36"><a href="#Level36" class="headerlink" title="Level36"></a>Level36</h4><p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-03%20%E4%B8%8A%E5%8D%889.57.38.png" alt="截屏2022-03-03 上午9.57.38"></p>
+<h4 id="Level37"><a href="#Level37" class="headerlink" title="Level37"></a>Level37</h4><p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-03%20%E4%B8%8A%E5%8D%8810.00.42.png" alt="截屏2022-03-03 上午10.00.42"></p>
+<h4 id="Level38"><a href="#Level38" class="headerlink" title="Level38"></a>Level38</h4><p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-03%20%E4%B8%8A%E5%8D%8810.02.08.png" alt="截屏2022-03-03 上午10.02.08"></p>
+<h4 id="level39"><a href="#level39" class="headerlink" title="level39"></a>level39</h4><p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-03%20%E4%B8%8A%E5%8D%8810.04.09.png" alt="截屏2022-03-03 上午10.04.09"></p>
+<h4 id="Level41"><a href="#Level41" class="headerlink" title="Level41"></a>Level41<img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-03%20%E4%B8%8A%E5%8D%8810.17.52.png" alt="截屏2022-03-03 上午10.17.52"></h4><h4 id="Level42"><a href="#Level42" class="headerlink" title="Level42"></a>Level42</h4><p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-03%20%E4%B8%8A%E5%8D%8810.20.23.png" alt="截屏2022-03-03 上午10.20.23"></p>
+<h4 id="Level45"><a href="#Level45" class="headerlink" title="Level45"></a>Level45</h4><p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-03%20%E4%B8%8A%E5%8D%8810.52.14.png" alt="截屏2022-03-03 上午10.52.14"></p>
+<h4 id="Level47"><a href="#Level47" class="headerlink" title="Level47"></a>Level47</h4><p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-03%20%E4%B8%8A%E5%8D%8810.59.45.png" alt="截屏2022-03-03 上午10.59.45"></p>
+<h4 id="Level49"><a href="#Level49" class="headerlink" title="Level49"></a>Level49</h4><p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-03%20%E4%B8%8A%E5%8D%8811.05.44.png" alt="截屏2022-03-03 上午11.05.44"></p>
+
+            <div class="clearfix"></div>
+        </div>
+        
+    </div>
+</section>
+<section id="process">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-8 col-md-offset-2">
+                <div class="timeline-centered">
+                    <div class="line"></div>
+                    <div class="present">Past</div>
+                    <div class="dot_tp"></div>
+                    <div class="born">Now</div>
+                    <div class="dot_bt"></div>
+                    
+                        <div class="timeline-entry">
+                            <div class="timeline-entry-inner">
+                                <div class="timeline-icon wow fadeInUp" data-wow-delay="0.2s">
+                                    <span class="number">1</span>
+                                </div>
+                                <div class="timeline-label wow fadeInUp" data-wow-delay="0.2s">
+                                    <p>2014/06/12-Start</p>
+                                </div>
+                            </div>
+                        </div>
+                    
+                        <div class="timeline-entry">
+                            <div class="timeline-entry-inner">
+                                <div class="timeline-icon wow fadeInUp" data-wow-delay="0.2s">
+                                    <span class="number">2</span>
+                                </div>
+                                <div class="timeline-label wow fadeInUp" data-wow-delay="0.2s">
+                                    <p>2014/11/29-XXX</p>
+                                </div>
+                            </div>
+                        </div>
+                    
+                        <div class="timeline-entry">
+                            <div class="timeline-entry-inner">
+                                <div class="timeline-icon wow fadeInUp" data-wow-delay="0.2s">
+                                    <span class="number">3</span>
+                                </div>
+                                <div class="timeline-label wow fadeInUp" data-wow-delay="0.2s">
+                                    <p>2015/02/18-DDD</p>
+                                </div>
+                            </div>
+                        </div>
+                    
+                        <div class="timeline-entry">
+                            <div class="timeline-entry-inner">
+                                <div class="timeline-icon wow fadeInUp" data-wow-delay="0.2s">
+                                    <span class="number">4</span>
+                                </div>
+                                <div class="timeline-label wow fadeInUp" data-wow-delay="0.2s">
+                                    <p>More</p>
+                                </div>
+                            </div>
+                        </div>
+                    
+                </div>
+                <!-- timeline-centered -->
+            </div>
+        </div>
+    </div>
+</section>
       
             <style>
 .local-search-popup {

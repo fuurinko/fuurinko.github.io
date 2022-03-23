@@ -433,6 +433,173 @@ $('#intro').find('img').each(function(){
 
 
 
+      <!-- ============================ Hero Image =========================== -->
+
+<section id="hero" class="scrollme">
+    <div class="container-fluid element-img" style="background: url(https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/cover.jpg) no-repeat center center fixed;background-size: cover">
+        <div class="row">
+            <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-8 col-md-offset-2 vertical-align cover boost text-center">
+                <div class="center-me animateme" data-when="exit" data-from="0" data-to="0.6" data-opacity="0" data-translatey="100">
+                    <div>
+                        
+                        <h2><span>RIN777</span></h2>
+                        <p></p>
+                        
+                        <h2></h2>
+                        <p>努力は嘘をつく、でも無駄にはならない</p>
+                        
+
+                    </div>
+                </div>
+            </div>
+            <!-- // .col-md-12 -->
+        </div>
+        <div class="herofade beige-dk"></div>
+    </div>
+</section>
+
+<!-- Height spacing helper -->
+<div class="heightblock"></div>
+<!-- // End height spacing helper -->
+
+<!-- ============================ END Hero Image =========================== -->
+<section id="intro">
+    <div class="container">
+        <div class="row col-md-offset-2">
+            <div class="col-md-8">
+                <h1>ret2dl_advanced</h1>
+            </div>
+        </div>
+        <div class="col-md-8 col-md-offset-2">
+            
+    <div id="aplayer-dahofNtS" class="aplayer aplayer-tag-marker meting-tag-marker"
+         data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"
+    ></div> 
+
+<h2 id="ret2dl-advanced"><a href="#ret2dl-advanced" class="headerlink" title="ret2dl_advanced"></a>ret2dl_advanced</h2><h3 id="1-review"><a href="#1-review" class="headerlink" title="1)review"></a>1)review</h3><p>当FULL RELRO保护开启时，通过 <code>dl_run_time</code>来获取libc基址的方式几乎无解。</p>
+<p>但是我们仍然能够找到某种方式来getshell。</p>
+<p>相关论文中给出一种解决方案，即通过<code>dt_bug</code>入口找到突破点。</p>
+<p>(Ps:为什么找不到相关的中文文章)</p>
+<h3 id="2）dt-dbg？"><a href="#2）dt-dbg？" class="headerlink" title="2）dt_dbg？"></a>2）dt_dbg？</h3><p><code>dt_dbg</code>这个概念实际上并不新鲜，简单来说它可以被包含在<code>libc.so</code>文件中，比如我们指定一个特定的libc版本加载的时候，通常除了程序本体还要附加一个libc文件，有时我们的debug信息就包含在这个<code>libc.so</code>文件中。但是有的libc.so文件是不包含debug信息的。所以如果我们程序的libc没有dbg文件那这个方法也没用了。</p>
+<p><code>dt_dubug</code>用于指向<code>type_r_debug</code>这个结构体。这个结构体用来保存调试器需要的信息来确认动态装载器的基址和拦截一些特定的与动态装载相关的事件。</p>
+<p>此外，这个结构体的<code>r_map</code>域保存了指向<code>link_map</code>的链接表表头的指针。</p>
+<p>也就是<code>dt_dbg</code>指向<code>type_r_debug</code>，且<code>type_r_debug</code>维护了指向<code>link_map</code>的指针。</p>
+<p><code>r_debug</code>具体代码如下:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* Rendezvous structure used by the run-time dynamic linker to communicate details of shared object loading to the debugger. If the executable&#x27;s dynamic section has a DT_DEBUG element, the run-time linker sets that element&#x27;s value to the address where this structure can be found. */</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">r_debug</span></span></span><br><span class="line"><span class="class">  &#123;</span> </span><br><span class="line">    <span class="keyword">int</span> r_version;              <span class="comment">/* Version number for this protocol. */</span></span><br><span class="line"></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">link_map</span> *<span class="title">r_map</span>;</span>     <span class="comment">/* Head of the chain of loaded objects. */</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">/* This is the address of a function internal to the run-time linker, that will always be called when the linker begins to map in a library or unmap it, and again when the mapping change is complete. The debugger can set a breakpoint at this address if it wants to notice shared object mapping changes. */</span></span><br><span class="line">    ElfW(Addr) r_brk;</span><br><span class="line">    <span class="class"><span class="keyword">enum</span></span></span><br><span class="line"><span class="class">      &#123;</span> </span><br><span class="line">        <span class="comment">/* This state value describes the mapping change taking place when the `r_brk&#x27; address is called. */</span></span><br><span class="line">        RT_CONSISTENT,          <span class="comment">/* Mapping change is complete. */</span></span><br><span class="line">        RT_ADD,                 <span class="comment">/* Beginning to add a new object. */</span></span><br><span class="line">        RT_DELETE               <span class="comment">/* Beginning to remove an object mapping. */</span></span><br><span class="line">      &#125; r_state;</span><br><span class="line"></span><br><span class="line">    ElfW(Addr) r_ldbase;        <span class="comment">/* Base address the linker is loaded at. */</span></span><br><span class="line">  &#125;;</span><br></pre></td></tr></table></figure>
+
+<p>实操一遍</p>
+<p>随便写一个无output的栈溢出。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">fur1n@ubuntu:~/pwn$ readelf -d ret2dl</span><br><span class="line"></span><br><span class="line">Dynamic section at offset 0xdb8 contains 27 entries:</span><br><span class="line">  Tag        Type                         Name/Value</span><br><span class="line">...</span><br><span class="line"> 0x0000000000000015 (DEBUG)              0x0</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>在没有运行的时候<code>dt_dbg</code>为空。</p>
+<p>在关闭aslr的情况下找到<code>dt_debug</code>并不困难。</p>
+<p>gdb使用<code>elfheader</code>命令查看相关elfheader的地址，可以找到<code>.dynamic</code></p>
+<p>段的地址。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">pwndbg&gt; x/50gx 0x600e20</span><br><span class="line">...</span><br><span class="line">0x600ee0:	0x0000000000000015	0x00007ffff7ffe140</span><br></pre></td></tr></table></figure>
+
+<p>0x00007ffff7ffe140也就是<code>dt_debug</code>指向的<code>r_debug</code>的地址。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">pwndbg&gt; x/20gx 0x00007ffff7ffe140</span><br><span class="line">0x7ffff7ffe140 &lt;_r_debug&gt;:	0x0000000000000001	0x00007ffff7ffe170</span><br><span class="line">0x7ffff7ffe150 &lt;_r_debug+16&gt;:	0x00007ffff7de3f40	0x0000000000000000</span><br><span class="line">0x7ffff7ffe160 &lt;_r_debug+32&gt;:	0x00007ffff7dd3000	0x0000000000000000</span><br><span class="line">0x7ffff7ffe170:	0x0000000000000000	0x00007ffff7ffe700</span><br><span class="line">0x7ffff7ffe180:	0x0000000000600e20	0x00007ffff7ffe710</span><br><span class="line">0x7ffff7ffe190:	0x0000000000000000	0x00007ffff7ffe170</span><br><span class="line">0x7ffff7ffe1a0:	0x0000000000000000	0x00007ffff7ffe6e8</span><br><span class="line">0x7ffff7ffe1b0:	0x0000000000000000	0x0000000000600e20</span><br><span class="line">0x7ffff7ffe1c0:	0x0000000000600f00	0x0000000000600ef0</span><br><span class="line">0x7ffff7ffe1d0:	0x0000000000000000	0x0000000000600ea0</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><code>r_debug</code>维护的第一个结构体，也就是<code>link_map</code>地址，即<code>0x00007ffff7ffe170</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">0x7ffff7ffe140 &lt;_r_debug&gt;:	0x0000000000000001	0x00007ffff7ffe170</span><br></pre></td></tr></table></figure>
+
+<p>这样我们就从<code>dt_debug</code>找到了<code>link_map</code>的地址。</p>
+<p>虽然但是。</p>
+<p>只是找到<code>link_map</code>没啥用。</p>
+<p>我们的最终目的还是寻找到<code>dl_runtime_resolve</code>函数的地址，当地址被找到那么之后的操作就是常规的ret2dl了。</p>
+<p>能从动态链接库中找到<code>dl_runtime_resolve</code>函数地址的原理大致是Full RELRO保护只对main excutable生效，而动态链接库并不受它保护。这就意味着我们如果能够通过动态链接库来找到<code>dl_runtime_resolve</code>函数地址，那么问题就迎刃而解了。</p>
+<p>那么如何寻找呢？</p>
+<p>实际比较简单（无aslr的情况），只要根据<code>link_map</code>的结构依次顺下来就好了。</p>
+<p>上一个section我们找到了<code>link_map</code>的地址，接下来我们通过<code>link_map</code>逐步找到</p>
+<p><code>dl_runtime_resolve</code>。</p>
+<p>首先我们找到<code>libc.so.6</code>文件。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">pwndbg&gt; x/20gx 0x00007ffff7ffe170</span><br><span class="line">0x7ffff7ffe170:	0x0000000000000000	0x00007ffff7ffe700</span><br><span class="line">0x7ffff7ffe180:	0x0000000000600e20	0x00007ffff7ffe710</span><br><span class="line">---</span><br><span class="line">pwndbg&gt; x/20gx 0x00007ffff7ffe700</span><br><span class="line">0x7ffff7ffe700:	0x0000000000000000	0x0000000000000000</span><br><span class="line">0x7ffff7ffe710:	0x00007ffff7ffb000	0x00007ffff7ffebb0</span><br><span class="line">---</span><br><span class="line">pwndbg&gt; x/s 0x00007ffff7ffebb0</span><br><span class="line">0x7ffff7ffebb0:	<span class="string">&quot;linux-vdso.so.1&quot;</span></span><br><span class="line">---</span><br><span class="line">pwndbg&gt; x/10gx 0x00007ffff7ffe710</span><br><span class="line">0x7ffff7ffe710:	0x00007ffff7ffb000	0x00007ffff7ffebb0</span><br><span class="line">0x7ffff7ffe720:	0x00007ffff7ffb3a0	0x00007ffff7fe2000</span><br><span class="line">---</span><br><span class="line">pwndbg&gt; x/10gx 0x00007ffff7fe2000</span><br><span class="line">0x7ffff7fe2000:	0x00007ffff79e2000	0x00007ffff7ffedd0</span><br><span class="line">---</span><br><span class="line">pwndbg&gt; x/s 0x00007ffff7ffedd0</span><br><span class="line">0x7ffff7ffedd0:	<span class="string">&quot;/lib/x86_64-linux-gnu/libc.so.6&quot;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>即<code>0x00007ffff7ffedd0</code>。</p>
+<p>0x3即<code>GOT[]</code>入口</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">pwndbg&gt; x/30gx 0x00007ffff7dccb80</span><br><span class="line">...</span><br><span class="line">0x7ffff7dccc30:	0x0000000000000003	0x00007ffff7dcd000</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>找到GOT[3]</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">pwndbg&gt; x/5gx 0x00007ffff7dcd000</span><br><span class="line">0x7ffff7dcd000:	0x00000000003eab80	0x00007ffff7fe2000</span><br><span class="line">0x7ffff7dcd010:	0x00007ffff7dea8f0	0x00007ffff7b70a10</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">pwndbg&gt; xinfo 0x00007ffff7dea8f0</span><br><span class="line">Extended information <span class="keyword">for</span> virtual address 0x7ffff7dea8f0:</span><br><span class="line"></span><br><span class="line">  Containing mapping:</span><br><span class="line">    0x7ffff7dd3000     0x7ffff7dfc000 r-xp    29000 0      /lib/x86_64-linux-gnu/ld-2.27.so</span><br><span class="line"></span><br><span class="line">  Offset information:</span><br><span class="line">         Mapped Area 0x7ffff7dea8f0 = 0x7ffff7dd3000 + 0x178f0</span><br><span class="line">         File (Base) 0x7ffff7dea8f0 = 0x7ffff7dd3000 + 0x178f0</span><br><span class="line">      File (Segment) 0x7ffff7dea8f0 = 0x7ffff7dd3000 + 0x178f0</span><br><span class="line">         File (Disk) 0x7ffff7dea8f0 = /lib/x86_64-linux-gnu/ld-2.27.so + 0x178f0</span><br><span class="line"></span><br><span class="line"> Containing ELF sections:</span><br><span class="line">               .text 0x7ffff7dea8f0 = 0x7ffff7dd3f10 + 0x169e0</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="3）exploitation"><a href="#3）exploitation" class="headerlink" title="3）exploitation"></a>3）exploitation</h3><p>在无aslr并已经获取到<code>dl_runtime_resolve</code>的情况下的利用和patial relro相似。</p>
+<p>有aslr的情况。。</p>
+<p>我也不会。</p>
+<h3 id="4-refrence"><a href="#4-refrence" class="headerlink" title="4)refrence"></a>4)refrence</h3><p><a target="_blank" rel="noopener" href="http://rk700.github.io/2015/04/09/dt_debug-read/">通过DT_DEBUG来获得各个库的基址</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.usenix.org/conference/usenixsecurity15/technical-sessions/presentation/di-frederico">How the ELF Ruined Christmas</a></p>
+<p><a target="_blank" rel="noopener" href="https://ypl.coffee/dl-resolve-full-relro/">Finding link_map and _dl_runtime_resolve() under full RELRO</a></p>
+<p>————————————————tbc——————————————————-</p>
+
+            <div class="clearfix"></div>
+        </div>
+        
+    </div>
+</section>
+<section id="process">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-8 col-md-offset-2">
+                <div class="timeline-centered">
+                    <div class="line"></div>
+                    <div class="present">Past</div>
+                    <div class="dot_tp"></div>
+                    <div class="born">Now</div>
+                    <div class="dot_bt"></div>
+                    
+                        <div class="timeline-entry">
+                            <div class="timeline-entry-inner">
+                                <div class="timeline-icon wow fadeInUp" data-wow-delay="0.2s">
+                                    <span class="number">1</span>
+                                </div>
+                                <div class="timeline-label wow fadeInUp" data-wow-delay="0.2s">
+                                    <p>2014/06/12-Start</p>
+                                </div>
+                            </div>
+                        </div>
+                    
+                        <div class="timeline-entry">
+                            <div class="timeline-entry-inner">
+                                <div class="timeline-icon wow fadeInUp" data-wow-delay="0.2s">
+                                    <span class="number">2</span>
+                                </div>
+                                <div class="timeline-label wow fadeInUp" data-wow-delay="0.2s">
+                                    <p>2014/11/29-XXX</p>
+                                </div>
+                            </div>
+                        </div>
+                    
+                        <div class="timeline-entry">
+                            <div class="timeline-entry-inner">
+                                <div class="timeline-icon wow fadeInUp" data-wow-delay="0.2s">
+                                    <span class="number">3</span>
+                                </div>
+                                <div class="timeline-label wow fadeInUp" data-wow-delay="0.2s">
+                                    <p>2015/02/18-DDD</p>
+                                </div>
+                            </div>
+                        </div>
+                    
+                        <div class="timeline-entry">
+                            <div class="timeline-entry-inner">
+                                <div class="timeline-icon wow fadeInUp" data-wow-delay="0.2s">
+                                    <span class="number">4</span>
+                                </div>
+                                <div class="timeline-label wow fadeInUp" data-wow-delay="0.2s">
+                                    <p>More</p>
+                                </div>
+                            </div>
+                        </div>
+                    
+                </div>
+                <!-- timeline-centered -->
+            </div>
+        </div>
+    </div>
+</section>
       
             <style>
 .local-search-popup {

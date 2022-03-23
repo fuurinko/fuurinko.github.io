@@ -399,6 +399,139 @@ $('#intro').find('img').each(function(){
 
 
 
+      <!-- ============================ Hero Image =========================== -->
+
+<section id="hero" class="scrollme">
+    <div class="container-fluid element-img" style="background: url(https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/cover.jpg) no-repeat center center fixed;background-size: cover">
+        <div class="row">
+            <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-8 col-md-offset-2 vertical-align cover boost text-center">
+                <div class="center-me animateme" data-when="exit" data-from="0" data-to="0.6" data-opacity="0" data-translatey="100">
+                    <div>
+                        
+                        <h2><span>RIN777</span></h2>
+                        <p></p>
+                        
+                        <h2></h2>
+                        <p>努力は嘘をつく、でも無駄にはならない</p>
+                        
+
+                    </div>
+                </div>
+            </div>
+            <!-- // .col-md-12 -->
+        </div>
+        <div class="herofade beige-dk"></div>
+    </div>
+</section>
+
+<!-- Height spacing helper -->
+<div class="heightblock"></div>
+<!-- // End height spacing helper -->
+
+<!-- ============================ END Hero Image =========================== -->
+<section id="intro">
+    <div class="container">
+        <div class="row col-md-offset-2">
+            <div class="col-md-8">
+                <h1>positive sp value has been found</h1>
+            </div>
+        </div>
+        <div class="col-md-8 col-md-offset-2">
+            
+    <div id="aplayer-VvtYLuJf" class="aplayer aplayer-tag-marker meting-tag-marker"
+         data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"
+    ></div> 
+
+
+
+<h3 id="0）"><a href="#0）" class="headerlink" title="0）"></a>0）</h3><p>​        自从抛弃虚拟机，利用ida for mac+pwndocker实现完全mac环境以后，深觉优雅的同时，也遇见了不少坑。</p>
+<p>​        其中ida的坑更是坑人于无形之中。因为如果不打开win的7.5（甚至7.6）做对比，你甚至不知道你遇见的一些奇怪的东西，是7.0 mac版特有的，已经被优化了的坑，还是自身逆向水平问题。</p>
+<p>​        作为一个逆向废物，7.0 for mac属实是给本来就逆不出的我雪上加霜，但是就算是这样，我也宁愿花时间解决问题，而不是重新回到虚拟机win的悲惨过往，因为这不优雅。（优雅这个词到底害死了多少人捏）</p>
+<h3 id="1）"><a href="#1）" class="headerlink" title="1）"></a>1）</h3><p>​        目前碰到的最多的一个问题，就是：</p>
+<p>​        <img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-12-10%20%E4%B8%8B%E5%8D%884.13.01.png" alt="截屏2021-12-10 下午4.13.01"></p>
+<p>​        其实这个严格来讲算不上问题，因为你只需要找到main函数再f5，照样能够反编译，但是每次弹出的这个框就让我很恼火。所以解决问题的目标在于修改ida使得不再弹出这个框，而不是修改程序治标不治本捏。</p>
+<p>​        对于问题本身，其实还是比较常规，只需要patch一下就好了。</p>
+<p>​        我这里是<code>_start()</code>堆栈不平衡，</p>
+<p>​                <img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-12-10%20%E4%B8%8B%E5%8D%884.22.48.png" alt="截屏2021-12-10 下午4.22.48"></p>
+<p>​        问题显然出在<code>and     rsp, 0FFFFFFFFFFFFFFF0h</code>到<code>start</code>结束的这一大段。call完main以后居然没有retn。<img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-12-10%20%E4%B8%8B%E5%8D%884.27.29.png" alt="截屏2021-12-10 下午4.27.29"></p>
+<p>​        首先报堆栈不平衡的错误大概就是因为ida要求stack pointer在函数开头和结束时相等。然后导致堆栈不平衡，通常是因为程序本身含有代码混淆/花指令，但是这是一道pwn题，为什么要在这种地方为难人。</p>
+<p>​        我超，流汗黄豆原来是为难的意思。</p>
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-12-10%20%E4%B8%8B%E5%8D%885.07.12.png" alt="截屏2021-12-10 下午5.07.12"></p>
+<p>​        </p>
+<p>​        首先最让我疑惑的就是末尾的hlt指令，它取代了retn，然后它的意思是暂停指令，而不是返回。为什么这个地方会有一条这样的指令，是程序原本设计的还是ida反编译的问题？</p>
+<p>​        稍微学习了一下，意识到start函数是被拆成了三个部分，所以只反编译一个部分肯定有问题。</p>
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-12-10%20%E4%B8%8B%E5%8D%885.17.51.png" alt="截屏2021-12-10 下午5.17.51"></p>
+<p>​        但是虽然这样堆栈平衡，但是还是无法反编译，我也不清楚里面是不是有什么花指令。</p>
+<p>​        和胖爷爷交流了一下，7.5及以上也会出现这个错误，但是完全可以反编译，并且start就是只有那么一段，没有后面的一堆东西。我不理解，我也修复不了，这篇文章毫无意义，但是学习了一些修复堆栈不平衡的方法（</p>
+<h3 id="）参考"><a href="#）参考" class="headerlink" title="）参考"></a>）参考</h3><p>​        <a target="_blank" rel="noopener" href="https://blog.csdn.net/lixiangminghate/article/details/78820388">IDA出现”sp-analysis failed”和F5(反编译)失败</a></p>
+<p>​        </p>
+
+            <div class="clearfix"></div>
+        </div>
+        
+    </div>
+</section>
+<section id="process">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-8 col-md-offset-2">
+                <div class="timeline-centered">
+                    <div class="line"></div>
+                    <div class="present">Past</div>
+                    <div class="dot_tp"></div>
+                    <div class="born">Now</div>
+                    <div class="dot_bt"></div>
+                    
+                        <div class="timeline-entry">
+                            <div class="timeline-entry-inner">
+                                <div class="timeline-icon wow fadeInUp" data-wow-delay="0.2s">
+                                    <span class="number">1</span>
+                                </div>
+                                <div class="timeline-label wow fadeInUp" data-wow-delay="0.2s">
+                                    <p>2014/06/12-Start</p>
+                                </div>
+                            </div>
+                        </div>
+                    
+                        <div class="timeline-entry">
+                            <div class="timeline-entry-inner">
+                                <div class="timeline-icon wow fadeInUp" data-wow-delay="0.2s">
+                                    <span class="number">2</span>
+                                </div>
+                                <div class="timeline-label wow fadeInUp" data-wow-delay="0.2s">
+                                    <p>2014/11/29-XXX</p>
+                                </div>
+                            </div>
+                        </div>
+                    
+                        <div class="timeline-entry">
+                            <div class="timeline-entry-inner">
+                                <div class="timeline-icon wow fadeInUp" data-wow-delay="0.2s">
+                                    <span class="number">3</span>
+                                </div>
+                                <div class="timeline-label wow fadeInUp" data-wow-delay="0.2s">
+                                    <p>2015/02/18-DDD</p>
+                                </div>
+                            </div>
+                        </div>
+                    
+                        <div class="timeline-entry">
+                            <div class="timeline-entry-inner">
+                                <div class="timeline-icon wow fadeInUp" data-wow-delay="0.2s">
+                                    <span class="number">4</span>
+                                </div>
+                                <div class="timeline-label wow fadeInUp" data-wow-delay="0.2s">
+                                    <p>More</p>
+                                </div>
+                            </div>
+                        </div>
+                    
+                </div>
+                <!-- timeline-centered -->
+            </div>
+        </div>
+    </div>
+</section>
       
             <style>
 .local-search-popup {

@@ -384,6 +384,124 @@ $('#intro').find('img').each(function(){
 
 
 
+      <!-- ============================ Hero Image =========================== -->
+
+<section id="hero" class="scrollme">
+    <div class="container-fluid element-img" style="background: url(https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/cover.jpg) no-repeat center center fixed;background-size: cover">
+        <div class="row">
+            <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-8 col-md-offset-2 vertical-align cover boost text-center">
+                <div class="center-me animateme" data-when="exit" data-from="0" data-to="0.6" data-opacity="0" data-translatey="100">
+                    <div>
+                        
+                        <h2><span>RIN777</span></h2>
+                        <p></p>
+                        
+                        <h2></h2>
+                        <p>努力は嘘をつく、でも無駄にはならない</p>
+                        
+
+                    </div>
+                </div>
+            </div>
+            <!-- // .col-md-12 -->
+        </div>
+        <div class="herofade beige-dk"></div>
+    </div>
+</section>
+
+<!-- Height spacing helper -->
+<div class="heightblock"></div>
+<!-- // End height spacing helper -->
+
+<!-- ============================ END Hero Image =========================== -->
+<section id="intro">
+    <div class="container">
+        <div class="row col-md-offset-2">
+            <div class="col-md-8">
+                <h1>ELF文件下对于PIE保护和ASLR的重新认识</h1>
+            </div>
+        </div>
+        <div class="col-md-8 col-md-offset-2">
+            
+    <div id="aplayer-PQrJuWeR" class="aplayer aplayer-tag-marker meting-tag-marker"
+         data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"
+    ></div> 
+
+<h3 id="ELF文件下对于PIE保护和ASLR的重新认识"><a href="#ELF文件下对于PIE保护和ASLR的重新认识" class="headerlink" title="ELF文件下对于PIE保护和ASLR的重新认识"></a>ELF文件下对于PIE保护和ASLR的重新认识</h3><h4 id="0）"><a href="#0）" class="headerlink" title="0）"></a>0）</h4><p>​    复现红色高跟鞋的时候，在ida修复swithc结构的时候碰见了一个问题。因为题目的源文件是有pie保护的，所以ida中的地址是很难看的随机化模式。虽然这些随机化的地址对于我们patch文件毫无影响，但是就是突发奇想，看看能不能找到方法来通过patch将elf文件的pie保护给禁用。</p>
+<h4 id="1）"><a href="#1）" class="headerlink" title="1）"></a>1）</h4><p>​    如果用010editor打开一个PE文件，我们能够很方便的通过修改PE头来禁用掉Windows程序的ASLR保护。这是因为程序本身其实并不是位置无关的。</p>
+<p>ASLR在PE文件上的开启与否实际上就是PE头上标识符的区分，总的来说ASLR是操作系统的功能，而不是程序本身的特性，以ASLR ON 编译，也只是给程序加上了能被ASLR保护识别的标识符。所以我们只需要patch掉这个标识符，就能够改变程序的地址随机化状态。</p>
+<p>也正是在寻找方法的过程中，我逐渐认识到虽然PIE保护和ASLR表现形式都是地址随机化，但是两者的原理以及实现的方式并不一样，甚至大相径庭。</p>
+<p>在维基百科上，我们能够清楚地看到PIE的全称是Position-independence Executable，位置无关可执行文件。</p>
+<p>这个概念并不是很常见，相对更为常见的是PIC，Position-independence Code，位置无关代码。</p>
+<p>PIC和PIE只差了一个字母，意思也相近。但PIC更多的是在重定位中被提及。源码通过汇编器生成可重定位目标文件，此时它的代码就是位置无关，从0开始的，PIE和PIC的概念相近，当编译完成，可执行文件的便是位置无关了，我们无法改变这一点，也就是说，被PIE保护的文件，并不是通过给头文件加上标识符，使系统开启或关闭随机，而是文件本身便是位置无关吗，是随机的。</p>
+<p>​    然而，虽然文件本身是位置无关的，但是实际地址是否随机，还是要看进程中aslr是否开启，如果将进程aslr关闭，那么调试时我们看到的地址依旧不是随机的。这里主要涉及到重定位的相关知识，之后会写一篇笔记来试图深入系统重定位过程与地址随机化之间的关系。</p>
+
+            <div class="clearfix"></div>
+        </div>
+        
+    </div>
+</section>
+<section id="process">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-8 col-md-offset-2">
+                <div class="timeline-centered">
+                    <div class="line"></div>
+                    <div class="present">Past</div>
+                    <div class="dot_tp"></div>
+                    <div class="born">Now</div>
+                    <div class="dot_bt"></div>
+                    
+                        <div class="timeline-entry">
+                            <div class="timeline-entry-inner">
+                                <div class="timeline-icon wow fadeInUp" data-wow-delay="0.2s">
+                                    <span class="number">1</span>
+                                </div>
+                                <div class="timeline-label wow fadeInUp" data-wow-delay="0.2s">
+                                    <p>2014/06/12-Start</p>
+                                </div>
+                            </div>
+                        </div>
+                    
+                        <div class="timeline-entry">
+                            <div class="timeline-entry-inner">
+                                <div class="timeline-icon wow fadeInUp" data-wow-delay="0.2s">
+                                    <span class="number">2</span>
+                                </div>
+                                <div class="timeline-label wow fadeInUp" data-wow-delay="0.2s">
+                                    <p>2014/11/29-XXX</p>
+                                </div>
+                            </div>
+                        </div>
+                    
+                        <div class="timeline-entry">
+                            <div class="timeline-entry-inner">
+                                <div class="timeline-icon wow fadeInUp" data-wow-delay="0.2s">
+                                    <span class="number">3</span>
+                                </div>
+                                <div class="timeline-label wow fadeInUp" data-wow-delay="0.2s">
+                                    <p>2015/02/18-DDD</p>
+                                </div>
+                            </div>
+                        </div>
+                    
+                        <div class="timeline-entry">
+                            <div class="timeline-entry-inner">
+                                <div class="timeline-icon wow fadeInUp" data-wow-delay="0.2s">
+                                    <span class="number">4</span>
+                                </div>
+                                <div class="timeline-label wow fadeInUp" data-wow-delay="0.2s">
+                                    <p>More</p>
+                                </div>
+                            </div>
+                        </div>
+                    
+                </div>
+                <!-- timeline-centered -->
+            </div>
+        </div>
+    </div>
+</section>
       
             <style>
 .local-search-popup {

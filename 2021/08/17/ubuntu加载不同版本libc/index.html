@@ -401,6 +401,141 @@ $('#intro').find('img').each(function(){
 
 
 
+      <!-- ============================ Hero Image =========================== -->
+
+<section id="hero" class="scrollme">
+    <div class="container-fluid element-img" style="background: url(https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/cover.jpg) no-repeat center center fixed;background-size: cover">
+        <div class="row">
+            <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-8 col-md-offset-2 vertical-align cover boost text-center">
+                <div class="center-me animateme" data-when="exit" data-from="0" data-to="0.6" data-opacity="0" data-translatey="100">
+                    <div>
+                        
+                        <h2><span>RIN777</span></h2>
+                        <p></p>
+                        
+                        <h2></h2>
+                        <p>努力は嘘をつく、でも無駄にはならない</p>
+                        
+
+                    </div>
+                </div>
+            </div>
+            <!-- // .col-md-12 -->
+        </div>
+        <div class="herofade beige-dk"></div>
+    </div>
+</section>
+
+<!-- Height spacing helper -->
+<div class="heightblock"></div>
+<!-- // End height spacing helper -->
+
+<!-- ============================ END Hero Image =========================== -->
+<section id="intro">
+    <div class="container">
+        <div class="row col-md-offset-2">
+            <div class="col-md-8">
+                <h1>ubuntu加载不同版本libc</h1>
+            </div>
+        </div>
+        <div class="col-md-8 col-md-offset-2">
+            
+    <div id="aplayer-VrOVGeUt" class="aplayer aplayer-tag-marker meting-tag-marker"
+         data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"
+    ></div> 
+
+<h4 id="1）review"><a href="#1）review" class="headerlink" title="1）review"></a>1）review</h4><p> 这个问题困扰了我多年，之前年轻的时候不知道为什么有的是题我就是死活调不出，后来才知道呀原来用的ubunt的版本太高了。但是我一直忽视了这个问题以为并不是什么关键的因素。我是这么认为的–只要清楚了利用方法并记住对应的libc版本，无论是不是真的把这道题调试出来了都无所谓。</p>
+<p>然后我就是这样一步一步地变得不会调试的。</p>
+<p>但是完整地把一道题调出来。这才是关键。这才是pwn题的灵魂。</p>
+<p>呜呜呜，我居然一直忽略了它的灵魂</p>
+<p>所以这一次我一定要解决掉这个问题。</p>
+<p>之前做考核的时候，稍微研究过这个问题。但是因为下载的的libc并没有debug符号，最终还是放弃了。</p>
+<p>目前来说针对题目的调试，一般来说是本地，远程也不用考虑这个问题。</p>
+<h4 id="2）原理"><a href="#2）原理" class="headerlink" title="2）原理"></a>2）原理</h4><p>在这之前我们需要了解一下ld以及libc在动态链接中的具体作用。实际上这也是一个比较基础的概念，ld链接器，libc共享库没什么好说的。</p>
+<p>但是这里有一堆环境变量就很离谱。我们来依次列举一下并且搞清楚它们是做什么的。</p>
+<h5 id="1）LD-PRELOAD"><a href="#1）LD-PRELOAD" class="headerlink" title="1）LD_PRELOAD"></a>1）LD_PRELOAD</h5><p>首先就是我们在脚本前加载的<code>LD_PRELOAD</code>这个东西。一般的用法是<code>env=&#123;&quot;LD_PRELOAD&quot;:libc_path&#125;</code></p>
+<p>它可以影响程序的运行时的链接（Runtime linker），允许你定义在程序运行前优先加载的动态链接库。</p>
+<p>这个功能主要就是用来有选择性的载入不同动态链接库中的相同函数。通过这个环境变量，我们可以在主程序和其动态链接库的中间加载别的动态链接库，甚至覆盖正常的函数库。</p>
+<p>换句话说我们可以通过指定这个环境变量来指定特定的libc版本。</p>
+<h5 id="2）LD-LIBRARY-PATH和LIBRARY-PATH"><a href="#2）LD-LIBRARY-PATH和LIBRARY-PATH" class="headerlink" title="2）LD_LIBRARY_PATH和LIBRARY_PATH"></a>2）LD_LIBRARY_PATH和LIBRARY_PATH</h5><p>LD_LIBRARY_PATH用于在<em><strong>程序加载运行期间</strong></em>查找动态链接库时指定除了系统默认路径之外的其他路径.</p>
+<p>LIBRARY_PATH环境变量用于在<em><strong>程序编译期间</strong></em>查找动态链接库时指定查找共享库的路径</p>
+<p>其实可以发现这三个环境变量都是修改程序需要的共享库，但是生效的时间不一样。</p>
+<p>并且在pwn题中基本都是需要在运行前指定另外的共享库的，所以<code>LD_PRELOAD</code>还是比较常见。</p>
+<p>相关（？）环境变量大概就这么多，然后是某些特殊的段。</p>
+<h5 id="1）-PT-INTERP"><a href="#1）-PT-INTERP" class="headerlink" title="1） PT_INTERP"></a>1） PT_INTERP</h5><p>储存了程序使用的ld.so的路径，默认使用 /lib64/ld-linux-x86-64.so.2。</p>
+<p>我们可以修改这个段的内容来指定我们需要的链接器。</p>
+<h4 id="汇总"><a href="#汇总" class="headerlink" title="汇总"></a>汇总</h4><p>综上，我们首先要准备我们需要的libc和ld，libc可以是编译好的elf文件也可以通过源码自己编译，这个无所谓。ld文件比较诡异，似乎是一个ld能同时支持很多libc的小版本。并不是一对一的关系。</p>
+<p>准备好了以后我们通过脚本将题目<code>PT_INTERP</code>段修改，然后通过<code>LD_PRELOAD</code>指定我们需要的libc的路径即可。</p>
+<h4 id="实际操作"><a href="#实际操作" class="headerlink" title="实际操作"></a>实际操作</h4><p>我们以lonelywolf为例。</p>
+<p>有一个很尴尬的事实就是，我找不到比赛提供的libc了。当时存了，但是没有了。</p>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/net66/p/5609026.html"><a target="_blank" rel="noopener" href="https://www.cnblogs.com/net66/p/5609026.html">LD_PRELOAD的偷梁换柱之能</a></a></p>
+
+            <div class="clearfix"></div>
+        </div>
+        
+    </div>
+</section>
+<section id="process">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-8 col-md-offset-2">
+                <div class="timeline-centered">
+                    <div class="line"></div>
+                    <div class="present">Past</div>
+                    <div class="dot_tp"></div>
+                    <div class="born">Now</div>
+                    <div class="dot_bt"></div>
+                    
+                        <div class="timeline-entry">
+                            <div class="timeline-entry-inner">
+                                <div class="timeline-icon wow fadeInUp" data-wow-delay="0.2s">
+                                    <span class="number">1</span>
+                                </div>
+                                <div class="timeline-label wow fadeInUp" data-wow-delay="0.2s">
+                                    <p>2014/06/12-Start</p>
+                                </div>
+                            </div>
+                        </div>
+                    
+                        <div class="timeline-entry">
+                            <div class="timeline-entry-inner">
+                                <div class="timeline-icon wow fadeInUp" data-wow-delay="0.2s">
+                                    <span class="number">2</span>
+                                </div>
+                                <div class="timeline-label wow fadeInUp" data-wow-delay="0.2s">
+                                    <p>2014/11/29-XXX</p>
+                                </div>
+                            </div>
+                        </div>
+                    
+                        <div class="timeline-entry">
+                            <div class="timeline-entry-inner">
+                                <div class="timeline-icon wow fadeInUp" data-wow-delay="0.2s">
+                                    <span class="number">3</span>
+                                </div>
+                                <div class="timeline-label wow fadeInUp" data-wow-delay="0.2s">
+                                    <p>2015/02/18-DDD</p>
+                                </div>
+                            </div>
+                        </div>
+                    
+                        <div class="timeline-entry">
+                            <div class="timeline-entry-inner">
+                                <div class="timeline-icon wow fadeInUp" data-wow-delay="0.2s">
+                                    <span class="number">4</span>
+                                </div>
+                                <div class="timeline-label wow fadeInUp" data-wow-delay="0.2s">
+                                    <p>More</p>
+                                </div>
+                            </div>
+                        </div>
+                    
+                </div>
+                <!-- timeline-centered -->
+            </div>
+        </div>
+    </div>
+</section>
       
             <style>
 .local-search-popup {

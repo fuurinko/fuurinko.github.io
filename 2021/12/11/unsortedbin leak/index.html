@@ -394,6 +394,134 @@ $('#intro').find('img').each(function(){
 
 
 
+      <!-- ============================ Hero Image =========================== -->
+
+<section id="hero" class="scrollme">
+    <div class="container-fluid element-img" style="background: url(https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/cover.jpg) no-repeat center center fixed;background-size: cover">
+        <div class="row">
+            <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-8 col-md-offset-2 vertical-align cover boost text-center">
+                <div class="center-me animateme" data-when="exit" data-from="0" data-to="0.6" data-opacity="0" data-translatey="100">
+                    <div>
+                        
+                        <h2><span>RIN777</span></h2>
+                        <p></p>
+                        
+                        <h2></h2>
+                        <p>努力は嘘をつく、でも無駄にはならない</p>
+                        
+
+                    </div>
+                </div>
+            </div>
+            <!-- // .col-md-12 -->
+        </div>
+        <div class="herofade beige-dk"></div>
+    </div>
+</section>
+
+<!-- Height spacing helper -->
+<div class="heightblock"></div>
+<!-- // End height spacing helper -->
+
+<!-- ============================ END Hero Image =========================== -->
+<section id="intro">
+    <div class="container">
+        <div class="row col-md-offset-2">
+            <div class="col-md-8">
+                <h1>unsortedbin leak</h1>
+            </div>
+        </div>
+        <div class="col-md-8 col-md-offset-2">
+            <p>​        
+    <div id="aplayer-sBJnuoeD" class="aplayer aplayer-tag-marker meting-tag-marker"
+         data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"
+    ></div>     </p>
+<p>​    一个简单的trick。</p>
+<p>​        并且在trick就是tcache，接下来就是刷题熟练，最后再简单学习一下largin bin和small bin的利用。</p>
+<p>​        unsortedbin  由双向循环链表管理，表头为<code>main_arena</code>，所以表末尾的chunk的fd会指回<code>main_arena</code>，这样我们就获得了<code>main_arena</code>结构体内部的的地址，通过调试我们就能得到<code>main_arena</code>的真正的地址，并且<code>main_arena</code>与libc基地址有固定偏移，就能四舍五入获得libc的基地址。</p>
+<p>​        如何泄露这个fd呢？</p>
+<p>​        一般情况下，可以利用UAF，show出 unsorted chunk的<code>fd</code>。</p>
+<p>​        当bin中只有一个chunk时，由于bin中一般都是干净的，该bin的<code>fd</code>和<code>bk</code>都会指向<code>main_arena</code>中</p>
+<p>​        那么如何得到<code>main_arena</code>与libc的固定偏移呢？</p>
+<p>​        有两种方式：</p>
+<p>​    1:用IDA找到.so文件的 <code>malloc_trim</code> 函数，就可以获得偏移。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span></span><br><span class="line">__malloc_trim (<span class="keyword">size_t</span> s)</span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">int</span> result = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (__malloc_initialized &lt; <span class="number">0</span>)</span><br><span class="line">    ptmalloc_init ();</span><br><span class="line"></span><br><span class="line">  mstate ar_ptr = &amp;main_arena;<span class="comment">//&lt;=对main_arena进行了访问，用伪代码看到的结果就是main_arena和libc的固定偏移。</span></span><br><span class="line">  <span class="keyword">do</span></span><br><span class="line">    &#123;</span><br><span class="line">      __libc_lock_lock (ar_ptr-&gt;mutex);</span><br><span class="line">      result |= mtrim (ar_ptr, s);</span><br><span class="line">      __libc_lock_unlock (ar_ptr-&gt;mutex</span><br><span class="line"></span><br><span class="line">      ar_ptr = ar_ptr-&gt;next;</span><br><span class="line">    &#125;</span><br><span class="line">  <span class="keyword">while</span> (ar_ptr != &amp;main_arena);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>​        </p>
+<p>2:通过<code>malloc_hook</code>算出。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">main_arena_offset = ELF(<span class="string">&quot;libc.so.6&quot;</span>).symbols[<span class="string">&quot;__malloc_hook&quot;</span>] + <span class="number">0x10</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+            <div class="clearfix"></div>
+        </div>
+        
+    </div>
+</section>
+<section id="process">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-8 col-md-offset-2">
+                <div class="timeline-centered">
+                    <div class="line"></div>
+                    <div class="present">Past</div>
+                    <div class="dot_tp"></div>
+                    <div class="born">Now</div>
+                    <div class="dot_bt"></div>
+                    
+                        <div class="timeline-entry">
+                            <div class="timeline-entry-inner">
+                                <div class="timeline-icon wow fadeInUp" data-wow-delay="0.2s">
+                                    <span class="number">1</span>
+                                </div>
+                                <div class="timeline-label wow fadeInUp" data-wow-delay="0.2s">
+                                    <p>2014/06/12-Start</p>
+                                </div>
+                            </div>
+                        </div>
+                    
+                        <div class="timeline-entry">
+                            <div class="timeline-entry-inner">
+                                <div class="timeline-icon wow fadeInUp" data-wow-delay="0.2s">
+                                    <span class="number">2</span>
+                                </div>
+                                <div class="timeline-label wow fadeInUp" data-wow-delay="0.2s">
+                                    <p>2014/11/29-XXX</p>
+                                </div>
+                            </div>
+                        </div>
+                    
+                        <div class="timeline-entry">
+                            <div class="timeline-entry-inner">
+                                <div class="timeline-icon wow fadeInUp" data-wow-delay="0.2s">
+                                    <span class="number">3</span>
+                                </div>
+                                <div class="timeline-label wow fadeInUp" data-wow-delay="0.2s">
+                                    <p>2015/02/18-DDD</p>
+                                </div>
+                            </div>
+                        </div>
+                    
+                        <div class="timeline-entry">
+                            <div class="timeline-entry-inner">
+                                <div class="timeline-icon wow fadeInUp" data-wow-delay="0.2s">
+                                    <span class="number">4</span>
+                                </div>
+                                <div class="timeline-label wow fadeInUp" data-wow-delay="0.2s">
+                                    <p>More</p>
+                                </div>
+                            </div>
+                        </div>
+                    
+                </div>
+                <!-- timeline-centered -->
+            </div>
+        </div>
+    </div>
+</section>
       
             <style>
 .local-search-popup {
