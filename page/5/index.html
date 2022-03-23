@@ -237,46 +237,6 @@
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
                 <div class="col-md-4">
-                    <h3><a href="/2021/11/02/pwndocker的pwn题体验（上）/">pwndocker的pwn题体验（上）</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2021-11-02T14:54:29.012Z" itemprop="datePublished">
-          2021-11-02
-      </time>
-    
-    
-    | 
-    <a href='/tags/pwnable/'>pwnable</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-     
-
-1）前言​        之前看到star大哥开始学pwn力，而且是使用的iterm+pwndocker的环境，觉得非常优雅，便一直想尝试一下，正好最近在研究docker的使用，可以拿来试一试。并且pwndocker也可以十分优雅地指定我们环境的glibc版本，所以是一个非常值得尝试的事。
-2）pwndocker启动​        首先是如何build pwndocker的问题。
-​        如果直接docker
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2021/11/02/pwndocker的pwn题体验（上）/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
                     <h3><a href="/2021/10/31/基于ctf pwn环境的docker配置/">基于ctf pwn环境的docker搭建</a></h3>
                     <span>
                         <span class="post-meta">
@@ -642,6 +602,47 @@ Tcache全名为Thread Local Caching，它为每个线程创建一个缓存，里
                     
                     <p class="pull-right readMore">
                         <a href="/2021/08/17/ubuntu加载不同版本libc/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2021/08/17/Tcache学习/">Tcahce学习</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2021-08-17T02:53:00.000Z" itemprop="datePublished">
+          2021-08-17
+      </time>
+    
+    
+    | 
+    <a href='/tags/Heap/'>Heap</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+     
+
+Tcahce学习0）review说是Tcache学习，实际上是lonelywolf的复现。
+网上wp都是神仙写的，一点也不萌新友好。我都看不懂（）
+打开题发现这个菜单题好常规。
+但是libc是2.27，难度会稍微高一点。而且这个2.27是魔改过的，加入了2.29才有的key，为Tcache加入了检查机制。                                                           
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2021/08/17/Tcache学习/">Read More...</a>
                     </p>
                     
                 </div>
