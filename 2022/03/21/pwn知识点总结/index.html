@@ -223,7 +223,7 @@
         </div>
         <div class="col-md-8 col-md-offset-2">
       		
-    <div id="aplayer-RHdiGgjp" class="aplayer aplayer-tag-marker meting-tag-marker"
+    <div id="aplayer-hAzaQBWj" class="aplayer aplayer-tag-marker meting-tag-marker"
          data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"
     ></div> 
 
@@ -234,7 +234,18 @@
 
 <h6 id="Extra"><a href="#Extra" class="headerlink" title="Extra:"></a>Extra:</h6><p>​        对于格式化字符串地址偏移的计算，32位和64位并不完全相同，32位参数完全由栈传递，所以参数在栈上出现的位次即是偏移（要减去返回地址占的位次），但是64位传参前六位是由寄存器传参，因此在栈上找到的偏移需要加6。</p>
 <h4 id="数组越界"><a href="#数组越界" class="headerlink" title="数组越界"></a>数组越界</h4><h4 id="覆盖空字节"><a href="#覆盖空字节" class="headerlink" title="覆盖空字节"></a>覆盖空字节</h4><p>​        </p>
-<h3 id="修改内存"><a href="#修改内存" class="headerlink" title="修改内存"></a>修改内存</h3><h4 id="格式化字符串-1"><a href="#格式化字符串-1" class="headerlink" title="格式化字符串"></a>格式化字符串</h4><h5 id="利用fmt-payload模块自动化写入"><a href="#利用fmt-payload模块自动化写入" class="headerlink" title="利用fmt_payload模块自动化写入"></a>利用fmt_payload模块自动化写入</h5>
+<h3 id="修改内存"><a href="#修改内存" class="headerlink" title="修改内存"></a>修改内存</h3><h4 id="格式化字符串-1"><a href="#格式化字符串-1" class="headerlink" title="格式化字符串"></a>格式化字符串</h4><h5 id="利用fmt-payload模块自动化写入"><a href="#利用fmt-payload模块自动化写入" class="headerlink" title="利用fmt_payload模块自动化写入"></a>利用fmt_payload模块自动化写入</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">payload = fmtstr_payload(offset, &#123;func_got : system_addr&#125;)</span><br></pre></td></tr></table></figure>
+
+<h5 id="手工构造"><a href="#手工构造" class="headerlink" title="手工构造"></a>手工构造</h5><h6 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h6><p><code>%n</code>参数不输出字符，但是把已成功输出的字符个数写入对应整形指针参数所指的变量。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">addr%k<span class="variable">$n</span><span class="comment">#k为格式化字符串偏移，addr为需要覆盖的地址</span></span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">%hhn <span class="comment">#向地址写入单字节</span></span><br><span class="line">%hn <span class="comment">#向地址写入双字节</span></span><br></pre></td></tr></table></figure>
+
+
+
+
             <div class="clearfix"></div>
             <hr class="nogutter">
         </div>
