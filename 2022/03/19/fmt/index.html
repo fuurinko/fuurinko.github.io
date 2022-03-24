@@ -132,6 +132,8 @@
                 <a class="sb-toggle-submenu">Links<span class="sb-caret"></span></a>
                 <ul class="sb-submenu">
                     
+                    <li><a target="_blank" rel="noopener" href="https://weibo.com/u/1682818607" class="animsition-link">没有营养的推广页</a></li>
+                    
                     <li><a target="_blank" rel="noopener" href="http://www.2323bb.ltd" class="animsition-link">cc_sakura</a></li>
                     
                     <li><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_36995313" class="animsition-link">F@LLe0</a></li>
@@ -226,7 +228,7 @@
         </div>
         <div class="col-md-8 col-md-offset-2">
       		
-    <div id="aplayer-nTMrVttP" class="aplayer aplayer-tag-marker meting-tag-marker"
+    <div id="aplayer-LAZzByzi" class="aplayer aplayer-tag-marker meting-tag-marker"
          data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"
     ></div> 
 
@@ -438,7 +440,10 @@
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">payload = p32(<span class="number">0x804A010</span>)  + <span class="string">b&#x27;%xxxxc&#x27;</span>+ <span class="string">b&#x27;%6$hn&#x27;</span>  </span><br></pre></td></tr></table></figure>
 
 <p>​        </p>
-<h3 id="echo2"><a href="#echo2" class="headerlink" title="echo2"></a>echo2</h3><p>​        </p>
+<h3 id="echo2"><a href="#echo2" class="headerlink" title="echo2"></a>echo2</h3><p>​        整个程序与echo1基本没有区别（估计只有编译参数不一样），但是是64位，并且开启了随机化。</p>
+<p>​        并且在栈上的参数的偏移（也）是7+6 = 13。</p>
+<p>​        但是值得注意的求偏移时，由于程序是64位，所以并不适合用pwntools的fmt模块，因为    </p>
+<p>​        </p>
 <p>​        </p>
 <p>​        </p>
 <h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>​    通过这篇笔记我确实是认识到自动化脚本的重要性，其实我觉得但凡真正入门了pwn，就不会再浪费时间于一些明明可以自动化完成的东西，就比如说rop有相应的脚本roputil，有onegadget，但是我总是拒绝去用这些东西，反而将大把时间浪费于无谓的调试以及历史脚本的复制粘贴上。</p>
