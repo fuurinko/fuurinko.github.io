@@ -95,7 +95,7 @@
 				    
 				    <li><a href="/categories/HEAP-Unsortedbin/" class="animsition-link">HEAP-Unsortedbin<small>(1)</small></a></li>
 				    
-				    <li><a href="/categories/MESS/" class="animsition-link">MESS<small>(21)</small></a></li>
+				    <li><a href="/categories/MESS/" class="animsition-link">MESS<small>(20)</small></a></li>
 				    
 				    <li><a href="/categories/OTHER-IO-FILE/" class="animsition-link">OTHER - IO FILE<small>(1)</small></a></li>
 				    
@@ -106,8 +106,6 @@
 				    <li><a href="/categories/STACK-DynELF/" class="animsition-link">STACK - DynELF<small>(2)</small></a></li>
 				    
 				    <li><a href="/categories/STACK-Format/" class="animsition-link">STACK - Format<small>(1)</small></a></li>
-				    
-				    <li><a href="/categories/STACK-Golang-Pwn/" class="animsition-link">STACK - Golang Pwn<small>(1)</small></a></li>
 				    
 				    <li><a href="/categories/STACK-OTHERS/" class="animsition-link">STACK - OTHERS<small>(1)</small></a></li>
 				    
@@ -242,42 +240,6 @@
 
 <section id="intro">
     <div class="container">
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2022/03/26/hexo调教合集/">hexo调教合集</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2022-03-26T04:12:52.291Z" itemprop="datePublished">
-          2022-03-26
-      </time>
-    
-    
-    | 
-    <a href='/tags/mess/'>mess</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        高亮​        
-
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2022/03/26/hexo调教合集/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
         
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
@@ -420,11 +382,9 @@ overview
                     <p>
                       
                         
-			
-				console.error("Error: [hexo-tag-aplayer] Meting support is disabled, cannot resolve the meting tags properly.");
-			 
+     
 
-stackret2libc1234567891011121314151617181920212223242526272829303132333435363738from pwn imp
+stackret2libc1234567891011121314151617181920212223242526272829303132333435363738from pwn import*from LibcSearcher import LibcSearchercontext.terminal = [&#x27;tmux&#x27;,&#x27;splitw&#x27;,&#x27;-h&#x27;]context.
                       
                     </p>
                     
@@ -473,46 +433,6 @@ ret2libcr
                     
                     <p class="pull-right readMore">
                         <a href="/2022/03/21/pwn知识点总结/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2022/03/20/HFCTF-gogogo/">GolangPwn研究</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2022-03-20T01:43:44.506Z" itemprop="datePublished">
-          2022-03-20
-      </time>
-    
-    
-    | 
-    <a href='/tags/Golang-Pwn/'>Golang Pwn</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-			
-				console.error("Error: [hexo-tag-aplayer] Meting support is disabled, cannot resolve the meting tags properly.");
-			 
-
-0​        第一次做golang pwn，逆向的过程倒还没有太多坑，IDA7.6能够直接解析程序的符号表，导致看起来并没有那么不堪。但是一旦开始动调，会发现断点下了与没下关系不
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2022/03/20/HFCTF-gogogo/">Read More...</a>
                     </p>
                     
                 </div>
@@ -638,6 +558,95 @@ PicoCTF_2018_got-shell​        虽然但是，这个题为什么这么pwncolle
                     
                     <p class="pull-right readMore">
                         <a href="/2022/03/20/PicoCTF_2018_got-shell/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2022/03/19/fmt/">格式化字符串</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-03-18T17:22:00.000Z" itemprop="datePublished">
+          2022-03-19
+      </time>
+    
+    
+    | 
+    <a href='/tags/FMT/'>FMT</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+			
+				console.error("Error: [hexo-tag-aplayer] Meting support is disabled, cannot resolve the meting tags properly.");
+			 
+
+
+
+1）前言​        绿盟杯pwn1，格式化字符串+沙盒orw。保护全开。
+​        首先对于格式化字符串我的理解就不是很深刻，甚至从来没有完整地刷过一道格式化字符串的
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/03/19/fmt/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2022/03/18/week-4.1/">search engine</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-03-18T12:51:38.181Z" itemprop="datePublished">
+          2022-03-18
+      </time>
+    
+    
+    | 
+    <a href='/tags/UAF/'>UAF</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+			
+				console.error("Error: [hexo-tag-aplayer] Meting support is disabled, cannot resolve the meting tags properly.");
+			 
+
+​    overview
+
+
+逆向​        菜单中的功能比较少，但是比较奇怪。
+
+searche word
+​        这个函数大致实现了一个“查找”word，如果找到
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/03/18/week-4.1/">Read More...</a>
                     </p>
                     
                 </div>

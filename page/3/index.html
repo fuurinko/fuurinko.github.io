@@ -95,7 +95,7 @@
 				    
 				    <li><a href="/categories/HEAP-Unsortedbin/" class="animsition-link">HEAP-Unsortedbin<small>(1)</small></a></li>
 				    
-				    <li><a href="/categories/MESS/" class="animsition-link">MESS<small>(21)</small></a></li>
+				    <li><a href="/categories/MESS/" class="animsition-link">MESS<small>(20)</small></a></li>
 				    
 				    <li><a href="/categories/OTHER-IO-FILE/" class="animsition-link">OTHER - IO FILE<small>(1)</small></a></li>
 				    
@@ -106,8 +106,6 @@
 				    <li><a href="/categories/STACK-DynELF/" class="animsition-link">STACK - DynELF<small>(2)</small></a></li>
 				    
 				    <li><a href="/categories/STACK-Format/" class="animsition-link">STACK - Format<small>(1)</small></a></li>
-				    
-				    <li><a href="/categories/STACK-Golang-Pwn/" class="animsition-link">STACK - Golang Pwn<small>(1)</small></a></li>
 				    
 				    <li><a href="/categories/STACK-OTHERS/" class="animsition-link">STACK - OTHERS<small>(1)</small></a></li>
 				    
@@ -242,87 +240,6 @@
 
 <section id="intro">
     <div class="container">
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2022/03/14/2019_your_pwn/">2019_your_pwn</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2022-03-14T10:30:34.805Z" itemprop="datePublished">
-          2022-03-14
-      </time>
-    
-    
-    | 
-    <a href='/tags/stack/'>stack</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-			
-				console.error("Error: [hexo-tag-aplayer] Meting support is disabled, cannot resolve the meting tags properly.");
-			     
-
-​        因为是数组越界，每次只能读取一个字节，所以脚本需要循环，首先计算出偏移获取函数的地址，一般来说比较常规的思路是拿libc_start_main    ,只是这
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2022/03/14/2019_your_pwn/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2022/03/12/pwn中的python字符串处理问题/">pwn中的python字符串处理问题</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2022-03-12T02:50:45.551Z" itemprop="datePublished">
-          2022-03-12
-      </time>
-    
-    
-    | 
-    <a href='/tags/mess/'>mess</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-			
-				console.error("Error: [hexo-tag-aplayer] Meting support is disabled, cannot resolve the meting tags properly.");
-			 
-
-​        最近在pwncollege做题的时候常常遇到接收的字符串处理不当的问题，故总结整理一下。
-字符串截取123456789p.recv()[0:6]		#截取1-5个字符
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2022/03/12/pwn中的python字符串处理问题/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
         
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
@@ -656,6 +573,93 @@ Level3​        不好描述，可以根据后面的正确随机数在栈中找
                     
                     <p class="pull-right readMore">
                         <a href="/2022/02/14/Debugging Refresher/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2022/01/29/pwncollege_Assembly_Refresher/">Assembly_Refresher</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-01-29T13:51:29.070Z" itemprop="datePublished">
+          2022-01-29
+      </time>
+    
+    
+    | 
+    <a href='/tags/pwncollege/'>pwncollege</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+			
+				console.error("Error: [hexo-tag-aplayer] Meting support is disabled, cannot resolve the meting tags properly.");
+			 
+
+
+
+Level1需要设置*rdi = 0x1337，
+如果是按照目的意思程序的汇编代码长这样子：
+12345.section .text    .intel_syntax nopref
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/01/29/pwncollege_Assembly_Refresher/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2022/01/29/Shellcode_Injection/">Shellcode_Injection</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-01-29T09:37:52.632Z" itemprop="datePublished">
+          2022-01-29
+      </time>
+    
+    
+    | 
+    <a href='/tags/pwncollege/'>pwncollege</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+			
+				console.error("Error: [hexo-tag-aplayer] Meting support is disabled, cannot resolve the meting tags properly.");
+			 
+
+
+
+​        整个专题其实就是一个shellcode编写的小练习，并不需要自己寻找漏洞点，写好shellcode直接注入就行。
+​        如果要将服务器的文件传输到本地
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/01/29/Shellcode_Injection/">Read More...</a>
                     </p>
                     
                 </div>
