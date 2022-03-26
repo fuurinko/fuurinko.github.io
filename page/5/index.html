@@ -509,12 +509,12 @@ docker基础架构​    对于docker，在了解基础命令之前我们需要�
                     <p>
                       
                           
-			
-				console.error("Error: [hexo-tag-aplayer] Meting support is disabled, cannot resolve the meting tags properly.");
-			 
+     
 
   博客搭了有快一年了，一直是hexo+git page的配置（不过这个搭配现在绝版了2333），但是一直荒废着，差不多到大一暑假的时候才想起要好好经营。
-​    但是代码高亮这
+​    但是代码高亮这个一直没有解决。
+​    之前我以为是博客主题配置的问题（就是highlight对象的值的问题），但是无论用怎么样的方法都不太行。
+​    在研究代码高亮的过程中，我才知道原来有个项目叫highlight.js,里面有各种各样的代码高亮
                       
                     </p>
                     
@@ -550,12 +550,14 @@ docker基础架构​    对于docker，在了解基础命令之前我们需要�
                     <p>
                       
                         
-			
-				console.error("Error: [hexo-tag-aplayer] Meting support is disabled, cannot resolve the meting tags properly.");
-			 
+     
 
 1）前言​    之前一直被gcc无法编译32位程序而困扰，但是问题一直拖着没有解决，趁着今天比较闲，把这个问题彻底解决一下。
-2)过程​    首先我们尝试编译32位程序，gcc报错
+2)过程​    首先我们尝试编译32位程序，gcc报错：
+​    缺少头文件，实则是没有安装多架构gcc。
+​    试图安装，失败，报错如下：
+​    这里有个坑了我好久的东西，就是这个报错
+E: Unable to correct problems, you have held bro
                       
                     </p>
                     
