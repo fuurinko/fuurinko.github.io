@@ -3,16 +3,6 @@
 <html class="ie" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US">
 <![endif]-->
 <!--[if (gte IE 9)|!(IE)]><!-->
-<!--
-***************  *      *     *
-      8          *    *       *
-      8          *  *         *
-      8          **           *
-      8          *  *         *
-      8          *    *       *
-      8          *      *     *
-      8          *        *   ***********    -----Theme By Kieran(http://go.kieran.top)
--->
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
 <!--<![endif]-->
 
@@ -61,7 +51,6 @@
 <body class="home-template">
 -->
 <body id="index" class="lightnav animsition">
-
       <!-- ============================ Off-canvas navigation =========================== -->
 
     <div class="sb-slidebar sb-right sb-style-overlay sb-momentum-scrolling">
@@ -95,7 +84,7 @@
 				    
 				    <li><a href="/categories/HEAP-Unsortedbin/" class="animsition-link">HEAP-Unsortedbin<small>(1)</small></a></li>
 				    
-				    <li><a href="/categories/MESS/" class="animsition-link">MESS<small>(20)</small></a></li>
+				    <li><a href="/categories/MESS/" class="animsition-link">MESS<small>(19)</small></a></li>
 				    
 				    <li><a href="/categories/OTHER-IO-FILE/" class="animsition-link">OTHER - IO FILE<small>(1)</small></a></li>
 				    
@@ -244,49 +233,6 @@
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
                 <div class="col-md-4">
-                    <h3><a href="/2021/10/13/pwn基础/">汇编小知识点</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2021-10-13T09:25:43.372Z" itemprop="datePublished">
-          2021-10-13
-      </time>
-    
-    
-    | 
-    <a href='/tags/pwn-Primary/'>pwn Primary</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-			
-				console.error("Error: [hexo-tag-aplayer] Meting support is disabled, cannot resolve the meting tags properly.");
-			 
-
-[TOC]
-汇编语言1）寻址1/直接寻址12mov     rax, fs:28h #直接寻址，fs段寄存器+偏移量。这里其实是一个canary的值。
-
-2/间接寻址间接在使用指针以及
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2021/10/13/pwn基础/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
                     <h3><a href="/2021/08/18/main_arana 与多线程/">main_arana 与多线程</a></h3>
                     <span>
                         <span class="post-meta">
@@ -306,57 +252,17 @@
                     <p>
                       
                         
-			
-				console.error("Error: [hexo-tag-aplayer] Meting support is disabled, cannot resolve the meting tags properly.");
-			 
+     
 
 在学习Tcache的时候遇到了一些比较奇怪的点，ctf权威指南pwn篇中对于Tcache的解释中第一段如下：
-Tcache全名为Thread Local Caching，它为每个线程创
+Tcache全名为Thread Local Caching，它为每个线程创建一个缓存，里面包含了一些小堆块，无需对main_arena上锁即可使用。
+
+首先让我感到不解的就是，“无需对main_arena上锁即可使用”这句话。什么叫对main_arana上锁？之前也遇见过很多文章提到过这个”锁“的相关概念，但是它
                       
                     </p>
                     
                     <p class="pull-right readMore">
                         <a href="/2021/08/18/main_arana 与多线程/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2021/08/17/ubuntu加载不同版本libc/">ubuntu加载不同版本libc</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2021-08-17T02:53:00.000Z" itemprop="datePublished">
-          2021-08-17
-      </time>
-    
-    
-    | 
-    <a href='/tags/linux-primary/'>linux primary</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-			
-				console.error("Error: [hexo-tag-aplayer] Meting support is disabled, cannot resolve the meting tags properly.");
-			 
-
-1）review 这个问题困扰了我多年，之前年轻的时候不知道为什么有的是题我就是死活调不出，后来才知道呀原来用的ubunt的版本太高了。但是我一直忽视了这个问题以为并不是什么关键的因素
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2021/08/17/ubuntu加载不同版本libc/">Read More...</a>
                     </p>
                     
                 </div>
@@ -387,19 +293,58 @@ Tcache全名为Thread Local Caching，它为每个线程创
                     <p>
                       
                         
-			
-				console.error("Error: [hexo-tag-aplayer] Meting support is disabled, cannot resolve the meting tags properly.");
-			 
+     
 
 Tcahce学习0）review说是Tcache学习，实际上是lonelywolf的复现。
 网上wp都是神仙写的，一点也不萌新友好。我都看不懂（）
 打开题发现这个菜单题好常规。
-但是l
+但是libc是2.27，难度会稍微高一点。而且这个2.27是魔改过的，加入了2.29才有的key，为Tcache加入了检查机制。                                                           
                       
                     </p>
                     
                     <p class="pull-right readMore">
                         <a href="/2021/08/17/Tcache学习/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2021/08/17/ubuntu加载不同版本libc/">ubuntu加载不同版本libc</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2021-08-17T02:53:00.000Z" itemprop="datePublished">
+          2021-08-17
+      </time>
+    
+    
+    | 
+    <a href='/tags/linux-primary/'>linux primary</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+     
+
+1）review 这个问题困扰了我多年，之前年轻的时候不知道为什么有的是题我就是死活调不出，后来才知道呀原来用的ubunt的版本太高了。但是我一直忽视了这个问题以为并不是什么关键的因素。我是这么认为的–只要清楚了利用方法并记住对应的libc版本，无论是不是真的把这道题调试出来了都无所谓。
+然后我就是这样一步一步地变得不会调试的。
+但是完整地把一道题调出来。这才是关键。这才是pwn题的灵魂。
+呜呜呜，我居然一直忽略了它的灵
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2021/08/17/ubuntu加载不同版本libc/">Read More...</a>
                     </p>
                     
                 </div>
@@ -430,13 +375,12 @@ Tcahce学习0）review说是Tcache学习，实际上是lonelywolf的复现。
                     <p>
                       
                         
-			
-				console.error("Error: [hexo-tag-aplayer] Meting support is disabled, cannot resolve the meting tags properly.");
-			 
+     
 
 1）概述这是一件悲伤的事情，我的ubuntu它又崩了。
 最开始的时候，发现pwndbg无法查看heap等信息，这个问题我之前也遇到过，但是情况有非常大的区别。
-之前是我2.32的本地默
+之前是我2.32的本地默认libc，执行程序时加载2.23，然后因为指定的lbc-2.23.so没有附带调试符号信息，所以也看不了heap，但是这一次，本机都看不了了？
+经过一番排查，我们认为是libc本身出现了问题。然后寻找libc-2.27.so的文件打算一探
                       
                     </p>
                     
@@ -472,11 +416,10 @@ Tcahce学习0）review说是Tcache学习，实际上是lonelywolf的复现。
                     <p>
                       
                         
-			
-				console.error("Error: [hexo-tag-aplayer] Meting support is disabled, cannot resolve the meting tags properly.");
-			 
+     
 
-ELF文件下对于PIE保护和ASLR的重新认识0）​    复现红色高跟鞋的时候，在ida修复swithc结构的时候碰见了一个问题。因为题目的源文件是有pie保护的，所以ida中的地址
+ELF文件下对于PIE保护和ASLR的重新认识0）​    复现红色高跟鞋的时候，在ida修复swithc结构的时候碰见了一个问题。因为题目的源文件是有pie保护的，所以ida中的地址是很难看的随机化模式。虽然这些随机化的地址对于我们patch文件毫无影响，但是就是突发奇想，看看能不能找到方法来通过patch将elf文件的pie保护给禁用。
+1）​    如果用010editor打开一个PE文件，我们能够很方便的通过修改
                       
                     </p>
                     
@@ -512,12 +455,14 @@ ELF文件下对于PIE保护和ASLR的重新认识0）​    复现红色高跟�
                     <p>
                       
                         
-			
-				console.error("Error: [hexo-tag-aplayer] Meting support is disabled, cannot resolve the meting tags properly.");
-			 
+     
 
 io_file学习笔记
-0）reviewglibc定义了_IO_FILE这样一个结构体来管理io file。io_file结构体里定义了一堆相关的变量，但是真正关键的是其中包含的_IO
+0）reviewglibc定义了_IO_FILE这样一个结构体来管理io file。io_file结构体里定义了一堆相关的变量，但是真正关键的是其中包含的_IO_FILE_plus结构
+结构源码如下
+12345struct _IO_FILE_plus&#123;    _IO_FILE    file;    IO_jump_t   *vtable;&#125;
+
+这个结构包含了一个叫vtable
                       
                     </p>
                     
@@ -553,13 +498,15 @@ io_file学习笔记
                     <p>
                       
                         
-			
-				console.error("Error: [hexo-tag-aplayer] Meting support is disabled, cannot resolve the meting tags properly.");
-			 
+     
 
 patch alarm比较弱智的一个操作，但是如果没注意到的话还是有一点点坑。
 一般来说许多题都喜欢在main函数里加alarm。
-alarm会导致调试的时候超时，如果没有解决的话基本
+alarm会导致调试的时候超时，如果没有解决的话基本不能调试。算最基础的的反调试手法了。
+ps:关于超时的那个报错当时还好好研究了一会儿来着。就是一个sigxxx，sigalarm好像，然后默认返回中止程序。
+解决方案也比较弱智。就是直接patch掉就好了。
+ida都关了懒得上图了。
+单双引
                       
                     </p>
                     
@@ -595,12 +542,13 @@ alarm会导致调试的时候超时，如果没有解决的话基本
                     <p>
                       
                         
-			
-				console.error("Error: [hexo-tag-aplayer] Meting support is disabled, cannot resolve the meting tags properly.");
-			 
+     
 
 ret2dl_advanced1)review当FULL RELRO保护开启时，通过 dl_run_time来获取libc基址的方式几乎无解。
-但是我们仍然能够找到某种方式来getsh
+但是我们仍然能够找到某种方式来getshell。
+相关论文中给出一种解决方案，即通过dt_bug入口找到突破点。
+(Ps:为什么找不到相关的中文文章)
+2）dt_dbg？dt_dbg这个概念实际上并不新鲜，简单来说它可以被包含在libc.so文件中，比如我们指定一个特定的libc
                       
                     </p>
                     
@@ -636,19 +584,59 @@ ret2dl_advanced1)review当FULL RELRO保护开启时，通过 dl_run_time来获�
                     <p>
                       
                         
-			
-				console.error("Error: [hexo-tag-aplayer] Meting support is disabled, cannot resolve the meting tags properly.");
-			 
+     
 
  学习编写一个堆内存管理程序。
 但是这道题其实是ctf-wiki上关于chunk-overlapping的题。。。
 先看源码。我以后学堆题必从看源码开始。。
-12345678void 
+12345678void read_input(char *buf,size_t size)&#123;	int ret ;  ret = read(0,buf,size);  if(ret &lt;=0)&#123;      puts(&quot;Error&q
                       
                     </p>
                     
                     <p class="pull-right readMore">
                         <a href="/2021/06/05/off by one漏洞学习/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2021/05/24/message/">Message</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2021-05-24T09:18:33.269Z" itemprop="datePublished">
+          2021-05-24
+      </time>
+    
+    
+    | 
+    <a href='/tags/UAF/'>UAF</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+     
+
+第二道fastbin double free。
+123free(*(void **)&amp;dword_602060[4 * v1 + 2]);      dword_602060[4 * v1] = 0;      --dword_60204C;
+
+这里没有把指针置为null，所以会产生uaf漏洞。
+ida大体分析了一下就会发现，由于没有后门函数，这道题会比上一道难。而且由于RELRO的开启，got所在的数据段是只读
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2021/05/24/message/">Read More...</a>
                     </p>
                     
                 </div>

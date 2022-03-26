@@ -3,16 +3,6 @@
 <html class="ie" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US">
 <![endif]-->
 <!--[if (gte IE 9)|!(IE)]><!-->
-<!--
-***************  *      *     *
-      8          *    *       *
-      8          *  *         *
-      8          **           *
-      8          *  *         *
-      8          *    *       *
-      8          *      *     *
-      8          *        *   ***********    -----Theme By Kieran(http://go.kieran.top)
--->
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
 <!--<![endif]-->
 
@@ -55,13 +45,15 @@
   
 
   <style>.col-md-8.col-md-offset-2.opening-statement img{display:none;}</style>
-<link rel="stylesheet" href="/css/prism.css" type="text/css"></head>
+<link rel="stylesheet" href="/css/prism.css" type="text/css"><link rel="stylesheet" href="/assets/css/APlayer.min.css" class="aplayer-style-marker">
+<script src="/assets/js/APlayer.min.js" class="aplayer-script-marker"></script>
+<script src="/assets/js/Meting.min.js" class="meting-script-marker"></script>
+</head>
 
 <!--
 <body class="post-template">
 -->
 <body id="index" class="lightnav animsition">
-
       <!-- ============================ Off-canvas navigation =========================== -->
 
     <div class="sb-slidebar sb-right sb-style-overlay sb-momentum-scrolling">
@@ -95,7 +87,7 @@
 				    
 				    <li><a href="/categories/HEAP-Unsortedbin/" class="animsition-link">HEAP-Unsortedbin<small>(1)</small></a></li>
 				    
-				    <li><a href="/categories/MESS/" class="animsition-link">MESS<small>(20)</small></a></li>
+				    <li><a href="/categories/MESS/" class="animsition-link">MESS<small>(19)</small></a></li>
 				    
 				    <li><a href="/categories/OTHER-IO-FILE/" class="animsition-link">OTHER - IO FILE<small>(1)</small></a></li>
 				    
@@ -227,9 +219,9 @@
         </div>
         <div class="col-md-8 col-md-offset-2">
       		
-			<script>
-				console.error("Error: [hexo-tag-aplayer] Meting support is disabled, cannot resolve the meting tags properly.");
-			</script> 
+    <div id="aplayer-nLjsVlnS" class="aplayer aplayer-tag-marker meting-tag-marker"
+         data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"
+    ></div> 
 
 <h2 id="Off-by-one"><a href="#Off-by-one" class="headerlink" title="Off by one"></a>Off by one</h2><p>​        单/空字节溢出攻击。</p>
 <p>​        通常来说简单的off by one的漏洞点来自于编写时对边界控制不严格，导致每次输入的字符都能比规定的最大字符大那么一些（一个，或者几个）。这些字节溢出到物理地址相邻的下一个堆块，就能修改下一个chunk的size或者<code>prev_inuse</code>，通过这样的溢出，就能够整一些有趣的攻击。</p>

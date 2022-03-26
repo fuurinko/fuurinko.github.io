@@ -3,16 +3,6 @@
 <html class="ie" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US">
 <![endif]-->
 <!--[if (gte IE 9)|!(IE)]><!-->
-<!--
-***************  *      *     *
-      8          *    *       *
-      8          *  *         *
-      8          **           *
-      8          *  *         *
-      8          *    *       *
-      8          *      *     *
-      8          *        *   ***********    -----Theme By Kieran(http://go.kieran.top)
--->
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
 <!--<![endif]-->
 
@@ -61,7 +51,6 @@
 <body class="home-template">
 -->
 <body id="index" class="lightnav animsition">
-
       <!-- ============================ Off-canvas navigation =========================== -->
 
     <div class="sb-slidebar sb-right sb-style-overlay sb-momentum-scrolling">
@@ -95,7 +84,7 @@
 				    
 				    <li><a href="/categories/HEAP-Unsortedbin/" class="animsition-link">HEAP-Unsortedbin<small>(1)</small></a></li>
 				    
-				    <li><a href="/categories/MESS/" class="animsition-link">MESS<small>(20)</small></a></li>
+				    <li><a href="/categories/MESS/" class="animsition-link">MESS<small>(19)</small></a></li>
 				    
 				    <li><a href="/categories/OTHER-IO-FILE/" class="animsition-link">OTHER - IO FILE<small>(1)</small></a></li>
 				    
@@ -263,12 +252,12 @@
                     <p>
                       
                         
-			
-				console.error("Error: [hexo-tag-aplayer] Meting support is disabled, cannot resolve the meting tags properly.");
-			 
+     
 
 写在前面：如果是普通的环境，运行程序可能需要capstone，可以直接在官网下载源码编译，然后将编译好的动态链接库cp到lib里
- cp libcapstone.so.5 /lib/x
+ cp libcapstone.so.5 /lib/x86_64-linux-gnu/
+Level1​        最最最基础的rop了，和前前一个module的前面的有个level一模一样。
+1234567891011121314from pwn import*#context.termi
                       
                     </p>
                     
@@ -386,12 +375,17 @@
                     <p>
                       
                         
-			
-				console.error("Error: [hexo-tag-aplayer] Meting support is disabled, cannot resolve the meting tags properly.");
-			 
+     
 
 ​        视频主要介绍了栈溢出及其保护。保护的绕过包括canary和pie，并没有提到NX（那个似乎在后面一个module）
-​        传输题目到本地可以使用scp命令
+​        传输题目到本地可以使用scp命令。
+1scp -i key -r hacker@dojo.pwn.college:/challenge/babymem_level4.1 /Users/rin/ctf/pwn/pwn_college/MemoryErrors
+
+
+
+
+
+Le
                       
                     </p>
                     
@@ -427,15 +421,16 @@
                     <p>
                       
                         
-			
-				console.error("Error: [hexo-tag-aplayer] Meting support is disabled, cannot resolve the meting tags properly.");
-			 
+     
 
 
 
 
 
-​        关于这个module，做出题目的话大致有两个思路，一个是利用/bin/sh    来对整个shell提权，另外一个是利用设置了suid的特殊程序来读取flag
+​        关于这个module，做出题目的话大致有两个思路，一个是利用/bin/sh    来对整个shell提权，另外一个是利用设置了suid的特殊程序来读取flag。一般来说是第二个方法比较简单，但是有时候只有第一个方法可以行得通。
+Level1​        没有看视频，并不知道这个Misuse是什么意义，但是level1只要执行给的程序就能get flag。
+
+Level2​        到第
                       
                     </p>
                     
@@ -471,12 +466,12 @@
                     <p>
                       
                         
-			
-				console.error("Error: [hexo-tag-aplayer] Meting support is disabled, cannot resolve the meting tags properly.");
-			 
+     
 
 Level1​        首先考察chroot
-​        因为程序在将根目录设置为/jail的时候并没有切换当前工作目录为/jail，所以我们实际上还是在/目录，因此可以直
+​        因为程序在将根目录设置为/jail的时候并没有切换当前工作目录为/jail，所以我们实际上还是在/目录，因此可以直接通过argv[1]    读取flag。
+​        执行脚本的时候需要添加cwd参数，使其工作目录为/
+Level2123shellcode = asm(shellcraft.readfile(&#x27;flag&#x27;,1
                       
                     </p>
                     
@@ -512,9 +507,7 @@ Level1​        首先考察chroot
                     <p>
                       
                         
-			
-				console.error("Error: [hexo-tag-aplayer] Meting support is disabled, cannot resolve the meting tags properly.");
-			 
+     
 
 
 
@@ -525,7 +518,12 @@ Level1​        首先考察chroot
 Level1.0
 Level1.1​        同上，一样的做法。
 Level2.0​        交换idx3和idx4的位置
-Level2.1​        交
+Level2.1​        交换idx1和idx4.
+​        ps：
+
+​        输入五个字符，转化为ascii后以int类型贮存，从栈布局可以看出v10大小是4个字，所以第五个字被储存在v11。
+Level3.0​        reverse
+Le
                       
                     </p>
                     
@@ -561,13 +559,14 @@ Level2.1​        交
                     <p>
                       
                         
-			
-				console.error("Error: [hexo-tag-aplayer] Meting support is disabled, cannot resolve the meting tags properly.");
-			 
+     
 
 Level1​        直接r，然后c到断点。
 Level2​        p/x $r12
-Level3​        不好描述，可以根据后面的正确随机数在栈中找到对应的位
+Level3​        不好描述，可以根据后面的正确随机数在栈中找到对应的位置，然后重新执行并输入。
+Level4​        。。。。
+Level5gdb脚本。
+
                       
                     </p>
                     
@@ -603,15 +602,16 @@ Level3​        不好描述，可以根据后面的正确随机数在栈中找
                     <p>
                       
                         
-			
-				console.error("Error: [hexo-tag-aplayer] Meting support is disabled, cannot resolve the meting tags properly.");
-			 
+     
 
 
 
 Level1需要设置*rdi = 0x1337，
 如果是按照目的意思程序的汇编代码长这样子：
-12345.section .text    .intel_syntax nopref
+12345.section .text    .intel_syntax noprefix    .global _start    _start :        mov rdi, 0x1337
+
+但是可以直接用pwntools传输mov rdi, 0x1337这一句。
+12345678910111213#!/usr/bi
                       
                     </p>
                     
@@ -647,14 +647,17 @@ Level1需要设置*rdi = 0x1337，
                     <p>
                       
                         
-			
-				console.error("Error: [hexo-tag-aplayer] Meting support is disabled, cannot resolve the meting tags properly.");
-			 
+     
 
 
 
 ​        整个专题其实就是一个shellcode编写的小练习，并不需要自己寻找漏洞点，写好shellcode直接注入就行。
-​        如果要将服务器的文件传输到本地
+​        如果要将服务器的文件传输到本地的话可以使用:
+1scp -i key -r hacker@dojo.pwn.college:/challenge [本地路径]
+
+
+
+Level1​        可以用pwntools的shellcraft模块，但是也可以手写shell
                       
                     </p>
                     

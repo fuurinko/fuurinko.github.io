@@ -3,16 +3,6 @@
 <html class="ie" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US">
 <![endif]-->
 <!--[if (gte IE 9)|!(IE)]><!-->
-<!--
-***************  *      *     *
-      8          *    *       *
-      8          *  *         *
-      8          **           *
-      8          *  *         *
-      8          *    *       *
-      8          *      *     *
-      8          *        *   ***********    -----Theme By Kieran(http://go.kieran.top)
--->
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
 <!--<![endif]-->
 
@@ -61,7 +51,6 @@
 <body class="home-template">
 -->
 <body id="index" class="lightnav animsition">
-
       <!-- ============================ Off-canvas navigation =========================== -->
 
     <div class="sb-slidebar sb-right sb-style-overlay sb-momentum-scrolling">
@@ -95,7 +84,7 @@
 				    
 				    <li><a href="/categories/HEAP-Unsortedbin/" class="animsition-link">HEAP-Unsortedbin<small>(1)</small></a></li>
 				    
-				    <li><a href="/categories/MESS/" class="animsition-link">MESS<small>(20)</small></a></li>
+				    <li><a href="/categories/MESS/" class="animsition-link">MESS<small>(19)</small></a></li>
 				    
 				    <li><a href="/categories/OTHER-IO-FILE/" class="animsition-link">OTHER - IO FILE<small>(1)</small></a></li>
 				    
@@ -263,11 +252,17 @@
                     <p>
                       
                         
-			
-				console.error("Error: [hexo-tag-aplayer] Meting support is disabled, cannot resolve the meting tags properly.");
-			 
+     
 
-1）Seccomp基础Seccomp简介​        就像ALSR，NX这样，Seccomp也是linux内核的一种安全机制。这种保护机制会禁用某些系统调用，有效避免了越权行为的发
+1）Seccomp基础Seccomp简介​        就像ALSR，NX这样，Seccomp也是linux内核的一种安全机制。这种保护机制会禁用某些系统调用，有效避免了越权行为的发生。
+启动Seccomp​        如果要编写调用Seccomp的程序，需要先安装相应的头文件。
+1apt install libseccomp-dev libseccomp2 seccomp
+
+
+
+
+
+Seccomp的模式以及参数比
                       
                     </p>
                     
@@ -303,14 +298,19 @@
                     <p>
                       
                         
-			
-				console.error("Error: [hexo-tag-aplayer] Meting support is disabled, cannot resolve the meting tags properly.");
-			 
+     
 
 0）​        哈哈，还是连续剧，我也想不到捏。我也不想捏。
 1）问题​        pwndocker体验了快一周，目前来说主要问题有这几个：
 
-启动tmux进行调试时机器发
+启动tmux进行调试时机器发热严重，风扇狂转
+
+挂载文件夹内文件不同步
+
+快照的制作相对麻烦（时间久，步骤多）
+
+打开需要输入命令，有点烦。
+​    想了怪久的，就想到这三点，第三点纯属鸡蛋里挑骨头，主要pwndocker体验确实比较优雅，为了美观用vim编辑exp
                       
                     </p>
                     
@@ -346,12 +346,11 @@
                     <p>
                       
                         
-			
-				console.error("Error: [hexo-tag-aplayer] Meting support is disabled, cannot resolve the meting tags properly.");
-			 
+     
 
 1)前言​        在看完csapp的异常控制流之后，对于信号以及系统调用有了更加深入的了解，故借此机会探明SROP，这个本身并不复杂的知识点。
-2）SROP原理​       
+2）SROP原理​         当用户向内核发起signal时，此时系统切换为内核态，并且由内核保存进程的上下文（通常是一些寄存器状态）至用户栈，然后切换回用户态，执行信号处理程序。程序执行完毕后，再次切换成内核态，将保存的寄存器状态恢复后返回用户态。
+​      
                       
                     </p>
                     
@@ -387,11 +386,11 @@
                     <p>
                       
                         
-			
-				console.error("Error: [hexo-tag-aplayer] Meting support is disabled, cannot resolve the meting tags properly.");
-			 
+     
 
-1）前言​        之前看到star大哥开始学pwn力，而且是使用的iterm+pwndocker的环境，觉得非常优雅，便一直想尝试一下，正好最近在研究docker的使用，可以拿
+1）前言​        之前看到star大哥开始学pwn力，而且是使用的iterm+pwndocker的环境，觉得非常优雅，便一直想尝试一下，正好最近在研究docker的使用，可以拿来试一试。并且pwndocker也可以十分优雅地指定我们环境的glibc版本，所以是一个非常值得尝试的事。
+2）pwndocker启动​        首先是如何build pwndocker的问题。
+​        如果直接docker
                       
                     </p>
                     
@@ -469,57 +468,16 @@ docker基础架构​    对于docker，在了解基础命令之前我们需要�
                     <p>
                       
                         
-			
-				console.error("Error: [hexo-tag-aplayer] Meting support is disabled, cannot resolve the meting tags properly.");
-			 
+     
 
-1）​    由于看腻了typora原主题的python高亮的丑兮兮的屎黄色注释，决定换个主题。然而找遍整个主题列表，并没有我看得上的主题。本来打算作罢，但想起最近因为写小程序，学了一
+1）​    由于看腻了typora原主题的python高亮的丑兮兮的屎黄色注释，决定换个主题。然而找遍整个主题列表，并没有我看得上的主题。本来打算作罢，但想起最近因为写小程序，学了一些简单的css，是不是可以尝试一下修改某些主题的css文件，打造一个自己喜欢的主题捏。
+2）​    在下载主题的过程中我大致了解了一下typora主题开发的大致内容，其实主体感觉就是css（除了css，就是各种需要的字体。
+​    这里
                       
                     </p>
                     
                     <p class="pull-right readMore">
                         <a href="/2021/10/29/typora主题配置的一些心得/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2021/10/28/解决hexo无法显示高亮问题/">解决hexo无法显示高亮问题</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2021-10-28T08:13:26.358Z" itemprop="datePublished">
-          2021-10-28
-      </time>
-    
-    
-    | 
-    <a href='/tags/mess/'>mess</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                          
-     
-
-  博客搭了有快一年了，一直是hexo+git page的配置（不过这个搭配现在绝版了2333），但是一直荒废着，差不多到大一暑假的时候才想起要好好经营。
-​    但是代码高亮这个一直没有解决。
-​    之前我以为是博客主题配置的问题（就是highlight对象的值的问题），但是无论用怎么样的方法都不太行。
-​    在研究代码高亮的过程中，我才知道原来有个项目叫highlight.js,里面有各种各样的代码高亮
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2021/10/28/解决hexo无法显示高亮问题/">Read More...</a>
                     </p>
                     
                 </div>
@@ -593,14 +551,14 @@ E: Unable to correct problems, you have held bro
                     <p>
                       
                         
-			
-				console.error("Error: [hexo-tag-aplayer] Meting support is disabled, cannot resolve the meting tags properly.");
-			 
+     
 
 0)preview​    一般通过萌新一般在接触pwn的时候，一个必不可少的步骤就是下载pwntools，并且在自己人生第一个脚本上输入：
 1from pwn import*
 
-​ 
+​    我也如此。
+​    在学习pwn知识快一年的今天，倘若还是对pwntools这个神一般的工具迷茫不解，那我确实还不是一个合格的pwn手。
+​    这个系列的目的是通过简单的源码剖析，辅以相应的例题，探究pwn题，gdb调试，以及p
                       
                     </p>
                     
@@ -636,17 +594,61 @@ E: Unable to correct problems, you have held bro
                     <p>
                       
                         
-			
-				console.error("Error: [hexo-tag-aplayer] Meting support is disabled, cannot resolve the meting tags properly.");
-			 
+     
 
 1）abstract​    这个part主要综合了一些奇怪的调试中遇到的问题，不定期更新。
-2）格式化字符串-cctf-pwn31）pause（p）导致ERROR: Could no
+2）格式化字符串-cctf-pwn31）pause（p）导致ERROR: Could not find ELF base问题​    在开始动调这个exp的时候，发现一个很奇怪的点就是如果下的断点的模式gdb.attach(sh)，那么程序会异常退出，大概是这样：
+12345678910111213141516171819202
                       
                     </p>
                     
                     <p class="pull-right readMore">
                         <a href="/2021/10/27/gdb附加调试的一些黑魔法/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2021/10/13/pwn基础/">汇编小知识点</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2021-10-13T09:25:43.372Z" itemprop="datePublished">
+          2021-10-13
+      </time>
+    
+    
+    | 
+    <a href='/tags/pwn-Primary/'>pwn Primary</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+     
+
+[TOC]
+汇编语言1）寻址1/直接寻址12mov     rax, fs:28h #直接寻址，fs段寄存器+偏移量。这里其实是一个canary的值。
+
+2/间接寻址间接在使用指针以及解引用的形式
+1mov     [rbp+var_8], rax # 寄存器相对寻址。相当于把rax，也就是这个canary值放到rbp+var_8的地方。
+
+3/比例寻址例如在数组遍历中
+123456.dataarrayD 1,2,3,4
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2021/10/13/pwn基础/">Read More...</a>
                     </p>
                     
                 </div>

@@ -3,16 +3,6 @@
 <html class="ie" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US">
 <![endif]-->
 <!--[if (gte IE 9)|!(IE)]><!-->
-<!--
-***************  *      *     *
-      8          *    *       *
-      8          *  *         *
-      8          **           *
-      8          *  *         *
-      8          *    *       *
-      8          *      *     *
-      8          *        *   ***********    -----Theme By Kieran(http://go.kieran.top)
--->
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
 <!--<![endif]-->
 
@@ -61,7 +51,6 @@
 <body class="home-template">
 -->
 <body id="index" class="lightnav animsition">
-
       <!-- ============================ Off-canvas navigation =========================== -->
 
     <div class="sb-slidebar sb-right sb-style-overlay sb-momentum-scrolling">
@@ -95,7 +84,7 @@
 				    
 				    <li><a href="/categories/HEAP-Unsortedbin/" class="animsition-link">HEAP-Unsortedbin<small>(1)</small></a></li>
 				    
-				    <li><a href="/categories/MESS/" class="animsition-link">MESS<small>(20)</small></a></li>
+				    <li><a href="/categories/MESS/" class="animsition-link">MESS<small>(19)</small></a></li>
 				    
 				    <li><a href="/categories/OTHER-IO-FILE/" class="animsition-link">OTHER - IO FILE<small>(1)</small></a></li>
 				    
@@ -262,10 +251,14 @@
                 <div class="col-md-8">
                     <p>
                       
-                        overview​        
+                        
+    
+
+[TOC]
+overview​        
 RE​        (随航突然又可以用了（（（（但是稍微有些怪，一不小心就卡死）
 ​        
-​    
+​
 
                       
                     </p>
@@ -339,14 +332,12 @@ re​        含有后门函数，直接的想法是利用hof将chunk分配至�
                     <p>
                       
                         
-			
-				console.error("Error: [hexo-tag-aplayer] Meting support is disabled, cannot resolve the meting tags properly.");
-			 
+     
 
 overview
 ​        全绿捏。
 逆向​        
-1234567891011121314151617181920212223unsigned __int64 add
+1234567891011121314151617181920212223unsigned __int64 add()&#123;  const void **i; // [rsp+0h] [rbp-120h]  __int64 size; // [rsp+8h] [rbp-118h]  char s[256]; // [rsp+10h] [rbp-1
                       
                     </p>
                     
@@ -420,14 +411,12 @@ stackret2libc1234567891011121314151617181920212223242526272829303132333435363738
                     <p>
                       
                         
-			
-				console.error("Error: [hexo-tag-aplayer] Meting support is disabled, cannot resolve the meting tags properly.");
-			 
+     
 
 [TOC]
 stack漏洞点控制程序执行流栈溢出ret2syscall​        利用程序自带的gadget，构造syscall。
 ​        对应板子
-ret2libcr
+ret2libcret2shellcode泄露内存格式化字符串1）泄露任意地址123456--------获取栈变量对应的地址------------%n$p #输出栈上第n+1个格式化字符串输出参数--------获取栈变量对应的字符串----------
                       
                     </p>
                     
@@ -463,14 +452,14 @@ ret2libcr
                     <p>
                       
                         
-			
-				console.error("Error: [hexo-tag-aplayer] Meting support is disabled, cannot resolve the meting tags properly.");
-			 
+     
 
 mrctf2020_shellcode_revengeoverview
 看起来像ret2shellcode。
 
-逆向​        不知道为什么ida不能一键f5，不过也懒得修了，程
+逆向​        不知道为什么ida不能一键f5，不过也懒得修了，程序逻辑也比较简单，就是一个write和read。然后程序会对输入的字符进行ascii码的大小的比较，
+​        
+​        分析一下这个流程图，我们的目的是执行loc_1236，一共有三个箭头指向它，归纳以后分别是(0x60
                       
                     </p>
                     
@@ -506,12 +495,10 @@ mrctf2020_shellcode_revengeoverview
                     <p>
                       
                         
-			
-				console.error("Error: [hexo-tag-aplayer] Meting support is disabled, cannot resolve the meting tags properly.");
-			 
+     
 
 jarvisoj_level5​        这个题吧，我好像以前做过，是个纯纯的ret2csu的板子题。
-1234567891011121314151617181920212223
+12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364from pwn import*from LibcSearcher impo
                       
                     </p>
                     
@@ -547,12 +534,12 @@ jarvisoj_level5​        这个题吧，我好像以前做过，是个纯纯的
                     <p>
                       
                         
-			
-				console.error("Error: [hexo-tag-aplayer] Meting support is disabled, cannot resolve the meting tags properly.");
-			 
+     
 
 PicoCTF_2018_got-shell​        虽然但是，这个题为什么这么pwncollege。guide的风格，函数的名字。。。完全一致好吧。
-​        可以写
+​        可以写4字节，正好可以修改got表为后门函数。那就修改puts咯？
+
+
                       
                     </p>
                     
@@ -588,14 +575,16 @@ PicoCTF_2018_got-shell​        虽然但是，这个题为什么这么pwncolle
                     <p>
                       
                         
-			
-				console.error("Error: [hexo-tag-aplayer] Meting support is disabled, cannot resolve the meting tags properly.");
-			 
+     
 
 
 
 1）前言​        绿盟杯pwn1，格式化字符串+沙盒orw。保护全开。
-​        首先对于格式化字符串我的理解就不是很深刻，甚至从来没有完整地刷过一道格式化字符串的
+​        首先对于格式化字符串我的理解就不是很深刻，甚至从来没有完整地刷过一道格式化字符串的题目。
+​        所以碰到这道题，算是又给我敲了第nn个警钟。
+​        非常清晰地告诉我：我是垃圾。
+2）格式化字符串基本原理​        ctfwiki上的格式化字符串教程写得挺好的，可以参考。
+格式化字符串参数1%
                       
                     </p>
                     
@@ -631,9 +620,7 @@ PicoCTF_2018_got-shell​        虽然但是，这个题为什么这么pwncolle
                     <p>
                       
                         
-			
-				console.error("Error: [hexo-tag-aplayer] Meting support is disabled, cannot resolve the meting tags properly.");
-			 
+     
 
 ​    overview
 
@@ -641,7 +628,11 @@ PicoCTF_2018_got-shell​        虽然但是，这个题为什么这么pwncolle
 逆向​        菜单中的功能比较少，但是比较奇怪。
 
 searche word
-​        这个函数大致实现了一个“查找”word，如果找到
+​        这个函数大致实现了一个“查找”word，如果找到则输出，并选择是否将其删除。
+​        
+​        
+​    
+
                       
                     </p>
                     

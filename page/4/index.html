@@ -3,16 +3,6 @@
 <html class="ie" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US">
 <![endif]-->
 <!--[if (gte IE 9)|!(IE)]><!-->
-<!--
-***************  *      *     *
-      8          *    *       *
-      8          *  *         *
-      8          **           *
-      8          *  *         *
-      8          *    *       *
-      8          *      *     *
-      8          *        *   ***********    -----Theme By Kieran(http://go.kieran.top)
--->
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
 <!--<![endif]-->
 
@@ -61,7 +51,6 @@
 <body class="home-template">
 -->
 <body id="index" class="lightnav animsition">
-
       <!-- ============================ Off-canvas navigation =========================== -->
 
     <div class="sb-slidebar sb-right sb-style-overlay sb-momentum-scrolling">
@@ -95,7 +84,7 @@
 				    
 				    <li><a href="/categories/HEAP-Unsortedbin/" class="animsition-link">HEAP-Unsortedbin<small>(1)</small></a></li>
 				    
-				    <li><a href="/categories/MESS/" class="animsition-link">MESS<small>(20)</small></a></li>
+				    <li><a href="/categories/MESS/" class="animsition-link">MESS<small>(19)</small></a></li>
 				    
 				    <li><a href="/categories/OTHER-IO-FILE/" class="animsition-link">OTHER - IO FILE<small>(1)</small></a></li>
 				    
@@ -263,14 +252,15 @@
                     <p>
                       
                         
-			
-				console.error("Error: [hexo-tag-aplayer] Meting support is disabled, cannot resolve the meting tags properly.");
-			 
+     
 
 「前面不太记得了，从level3记起」
 level3 ./embryoio_level3  xkbdyoisnx    
 Level4export jouixn = xxx
-Level
+Level5​    一个标准输入重定向的考察，
+./embryoio_level5 &lt; /tmp/mihsjr
+​        还需要编辑mihsjr 的内容为给的密码。
+Level6​        一个输出重定向，创建对应文件./emb
                       
                     </p>
                     
@@ -338,14 +328,13 @@ Level
                     <p>
                       
                         
-			
-				console.error("Error: [hexo-tag-aplayer] Meting support is disabled, cannot resolve the meting tags properly.");
-			 
+     
 
 
 
 0）​        自从抛弃虚拟机，利用ida for mac+pwndocker实现完全mac环境以后，深觉优雅的同时，也遇见了不少坑。
-​        其中ida的坑更是坑
+​        其中ida的坑更是坑人于无形之中。因为如果不打开win的7.5（甚至7.6）做对比，你甚至不知道你遇见的一些奇怪的东西，是7.0 mac版特有的，已经被优化了的坑，还是自身逆向水平问题。
+​        作为一个逆向废物，7.0 for mac属实是给本来就
                       
                     </p>
                     
@@ -381,11 +370,14 @@ Level
                     <p>
                       
                         
-			
-				console.error("Error: [hexo-tag-aplayer] Meting support is disabled, cannot resolve the meting tags properly.");
-			     
+         
 
-UNLINK​        就是将free chunk从双向循环链表中解链的过程，当然这里的解链一般来说是指在对空闲块进行合并的时候的unlink。借用malloc lab中
+UNLINK​        就是将free chunk从双向循环链表中解链的过程，当然这里的解链一般来说是指在对空闲块进行合并的时候的unlink。借用malloc lab中的简化的unlink的代码，就是：
+12SET_PREV(next,prev);SET_NEXT(prev,next)
+
+
+
+​        也就是把下一个chunk的PREV位设为上一个chunk的bp，把上一个chunk的next位设
                       
                     </p>
                     
@@ -421,12 +413,13 @@ UNLINK​        就是将free chunk从双向循环链表中解链的过程，�
                     <p>
                       
                         
-			
-				console.error("Error: [hexo-tag-aplayer] Meting support is disabled, cannot resolve the meting tags properly.");
-			 
+     
 
 Off by one​        单/空字节溢出攻击。
-​        通常来说简单的off by one的漏洞点来自于编写时对边界控制不严格，导致每次输入的字符都能比规定的最大
+​        通常来说简单的off by one的漏洞点来自于编写时对边界控制不严格，导致每次输入的字符都能比规定的最大字符大那么一些（一个，或者几个）。这些字节溢出到物理地址相邻的下一个堆块，就能修改下一个chunk的size或者prev_inuse，通过这样的溢出，就能够整一些有趣的攻击。
+​        通常单字节溢出的利用方式有如下几种：
+
+溢出字
                       
                     </p>
                     
@@ -462,12 +455,10 @@ Off by one​        单/空字节溢出攻击。
                     <p>
                       
                         
-			
-				console.error("Error: [hexo-tag-aplayer] Meting support is disabled, cannot resolve the meting tags properly.");
-			 
+     
 
 fastbin？​    
-​    长度在32-160(32位系统是16-80)的free堆块。通过fastbinlist储存，单向链表，所以fast。fastbin attack一
+​    长度在32-160(32位系统是16-80)的free堆块。通过fastbinlist储存，单向链表，所以fast。fastbin attack一个最简单的利用就是UAF，其次就是fastbin double free。ctf pwn中与fastbin相关的还有就是在unsortedbin attack中涉及到的，也是ptmalloc机制中的一种的malloc_consolidate
                       
                     </p>
                     
@@ -503,13 +494,19 @@ fastbin？​
                     <p>
                       
                         
-			
-				console.error("Error: [hexo-tag-aplayer] Meting support is disabled, cannot resolve the meting tags properly.");
-			 
+     
 
 0）前言​        鸽了三个月的malloc lab，作为复习堆题的开始。
 ​        计画完成时间是12.5之前，也就是三天。
-1）大体设计​        对于整体的操
+1）大体设计​        对于整体的操作的大致模型以及allocater和freer需要做的工作如下：
+​        分配器：
+
+在第一次分配chunk时，对堆空间进行初始化=&gt;mm_init()    
+
+创建指定类型的chunk。
+​    free
+
+利用隐式空
                       
                     </p>
                     
@@ -545,12 +542,12 @@ fastbin？​
                     <p>
                       
                         ​    
-			
-				console.error("Error: [hexo-tag-aplayer] Meting support is disabled, cannot resolve the meting tags properly.");
-			 
+     
 ​        为了跟上网校的集群重构计划，这下狠狠地开始学习运维了。
 ​        在开始具体的openstack学习之前，首先需要学习一下一些基本的运维概念。
-虚拟化
+虚拟化/容器化​        之前在学习docker的时候对于容器化已经有一个比较到位的认知了，而与容器化相对应的虚拟化并没有深入理解。
+​        这里的虚拟化特指服务器虚拟化。就是在一台服务器上运行虚拟运行多个服务器。
+虚拟化分类完全
                       
                     </p>
                     
@@ -586,15 +583,15 @@ fastbin？​
                     <p>
                       
                         
-			
-				console.error("Error: [hexo-tag-aplayer] Meting support is disabled, cannot resolve the meting tags properly.");
-			 
+     
 
 逆向​        程序实现了一个简单的计算器功能。运算有加减乘除四种。
 ​        
 ​        并且程序再次自带计时功能，需要patch。
 ​        
-​  
+​        静态链接，所以肯定不能用ret2libc那一套，只能试图ROP一下。
+​        程序主要功能通过get_expr和calculate（原本不叫这个）两个函数实现。
+​        get_expr主要用于定位我们输入的
                       
                     </p>
                     
@@ -630,11 +627,13 @@ fastbin？​
                     <p>
                       
                         ​    
-			
-				console.error("Error: [hexo-tag-aplayer] Meting support is disabled, cannot resolve the meting tags properly.");
-			     
+         
 ​        最近刚花了三百大洋从室友那里买回了白嫖了半个学期的妙控鼠标，钱转了不到两天，鼠标开始疯狂卡顿。
-​        最初以为是外接了太多东西，把键盘啥的
+​        最初以为是外接了太多东西，把键盘啥的都换成了线控，但是问题还是不见解决。
+​        最后是这篇文章解决了我的问题。
+​        macos系统里面，蓝牙鼠标偶尔卡顿，飘的问题
+​        解决方法也很简单，把网络中的蓝牙PAN的顺序调到最前。
+​     
                       
                     </p>
                     
