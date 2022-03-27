@@ -8,7 +8,7 @@
 
 <head>
 
-  <title>off by one /chunk overlapping | Rin</title>
+  <title>hexo调教合集 | Rin</title>
   <!-- Meta data -->
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -45,10 +45,7 @@
   
 
   <style>.col-md-8.col-md-offset-2.opening-statement img{display:none;}</style>
-<link rel="stylesheet" href="/css/prism.css" type="text/css"><link rel="stylesheet" href="/assets/css/APlayer.min.css" class="aplayer-style-marker">
-<script src="/assets/js/APlayer.min.js" class="aplayer-script-marker"></script>
-<script src="/assets/js/Meting.min.js" class="meting-script-marker"></script>
-</head>
+<link rel="stylesheet" href="/css/prism.css" type="text/css"></head>
 
 <!--
 <body class="post-template">
@@ -204,145 +201,149 @@
         <div class="row col-md-offset-2">
             <div class="col-md-8">
     			<span class="post-meta">
-      <time datetime="2021-12-08T02:30:31.469Z" itemprop="datePublished">
-          2021-12-08
+      <time datetime="2022-03-26T04:12:52.291Z" itemprop="datePublished">
+          2022-03-26
       </time>
     
     
     | 
-    <a href='/tags/heap-pro/'>heap_pro</a>
+    <a href='/tags/mess/'>mess</a>
     
     
 </span>
-                <h1>off by one /chunk overlapping</h1>
+                <h1>hexo调教合集</h1>
             </div>
         </div>
         <div class="col-md-8 col-md-offset-2">
-      		
-    <div id="aplayer-nLjsVlnS" class="aplayer aplayer-tag-marker meting-tag-marker"
-         data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"
-    ></div> 
+      		<p>​        如何实现一个好看且满足我所有需求的blog？</p>
+<h4><span id="高亮">高亮</span></h4><p>​    之前我以为是博客主题配置的问题（就是highlight对象的值的问题），但是无论用怎么样的方法都不太行。</p>
+<p>​    在研究代码高亮的过程中，我才知道原来有个项目叫highlight.js,里面有各种各样的代码高亮的css文件。</p>
+<p>​    一开始我是将博客原本的代码高亮的css文件替换成我想要的样式，但是无论替换成什么样式，博客中代码都是蓝色，清一色的蓝色。然后我意识到，这根本不是什么代码高亮的样式，这根本就是，没有代码高亮。</p>
+<p>​    然后我开始在网上寻找解决方案，搜索的关键词是hexo 无法显示代码高亮，辗转来回，找到了一篇文章。</p>
+<p>​    <a target="_blank" rel="noopener" href="https://igeek.cloud/2021/01/13/hexo%E4%B8%ADhighlight-js%E4%BB%A3%E7%A0%81%E9%AB%98%E4%BA%AE%E7%9A%84%E4%BF%AE%E6%94%B9%E6%96%B9%E6%B3%95/">hexo中highlight.js代码高亮的修改方法</a></p>
+<p>​    按照文章中的方法，我在主题layout文件夹中的_post.ejs文件随便找了个角落，把</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">COPY<span class="comment">&lt;!-- Highlight.js --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">&quot;stylesheet&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">href</span>=<span class="string">&quot;//highlightjs.org/static/demo/styles/night-owl.css&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line">    hljs.initHighlightingOnLoad();</span><br><span class="line">&lt;/script</span><br></pre></td></tr></table></figure>
 
-<h2 id="Off-by-one"><a href="#Off-by-one" class="headerlink" title="Off by one"></a>Off by one</h2><p>​        单/空字节溢出攻击。</p>
-<p>​        通常来说简单的off by one的漏洞点来自于编写时对边界控制不严格，导致每次输入的字符都能比规定的最大字符大那么一些（一个，或者几个）。这些字节溢出到物理地址相邻的下一个堆块，就能修改下一个chunk的size或者<code>prev_inuse</code>，通过这样的溢出，就能够整一些有趣的攻击。</p>
-<p>​        通常单字节溢出的利用方式有如下几种：</p>
-<ol>
-<li>溢出字节任意可控制字节：修改chunk size，造成堆叠，泄露或覆盖其他块的数据</li>
-<li>溢出空字节：修改下一个chunk的<code>prev_inuse</code>，使得当前chunk状态为free，然后就可以：1）利用unlink进行攻击。2）对于下一个chunk来说，前一个chunk状态为free，自身的prev_size域启用，就能够伪造<code>prev_size</code>，改变前一个chunk的size，造成堆叠。</li>
-</ol>
-<p>​        </p>
-<p>​        从ctf-wiki上的一个简单的小例子开始：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">my_gets</span><span class="params">(<span class="keyword">char</span> *ptr,<span class="keyword">int</span> size)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i;</span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;=size;i++)#栅栏错误</span><br><span class="line">    &#123;</span><br><span class="line">        ptr[i]=getchar();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> i;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">void</span> *chunk1,*chunk2;</span><br><span class="line">    chunk1=<span class="built_in">malloc</span>(<span class="number">16</span>);</span><br><span class="line">    chunk2=<span class="built_in">malloc</span>(<span class="number">16</span>);</span><br><span class="line">    <span class="built_in">puts</span>(<span class="string">&quot;Get Input:&quot;</span>);</span><br><span class="line">    my_gets(chunk1,<span class="number">16</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-12-08%20%E4%B8%8B%E5%8D%882.09.13.png" alt="截屏2021-12-08 下午2.09.13">        </p>
-<p>可以看到0x1994020的最低位被覆盖为了“61”，也就是a的小端序。当然这里是因为前一个chunk属于已分配状态，所以下一个chunk的<code>prev_size</code>被内存复用为了前一个chunk的内容。</p>
-<p>以及这个字符串操作的例子</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">char</span> buffer[<span class="number">40</span>]=<span class="string">&quot;&quot;</span>;</span><br><span class="line">    <span class="keyword">void</span> *chunk1;</span><br><span class="line">    chunk1=<span class="built_in">malloc</span>(<span class="number">24</span>);</span><br><span class="line">    <span class="built_in">puts</span>(<span class="string">&quot;Get Input&quot;</span>);</span><br><span class="line">    gets(buffer);</span><br><span class="line">    <span class="keyword">if</span>(<span class="built_in">strlen</span>(buffer)==<span class="number">24</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">strcpy</span>(chunk1,buffer);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-12-08%20%E4%B8%8B%E5%8D%882.30.56.png" alt="截屏2021-12-08 下午2.30.56"></p>
-<p>![截屏2021-12-08 下午2.32.03](/Users/rin/Library/Application Support/typora-user-images/截屏2021-12-08 下午2.32.03.png)</p>
-<p>这样next chunk的最低位就被0覆盖了。</p>
-<h3 id="chunk-overlapping"><a href="#chunk-overlapping" class="headerlink" title="chunk overlapping"></a>chunk overlapping</h3><p>​        off by one的一个比较简单的利用就是chunk overlapping，简单讲就是通过溢出将chunk的size位修改，导致几个连续的chunk的内存空间发生了重叠，借此可以泄露一些数据或者覆盖chunk指针。</p>
-<p>​        在举例子之前先复习一下与chunk size有关的一些操作。</p>
-<p>​        获取当前chunk size ：通过堆指针的直接获取size位</p>
-<p>​        获取当前chunk的use状态：通过当前chunk bp+chunk size获取下一个chunk的bp，然后获得prev_inuse位。</p>
-<p>​        获取前一个chunk size  ：利用当前chunk指针获取当前chunk的prev size。</p>
-<p>​        获取下一个chunk的地址 ：利用当前chunk的size，下一个chunk地址即为：当前chunk指针+size。</p>
-<p>​        获取前一个chunk的信息：先通过prev_size算出前一个chunl的堆指针，然后再利用前一个chunk的对指针来获得相关信息。</p>
-<h4 id="HITCON-Trainging-lab13"><a href="#HITCON-Trainging-lab13" class="headerlink" title="HITCON Trainging lab13"></a>HITCON Trainging lab13</h4><p><a target="_blank" rel="noopener" href="https://github.com/ctf-wiki/ctf-challenges/tree/master/pwn/heap/chunk-extend-shrink/hitcontraning_lab13">题目链接</a></p>
-<h5 id="逆向"><a href="#逆向" class="headerlink" title="逆向"></a>逆向</h5><p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-12-08%20%E4%B8%8B%E5%8D%888.42.17.png" alt="截屏2021-12-08 下午8.42.17"></p>
-<p>​        <code>edit()</code>中，可以输入的字符比规定的多了一个字节。</p>
-<p>​        程序并没有其他非常规的操作，就是单纯的off by one+chunk overlapping的利用。</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">#思路如下</span><br><span class="line">add chunk0#<span class="number">0x18</span></span><br><span class="line">add chunk1#<span class="number">0x10</span></span><br><span class="line">edit chunk1 size to <span class="number">0x41</span></span><br><span class="line"><span class="built_in">free</span> chunk1</span><br><span class="line">add chunk2<span class="meta">#size = 0x30</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>丢了进去。</p>
+<p>​    然后我的博客就成功的显示了代码高亮。</p>
+<p>​    高亮的样式可以通过更改<code>sytels/xx</code>来实现，具体的样式可以从Highlight.js官网找到。</p>
+<h4><span id="音乐播放器">音乐播放器</span></h4><p>​        步骤其实比较简单。</p>
+<h5><span id="1安装插件">1:安装插件</span></h5><p>​        ```</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --save hexo-tag-aplayer</span><br></pre></td></tr></table></figure>
 
 
 
 
 
+<h5><span id="2更改配置">2:更改配置</span></h5><p>​        在hexo主题的config文件中增加</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">aplayer:</span></span><br><span class="line">  <span class="attr">meting:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
 
 
-<p>​        对于每个heap，程序会申请0x10作为heap结构，然后再申请size大小作为content。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">create(<span class="number">0x18</span>, <span class="string">&quot;dada&quot;</span>)  <span class="comment"># 0</span></span><br><span class="line">create(<span class="number">0x10</span>, <span class="string">&quot;ddaa&quot;</span>)  <span class="comment"># 1</span></span><br><span class="line">这样操作以后内存应该是</span><br><span class="line">chunk0/struct <span class="comment">#0x10</span></span><br><span class="line">chunk0/content <span class="comment">#0x18</span></span><br><span class="line">chunk1/struct<span class="comment">#0x10</span></span><br><span class="line">chunk1/content<span class="comment">#0x10</span></span><br></pre></td></tr></table></figure>
 
-<p>​        申请的chunk0为0x18，原因是chunk都处于allocated状态，下一个chunk的<code>prev_size</code>无效，所以会被上一个chunk给内存复用。所以这里0x18是0x10的chunk0和0x8的chunk1的prevsize域。</p>
-<p>申请两个heap后内存布局如图。</p>
-<p>00-20是heap1的struct，20-40是heap1 content，其中，heap1 struct保存了指向heap1 content的指针。然后40-60是heap2 struct，60-80是heap2 content。</p>
-<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-12-08%20%E4%B8%8B%E5%8D%889.23.24.png"></p>
-<p>​        通过<code>edit(0, &quot;/bin/sh\x00&quot; + &quot;a&quot; * *0x*10 + &quot;\x41&quot;)</code>将chunk1的size覆盖为0x41。</p>
-<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-12-08%20%E4%B8%8B%E5%8D%888.59.28.png" alt="截屏2021-12-08 下午8.59.28">        </p>
-<p>​        然后释放chunk1。</p>
-<p>​        释放chunk1后的内存如图。</p>
-<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-12-08%20%E4%B8%8B%E5%8D%8810.45.36.png" alt="截屏2021-12-08 下午10.45.36"></p>
-<p>​    48开始可以直接理解为一个0x41的内存块。申请一个0x30的chunk2，属于fastbin，直接找到上次释放的0x41的chunk1分配给heap2，从048开始储存。我们的目的是修改chunk在结构chunk中保存content ptr为<code>free_got_addr</code>,并且要show（）出来，就要确保<code>free_got_addr</code>的位置是原来chunk1content开始的位置，也就是078。</p>
-<p>​        所以只需要利用chunk2，在合适的地方将free got addr填写到chunk1的content ptr处，chunk2的size是多少其实关系不大，只要大于8就行。</p>
-<p>​        当chunk1的content ptr被覆盖成了free got addr，show（1）实际上是读取这个ptr指向的地址的内容，也就是free的真实地址。同时也就相当于把chunk1的content ptr变为了free的真实地址，所以我们只需要修改chunk1的content，就能修改free的真实地址，将我们获得的<code>system()</code>的地址替换就行。</p>
-<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-12-08%20%E4%B8%8B%E5%8D%889.31.45.png" alt="截屏2021-12-08 下午9.31.45"></p>
-<p>​        这样我们就获得了system·函数，要执行这个函数，只需要free一个含字符串<code>&quot;/bin/sh&quot;</code>的堆。也就是我们最开始add的工具人堆chunk0.</p>
-<p>​        这样基本就清楚了，但是还有一个问题我不是很理解，为什么在add chunk2的时候，chunk2的结构chunk的size位为0.或者说感觉根本没有结构chunk。</p>
-<h5 id="一些mzr"><a href="#一些mzr" class="headerlink" title="一些mzr"></a>一些mzr</h5><p>​        我超，我大彻大悟了。原来这么半年我一直理解错了何为堆叠。我理解错了啊！其实堆叠在动调中是看不到的，因为两个chunk完全被叠在了一起，就像我修改了chunk1的size1为41，这样heap1 struct和heap1 content就被叠成了0x41的空间，是叠成了0x41而不是struct把content覆盖了，如果这个时候申请内存空间的话，被叠起来的0x20的原本的content还是能够被申请到，所以我为什么chunk2的结构chunk离奇消失，就是因为被叠起来的0x20给隐藏了，然后再通过构造chunk2的content来伪造一个heap2struct，一切就说得通。</p>
-<p>​        再稍微细节一些，从代码中我们可以发现当我们free被堆叠的chunk1时，其实这个过程释放了两个chunk，一个是结构体chunk，是0x20size，另外一个是被修改为0x41的struct，然后两个chunk释放的先后顺序是先释放content，再释放struct，也就是fastbin中顺序是<code> struct（0x41）=&gt;content(0x20)</code></p>
-<p>​        这时候申请0x30的chunk2，首先需要申请0x20的struct，也就是被堆叠的heap1的content（这里存疑，如果fastbin的适配是smallest fit，那无话可说，但是似乎是first fit），然后再申请0x30的content，也就是被修改的0x41，这样就说得通了。</p>
-<p>​        但是很奇怪的一点，ctf-wiki上的说法却和这个不太一样，他认为将struct的size修改为0x41再free后，content就被struct吞并，而不是折叠了，free也只free一个0x41的chunk，而不是两个chunk。这个有待验证。</p>
-<p>​        我想通了，同时释放两个chunk是题目特地设置的，并且是必须要先释放content再释放struct才能达到效果。如果是先释放struct，0x41就会把content的所有chunk头之类的一并认为是user space然后释放，这样也就不存在content，自然就只释放一个堆块了。</p>
-<h5 id="一些动调"><a href="#一些动调" class="headerlink" title="一些动调"></a>一些动调</h5><p>​        exp打了。发现打不通。动调发现free的got表确实被被修改成<code>system()</code>，但是调用的时候似乎出现了问题，</p>
-<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-12-09%20%E4%B8%8A%E5%8D%8810.32.49.png" alt="截屏2021-12-09 上午10.32.49"></p>
-<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-12-09%20%E4%B8%8A%E5%8D%8810.51.22.png" alt="截屏2021-12-09 上午10.51.22"></p>
-<p>​        先检查问题是不是出现在<code>edit()</code>上</p>
-<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-12-09%20%E4%B8%8A%E5%8D%8810.42.21.png" alt="截屏2021-12-09 上午10.42.21"></p>
-<p>​        跟进<code>edit()</code>，可以看到堆结构岿然不动，但是这是正常的。因为被修改的应该是free的got表，显然那种东西不会在这里。        </p>
-<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-12-09%20%E4%B8%8A%E5%8D%8810.44.47.png" alt="截屏2021-12-09 上午10.44.47"></p>
-<p>​        rdi指向free的got表地址，got指向真实地址，似乎没有任何问题。</p>
-<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-12-09%20%E4%B8%8A%E5%8D%8810.54.46.png" alt="截屏2021-12-09 上午10.54.46"></p>
-<p>​        我悟了，问题所在就是，就是啥呢，就是我本地libc的符号和程序使用的对不上。所以getshell失败。好了，我爬了。</p>
-<p>​        </p>
-<p>​        （所以远端也打不通的原因是？）</p>
-<h4 id="Asis-CTF-2016-b00ks"><a href="#Asis-CTF-2016-b00ks" class="headerlink" title="Asis CTF 2016 b00ks"></a><a target="_blank" rel="noopener" href="https://github.com/ctf-wiki/ctf-challenges/tree/master/pwn/heap/off_by_one/Asis_2016_b00ks">Asis CTF 2016 b00ks</a></h4><p>Checksec:</p>
-<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-12-08%20%E4%B8%8B%E5%8D%883.40.30.png" alt="截屏2021-12-08 下午3.40.30"></p>
-<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-12-08%20%E4%B8%8B%E5%8D%883.49.14.png" alt="截屏2021-12-08 下午3.49.14"></p>
-<p>​        代码的逻辑相对来说有一些复杂，但是还是比较好逆的，管理book的结构体大概长这样：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">booklist</span>&#123;</span></span><br><span class="line">  <span class="keyword">int</span> idx;</span><br><span class="line">  <span class="keyword">char</span> *name;</span><br><span class="line">  <span class="keyword">char</span> *description;</span><br><span class="line">  <span class="keyword">int</span> size;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>​        然后就是常规的菜单题的逻辑，也没有后门函数，估计需要ret2libc。值得注意的是：保护除了canary，其他都开了，这样的意义我尚且不清楚。</p>
-<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-12-08%20%E4%B8%8B%E5%8D%884.39.02.png" alt="截屏2021-12-08 下午4.39.02"></p>
-<p>但是又联系到作者的名字是存贮在栈上的，也许可以利用。</p>
-<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-12-08%20%E4%B8%8B%E5%8D%884.42.56.png" alt="截屏2021-12-08 下午4.42.56"></p>
-<p>​        <code>    my_read</code>函数有一个疑点就是每一次输入完成以后都会将buf的开始的地址至0。也就是每个利用到<code>my_read()</code>的地址，开头一个字节都是0。</p>
-<p>​        为了验证这一操作，我们动态调试一下。</p>
-<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-12-08%20%E4%B8%8B%E5%8D%884.59.56.png" alt="截屏2021-12-08 下午4.59.56"></p>
-<p>​        操作没有验证到，反而发现一个很怪的东西，就是储存name和des的chunk的size并不是我们输入的，而是限定的0x20，也就是32。这样就对应了add函数最的一段：</p>
-<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-12-08%20%E4%B8%8B%E5%8D%885.01.29.png" alt="截屏2021-12-08 下午5.01.29"></p>
-<p>​        对着伪代码摁逆确实没什么思路，但是动调一下思路就清晰了，程序将原本储存name或者des的堆指针赋给了size为0x20的chunk。但是这么做的目的何在？</p>
-<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-12-08%20%E4%B8%8B%E5%8D%885.17.28.png" alt="截屏2021-12-08 下午5.17.28"></p>
-<p>​        没辙了，没有一点思路。</p>
-<p>​        （偷偷看一眼wp，只看逆向部分）</p>
-<p>​        <img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-12-08%20%E4%B8%8B%E5%8D%885.26.54.png" alt="截屏2021-12-08 下午5.26.54"></p>
-<p>​        （不懂，为什么对于边界的考虑不当，我觉得挺当的qwq。wp说存在空字节溢出，那估计又是我想错了。呜呜，我想通了。就是这个*buf = 0，我是傻逼。）</p>
-<p>​        其实是最后一位被清0了，但是我一直想的是原本的buf的开始被清0。现在想通了，其实特别简单，就是当i等于32的时候，buf还自增了，然后才判结束循环，这时候又将末位置0，就相当于多输了一个0，造成了空字节溢出。</p>
-<p>​        （wp关闭，开始瞎写时间）</p>
-<p>ToBeContinue</p>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>稍微总结一下昨天的学习吧。</p>
-<p>其实虽然做了大概十个小时，但是只做了三个题不到，其中有大段时间在修复崩坏的环境以及研究pwndocker的一些问题，还有无谓的逆向，结果做不出。</p>
-<p>并且对于hicton lab 13这道题 ，一个简单的概念卡了我很久。</p>
-<p>现在看来，原因有2:我没有认真逆向。错过了很多我不以为意的内容，pwn题只要一个细节没有注意到就会被坑很久，所以还是那个老生常谈的话题，逆向。其实这个问题一方面是我逆向太不认真了，还有一方面是刷的题太少，甚至没办法总结规律。比如通过这两道题我总结出来的规律是：一般在普通的ptr = malloc（）之外还会特地创建一个struct用来管理每个表项的结构（我早就应该想到的），这个结构中通常会储存堆中的指针（我早就应该知道的，但是不知道为什么，我半年来一直没有意识到这个问题），所以我们覆盖的其实是堆struct chunk中储存的chunk bp，而不是实际的chunk bp（那个储存在哪里都不清楚捏）。</p>
-<p>然后就是还是对chunk以及bin的一些操作或者说数据结构不是非常了解，导致概念不清。所以我暂停一天刷题，然后把malloc lab的分离适配搞完。</p>
-<p>​        </p>
-<p>​        </p>
-<p>​        </p>
 
+<h5><span id="3在正文中添加tag">3:在正文中添加tag</span></h5><p>例子</p>
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-26%20%E4%B8%8B%E5%8D%889.47.51.png" alt="截屏2022-03-26 下午9.47.51"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;% meting &quot;7342554262&quot; &quot;netease&quot; &quot;playlist&quot; &quot;theme:#555&quot; &quot;mutex:true&quot; &quot;listmaxheight:340px&quot; &quot;preload:auto&quot; %&#125; </span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th align="left">选项</th>
+<th>默认值</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">id</td>
+<td><strong>必须值</strong></td>
+<td>歌曲 id / 播放列表 id / 相册 id / 搜索关键字</td>
+</tr>
+<tr>
+<td align="left">server</td>
+<td><strong>必须值</strong></td>
+<td>音乐平台: <code>netease</code>, <code>tencent</code>, <code>kugou</code>, <code>xiami</code>, <code>baidu</code></td>
+</tr>
+<tr>
+<td align="left">type</td>
+<td><strong>必须值</strong></td>
+<td><code>song</code>, <code>playlist</code>, <code>album</code>, <code>search</code>, <code>artist</code></td>
+</tr>
+<tr>
+<td align="left">fixed</td>
+<td><code>false</code></td>
+<td>开启固定模式</td>
+</tr>
+<tr>
+<td align="left">mini</td>
+<td><code>false</code></td>
+<td>开启迷你模式</td>
+</tr>
+<tr>
+<td align="left">loop</td>
+<td><code>all</code></td>
+<td>列表循环模式：<code>all</code>, <code>one</code>,<code>none</code></td>
+</tr>
+<tr>
+<td align="left">order</td>
+<td><code>list</code></td>
+<td>列表播放模式： <code>list</code>, <code>random</code></td>
+</tr>
+<tr>
+<td align="left">volume</td>
+<td>0.7</td>
+<td>播放器音量</td>
+</tr>
+<tr>
+<td align="left">lrctype</td>
+<td>0</td>
+<td>歌词格式类型</td>
+</tr>
+<tr>
+<td align="left">listfolded</td>
+<td><code>false</code></td>
+<td>指定音乐播放列表是否折叠</td>
+</tr>
+<tr>
+<td align="left">storagename</td>
+<td><code>metingjs</code></td>
+<td>LocalStorage 中存储播放器设定的键名</td>
+</tr>
+<tr>
+<td align="left">autoplay</td>
+<td><code>true</code></td>
+<td>自动播放，移动端浏览器暂时不支持此功能</td>
+</tr>
+<tr>
+<td align="left">mutex</td>
+<td><code>true</code></td>
+<td>该选项开启时，如果同页面有其他 aplayer 播放，该播放器会暂停</td>
+</tr>
+<tr>
+<td align="left">listmaxheight</td>
+<td><code>340px</code></td>
+<td>播放列表的最大长度</td>
+</tr>
+<tr>
+<td align="left">preload</td>
+<td><code>auto</code></td>
+<td>音乐文件预载入模式，可选项： <code>none</code>, <code>metadata</code>, <code>auto</code></td>
+</tr>
+<tr>
+<td align="left">theme</td>
+<td><code>#ad7a86</code></td>
+<td>播放器风格色彩设置</td>
+</tr>
+</tbody></table>
+<h4><span id="一些报错">一些报错</span></h4>
             <div class="clearfix"></div>
             <hr class="nogutter">
         </div>
         <nav class="m-pagination col-md-8 col-md-offset-2 col-sm-24" role="pagination">
     
-    <a class="pull-left" href="../../10/unlink/" style="float: left;">
-        ← UNLINK
-    </a>
     
-    
-    <a class="pull-right" href="../../06/fastbin_attack/">
-        fastbin attack →
+    <a class="pull-right" href="../../25/hof_bcloud/">
+        bcloud →
     </a>
     
 </nav>

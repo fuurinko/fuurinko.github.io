@@ -84,7 +84,7 @@
 				    
 				    <li><a href="/categories/HEAP-Unsortedbin/" class="animsition-link">HEAP-Unsortedbin<small>(1)</small></a></li>
 				    
-				    <li><a href="/categories/MESS/" class="animsition-link">MESS<small>(19)</small></a></li>
+				    <li><a href="/categories/MESS/" class="animsition-link">MESS<small>(20)</small></a></li>
 				    
 				    <li><a href="/categories/OTHER-IO-FILE/" class="animsition-link">OTHER - IO FILE<small>(1)</small></a></li>
 				    
@@ -229,6 +229,48 @@
 
 <section id="intro">
     <div class="container">
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2021/11/17/妙控鼠标卡顿问题/">妙控鼠标卡顿问题</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2021-11-17T13:59:33.427Z" itemprop="datePublished">
+          2021-11-17
+      </time>
+    
+    
+    | 
+    <a href='/tags/mess/'>mess</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        ​    
+         
+​        最近刚花了三百大洋从室友那里买回了白嫖了半个学期的妙控鼠标，钱转了不到两天，鼠标开始疯狂卡顿。
+​        最初以为是外接了太多东西，把键盘啥的都换成了线控，但是问题还是不见解决。
+​        最后是这篇文章解决了我的问题。
+​        macos系统里面，蓝牙鼠标偶尔卡顿，飘的问题
+​        解决方法也很简单，把网络中的蓝牙PAN的顺序调到最前。
+​     
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2021/11/17/妙控鼠标卡顿问题/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
         
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
@@ -604,51 +646,6 @@ E: Unable to correct problems, you have held bro
                     
                     <p class="pull-right readMore">
                         <a href="/2021/10/27/gdb附加调试的一些黑魔法/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2021/10/13/pwn基础/">汇编小知识点</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2021-10-13T09:25:43.372Z" itemprop="datePublished">
-          2021-10-13
-      </time>
-    
-    
-    | 
-    <a href='/tags/pwn-Primary/'>pwn Primary</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-     
-
-[TOC]
-汇编语言1）寻址1/直接寻址12mov     rax, fs:28h #直接寻址，fs段寄存器+偏移量。这里其实是一个canary的值。
-
-2/间接寻址间接在使用指针以及解引用的形式
-1mov     [rbp+var_8], rax # 寄存器相对寻址。相当于把rax，也就是这个canary值放到rbp+var_8的地方。
-
-3/比例寻址例如在数组遍历中
-123456.dataarrayD 1,2,3,4
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2021/10/13/pwn基础/">Read More...</a>
                     </p>
                     
                 </div>
