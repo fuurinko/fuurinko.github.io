@@ -106,6 +106,8 @@
 				    
 				    <li><a href="/categories/STACK-ret2dlsolve/" class="animsition-link">STACK - ret2dlsolve<small>(1)</small></a></li>
 				    
+				    <li><a href="/categories/STACK-ret2shellcode/" class="animsition-link">STACK - ret2shellcode<small>(1)</small></a></li>
+				    
 				    <li><a href="/categories/STACK-sandbox/" class="animsition-link">STACK - sandbox<small>(1)</small></a></li>
 				    
 				    <li><a href="/categories/mess/" class="animsition-link">mess<small>(2)</small></a></li>
@@ -229,6 +231,47 @@
 
 <section id="intro">
     <div class="container">
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2021/06/05/off by one漏洞学习/">off by one漏洞学习</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2021-06-04T16:38:55.000Z" itemprop="datePublished">
+          2021-06-05
+      </time>
+    
+    
+    | 
+    <a href='/tags/heap/'>heap</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+     
+
+ 学习编写一个堆内存管理程序。
+但是这道题其实是ctf-wiki上关于chunk-overlapping的题。。。
+先看源码。我以后学堆题必从看源码开始。。
+12345678void read_input(char *buf,size_t size)&#123;	int ret ;  ret = read(0,buf,size);  if(ret &lt;=0)&#123;      puts(&quot;Error&q
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2021/06/05/off by one漏洞学习/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
         
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">

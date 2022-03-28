@@ -106,6 +106,8 @@
 				    
 				    <li><a href="/categories/STACK-ret2dlsolve/" class="animsition-link">STACK - ret2dlsolve<small>(1)</small></a></li>
 				    
+				    <li><a href="/categories/STACK-ret2shellcode/" class="animsition-link">STACK - ret2shellcode<small>(1)</small></a></li>
+				    
 				    <li><a href="/categories/STACK-sandbox/" class="animsition-link">STACK - sandbox<small>(1)</small></a></li>
 				    
 				    <li><a href="/categories/mess/" class="animsition-link">mess<small>(2)</small></a></li>
@@ -229,6 +231,51 @@
 
 <section id="intro">
     <div class="container">
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2022/01/29/pwncollege_Assembly_Refresher/">Assembly_Refresher</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-01-29T13:51:29.070Z" itemprop="datePublished">
+          2022-01-29
+      </time>
+    
+    
+    | 
+    <a href='/tags/pwncollege/'>pwncollege</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+     
+
+
+
+Level1需要设置*rdi = 0x1337，
+如果是按照目的意思程序的汇编代码长这样子：
+12345.section .text    .intel_syntax noprefix    .global _start    _start :        mov rdi, 0x1337
+
+但是可以直接用pwntools传输mov rdi, 0x1337这一句。
+12345678910111213#!/usr/bi
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/01/29/pwncollege_Assembly_Refresher/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
         
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
@@ -599,50 +646,6 @@ fastbin？​
                     
                     <p class="pull-right readMore">
                         <a href="/2021/11/22/openstack学习笔记/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2021/11/18/pwnable-calc/">pwnable-calc</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2021-11-18T02:30:24.678Z" itemprop="datePublished">
-          2021-11-18
-      </time>
-    
-    
-    | 
-    <a href='/tags/pwnable/'>pwnable</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-     
-
-逆向​        程序实现了一个简单的计算器功能。运算有加减乘除四种。
-​        
-​        并且程序再次自带计时功能，需要patch。
-​        
-​        静态链接，所以肯定不能用ret2libc那一套，只能试图ROP一下。
-​        程序主要功能通过get_expr和calculate（原本不叫这个）两个函数实现。
-​        get_expr主要用于定位我们输入的
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2021/11/18/pwnable-calc/">Read More...</a>
                     </p>
                     
                 </div>

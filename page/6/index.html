@@ -106,6 +106,8 @@
 				    
 				    <li><a href="/categories/STACK-ret2dlsolve/" class="animsition-link">STACK - ret2dlsolve<small>(1)</small></a></li>
 				    
+				    <li><a href="/categories/STACK-ret2shellcode/" class="animsition-link">STACK - ret2shellcode<small>(1)</small></a></li>
+				    
 				    <li><a href="/categories/STACK-sandbox/" class="animsition-link">STACK - sandbox<small>(1)</small></a></li>
 				    
 				    <li><a href="/categories/mess/" class="animsition-link">mess<small>(2)</small></a></li>
@@ -229,6 +231,46 @@
 
 <section id="intro">
     <div class="container">
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2021/10/27/gdb附加调试的一些黑魔法/">gdb附加调试的一些黑魔法</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2021-10-27T03:21:25.650Z" itemprop="datePublished">
+          2021-10-27
+      </time>
+    
+    
+    | 
+    <a href='/tags/gdb/'>gdb</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+     
+
+1）abstract​    这个part主要综合了一些奇怪的调试中遇到的问题，不定期更新。
+2）格式化字符串-cctf-pwn31）pause（p）导致ERROR: Could not find ELF base问题​    在开始动调这个exp的时候，发现一个很奇怪的点就是如果下的断点的模式gdb.attach(sh)，那么程序会异常退出，大概是这样：
+12345678910111213141516171819202
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2021/10/27/gdb附加调试的一些黑魔法/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
         
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
@@ -599,47 +641,6 @@ ret2dl_advanced1)review当FULL RELRO保护开启时，通过 dl_run_time来获�
                     
                     <p class="pull-right readMore">
                         <a href="/2021/08/02/ret2dl_advanced/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2021/06/05/off by one漏洞学习/">off by one漏洞学习</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2021-06-04T16:38:55.000Z" itemprop="datePublished">
-          2021-06-05
-      </time>
-    
-    
-    | 
-    <a href='/tags/heap/'>heap</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-     
-
- 学习编写一个堆内存管理程序。
-但是这道题其实是ctf-wiki上关于chunk-overlapping的题。。。
-先看源码。我以后学堆题必从看源码开始。。
-12345678void read_input(char *buf,size_t size)&#123;	int ret ;  ret = read(0,buf,size);  if(ret &lt;=0)&#123;      puts(&quot;Error&q
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2021/06/05/off by one漏洞学习/">Read More...</a>
                     </p>
                     
                 </div>
