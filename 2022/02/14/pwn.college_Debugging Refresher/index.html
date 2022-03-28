@@ -8,7 +8,7 @@
 
 <head>
 
-  <title>Sandboxing | Rin</title>
+  <title>Debugging Refresher | Rin</title>
   <!-- Meta data -->
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -204,8 +204,8 @@
         <div class="row col-md-offset-2">
             <div class="col-md-8">
     			<span class="post-meta">
-      <time datetime="2022-02-28T13:59:27.326Z" itemprop="datePublished">
-          2022-02-28
+      <time datetime="2022-02-14T08:16:26.477Z" itemprop="datePublished">
+          2022-02-14
       </time>
     
     
@@ -214,40 +214,31 @@
     
     
 </span>
-                <h1>Sandboxing</h1>
+                <h1>Debugging Refresher</h1>
             </div>
         </div>
         <div class="col-md-8 col-md-offset-2">
       		
-    <div id="aplayer-ZmvwSjTy" class="aplayer aplayer-tag-marker meting-tag-marker"
-         data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"
-    ></div> 
+    <div id="aplayer-RXiWOHgF" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div> 
 
-<h4 id="Level1"><a href="#Level1" class="headerlink" title="Level1"></a>Level1</h4><p>​        首先考察<code>chroot</code></p>
-<p>​        因为程序在将根目录设置为<code>/jail</code>的时候并没有切换当前工作目录为<code>/jail</code>，所以我们实际上还是在<code>/</code>目录，因此可以直接通过<code>argv[1]</code>    读取flag。</p>
-<p>​        执行脚本的时候需要添加<code>cwd</code>参数，使其工作目录为<code>/</code></p>
-<h4 id="Level2"><a href="#Level2" class="headerlink" title="Level2"></a>Level2</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">shellcode = asm(shellcraft.readfile(<span class="string">&#x27;flag&#x27;</span>,<span class="number">1</span>))</span><br><span class="line">p = process([<span class="string">&quot;/challenge/babyjail_level2&quot;</span>, <span class="string">&quot;/&quot;</span>],cwd=<span class="string">&#x27;/&#x27;</span>)</span><br><span class="line">p.send(shellcode)</span><br></pre></td></tr></table></figure>
-
-
-
-<h4 id="Level3"><a href="#Level3" class="headerlink" title="Level3"></a>Level3</h4><p>​            关键源码：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">assert(argc &gt; <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">   <span class="built_in">puts</span>(<span class="string">&quot;Checking to make sure you&#x27;re not trying to open the flag.\n&quot;</span>);</span><br><span class="line">   assert(<span class="built_in">strstr</span>(argv[<span class="number">1</span>], <span class="string">&quot;flag&quot;</span>) == <span class="literal">NULL</span>);</span><br><span class="line"></span><br><span class="line">   <span class="keyword">int</span> fd = open(argv[<span class="number">1</span>], O_RDONLY|O_NOFOLLOW);</span><br><span class="line">   <span class="keyword">if</span> (fd &lt; <span class="number">0</span>)</span><br><span class="line">       <span class="built_in">printf</span>(<span class="string">&quot;Failed to open the file located at `%s`.\n&quot;</span>, argv[<span class="number">1</span>]);</span><br><span class="line">   <span class="keyword">else</span></span><br><span class="line">       <span class="built_in">printf</span>(<span class="string">&quot;Successfully opened the file located at `%s`.\n&quot;</span>, argv[<span class="number">1</span>]);</span><br><span class="line"></span><br><span class="line">   <span class="keyword">char</span> jail_path[] = <span class="string">&quot;/tmp/jail-XXXXXX&quot;</span>;</span><br><span class="line">   assert(mkdtemp(jail_path) != <span class="literal">NULL</span>);</span><br><span class="line"></span><br><span class="line">   <span class="built_in">printf</span>(<span class="string">&quot;Creating a jail at `%s`.\n&quot;</span>, jail_path);</span><br><span class="line"></span><br><span class="line">   assert(chroot(jail_path) == <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">   <span class="built_in">puts</span>(<span class="string">&quot;Moving the current working directory into the jail.\n&quot;</span>);</span><br><span class="line">   assert(chdir(<span class="string">&quot;/&quot;</span>) == <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">   <span class="keyword">int</span> fffd = open(<span class="string">&quot;/flag&quot;</span>, O_WRONLY | O_CREAT);</span><br><span class="line">   write(fffd, <span class="string">&quot;FLAG&#123;FAKE&#125;&quot;</span>, <span class="number">10</span>);</span><br><span class="line">   close(fffd);</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-
+<h4><span id="level1">Level1</span></h4><p>​        直接r，然后c到断点。</p>
+<h4><span id="level2">Level2</span></h4><p>​        <code>p/x $r12</code></p>
+<h4><span id="level3">Level3</span></h4><p>​        不好描述，可以根据后面的正确随机数在栈中找到对应的位置，然后重新执行并输入。</p>
+<h4><span id="level4">Level4</span></h4><p>​        。。。。</p>
+<h4><span id="level5">Level5</span></h4><p>gdb脚本。</p>
 
             <div class="clearfix"></div>
             <hr class="nogutter">
         </div>
         <nav class="m-pagination col-md-8 col-md-offset-2 col-sm-24" role="pagination">
     
-    <a class="pull-left" href="../../../03/03/pwncollege_ProgramMisuse/" style="float: left;">
-        ← ProgramMisuse
+    <a class="pull-left" href="../../15/pwn.college_ReverseEngineering/" style="float: left;">
+        ← ReverseEngineering
     </a>
     
     
-    <a class="pull-right" href="../../15/ReverseEngineering/">
-        ReverseEngineering →
+    <a class="pull-right" href="../../../01/29/pwncollege_Assembly_Refresher/">
+        Assembly_Refresher →
     </a>
     
 </nav>

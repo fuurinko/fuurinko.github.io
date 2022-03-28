@@ -219,7 +219,7 @@
         </div>
         <div class="col-md-8 col-md-offset-2">
       		
-    <div id="aplayer-KvOOXwWA" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#FFB11B"></div>
+    <div id="aplayer-kKCZOVFs" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#FFB11B"></div>
 
 <h2><span id="overview">overview</span></h2><h4><span id><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-25%20%E4%B8%8B%E5%8D%888.34.10.png" alt="截屏2022-03-25 下午8.34.10"></span></h4><p>​        partial relro，可以改got表，也可以劫持hook。</p>
 <h2><span id="re">RE</span></h2><h3><span id="init">init</span></h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">memset</span>(s, <span class="number">0</span>, <span class="number">0x50</span>u);</span><br><span class="line"> <span class="built_in">puts</span>(<span class="string">&quot;Input your name:&quot;</span>);</span><br><span class="line"> my_read((<span class="keyword">int</span>)s, <span class="number">64</span>, <span class="number">10</span>);</span><br><span class="line"> v2 = (<span class="keyword">char</span> *)<span class="built_in">malloc</span>(<span class="number">0x40</span>u);</span><br><span class="line"> dword_804B0CC = (<span class="keyword">int</span>)v2;</span><br><span class="line"> <span class="built_in">strcpy</span>(v2, s);                                <span class="comment">// name is stored in heap</span></span><br><span class="line"> welcome(v2);</span><br></pre></td></tr></table></figure>
@@ -242,9 +242,9 @@
 <h3><span id></span></h3><h2><span id="利用">利用</span></h2><h4><span id="确定思路">确定思路</span></h4><p>​        目前先考虑更改got表的做法，劫持hook相对来说更加麻烦，反正都要leak libc。</p>
 <p>​        ps：在调试的时候发现如果是利<code>LD_PRELOAD</code>进行其他版本的libc加载的话，会使libc地址低于heap段，其实影响有限，原因也很好理解，但用关于<code>LD_PRELOAD</code>对于内存空间加载的影响的问题可能后面会写一篇笔记来专门研究。</p>
 <p><code>malloc_hook</code><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-27%20%E4%B8%8B%E5%8D%887.30.32.png" alt="截屏2022-03-27 下午7.30.32"></p>
-<p>​        程序在开始会申请很多乱七八糟的东西，不太好看。但是核心是先要改top chunk的size为-1，这里需要一些绕过，之后就相对常规。整体看来除了没有控制size以外似乎没有可以利用的漏洞了。</p>
+<p>​        程序在开始会申请很多乱七八糟的东西，不太好看。但是核心是先要改top chunk的size为-1,或者说0xffffffff，这里需要一些绕过，之后就相对常规。整体看来除了没有控制size以外似乎没有可以利用的漏洞了。</p>
 <p>此外或许可以更改<code>ptr_chunk</code>中top chunk的指针（不过这样似乎就不是hof了）。</p>
-<p>​        发现一些非常怪异的点，如果用ld preload加载自己的libc，那么topchunk和malloc hook的偏移也会改变，并且直接由低地址变为了高地址。需要更改的地址也更小，四舍五入更简单。</p>
+<p>​        发现一些非常怪异的点，如果用<code>Ld_preload</code>加载自己的libc，那么topchunk和malloc hook的偏移也会改变，并且直接由低地址变为了高地址。需要更改的地址也更小，四舍五入更简单。</p>
 <h4><span id="漏洞点">漏洞点</span></h4><p>​        看了很久，发现一个遗漏的点，在于<code>init()</code>    中，将s copy到v2中，是利用<code>strcpy</code>，这个之前在pwncollege中就被坑过，是一个人尽皆知的trick，利用覆盖空字节进行内存泄露。</p>
 <p>​        利用这个<code>strcpy</code>我们一共可以找到两个漏洞，第一个是print name的时候对于堆基址的泄露，另外一个是在填org和host的时候覆盖top chunk size为0xffffffff。</p>
 <p>​        覆盖size为0xffffffff后就相当于一个任意地址写了，为了leak libc，比较常规的思路是覆盖free got为puts got，以此打印atoi got来leak。leak之后利用edit来改atoi got为system从而getshell。</p>

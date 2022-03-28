@@ -8,7 +8,7 @@
 
 <head>
 
-  <title>Debugging Refresher | Rin</title>
+  <title>ReverseEngineering | Rin</title>
   <!-- Meta data -->
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -204,8 +204,8 @@
         <div class="row col-md-offset-2">
             <div class="col-md-8">
     			<span class="post-meta">
-      <time datetime="2022-02-14T08:16:26.477Z" itemprop="datePublished">
-          2022-02-14
+      <time datetime="2022-02-14T20:11:23.367Z" itemprop="datePublished">
+          2022-02-15
       </time>
     
     
@@ -214,33 +214,57 @@
     
     
 </span>
-                <h1>Debugging Refresher</h1>
+                <h1>ReverseEngineering</h1>
             </div>
         </div>
         <div class="col-md-8 col-md-offset-2">
       		
-    <div id="aplayer-WUIDfsgV" class="aplayer aplayer-tag-marker meting-tag-marker"
-         data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"
-    ></div> 
+    <div id="aplayer-uYdPASTG" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div> 
 
-<h4 id="Level1"><a href="#Level1" class="headerlink" title="Level1"></a>Level1</h4><p>​        直接r，然后c到断点。</p>
-<h4 id="Level2"><a href="#Level2" class="headerlink" title="Level2"></a>Level2</h4><p>​        <code>p/x $r12</code></p>
-<h4 id="Level3"><a href="#Level3" class="headerlink" title="Level3"></a>Level3</h4><p>​        不好描述，可以根据后面的正确随机数在栈中找到对应的位置，然后重新执行并输入。</p>
-<h4 id="Level4"><a href="#Level4" class="headerlink" title="Level4"></a>Level4</h4><p>​        。。。。</p>
-<h4 id="Level5"><a href="#Level5" class="headerlink" title="Level5"></a>Level5</h4><p>gdb脚本。</p>
+
+
+
+
+
+
+<h4><span id="level10">Level1.0</span></h4><p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-02-15%20%E4%B8%8A%E5%8D%884.12.04.png" alt="截屏2022-02-15 上午4.12.04"></p>
+<h4><span id="level11">Level1.1</span></h4><p>​        同上，一样的做法。</p>
+<h4><span id="level20">Level2.0</span></h4><p>​        交换idx3和idx4的位置</p>
+<h4><span id="level21">Level2.1</span></h4><p>​        交换idx1和idx4.</p>
+<p>​        ps：</p>
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-02-15%20%E4%B8%8B%E5%8D%883.28.51.png" alt="截屏2022-02-15 下午3.28.51"></p>
+<p>​        输入五个字符，转化为ascii后以int类型贮存，从栈布局可以看出v10大小是4个字，所以第五个字被储存在v11。</p>
+<h4><span id="level30">Level3.0</span></h4><p>​        reverse</p>
+<h4><span id="level31">Level3.1</span></h4><p>​        同上。</p>
+<h4><span id="level40">Level4.0</span></h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> ( j = <span class="number">0</span>; j &lt;= <span class="number">3</span>; ++j )</span><br><span class="line"> &#123;</span><br><span class="line">   <span class="keyword">for</span> ( k = <span class="number">0</span>; k &lt; <span class="number">4</span> - j; ++k )</span><br><span class="line">   &#123;</span><br><span class="line">     <span class="keyword">if</span> ( *((_BYTE *)&amp;v15 + k - <span class="number">14</span>) &gt; *((_BYTE *)&amp;v15 + k - <span class="number">13</span>) )</span><br><span class="line">     &#123;</span><br><span class="line">       v4 = *((_BYTE *)&amp;v15 + k - <span class="number">14</span>);</span><br><span class="line">       *((_BYTE *)&amp;v15 + k - <span class="number">14</span>) = *((_BYTE *)&amp;v15 + k - <span class="number">13</span>);</span><br><span class="line">       *((_BYTE *)&amp;v15 + k - <span class="number">13</span>) = v4;</span><br><span class="line">     &#125;</span><br><span class="line">   &#125;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+
+<p>​        一个简单的冒泡排序算法。</p>
+<h4><span id="level41">level4.1</span></h4><p>​        同上</p>
+<h4><span id="level50">Level5.0</span></h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> ( j = <span class="number">0</span>; j &lt;= <span class="number">4</span>; ++j )</span><br><span class="line">   *((_BYTE *)&amp;v13 + j - <span class="number">14</span>) ^= <span class="number">0xCD</span>u;</span><br></pre></td></tr></table></figure>
+
+<p>​        异或加密，需要用到简单的脚本（手抠也不是不行）</p>
+<h4><span id="level51">Level5.1</span></h4><p>​        同上，好饿。</p>
+<h4><span id="level60">Level6.0</span></h4><p>​        可以批量导出数据，避免手动处理数组</p>
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-02-15%20%E4%B8%8B%E5%8D%885.15.04.png" alt="截屏2022-02-15 下午5.15.04"></p>
+<p>​        程序的逻辑是输入的字符串进行降序排序-&gt;条件异或，我们需要通过结果反推输入值，</p>
+<p>​        因为程序一定会对字符串进行降序排序，所以输入字符串的顺序其实意义不大，无论是怎么打乱，最后处理的结果都是一样的。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">x = [<span class="number">0x64</span>, <span class="number">0x59</span>, <span class="number">0x60</span>, <span class="number">0x59</span>, <span class="number">0x7F</span>, <span class="number">0x40</span>, <span class="number">0x77</span>, <span class="number">0x4E</span>, <span class="number">0x77</span>, <span class="number">0x4C</span>, <span class="number">0x75</span>, <span class="number">0x4D</span>, <span class="number">0x73</span>, <span class="number">0x4B</span>, <span class="number">0x71</span>]</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">15</span>):</span><br><span class="line">    <span class="keyword">if</span> (i % <span class="number">2</span>  == <span class="number">0</span>):</span><br><span class="line">        x[i] ^= <span class="number">0x10</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">      x[i] ^= <span class="number">0x29</span></span><br><span class="line"></span><br><span class="line">    a = <span class="built_in">chr</span>(x[i])</span><br><span class="line">    <span class="built_in">print</span>(a)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
 
             <div class="clearfix"></div>
             <hr class="nogutter">
         </div>
         <nav class="m-pagination col-md-8 col-md-offset-2 col-sm-24" role="pagination">
     
-    <a class="pull-left" href="../../15/ReverseEngineering/" style="float: left;">
-        ← ReverseEngineering
+    <a class="pull-left" href="../../28/pwn.college_Sandboxing/" style="float: left;">
+        ← Sandboxing
     </a>
     
     
-    <a class="pull-right" href="../../../01/29/pwncollege_Assembly_Refresher/">
-        Assembly_Refresher →
+    <a class="pull-right" href="../../14/pwn.college_Debugging%20Refresher/">
+        Debugging Refresher →
     </a>
     
 </nav>
