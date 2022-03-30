@@ -88,7 +88,7 @@
 				    
 				    <li><a href="/categories/OTHER-IO-FILE/" class="animsition-link">OTHER - IO FILE<small>(1)</small></a></li>
 				    
-				    <li><a href="/categories/PWN-COLLEGE/" class="animsition-link">PWN.COLLEGE<small>(9)</small></a></li>
+				    <li><a href="/categories/PWN-COLLEGE/" class="animsition-link">PWN.COLLEGE<small>(10)</small></a></li>
 				    
 				    <li><a href="/categories/STACK-ARRAY-OUT-OF-BOUNDS/" class="animsition-link">STACK - ARRAY OUT OF BOUNDS<small>(1)</small></a></li>
 				    
@@ -231,6 +231,49 @@
 
 <section id="intro">
     <div class="container">
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2021/10/27/pwntools（1）--pwnlib.tube/">pwntools(1)-- pwnlib.tube</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2021-10-27T03:21:54.156Z" itemprop="datePublished">
+          2021-10-27
+      </time>
+    
+    
+    | 
+    <a href='/tags/pwntools/'>pwntools</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+     
+
+0)preview​    一般通过萌新一般在接触pwn的时候，一个必不可少的步骤就是下载pwntools，并且在自己人生第一个脚本上输入：
+1from pwn import*
+
+​    我也如此。
+​    在学习pwn知识快一年的今天，倘若还是对pwntools这个神一般的工具迷茫不解，那我确实还不是一个合格的pwn手。
+​    这个系列的目的是通过简单的源码剖析，辅以相应的例题，探究pwn题，gdb调试，以及p
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2021/10/27/pwntools（1）--pwnlib.tube/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
         
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
@@ -599,48 +642,6 @@ ida都关了懒得上图了。
                     
                     <p class="pull-right readMore">
                         <a href="/2021/08/03/pwn题中的一些奇怪的姿势/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2021/08/02/ret2dl_advanced/">ret2dl_advanced</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2021-08-02T03:22:53.000Z" itemprop="datePublished">
-          2021-08-02
-      </time>
-    
-    
-    | 
-    <a href='/tags/stack/'>stack</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-     
-
-ret2dl_advanced1)review当FULL RELRO保护开启时，通过 dl_run_time来获取libc基址的方式几乎无解。
-但是我们仍然能够找到某种方式来getshell。
-相关论文中给出一种解决方案，即通过dt_bug入口找到突破点。
-(Ps:为什么找不到相关的中文文章)
-2）dt_dbg？dt_dbg这个概念实际上并不新鲜，简单来说它可以被包含在libc.so文件中，比如我们指定一个特定的libc
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2021/08/02/ret2dl_advanced/">Read More...</a>
                     </p>
                     
                 </div>
