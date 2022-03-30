@@ -75,9 +75,9 @@
 				    
 				    <li><a href="/categories/Generalization/" class="animsition-link">Generalization<small>(2)</small></a></li>
 				    
-				    <li><a href="/categories/HEAP-Fastbin-Attack/" class="animsition-link">HEAP - Fastbin Attack<small>(8)</small></a></li>
+				    <li><a href="/categories/HEAP-Fastbin-Attack/" class="animsition-link">HEAP - Fastbin Attack<small>(7)</small></a></li>
 				    
-				    <li><a href="/categories/HEAP-House-Of-Force/" class="animsition-link">HEAP - House Of Force<small>(2)</small></a></li>
+				    <li><a href="/categories/HEAP-House-Of-Force/" class="animsition-link">HEAP - House Of Force<small>(3)</small></a></li>
 				    
 				    <li><a href="/categories/HEAP-Off-By-One/" class="animsition-link">HEAP - Off By One<small>(2)</small></a></li>
 				    
@@ -221,35 +221,33 @@
         </div>
         <div class="col-md-8 col-md-offset-2">
       		
-    <div id="aplayer-nXtCFWoO" class="aplayer aplayer-tag-marker meting-tag-marker"
-         data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"
-    ></div>     
+    <div id="aplayer-SavhsgHu" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div>     
 
-<h4 id="overview"><a href="#overview" class="headerlink" title="overview"></a>overview</h4><p>​        <img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-17%20%E4%B8%8B%E5%8D%883.11.04.png" alt="截屏2022-03-17 下午3.11.04"></p>
+<h4><span id="overview">overview</span></h4><p>​        <img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-17%20%E4%B8%8B%E5%8D%883.11.04.png" alt="截屏2022-03-17 下午3.11.04"></p>
 <p>​        搞不懂为什么这么多题都要stripped。</p>
-<h4 id="逆向"><a href="#逆向" class="headerlink" title="逆向"></a>逆向</h4><h5 id="add"><a href="#add" class="headerlink" title="add"></a>add</h5><h5 id=""><a href="#" class="headerlink" title=""></a><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-17%20%E4%B8%8B%E5%8D%885.27.45.png" alt="截屏2022-03-17 下午5.27.45"></h5><p>​        申请0x38大小的chunk，user space开始处存枪支的description,+0x19处存放枪支的name。</p>
+<h4><span id="逆向">逆向</span></h4><h5><span id="add">add</span></h5><h5><span id><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-17%20%E4%B8%8B%E5%8D%885.27.45.png" alt="截屏2022-03-17 下午5.27.45"></span></h5><p>​        申请0x38大小的chunk，user space开始处存枪支的description,+0x19处存放枪支的name。</p>
 <p>​        输入name的时候，最大长度为56，导致能够溢出，覆盖fd字段。</p>
 <p>​        同时每输入信息以后都会有一个保存指针的操作：<br><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-17%20%E4%B8%8B%E5%8D%885.35.13.png" alt="截屏2022-03-17 下午5.35.13"></p>
-<h5 id="free"><a href="#free" class="headerlink" title="free"></a>free</h5><p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-17%20%E4%B8%8B%E5%8D%885.33.13.png" alt="截屏2022-03-17 下午5.33.13"></p>
+<h5><span id="free">free</span></h5><p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-17%20%E4%B8%8B%E5%8D%885.33.13.png" alt="截屏2022-03-17 下午5.33.13"></p>
 <p>​            虽然free了ptr，但是会将allocaed chunk的fd字段作为free后的fd指针，存在ptr指向的地址。</p>
 <p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-17%20%E4%B8%8B%E5%8D%885.51.06.png" alt="截屏2022-03-17 下午5.51.06"></p>
 <p>​        可以看到bin中的fd。</p>
-<h5 id="show"><a href="#show" class="headerlink" title="show"></a>show</h5><p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-18%20%E4%B8%8B%E5%8D%882.06.39.png" alt="截屏2022-03-18 下午2.06.39"></p>
+<h5><span id="show">show</span></h5><p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-18%20%E4%B8%8B%E5%8D%882.06.39.png" alt="截屏2022-03-18 下午2.06.39"></p>
 <p>​    </p>
 <p>​            打印descrption时会将fd指针所所指向的内容打印出来。</p>
-<h5 id="message-amp-show-status"><a href="#message-amp-show-status" class="headerlink" title="message&amp;show status"></a>message&amp;show status</h5><p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-18%20%E4%B8%8B%E5%8D%883.22.16.png" alt="截屏2022-03-18 下午3.22.16">            </p>
+<h5><span id="messageampshow-status">message&amp;show status</span></h5><p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-18%20%E4%B8%8B%E5%8D%883.22.16.png" alt="截屏2022-03-18 下午3.22.16">            </p>
 <p>​        注意<code>fgets()</code>的定义，将128字节从stdin读进notice指向的地址（bss段上），然后在show status函数中打印出来。</p>
 <p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-18%20%E4%B8%8B%E5%8D%883.23.24.png" alt="截屏2022-03-18 下午3.23.24"></p>
 <p>​        所以可以看到，在一般情况下，向message留言，一般内存布局是这样子的</p>
 <p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-18%20%E4%B8%8B%E5%8D%884.01.09.png" alt="截屏2022-03-18 下午4.01.09"></p>
 <p>​        也就是a2a8指向a2c0，所以是向a2c0写入数据。这样如果把a2a8储存的数据改为某个函数的got表，就能够实现got表的更改。</p>
-<h4 id="利用"><a href="#利用" class="headerlink" title="利用"></a>利用</h4><h6 id="把fd项填为puts-got的地址，从而泄露libc基址，计算system地址"><a href="#把fd项填为puts-got的地址，从而泄露libc基址，计算system地址" class="headerlink" title="把fd项填为puts@got的地址，从而泄露libc基址，计算system地址"></a>把fd项填为<code>puts@got</code>的地址，从而泄露libc基址，计算system地址</h6><p>​    泄露地址利用了程序的第一个漏洞，正因为打印descrption时会将fd指针所所指向的内容打印出来，所以如果我们将其覆盖为<code>puts()</code>的got表地址，就能够泄露其地址。</p>
+<h4><span id="利用">利用</span></h4><h6><span id="把fd项填为putsgot的地址从而泄露libc基址计算system地址">把fd项填为<code>puts@got</code>的地址，从而泄露libc基址，计算system地址</span></h6><p>​    泄露地址利用了程序的第一个漏洞，正因为打印descrption时会将fd指针所所指向的内容打印出来，所以如果我们将其覆盖为<code>puts()</code>的got表地址，就能够泄露其地址。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">add(<span class="number">25</span> * <span class="string">b&#x27;a&#x27;</span>, name)</span><br><span class="line">show_rifle()</span><br><span class="line">p.recvuntil(<span class="string">&#x27;===================================\n&#x27;</span>)</span><br><span class="line">p.recvuntil(<span class="string">&#x27;Description: &#x27;</span>)</span><br><span class="line">puts_addr = u32(p.recvuntil(<span class="string">&#x27;\n&#x27;</span>, drop=<span class="literal">True</span>)[:<span class="number">4</span>])</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">hex</span>(puts_addr))</span><br></pre></td></tr></table></figure>
 
 <p>​        然后按套路算出<code>system()</code>的地址。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">libcbase = puts_addr - libc.symbols(<span class="string">&#x27;puts&#x27;</span>)</span><br><span class="line">system_addr = libcbase + libc.symbols(<span class="string">&#x27;system&#x27;</span>)</span><br><span class="line">log.success(<span class="string">&#x27;system_addr &#x27;</span> + <span class="built_in">hex</span>(system_addr))</span><br></pre></td></tr></table></figure>
 
-<h6 id="利用任意地址写覆盖free-got为system-addr"><a href="#利用任意地址写覆盖free-got为system-addr" class="headerlink" title="利用任意地址写覆盖free@got为system_addr"></a>利用任意地址写覆盖free@got为system_addr</h6><p>​        刚才说到，我们可以将notice处的指针改为got表地址，为了做到这一点，我们需要在这个地址附近申请一个fake chunkk。</p>
+<h6><span id="利用任意地址写覆盖freegot为system_addr">利用任意地址写覆盖free@got为system_addr</span></h6><p>​        刚才说到，我们可以将notice处的指针改为got表地址，为了做到这一点，我们需要在这个地址附近申请一个fake chunkk。</p>
 <p>​        这里主要利用到了<code>order()</code>函数中的漏洞。虽然free的过程中将ptr置0，但是chunk中还保存着fd。</p>
 <p>​        最开始有一个简单的想法，就是直接将fd覆盖为got表地址，从而在got表项地址处申请chunk来修改，想法是自然的，然而如果只是单纯地将fd覆盖为free@got，并不能成功地在target addr分配chunk，这是由于分配chunk时的一系列检测。</p>
 <p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-18%20%E4%B8%8B%E5%8D%883.45.11.png" alt="截屏2022-03-18 下午3.45.11"></p>
@@ -266,7 +264,7 @@
 
 
 
-<p>​                </p>
+<p>​</p>
 
             <div class="clearfix"></div>
             <hr class="nogutter">

@@ -75,9 +75,9 @@
 				    
 				    <li><a href="/categories/Generalization/" class="animsition-link">Generalization<small>(2)</small></a></li>
 				    
-				    <li><a href="/categories/HEAP-Fastbin-Attack/" class="animsition-link">HEAP - Fastbin Attack<small>(8)</small></a></li>
+				    <li><a href="/categories/HEAP-Fastbin-Attack/" class="animsition-link">HEAP - Fastbin Attack<small>(7)</small></a></li>
 				    
-				    <li><a href="/categories/HEAP-House-Of-Force/" class="animsition-link">HEAP - House Of Force<small>(2)</small></a></li>
+				    <li><a href="/categories/HEAP-House-Of-Force/" class="animsition-link">HEAP - House Of Force<small>(3)</small></a></li>
 				    
 				    <li><a href="/categories/HEAP-Off-By-One/" class="animsition-link">HEAP - Off By One<small>(2)</small></a></li>
 				    
@@ -221,7 +221,7 @@
         </div>
         <div class="col-md-8 col-md-offset-2">
       		
-    <div id="aplayer-kKCZOVFs" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#FFB11B"></div>
+    <div id="aplayer-wUXEYqBP" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#FFB11B"></div>
 
 <h2><span id="overview">overview</span></h2><h4><span id><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-25%20%E4%B8%8B%E5%8D%888.34.10.png" alt="截屏2022-03-25 下午8.34.10"></span></h4><p>​        partial relro，可以改got表，也可以劫持hook。</p>
 <h2><span id="re">RE</span></h2><h3><span id="init">init</span></h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">memset</span>(s, <span class="number">0</span>, <span class="number">0x50</span>u);</span><br><span class="line"> <span class="built_in">puts</span>(<span class="string">&quot;Input your name:&quot;</span>);</span><br><span class="line"> my_read((<span class="keyword">int</span>)s, <span class="number">64</span>, <span class="number">10</span>);</span><br><span class="line"> v2 = (<span class="keyword">char</span> *)<span class="built_in">malloc</span>(<span class="number">0x40</span>u);</span><br><span class="line"> dword_804B0CC = (<span class="keyword">int</span>)v2;</span><br><span class="line"> <span class="built_in">strcpy</span>(v2, s);                                <span class="comment">// name is stored in heap</span></span><br><span class="line"> welcome(v2);</span><br></pre></td></tr></table></figure>

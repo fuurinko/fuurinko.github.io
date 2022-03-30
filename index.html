@@ -72,9 +72,9 @@
 				    
 				    <li><a href="/categories/Generalization/" class="animsition-link">Generalization<small>(2)</small></a></li>
 				    
-				    <li><a href="/categories/HEAP-Fastbin-Attack/" class="animsition-link">HEAP - Fastbin Attack<small>(8)</small></a></li>
+				    <li><a href="/categories/HEAP-Fastbin-Attack/" class="animsition-link">HEAP - Fastbin Attack<small>(7)</small></a></li>
 				    
-				    <li><a href="/categories/HEAP-House-Of-Force/" class="animsition-link">HEAP - House Of Force<small>(2)</small></a></li>
+				    <li><a href="/categories/HEAP-House-Of-Force/" class="animsition-link">HEAP - House Of Force<small>(3)</small></a></li>
 				    
 				    <li><a href="/categories/HEAP-Off-By-One/" class="animsition-link">HEAP - Off By One<small>(2)</small></a></li>
 				    
@@ -231,6 +231,49 @@
 
 <section id="intro">
     <div class="container">
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2022/03/30/week5-3.1/">gyctf_2020_force</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-03-30T03:21:26.675Z" itemprop="datePublished">
+          2022-03-30
+      </time>
+    
+    
+    | 
+    <a href='/tags/hof/'>hof</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+     
+
+overview
+好绿。
+逆向​        程序比较简约，只有add和put两个功能。逻辑也不复杂。漏洞的话也比较明显，一个是程序直接把heap base白给了。另一个是虽然询问了size的大小，但是在实际add的时候完全没有根据size分配chunk,并且可以分配很大size的chunk。
+​        
+​        导致我们可以很轻易地修改top chunk的size。        
+​       
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/03/30/week5-3.1/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
         
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
@@ -422,47 +465,6 @@ re​        含有后门函数，直接的想法是利用hof将chunk分配至�
                     
                     <p class="pull-right readMore">
                         <a href="/2022/03/24/hof_hitcontraininf11/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2022/03/24/week4/">？</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2022-03-24T13:16:16.495Z" itemprop="datePublished">
-          2022-03-24
-      </time>
-    
-    
-    | 
-    <a href='/tags/UAF/'>UAF</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-     
-
-overview
-​        全绿捏。
-逆向​        
-1234567891011121314151617181920212223unsigned __int64 add()&#123;  const void **i; // [rsp+0h] [rbp-120h]  __int64 size; // [rsp+8h] [rbp-118h]  char s[256]; // [rsp+10h] [rbp-1
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2022/03/24/week4/">Read More...</a>
                     </p>
                     
                 </div>
