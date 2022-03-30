@@ -221,11 +221,11 @@
         </div>
         <div class="col-md-8 col-md-offset-2">
       		
-    <div id="aplayer-LIzrmnLm" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div> 
+    <div id="aplayer-BShDxLcG" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div> 
 
 
 
-<h2><span id="overview">overview</span></h2><p>![截屏2022-03-29 上午10.43.22](/Users/rin/Library/Application Support/typora-user-images/截屏2022-03-29 上午10.43.22.png)</p>
+<h2><span id="overview">overview</span></h2><p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-29%20%E4%B8%8A%E5%8D%8810.43.22.png" alt="截屏2022-03-29 上午10.43.22"></p>
 <h2><span id="逆向">逆向</span></h2><h3><span id="menu">menu</span></h3><p>​            一共只有两个功能，search word和index sentence。</p>
 <h3><span id="index-sentence">index sentence</span></h3><p>​        指针操作有点多，配合gdb观看效果更佳。</p>
 <p>​        当只malloc一个10 size的chunk时，内存是这样的，代码是这样的：</p>
@@ -252,7 +252,7 @@
 
 <p>​        先让一个small chunk进入unsorted bin，从gdb中我们可以看到其与<code>main_arena</code>的相对偏移，但是我们需要利用漏洞将其leak出来才能够利用。</p>
 <p>​        </p>
-<p>![截屏2022-03-29 下午3.41.03](/Users/rin/Library/Application Support/typora-user-images/截屏2022-03-29 下午3.41.03.png)</p>
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-29%20%E4%B8%8B%E5%8D%883.41.03.png" alt="截屏2022-03-29 下午3.41.03"></p>
 <p>​        因为之前说到，就算delete了sentence，word chunk中的指针并没有被置0，还是能够搜索，所以只需要搜索<code>\x00</code>，就能输出unsortedbin的地址。</p>
 <h3><span id="构造double-free将fake-chunk分配至malloc-hook">构造double free，将fake chunk分配至malloc hook</span></h3><h5><span id="绕过验证构造fastbin循环链表">绕过验证，构造fastbin循环链表</span></h5><p>​        虽然单词的指针并没有被置0，但是想要进行搜索还是需要绕过<code>  if ( *(_BYTE *)head-&gt;sentence_ptr )</code>的验证。</p>
 <p>​        所以可以按照一般构造fastbin double free的思路来处理这里的chunk。</p>
