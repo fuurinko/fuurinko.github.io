@@ -223,11 +223,9 @@
         </div>
         <div class="col-md-8 col-md-offset-2">
       		
-    <div id="aplayer-nLjsVlnS" class="aplayer aplayer-tag-marker meting-tag-marker"
-         data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"
-    ></div> 
+    <div id="aplayer-vcokdhVj" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div> 
 
-<h2 id="Off-by-one"><a href="#Off-by-one" class="headerlink" title="Off by one"></a>Off by one</h2><p>​        单/空字节溢出攻击。</p>
+<h2><span id="off-by-one">Off by one</span></h2><p>​        单/空字节溢出攻击。</p>
 <p>​        通常来说简单的off by one的漏洞点来自于编写时对边界控制不严格，导致每次输入的字符都能比规定的最大字符大那么一些（一个，或者几个）。这些字节溢出到物理地址相邻的下一个堆块，就能修改下一个chunk的size或者<code>prev_inuse</code>，通过这样的溢出，就能够整一些有趣的攻击。</p>
 <p>​        通常单字节溢出的利用方式有如下几种：</p>
 <ol>
@@ -248,15 +246,15 @@
 <p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-12-08%20%E4%B8%8B%E5%8D%882.30.56.png" alt="截屏2021-12-08 下午2.30.56"></p>
 <p>![截屏2021-12-08 下午2.32.03](/Users/rin/Library/Application Support/typora-user-images/截屏2021-12-08 下午2.32.03.png)</p>
 <p>这样next chunk的最低位就被0覆盖了。</p>
-<h3 id="chunk-overlapping"><a href="#chunk-overlapping" class="headerlink" title="chunk overlapping"></a>chunk overlapping</h3><p>​        off by one的一个比较简单的利用就是chunk overlapping，简单讲就是通过溢出将chunk的size位修改，导致几个连续的chunk的内存空间发生了重叠，借此可以泄露一些数据或者覆盖chunk指针。</p>
+<h3><span id="chunk-overlapping">chunk overlapping</span></h3><p>​        off by one的一个比较简单的利用就是chunk overlapping，简单讲就是通过溢出将chunk的size位修改，导致几个连续的chunk的内存空间发生了重叠，借此可以泄露一些数据或者覆盖chunk指针。</p>
 <p>​        在举例子之前先复习一下与chunk size有关的一些操作。</p>
 <p>​        获取当前chunk size ：通过堆指针的直接获取size位</p>
 <p>​        获取当前chunk的use状态：通过当前chunk bp+chunk size获取下一个chunk的bp，然后获得prev_inuse位。</p>
 <p>​        获取前一个chunk size  ：利用当前chunk指针获取当前chunk的prev size。</p>
 <p>​        获取下一个chunk的地址 ：利用当前chunk的size，下一个chunk地址即为：当前chunk指针+size。</p>
 <p>​        获取前一个chunk的信息：先通过prev_size算出前一个chunl的堆指针，然后再利用前一个chunk的对指针来获得相关信息。</p>
-<h4 id="HITCON-Trainging-lab13"><a href="#HITCON-Trainging-lab13" class="headerlink" title="HITCON Trainging lab13"></a>HITCON Trainging lab13</h4><p><a target="_blank" rel="noopener" href="https://github.com/ctf-wiki/ctf-challenges/tree/master/pwn/heap/chunk-extend-shrink/hitcontraning_lab13">题目链接</a></p>
-<h5 id="逆向"><a href="#逆向" class="headerlink" title="逆向"></a>逆向</h5><p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-12-08%20%E4%B8%8B%E5%8D%888.42.17.png" alt="截屏2021-12-08 下午8.42.17"></p>
+<h4><span id="hitcon-trainging-lab13">HITCON Trainging lab13</span></h4><p><a target="_blank" rel="noopener" href="https://github.com/ctf-wiki/ctf-challenges/tree/master/pwn/heap/chunk-extend-shrink/hitcontraning_lab13">题目链接</a></p>
+<h5><span id="逆向">逆向</span></h5><p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-12-08%20%E4%B8%8B%E5%8D%888.42.17.png" alt="截屏2021-12-08 下午8.42.17"></p>
 <p>​        <code>edit()</code>中，可以输入的字符比规定的多了一个字节。</p>
 <p>​        程序并没有其他非常规的操作，就是单纯的off by one+chunk overlapping的利用。</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">#思路如下</span><br><span class="line">add chunk0#<span class="number">0x18</span></span><br><span class="line">add chunk1#<span class="number">0x10</span></span><br><span class="line">edit chunk1 size to <span class="number">0x41</span></span><br><span class="line"><span class="built_in">free</span> chunk1</span><br><span class="line">add chunk2<span class="meta">#size = 0x30</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
@@ -285,12 +283,12 @@
 <p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-12-08%20%E4%B8%8B%E5%8D%889.31.45.png" alt="截屏2021-12-08 下午9.31.45"></p>
 <p>​        这样我们就获得了system·函数，要执行这个函数，只需要free一个含字符串<code>&quot;/bin/sh&quot;</code>的堆。也就是我们最开始add的工具人堆chunk0.</p>
 <p>​        这样基本就清楚了，但是还有一个问题我不是很理解，为什么在add chunk2的时候，chunk2的结构chunk的size位为0.或者说感觉根本没有结构chunk。</p>
-<h5 id="一些mzr"><a href="#一些mzr" class="headerlink" title="一些mzr"></a>一些mzr</h5><p>​        我超，我大彻大悟了。原来这么半年我一直理解错了何为堆叠。我理解错了啊！其实堆叠在动调中是看不到的，因为两个chunk完全被叠在了一起，就像我修改了chunk1的size1为41，这样heap1 struct和heap1 content就被叠成了0x41的空间，是叠成了0x41而不是struct把content覆盖了，如果这个时候申请内存空间的话，被叠起来的0x20的原本的content还是能够被申请到，所以我为什么chunk2的结构chunk离奇消失，就是因为被叠起来的0x20给隐藏了，然后再通过构造chunk2的content来伪造一个heap2struct，一切就说得通。</p>
+<h5><span id="一些mzr">一些mzr</span></h5><p>​        我超，我大彻大悟了。原来这么半年我一直理解错了何为堆叠。我理解错了啊！其实堆叠在动调中是看不到的，因为两个chunk完全被叠在了一起，就像我修改了chunk1的size1为41，这样heap1 struct和heap1 content就被叠成了0x41的空间，是叠成了0x41而不是struct把content覆盖了，如果这个时候申请内存空间的话，被叠起来的0x20的原本的content还是能够被申请到，所以我为什么chunk2的结构chunk离奇消失，就是因为被叠起来的0x20给隐藏了，然后再通过构造chunk2的content来伪造一个heap2struct，一切就说得通。</p>
 <p>​        再稍微细节一些，从代码中我们可以发现当我们free被堆叠的chunk1时，其实这个过程释放了两个chunk，一个是结构体chunk，是0x20size，另外一个是被修改为0x41的struct，然后两个chunk释放的先后顺序是先释放content，再释放struct，也就是fastbin中顺序是<code> struct（0x41）=&gt;content(0x20)</code></p>
 <p>​        这时候申请0x30的chunk2，首先需要申请0x20的struct，也就是被堆叠的heap1的content（这里存疑，如果fastbin的适配是smallest fit，那无话可说，但是似乎是first fit），然后再申请0x30的content，也就是被修改的0x41，这样就说得通了。</p>
 <p>​        但是很奇怪的一点，ctf-wiki上的说法却和这个不太一样，他认为将struct的size修改为0x41再free后，content就被struct吞并，而不是折叠了，free也只free一个0x41的chunk，而不是两个chunk。这个有待验证。</p>
 <p>​        我想通了，同时释放两个chunk是题目特地设置的，并且是必须要先释放content再释放struct才能达到效果。如果是先释放struct，0x41就会把content的所有chunk头之类的一并认为是user space然后释放，这样也就不存在content，自然就只释放一个堆块了。</p>
-<h5 id="一些动调"><a href="#一些动调" class="headerlink" title="一些动调"></a>一些动调</h5><p>​        exp打了。发现打不通。动调发现free的got表确实被被修改成<code>system()</code>，但是调用的时候似乎出现了问题，</p>
+<h5><span id="一些动调">一些动调</span></h5><p>​        exp打了。发现打不通。动调发现free的got表确实被被修改成<code>system()</code>，但是调用的时候似乎出现了问题，</p>
 <p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-12-09%20%E4%B8%8A%E5%8D%8810.32.49.png" alt="截屏2021-12-09 上午10.32.49"></p>
 <p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-12-09%20%E4%B8%8A%E5%8D%8810.51.22.png" alt="截屏2021-12-09 上午10.51.22"></p>
 <p>​        先检查问题是不是出现在<code>edit()</code>上</p>
@@ -302,7 +300,7 @@
 <p>​        我悟了，问题所在就是，就是啥呢，就是我本地libc的符号和程序使用的对不上。所以getshell失败。好了，我爬了。</p>
 <p>​        </p>
 <p>​        （所以远端也打不通的原因是？）</p>
-<h4 id="Asis-CTF-2016-b00ks"><a href="#Asis-CTF-2016-b00ks" class="headerlink" title="Asis CTF 2016 b00ks"></a><a target="_blank" rel="noopener" href="https://github.com/ctf-wiki/ctf-challenges/tree/master/pwn/heap/off_by_one/Asis_2016_b00ks">Asis CTF 2016 b00ks</a></h4><p>Checksec:</p>
+<h4><span id="asis-ctf-2016-b00ks"></span></h4><p>Checksec:</p>
 <p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-12-08%20%E4%B8%8B%E5%8D%883.40.30.png" alt="截屏2021-12-08 下午3.40.30"></p>
 <p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-12-08%20%E4%B8%8B%E5%8D%883.49.14.png" alt="截屏2021-12-08 下午3.49.14"></p>
 <p>​        代码的逻辑相对来说有一些复杂，但是还是比较好逆的，管理book的结构体大概长这样：</p>
@@ -326,14 +324,14 @@
 <p>​        其实是最后一位被清0了，但是我一直想的是原本的buf的开始被清0。现在想通了，其实特别简单，就是当i等于32的时候，buf还自增了，然后才判结束循环，这时候又将末位置0，就相当于多输了一个0，造成了空字节溢出。</p>
 <p>​        （wp关闭，开始瞎写时间）</p>
 <p>ToBeContinue</p>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>稍微总结一下昨天的学习吧。</p>
+<h3><span id="总结">总结</span></h3><p>稍微总结一下昨天的学习吧。</p>
 <p>其实虽然做了大概十个小时，但是只做了三个题不到，其中有大段时间在修复崩坏的环境以及研究pwndocker的一些问题，还有无谓的逆向，结果做不出。</p>
 <p>并且对于hicton lab 13这道题 ，一个简单的概念卡了我很久。</p>
 <p>现在看来，原因有2:我没有认真逆向。错过了很多我不以为意的内容，pwn题只要一个细节没有注意到就会被坑很久，所以还是那个老生常谈的话题，逆向。其实这个问题一方面是我逆向太不认真了，还有一方面是刷的题太少，甚至没办法总结规律。比如通过这两道题我总结出来的规律是：一般在普通的ptr = malloc（）之外还会特地创建一个struct用来管理每个表项的结构（我早就应该想到的），这个结构中通常会储存堆中的指针（我早就应该知道的，但是不知道为什么，我半年来一直没有意识到这个问题），所以我们覆盖的其实是堆struct chunk中储存的chunk bp，而不是实际的chunk bp（那个储存在哪里都不清楚捏）。</p>
 <p>然后就是还是对chunk以及bin的一些操作或者说数据结构不是非常了解，导致概念不清。所以我暂停一天刷题，然后把malloc lab的分离适配搞完。</p>
 <p>​        </p>
 <p>​        </p>
-<p>​        </p>
+<p>​</p>
 
             <div class="clearfix"></div>
             <hr class="nogutter">
