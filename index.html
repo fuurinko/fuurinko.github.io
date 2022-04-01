@@ -72,6 +72,8 @@
 				    
 				    <li><a href="/categories/Generalization/" class="animsition-link">Generalization<small>(2)</small></a></li>
 				    
+				    <li><a href="/categories/HEAP/" class="animsition-link">HEAP<small>(1)</small></a></li>
+				    
 				    <li><a href="/categories/HEAP-Fastbin-Attack/" class="animsition-link">HEAP - Fastbin Attack<small>(7)</small></a></li>
 				    
 				    <li><a href="/categories/HEAP-House-Of-Force/" class="animsition-link">HEAP - House Of Force<small>(3)</small></a></li>
@@ -231,6 +233,42 @@
 
 <section id="intro">
     <div class="container">
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2022/03/30/week5-3.2/">starctf_2019_quicksort</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-03-30T13:51:36.373Z" itemprop="datePublished">
+          2022-03-30
+      </time>
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+     
+
+overview​    
+libc大版本是2.23。
+re​        整体实现了一个简单的快速排序功能，在输入具体需要排序的数的时候存在溢出，但是由于开启了canary，并不是很好利用。并且num的储存其实是在堆上的，所以我以为这是个栈题，这其实是个堆题。
+12345678910111213141516171819memset(s, 0, sizeof(s));  num = 0;  puts(&quot;how
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/03/30/week5-3.2/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
         
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
@@ -589,49 +627,6 @@ ret2libcret2shellcode泄露内存格式化字符串1）泄露任意地址123456-
                     
                     <p class="pull-right readMore">
                         <a href="/2022/03/21/pwn知识点总结/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2022/03/20/mrctf2020_shellcode_revenge/">mrctf2020_shellcode_revenge</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2022-03-19T17:18:00.923Z" itemprop="datePublished">
-          2022-03-20
-      </time>
-    
-    
-    | 
-    <a href='/tags/EZ-STACK/'>EZ_STACK</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-     
-
-mrctf2020_shellcode_revengeoverview
-看起来像ret2shellcode。
-
-逆向​        不知道为什么ida不能一键f5，不过也懒得修了，程序逻辑也比较简单，就是一个write和read。然后程序会对输入的字符进行ascii码的大小的比较，
-​        
-​        分析一下这个流程图，我们的目的是执行loc_1236，一共有三个箭头指向它，归纳以后分别是(0x60
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2022/03/20/mrctf2020_shellcode_revenge/">Read More...</a>
                     </p>
                     
                 </div>

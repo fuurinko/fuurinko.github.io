@@ -72,6 +72,8 @@
 				    
 				    <li><a href="/categories/Generalization/" class="animsition-link">Generalization<small>(2)</small></a></li>
 				    
+				    <li><a href="/categories/HEAP/" class="animsition-link">HEAP<small>(1)</small></a></li>
+				    
 				    <li><a href="/categories/HEAP-Fastbin-Attack/" class="animsition-link">HEAP - Fastbin Attack<small>(7)</small></a></li>
 				    
 				    <li><a href="/categories/HEAP-House-Of-Force/" class="animsition-link">HEAP - House Of Force<small>(3)</small></a></li>
@@ -231,6 +233,54 @@
 
 <section id="intro">
     <div class="container">
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2021/12/03/malloc lab/">csapp malloc lab</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2021-12-03T08:46:22.570Z" itemprop="datePublished">
+          2021-12-03
+      </time>
+    
+    
+    | 
+    <a href='/tags/csapp-lab/'>csapp lab</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+     
+
+0）前言​        鸽了三个月的malloc lab，作为复习堆题的开始。
+​        计画完成时间是12.5之前，也就是三天。
+1）大体设计​        对于整体的操作的大致模型以及allocater和freer需要做的工作如下：
+​        分配器：
+
+在第一次分配chunk时，对堆空间进行初始化=&gt;mm_init()    
+
+创建指定类型的chunk。
+​    free
+
+利用隐式空
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2021/12/03/malloc lab/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
         
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
@@ -607,49 +657,6 @@ docker基础架构​    对于docker，在了解基础命令之前我们需要�
                     
                     <p class="pull-right readMore">
                         <a href="/2021/10/29/typora主题配置的一些心得/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2021/10/27/解决gcc无法编译32位程序的问题/">解决gcc无法编译32位程序的问题</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2021-10-27T12:26:56.705Z" itemprop="datePublished">
-          2021-10-27
-      </time>
-    
-    
-    | 
-    <a href='/tags/linux-primary/'>linux primary</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-     
-
-1）前言​    之前一直被gcc无法编译32位程序而困扰，但是问题一直拖着没有解决，趁着今天比较闲，把这个问题彻底解决一下。
-2)过程​    首先我们尝试编译32位程序，gcc报错：
-​    缺少头文件，实则是没有安装多架构gcc。
-​    试图安装，失败，报错如下：
-​    这里有个坑了我好久的东西，就是这个报错
-E: Unable to correct problems, you have held bro
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2021/10/27/解决gcc无法编译32位程序的问题/">Read More...</a>
                     </p>
                     
                 </div>
