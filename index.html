@@ -72,13 +72,13 @@
 				    
 				    <li><a href="/categories/Generalization/" class="animsition-link">Generalization<small>(2)</small></a></li>
 				    
-				    <li><a href="/categories/HEAP/" class="animsition-link">HEAP<small>(1)</small></a></li>
+				    <li><a href="/categories/HEAP/" class="animsition-link">HEAP<small>(2)</small></a></li>
 				    
-				    <li><a href="/categories/HEAP-Fastbin-Attack/" class="animsition-link">HEAP - Fastbin Attack<small>(7)</small></a></li>
+				    <li><a href="/categories/HEAP-Fastbin-Attack/" class="animsition-link">HEAP - Fastbin Attack<small>(8)</small></a></li>
 				    
 				    <li><a href="/categories/HEAP-House-Of-Force/" class="animsition-link">HEAP - House Of Force<small>(3)</small></a></li>
 				    
-				    <li><a href="/categories/HEAP-Off-By-One/" class="animsition-link">HEAP - Off By One<small>(2)</small></a></li>
+				    <li><a href="/categories/HEAP-Off-By-One/" class="animsition-link">HEAP - Off By One<small>(3)</small></a></li>
 				    
 				    <li><a href="/categories/HEAP-Tcache/" class="animsition-link">HEAP - Tcache<small>(1)</small></a></li>
 				    
@@ -237,6 +237,126 @@
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
                 <div class="col-md-4">
+                    <h3><a href="/2022/04/02/Asis-CTF-2016-b00ks/">Asis CTF 2016 b00ks</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-04-02T01:47:13.521Z" itemprop="datePublished">
+          2022-04-02
+      </time>
+    
+    
+    | 
+    <a href='/tags/offbyone/'>offbyone</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+     
+
+overview​        ctf-wiki上的例子，之前一直没有做，正好拿来复习offbyone。
+
+​        也是非常离奇的保护。
+re​        我依稀记得当时做的时候感觉这道题不是很好逆。    
+​        但是时过境迁，也不一定，毕竟大半年了。
+
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/04/02/Asis-CTF-2016-b00ks/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2022/04/02/fastbin中uaf实现任意地址分配的检测问题/">fastbin中uaf实现任意地址分配的检测问题</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-04-02T00:37:40.817Z" itemprop="datePublished">
+          2022-04-02
+      </time>
+    
+    
+    | 
+    <a href='/tags/heap/'>heap</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+     
+
+
+
+​        目前做到的与fastbin有关（包括Tcache），并且存在uaf漏洞，需要通过任意地址分配来实现利用的题大致有两类，一类对于申请的chunk，通过简单或者复杂的结构体管理，在一个note的结构体中通常包括size，content甚至指针等字段，我们可以通过覆盖指针实现任意地址分配。另一类则是相对逻辑比较简单的，并没有为note定义结构体，仅仅使用了类似数组的形式，这样的话覆盖free chunk的
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/04/02/fastbin中uaf实现任意地址分配的检测问题/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2022/04/01/week5-5.1/">NoLeak</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-04-01T13:34:22.000Z" itemprop="datePublished">
+          2022-04-01
+      </time>
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+     
+
+overview
+非常之畸形。
+re​        逻辑比较简单简单，并且没有为chunk定义结构体。漏洞点也很明显，就是还是free后没有给指针置0，顺便edit的时候size没有限定，可以造成堆溢出。
+利用​        没有办法改got表，但是可以写shellcode。所以是不是能uaf改指针，add到栈上写shellcode呢？
+​        但是问题随即而来，我们有向栈上写shellcode的能力，但是
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/04/01/week5-5.1/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
                     <h3><a href="/2022/04/01/pwn.college_Dynamic_Allocator_Misuse/">Dynamic_Allocator_Misuse</a></h3>
                     <span>
                         <span class="post-meta">
@@ -282,7 +402,7 @@ Level2.
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
                 <div class="col-md-4">
-                    <h3><a href="/2022/03/31/week5-3.2/">starctf_2019_quicksort</a></h3>
+                    <h3><a href="/2022/03/31/week5-4.1/">starctf_2019_quicksort</a></h3>
                     <span>
                         <span class="post-meta">
       <time datetime="2022-03-31T12:04:14.000Z" itemprop="datePublished">
@@ -306,7 +426,7 @@ re​        整体实现了一个简单的快速排序功能，在输入具体�
                     </p>
                     
                     <p class="pull-right readMore">
-                        <a href="/2022/03/31/week5-3.2/">Read More...</a>
+                        <a href="/2022/03/31/week5-4.1/">Read More...</a>
                     </p>
                     
                 </div>
@@ -511,122 +631,6 @@ REinit1234567memset(s, 0, 0x50u); puts(&quot;Input your name:&quot;); my_read((i
                     
                     <p class="pull-right readMore">
                         <a href="/2022/03/25/hof_bcloud/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2022/03/24/hof_hitcontraininf11/">hitcon_training11</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2022-03-24T14:16:18.934Z" itemprop="datePublished">
-          2022-03-24
-      </time>
-    
-    
-    | 
-    <a href='/tags/heap/'>heap</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        % meting “7342554262” “netease” “playlist” “theme:#555” “mutex:true” “listmaxheight:340px” “preload:auto” %}     
-re​        含有后门函数，直接的想法是利用hof将chunk分配至某个可写的位置，然后覆盖为后门。
-1234v4 = malloc(0x10uLL); *v4 = hello_message; v4[1
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2022/03/24/hof_hitcontraininf11/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2022/03/21/一些板子/">一些板子</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2022-03-21T08:45:02.536Z" itemprop="datePublished">
-          2022-03-21
-      </time>
-    
-    
-    | 
-    <a href='/tags/summary/'>summary</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-     
-
-stackret2shellcode123456789101112from pwn import*from LibcSearcher import LibcSearchercontext.terminal = [&#x27;tmux&#x27;,&#x27;splitw&#x27;,&#x27;-h&#x27;]context.log_level = &quot;debug&quot;p = process(&quot;
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2022/03/21/一些板子/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2022/03/21/pwn知识点总结/">pwn知识点总结</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2022-03-21T07:55:07.636Z" itemprop="datePublished">
-          2022-03-21
-      </time>
-    
-    
-    | 
-    <a href='/tags/summary/'>summary</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-     
-
-[TOC]
-stack漏洞点控制程序执行流栈溢出ret2syscall​        利用程序自带的gadget，构造syscall。
-​        对应板子
-ret2libcret2shellcode泄露内存格式化字符串1）泄露任意地址123456--------获取栈变量对应的地址------------%n$p #输出栈上第n+1个格式化字符串输出参数--------获取栈变量对应的字符串----------
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2022/03/21/pwn知识点总结/">Read More...</a>
                     </p>
                     
                 </div>

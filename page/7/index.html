@@ -72,13 +72,13 @@
 				    
 				    <li><a href="/categories/Generalization/" class="animsition-link">Generalization<small>(2)</small></a></li>
 				    
-				    <li><a href="/categories/HEAP/" class="animsition-link">HEAP<small>(1)</small></a></li>
+				    <li><a href="/categories/HEAP/" class="animsition-link">HEAP<small>(2)</small></a></li>
 				    
-				    <li><a href="/categories/HEAP-Fastbin-Attack/" class="animsition-link">HEAP - Fastbin Attack<small>(7)</small></a></li>
+				    <li><a href="/categories/HEAP-Fastbin-Attack/" class="animsition-link">HEAP - Fastbin Attack<small>(8)</small></a></li>
 				    
 				    <li><a href="/categories/HEAP-House-Of-Force/" class="animsition-link">HEAP - House Of Force<small>(3)</small></a></li>
 				    
-				    <li><a href="/categories/HEAP-Off-By-One/" class="animsition-link">HEAP - Off By One<small>(2)</small></a></li>
+				    <li><a href="/categories/HEAP-Off-By-One/" class="animsition-link">HEAP - Off By One<small>(3)</small></a></li>
 				    
 				    <li><a href="/categories/HEAP-Tcache/" class="animsition-link">HEAP - Tcache<small>(1)</small></a></li>
 				    
@@ -233,6 +233,129 @@
 
 <section id="intro">
     <div class="container">
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2021/08/16/记一次ubuntu18.04的glibc调教/">记一次ubuntu18.04的glibc调教</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2021-08-16T13:24:18.623Z" itemprop="datePublished">
+          2021-08-16
+      </time>
+    
+    
+    | 
+    <a href='/tags/mess/'>mess</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+     
+
+1）概述这是一件悲伤的事情，我的ubuntu它又崩了。
+最开始的时候，发现pwndbg无法查看heap等信息，这个问题我之前也遇到过，但是情况有非常大的区别。
+之前是我2.32的本地默认libc，执行程序时加载2.23，然后因为指定的lbc-2.23.so没有附带调试符号信息，所以也看不了heap，但是这一次，本机都看不了了？
+经过一番排查，我们认为是libc本身出现了问题。然后寻找libc-2.27.so的文件打算一探
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2021/08/16/记一次ubuntu18.04的glibc调教/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2021/08/13/ELF文件下对于PIE保护和ASLR的重新认识/">ELF文件下对于PIE保护和ASLR的重新认识</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2021-08-13T07:06:00.000Z" itemprop="datePublished">
+          2021-08-13
+      </time>
+    
+    
+    | 
+    <a href='/tags/mess/'>mess</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+     
+
+ELF文件下对于PIE保护和ASLR的重新认识0）​    复现红色高跟鞋的时候，在ida修复swithc结构的时候碰见了一个问题。因为题目的源文件是有pie保护的，所以ida中的地址是很难看的随机化模式。虽然这些随机化的地址对于我们patch文件毫无影响，但是就是突发奇想，看看能不能找到方法来通过patch将elf文件的pie保护给禁用。
+1）​    如果用010editor打开一个PE文件，我们能够很方便的通过修改
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2021/08/13/ELF文件下对于PIE保护和ASLR的重新认识/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2021/08/09/io_file（未完成）/">IO_FILE学习</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2021-08-09T07:44:00.000Z" itemprop="datePublished">
+          2021-08-09
+      </time>
+    
+    
+    | 
+    <a href='/tags/io-file/'>io_file</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+     
+
+io_file学习笔记
+0）reviewglibc定义了_IO_FILE这样一个结构体来管理io file。io_file结构体里定义了一堆相关的变量，但是真正关键的是其中包含的_IO_FILE_plus结构
+结构源码如下
+12345struct _IO_FILE_plus&#123;    _IO_FILE    file;    IO_jump_t   *vtable;&#125;
+
+这个结构包含了一个叫vtable
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2021/08/09/io_file（未完成）/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
         
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
@@ -529,49 +652,9 @@ ROPgadget –binary （） –only “pop|ret” | grep rdi
             </div>
         </div>
         
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/1919/08/10/深夜高速-1/">1</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="1919-08-09T15:34:14.000Z" itemprop="datePublished">
-          1919-08-10
-      </time>
-    
-    
-    | 
-    <a href='/tags/mess/'>mess</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        ​    
-         
-0:​        写下这些话的时候，不知不觉地，已经半夜两点了。
-​        其实放在半个月之前的我看来，两点根本不是半夜，而是夜生活的开始。然而仅仅十五天，我将作息强行向前延伸了两小时，所以对于现在的我来说，两点已经是高程度的熬夜了。
-​        熬夜并不是一件坏事，至少我如今也这么认为——只要不是因为玩手机等无意义的事情而浪费生命。
-​        最近的我一直在经受苦难，或者说，我
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/1919/08/10/深夜高速-1/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
         <nav class="pagination" role="pagination">
           <a class="pull-left" href="../6/">← Newer Posts</a>
-          
+          <a class="pull-right" href="../8/">Older Posts →</a>
         </nav>
     </div>
 </section>

@@ -72,13 +72,13 @@
 				    
 				    <li><a href="/categories/Generalization/" class="animsition-link">Generalization<small>(2)</small></a></li>
 				    
-				    <li><a href="/categories/HEAP/" class="animsition-link">HEAP<small>(1)</small></a></li>
+				    <li><a href="/categories/HEAP/" class="animsition-link">HEAP<small>(2)</small></a></li>
 				    
-				    <li><a href="/categories/HEAP-Fastbin-Attack/" class="animsition-link">HEAP - Fastbin Attack<small>(7)</small></a></li>
+				    <li><a href="/categories/HEAP-Fastbin-Attack/" class="animsition-link">HEAP - Fastbin Attack<small>(8)</small></a></li>
 				    
 				    <li><a href="/categories/HEAP-House-Of-Force/" class="animsition-link">HEAP - House Of Force<small>(3)</small></a></li>
 				    
-				    <li><a href="/categories/HEAP-Off-By-One/" class="animsition-link">HEAP - Off By One<small>(2)</small></a></li>
+				    <li><a href="/categories/HEAP-Off-By-One/" class="animsition-link">HEAP - Off By One<small>(3)</small></a></li>
 				    
 				    <li><a href="/categories/HEAP-Tcache/" class="animsition-link">HEAP - Tcache<small>(1)</small></a></li>
 				    
@@ -233,6 +233,128 @@
 
 <section id="intro">
     <div class="container">
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2022/03/16/DynELF/">DynELF学习</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-03-16T14:06:44.306Z" itemprop="datePublished">
+          2022-03-16
+      </time>
+    
+    
+    | 
+    <a href='/tags/mess/'>mess</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+     
+
+0​        我发现我居然还不太会用这个东西，可以用不上，但是不能不会。
+1​        DynELF的意义在于当我们无法找到目标libc中具体的符号偏移时，可以利用它来搜索内存中的函数地址,而不需要再通过libc来获取。
+如何使用？1234567891011121314151617181920212223242526272829303132333435p = process(&#x27;./pwnme&#x2
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/03/16/DynELF/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2022/03/16/week3-2.2/">ccmc_pwnme2</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-03-16T11:18:25.856Z" itemprop="datePublished">
+          2022-03-16
+      </time>
+    
+    
+    | 
+    <a href='/tags/ret2gadgets/'>ret2gadgets</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        ​    
+     
+ccmc_pwnme2一道看起来人畜无害的栈题。但是有几个非常奇怪的函数。
+​        所以这是一道相对有些奇怪的rop，控制这三个函数的其中两个的参数为指定字符串，就能较为方便地读取flag。
+12345678910111213141516from pwn import *p = remote(&#x27;node4.buuoj.cn&#x27;,27653)#p = process(&#x27;./pw
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/03/16/week3-2.2/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2022/03/16/week3-2.1/">hctf2016_fheap</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-03-16T03:48:29.784Z" itemprop="datePublished">
+          2022-03-16
+      </time>
+    
+    
+    | 
+    <a href='/tags/UAF/'>UAF</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        ​    
+     
+​        第三周第二天第一道堆题。应该是一道中等偏下的fastbinattack。
+​        libc是2.23。
+​        
+​        保护全开，pie是个麻烦点。
+​        逆向一下，这个程序的逻辑不算很复杂，但是也需要逆清楚。
+​        
+​        程序在ptr+3的地方保存了一个有着free函数功能的指针，并且当delete str时，也是调用这个指
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/03/16/week3-2.1/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
         
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
@@ -518,138 +640,6 @@ Level1​        最最最基础的rop了，和前前一个module的前面的有
                     
                     <p class="pull-right readMore">
                         <a href="/2022/03/10/法压壶/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2022/03/03/pwn.college_MemoryErrors/">MemoryErrors</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2022-03-03T03:18:50.193Z" itemprop="datePublished">
-          2022-03-03
-      </time>
-    
-    
-    | 
-    <a href='/tags/pwncollege/'>pwncollege</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-     
-
-​        视频主要介绍了栈溢出及其保护。保护的绕过包括canary和pie，并没有提到NX（那个似乎在后面一个module）
-​        传输题目到本地可以使用scp命令。
-1scp -i key -r hacker@dojo.pwn.college:/challenge/babymem_level4.1 /Users/rin/ctf/pwn/pwn_college/MemoryErrors
-
-
-
-
-
-Le
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2022/03/03/pwn.college_MemoryErrors/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2022/03/03/pwn.college_ProgramMisuse/">ProgramMisuse</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2022-03-03T03:09:26.547Z" itemprop="datePublished">
-          2022-03-03
-      </time>
-    
-    
-    | 
-    <a href='/tags/pwncollege/'>pwncollege</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-     
-
-
-
-
-
-​        关于这个module，做出题目的话大致有两个思路，一个是利用/bin/sh    来对整个shell提权，另外一个是利用设置了suid的特殊程序来读取flag。一般来说是第二个方法比较简单，但是有时候只有第一个方法可以行得通。
-Level1​        没有看视频，并不知道这个Misuse是什么意义，但是level1只要执行给的程序就能get flag。
-
-Level2​        到第
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2022/03/03/pwn.college_ProgramMisuse/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2022/02/28/pwn.college_Sandboxing/">Sandboxing</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2022-02-28T13:59:27.326Z" itemprop="datePublished">
-          2022-02-28
-      </time>
-    
-    
-    | 
-    <a href='/tags/pwncollege/'>pwncollege</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-     
-
-Level1​        首先考察chroot
-​        因为程序在将根目录设置为/jail的时候并没有切换当前工作目录为/jail，所以我们实际上还是在/目录，因此可以直接通过argv[1]    读取flag。
-​        执行脚本的时候需要添加cwd参数，使其工作目录为/
-Level2123shellcode = asm(shellcraft.readfile(&#x27;flag&#x27;,1
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2022/02/28/pwn.college_Sandboxing/">Read More...</a>
                     </p>
                     
                 </div>
