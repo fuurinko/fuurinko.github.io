@@ -8,7 +8,7 @@
 
 <head>
 
-  <title>Tag: heap | Rin</title>
+  <title>Tag: Heap | Rin</title>
   <!-- Meta data -->
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -78,7 +78,7 @@
 				    
 				    <li><a href="/categories/HEAP-House-Of-Force/" class="animsition-link">HEAP - House Of Force<small>(3)</small></a></li>
 				    
-				    <li><a href="/categories/HEAP-Off-By-One/" class="animsition-link">HEAP - Off By One<small>(3)</small></a></li>
+				    <li><a href="/categories/HEAP-Off-By-One/" class="animsition-link">HEAP - Off By One<small>(1)</small></a></li>
 				    
 				    <li><a href="/categories/HEAP-Tcache/" class="animsition-link">HEAP - Tcache<small>(1)</small></a></li>
 				    
@@ -114,7 +114,9 @@
 				    
 				    <li><a href="/categories/mess/" class="animsition-link">mess<small>(2)</small></a></li>
 				    
-				    <li><a href="/categories/深夜高速/" class="animsition-link">深夜高速<small>(3)</small></a></li>
+				    <li><a href="/categories/幻想曲/" class="animsition-link">幻想曲<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/深夜高速/" class="animsition-link">深夜高速<small>(1)</small></a></li>
 				    
 				</ul>
         	</li>
@@ -244,48 +246,9 @@
                         
                         <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 wow fadeInUp" data-wow-delay="0.3s">
                             
-                              <h4 class="title"><a href="/2022/04/02/fastbin中uaf实现任意地址分配的检测问题/">fastbin中uaf实现任意地址分配的检测问题</a></h4>
+                              <h4 class="title"><a href="/2021/08/17/Tcache学习/">Tcahce学习</a></h4>
                             
-                            <p><time datetime="2022-04-02T00:37:40.817Z"><a href="/2022/04/02/fastbin中uaf实现任意地址分配的检测问题/">2022-04-02</a></time></p>
-                        </div>
-                    
-                        
-                        
-                        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 wow fadeInUp" data-wow-delay="0.3s">
-                            
-                              <h4 class="title"><a href="/2022/03/25/hof_bcloud/">bcloud</a></h4>
-                            
-                            <p><time datetime="2022-03-25T12:33:06.204Z"><a href="/2022/03/25/hof_bcloud/">2022-03-25</a></time></p>
-                        </div>
-                    
-                        
-                        
-                        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 wow fadeInUp" data-wow-delay="0.3s">
-                            
-                              <h4 class="title"><a href="/2022/03/24/hof_hitcontraininf11/">hitcon_training11</a></h4>
-                            
-                            <p><time datetime="2022-03-24T14:16:18.934Z"><a href="/2022/03/24/hof_hitcontraininf11/">2022-03-24</a></time></p>
-                        </div>
-                    
-                        
-                        
-                        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 wow fadeInUp" data-wow-delay="0.3s">
-                            
-                              <h4 class="title"><a href="/2021/12/10/unlink/">UNLINK</a></h4>
-                            
-                            <p><time datetime="2021-12-09T17:33:53.716Z"><a href="/2021/12/10/unlink/">2021-12-10</a></time></p>
-                        </div>
-                    
-                        
-                            </div><div class="row boxes">
-                            
-                        
-                        
-                        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 wow fadeInUp" data-wow-delay="0.3s">
-                            
-                              <h4 class="title"><a href="/2021/06/05/off by one漏洞学习/">off by one漏洞学习</a></h4>
-                            
-                            <p><time datetime="2021-06-04T16:38:55.000Z"><a href="/2021/06/05/off by one漏洞学习/">2021-06-05</a></time></p>
+                            <p><time datetime="2021-08-17T02:53:00.000Z"><a href="/2021/08/17/Tcache学习/">2021-08-17</a></time></p>
                         </div>
                     
                 </div>
@@ -382,7 +345,117 @@ $('#intro').find('img').each(function(){
   color: #333;
   z-index: 9999;
   border-radius: 5px;
-  overflow: sbox;
+  overflow: scroll;
+}
+#local-search-input {
+  width: 100%;
+  border: none;
+  outline: none;
+  border-bottom: 1px solid #151515;
+  background-color: initial;
+}
+.search-result-list {
+  list-style: none;
+  padding-left: 0;
+}
+.search-result-list > li {
+  margin-top: 15px;
+  border-bottom: 1px solid #ddd;
+  transition: all ease .3s;
+}
+.search-result-list > li:hover {
+  border-bottom: 1px solid gray;
+}
+.search-result-title {
+  font-size: 16px;
+}
+.search-result {
+  line-height: 20px;
+}
+.search-keyword {
+  font-weight: normal;
+  color: #c00;
+}
+
+@media (min-width: 890px) {
+  .popup-btn-close {
+    position: absolute;
+    top: 15px;
+    left: 35px;
+    border: 1px solid #151515;
+    padding: 0px 10px;
+    border-top-left-radius: 8px;
+    cursor: pointer;
+    transition: all ease .3s;
+  }
+  .popup-btn-close:hover {
+    background: #151515;
+    opacity: .9;
+    color: #fff;
+  }
+}
+@media (max-width: 890px) {
+  .popup-btn-close {
+    font-size: 0;
+    position: fixed;
+    right: 20px;
+    bottom: 50px;
+    width: 50px;
+    height: 50px;
+    background: #fff;
+    border-radius: 50%;
+    box-shadow: 1px 1px 5px #888;
+    cursor: pointer;
+  }
+  .popup-btn-close::after {
+    content: '←';
+    color: #151515;
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-size: 20px;
+    width: 100%;
+    height: 100%;
+    line-height: 50px;
+    text-align: center;
+  }
+}
+</style>
+
+<div class="popup search-popup local-search-popup">
+  <span class="popup-btn-close">
+    ESC
+  </span>
+  <div class="container">
+    <div class="col-md-8 col-md-offset-2">
+      <div class="local-search-header clearfix">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="local-search-input-wrapper">
+          <input autocomplete="off" placeholder="Search..." type="text" id="local-search-input">
+        </div>
+      </div>
+      <div id="local-search-result"></div>
+    </div>
+  </div>
+</div>
+
+<script src="/js/ziploader.js"></script>
+
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.json";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    // monitor main search box;
 
     var onPopupClose = function (e) {
       $('.popup').fadeOut(300);
@@ -712,19 +785,7 @@ $('#intro').find('img').each(function(){
 
 
 
-= '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
-        } else {
-          resultItems.sort(function (resultLeft, resultRight) {
-            if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
-              return resultRight.searchTextCount - resultLeft.searchTextCount;
-            } else if (resultLeft.hitCount !== resultRight.hitCount) {
-              return resultRight.hitCount - resultLeft.hitCount;
-            } else {
-              return resultRight.id - resultLeft.id;
-            }
-          });
-          var searchResultList = '<ul class=\"search-result-list\">';
-          resultItems.forEach(function (result) {
+ult) {
             searchResultList += result.item;
           })
           searchResultList += "</ul>";
