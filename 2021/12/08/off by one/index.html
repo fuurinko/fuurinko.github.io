@@ -8,7 +8,7 @@
 
 <head>
 
-  <title>off by one /chunk overlapping | Rin</title>
+  <title>Rin</title>
   <!-- Meta data -->
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -45,10 +45,10 @@
   
 
   <style>.col-md-8.col-md-offset-2.opening-statement img{display:none;}</style>
-<link rel="stylesheet" href="/assets/css/APlayer.min.css" class="aplayer-style-marker">
+<link rel="stylesheet" href="/css/prism.css" type="text/css"><link rel="stylesheet" href="/assets/css/APlayer.min.css" class="aplayer-style-marker">
 <script src="/assets/js/APlayer.min.js" class="aplayer-script-marker"></script>
 <script src="/assets/js/Meting.min.js" class="meting-script-marker"></script>
-<link rel="stylesheet" href="/css/prism.css" type="text/css"></head>
+</head>
 
 <!--
 <body class="post-template">
@@ -80,8 +80,6 @@
 				    <li><a href="/categories/HEAP-Fastbin-Attack/" class="animsition-link">HEAP - Fastbin Attack<small>(8)</small></a></li>
 				    
 				    <li><a href="/categories/HEAP-House-Of-Force/" class="animsition-link">HEAP - House Of Force<small>(3)</small></a></li>
-				    
-				    <li><a href="/categories/HEAP-Off-By-One/" class="animsition-link">HEAP - Off By One<small>(1)</small></a></li>
 				    
 				    <li><a href="/categories/HEAP-Tcache/" class="animsition-link">HEAP - Tcache<small>(1)</small></a></li>
 				    
@@ -210,22 +208,18 @@
         <div class="row col-md-offset-2">
             <div class="col-md-8">
     			<span class="post-meta">
-      <time datetime="2022-04-02T16:00:00.000Z" itemprop="datePublished">
-          2022-04-03
+      <time datetime="2021-12-08T02:30:31.469Z" itemprop="datePublished">
+          2021-12-08
       </time>
     
-    
-    | 
-    <a href='/tags/heap-pro/'>heap_pro</a>
-    
-    
 </span>
-                <h1>off by one /chunk overlapping</h1>
+                <h1></h1>
             </div>
         </div>
         <div class="col-md-8 col-md-offset-2">
-      		
-    <div id="aplayer-PPCgTIEW" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div> 
+      		<h5><span id="title-off-by-one-chunk-overlapping">title: off by one /chunk overlapping</span></h5><p>tags : heap_pro<br>category: HEAP - Off By One<br>date : 2022-04-03</p>
+
+    <div id="aplayer-iKsCTBwh" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div> 
 
 <h1><span id="0">0</span></h1><p>​        这篇笔记最早是在大概21年的11月开始的，当时其实也是抱着复习的心理去写的，毕竟堆题在完全吃透之前，只要不是经常做题，那么就基本是学了就忘的状态。更别说我这种就没怎么做题的人。</p>
 <p>​        现在是2022年四月，我看着这篇笔记，只觉得当时那些卡了很久的点，实在过于愚蠢，完全无法理解当时自己为什么会这么想。这些困难点大多源于我看代码不仔细，以及对于指针操作的一些不理解，或者说对于chunk结构的不熟悉。</p>
@@ -332,8 +326,19 @@
 <p>​        漏洞出在这个读入的函数，在读取应该结束的时候，buf却不正确地加一，同时指向区域被置0，这就造成了空字节溢出。这个读入函数虽然被用于每一个和输入有关的功能上，但是只有输入作者姓名的时候可以较为方便地利用。</p>
 <h4><span id="利用">利用</span></h4><h5><span id="大致的思考">大致的思考</span></h5><p>​        这道题的核心就在于溢出空字节，修改next chunk的prev inuse位，造成chunk overlapping。相较于之前那个比较简单的例子，这个例子在程序逻辑上相对更复杂，并且漏洞的利用难度增加了一些，首先就是不能溢出任意的单字节，这就为我们修改chunk size增加了步骤。</p>
 <h5><span id="leak-heap">leak heap</span></h5><p>​        这里有个非常之坑的点。我们输入的作者姓名和book结构体地址正好相差32字节，所以按道理我们输入在作者姓名时输入32个字符，字符串末尾的空字节会在创建结构体时被直接覆盖为结构体的指针，因此打印book信息的时候，作者这一栏能直接把后面的指针也打印出来。</p>
-<p>​        但是，如果我们是使用pre_load加载别的版本的libc，那么，这里作者名字的地址和结构体的地址，就完全不在一个地方，根本没有办法泄露。所以在这里我们只能先摁把libc改成本机，或者找个16.04的ubuntu来做，改本机libc这种事情不是linux铁佬建议别尝试。</p>
-<h5><span id="leak-libc">leak libc</span></h5><p>​        </p>
+<p>​        但是，如果我们是使用pre_load加载别的版本的libc，那么，这里作者名字的地址和结构体的地址，就完全不在一个地方，根本没有办法泄露。所以在这里我们只能先摁把libc改成本机，或者找个16.04的ubuntu来做，改本机libc这种事情不是linux铁佬建议别尝试，上一个被我魔改的ubuntu已经与这个世界说再见了。</p>
+<p>​        摁打情况的exp如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">io.recvuntil(<span class="string">&quot;Enter author name: &quot;</span>)</span><br><span class="line">io.sendline(<span class="string">b&quot;a&quot;</span>*<span class="number">32</span>)</span><br><span class="line">add(<span class="number">32</span>,<span class="string">b&#x27;a&#x27;</span>,<span class="number">32</span>,<span class="string">b&#x27;a&#x27;</span>)</span><br><span class="line">printbook(<span class="number">1</span>)</span><br><span class="line">io.recvuntil(<span class="string">b&#x27;Author:&#x27;</span>)</span><br><span class="line">heap_addr = io.recv()[<span class="number">32</span>:<span class="number">38</span>]</span><br><span class="line">heap_addr = u64(heap_addr.ljust(<span class="number">8</span>,<span class="string">b&#x27;\x00&#x27;</span>))</span><br><span class="line">log.success(<span class="string">&quot;heap_addr&quot;</span> + <span class="built_in">hex</span>(heap_addr))</span><br></pre></td></tr></table></figure>
+
+
+
+<h5><span id="利用fake-chunk构造任意地址写">利用fake chunk构造任意地址写</span></h5><p>​        我们已经获得了一个堆上的地址，接下来我们需要利用空字节溢出构造出任意地址写。还是利用到刚才利用过的漏洞点，再次在修改作者名字时写入32个字符，这样空字节就会溢出覆盖struct chunk ptr中第一个 chunk ptr的地址最低位。</p>
+<p>​        因为每个book，des和name相对structure是在低地址，所以当structure的ptr最低位被空字节覆盖，如果此时des chunk很大的话，那么structure就会指向des chunk的内部。</p>
+<p>​        这样chunk structure的指针已经被我们劫持了，des中也有足够的空间，我们现在只需要伪造出一个合法可利用的fake structure。在这个假的结构中，我们需要实现任意地址写的功能。我们可以在fake book1 structure的des ptr字段填写book2 des ptr字段的地址，当我们使用edit修改book1的字段时，实际上就是对book2 des ptr进行修改。我们可以将其修改为我们想要的任何地址，比如<code>free_got</code>，于是当我们edit book2的des时，就是对这个des ptr指向的地方，也就是我们刚刚修改的地址指向的地方进行修改，比如说改为<code>system_addr</code>。这就是一个很完美的任意地址任意写的实现。</p>
+<h5><span id="leak-libc">leak libc</span></h5><p>​        为了完成任意地址写，我们还需要获得system的地址。这个题同样可以通过<code>mmap()</code>暴力拿到libc的基址。</p>
+<h5><span id="细节以及exp">细节以及exp</span></h5><p>累了，tbc。</p>
+<p>​        </p>
+<p>​        </p>
 <p>​        </p>
 <p>​    </p>
 <p>​        </p>
@@ -350,9 +355,13 @@
         </div>
         <nav class="m-pagination col-md-8 col-md-offset-2 col-sm-24" role="pagination">
     
+    <a class="pull-left" href="../../10/unlink/" style="float: left;">
+        ← UNLINK
+    </a>
     
-    <a class="pull-right" href="../%E5%B9%BB%E6%83%B3%E6%9B%B2-01-%E6%98%A5%E5%A4%A9/">
-        春日和 →
+    
+    <a class="pull-right" href="../../06/fastbin_attack/">
+        fastbin attack →
     </a>
     
 </nav>
