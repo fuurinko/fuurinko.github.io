@@ -78,6 +78,8 @@
 				    
 				    <li><a href="/categories/HEAP-House-Of-Force/" class="animsition-link">HEAP - House Of Force<small>(3)</small></a></li>
 				    
+				    <li><a href="/categories/HEAP-Off-By-One/" class="animsition-link">HEAP - Off By One<small>(1)</small></a></li>
+				    
 				    <li><a href="/categories/HEAP-Tcache/" class="animsition-link">HEAP - Tcache<small>(1)</small></a></li>
 				    
 				    <li><a href="/categories/HEAP-UNLINK/" class="animsition-link">HEAP - UNLINK<small>(1)</small></a></li>
@@ -233,6 +235,45 @@
 
 <section id="intro">
     <div class="container">
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2022/03/25/hof_bcloud/">bcloud</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-03-25T12:33:06.204Z" itemprop="datePublished">
+          2022-03-25
+      </time>
+    
+    
+    | 
+    <a href='/tags/heap/'>heap</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+    
+
+overview​        partial relro，可以改got表，也可以劫持hook。
+REinit1234567memset(s, 0, 0x50u); puts(&quot;Input your name:&quot;); my_read((int)s, 64, 10); v2 = (char *)malloc(0x40u); dword_804B0CC = (int)v2; strcpy(v2, s); 
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/03/25/hof_bcloud/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
         
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
@@ -594,48 +635,6 @@ free
                     
                     <p class="pull-right readMore">
                         <a href="/2022/03/17/week3-3.2/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2022/03/17/week3-3.1/">xdctf2015_pwn200</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2022-03-17T06:43:25.178Z" itemprop="datePublished">
-          2022-03-17
-      </time>
-    
-    
-    | 
-    <a href='/tags/DynELF/'>DynELF</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-         
-
-xdctf2015_pwn200​    
-​        练习一下DynELF。
-​        看起来像ret2csu+DynELF。
-​        没啥好分析的，溢出112,然后直接写leak函数。
-1234567891011121314151617def leak(addr):	payload = b&#x27;a&#x27;*offset	payload += p32(write_plt)	pa
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2022/03/17/week3-3.1/">Read More...</a>
                     </p>
                     
                 </div>

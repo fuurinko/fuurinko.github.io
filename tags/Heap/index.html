@@ -8,7 +8,7 @@
 
 <head>
 
-  <title>Tag: Heap | Rin</title>
+  <title>Tag: heap | Rin</title>
   <!-- Meta data -->
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -77,6 +77,8 @@
 				    <li><a href="/categories/HEAP-Fastbin-Attack/" class="animsition-link">HEAP - Fastbin Attack<small>(8)</small></a></li>
 				    
 				    <li><a href="/categories/HEAP-House-Of-Force/" class="animsition-link">HEAP - House Of Force<small>(3)</small></a></li>
+				    
+				    <li><a href="/categories/HEAP-Off-By-One/" class="animsition-link">HEAP - Off By One<small>(1)</small></a></li>
 				    
 				    <li><a href="/categories/HEAP-Tcache/" class="animsition-link">HEAP - Tcache<small>(1)</small></a></li>
 				    
@@ -244,9 +246,36 @@
                         
                         <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 wow fadeInUp" data-wow-delay="0.3s">
                             
-                              <h4 class="title"><a href="/2021/08/17/Tcache学习/">Tcahce学习</a></h4>
+                              <h4 class="title"><a href="/2022/04/02/fastbin中uaf实现任意地址分配的检测问题/">fastbin中uaf实现任意地址分配的检测问题</a></h4>
                             
-                            <p><time datetime="2021-08-17T02:53:00.000Z"><a href="/2021/08/17/Tcache学习/">2021-08-17</a></time></p>
+                            <p><time datetime="2022-04-02T00:37:40.817Z"><a href="/2022/04/02/fastbin中uaf实现任意地址分配的检测问题/">2022-04-02</a></time></p>
+                        </div>
+                    
+                        
+                        
+                        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 wow fadeInUp" data-wow-delay="0.3s">
+                            
+                              <h4 class="title"><a href="/2022/03/25/hof_bcloud/">bcloud</a></h4>
+                            
+                            <p><time datetime="2022-03-25T12:33:06.204Z"><a href="/2022/03/25/hof_bcloud/">2022-03-25</a></time></p>
+                        </div>
+                    
+                        
+                        
+                        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 wow fadeInUp" data-wow-delay="0.3s">
+                            
+                              <h4 class="title"><a href="/2022/03/24/hof_hitcontraininf11/">hitcon_training11</a></h4>
+                            
+                            <p><time datetime="2022-03-24T14:16:18.934Z"><a href="/2022/03/24/hof_hitcontraininf11/">2022-03-24</a></time></p>
+                        </div>
+                    
+                        
+                        
+                        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 wow fadeInUp" data-wow-delay="0.3s">
+                            
+                              <h4 class="title"><a href="/2021/12/10/unlink/">UNLINK</a></h4>
+                            
+                            <p><time datetime="2021-12-09T17:33:53.716Z"><a href="/2021/12/10/unlink/">2021-12-10</a></time></p>
                         </div>
                     
                 </div>
@@ -707,83 +736,6 @@ $('#intro').find('img').each(function(){
           });
           var searchResultList = '<ul class=\"search-result-list\">';
           resultItems.forEach(function (result) {
-            searchResultList += result.item;
-          })
-          searchResultList += "</ul>";
-          resultContent.innerHTML = searchResultList;
-        }
-      }
-
-      if ('auto' === 'auto') {
-        input.addEventListener('input', inputEventFunction);
-      } else {
-        $('.search-icon').click(inputEventFunction);
-        input.addEventListener('keypress', function (event) {
-          if (event.keyCode === 13) {
-            inputEventFunction();
-          }
-        });
-      }
-
-      // remove loading animation
-      $('body').css('overflow', '');
-
-      proceedsearch();
-    }
-
-    // handle and trigger popup window;
-    $('.popup-trigger').click(function(e) {
-      e.stopPropagation();
-      if (isfetched === false) {
-        $('.sb-close').click();
-        searchFunc('local-search-input', 'local-search-result');
-      } else {
-        proceedsearch();
-      };
-    });
-
-    $('.popup-btn-close').click(onPopupClose);
-    $('.popup').click(function(e){
-      e.stopPropagation();
-    });
-    $(document).on('keyup', function (event) {
-      var shouldDismissSearchPopup = event.which === 27 &&
-        $('.search-popup').is(':visible');
-      if (shouldDismissSearchPopup) {
-        onPopupClose();
-      }
-    });
-  </script>
-
-
-      
-      
-
-<!--
-
-<link rel="stylesheet" href="/dist/APlayer.min.css">
-<div id="aplayer"></div>
-<script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script>
-
-<script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
-<meting-js
-      server="netease"
-      type="playlist"
-      id="4904272454">
-</meting-js>
--->
-
-</body>
-
-</html>
-
-
-
-
-
-
-
-ult) {
             searchResultList += result.item;
           })
           searchResultList += "</ul>";
