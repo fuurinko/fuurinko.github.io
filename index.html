@@ -239,6 +239,48 @@
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
                 <div class="col-md-4">
+                    <h3><a href="/2022/04/06/pwn知识点总结/">pwn知识点总结</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-04-05T16:00:00.000Z" itemprop="datePublished">
+          2022-04-06
+      </time>
+    
+    
+    | 
+    <a href='/tags/summary/'>summary</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+     
+
+[TOC]
+stack控制程序执行流栈溢出ret2syscall​        利用程序自带的gadget，构造syscall。
+​        对应板子
+ret2libc/csu​        比较模版化，值得一题的就是，system()的执行要求此时栈是16位对齐的，所以如果getshell失败不妨多ret一次。        
+ret2shellcode​        在rwx的内存空间(不一定是栈）上写s
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/04/06/pwn知识点总结/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
                     <h3><a href="/2022/04/05/unlink/">UNLINK</a></h3>
                     <span>
                         <span class="post-meta">
@@ -593,45 +635,6 @@ index sentence​        指针操作有点多，配合gdb观看效果更佳。
                     
                     <p class="pull-right readMore">
                         <a href="/2022/03/29/week5-2.1/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2022/03/28/ret2shellcode/">ret2shellcode</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2022-03-28T14:52:39.514Z" itemprop="datePublished">
-          2022-03-28
-      </time>
-    
-    
-    | 
-    <a href='/tags/stack/'>stack</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        ​        一个写shellcode大合集。
-[极客大挑战 2019]Not Bad普通的栈迁移​        无保护。可以读入程序的字符长度为0x38，读入shellcode的话空间会不够，需要栈迁移。
-​        
-​        程序为我们开辟了一块fake stack，我们可以直接将ebp劫持至0x123000。
-​        关于栈迁移的部分，其实挺久没有利用到这个trick了，有些不记得了，但是看了相关的
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2022/03/28/ret2shellcode/">Read More...</a>
                     </p>
                     
                 </div>

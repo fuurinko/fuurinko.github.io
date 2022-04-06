@@ -210,8 +210,8 @@
         <div class="row col-md-offset-2">
             <div class="col-md-8">
     			<span class="post-meta">
-      <time datetime="2022-03-21T07:55:07.636Z" itemprop="datePublished">
-          2022-03-21
+      <time datetime="2022-04-05T16:00:00.000Z" itemprop="datePublished">
+          2022-04-06
       </time>
     
     
@@ -225,20 +225,29 @@
         </div>
         <div class="col-md-8 col-md-offset-2">
       		
-    <div id="aplayer-LotNhcSV" class="aplayer aplayer-tag-marker meting-tag-marker"
-         data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"
-    ></div> 
+    <div id="aplayer-zrgwPuMb" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div> 
 
 <p>[TOC]</p>
-<h1 id="stack"><a href="#stack" class="headerlink" title="stack"></a>stack</h1><h2 id="漏洞点"><a href="#漏洞点" class="headerlink" title="漏洞点"></a>漏洞点</h2><h3 id="控制程序执行流"><a href="#控制程序执行流" class="headerlink" title="控制程序执行流"></a>控制程序执行流</h3><h4 id="栈溢出"><a href="#栈溢出" class="headerlink" title="栈溢出"></a>栈溢出</h4><h5 id="ret2syscall"><a href="#ret2syscall" class="headerlink" title="ret2syscall"></a>ret2syscall</h5><p>​        利用程序自带的gadget，构造syscall。</p>
+<h1><span id="stack">stack</span></h1><h2><span id="控制程序执行流">控制程序执行流</span></h2><h3><span id="栈溢出">栈溢出</span></h3><h4><span id="ret2syscall">ret2syscall</span></h4><p>​        利用程序自带的gadget，构造syscall。</p>
 <p>​        <a href="https://fuurinko.github.io/2022/03/21/%E4%B8%80%E4%BA%9B%E6%9D%BF%E5%AD%90/">对应板子</a></p>
-<h5 id="ret2libc"><a href="#ret2libc" class="headerlink" title="ret2libc"></a>ret2libc</h5><h5 id="ret2shellcode"><a href="#ret2shellcode" class="headerlink" title="ret2shellcode"></a>ret2shellcode</h5><h3 id="泄露内存"><a href="#泄露内存" class="headerlink" title="泄露内存"></a>泄露内存</h3><h4 id="格式化字符串"><a href="#格式化字符串" class="headerlink" title="格式化字符串"></a>格式化字符串</h4><h5 id="1）泄露任意地址"><a href="#1）泄露任意地址" class="headerlink" title="1）泄露任意地址"></a>1）泄露任意地址</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">--------获取栈变量对应的地址------------</span><br><span class="line">%n<span class="variable">$p</span> <span class="comment">#输出栈上第n+1个格式化字符串输出参数</span></span><br><span class="line">--------获取栈变量对应的字符串----------</span><br><span class="line">%n<span class="variable">$s</span><span class="comment">#输出栈上第n+1个格式化字符串参数对应的字符串</span></span><br><span class="line">--------获取任意地址内容---------------</span><br><span class="line">addr%n<span class="variable">$s</span>	</span><br></pre></td></tr></table></figure>
+<h4><span id="ret2libccsu">ret2libc/csu</span></h4><p>​        比较模版化，值得一题的就是，<code>system()</code>的执行要求此时栈是16位对齐的，所以如果getshell失败不妨多ret一次。        </p>
+<h4><span id="ret2shellcode">ret2shellcode</span></h4><p>​        在rwx的内存空间(不一定是栈）上写shellcode，其实利用的姿势挺多的，建议看看pwn.college的ShellcodeInjection module，会刷新世界观。</p>
+<p>​        普通的ret2shellcode一般要求我们leak输入的buf以跳转回去执行，但是还是因题而异，有的题还会对输入或者说要执行的shellcode进行过滤，反正花样挺多。</p>
+<h4><span id="srop">srop</span></h4><p>​        提供了一种相对更加高级的rop方式，但是据我的经验一般srop能做普通rop也能做，只是相对来说exp更短。如果一定要srop的话，pwntools的srop模块会是一个很好的选择。</p>
+<h4><span id="ret2dlreslove">ret2dlreslove</span></h4><p>​        当程序没有任何输出时，可以考虑这个利用方式。</p>
+<p>​        利用其实虽然复杂，原理比较好理解，简单的题也还是不难的。    </p>
+<p>​        无relro的情况只需要伪造<code>.dynamic</code>节中字符串表地址为目的地址就行。比如将<code>read()</code>字符串替换为<code>system()</code>字符串，然后读入<code>&quot;/bin/sh&quot;</code></p>
+<p>​        partial relro使得<code>.dynamic</code>只读，那么就需要伪造重定位表。</p>
+<p>​        full relro的话，就更加困难了，是需要利用到<code>dt_bug</code>找到<code>link_map</code>，再通过<code>link_map</code>找到<code>dl_runtime_resolve</code>函数的地址，然后再进行常规的利用。相当之复杂。</p>
+<p>​        </p>
+<h3><span id="泄露内存">泄露内存</span></h3><h4><span id="格式化字符串">格式化字符串</span></h4><h5><span id="泄露任意地址">泄露任意地址</span></h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">--------获取栈变量对应的地址------------</span><br><span class="line">%n<span class="variable">$p</span> <span class="comment">#输出栈上第n+1个格式化字符串输出参数</span></span><br><span class="line">--------获取栈变量对应的字符串----------</span><br><span class="line">%n<span class="variable">$s</span><span class="comment">#输出栈上第n+1个格式化字符串参数对应的字符串</span></span><br><span class="line">--------获取任意地址内容---------------</span><br><span class="line">addr%n<span class="variable">$s</span>	</span><br></pre></td></tr></table></figure>
 
-<h6 id="Extra"><a href="#Extra" class="headerlink" title="Extra:"></a>Extra:</h6><p>​        对于格式化字符串地址偏移的计算，32位和64位并不完全相同，32位参数完全由栈传递，所以参数在栈上出现的位次即是偏移（要减去返回地址占的位次），但是64位传参前六位是由寄存器传参，因此在栈上找到的偏移需要加6。</p>
-<h4 id="数组越界"><a href="#数组越界" class="headerlink" title="数组越界"></a>数组越界</h4><h4 id="覆盖空字节"><a href="#覆盖空字节" class="headerlink" title="覆盖空字节"></a>覆盖空字节</h4><p>​        </p>
-<h3 id="修改内存"><a href="#修改内存" class="headerlink" title="修改内存"></a>修改内存</h3><h4 id="格式化字符串-1"><a href="#格式化字符串-1" class="headerlink" title="格式化字符串"></a>格式化字符串</h4><h5 id="利用fmt-payload模块自动化写入"><a href="#利用fmt-payload模块自动化写入" class="headerlink" title="利用fmt_payload模块自动化写入"></a>利用fmt_payload模块自动化写入</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">payload = fmtstr_payload(offset, &#123;func_got : system_addr&#125;)</span><br></pre></td></tr></table></figure>
+<h6><span id="extra">Extra:</span></h6><p>​        对于格式化字符串地址偏移的计算，32位和64位并不完全相同，32位参数完全由栈传递，所以参数在栈上出现的位次即是偏移（要减去返回地址占的位次），但是64位传参前六位是由寄存器传参，因此在栈上找到的偏移需要加6。</p>
+<h4><span id="数组越界">数组越界</span></h4><p>​        对数组的idx进行非法的索引，以输出相应内存中的数据。</p>
+<h4><span id="覆盖空字节">覆盖空字节</span></h4><p>​        输入或者其他操作时，将字符串结尾的截断空字节覆盖，输出时则会无视截断持续输出，有可能造成内存泄露。这一点在堆题中同样非常好用，尤其是有时候输出字符串与堆结构体的地址相邻。</p>
+<h3><span id="修改内存">修改内存</span></h3><h4><span id="格式化字符串">格式化字符串</span></h4><h5><span id="利用fmt_payload模块自动化写入">利用fmt_payload模块自动化写入</span></h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">payload = fmtstr_payload(offset, &#123;func_got : system_addr&#125;)</span><br></pre></td></tr></table></figure>
 
-<h5 id="手工构造"><a href="#手工构造" class="headerlink" title="手工构造"></a>手工构造</h5><h6 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h6><p><code>%n</code>参数不输出字符，但是把已成功输出的字符个数写入对应整形指针参数所指的变量。</p>
+<h5><span id="手工构造">手工构造</span></h5><h6><span id="原理">原理</span></h6><p><code>%n</code>参数不输出字符，但是把已成功输出的字符个数写入对应整形指针参数所指的变量。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">addr%k<span class="variable">$n</span><span class="comment">#k为格式化字符串偏移，addr为需要覆盖的地址</span></span><br></pre></td></tr></table></figure>
 
 
@@ -248,18 +257,26 @@
 
 
 
+
+<h1><span id="heap">Heap</span></h1><p>堆题的内存泄露和修改其实是结合在一起的，所以也不好分开讨论</p>
+<h2><span id="逆向">逆向</span></h2><p>​        一般来说大多数菜单题都会申请的比如说note定义结构体，当然也有那种纯纯利用malloc出的ptr进行读写操作的，但是比较少。</p>
+<p>​        首先需要利用眼力，想 象 力和动调逆出这个结构体里的字段，以及其占用的size，在内存空间的布局。如果足够闲也可以在ida中新建结构体，然后将题目中的结构体与你创建的结构体关联起来，这样伪代码的可读性又会增加很多。</p>
+<p>​        很多题都会在结构体中保存note content的指针，这个指针也是我们解题的关键所在。其他乱七八糟的东西就看出题人是不是爱整活了。</p>
+<h2><span id="利用">利用</span></h2><h3><span id="修改指针">修改指针</span></h3><p>​        </p>
+<h4><span id="uaf">UAF</span></h4><h5><span id="fastbintcahce-double-free">fastbin（Tcahce） double free</span></h5><h5><span id="unlink">unlink</span></h5><h4><span id="offbyone">offbyone</span></h4><h5><span id="chunk-overlapping">chunk overlapping</span></h5><h5><span id="house-of-en啥啥啥">house of en啥啥啥</span></h5><h4><span id="堆溢出">堆溢出</span></h4><h5><span id="house-of-force">house of force</span></h5><h3><span id="内存泄露">内存泄露</span></h3><h4><span id="unsortedbin-leak">unsortedbin leak</span></h4><p>​        当unsortedbin双向循环链表中只有一个bin时，fd会指向<code>main_arena</code>的内部，这样我们就可以通过leak这个bin的相关地址来获得<code>main_arena</code>的地址，而<code>malloc_hook</code>与<code>main_arena</code>有固定的偏移，一般情况为0x10，也就算是获得了<code>malloc_hook</code>的地址。</p>
+<h4><span id="mmap-leak">mmap() leak</span></h4><p>​        申请一个巨大的chunk，大到需要利用到<code>mmap()</code>，然后这个申请的范围会与libc加载的地址有一个并不大的固定偏移，我们可以通过leak这个chunk的地址来获得libc的基址。</p>
+<h4><span id="other">other</span></h4><p>​    就是看题的特性（其实大多数题都是靠这个吧）</p>
+<h4><span id></span></h4><h3><span id="getshell">getshell</span></h3><h4><span id="修改hook">修改hook</span></h4><p>​        改<code>malloc_hook</code>、<code>free_hook</code>等</p>
+<h4><span id="修改got">修改got</span></h4><h5><span id></span></h5><p>​</p>
+
             <div class="clearfix"></div>
             <hr class="nogutter">
         </div>
         <nav class="m-pagination col-md-8 col-md-offset-2 col-sm-24" role="pagination">
     
-    <a class="pull-left" href="../%E4%B8%80%E4%BA%9B%E6%9D%BF%E5%AD%90/" style="float: left;">
-        ← 一些板子
-    </a>
     
-    
-    <a class="pull-right" href="../../20/mrctf2020_shellcode_revenge/">
-        mrctf2020_shellcode_revenge →
+    <a class="pull-right" href="../../05/unlink/">
+        UNLINK →
     </a>
     
 </nav>
