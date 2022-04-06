@@ -72,15 +72,17 @@
 				    
 				    <li><a href="/categories/Generalization/" class="animsition-link">Generalization<small>(2)</small></a></li>
 				    
-				    <li><a href="/categories/HEAP/" class="animsition-link">HEAP<small>(2)</small></a></li>
+				    <li><a href="/categories/HEAP-Chunk-Overlapping/" class="animsition-link">HEAP - Chunk Overlapping<small>(1)</small></a></li>
 				    
 				    <li><a href="/categories/HEAP-Fastbin-Attack/" class="animsition-link">HEAP - Fastbin Attack<small>(8)</small></a></li>
+				    
+				    <li><a href="/categories/HEAP-Heap-overflow/" class="animsition-link">HEAP - Heap overflow<small>(1)</small></a></li>
 				    
 				    <li><a href="/categories/HEAP-House-Of-Force/" class="animsition-link">HEAP - House Of Force<small>(3)</small></a></li>
 				    
 				    <li><a href="/categories/HEAP-Off-By-One/" class="animsition-link">HEAP - Off By One<small>(1)</small></a></li>
 				    
-				    <li><a href="/categories/HEAP-Tcache/" class="animsition-link">HEAP - Tcache<small>(1)</small></a></li>
+				    <li><a href="/categories/HEAP-Tcache/" class="animsition-link">HEAP - Tcache<small>(2)</small></a></li>
 				    
 				    <li><a href="/categories/HEAP-UNLINK/" class="animsition-link">HEAP - UNLINK<small>(1)</small></a></li>
 				    
@@ -235,6 +237,50 @@
 
 <section id="intro">
     <div class="container">
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2022/04/06/week6-3.2/">LonelyWolf</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-04-06T12:19:37.401Z" itemprop="datePublished">
+          2022-04-06
+      </time>
+    
+    
+    | 
+    <a href='/tags/ciscn/'>ciscn</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+     
+
+overview​        开始做一些ciscn了。
+
+readd​        size不能大于0x78。
+1234567ptr = malloc(size);if ( ptr )&#123; size_struct = size_1; content_struct = ptr; puts(&quot;Done!&quot;); &#125;
+
+
+​        size和content的buf在空间中是相邻
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/04/06/week6-3.2/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
         
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
@@ -440,7 +486,7 @@ UNLINKunlink大致概念​        就是将free chunk从双向循环链表中�
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
                 <div class="col-md-4">
-                    <h3><a href="/2022/04/01/week5-5.1/">NoLeak</a></h3>
+                    <h3><a href="/2022/04/01/week6-3.1/">NoLeak</a></h3>
                     <span>
                         <span class="post-meta">
       <time datetime="2022-04-01T13:34:22.000Z" itemprop="datePublished">
@@ -457,15 +503,15 @@ UNLINKunlink大致概念​        就是将free chunk从双向循环链表中�
      
 
 overview
-非常之畸形。
-re​        逻辑比较简单简单，并且没有为chunk定义结构体。漏洞点也很明显，就是还是free后没有给指针置0，顺便edit的时候size没有限定，可以造成堆溢出。
-利用​        没有办法改got表，但是可以写shellcode。所以是不是能uaf改指针，add到栈上写shellcode呢？
-​        但是问题随即而来，我们有向栈上写shellcode的能力，但是
+​        非常之畸形。
+re​        逻辑比较简单，结构体中只有一个chunk bp的字段。漏洞点也很魔幻，free只free结构体中保存的指针，而没有free malloc出来的ptr本身，并且没有置0，顺便edit的时候size没有限定，可以造成堆溢出。
+​        并且题目并没有可控的输出功能,虽然调用了write()，但是我们很难通过改got表来调用。    
+利用​   
                       
                     </p>
                     
                     <p class="pull-right readMore">
-                        <a href="/2022/04/01/week5-5.1/">Read More...</a>
+                        <a href="/2022/04/01/week6-3.1/">Read More...</a>
                     </p>
                     
                 </div>
@@ -590,51 +636,6 @@ overview
                     
                     <p class="pull-right readMore">
                         <a href="/2022/03/30/week5-3.1/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2022/03/29/week5-2.1/">9447_CTF-Search Engine</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2022-03-29T02:44:17.477Z" itemprop="datePublished">
-          2022-03-29
-      </time>
-    
-    
-    | 
-    <a href='/tags/UAF/'>UAF</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-     
-
-
-
-overview
-逆向menu​            一共只有两个功能，search word和index sentence。
-index sentence​        指针操作有点多，配合gdb观看效果更佳。
-​        当只malloc一个10 size的chunk时，内存是这样的，代码是这样的：
-
-123456789101112131415161718puts(&quot;Enter the sen
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2022/03/29/week5-2.1/">Read More...</a>
                     </p>
                     
                 </div>

@@ -8,7 +8,7 @@
 
 <head>
 
-  <title>NoLeak | Rin</title>
+  <title>LonelyWolf | Rin</title>
   <!-- Meta data -->
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -75,15 +75,17 @@
 				    
 				    <li><a href="/categories/Generalization/" class="animsition-link">Generalization<small>(2)</small></a></li>
 				    
-				    <li><a href="/categories/HEAP/" class="animsition-link">HEAP<small>(2)</small></a></li>
+				    <li><a href="/categories/HEAP-Chunk-Overlapping/" class="animsition-link">HEAP - Chunk Overlapping<small>(1)</small></a></li>
 				    
 				    <li><a href="/categories/HEAP-Fastbin-Attack/" class="animsition-link">HEAP - Fastbin Attack<small>(8)</small></a></li>
+				    
+				    <li><a href="/categories/HEAP-Heap-overflow/" class="animsition-link">HEAP - Heap overflow<small>(1)</small></a></li>
 				    
 				    <li><a href="/categories/HEAP-House-Of-Force/" class="animsition-link">HEAP - House Of Force<small>(3)</small></a></li>
 				    
 				    <li><a href="/categories/HEAP-Off-By-One/" class="animsition-link">HEAP - Off By One<small>(1)</small></a></li>
 				    
-				    <li><a href="/categories/HEAP-Tcache/" class="animsition-link">HEAP - Tcache<small>(1)</small></a></li>
+				    <li><a href="/categories/HEAP-Tcache/" class="animsition-link">HEAP - Tcache<small>(2)</small></a></li>
 				    
 				    <li><a href="/categories/HEAP-UNLINK/" class="animsition-link">HEAP - UNLINK<small>(1)</small></a></li>
 				    
@@ -210,47 +212,55 @@
         <div class="row col-md-offset-2">
             <div class="col-md-8">
     			<span class="post-meta">
-      <time datetime="2022-04-01T13:34:22.000Z" itemprop="datePublished">
-          2022-04-01
+      <time datetime="2022-04-06T12:19:37.401Z" itemprop="datePublished">
+          2022-04-06
       </time>
     
+    
+    | 
+    <a href='/tags/ciscn/'>ciscn</a>
+    
+    
 </span>
-                <h1>NoLeak</h1>
+                <h1>LonelyWolf</h1>
             </div>
         </div>
         <div class="col-md-8 col-md-offset-2">
       		
-    <div id="aplayer-lSjcAvOw" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div> 
+    <div id="aplayer-exeiLnSB" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div> 
 
-<h2><span id="overview">overview</span></h2><p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-04-01%20%E4%B8%8B%E5%8D%888.39.29.png" alt="截屏2022-04-01 下午8.39.29"></p>
-<p>非常之畸形。</p>
-<h2><span id="re">re</span></h2><p>​        逻辑比较简单简单，并且没有为chunk定义结构体。漏洞点也很明显，就是还是free后没有给指针置0，顺便edit的时候size没有限定，可以造成堆溢出。</p>
-<h2><span id="利用">利用</span></h2><p>​        没有办法改got表，但是可以写shellcode。所以是不是能uaf改指针，add到栈上写shellcode呢？</p>
-<p>​        但是问题随即而来，我们有向栈上写shellcode的能力，但是如何控制程序执行？</p>
-<p>​        由于没有leak的机会，所以我们很难通过单纯向栈内写东西来使得shellcode执行，所以需要借用其他的函数，比如说将让<code>malloc_hook</code>指向<code>shellcode_addr</code>，这样就能执行了。</p>
-<p>​        但是第一步，我们需要一个任意地址写，来将shellcode写入。</p>
-<h3><span id="关于任意地址分配的疑思">关于任意地址分配的疑思</span></h3><p>​        这里我把这道题想得太简单了，我以为这里只用UAF就可以劫持chunk ptr。(因为程序真的写得很简单嘛555)</p>
-<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-04-02%20%E4%B8%8A%E5%8D%888.28.00.png" alt="截屏2022-04-02 上午8.28.00"></p>
-<p>​        由于其实还是不太清楚分配fastbin的一些流程，或者说检测，导致我还是天真地相信单纯利用uaf就能够实现任意地址写，但是无情的报错掐碎了我的幻想，之所以报错大概是我少写chunk的size域，导致过不了检测。</p>
-<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-04-02%20%E4%B8%8A%E5%8D%888.33.00.png" alt="截屏2022-04-02 上午8.33.00"></p>
-<p>​        原来这个点wiki上就有啊，还是我刷的题太太太太太少了。</p>
-<p>​        所以这个题如果想要利用uaf实现任意地址分配，首先选择分配的地址为<code>malloc_hook</code>，然后问题就在于我们无法手工构造fake chunk size域，这样的结果就会导致刚才那个报错，那我们可以尝试寻找<code>malloc_hook</code>附近是否有符合条件的，可以充当size的字节。</p>
-<h3><span id="寻找malloc_hook">寻找malloc_hook</span></h3><p>​        但是首先我们需要找到<code>malloc_hook</code>所在的地址。这个题目是没有leak的，所以我们不能通过常规leak <code>main_arena</code>的思路来寻找。回想一下，libc中main_arena与malloc_hook的偏移其实是固定且很小的，也就是<code>malloc_hook = main_arena - 0x10</code>,所以当我们获得一个fastbin时，<code>malloc_hook</code>就是<code>bin_addr-size-0x10-0x10</code>。</p>
-<p>​        </p>
-<p>​</p>
+<h2><span id="overview">overview</span></h2><p>​        开始做一些ciscn了。</p>
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-04-06%20%E4%B8%8B%E5%8D%888.21.22.png" alt="截屏2022-04-06 下午8.21.22"></p>
+<h2><span id="re">re</span></h2><h3><span id="add">add</span></h3><p>​        size不能大于0x78。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">ptr = <span class="built_in">malloc</span>(size);</span><br><span class="line"><span class="keyword">if</span> ( ptr )</span><br><span class="line">&#123;</span><br><span class="line"> size_struct = size_1;</span><br><span class="line"> content_struct = ptr;</span><br><span class="line"> <span class="built_in">puts</span>(<span class="string">&quot;Done!&quot;</span>);</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-04-06%20%E4%B8%8B%E5%8D%888.32.06.png" alt="截屏2022-04-06 下午8.32.06"></p>
+<p>​        size和content的buf在空间中是相邻的。</p>
+<p>​        有一个值得注意的地方是，add的idx是可以指定的，并且在后面输入size的时候会覆盖idx。但是似乎意义不大。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">__printf_chk(<span class="number">1LL</span>, <span class="string">&quot;Index: &quot;</span>);</span><br><span class="line">__isoc99_scanf(&amp;dword_F44, &amp;size_1);</span><br><span class="line">__printf_chk(<span class="number">1LL</span>, <span class="string">&quot;Size: &quot;</span>);</span><br><span class="line">__isoc99_scanf(&amp;dword_F44, &amp;size_1);</span><br><span class="line">size = size_1;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3><span id="edit">edit</span></h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> ( content_struct )</span><br><span class="line">    &#123;</span><br><span class="line">      __printf_chk(<span class="number">1LL</span>, <span class="string">&quot;Content: &quot;</span>);</span><br><span class="line">      v0 = content_struct;</span><br><span class="line">      <span class="keyword">if</span> ( size_struct )</span><br><span class="line">      &#123;</span><br><span class="line">        v1 = (<span class="keyword">char</span> *)content_struct + size_struct;</span><br><span class="line">        <span class="keyword">while</span> ( <span class="number">1</span> )</span><br><span class="line">        &#123;</span><br><span class="line">          read(<span class="number">0</span>, v0, <span class="number">1uLL</span>);</span><br><span class="line">          <span class="keyword">if</span> ( *v0 == <span class="string">&#x27;\n&#x27;</span> )</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">          <span class="keyword">if</span> ( ++v0 == v1 )</span><br><span class="line">            <span class="keyword">return</span> __readfsqword(<span class="number">0x28</span>u) ^ v4;</span><br><span class="line">        &#125;</span><br><span class="line">        *v0 = <span class="number">0</span>;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>​        当输入的地址递增到content_struct + size_struct，则终止输入。看似是没有堆溢出的。</p>
+<h3><span id="show">show</span></h3><p>​        其实我不理解为什么要idx。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> ( !idx &amp;&amp; content_struct )</span><br><span class="line">   __printf_chk(<span class="number">1LL</span>, <span class="string">&quot;Content: %s\n&quot;</span>, (<span class="keyword">const</span> <span class="keyword">char</span> *)content_struct);</span><br></pre></td></tr></table></figure>
+
+<h3><span id="free">free</span></h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> ( !idx &amp;&amp; content_struct )</span><br><span class="line">  <span class="built_in">free</span>(content_struct);</span><br></pre></td></tr></table></figure>
+
+<p>​        UAF</p>
 
             <div class="clearfix"></div>
             <hr class="nogutter">
         </div>
         <nav class="m-pagination col-md-8 col-md-offset-2 col-sm-24" role="pagination">
     
-    <a class="pull-left" href="../../02/fastbin%E4%B8%ADuaf%E5%AE%9E%E7%8E%B0%E4%BB%BB%E6%84%8F%E5%9C%B0%E5%9D%80%E5%88%86%E9%85%8D%E7%9A%84%E6%A3%80%E6%B5%8B%E9%97%AE%E9%A2%98/" style="float: left;">
-        ← fastbin中uaf实现任意地址分配的检测问题
-    </a>
     
-    
-    <a class="pull-right" href="../pwn.college_Dynamic_Allocator_Misuse/">
-        Dynamic_Allocator_Misuse →
+    <a class="pull-right" href="../pwn%E7%9F%A5%E8%AF%86%E7%82%B9%E6%80%BB%E7%BB%93/">
+        pwn知识点总结 →
     </a>
     
 </nav>
