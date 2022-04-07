@@ -88,6 +88,8 @@
 				    
 				    <li><a href="/categories/HEAP-Unsortedbin/" class="animsition-link">HEAP-Unsortedbin<small>(1)</small></a></li>
 				    
+				    <li><a href="/categories/Heap/" class="animsition-link">Heap<small>(1)</small></a></li>
+				    
 				    <li><a href="/categories/MESS/" class="animsition-link">MESS<small>(20)</small></a></li>
 				    
 				    <li><a href="/categories/OTHER-IO-FILE/" class="animsition-link">OTHER - IO FILE<small>(1)</small></a></li>
@@ -237,6 +239,48 @@
 
 <section id="intro">
     <div class="container">
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2022/03/12/pwn中的python字符串处理问题/">pwn中的python字符串处理问题</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-03-12T02:50:45.551Z" itemprop="datePublished">
+          2022-03-12
+      </time>
+    
+    
+    | 
+    <a href='/tags/mess/'>mess</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+     
+
+​        最近在pwncollege做题的时候常常遇到接收的字符串处理不当的问题，故总结整理一下。
+字符串截取123456789p.recv()[0:6]		#截取1-5个字符串p.recv()[2:6]		#截取2-5个字符串p.recv()[:]		#截取完整字符串p.recv()[2:]#从第二个索引开始截取p.recv()[-4:]#截取最后四个字符
+
+​        
+字符串处理​        一般
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/03/12/pwn中的python字符串处理问题/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
         
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
@@ -625,52 +669,6 @@ Level1需要设置*rdi = 0x1337，
                     
                     <p class="pull-right readMore">
                         <a href="/2022/01/29/pwncollege_Assembly_Refresher/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2022/01/29/pwn.college_Shellcode_Injection/">Shellcode_Injection</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2022-01-29T09:37:52.632Z" itemprop="datePublished">
-          2022-01-29
-      </time>
-    
-    
-    | 
-    <a href='/tags/pwncollege/'>pwncollege</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-     
-
-
-
-​        整个专题其实就是一个shellcode编写的小练习，并不需要自己寻找漏洞点，写好shellcode直接注入就行。
-​        如果要将服务器的文件传输到本地的话可以使用:
-1scp -i key -r hacker@dojo.pwn.college:/challenge [本地路径]
-
-
-
-Level1​        可以用pwntools的shellcraft模块，但是也可以手写shell
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2022/01/29/pwn.college_Shellcode_Injection/">Read More...</a>
                     </p>
                     
                 </div>

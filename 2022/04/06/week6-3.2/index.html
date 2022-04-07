@@ -91,6 +91,8 @@
 				    
 				    <li><a href="/categories/HEAP-Unsortedbin/" class="animsition-link">HEAP-Unsortedbin<small>(1)</small></a></li>
 				    
+				    <li><a href="/categories/Heap/" class="animsition-link">Heap<small>(1)</small></a></li>
+				    
 				    <li><a href="/categories/MESS/" class="animsition-link">MESS<small>(20)</small></a></li>
 				    
 				    <li><a href="/categories/OTHER-IO-FILE/" class="animsition-link">OTHER - IO FILE<small>(1)</small></a></li>
@@ -227,7 +229,7 @@
         </div>
         <div class="col-md-8 col-md-offset-2">
       		
-    <div id="aplayer-exeiLnSB" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div> 
+    <div id="aplayer-bhRQsZCX" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div> 
 
 <h2><span id="overview">overview</span></h2><p>​        开始做一些ciscn了。</p>
 <p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-04-06%20%E4%B8%8B%E5%8D%888.21.22.png" alt="截屏2022-04-06 下午8.21.22"></p>
@@ -251,12 +253,32 @@
 
 <h3><span id="free">free</span></h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> ( !idx &amp;&amp; content_struct )</span><br><span class="line">  <span class="built_in">free</span>(content_struct);</span><br></pre></td></tr></table></figure>
 
-<p>​        UAF</p>
-
+<p>​        UAF。</p>
+<h3><span id="动调">动调</span></h3><p>​        <img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-04-06%20%E4%B8%8B%E5%8D%889.52.10.png" alt="截屏2022-04-06 下午9.52.10"></p>
+<p>​        申请一个chunk，再free，内存如图。比较常规。</p>
+<h2><span id="加载符号表">加载符号表</span></h2><p>​        这几个ciscn的题都比较鸡贼，需要自己找符号表加载，不然pwndgb都看不了heap等。</p>
+<p>​            执行一下看看小版本，然后去网上找有debug符号的libc，把符号表扒下来加载到程序上就行。实在找不到编译好的就找源码编译一下。</p>
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-04-06%20%E4%B8%8B%E5%8D%8810.29.13.png" alt="截屏2022-04-06 下午10.29.13"></p>
+<p>​        这个版本还是蛮阴间的，根本找不到，老老实实编译了。</p>
+<h2><span id="利用">利用</span></h2><h4><span id="大致思路">大致思路</span></h4><p>​        先想一想大体的利用思路吧，首先got表肯定不能改，所以getshell应该是改<code>malloc_hook</code>。因为有UAF，并且chunk的size限制得比较小，功能也比较完备，所以应该是改Tcache bin的fd，构造任意地址写，并将chunk分配至<code>malloc_hook    </code>。leak的话可以考虑<code>unsorted bin leak</code>。（这么一想还是蛮常规的一道题）</p>
+<p>​        其实之前并没有怎么做过专门考Tcache的题，不过最近做pwn college的时候，libc的版本都已经包含tcache了，但不管是uaf还是double free都和fastbin比较类似，甚至更加简单（因为pwncollege的几个前面的level的libc是没有对double free做检测的）</p>
+<p>​        回到题目本身，这个题之前一直没有认真做完，所以虽然完全不知道解法的细节，但是还是记得比较清楚，这个libc是有对于tcache double free的检测的。不过还是比较鸡肋，我们可以利用fastbin double free的思路来绕过。</p>
+<p>​        为了修改<code>malloc_hook</code>为<code>one_gadget</code>或者其他什么东西，我们首先需要将fake chunk分配至保存chunk ptr的buf上，劫持chunk ptr，将其修改为<code>malloc_hook</code>，然后编辑chunk content为<code>one_gadget</code>。</p>
+<p>​        所以在构造fake chunk前，我们肯定要leak buf的地址以及<code>malloc_hook    </code>的地址。</p>
+<h4><span id="leak-memory">leak memory</span></h4><h5><span id="leak-main-arena">leak main arena</span></h5><p>​        利用uaf，打印已经free的unsortedbin，获得指向<code>main_arena</code>的固定偏移。最低位改为<code>\x10</code>    则为<code>malloc_hook</code>。</p>
+<p>​        拿到<code>malloc_hook</code>四舍五入也就拿到了libc，我们只需要leak buf，将fake chunk分配到buf上就完成了四分之三。</p>
+<h5><span id="leak-buf">leak buf</span></h5><p>​        由于万恶的libc还在编译，没有办法动调，我还不清楚这个程序里的idx是个什么鬼，所以暂时没有思路。只是感觉这个buf和size靠这么近，肯定有问题。    </p>
+<p>​        。。。我就不信我去洗个澡它还能在编译。。。。            </p>
+<p>​        </p>
+<h5><span id></span></h5>
             <div class="clearfix"></div>
             <hr class="nogutter">
         </div>
         <nav class="m-pagination col-md-8 col-md-offset-2 col-sm-24" role="pagination">
+    
+    <a class="pull-left" href="../../07/ciscn_2019_double/" style="float: left;">
+        ← double
+    </a>
     
     
     <a class="pull-right" href="../pwn%E7%9F%A5%E8%AF%86%E7%82%B9%E6%80%BB%E7%BB%93/">

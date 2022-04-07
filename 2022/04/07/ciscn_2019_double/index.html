@@ -8,7 +8,7 @@
 
 <head>
 
-  <title>mrctf2020_shellcode_revenge | Rin</title>
+  <title>double | Rin</title>
   <!-- Meta data -->
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -45,10 +45,7 @@
   
 
   <style>.col-md-8.col-md-offset-2.opening-statement img{display:none;}</style>
-<link rel="stylesheet" href="/css/prism.css" type="text/css"><link rel="stylesheet" href="/assets/css/APlayer.min.css" class="aplayer-style-marker">
-<script src="/assets/js/APlayer.min.js" class="aplayer-script-marker"></script>
-<script src="/assets/js/Meting.min.js" class="meting-script-marker"></script>
-</head>
+<link rel="stylesheet" href="/css/prism.css" type="text/css"></head>
 
 <!--
 <body class="post-template">
@@ -214,47 +211,57 @@
         <div class="row col-md-offset-2">
             <div class="col-md-8">
     			<span class="post-meta">
-      <time datetime="2022-03-19T17:18:00.923Z" itemprop="datePublished">
-          2022-03-20
+      <time datetime="2022-04-07T12:38:02.382Z" itemprop="datePublished">
+          2022-04-07
       </time>
     
     
     | 
-    <a href='/tags/EZ-STACK/'>EZ_STACK</a>
+    <a href='/tags/ciscn/'>ciscn</a>
     
     
 </span>
-                <h1>mrctf2020_shellcode_revenge</h1>
+                <h1>double</h1>
             </div>
         </div>
         <div class="col-md-8 col-md-offset-2">
       		
-    <div id="aplayer-eIYUrojp" class="aplayer aplayer-tag-marker meting-tag-marker"
-         data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"
-    ></div> 
+			<script>
+				console.error("ReferenceError: value is not defined");
+			</script>     
 
-<h3 id="mrctf2020-shellcode-revenge"><a href="#mrctf2020-shellcode-revenge" class="headerlink" title="mrctf2020_shellcode_revenge"></a>mrctf2020_shellcode_revenge</h3><h4 id="overview"><a href="#overview" class="headerlink" title="overview"></a>overview</h4><p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-19%20%E4%B8%8B%E5%8D%884.33.15.png" alt="截屏2022-03-19 下午4.33.15"></p>
-<p>看起来像ret2shellcode。</p>
-<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-19%20%E4%B8%8B%E5%8D%884.36.32.png" alt="截屏2022-03-19 下午4.36.32"></p>
-<h4 id="逆向"><a href="#逆向" class="headerlink" title="逆向"></a>逆向</h4><p>​        不知道为什么ida不能一键f5，不过也懒得修了，程序逻辑也比较简单，就是一个write和read。然后程序会对输入的字符进行ascii码的大小的比较，<img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-19%20%E4%B8%8B%E5%8D%885.00.43.png" alt="截屏2022-03-19 下午5.00.43"></p>
-<p>​        <img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-19%20%E4%B8%8B%E5%8D%884.52.21.png" alt="截屏2022-03-19 下午4.52.21"></p>
-<p>​        分析一下这个流程图，我们的目的是执行<code>loc_1236</code>，一共有三个箭头指向它，归纳以后分别是<code>(0x60,0x7A)</code>,<code>(0x2f,0x5A)</code>,ascii在这些范围内的字符会被读入buf，然后<code>call rax</code>，也就是执行了我们输入的shellcode。</p>
-<h4 id="利用"><a href="#利用" class="headerlink" title="利用"></a>利用</h4><p>​        由于题目本身的设置，我们并不需要像常规那样先泄露什么栈上的地址，只需要绕过题目的检测。虽然但是，搞不懂这个字符ackii码的限制意义何在。去摸了一下ackii表，发现这个范围内的字符都是数字或者字母。</p>
-<p>​        所以把shellcode转换成这些范围内的字符，然后直接传输就行。</p>
-<p>​        </p>
+<h1><span id="overview">overview</span></h1><p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-04-07%20%E4%B8%8B%E5%8D%888.39.03.png" alt="截屏2022-04-07 下午8.39.03"></p>
+<p>​            可以改表</p>
+<h1><span id="re">re</span></h1><p>​        这个题其实感觉不太好逆，有些操作挺乱的，所以以动调为主会比较好。</p>
+<h2><span id="add">add</span></h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">head_ptr = (<span class="keyword">unsigned</span> <span class="keyword">int</span> *)<span class="built_in">malloc</span>(<span class="number">0x18</span>uLL);</span><br></pre></td></tr></table></figure>
+
+<p>如果先申请一个0x28大小的chunk。</p>
+<p>那么首先创建一个结构体chunk，size为0x18。<img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-04-07%20%E4%B8%8B%E5%8D%889.27.40.png" alt="截屏2022-04-07 下午9.27.40"></p>
+<p>在010-014储存了size，014-018则为0 。</p>
+<p>这个结构体字段猜测如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">size（高四位） <span class="number">0</span>（低四位）</span><br><span class="line">content ptr</span><br><span class="line"><span class="number">0</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>如果申请了同样内容的chunk，只会为新的chunk创建结构体，结构体内保存指向上一个相同chunk的content的ptr。</p>
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-04-07%20%E4%B8%8B%E5%8D%8810.33.52.png" alt="截屏2022-04-07 下午10.33.52"></p>
+<p>因此如果只要连续free两个内容相同的chunk就会造成double free。</p>
+<h3><span id="free">free</span></h3><p>​        有uaf。</p>
+<h2><span id="利用">利用</span></h2><h3><span id="整体思路">整体思路</span></h3><p>​        大概思路还是比较常规的fastbin attack，但是需要构造fake chunk的size合法。</p>
+<p>​        利用fake chunk劫持这个<code>begin_ptr</code>，可以leak heap，同时也可以使用比较常规的unsorted bin leak 来leak libc。</p>
+<p>​        劫持ptr后，将ptr改为free got addr，以修改其为<code>system</code>或者其他什么东西。</p>
+<p>​        所以关键就是分配fake chunk至<code>begin_ptr</code>附近。</p>
+<p>​        因为程序有edit功能，所以改free chunk的fd其实是很简单的，唯一需要考虑的就是fake chunk的size合法性，需要手工构造。</p>
+<h3><span id="劫持fastbin-fd">劫持fastbin fd</span></h3><p>​</p>
 
             <div class="clearfix"></div>
             <hr class="nogutter">
         </div>
         <nav class="m-pagination col-md-8 col-md-offset-2 col-sm-24" role="pagination">
     
-    <a class="pull-left" href="../../21/%E4%B8%80%E4%BA%9B%E6%9D%BF%E5%AD%90/" style="float: left;">
-        ← 一些板子
-    </a>
     
-    
-    <a class="pull-right" href="../ret2csu/">
-        jarvisoj_level5 →
+    <a class="pull-right" href="../../06/week6-3.2/">
+        LonelyWolf →
     </a>
     
 </nav>

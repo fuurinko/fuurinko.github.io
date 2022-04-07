@@ -88,6 +88,8 @@
 				    
 				    <li><a href="/categories/HEAP-Unsortedbin/" class="animsition-link">HEAP-Unsortedbin<small>(1)</small></a></li>
 				    
+				    <li><a href="/categories/Heap/" class="animsition-link">Heap<small>(1)</small></a></li>
+				    
 				    <li><a href="/categories/MESS/" class="animsition-link">MESS<small>(20)</small></a></li>
 				    
 				    <li><a href="/categories/OTHER-IO-FILE/" class="animsition-link">OTHER - IO FILE<small>(1)</small></a></li>
@@ -237,6 +239,49 @@
 
 <section id="intro">
     <div class="container">
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2022/03/30/week5-3.1/">gyctf_2020_force</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-03-30T03:21:26.675Z" itemprop="datePublished">
+          2022-03-30
+      </time>
+    
+    
+    | 
+    <a href='/tags/hof/'>hof</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+     
+
+overview
+好绿。
+逆向​        程序比较简约，只有add和put两个功能。逻辑也不复杂。漏洞的话也比较明显，一个是程序直接把heap base白给了。另一个是虽然询问了size的大小，但是在实际add的时候完全没有根据size分配chunk,并且可以分配很大size的chunk。
+​        
+​        导致我们可以很轻易地修改top chunk的size。        
+​       
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/03/30/week5-3.1/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
         
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
@@ -589,51 +634,6 @@ PicoCTF_2018_got-shell​        虽然但是，这个题为什么这么pwncolle
                     
                     <p class="pull-right readMore">
                         <a href="/2022/03/20/PicoCTF_2018_got-shell/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2022/03/19/fmt/">格式化字符串</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2022-03-18T17:22:00.000Z" itemprop="datePublished">
-          2022-03-19
-      </time>
-    
-    
-    | 
-    <a href='/tags/FMT/'>FMT</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-     
-
-
-
-1）前言​        绿盟杯pwn1，格式化字符串+沙盒orw。保护全开。
-​        首先对于格式化字符串我的理解就不是很深刻，甚至从来没有完整地刷过一道格式化字符串的题目。
-​        所以碰到这道题，算是又给我敲了第nn个警钟。
-​        非常清晰地告诉我：我是垃圾。
-2）格式化字符串基本原理​        ctfwiki上的格式化字符串教程写得挺好的，可以参考。
-格式化字符串参数1%
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2022/03/19/fmt/">Read More...</a>
                     </p>
                     
                 </div>

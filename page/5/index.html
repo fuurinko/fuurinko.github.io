@@ -88,6 +88,8 @@
 				    
 				    <li><a href="/categories/HEAP-Unsortedbin/" class="animsition-link">HEAP-Unsortedbin<small>(1)</small></a></li>
 				    
+				    <li><a href="/categories/Heap/" class="animsition-link">Heap<small>(1)</small></a></li>
+				    
 				    <li><a href="/categories/MESS/" class="animsition-link">MESS<small>(20)</small></a></li>
 				    
 				    <li><a href="/categories/OTHER-IO-FILE/" class="animsition-link">OTHER - IO FILE<small>(1)</small></a></li>
@@ -237,6 +239,52 @@
 
 <section id="intro">
     <div class="container">
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2022/01/29/pwn.college_Shellcode_Injection/">Shellcode_Injection</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-01-29T09:37:52.632Z" itemprop="datePublished">
+          2022-01-29
+      </time>
+    
+    
+    | 
+    <a href='/tags/pwncollege/'>pwncollege</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+     
+
+
+
+​        整个专题其实就是一个shellcode编写的小练习，并不需要自己寻找漏洞点，写好shellcode直接注入就行。
+​        如果要将服务器的文件传输到本地的话可以使用:
+1scp -i key -r hacker@dojo.pwn.college:/challenge [本地路径]
+
+
+
+Level1​        可以用pwntools的shellcraft模块，但是也可以手写shell
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/01/29/pwn.college_Shellcode_Injection/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
         
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
@@ -607,54 +655,6 @@ Seccomp的模式以及参数比
                     
                     <p class="pull-right readMore">
                         <a href="/2021/11/11/Seccomp机制学习/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2021/11/11/pwndocker的pwn题体验（下）/">pwndocker的pwn题体验（下</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2021-11-10T20:04:03.336Z" itemprop="datePublished">
-          2021-11-11
-      </time>
-    
-    
-    | 
-    <a href='/tags/mess/'>mess</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-     
-
-0）​        哈哈，还是连续剧，我也想不到捏。我也不想捏。
-1）问题​        pwndocker体验了快一周，目前来说主要问题有这几个：
-
-启动tmux进行调试时机器发热严重，风扇狂转
-
-挂载文件夹内文件不同步
-
-快照的制作相对麻烦（时间久，步骤多）
-
-打开需要输入命令，有点烦。
-​    想了怪久的，就想到这三点，第三点纯属鸡蛋里挑骨头，主要pwndocker体验确实比较优雅，为了美观用vim编辑exp
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2021/11/11/pwndocker的pwn题体验（下）/">Read More...</a>
                     </p>
                     
                 </div>
