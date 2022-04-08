@@ -229,16 +229,16 @@
         </div>
         <div class="col-md-8 col-md-offset-2">
       		
-    <div id="aplayer-bhRQsZCX" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div> 
+    <div id="aplayer-WWMLLSte" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div> 
 
 <h2><span id="overview">overview</span></h2><p>​        开始做一些ciscn了。</p>
 <p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-04-06%20%E4%B8%8B%E5%8D%888.21.22.png" alt="截屏2022-04-06 下午8.21.22"></p>
 <h2><span id="re">re</span></h2><h3><span id="add">add</span></h3><p>​        size不能大于0x78。</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">ptr = <span class="built_in">malloc</span>(size);</span><br><span class="line"><span class="keyword">if</span> ( ptr )</span><br><span class="line">&#123;</span><br><span class="line"> size_struct = size_1;</span><br><span class="line"> content_struct = ptr;</span><br><span class="line"> <span class="built_in">puts</span>(<span class="string">&quot;Done!&quot;</span>);</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">ptr = <span class="built_in">malloc</span>(size);</span><br><span class="line"><span class="keyword">if</span> ( ptr )</span><br><span class="line">&#123;</span><br><span class="line"> size_struct = size_1;</span><br><span class="line"> content_struct = ptr;<span class="comment">//蚌埠住了，每次都会把这个指针覆盖为最新分配的content ptr。这下idx直接报废。</span></span><br><span class="line"> <span class="built_in">puts</span>(<span class="string">&quot;Done!&quot;</span>);</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
 
 <p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-04-06%20%E4%B8%8B%E5%8D%888.32.06.png" alt="截屏2022-04-06 下午8.32.06"></p>
 <p>​        size和content的buf在空间中是相邻的。</p>
-<p>​        有一个值得注意的地方是，add的idx是可以指定的，并且在后面输入size的时候会覆盖idx。但是似乎意义不大。</p>
+<p>​        有一个值得注意的地方是，add的idx是可以指定的，并且在后面输入size的时候会覆盖idx。但是似乎意义不大。并且add的时候完全没有为不同的idx创建不同的chunk，所以这个程序其实很阴间，idx感觉就是一个烟雾弹。不管是这里的add还是后面的show，edit，都是默认编辑第个ptr。</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">__printf_chk(<span class="number">1LL</span>, <span class="string">&quot;Index: &quot;</span>);</span><br><span class="line">__isoc99_scanf(&amp;dword_F44, &amp;size_1);</span><br><span class="line">__printf_chk(<span class="number">1LL</span>, <span class="string">&quot;Size: &quot;</span>);</span><br><span class="line">__isoc99_scanf(&amp;dword_F44, &amp;size_1);</span><br><span class="line">size = size_1;</span><br></pre></td></tr></table></figure>
 
 
@@ -248,7 +248,7 @@
 
 
 <p>​        当输入的地址递增到content_struct + size_struct，则终止输入。看似是没有堆溢出的。</p>
-<h3><span id="show">show</span></h3><p>​        其实我不理解为什么要idx。</p>
+<h3><span id="show">show</span></h3><p>​        </p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> ( !idx &amp;&amp; content_struct )</span><br><span class="line">   __printf_chk(<span class="number">1LL</span>, <span class="string">&quot;Content: %s\n&quot;</span>, (<span class="keyword">const</span> <span class="keyword">char</span> *)content_struct);</span><br></pre></td></tr></table></figure>
 
 <h3><span id="free">free</span></h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> ( !idx &amp;&amp; content_struct )</span><br><span class="line">  <span class="built_in">free</span>(content_struct);</span><br></pre></td></tr></table></figure>
@@ -257,7 +257,7 @@
 <h3><span id="动调">动调</span></h3><p>​        <img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-04-06%20%E4%B8%8B%E5%8D%889.52.10.png" alt="截屏2022-04-06 下午9.52.10"></p>
 <p>​        申请一个chunk，再free，内存如图。比较常规。</p>
 <h2><span id="加载符号表">加载符号表</span></h2><p>​        这几个ciscn的题都比较鸡贼，需要自己找符号表加载，不然pwndgb都看不了heap等。</p>
-<p>​            执行一下看看小版本，然后去网上找有debug符号的libc，把符号表扒下来加载到程序上就行。实在找不到编译好的就找源码编译一下。</p>
+<p>​        执行一下看看小版本，然后去网上找有debug符号的libc，把符号表扒下来加载到程序上就行。实在找不到编译好的就找源码编译一下。</p>
 <p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-04-06%20%E4%B8%8B%E5%8D%8810.29.13.png" alt="截屏2022-04-06 下午10.29.13"></p>
 <p>​        这个版本还是蛮阴间的，根本找不到，老老实实编译了。</p>
 <h2><span id="利用">利用</span></h2><h4><span id="大致思路">大致思路</span></h4><p>​        先想一想大体的利用思路吧，首先got表肯定不能改，所以getshell应该是改<code>malloc_hook</code>。因为有UAF，并且chunk的size限制得比较小，功能也比较完备，所以应该是改Tcache bin的fd，构造任意地址写，并将chunk分配至<code>malloc_hook    </code>。leak的话可以考虑<code>unsorted bin leak</code>。（这么一想还是蛮常规的一道题）</p>
@@ -265,10 +265,21 @@
 <p>​        回到题目本身，这个题之前一直没有认真做完，所以虽然完全不知道解法的细节，但是还是记得比较清楚，这个libc是有对于tcache double free的检测的。不过还是比较鸡肋，我们可以利用fastbin double free的思路来绕过。</p>
 <p>​        为了修改<code>malloc_hook</code>为<code>one_gadget</code>或者其他什么东西，我们首先需要将fake chunk分配至保存chunk ptr的buf上，劫持chunk ptr，将其修改为<code>malloc_hook</code>，然后编辑chunk content为<code>one_gadget</code>。</p>
 <p>​        所以在构造fake chunk前，我们肯定要leak buf的地址以及<code>malloc_hook    </code>的地址。</p>
+<p>​        但是总感觉buf的addr并不好leak，所以能不能先用unsortedbin leak <code>malloc_hoook</code>    ,然后直接劫持tcache fd到malloc hook上呢。但是这个需要考虑的问题是，如果不把tcache填满我们是没有办法申请到unsorted bin的，所以需要将0x70 size的tcache先填满。</p>
+<p>​        但是很狗，没有办法free指定的chunk，每次都是只能free idx0，编辑和show同理。</p>
 <h4><span id="leak-memory">leak memory</span></h4><h5><span id="leak-main-arena">leak main arena</span></h5><p>​        利用uaf，打印已经free的unsortedbin，获得指向<code>main_arena</code>的固定偏移。最低位改为<code>\x10</code>    则为<code>malloc_hook</code>。</p>
 <p>​        拿到<code>malloc_hook</code>四舍五入也就拿到了libc，我们只需要leak buf，将fake chunk分配到buf上就完成了四分之三。</p>
-<h5><span id="leak-buf">leak buf</span></h5><p>​        由于万恶的libc还在编译，没有办法动调，我还不清楚这个程序里的idx是个什么鬼，所以暂时没有思路。只是感觉这个buf和size靠这么近，肯定有问题。    </p>
-<p>​        。。。我就不信我去洗个澡它还能在编译。。。。            </p>
+<p>​    </p>
+<p>​        <img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-04-08%20%E4%B8%8B%E5%8D%882.27.57.png" alt="截屏2022-04-08 下午2.27.57"></p>
+<p>​        </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">add(<span class="number">0</span>,<span class="number">0x40</span>)<span class="comment">#idx0</span></span><br><span class="line">edit(<span class="number">0</span>,<span class="string">b&#x27;a&#x27;</span>*<span class="number">0x40</span>)</span><br><span class="line">free(<span class="number">0</span>)</span><br><span class="line">edit(<span class="number">0</span>,<span class="string">b&#x27;a&#x27;</span>*<span class="number">8</span> + p64(addr))<span class="comment">#addr = 0x12345678</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>​        fd是可以被轻易修改的，但是能不能分配还是一个问题，首先需要leak地址。</p>
+<p>​        </p>
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-04-08%20%E4%B8%8B%E5%8D%883.03.32.png" alt="截屏2022-04-08 下午3.03.32"></p>
+<p>​        真的很狗，本来是没有double free检测的。所以现在的问题是如何连续七次free这个tcache chunk。</p>
 <p>​        </p>
 <h5><span id></span></h5>
             <div class="clearfix"></div>

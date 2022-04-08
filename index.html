@@ -243,7 +243,7 @@
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
                 <div class="col-md-4">
-                    <h3><a href="/2022/04/08/幻想曲-02-春夜/"></a></h3>
+                    <h3><a href="/2022/04/08/幻想曲-02-春夜/">春夜</a></h3>
                     <span>
                         <span class="post-meta">
       <time datetime="2022-04-07T17:25:10.897Z" itemprop="datePublished">
@@ -396,10 +396,7 @@ add1head_ptr = (unsigned int *)malloc(0x18uLL);
 overview​        开始做一些ciscn了。
 
 readd​        size不能大于0x78。
-1234567ptr = malloc(size);if ( ptr )&#123; size_struct = size_1; content_struct = ptr; puts(&quot;Done!&quot;); &#125;
-
-
-​        size和content的buf在空间中是相邻
+1234567ptr = malloc(size);if ( ptr )&#123; size_struct = size_1; content_struct = ptr;//蚌埠住了，每次都会把这个指针覆盖为最新分配的content ptr。这下idx直接报废。 puts(&quot;Done!&quo
                       
                     </p>
                     
