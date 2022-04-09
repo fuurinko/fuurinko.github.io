@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<!--[if lte IE 8 ]>
+<html class="ie" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US">
+<![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!-->
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
+<!--<![endif]-->
+
+<head>
+
+  <title>基于ctf pwn环境的docker搭建 | Rin</title>
+  <!-- Meta data -->
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content="Rin">
+    <meta name="author" content="Rin777">
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+
+    <!-- Favicon, (keep icon in root folder) -->
+    <link rel="Shortcut Icon" href="/img/favicon.ico" type="image/ico">
+
+    <link rel="alternate" href="/atom.xml" title="Rin" type="application/atom+xml">
+    <link rel="stylesheet" href="/css/all.css" media="screen" type="text/css">
+    
+
+    <!--[if IE 8]>
+    <link rel="stylesheet" type="text/css" href="/css/ie8.css" />
+    <![endif]-->
+
+    <!-- jQuery | Load our jQuery, with an alternative source fallback to a local version if request is unavailable -->
+    <script src="/js/jquery-1.11.1.min.js"></script>
+    <script>window.jQuery || document.write('<script src="js/jquery-1.11.1.min.js"><\/script>')</script>
+
+    <!-- Load these in the <head> for quicker IE8+ load times -->
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="/js/html5shiv.min.js"></script>
+    <script src="/js/respond.min.js"></script>
+    <![endif]-->
+
+  
+  
+  
+
+  <style>.col-md-8.col-md-offset-2.opening-statement img{display:none;}</style>
+<link rel="stylesheet" href="/css/prism.css" type="text/css"><link rel="stylesheet" href="/assets/css/APlayer.min.css" class="aplayer-style-marker">
+<script src="/assets/js/APlayer.min.js" class="aplayer-script-marker"></script>
+<script src="/assets/js/Meting.min.js" class="meting-script-marker"></script>
+</head>
+
+<!--
+<body class="post-template">
+-->
+<body id="index" class="lightnav animsition">
+      <!-- ============================ Off-canvas navigation =========================== -->
+
+    <div class="sb-slidebar sb-right sb-style-overlay sb-momentum-scrolling">
+        <div class="sb-close" aria-label="Close Menu" aria-hidden="true">
+            <img src="/img/close.png" alt="Close"/>
+        </div>
+        <!-- Lists in Slidebars -->
+        <ul class="sb-menu">
+            <li><a href="/" class="animsition-link" title="Home">Home</a></li>
+            <li><a href="/archives" class="animsition-link" title="archive">archives</a></li>
+            <!-- Dropdown Menu -->
+			 
+            
+        	<li>
+        		<a class="sb-toggle-submenu">Categories<span class="sb-caret"></span></a>
+            	<ul class="sb-submenu">
+				  	
+				    <li><a href="/categories/CSAPP-LAB/" class="animsition-link">CSAPP LAB<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/Generalization/" class="animsition-link">Generalization<small>(2)</small></a></li>
+				    
+				    <li><a href="/categories/HEAP/" class="animsition-link">HEAP<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/HEAP-Fastbin-Attack/" class="animsition-link">HEAP - Fastbin Attack<small>(9)</small></a></li>
+				    
+				    <li><a href="/categories/HEAP-Heap-overflow/" class="animsition-link">HEAP - Heap overflow<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/HEAP-House-Of-Force/" class="animsition-link">HEAP - House Of Force<small>(3)</small></a></li>
+				    
+				    <li><a href="/categories/HEAP-Off-By-One/" class="animsition-link">HEAP - Off By One<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/HEAP-Tcache/" class="animsition-link">HEAP - Tcache<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/HEAP-Unlink/" class="animsition-link">HEAP - Unlink<small>(2)</small></a></li>
+				    
+				    <li><a href="/categories/HEAP-Unsortedbin/" class="animsition-link">HEAP - Unsortedbin<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/MESS/" class="animsition-link">MESS<small>(18)</small></a></li>
+				    
+				    <li><a href="/categories/OTHER-IO-FILE/" class="animsition-link">OTHER - IO FILE<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/PWN-COLLEGE/" class="animsition-link">PWN.COLLEGE<small>(11)</small></a></li>
+				    
+				    <li><a href="/categories/STACK-ARRAY-OUT-OF-BOUNDS/" class="animsition-link">STACK - ARRAY OUT OF BOUNDS<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/STACK-DynELF/" class="animsition-link">STACK - DynELF<small>(2)</small></a></li>
+				    
+				    <li><a href="/categories/STACK-Format/" class="animsition-link">STACK - Format<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/STACK-OTHERS/" class="animsition-link">STACK - OTHERS<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/STACK-ROP/" class="animsition-link">STACK - ROP<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/STACK-SROP/" class="animsition-link">STACK - SROP<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/STACK-Stack-Overflow/" class="animsition-link">STACK - Stack Overflow<small>(2)</small></a></li>
+				    
+				    <li><a href="/categories/STACK-ret2dlreslove/" class="animsition-link">STACK - ret2dlreslove<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/STACK-ret2dlresolve/" class="animsition-link">STACK - ret2dlresolve<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/STACK-ret2shellcode/" class="animsition-link">STACK - ret2shellcode<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/STACK-sandbox/" class="animsition-link">STACK - sandbox<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/mess/" class="animsition-link">mess<small>(2)</small></a></li>
+				    
+				    <li><a href="/categories/幻想曲/" class="animsition-link">幻想曲<small>(2)</small></a></li>
+				    
+				    <li><a href="/categories/深夜高速/" class="animsition-link">深夜高速<small>(1)</small></a></li>
+				    
+				</ul>
+        	</li>
+			
+            
+            <li>
+                <a class="sb-toggle-submenu">Links<span class="sb-caret"></span></a>
+                <ul class="sb-submenu">
+                    
+                    <li><a target="_blank" rel="noopener" href="https://weibo.com/u/1682818607" class="animsition-link">没有营养的推广页</a></li>
+                    
+                    <li><a target="_blank" rel="noopener" href="http://www.2323bb.ltd" class="animsition-link">cc_sakura</a></li>
+                    
+                    <li><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_36995313" class="animsition-link">F@LLe0</a></li>
+                    
+                    <li><a target="_blank" rel="noopener" href="https://yyz9.cn" class="animsition-link">YYZ</a></li>
+                    
+                    <li><a target="_blank" rel="noopener" href="https://www.star123.top" class="animsition-link">star</a></li>
+                    
+                </ul>
+            </li>
+            
+        </ul>
+        <!-- Lists in Slidebars -->
+        <ul class="sb-menu secondary">
+            
+            <li><a href="javascript:;" class="popup-trigger" title="Search"><span class="search-icon"></span>Search</a></li>
+            
+            <li><a href="/about.html" class="animsition-link" title="about">About</a></li>
+            <li><a href="/atom.xml" class="animsition-link" title="rss">RSS</a></li>
+        </ul>
+    </div>
+    
+    <!-- ============================ END Off-canvas navigation =========================== -->
+
+    <!-- ============================ #sb-site Main Page Wrapper =========================== -->
+
+    <div id="sb-site">
+        <!-- #sb-site - All page content should be contained within this id, except the off-canvas navigation itself -->
+
+        <!-- ============================ Header & Logo bar =========================== -->
+
+        <div id="navigation" class="navbar navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="container">
+                    <!-- Nav logo -->
+                    <div class="logo">
+                        <a href="/" title="Logo" class="animsition-link">
+                         <img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/IMG_0282.jpg" alt="Logo" width="35px;"/> 
+                        </a>
+                    </div>
+                    <!-- // Nav logo -->
+                    <!-- Info-bar -->
+                    <nav>
+                        <ul class="nav">
+                            <li><a href="/" class="animsition-link">Rin</a></li>
+                            <li class="nolink"><span>Always </span>Creative.</li>
+                            
+                            <li><a href="https://github.com/" title="Github" target="_blank"><i class="icon-github"></i></a></li>
+                            
+                            
+                            
+                            
+                            
+                            <li class="nolink"><span>Welcome!</span></li>
+                        </ul>
+                    </nav>
+                    <!--// Info-bar -->
+                </div>
+                <!-- // .container -->
+                <div class="learnmore sb-toggle-right">More</div>
+                <button type="button" class="navbar-toggle menu-icon sb-toggle-right" title="More">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar before"></span>
+                <span class="icon-bar main"></span>
+                <span class="icon-bar after"></span>
+                </button>
+            </div>
+            <!-- // .navbar-inner -->
+        </div>
+
+        <!-- ============================ Header & Logo bar =========================== -->
+
+
+      
+<section id="intro">
+    <div class="container">
+        <div class="row col-md-offset-2">
+            <div class="col-md-8">
+    			<span class="post-meta">
+      <time datetime="2021-10-31T15:04:01.604Z" itemprop="datePublished">
+          2021-10-31
+      </time>
+    
+    
+    | 
+    <a href='/tags/mess/'>mess</a>
+    
+    
+</span>
+                <h1>基于ctf pwn环境的docker搭建</h1>
+            </div>
+        </div>
+        <div class="col-md-8 col-md-offset-2">
+      		
+    <div id="aplayer-bTrfTyBz" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div> 
+
+
+
+<p>​    最近为了校内的萌新赛，需要出一些简单的pwn题，然后把它们搓进docker。虽然步骤并不是非常复杂，而且有现成的框架，但我发现如果纯粹按照网上框架的一件脚本运行的话，遇到报错根本无法解决，所以看图说话之外我还需要较为系统地学习docker知识。</p>
+<h2><span id="docker基础架构">docker基础架构</span></h2><p>​    对于docker，在了解基础命令之前我们需要了解的就是，容器以及虚拟化的大致概念。</p>
+<h3><span id="11-为什么要有docker">1.1    为什么要有docker？</span></h3><p>​    一个程序运行也许需要严苛的环境条件，也许一个微小的环境变量的差异，将导致程序的崩溃，因此在软件开发的过程中，统一环境是一件很重要的事。</p>
+<p>​    为了解决这个问题，我们可以使用虚拟机，将程序同操作系统一起打包，这样确实避免了因为环境问题导致的程序的bug。</p>
+<p>​    但是虚拟机通常体积庞大，且启动时间缓慢，资源占用多。所以相比于纯粹使用虚拟机，我们希望使用一些更轻盈的虚拟化工具来解决问题。而容器化技术应运而生，也就是Linux 容器（Linux Containers）。</p>
+<p>​    linux容器并不是完整的操作系统，容器化对进程隔离，使得不同的容器共享内核，但是调用的各种资源是虚拟的。容器化就像在正常的进程外伪装了一层外壳，使得壳内的进程认为自己是在一个全新的环境中运行，所以很自然的，容器中的应用启动速度快，资源占用少，并且体积轻巧。</p>
+<p>​    而Docker的存在为我们提供了Linux容器的封装,提供简单易用的容器使用接口。它是目前最流行的 Linux 容器解决方案。</p>
+<h3><span id="12-docker基础知识">1.2 docker基础知识</span></h3><p>​    之前说到，Docker提供了Linux容器的封装，运用Docker实现容器化也十分简单，我们只需要有image文件，再通过docker创建镜像的容器，就能够在容器中运行我们想要的程序。</p>
+<p>​    image文件，顾名思义，类似系统iso，它包含应用程序以及运行它所必需的依赖，Docker通过image文件生成一个个运行的容器。实际开发中，一个 image 文件往往通过继承另一个 image 文件，加上一些个性化设置而生成。举例来说，你可以在 Ubuntu 的 image 基础上，往里面加入 Apache 服务器，形成你的 image。</p>
+<h3><span id="13-docker基础命令">1.3 docker基础命令</span></h3><p>​    首先我们需要拉取镜像至本地，可以通过<code>docker pull</code>命令。例如：</p>
+<blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker image pull library/hello-world</span><br></pre></td></tr></table></figure>
+</blockquote>
+<p>​    </p>
+<p>​        拉取镜像需要一定时间的等待，拉取完成后，通过<code>docker image ls</code>可以查看本地的docker镜像。</p>
+<p>​    <img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-01%20%E4%B8%8B%E5%8D%8811.54.51.png" alt="截屏2021-11-01 下午11.54.51"></p>
+<p>​    这个<code>hello world</code>其实就是被打包好的在特定环境下的程序，我们可以通过<code>docker cantainer run hello-world</code>指令将镜像创建为容器并运行。</p>
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-01%20%E4%B8%8B%E5%8D%8811.59.12.png" alt="截屏2021-11-01 下午11.59.12"></p>
+<h4><span id="docker-build">docker build</span></h4><p>​    build指令使用dockerfile来创建新的容器。一般来说简单的构建命令就是</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker build -t imagename .</span><br></pre></td></tr></table></figure>
+
+<p>​    虽然我不是很理解这个<code>-t</code>    的参数意义何在，并且镜像名后面的“.”是干啥的。</p>
+<h4><span id="docker-run">docker run</span></h4><p>​    创建一个新的容器并运行</p>
+<p>​    一般来说会有这几个参数</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">-d: 后台运行容器，并返回容器ID；</span><br><span class="line"></span><br><span class="line">-it: 以交互模式运行容器，并创建一个伪终端；</span><br><span class="line"></span><br><span class="line">-p: 指定端口映射，格式为：主机(宿主)端口:容器端口</span><br><span class="line"></span><br><span class="line">--name=<span class="string">&quot;nginx-lb&quot;</span>: 为容器指定一个名称；</span><br><span class="line"></span><br><span class="line">-v：映射主机文件夹至容器内	</span><br></pre></td></tr></table></figure>
+
+<h4><span id="docker-startstopretart">docker start/stop/retart</span></h4><p>​    启动或停止容器。</p>
+<p>​    指令为<code>docker start/stop/retart containerID</code></p>
+<h4><span id="docker-pause">docker pause</span></h4><p>​    暂停容器内全部进程。</p>
+<h4><span id="docker-kill">docker kill</span></h4><p>​    kill 运行的容器进程</p>
+<h4><span id="docker-ps">docker ps</span></h4><p>​    列出容器。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-a :显示所有的容器，包括未运行的。</span><br></pre></td></tr></table></figure>
+
+<h4><span id="docker-attach">docker attach</span></h4><p>​    连接到正在运行中的容器。</p>
+<p><code>docker attach containerID</code></p>
+<h4><span id="docker-inspect">docker inspect</span></h4><p>​    获取容器/镜像的元数据。</p>
+<h2><span id="简单的docker搭建步骤">简单的docker搭建步骤</span></h2><p>​    熟悉docker基础操作后，开始搭建docker啦！！</p>
+<p>​    首先是脚本的选择，pwn的docker脚本其实很多，这里随便选一个最基础的<code>ctf_xinted</code>。</p>
+<p>​    首先我们需要做的是把项目clone到本地。</p>
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-01%20%E4%B8%8B%E5%8D%885.11.41.png" alt="截屏2021-11-01 下午5.11.41"></p>
+<p>​    通过指令<code>cat Dockerfile</code>可以看到dockerfile。</p>
+<p>​    dockerfile是用来构建docker镜像的，里面包含了构建docker镜像构建的一些步骤和说明。一般来说如果要打包自己的环境的话，需要写dockerfile来供别人使用。这里我们直接切换到<code>ctf_xinetd</code>的文件夹下，然后执行     </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo docker build -t <span class="string">&quot;helloworld&quot;</span> .</span><br></pre></td></tr></table></figure>
+
+<p>​    (注意后面的“.”)</p>
+<p>​    这个时候一般就会创建<code>helloworld</code>这个镜像，我们只需要等待创建结束，然后执行</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo docker run -d -p <span class="string">&quot;0.0.0.0:10001:9999&quot;</span> -h <span class="string">&quot;helloworld&quot;</span> --name=<span class="string">&quot;helloworld&quot;</span> helloworld</span><br></pre></td></tr></table></figure>
+
+<p>​    <code>0.0.0.0</code>表示用户连接的ip地址，10001表示对用户开放的端口，9999指容器内部端口绑定到指定的主机端口。</p>
+<p>​    如果运行正常，此时我们是能够通过 <code>nc 0.0.0.0 10001</code>来连接我们的docker容器的。</p>
+<p>​    但是有时候docker会出现一些问题。比如说在创建镜像的时候有可能会出现软件源解释失败的问题，这时候你需要关闭你的vpn（如果有）。然后重启docker。就像这样</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo service docker restart</span><br></pre></td></tr></table></figure>
+
+
+
+<p>​    这样这个pwn题的docker就算部署完成了，你只需要把你自己的题目放置在容器中，并修改对应的flag就行。</p>
+<p>​    但是目前来说这个框架存在一些局限性，比如说一次只能部署一道题等。</p>
+<p>​    所以我们可以更换另外一个脚本进行docker镜像的创建。</p>
+<p>​    这里我们选择<a target="_blank" rel="noopener" href="https://github.com/giantbranch/pwn_deploy_chroot.git%EF%BC%8C%E8%BF%99%E4%B8%AA%E8%84%9A%E6%9C%AC%E3%80%82">https://github.com/giantbranch/pwn_deploy_chroot.git，这个脚本。</a></p>
+<p>​    然后有个比较全面的教程，链接在这里：<a target="_blank" rel="noopener" href="http://www.giantbranch.cn/2018/09/24/%E5%A6%82%E4%BD%95%E5%AE%89%E5%85%A8%E5%BF%AB%E9%80%9F%E5%9C%B0%E9%83%A8%E7%BD%B2%E5%A4%9A%E9%81%93ctf%20pwn%E6%AF%94%E8%B5%9B%E9%A2%98%E7%9B%AE/">如何安全快速地部署多道ctf%20pwn比赛题目</a></p>
+<p>​    就是把文件放到bin文件夹，然后</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">python initialize.py</span><br><span class="line">docker-compose up --build -d     <span class="comment"># please run as root</span></span><br></pre></td></tr></table></figure>
+
+<p>​    这样就生成了一个总的镜像，每道题通过不同端口映射，然后分别有各自的flag。</p>
+<p>​    在完成镜像的创建后，还需要在做题平台中填写相关镜像。</p>
+<p>​    因为我们的CTFd是二次开发的，一般的CTFd的题目分类是有个dynamic docker，但是我们的平台只有一个kube类型。但是里面的东西还是八九不离十，然后对于指定题目，你需要填写你的docker image。并且指定暴露端口。</p>
+<p>​    然后我这个萌新就被狠狠地坑了，一开始费了好大劲从0学习docker（虽然不难），然后通过别人的框架部署题目，创建好镜像，照猫画虎指定ip和端口运行容器，最后打开CTFd，就直接把docker image那一空给填成自己启动容器的那串ip了，然后端口也傻傻地不知道怎么搞，然后随便乱输一通，结果狠狠地靶机notready了。</p>
+<p>​    直到下午我突然意识到哪里不对，然后去搜了一下，发现别人填的和我填的好像不太一样，找胖爷爷确认了一下，果然是要填docker hub里的镜像名哇。</p>
+<p>​    然后又狠狠地push了镜像，在CTFd填了镜像的名字，然后端口就是初始化时每个二进制文件对应的那个映射的端口，这下总算靶机ready了。并且顺利通过测试。</p>
+<p>​    好！</p>
+<p>​    </p>
+<p>​        </p>
+<p>​        </p>
+<h2><span id="参考">参考</span></h2><p><a target="_blank" rel="noopener" href="https://www.ruanyifeng.com/blog/2018/02/docker-tutorial.html">Docker 入门教程</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.runoob.com/docker/docker-image-usage.html">Docker 镜像使用</a></p>
+<p>​    </p>
+<p>​</p>
+
+            <div class="clearfix"></div>
+            <hr class="nogutter">
+        </div>
+        <nav class="m-pagination col-md-8 col-md-offset-2 col-sm-24" role="pagination">
+    
+    <a class="pull-left" href="../../../11/02/mess_pwndocker%E7%9A%84pwn%E9%A2%98%E4%BD%93%E9%AA%8C%EF%BC%88%E4%B8%8A%EF%BC%89/" style="float: left;">
+        ← pwndocker的pwn题体验（上）
+    </a>
+    
+    
+    <a class="pull-right" href="../../29/mess_typora%E4%B8%BB%E9%A2%98%E9%85%8D%E7%BD%AE%E7%9A%84%E4%B8%80%E4%BA%9B%E5%BF%83%E5%BE%97/">
+        typora主题配置的一些心得 →
+    </a>
+    
+</nav>
+
+        <div class="col-md-8 col-md-offset-2 col-sm-24"><script type="text/javascript">
+  /**
+   * 搜狐畅言
+   */
+
+  /*
+  document.write('<div id="SOHUCS" sid="' + window.location.pathname.slice(1) + '" ></div>');
+
+  window.onload = function () {
+    (function () {
+      var appid = 'cytXXXX';
+      var conf = 'prod_xxxxxxxxxxxxxxxxx';
+      var width = window.innerWidth || document.documentElement.clientWidth;
+      var loadJs = function (d, a, id) {
+        var c = document.getElementsByTagName("head")[0] || document.head || document.documentElement;
+        var b = document.createElement("script");
+        b.setAttribute("type", "text/javascript");
+        b.setAttribute("charset", "UTF-8");
+        b.setAttribute("src", d);
+        if (id) {
+          b.setAttribute("id", id);
+        }
+        if (typeof a === "function") {
+          if (window.attachEvent) {
+            b.onreadystatechange = function () {
+              var e = b.readyState;
+              if (e === "loaded" || e === "complete") {
+                b.onreadystatechange = null;
+                a()
+              }
+            }
+          } else {
+            b.onload = a
+          }
+        }
+        c.appendChild(b)
+      };
+
+      loadJs("https://changyan.sohu.com/upload/changyan.js", function () {
+        window.changyan.api.config({
+          appid: appid,
+          conf: conf
+        })
+      });
+    })();
+  }
+  */
+
+</script>
+</div>
+    </div>
+</section>
+
+<!-- Highlight.js -->
+
+<link rel="stylesheet"
+href="//highlightjs.org/static/demo/styles/atom-one-light.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js">
+</script>
+<script>
+hljs.initHighlightingOnLoad();
+
+</script>
+
+
+      
+<!-- ============================ Footer =========================== -->
+
+<footer>
+    <div class="container">
+            <div class="copy">
+                <p>
+                    &copy; 2014<script>new Date().getFullYear()>2010&&document.write("-"+new Date().getFullYear());</script>, Content By Rin777. All Rights Reserved.
+                </p>
+                <p>Theme By <a target="_blank" rel="noopener" href="//go.kieran.top" style="color: #767D84">Kieran</a></p>
+            </div>
+            <div class="social">
+                <ul>
+                    
+                    <li><a href="https://github.com/" title="Github" target="_blank"><i class="icon-github"></i></a>&nbsp;</li>
+                    
+                    
+                    
+                    
+                    
+                </ul>
+            </div>
+            <div class="clearfix"> </div>
+        </div>
+</footer>
+
+<!-- ============================ END Footer =========================== -->
+      <!-- Load our scripts -->
+<!-- Resizable 'on-demand' full-height hero -->
+<script type="text/javascript">
+    var resizeHero = function () {
+        var hero = $(".cover,.heightblock"),
+            window1 = $(window);
+        hero.css({
+            "height": window1.height()
+        });
+    };
+
+    resizeHero();
+
+    $(window).resize(function () {
+        resizeHero();
+    });
+</script>
+<script src="/js/plugins.min.js"></script><!-- Bootstrap core and concatenated plugins always load here -->
+<script src="/js/scripts.js"></script><!-- Theme scripts -->
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$('#intro').find('img').each(function(){
+  var alt = this.alt;
+
+  if (alt){
+    $(this).after('<span class="caption" style="display:none">' + alt + '</span>');
+  }
+
+  $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox" rel="gallery" />');
+});
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+      
+            <style>
+.local-search-popup {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  background: rgba(255, 255, 255, .9);
+  color: #333;
+  z-index: 9999;
+  border-radius: 5px;
+  overflow: scroll;
+}
+#local-search-input {
+  width: 100%;
+  border: none;
+  outline: none;
+  border-bottom: 1px solid #151515;
+  background-color: initial;
+}
+.search-result-list {
+  list-style: none;
+  padding-left: 0;
+}
+.search-result-list > li {
+  margin-top: 15px;
+  border-bottom: 1px solid #ddd;
+  transition: all ease .3s;
+}
+.search-result-list > li:hover {
+  border-bottom: 1px solid gray;
+}
+.search-result-title {
+  font-size: 16px;
+}
+.search-result {
+  line-height: 20px;
+}
+.search-keyword {
+  font-weight: normal;
+  color: #c00;
+}
+
+@media (min-width: 890px) {
+  .popup-btn-close {
+    position: absolute;
+    top: 15px;
+    left: 35px;
+    border: 1px solid #151515;
+    padding: 0px 10px;
+    border-top-left-radius: 8px;
+    cursor: pointer;
+    transition: all ease .3s;
+  }
+  .popup-btn-close:hover {
+    background: #151515;
+    opacity: .9;
+    color: #fff;
+  }
+}
+@media (max-width: 890px) {
+  .popup-btn-close {
+    font-size: 0;
+    position: fixed;
+    right: 20px;
+    bottom: 50px;
+    width: 50px;
+    height: 50px;
+    background: #fff;
+    border-radius: 50%;
+    box-shadow: 1px 1px 5px #888;
+    cursor: pointer;
+  }
+  .popup-btn-close::after {
+    content: '←';
+    color: #151515;
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-size: 20px;
+    width: 100%;
+    height: 100%;
+    line-height: 50px;
+    text-align: center;
+  }
+}
+</style>
+
+<div class="popup search-popup local-search-popup">
+  <span class="popup-btn-close">
+    ESC
+  </span>
+  <div class="container">
+    <div class="col-md-8 col-md-offset-2">
+      <div class="local-search-header clearfix">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="local-search-input-wrapper">
+          <input autocomplete="off" placeholder="Search..." type="text" id="local-search-input">
+        </div>
+      </div>
+      <div id="local-search-result"></div>
+    </div>
+  </div>
+</div>
+
+<script src="/js/ziploader.js"></script>
+
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.json";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').fadeOut(300);
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $('.popup').fadeIn(300);
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // get search zip version
+    $.get('/searchVersion.txt?t=' + (+new Date()), function(res) {
+      if (localStorage.getItem('searchVersion') !== res) {
+        localStorage.setItem('searchVersion', res);
+        initSearchJson();
+      }
+    });
+
+    function initSearchJson () {
+      initLoad(['/search.zip'], {
+        loadOptions: {
+          success: function(obj) {
+            localStorage.setItem('searchJson', obj['search.json'])
+          },
+          error: function(e) {
+            return console.log(e)
+          }
+        },
+        returnOptions: {
+          'json': TYPE_TEXT
+        },
+        mimeOptions:{
+          'json':'application/json'
+        }
+      })
+    }
+
+
+    // search function;
+    var searchFunc = function(search_id, content_id) {
+      'use strict';
+
+      isfetched = true;
+      var datas = JSON.parse(localStorage.getItem('searchJson'));
+      console.log(search_id)
+      var input = document.getElementById(search_id);
+      var resultContent = document.getElementById(content_id);
+      var inputEventFunction = function() {
+        var searchText = input.value.trim().toLowerCase();
+        var keywords = searchText.split(/[\s\-]+/);
+        if (keywords.length > 1) {
+          keywords.push(searchText);
+        }
+        var resultItems = [];
+        if (searchText.length > 0) {
+          // perform local searching
+          datas.forEach(function(data) {
+            var isMatch = false;
+            var hitCount = 0;
+            var searchTextCount = 0;
+            var title = data.title ? data.title.trim() : '';
+            var titleInLowerCase = title.toLowerCase();
+            var content = data.content ? data.content.trim().replace(/<[^>]+>/g,"") : '';
+            var contentInLowerCase = content.toLowerCase();
+            var articleUrl = decodeURIComponent(data.url);
+            var indexOfTitle = [];
+            var indexOfContent = [];
+            // only match articles with not empty titles
+            keywords.forEach(function(keyword) {
+              function getIndexByWord(word, text, caseSensitive) {
+                var wordLen = word.length;
+                if (wordLen === 0) {
+                  return [];
+                }
+                var startPosition = 0, position = [], index = [];
+                if (!caseSensitive) {
+                  text = text.toLowerCase();
+                  word = word.toLowerCase();
+                }
+                while ((position = text.indexOf(word, startPosition)) > -1) {
+                  index.push({position: position, word: word});
+                  startPosition = position + wordLen;
+                }
+                return index;
+              }
+
+              indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+              indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+            });
+            if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+              isMatch = true;
+              hitCount = indexOfTitle.length + indexOfContent.length;
+            }
+
+            // show search results
+
+            if (isMatch) {
+              // sort index by position of keyword
+
+              [indexOfTitle, indexOfContent].forEach(function (index) {
+                index.sort(function (itemLeft, itemRight) {
+                  if (itemRight.position !== itemLeft.position) {
+                    return itemRight.position - itemLeft.position;
+                  } else {
+                    return itemLeft.word.length - itemRight.word.length;
+                  }
+                });
+              });
+
+              // merge hits into slices
+
+              function mergeIntoSlice(text, start, end, index) {
+                var item = index[index.length - 1];
+                var position = item.position;
+                var word = item.word;
+                var hits = [];
+                var searchTextCountInSlice = 0;
+                while (position + word.length <= end && index.length != 0) {
+                  if (word === searchText) {
+                    searchTextCountInSlice++;
+                  }
+                  hits.push({position: position, length: word.length});
+                  var wordEnd = position + word.length;
+
+                  // move to next position of hit
+
+                  index.pop();
+                  while (index.length != 0) {
+                    item = index[index.length - 1];
+                    position = item.position;
+                    word = item.word;
+                    if (wordEnd > position) {
+                      index.pop();
+                    } else {
+                      break;
+                    }
+                  }
+                }
+                searchTextCount += searchTextCountInSlice;
+                return {
+                  hits: hits,
+                  start: start,
+                  end: end,
+                  searchTextCount: searchTextCountInSlice
+                };
+              }
+
+              var slicesOfTitle = [];
+              if (indexOfTitle.length != 0) {
+                slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+              }
+
+              var slicesOfContent = [];
+              while (indexOfContent.length != 0) {
+                var item = indexOfContent[indexOfContent.length - 1];
+                var position = item.position;
+                var word = item.word;
+                // cut out 100 characters
+                var start = position - 20;
+                var end = position + 80;
+                if(start < 0){
+                  start = 0;
+                }
+                if (end < position + word.length) {
+                  end = position + word.length;
+                }
+                if(end > content.length){
+                  end = content.length;
+                }
+                slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+              }
+
+              // sort slices in content by search text's count and hits' count
+
+              slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                  return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                  return sliceRight.hits.length - sliceLeft.hits.length;
+                } else {
+                  return sliceLeft.start - sliceRight.start;
+                }
+              });
+
+              // select top N slices in content
+
+              var upperBound = parseInt('2');
+              if (upperBound >= 0) {
+                slicesOfContent = slicesOfContent.slice(0, upperBound);
+              }
+
+              // highlight title and content
+
+              function highlightKeyword(text, slice) {
+                var result = '';
+                var prevEnd = slice.start;
+                slice.hits.forEach(function (hit) {
+                  result += text.substring(prevEnd, hit.position);
+                  var end = hit.position + hit.length;
+                  result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                  prevEnd = end;
+                });
+                result += text.substring(prevEnd, slice.end);
+                return result;
+              }
+
+              var resultItem = '';
+
+              if (slicesOfTitle.length != 0) {
+                resultItem += "<li><a target='_blank' href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+              } else {
+                resultItem += "<li><a target='_blank' href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+              }
+
+              slicesOfContent.forEach(function (slice) {
+                resultItem += "<a target='_blank' href='" + articleUrl + "'>" +
+                  "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                  "...</p>" + "</a>";
+              });
+
+              resultItem += "</li>";
+              resultItems.push({
+                item: resultItem,
+                searchTextCount: searchTextCount,
+                hitCount: hitCount,
+                id: resultItems.length
+              });
+            }
+          })
+        };
+        if (keywords.length === 1 && keywords[0] === "") {
+          resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+        } else if (resultItems.length === 0) {
+          resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+        } else {
+          resultItems.sort(function (resultLeft, resultRight) {
+            if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+              return resultRight.searchTextCount - resultLeft.searchTextCount;
+            } else if (resultLeft.hitCount !== resultRight.hitCount) {
+              return resultRight.hitCount - resultLeft.hitCount;
+            } else {
+              return resultRight.id - resultLeft.id;
+            }
+          });
+          var searchResultList = '<ul class=\"search-result-list\">';
+          resultItems.forEach(function (result) {
+            searchResultList += result.item;
+          })
+          searchResultList += "</ul>";
+          resultContent.innerHTML = searchResultList;
+        }
+      }
+
+      if ('auto' === 'auto') {
+        input.addEventListener('input', inputEventFunction);
+      } else {
+        $('.search-icon').click(inputEventFunction);
+        input.addEventListener('keypress', function (event) {
+          if (event.keyCode === 13) {
+            inputEventFunction();
+          }
+        });
+      }
+
+      // remove loading animation
+      $('body').css('overflow', '');
+
+      proceedsearch();
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        $('.sb-close').click();
+        searchFunc('local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+      
+      
+
+<!--
+
+<link rel="stylesheet" href="/dist/APlayer.min.css">
+<div id="aplayer"></div>
+<script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+<meting-js
+      server="netease"
+      type="playlist"
+      id="4904272454">
+</meting-js>
+-->
+
+</body>
+
+</html>
+
+
+
+
+
+
+

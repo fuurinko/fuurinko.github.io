@@ -72,6 +72,8 @@
 				    
 				    <li><a href="/categories/Generalization/" class="animsition-link">Generalization<small>(2)</small></a></li>
 				    
+				    <li><a href="/categories/HEAP/" class="animsition-link">HEAP<small>(1)</small></a></li>
+				    
 				    <li><a href="/categories/HEAP-Fastbin-Attack/" class="animsition-link">HEAP - Fastbin Attack<small>(9)</small></a></li>
 				    
 				    <li><a href="/categories/HEAP-Heap-overflow/" class="animsition-link">HEAP - Heap overflow<small>(1)</small></a></li>
@@ -80,13 +82,13 @@
 				    
 				    <li><a href="/categories/HEAP-Off-By-One/" class="animsition-link">HEAP - Off By One<small>(1)</small></a></li>
 				    
-				    <li><a href="/categories/HEAP-Tcache/" class="animsition-link">HEAP - Tcache<small>(2)</small></a></li>
+				    <li><a href="/categories/HEAP-Tcache/" class="animsition-link">HEAP - Tcache<small>(1)</small></a></li>
 				    
 				    <li><a href="/categories/HEAP-Unlink/" class="animsition-link">HEAP - Unlink<small>(2)</small></a></li>
 				    
 				    <li><a href="/categories/HEAP-Unsortedbin/" class="animsition-link">HEAP - Unsortedbin<small>(1)</small></a></li>
 				    
-				    <li><a href="/categories/MESS/" class="animsition-link">MESS<small>(20)</small></a></li>
+				    <li><a href="/categories/MESS/" class="animsition-link">MESS<small>(18)</small></a></li>
 				    
 				    <li><a href="/categories/OTHER-IO-FILE/" class="animsition-link">OTHER - IO FILE<small>(1)</small></a></li>
 				    
@@ -104,7 +106,7 @@
 				    
 				    <li><a href="/categories/STACK-SROP/" class="animsition-link">STACK - SROP<small>(1)</small></a></li>
 				    
-				    <li><a href="/categories/STACK-Stack-Overflow/" class="animsition-link">STACK - Stack Overflow<small>(3)</small></a></li>
+				    <li><a href="/categories/STACK-Stack-Overflow/" class="animsition-link">STACK - Stack Overflow<small>(2)</small></a></li>
 				    
 				    <li><a href="/categories/STACK-ret2dlreslove/" class="animsition-link">STACK - ret2dlreslove<small>(1)</small></a></li>
 				    
@@ -237,6 +239,49 @@
 
 <section id="intro">
     <div class="container">
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2022/04/09/ciscn_2019_daliy/">daliy</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-04-09T08:20:21.957Z" itemprop="datePublished">
+          2022-04-09
+      </time>
+    
+    
+    | 
+    <a href='/tags/ciscn/'>ciscn</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+			
+				console.error("ReferenceError: value is not defined");
+			     
+
+Overview
+​        还可以。估计是个中等题。libc应该还是2.23。不得不说2019的ciscn初赛pwn确实是没有什么难度的。
+Readd​        第一次申请chunk时，操作如下：
+123456789if ( !v0 )        &#123;       
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/04/09/ciscn_2019_daliy/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
         
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
@@ -453,7 +498,7 @@ readd​        size不能大于0x78。
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
                 <div class="col-md-4">
-                    <h3><a href="/2022/04/06/pwn知识点总结/">pwn知识点总结</a></h3>
+                    <h3><a href="/2022/04/06/sum_pwn知识点总结/">pwn知识点总结</a></h3>
                     <span>
                         <span class="post-meta">
       <time datetime="2022-04-05T16:00:00.000Z" itemprop="datePublished">
@@ -483,7 +528,7 @@ ret2shellcode​        在rwx的内存空间(不一定是栈）上写s
                     </p>
                     
                     <p class="pull-right readMore">
-                        <a href="/2022/04/06/pwn知识点总结/">Read More...</a>
+                        <a href="/2022/04/06/sum_pwn知识点总结/">Read More...</a>
                     </p>
                     
                 </div>
@@ -495,7 +540,7 @@ ret2shellcode​        在rwx的内存空间(不一定是栈）上写s
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
                 <div class="col-md-4">
-                    <h3><a href="/2022/04/05/unlink/">UNLINK</a></h3>
+                    <h3><a href="/2022/04/05/heap_learning_unlink/">UNLINK</a></h3>
                     <span>
                         <span class="post-meta">
       <time datetime="2022-04-04T16:00:00.000Z" itemprop="datePublished">
@@ -525,7 +570,7 @@ UNLINKunlink大致概念​        就是将free chunk从双向循环链表中�
                     </p>
                     
                     <p class="pull-right readMore">
-                        <a href="/2022/04/05/unlink/">Read More...</a>
+                        <a href="/2022/04/05/heap_learning_unlink/">Read More...</a>
                     </p>
                     
                 </div>
@@ -537,7 +582,7 @@ UNLINKunlink大致概念​        就是将free chunk从双向循环链表中�
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
                 <div class="col-md-4">
-                    <h3><a href="/2022/04/04/off by one/">off by one /chunk overlapping</a></h3>
+                    <h3><a href="/2022/04/04/heap_leaarning_off by one/">off by one /chunk overlapping</a></h3>
                     <span>
                         <span class="post-meta">
       <time datetime="2022-04-03T16:00:00.000Z" itemprop="datePublished">
@@ -564,7 +609,7 @@ UNLINKunlink大致概念​        就是将free chunk从双向循环链表中�
                     </p>
                     
                     <p class="pull-right readMore">
-                        <a href="/2022/04/04/off by one/">Read More...</a>
+                        <a href="/2022/04/04/heap_leaarning_off by one/">Read More...</a>
                     </p>
                     
                 </div>
@@ -603,46 +648,6 @@ UNLINKunlink大致概念​        就是将free chunk从双向循环链表中�
                     
                     <p class="pull-right readMore">
                         <a href="/2022/04/03/幻想曲-01-春天/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2022/04/02/fastbin中uaf实现任意地址分配的检测问题/">fastbin中uaf实现任意地址分配的检测问题</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2022-04-02T00:37:40.817Z" itemprop="datePublished">
-          2022-04-02
-      </time>
-    
-    
-    | 
-    <a href='/tags/heap/'>heap</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-     
-
-
-
-​        目前做到的与fastbin有关（包括Tcache），并且存在uaf漏洞，需要通过任意地址分配来实现利用的题大致有两类，一类对于申请的chunk，通过简单或者复杂的结构体管理，在一个note的结构体中通常包括size，content甚至指针等字段，我们可以通过覆盖指针实现任意地址分配。另一类则是相对逻辑比较简单的，并没有为note定义结构体，仅仅使用了类似数组的形式，这样的话覆盖free chunk的
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2022/04/02/fastbin中uaf实现任意地址分配的检测问题/">Read More...</a>
                     </p>
                     
                 </div>

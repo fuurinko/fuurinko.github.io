@@ -72,6 +72,8 @@
 				    
 				    <li><a href="/categories/Generalization/" class="animsition-link">Generalization<small>(2)</small></a></li>
 				    
+				    <li><a href="/categories/HEAP/" class="animsition-link">HEAP<small>(1)</small></a></li>
+				    
 				    <li><a href="/categories/HEAP-Fastbin-Attack/" class="animsition-link">HEAP - Fastbin Attack<small>(9)</small></a></li>
 				    
 				    <li><a href="/categories/HEAP-Heap-overflow/" class="animsition-link">HEAP - Heap overflow<small>(1)</small></a></li>
@@ -80,13 +82,13 @@
 				    
 				    <li><a href="/categories/HEAP-Off-By-One/" class="animsition-link">HEAP - Off By One<small>(1)</small></a></li>
 				    
-				    <li><a href="/categories/HEAP-Tcache/" class="animsition-link">HEAP - Tcache<small>(2)</small></a></li>
+				    <li><a href="/categories/HEAP-Tcache/" class="animsition-link">HEAP - Tcache<small>(1)</small></a></li>
 				    
 				    <li><a href="/categories/HEAP-Unlink/" class="animsition-link">HEAP - Unlink<small>(2)</small></a></li>
 				    
 				    <li><a href="/categories/HEAP-Unsortedbin/" class="animsition-link">HEAP - Unsortedbin<small>(1)</small></a></li>
 				    
-				    <li><a href="/categories/MESS/" class="animsition-link">MESS<small>(20)</small></a></li>
+				    <li><a href="/categories/MESS/" class="animsition-link">MESS<small>(18)</small></a></li>
 				    
 				    <li><a href="/categories/OTHER-IO-FILE/" class="animsition-link">OTHER - IO FILE<small>(1)</small></a></li>
 				    
@@ -104,7 +106,7 @@
 				    
 				    <li><a href="/categories/STACK-SROP/" class="animsition-link">STACK - SROP<small>(1)</small></a></li>
 				    
-				    <li><a href="/categories/STACK-Stack-Overflow/" class="animsition-link">STACK - Stack Overflow<small>(3)</small></a></li>
+				    <li><a href="/categories/STACK-Stack-Overflow/" class="animsition-link">STACK - Stack Overflow<small>(2)</small></a></li>
 				    
 				    <li><a href="/categories/STACK-ret2dlreslove/" class="animsition-link">STACK - ret2dlreslove<small>(1)</small></a></li>
 				    
@@ -237,6 +239,46 @@
 
 <section id="intro">
     <div class="container">
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2022/04/02/heap_fastbin中uaf实现任意地址分配的检测问题/">fastbin中uaf实现任意地址分配的检测问题</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-04-02T00:37:40.817Z" itemprop="datePublished">
+          2022-04-02
+      </time>
+    
+    
+    | 
+    <a href='/tags/heap/'>heap</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+     
+
+
+
+​        目前做到的与fastbin有关（包括Tcache），并且存在uaf漏洞，需要通过任意地址分配来实现利用的题大致有两类，一类对于申请的chunk，通过简单或者复杂的结构体管理，在一个note的结构体中通常包括size，content甚至指针等字段，我们可以通过覆盖指针实现任意地址分配。另一类则是相对逻辑比较简单的，并没有为note定义结构体，仅仅使用了类似数组的形式，这样的话覆盖free chunk的
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/04/02/heap_fastbin中uaf实现任意地址分配的检测问题/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
         
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
@@ -452,7 +494,7 @@ index sentence​        指针操作有点多，配合gdb观看效果更佳。
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
                 <div class="col-md-4">
-                    <h3><a href="/2022/03/28/ret2shellcode/">ret2shellcode</a></h3>
+                    <h3><a href="/2022/03/28/stack_ret2shellcode/">ret2shellcode</a></h3>
                     <span>
                         <span class="post-meta">
       <time datetime="2022-03-28T14:52:39.514Z" itemprop="datePublished">
@@ -479,7 +521,7 @@ index sentence​        指针操作有点多，配合gdb观看效果更佳。
                     </p>
                     
                     <p class="pull-right readMore">
-                        <a href="/2022/03/28/ret2shellcode/">Read More...</a>
+                        <a href="/2022/03/28/stack_ret2shellcode/">Read More...</a>
                     </p>
                     
                 </div>
@@ -491,7 +533,7 @@ index sentence​        指针操作有点多，配合gdb观看效果更佳。
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
                 <div class="col-md-4">
-                    <h3><a href="/2022/03/26/hexo调教合集/">hexo调教合集</a></h3>
+                    <h3><a href="/2022/03/26/mess_hexo调教合集/">hexo调教合集</a></h3>
                     <span>
                         <span class="post-meta">
       <time datetime="2022-03-26T04:12:52.291Z" itemprop="datePublished">
@@ -517,7 +559,7 @@ index sentence​        指针操作有点多，配合gdb观看效果更佳。
                     </p>
                     
                     <p class="pull-right readMore">
-                        <a href="/2022/03/26/hexo调教合集/">Read More...</a>
+                        <a href="/2022/03/26/mess_hexo调教合集/">Read More...</a>
                     </p>
                     
                 </div>
@@ -529,7 +571,7 @@ index sentence​        指针操作有点多，配合gdb观看效果更佳。
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
                 <div class="col-md-4">
-                    <h3><a href="/2022/03/25/hof_bcloud/">bcloud</a></h3>
+                    <h3><a href="/2022/03/25/heap_hof_bcloud/">bcloud</a></h3>
                     <span>
                         <span class="post-meta">
       <time datetime="2022-03-25T12:33:06.204Z" itemprop="datePublished">
@@ -556,7 +598,7 @@ REinit1234567memset(s, 0, 0x50u); puts(&quot;Input your name:&quot;); my_read((i
                     </p>
                     
                     <p class="pull-right readMore">
-                        <a href="/2022/03/25/hof_bcloud/">Read More...</a>
+                        <a href="/2022/03/25/heap_hof_bcloud/">Read More...</a>
                     </p>
                     
                 </div>
@@ -568,7 +610,7 @@ REinit1234567memset(s, 0, 0x50u); puts(&quot;Input your name:&quot;); my_read((i
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
                 <div class="col-md-4">
-                    <h3><a href="/2022/03/24/hof_hitcontraininf11/">hitcon_training11</a></h3>
+                    <h3><a href="/2022/03/24/heap_hof_hitcontraininf11/">hitcon_training11</a></h3>
                     <span>
                         <span class="post-meta">
       <time datetime="2022-03-24T14:16:18.934Z" itemprop="datePublished">
@@ -593,45 +635,7 @@ re​        含有后门函数，直接的想法是利用hof将chunk分配至�
                     </p>
                     
                     <p class="pull-right readMore">
-                        <a href="/2022/03/24/hof_hitcontraininf11/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2022/03/21/一些板子/">一些板子</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2022-03-21T08:45:02.536Z" itemprop="datePublished">
-          2022-03-21
-      </time>
-    
-    
-    | 
-    <a href='/tags/summary/'>summary</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-     
-
-stackret2shellcode123456789101112from pwn import*from LibcSearcher import LibcSearchercontext.terminal = [&#x27;tmux&#x27;,&#x27;splitw&#x27;,&#x27;-h&#x27;]context.log_level = &quot;debug&quot;p = process(&quot;
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2022/03/21/一些板子/">Read More...</a>
+                        <a href="/2022/03/24/heap_hof_hitcontraininf11/">Read More...</a>
                     </p>
                     
                 </div>

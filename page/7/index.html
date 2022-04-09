@@ -72,6 +72,8 @@
 				    
 				    <li><a href="/categories/Generalization/" class="animsition-link">Generalization<small>(2)</small></a></li>
 				    
+				    <li><a href="/categories/HEAP/" class="animsition-link">HEAP<small>(1)</small></a></li>
+				    
 				    <li><a href="/categories/HEAP-Fastbin-Attack/" class="animsition-link">HEAP - Fastbin Attack<small>(9)</small></a></li>
 				    
 				    <li><a href="/categories/HEAP-Heap-overflow/" class="animsition-link">HEAP - Heap overflow<small>(1)</small></a></li>
@@ -80,13 +82,13 @@
 				    
 				    <li><a href="/categories/HEAP-Off-By-One/" class="animsition-link">HEAP - Off By One<small>(1)</small></a></li>
 				    
-				    <li><a href="/categories/HEAP-Tcache/" class="animsition-link">HEAP - Tcache<small>(2)</small></a></li>
+				    <li><a href="/categories/HEAP-Tcache/" class="animsition-link">HEAP - Tcache<small>(1)</small></a></li>
 				    
 				    <li><a href="/categories/HEAP-Unlink/" class="animsition-link">HEAP - Unlink<small>(2)</small></a></li>
 				    
 				    <li><a href="/categories/HEAP-Unsortedbin/" class="animsition-link">HEAP - Unsortedbin<small>(1)</small></a></li>
 				    
-				    <li><a href="/categories/MESS/" class="animsition-link">MESS<small>(20)</small></a></li>
+				    <li><a href="/categories/MESS/" class="animsition-link">MESS<small>(18)</small></a></li>
 				    
 				    <li><a href="/categories/OTHER-IO-FILE/" class="animsition-link">OTHER - IO FILE<small>(1)</small></a></li>
 				    
@@ -104,7 +106,7 @@
 				    
 				    <li><a href="/categories/STACK-SROP/" class="animsition-link">STACK - SROP<small>(1)</small></a></li>
 				    
-				    <li><a href="/categories/STACK-Stack-Overflow/" class="animsition-link">STACK - Stack Overflow<small>(3)</small></a></li>
+				    <li><a href="/categories/STACK-Stack-Overflow/" class="animsition-link">STACK - Stack Overflow<small>(2)</small></a></li>
 				    
 				    <li><a href="/categories/STACK-ret2dlreslove/" class="animsition-link">STACK - ret2dlreslove<small>(1)</small></a></li>
 				    
@@ -241,92 +243,7 @@
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
                 <div class="col-md-4">
-                    <h3><a href="/2021/10/27/gdb附加调试的一些黑魔法/">gdb附加调试的一些黑魔法</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2021-10-27T03:21:25.650Z" itemprop="datePublished">
-          2021-10-27
-      </time>
-    
-    
-    | 
-    <a href='/tags/gdb/'>gdb</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-     
-
-1）abstract​    这个part主要综合了一些奇怪的调试中遇到的问题，不定期更新。
-2）格式化字符串-cctf-pwn31）pause（p）导致ERROR: Could not find ELF base问题​    在开始动调这个exp的时候，发现一个很奇怪的点就是如果下的断点的模式gdb.attach(sh)，那么程序会异常退出，大概是这样：
-12345678910111213141516171819202
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2021/10/27/gdb附加调试的一些黑魔法/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2021/10/13/pwn基础/">汇编小知识点</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2021-10-13T09:25:43.372Z" itemprop="datePublished">
-          2021-10-13
-      </time>
-    
-    
-    | 
-    <a href='/tags/pwn-Primary/'>pwn Primary</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-     
-
-[TOC]
-汇编语言1）寻址1/直接寻址12mov     rax, fs:28h #直接寻址，fs段寄存器+偏移量。这里其实是一个canary的值。
-
-2/间接寻址间接在使用指针以及解引用的形式
-1mov     [rbp+var_8], rax # 寄存器相对寻址。相当于把rax，也就是这个canary值放到rbp+var_8的地方。
-
-3/比例寻址例如在数组遍历中
-123456.dataarrayD 1,2,3,4
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2021/10/13/pwn基础/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2021/08/18/main_arana 与多线程/">main_arana 与多线程</a></h3>
+                    <h3><a href="/2021/08/18/mess_main_arana 与多线程/">main_arana 与多线程</a></h3>
                     <span>
                         <span class="post-meta">
       <time datetime="2021-08-18T09:24:05.282Z" itemprop="datePublished">
@@ -355,7 +272,7 @@ Tcache全名为Thread Local Caching，它为每个线程创建一个缓存，里
                     </p>
                     
                     <p class="pull-right readMore">
-                        <a href="/2021/08/18/main_arana 与多线程/">Read More...</a>
+                        <a href="/2021/08/18/mess_main_arana 与多线程/">Read More...</a>
                     </p>
                     
                 </div>
@@ -367,48 +284,7 @@ Tcache全名为Thread Local Caching，它为每个线程创建一个缓存，里
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
                 <div class="col-md-4">
-                    <h3><a href="/2021/08/17/Tcache学习/">Tcahce学习</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2021-08-17T02:53:00.000Z" itemprop="datePublished">
-          2021-08-17
-      </time>
-    
-    
-    | 
-    <a href='/tags/Heap/'>Heap</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-     
-
-Tcahce学习0）review说是Tcache学习，实际上是lonelywolf的复现。
-网上wp都是神仙写的，一点也不萌新友好。我都看不懂（）
-打开题发现这个菜单题好常规。
-但是libc是2.27，难度会稍微高一点。而且这个2.27是魔改过的，加入了2.29才有的key，为Tcache加入了检查机制。                                                           
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2021/08/17/Tcache学习/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2021/08/17/ubuntu加载不同版本libc/">ubuntu加载不同版本libc</a></h3>
+                    <h3><a href="/2021/08/17/mess_ubuntu加载不同版本libc/">ubuntu加载不同版本libc</a></h3>
                     <span>
                         <span class="post-meta">
       <time datetime="2021-08-17T02:53:00.000Z" itemprop="datePublished">
@@ -437,7 +313,7 @@ Tcahce学习0）review说是Tcache学习，实际上是lonelywolf的复现。
                     </p>
                     
                     <p class="pull-right readMore">
-                        <a href="/2021/08/17/ubuntu加载不同版本libc/">Read More...</a>
+                        <a href="/2021/08/17/mess_ubuntu加载不同版本libc/">Read More...</a>
                     </p>
                     
                 </div>
@@ -449,7 +325,7 @@ Tcahce学习0）review说是Tcache学习，实际上是lonelywolf的复现。
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
                 <div class="col-md-4">
-                    <h3><a href="/2021/08/16/记一次ubuntu18.04的glibc调教/">记一次ubuntu18.04的glibc调教</a></h3>
+                    <h3><a href="/2021/08/16/mess_记一次ubuntu18.04的glibc调教/">记一次ubuntu18.04的glibc调教</a></h3>
                     <span>
                         <span class="post-meta">
       <time datetime="2021-08-16T13:24:18.623Z" itemprop="datePublished">
@@ -478,7 +354,7 @@ Tcahce学习0）review说是Tcache学习，实际上是lonelywolf的复现。
                     </p>
                     
                     <p class="pull-right readMore">
-                        <a href="/2021/08/16/记一次ubuntu18.04的glibc调教/">Read More...</a>
+                        <a href="/2021/08/16/mess_记一次ubuntu18.04的glibc调教/">Read More...</a>
                     </p>
                     
                 </div>
@@ -490,7 +366,7 @@ Tcahce学习0）review说是Tcache学习，实际上是lonelywolf的复现。
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
                 <div class="col-md-4">
-                    <h3><a href="/2021/08/13/ELF文件下对于PIE保护和ASLR的重新认识/">ELF文件下对于PIE保护和ASLR的重新认识</a></h3>
+                    <h3><a href="/2021/08/13/mess_ELF文件下对于PIE保护和ASLR的重新认识/">ELF文件下对于PIE保护和ASLR的重新认识</a></h3>
                     <span>
                         <span class="post-meta">
       <time datetime="2021-08-13T07:06:00.000Z" itemprop="datePublished">
@@ -517,7 +393,7 @@ ELF文件下对于PIE保护和ASLR的重新认识0）​    复现红色高跟�
                     </p>
                     
                     <p class="pull-right readMore">
-                        <a href="/2021/08/13/ELF文件下对于PIE保护和ASLR的重新认识/">Read More...</a>
+                        <a href="/2021/08/13/mess_ELF文件下对于PIE保护和ASLR的重新认识/">Read More...</a>
                     </p>
                     
                 </div>
@@ -529,7 +405,7 @@ ELF文件下对于PIE保护和ASLR的重新认识0）​    复现红色高跟�
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
                 <div class="col-md-4">
-                    <h3><a href="/2021/08/09/io_file（未完成）/">IO_FILE学习</a></h3>
+                    <h3><a href="/2021/08/09/stack_learning_io_file（未完成）/">IO_FILE学习</a></h3>
                     <span>
                         <span class="post-meta">
       <time datetime="2021-08-09T07:44:00.000Z" itemprop="datePublished">
@@ -560,7 +436,7 @@ io_file学习笔记
                     </p>
                     
                     <p class="pull-right readMore">
-                        <a href="/2021/08/09/io_file（未完成）/">Read More...</a>
+                        <a href="/2021/08/09/stack_learning_io_file（未完成）/">Read More...</a>
                     </p>
                     
                 </div>
@@ -572,7 +448,7 @@ io_file学习笔记
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
                 <div class="col-md-4">
-                    <h3><a href="/2021/08/03/pwn题中的一些奇怪的姿势/">pwn题中的一些奇怪的姿势</a></h3>
+                    <h3><a href="/2021/08/03/sum_pwn题中的一些奇怪的姿势/">pwn题中的一些奇怪的姿势</a></h3>
                     <span>
                         <span class="post-meta">
       <time datetime="2021-08-03T06:56:14.000Z" itemprop="datePublished">
@@ -604,7 +480,7 @@ ida都关了懒得上图了。
                     </p>
                     
                     <p class="pull-right readMore">
-                        <a href="/2021/08/03/pwn题中的一些奇怪的姿势/">Read More...</a>
+                        <a href="/2021/08/03/sum_pwn题中的一些奇怪的姿势/">Read More...</a>
                     </p>
                     
                 </div>
@@ -616,7 +492,7 @@ ida都关了懒得上图了。
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
                 <div class="col-md-4">
-                    <h3><a href="/2021/08/02/ret2dl_advanced/">ret2dl_advanced</a></h3>
+                    <h3><a href="/2021/08/02/stack_ret2dl_advanced/">ret2dl_advanced</a></h3>
                     <span>
                         <span class="post-meta">
       <time datetime="2021-08-02T03:22:53.000Z" itemprop="datePublished">
@@ -646,7 +522,132 @@ ret2dl_advanced1)review当FULL RELRO保护开启时，通过 dl_run_time来获�
                     </p>
                     
                     <p class="pull-right readMore">
-                        <a href="/2021/08/02/ret2dl_advanced/">Read More...</a>
+                        <a href="/2021/08/02/stack_ret2dl_advanced/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2021/05/24/heap_challenge_message/">Message</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2021-05-24T09:18:33.269Z" itemprop="datePublished">
+          2021-05-24
+      </time>
+    
+    
+    | 
+    <a href='/tags/UAF/'>UAF</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+     
+
+第二道fastbin double free。
+123free(*(void **)&amp;dword_602060[4 * v1 + 2]);      dword_602060[4 * v1] = 0;      --dword_60204C;
+
+这里没有把指针置为null，所以会产生uaf漏洞。
+ida大体分析了一下就会发现，由于没有后门函数，这道题会比上一道难。而且由于RELRO的开启，got所在的数据段是只读
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2021/05/24/heap_challenge_message/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2021/04/24/sum_杂碎的指令/">杂碎的指令</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2021-04-23T16:50:26.062Z" itemprop="datePublished">
+          2021-04-24
+      </time>
+    
+    
+    | 
+    <a href='/tags/mess/'>mess</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        [TOC]
+
+     
+
+杂碎的知识点1）调试相关1）gdbropgagdet
+ROPgadget –binary （） –only “pop|ret” | grep rdi
+(基本适用于ret2csu这种万能gagdet的寻找)
+例如ROPgadget --binary calc --only &quot;pop|ret&quot; | grep eax
+2）内存断点？硬件断点？原理对所访问内存地址设置为不可读写，当访问时触发中断。
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2021/04/24/sum_杂碎的指令/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/1919/08/10/note_深夜高速-1/">深夜高速</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="1919-08-09T15:34:14.000Z" itemprop="datePublished">
+          1919-08-10
+      </time>
+    
+    
+    | 
+    <a href='/tags/mess/'>mess</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        ​    
+         
+0:​        写下这些话的时候，不知不觉地，已经半夜两点了。
+​        其实放在半个月之前的我看来，两点根本不是半夜，而是夜生活的开始。然而仅仅十五天，我将作息强行向前延伸了两小时，所以对于现在的我来说，两点已经是高程度的熬夜了。
+​        熬夜并不是一件坏事，至少我如今也这么认为——只要不是因为玩手机等无意义的事情而浪费生命。
+​        最近的我一直在经受苦难，或者说，我
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/1919/08/10/note_深夜高速-1/">Read More...</a>
                     </p>
                     
                 </div>
@@ -657,7 +658,7 @@ ret2dl_advanced1)review当FULL RELRO保护开启时，通过 dl_run_time来获�
         
         <nav class="pagination" role="pagination">
           <a class="pull-left" href="../6/">← Newer Posts</a>
-          <a class="pull-right" href="../8/">Older Posts →</a>
+          
         </nav>
     </div>
 </section>
