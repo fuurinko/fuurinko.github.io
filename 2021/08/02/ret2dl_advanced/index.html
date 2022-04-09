@@ -75,7 +75,7 @@
 				    
 				    <li><a href="/categories/Generalization/" class="animsition-link">Generalization<small>(2)</small></a></li>
 				    
-				    <li><a href="/categories/HEAP-Fastbin-Attack/" class="animsition-link">HEAP - Fastbin Attack<small>(10)</small></a></li>
+				    <li><a href="/categories/HEAP-Fastbin-Attack/" class="animsition-link">HEAP - Fastbin Attack<small>(9)</small></a></li>
 				    
 				    <li><a href="/categories/HEAP-Heap-overflow/" class="animsition-link">HEAP - Heap overflow<small>(1)</small></a></li>
 				    
@@ -109,7 +109,9 @@
 				    
 				    <li><a href="/categories/STACK-Stack-Overflow/" class="animsition-link">STACK - Stack Overflow<small>(3)</small></a></li>
 				    
-				    <li><a href="/categories/STACK-ret2dlsolve/" class="animsition-link">STACK - ret2dlsolve<small>(1)</small></a></li>
+				    <li><a href="/categories/STACK-ret2dlreslove/" class="animsition-link">STACK - ret2dlreslove<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/STACK-ret2dlresolve/" class="animsition-link">STACK - ret2dlresolve<small>(1)</small></a></li>
 				    
 				    <li><a href="/categories/STACK-ret2shellcode/" class="animsition-link">STACK - ret2shellcode<small>(1)</small></a></li>
 				    
@@ -225,15 +227,13 @@
         </div>
         <div class="col-md-8 col-md-offset-2">
       		
-    <div id="aplayer-YPyzfLoT" class="aplayer aplayer-tag-marker meting-tag-marker"
-         data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"
-    ></div> 
+    <div id="aplayer-AyxCWLiZ" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div> 
 
-<h2 id="ret2dl-advanced"><a href="#ret2dl-advanced" class="headerlink" title="ret2dl_advanced"></a>ret2dl_advanced</h2><h3 id="1-review"><a href="#1-review" class="headerlink" title="1)review"></a>1)review</h3><p>当FULL RELRO保护开启时，通过 <code>dl_run_time</code>来获取libc基址的方式几乎无解。</p>
+<h2><span id="ret2dl_advanced">ret2dl_advanced</span></h2><h3><span id="1review">1)review</span></h3><p>当FULL RELRO保护开启时，通过 <code>dl_run_time</code>来获取libc基址的方式几乎无解。</p>
 <p>但是我们仍然能够找到某种方式来getshell。</p>
 <p>相关论文中给出一种解决方案，即通过<code>dt_bug</code>入口找到突破点。</p>
 <p>(Ps:为什么找不到相关的中文文章)</p>
-<h3 id="2）dt-dbg？"><a href="#2）dt-dbg？" class="headerlink" title="2）dt_dbg？"></a>2）dt_dbg？</h3><p><code>dt_dbg</code>这个概念实际上并不新鲜，简单来说它可以被包含在<code>libc.so</code>文件中，比如我们指定一个特定的libc版本加载的时候，通常除了程序本体还要附加一个libc文件，有时我们的debug信息就包含在这个<code>libc.so</code>文件中。但是有的libc.so文件是不包含debug信息的。所以如果我们程序的libc没有dbg文件那这个方法也没用了。</p>
+<h3><span id="2dt_dbg">2）dt_dbg？</span></h3><p><code>dt_dbg</code>这个概念实际上并不新鲜，简单来说它可以被包含在<code>libc.so</code>文件中，比如我们指定一个特定的libc版本加载的时候，通常除了程序本体还要附加一个libc文件，有时我们的debug信息就包含在这个<code>libc.so</code>文件中。但是有的libc.so文件是不包含debug信息的。所以如果我们程序的libc没有dbg文件那这个方法也没用了。</p>
 <p><code>dt_dubug</code>用于指向<code>type_r_debug</code>这个结构体。这个结构体用来保存调试器需要的信息来确认动态装载器的基址和拦截一些特定的与动态装载相关的事件。</p>
 <p>此外，这个结构体的<code>r_map</code>域保存了指向<code>link_map</code>的链接表表头的指针。</p>
 <p>也就是<code>dt_dbg</code>指向<code>type_r_debug</code>，且<code>type_r_debug</code>维护了指向<code>link_map</code>的指针。</p>
@@ -279,10 +279,10 @@
 
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">pwndbg&gt; xinfo 0x00007ffff7dea8f0</span><br><span class="line">Extended information <span class="keyword">for</span> virtual address 0x7ffff7dea8f0:</span><br><span class="line"></span><br><span class="line">  Containing mapping:</span><br><span class="line">    0x7ffff7dd3000     0x7ffff7dfc000 r-xp    29000 0      /lib/x86_64-linux-gnu/ld-2.27.so</span><br><span class="line"></span><br><span class="line">  Offset information:</span><br><span class="line">         Mapped Area 0x7ffff7dea8f0 = 0x7ffff7dd3000 + 0x178f0</span><br><span class="line">         File (Base) 0x7ffff7dea8f0 = 0x7ffff7dd3000 + 0x178f0</span><br><span class="line">      File (Segment) 0x7ffff7dea8f0 = 0x7ffff7dd3000 + 0x178f0</span><br><span class="line">         File (Disk) 0x7ffff7dea8f0 = /lib/x86_64-linux-gnu/ld-2.27.so + 0x178f0</span><br><span class="line"></span><br><span class="line"> Containing ELF sections:</span><br><span class="line">               .text 0x7ffff7dea8f0 = 0x7ffff7dd3f10 + 0x169e0</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
-<h3 id="3）exploitation"><a href="#3）exploitation" class="headerlink" title="3）exploitation"></a>3）exploitation</h3><p>在无aslr并已经获取到<code>dl_runtime_resolve</code>的情况下的利用和patial relro相似。</p>
+<h3><span id="3exploitation">3）exploitation</span></h3><p>在无aslr并已经获取到<code>dl_runtime_resolve</code>的情况下的利用和patial relro相似。</p>
 <p>有aslr的情况。。</p>
 <p>我也不会。</p>
-<h3 id="4-refrence"><a href="#4-refrence" class="headerlink" title="4)refrence"></a>4)refrence</h3><p><a target="_blank" rel="noopener" href="http://rk700.github.io/2015/04/09/dt_debug-read/">通过DT_DEBUG来获得各个库的基址</a></p>
+<h3><span id="4refrence">4)refrence</span></h3><p><a target="_blank" rel="noopener" href="http://rk700.github.io/2015/04/09/dt_debug-read/">通过DT_DEBUG来获得各个库的基址</a></p>
 <p><a target="_blank" rel="noopener" href="https://www.usenix.org/conference/usenixsecurity15/technical-sessions/presentation/di-frederico">How the ELF Ruined Christmas</a></p>
 <p><a target="_blank" rel="noopener" href="https://ypl.coffee/dl-resolve-full-relro/">Finding link_map and _dl_runtime_resolve() under full RELRO</a></p>
 <p>————————————————tbc——————————————————-</p>
