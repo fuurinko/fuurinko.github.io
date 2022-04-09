@@ -75,8 +75,6 @@
 				    
 				    <li><a href="/categories/Generalization/" class="animsition-link">Generalization<small>(2)</small></a></li>
 				    
-				    <li><a href="/categories/HEAP-Chunk-Overlapping/" class="animsition-link">HEAP - Chunk Overlapping<small>(1)</small></a></li>
-				    
 				    <li><a href="/categories/HEAP-Fastbin-Attack/" class="animsition-link">HEAP - Fastbin Attack<small>(9)</small></a></li>
 				    
 				    <li><a href="/categories/HEAP-Heap-overflow/" class="animsition-link">HEAP - Heap overflow<small>(1)</small></a></li>
@@ -87,9 +85,9 @@
 				    
 				    <li><a href="/categories/HEAP-Tcache/" class="animsition-link">HEAP - Tcache<small>(2)</small></a></li>
 				    
-				    <li><a href="/categories/HEAP-UNLINK/" class="animsition-link">HEAP - UNLINK<small>(1)</small></a></li>
+				    <li><a href="/categories/HEAP-Unlink/" class="animsition-link">HEAP - Unlink<small>(2)</small></a></li>
 				    
-				    <li><a href="/categories/HEAP-Unsortedbin/" class="animsition-link">HEAP-Unsortedbin<small>(1)</small></a></li>
+				    <li><a href="/categories/HEAP-Unsortedbin/" class="animsition-link">HEAP - Unsortedbin<small>(1)</small></a></li>
 				    
 				    <li><a href="/categories/MESS/" class="animsition-link">MESS<small>(20)</small></a></li>
 				    
@@ -227,12 +225,10 @@
         </div>
         <div class="col-md-8 col-md-offset-2">
       		
-    <div id="aplayer-IAaIexvs" class="aplayer aplayer-tag-marker meting-tag-marker"
-         data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"
-    ></div> 
+    <div id="aplayer-vJiLYxkR" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div> 
 
-<h2 id="1）Seccomp基础"><a href="#1）Seccomp基础" class="headerlink" title="1）Seccomp基础"></a>1）Seccomp基础</h2><h3 id="Seccomp简介"><a href="#Seccomp简介" class="headerlink" title="Seccomp简介"></a>Seccomp简介</h3><p>​        就像ALSR，NX这样，Seccomp也是linux内核的一种安全机制。这种保护机制会禁用某些系统调用，有效避免了越权行为的发生。</p>
-<h3 id="启动Seccomp"><a href="#启动Seccomp" class="headerlink" title="启动Seccomp"></a>启动Seccomp</h3><p>​        如果要编写调用Seccomp的程序，需要先安装相应的头文件。</p>
+<h2><span id="1seccomp基础">1）Seccomp基础</span></h2><h3><span id="seccomp简介">Seccomp简介</span></h3><p>​        就像ALSR，NX这样，Seccomp也是linux内核的一种安全机制。这种保护机制会禁用某些系统调用，有效避免了越权行为的发生。</p>
+<h3><span id="启动seccomp">启动Seccomp</span></h3><p>​        如果要编写调用Seccomp的程序，需要先安装相应的头文件。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt install libseccomp-dev libseccomp2 seccomp</span><br></pre></td></tr></table></figure>
 
 
@@ -242,8 +238,8 @@
 <p>Seccomp的模式以及参数比较多，这里只总结比较直观的几点，具体的可以看大佬的博客：<a target="_blank" rel="noopener" href="https://a1ex.online/2020/09/27/seccomp%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">seccomp学习笔记</a></p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">	scmp_filter_ctx ctx;</span><br><span class="line"></span><br><span class="line">	ctx = seccomp_init(SCMP_ACT_ALLOW);<span class="comment">/* SCMP_ACT_ALLOW表示在初始化的时候允许所有系统调用，相反的 SCMP_ACT_KILL表示禁用所有系统调用*/</span></span><br><span class="line"></span><br><span class="line">	seccomp_rule_add(ctx, SCMP_ACT_KILL, SCMP_SYS(execve), <span class="number">0</span>);</span><br><span class="line"><span class="comment">//添加一条seccomp规则，第二个参数选择禁用/开启（kill为禁用，allow为开启）第三个参数表示规则处理的具体的系统调用，第四个参数是限制系统调用执行的参数，如果不为0，那么后面会加上更具体的限制系统调用参数的函数参数）</span></span><br><span class="line">	</span><br><span class="line">seccomp_load(ctx);<span class="comment">//调用，使过滤规则生效</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
-<h2 id="2）Seccomp-Tools"><a href="#2）Seccomp-Tools" class="headerlink" title="2）Seccomp-Tools"></a>2）Seccomp-Tools</h2><p>​        暂时空着，因为我seccomp dump，系统给我说无权限。这个问题似乎仅限于docker，但是网上并没有类似的烈士为我答疑解惑捏。</p>
-<h2 id="3）ORW例题"><a href="#3）ORW例题" class="headerlink" title="3）ORW例题"></a>3）ORW例题</h2><h3 id="pwnable-orw"><a href="#pwnable-orw" class="headerlink" title="pwnable-orw"></a>pwnable-orw</h3><p>​        pwnable第二题，orw。 </p>
+<h2><span id="2seccomp-tools">2）Seccomp-Tools</span></h2><p>​        暂时空着，因为我seccomp dump，系统给我说无权限。这个问题似乎仅限于docker，但是网上并没有类似的烈士为我答疑解惑捏。</p>
+<h2><span id="3orw例题">3）ORW例题</span></h2><h3><span id="pwnable-orw">pwnable-orw</span></h3><p>​        pwnable第二题，orw。 </p>
 <p>​    </p>
 <p>​                <img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-15%20%E4%B8%8B%E5%8D%889.41.28.png" alt="截屏2021-11-15 下午9.41.28"></p>
 <p>​        这里的沙箱实际是通过prctl来控制实现的。</p>
@@ -276,7 +272,7 @@
 
 <p>​        完整exp，其实主要是要对32位的传参熟悉，整体编写的难度并不高捏。</p>
 <p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-17%20%E4%B8%8B%E5%8D%8810.28.54.png" alt="截屏2021-11-17 下午10.28.54">        </p>
-<h2 id="4）参考"><a href="#4）参考" class="headerlink" title="4）参考"></a>4）参考</h2><p>prctl函数开始学习沙箱规则](<a target="_blank" rel="noopener" href="https://www.cnblogs.com/L0g4n-blog/p/12839171.html">https://www.cnblogs.com/L0g4n-blog/p/12839171.html</a>)</p>
+<h2><span id="4参考">4）参考</span></h2><p>prctl函数开始学习沙箱规则](<a target="_blank" rel="noopener" href="https://www.cnblogs.com/L0g4n-blog/p/12839171.html">https://www.cnblogs.com/L0g4n-blog/p/12839171.html</a>)</p>
 
             <div class="clearfix"></div>
             <hr class="nogutter">

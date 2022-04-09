@@ -75,8 +75,6 @@
 				    
 				    <li><a href="/categories/Generalization/" class="animsition-link">Generalization<small>(2)</small></a></li>
 				    
-				    <li><a href="/categories/HEAP-Chunk-Overlapping/" class="animsition-link">HEAP - Chunk Overlapping<small>(1)</small></a></li>
-				    
 				    <li><a href="/categories/HEAP-Fastbin-Attack/" class="animsition-link">HEAP - Fastbin Attack<small>(9)</small></a></li>
 				    
 				    <li><a href="/categories/HEAP-Heap-overflow/" class="animsition-link">HEAP - Heap overflow<small>(1)</small></a></li>
@@ -87,9 +85,9 @@
 				    
 				    <li><a href="/categories/HEAP-Tcache/" class="animsition-link">HEAP - Tcache<small>(2)</small></a></li>
 				    
-				    <li><a href="/categories/HEAP-UNLINK/" class="animsition-link">HEAP - UNLINK<small>(1)</small></a></li>
+				    <li><a href="/categories/HEAP-Unlink/" class="animsition-link">HEAP - Unlink<small>(2)</small></a></li>
 				    
-				    <li><a href="/categories/HEAP-Unsortedbin/" class="animsition-link">HEAP-Unsortedbin<small>(1)</small></a></li>
+				    <li><a href="/categories/HEAP-Unsortedbin/" class="animsition-link">HEAP - Unsortedbin<small>(1)</small></a></li>
 				    
 				    <li><a href="/categories/MESS/" class="animsition-link">MESS<small>(20)</small></a></li>
 				    
@@ -227,15 +225,13 @@
         </div>
         <div class="col-md-8 col-md-offset-2">
       		
-    <div id="aplayer-cpoQqnsQ" class="aplayer aplayer-tag-marker meting-tag-marker"
-         data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"
-    ></div> 
+    <div id="aplayer-uTEwSnfO" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div> 
 
-<h1 id="Tcahce学习"><a href="#Tcahce学习" class="headerlink" title="Tcahce学习"></a>Tcahce学习</h1><h2 id="0）review"><a href="#0）review" class="headerlink" title="0）review"></a>0）review</h2><p>说是Tcache学习，实际上是lonelywolf的复现。</p>
+<h1><span id="tcahce学习">Tcahce学习</span></h1><h2><span id="0review">0）review</span></h2><p>说是Tcache学习，实际上是lonelywolf的复现。</p>
 <p>网上wp都是神仙写的，一点也不萌新友好。我都看不懂（）</p>
 <p>打开题发现这个菜单题好常规。</p>
 <p>但是libc是2.27，难度会稍微高一点。而且这个2.27是魔改过的，加入了2.29才有的key，为Tcache加入了检查机制。                                                                                                   具体的参考可以看<a target="_blank" rel="noopener" href="https://blog.csdn.net/chennbnbnb/article/details/109284780">glibc2.31下的新double free手法/字节跳动pwn题gun题解</a>。但是在这道题里面充其量算一个trick而不是核心考点。</p>
-<h2 id="1）漏洞点"><a href="#1）漏洞点" class="headerlink" title="1）漏洞点"></a>1）漏洞点</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">unsigned</span> __int64 <span class="title">delete</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  __int64 v1; <span class="comment">// [rsp+0h] [rbp-18h]</span></span><br><span class="line">  <span class="keyword">unsigned</span> __int64 v2; <span class="comment">// [rsp+8h] [rbp-10h]</span></span><br><span class="line"></span><br><span class="line">  v2 = __readfsqword(<span class="number">0x28</span>u);</span><br><span class="line">  __printf_chk(<span class="number">1LL</span>, <span class="string">&quot;Index: &quot;</span>);</span><br><span class="line">  __isoc99_scanf(&amp;number, &amp;v1);</span><br><span class="line">  <span class="keyword">if</span> ( !v1 &amp;&amp; buf )</span><br><span class="line">    <span class="built_in">free</span>(buf);</span><br><span class="line">  <span class="keyword">return</span> __readfsqword(<span class="number">0x28</span>u) ^ v2;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2><span id="1漏洞点">1）漏洞点</span></h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">unsigned</span> __int64 <span class="title">delete</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  __int64 v1; <span class="comment">// [rsp+0h] [rbp-18h]</span></span><br><span class="line">  <span class="keyword">unsigned</span> __int64 v2; <span class="comment">// [rsp+8h] [rbp-10h]</span></span><br><span class="line"></span><br><span class="line">  v2 = __readfsqword(<span class="number">0x28</span>u);</span><br><span class="line">  __printf_chk(<span class="number">1LL</span>, <span class="string">&quot;Index: &quot;</span>);</span><br><span class="line">  __isoc99_scanf(&amp;number, &amp;v1);</span><br><span class="line">  <span class="keyword">if</span> ( !v1 &amp;&amp; buf )</span><br><span class="line">    <span class="built_in">free</span>(buf);</span><br><span class="line">  <span class="keyword">return</span> __readfsqword(<span class="number">0x28</span>u) ^ v2;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>漏洞点。经典uaf。</p>
 <p>之前看wp有人说edit函数里面有空字节溢出，问题大概出在++v == v1上，正确写法应该是v0++，不然判断结束但是v0多加了一次。</p>
@@ -247,7 +243,7 @@
 <p>但是好像说了和没说一样。</p>
 <p>回到汇编语言的界面，似乎找到点不进去的原因了。具体的内容还是要码住。<a target="_blank" rel="noopener" href="https://toutiao.io/posts/o5yed8w/preview">Canary安全机制原理实战分析</a></p>
 <p>![image-20210811161707509](/Users/rin/Library/Application Support/typora-user-images/image-20210811161707509.png)</p>
-<h2 id="2）漏洞利用"><a href="#2）漏洞利用" class="headerlink" title="2）漏洞利用"></a>2）漏洞利用</h2><h3 id="1）Tcache-double-free"><a href="#1）Tcache-double-free" class="headerlink" title="1）Tcache double free"></a>1）Tcache double free</h3><p>之前也说过了，这个libc是魔改过的，增加了2.29才有的key，所以需要绕过。</p>
+<h2><span id="2漏洞利用">2）漏洞利用</span></h2><h3><span id="1tcache-double-free">1）Tcache double free</span></h3><p>之前也说过了，这个libc是魔改过的，增加了2.29才有的key，所以需要绕过。</p>
 <p>虽然但是，我连普通的Tcache的题都不太清楚，正好找到一个讲得特别详细的视频，那就跟着做好了，顺便复习一下。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">add(<span class="number">0</span>,<span class="number">0x68</span>)</span><br><span class="line">free(<span class="number">0</span>)</span><br><span class="line">gdb.attach(p)</span><br><span class="line">pause()</span><br></pre></td></tr></table></figure>
 
@@ -274,7 +270,7 @@
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">pwndbg&gt; x/20gx 0x56533012f250</span><br><span class="line">0x56533012f250:	0x0000000000000000	0x0000000000000071</span><br><span class="line">0x56533012f260:	0x0000000000000000	0x000056533012f010</span><br></pre></td></tr></table></figure>
 
 <p>我们到Tcache的地址中看一看，会发现<code>0x56533012f260:    0x0000000000000000    0x000056533012f010</code>处的<code>0x000056533012f010</code>，这是一个key值。</p>
-<h4 id="2-29下Tcahce-double-free的检测"><a href="#2-29下Tcahce-double-free的检测" class="headerlink" title="2.29下Tcahce double free的检测"></a>2.29下Tcahce double free的检测</h4><p>之前也说过在2.29中新增了对于Tcahce double free的检测，也就是这里的key。检测的大致思路是</p>
+<h4><span id="229下tcahce-double-free的检测">2.29下Tcahce double free的检测</span></h4><p>之前也说过在2.29中新增了对于Tcahce double free的检测，也就是这里的key。检测的大致思路是</p>
 <p>对于每一个tcache中的chunk，增加了一个key指针，用于指向所属的tcache结构体(也就是修改的原本只有一行的tcache_entry)</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">tcache_entry</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">tcache_entry</span> *<span class="title">next</span>;</span>  <span class="comment">//链表指针，对应chunk中的fd字段</span></span><br><span class="line">  <span class="comment">/* This field exists to detect double frees.  */</span></span><br><span class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">tcache_perthread_struct</span> *<span class="title">key</span>;</span>  <span class="comment">//指向所属的tcache结构体，对应chunk中的bk字段</span></span><br><span class="line">&#125; tcache_entry;</span><br></pre></td></tr></table></figure>
 
@@ -299,18 +295,18 @@
 <p>然后可以直接通过unsortedbin中的地址来减去偏移获得libc基址，然后直接one_gadget打malloc_hook。</p>
 <p>总体的利用思路是比较常规的，尤其是获得unsortedbin的地址之后的操作基本上就是模版化。</p>
 <p>然后比较关键的就是前面对于Tcache 检测的绕过以及修改Tcache控制区域来构造unsorted’bin。</p>
-<h4 id="调试"><a href="#调试" class="headerlink" title="调试"></a>调试</h4><p>接下来是具体的调试部分，我力争把每道题都完整地调出来，只清楚原理不能实战是没有任何意义的。</p>
+<h4><span id="调试">调试</span></h4><p>接下来是具体的调试部分，我力争把每道题都完整地调出来，只清楚原理不能实战是没有任何意义的。</p>
 <p>但是我们首先就是要解决libc的问题。虽然我们已经找到解决问题的方法，但是中途是否会出现其他的问题这个还不得而知。</p>
-<h3 id="Tcache-利用"><a href="#Tcache-利用" class="headerlink" title="Tcache 利用"></a>Tcache 利用</h3><p>不是学习不是学习不是学习，</p>
+<h3><span id="tcache-利用">Tcache 利用</span></h3><p>不是学习不是学习不是学习，</p>
 <p>例题是lctf2018的easyheap。</p>
-<h4 id="漏洞点"><a href="#漏洞点" class="headerlink" title="漏洞点"></a>漏洞点</h4><p>一个又明显又不明显的漏洞、来自于输入后会把chunk_ptr置为0。</p>
+<h4><span id="漏洞点">漏洞点</span></h4><p>一个又明显又不明显的漏洞、来自于输入后会把chunk_ptr置为0。</p>
 <p>然后联想到malloc的内存分配机制，如果我们malloc一个16*n+8型的chunk，由于ptmalloc的内存复用机制，我们可以利用这个置零的漏洞使得物理相邻的下一个chunk的prevsize位包括previnuse位为0。然后构造堆叠。</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">unsigned</span> __int64 __fastcall <span class="title">sub_BEC</span><span class="params">(_BYTE *a1, <span class="keyword">int</span> a2)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">signed</span> <span class="keyword">int</span> v3; <span class="comment">// [rsp+14h] [rbp-Ch]</span></span><br><span class="line">  <span class="keyword">unsigned</span> __int64 v4; <span class="comment">// [rsp+18h] [rbp-8h]</span></span><br><span class="line"></span><br><span class="line">  v4 = __readfsqword(<span class="number">0x28</span>u);</span><br><span class="line">  v3 = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">if</span> ( a2 )</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="keyword">while</span> ( <span class="number">1</span> )</span><br><span class="line">    &#123;</span><br><span class="line">      read(<span class="number">0</span>, &amp;a1[v3], <span class="number">1uLL</span>);</span><br><span class="line">      <span class="keyword">if</span> ( a2 - <span class="number">1</span> &lt; (<span class="keyword">unsigned</span> <span class="keyword">int</span>)v3 || !a1[v3] || a1[v3] == <span class="number">10</span> )</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">      ++v3;</span><br><span class="line">    &#125;</span><br><span class="line">    a1[v3] = <span class="number">0</span>;</span><br><span class="line">    a1[a2] = <span class="number">0</span>;<span class="comment">//loophole</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">  &#123;</span><br><span class="line">    *a1 = <span class="number">0</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> __readfsqword(<span class="number">0x28</span>u) ^ v4;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>然后又注意到我们最多只能分配十个堆块，除去需要填满Tcache的七个堆块，也就是我们只能分配十个相同大小的堆块。</p>
 <p>在完成这道题之前我们需要先理解unsortedbin 泄漏libc的原理。</p>
 <p>包括ciscn lonelywolf也是利用到了这一点。</p>
-<h4 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h4><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/A951860555/article/details/116910945">2021第十四届全国大学生信息安全竞赛WP（CISCN）– pwn部分</a></p>
+<h4><span id="参考">参考</span></h4><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/A951860555/article/details/116910945">2021第十四届全国大学生信息安全竞赛WP（CISCN）– pwn部分</a></p>
 <p><a target="_blank" rel="noopener" href="https://blog.csdn.net/chennbnbnb/article/details/109284780">glibc2.31下的新double free手法/字节跳动pwn题gun题解</a></p>
 <p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1Sy4y1W7h2">CISCN2021 lonelywolf</a></p>
 
