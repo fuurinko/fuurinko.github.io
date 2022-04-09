@@ -72,7 +72,7 @@
 				    
 				    <li><a href="/categories/Generalization/" class="animsition-link">Generalization<small>(2)</small></a></li>
 				    
-				    <li><a href="/categories/HEAP-Fastbin-Attack/" class="animsition-link">HEAP - Fastbin Attack<small>(9)</small></a></li>
+				    <li><a href="/categories/HEAP-Fastbin-Attack/" class="animsition-link">HEAP - Fastbin Attack<small>(10)</small></a></li>
 				    
 				    <li><a href="/categories/HEAP-Heap-overflow/" class="animsition-link">HEAP - Heap overflow<small>(1)</small></a></li>
 				    
@@ -235,6 +235,50 @@
 
 <section id="intro">
     <div class="container">
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2021/11/18/pwnable-calc/">pwnable-calc</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2021-11-18T02:30:24.678Z" itemprop="datePublished">
+          2021-11-18
+      </time>
+    
+    
+    | 
+    <a href='/tags/pwnable/'>pwnable</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+     
+
+逆向​        程序实现了一个简单的计算器功能。运算有加减乘除四种。
+​        
+​        并且程序再次自带计时功能，需要patch。
+​        
+​        静态链接，所以肯定不能用ret2libc那一套，只能试图ROP一下。
+​        程序主要功能通过get_expr和calculate（原本不叫这个）两个函数实现。
+​        get_expr主要用于定位我们输入的
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2021/11/18/pwnable-calc/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
         
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
@@ -612,46 +656,6 @@ E: Unable to correct problems, you have held bro
                     
                     <p class="pull-right readMore">
                         <a href="/2021/10/27/pwntools（1）--pwnlib.tube/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2021/10/27/gdb附加调试的一些黑魔法/">gdb附加调试的一些黑魔法</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2021-10-27T03:21:25.650Z" itemprop="datePublished">
-          2021-10-27
-      </time>
-    
-    
-    | 
-    <a href='/tags/gdb/'>gdb</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-     
-
-1）abstract​    这个part主要综合了一些奇怪的调试中遇到的问题，不定期更新。
-2）格式化字符串-cctf-pwn31）pause（p）导致ERROR: Could not find ELF base问题​    在开始动调这个exp的时候，发现一个很奇怪的点就是如果下的断点的模式gdb.attach(sh)，那么程序会异常退出，大概是这样：
-12345678910111213141516171819202
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2021/10/27/gdb附加调试的一些黑魔法/">Read More...</a>
                     </p>
                     
                 </div>

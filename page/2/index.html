@@ -72,7 +72,7 @@
 				    
 				    <li><a href="/categories/Generalization/" class="animsition-link">Generalization<small>(2)</small></a></li>
 				    
-				    <li><a href="/categories/HEAP-Fastbin-Attack/" class="animsition-link">HEAP - Fastbin Attack<small>(9)</small></a></li>
+				    <li><a href="/categories/HEAP-Fastbin-Attack/" class="animsition-link">HEAP - Fastbin Attack<small>(10)</small></a></li>
 				    
 				    <li><a href="/categories/HEAP-Heap-overflow/" class="animsition-link">HEAP - Heap overflow<small>(1)</small></a></li>
 				    
@@ -235,6 +235,48 @@
 
 <section id="intro">
     <div class="container">
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2022/04/01/week6-3.1/">NoLeak</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-04-01T13:34:22.000Z" itemprop="datePublished">
+          2022-04-01
+      </time>
+    
+    
+    | 
+    <a href='/tags/Chunk-Overlapping/'>Chunk Overlapping</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+     
+
+overview
+​        非常之畸形。
+re​        逻辑比较简单，结构体中只有一个chunk bp的字段。漏洞点也很魔幻，free只free结构体中保存的指针，而没有free malloc出来的ptr本身，并且没有置0，顺便edit的时候size没有限定，可以造成堆溢出。
+​        并且题目并没有可控的输出功能,虽然调用了write()，但是我们很难通过改got表来调用。    
+利用​   
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/04/01/week6-3.1/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
         
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
@@ -588,49 +630,6 @@ stackret2shellcode123456789101112from pwn import*from LibcSearcher import LibcSe
                     
                     <p class="pull-right readMore">
                         <a href="/2022/03/21/一些板子/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2022/03/20/mrctf2020_shellcode_revenge/">mrctf2020_shellcode_revenge</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2022-03-19T17:18:00.923Z" itemprop="datePublished">
-          2022-03-20
-      </time>
-    
-    
-    | 
-    <a href='/tags/EZ-STACK/'>EZ_STACK</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-     
-
-mrctf2020_shellcode_revengeoverview
-看起来像ret2shellcode。
-
-逆向​        不知道为什么ida不能一键f5，不过也懒得修了，程序逻辑也比较简单，就是一个write和read。然后程序会对输入的字符进行ascii码的大小的比较，
-​        
-​        分析一下这个流程图，我们的目的是执行loc_1236，一共有三个箭头指向它，归纳以后分别是(0x60
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2022/03/20/mrctf2020_shellcode_revenge/">Read More...</a>
                     </p>
                     
                 </div>
