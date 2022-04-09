@@ -290,6 +290,7 @@
 <p>修改fd，使其指向<code>malloc_hook-35</code></p>
 <p>​        这里减去三十五是为了构造fake chunk的size位，使其合法。详情可以参考[fastbin中uaf实现任意地址分配的检测问题][<a href="https://fuurinko.github.io/2022/04/02/fastbin%E4%B8%ADuaf%E5%AE%9E%E7%8E%B0%E4%BB%BB%E6%84%8F%E5%9C%B0%E5%9D%80%E5%88%86%E9%85%8D%E7%9A%84%E6%A3%80%E6%B5%8B%E9%97%AE%E9%A2%98/]%E3%80%82">https://fuurinko.github.io/2022/04/02/fastbin中uaf实现任意地址分配的检测问题/]。</a></p>
 <p>​        接着只需要多add几个chunk，并编辑对应chunk为<code>one_gadget</code>即可。</p>
+<p>​        人有点麻。</p>
 <p>​</p>
 
             <div class="clearfix"></div>
