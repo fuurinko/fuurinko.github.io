@@ -82,6 +82,8 @@
 				    
 				    <li><a href="/categories/HEAP-Off-By-One/" class="animsition-link">HEAP - Off By One<small>(1)</small></a></li>
 				    
+				    <li><a href="/categories/HEAP-Seccomp/" class="animsition-link">HEAP - Seccomp<small>(1)</small></a></li>
+				    
 				    <li><a href="/categories/HEAP-Tcache/" class="animsition-link">HEAP - Tcache<small>(1)</small></a></li>
 				    
 				    <li><a href="/categories/HEAP-Unlink/" class="animsition-link">HEAP - Unlink<small>(2)</small></a></li>
@@ -239,6 +241,51 @@
 
 <section id="intro">
     <div class="container">
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2021/10/13/sum_pwn基础/">汇编小知识点</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2021-10-13T09:25:43.372Z" itemprop="datePublished">
+          2021-10-13
+      </time>
+    
+    
+    | 
+    <a href='/tags/pwn-Primary/'>pwn Primary</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+     
+
+[TOC]
+汇编语言1）寻址1/直接寻址12mov     rax, fs:28h #直接寻址，fs段寄存器+偏移量。这里其实是一个canary的值。
+
+2/间接寻址间接在使用指针以及解引用的形式
+1mov     [rbp+var_8], rax # 寄存器相对寻址。相当于把rax，也就是这个canary值放到rbp+var_8的地方。
+
+3/比例寻址例如在数组遍历中
+123456.dataarrayD 1,2,3,4
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2021/10/13/sum_pwn基础/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
         
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
@@ -616,49 +663,9 @@ ROPgadget –binary （） –only “pop|ret” | grep rdi
             </div>
         </div>
         
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/1919/08/10/note_深夜高速-1/">深夜高速</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="1919-08-09T15:34:14.000Z" itemprop="datePublished">
-          1919-08-10
-      </time>
-    
-    
-    | 
-    <a href='/tags/mess/'>mess</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        ​    
-         
-0:​        写下这些话的时候，不知不觉地，已经半夜两点了。
-​        其实放在半个月之前的我看来，两点根本不是半夜，而是夜生活的开始。然而仅仅十五天，我将作息强行向前延伸了两小时，所以对于现在的我来说，两点已经是高程度的熬夜了。
-​        熬夜并不是一件坏事，至少我如今也这么认为——只要不是因为玩手机等无意义的事情而浪费生命。
-​        最近的我一直在经受苦难，或者说，我
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/1919/08/10/note_深夜高速-1/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
         <nav class="pagination" role="pagination">
           <a class="pull-left" href="../6/">← Newer Posts</a>
-          
+          <a class="pull-right" href="../8/">Older Posts →</a>
         </nav>
     </div>
 </section>

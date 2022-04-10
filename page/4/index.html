@@ -82,6 +82,8 @@
 				    
 				    <li><a href="/categories/HEAP-Off-By-One/" class="animsition-link">HEAP - Off By One<small>(1)</small></a></li>
 				    
+				    <li><a href="/categories/HEAP-Seccomp/" class="animsition-link">HEAP - Seccomp<small>(1)</small></a></li>
+				    
 				    <li><a href="/categories/HEAP-Tcache/" class="animsition-link">HEAP - Tcache<small>(1)</small></a></li>
 				    
 				    <li><a href="/categories/HEAP-Unlink/" class="animsition-link">HEAP - Unlink<small>(2)</small></a></li>
@@ -239,6 +241,49 @@
 
 <section id="intro">
     <div class="container">
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2022/03/16/week3-2.1/">hctf2016_fheap</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-03-16T03:48:29.784Z" itemprop="datePublished">
+          2022-03-16
+      </time>
+    
+    
+    | 
+    <a href='/tags/UAF/'>UAF</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        ​    
+     
+​        第三周第二天第一道堆题。应该是一道中等偏下的fastbinattack。
+​        libc是2.23。
+​        
+​        保护全开，pie是个麻烦点。
+​        逆向一下，这个程序的逻辑不算很复杂，但是也需要逆清楚。
+​        
+​        程序在ptr+3的地方保存了一个有着free函数功能的指针，并且当delete str时，也是调用这个指
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/03/16/week3-2.1/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
         
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
@@ -615,47 +660,6 @@ Level2​        到第
                     
                     <p class="pull-right readMore">
                         <a href="/2022/03/03/pwn.college_ProgramMisuse/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2022/02/28/pwn.college_Sandboxing/">Sandboxing</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2022-02-28T13:59:27.326Z" itemprop="datePublished">
-          2022-02-28
-      </time>
-    
-    
-    | 
-    <a href='/tags/pwncollege/'>pwncollege</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-     
-
-Level1​        首先考察chroot
-​        因为程序在将根目录设置为/jail的时候并没有切换当前工作目录为/jail，所以我们实际上还是在/目录，因此可以直接通过argv[1]    读取flag。
-​        执行脚本的时候需要添加cwd参数，使其工作目录为/
-Level2123shellcode = asm(shellcraft.readfile(&#x27;flag&#x27;,1
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2022/02/28/pwn.college_Sandboxing/">Read More...</a>
                     </p>
                     
                 </div>
