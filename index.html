@@ -335,6 +335,48 @@ add​        最多申请三个house。并且在申请house开始为每个house
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
                 <div class="col-md-4">
+                    <h3><a href="/2022/04/10/heap_learning_io_file（未完成）/">IO_FILE学习</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-04-10T07:44:00.000Z" itemprop="datePublished">
+          2022-04-10
+      </time>
+    
+    
+    | 
+    <a href='/tags/io-file/'>io_file</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+     
+
+
+
+overview大致原理​        glibc定义了_IO_FILE这样一个结构体来管理io file。io_file结构体里定义了一堆相关的变量，但是真正关键的是其中包含的_IO_FILE_plus结构。 libc2.23 版本下，32 位的 vtable 偏移为 0x94，64 位偏移为 0xd8。
+​        结构源码如下：
+12345struct _IO_FILE_plus&#123;    _I
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/04/10/heap_learning_io_file（未完成）/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
                     <h3><a href="/2022/04/10/ciscn_2021_silverwolf/">SilverWolf</a></h3>
                     <span>
                         <span class="post-meta">
@@ -620,48 +662,6 @@ readd​        size不能大于0x78。
                     
                     <p class="pull-right readMore">
                         <a href="/2022/04/06/ciscn_2021_lonelywolf/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2022/04/06/sum_pwn知识点总结/">pwn知识点总结</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2022-04-05T16:00:00.000Z" itemprop="datePublished">
-          2022-04-06
-      </time>
-    
-    
-    | 
-    <a href='/tags/summary/'>summary</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-     
-
-[TOC]
-stack控制程序执行流栈溢出ret2syscall​        利用程序自带的gadget，构造syscall。
-​        对应板子
-ret2libc/csu​        比较模版化，值得一题的就是，system()的执行要求此时栈是16位对齐的，所以如果getshell失败不妨多ret一次。        
-ret2shellcode​        在rwx的内存空间(不一定是栈）上写s
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2022/04/06/sum_pwn知识点总结/">Read More...</a>
                     </p>
                     
                 </div>
