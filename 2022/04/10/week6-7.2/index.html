@@ -235,7 +235,7 @@
         </div>
         <div class="col-md-8 col-md-offset-2">
       		
-    <div id="aplayer-vSPQgWJC" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div> 
+    <div id="aplayer-FXDypoWr" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div> 
 
 
 
@@ -285,25 +285,32 @@
 <p>​        有一个比较奇怪的点，就是这道题我没有猜错的话最早的libc版本应该是libc-2.23.so，但是攻防世界提供的版本是2.19，虽然从io_file利用的角度来看两者其实区别挺大的吗，但是由于这个题目本身的限制非常之多，以至于两个版本实则没有什么大致的区别，并且因为攻防世界的libc没有调试符号，所以我索性就用2.23来做了。</p>
 <p>​        在之前的步骤里我们获得了一个unsortedbin，这也是为什么说这道题的限制非常多，因为我们可以利用的也就只有这一个bin了，所以一般的堆利用方法几乎都失效了。</p>
 <p>​        但是好巧不巧，我们就是能通过这一个bin来实现对于<code>io_list_all</code>的劫持。</p>
+<p>​        但是在考虑这道题情况下的fsop前，我们需要先复习一下普通情况下的fsop，搞清楚几个链表节点以及结构体之间的关系。</p>
+<p>​        实际上我们只需要劫持<code>io_list_all</code>，并把它指向我们伪造的结构体。fake struct需要绕过一些比较简单的检测，然后在结构体内部的字段伪造vtable，并将vtable指向的地方修改为我们想要的函数地址。</p>
 <h3><span id="劫持io_list_all">劫持io_list_all</span></h3><p>​        首先我们需要劫持<code>io_list_all</code>，使它指向我们可以控制的内存区域。</p>
 <p>​        这里会用到<code>unsorted bin attack</code>。将unsorted bin chunk的bk指向<code>_IO_list_all - 0x10</code>，那么就能通过 <code>bck-&gt;fd = unsorted_chunks (av);</code>使<code>io_list_all</code>指向<code>&amp;main_arena+88</code>        。<code>_IO_list_all</code>是位于libc中的全局变量，所以它的地址可以直接通过leak得到。</p>
 <p>​        然后需要伪造结构体，这里面的逻辑比较抽象，大部分原因是我对于这种large bin或者smallbin以及一些结构，还有堆上chunk分配流程的不熟悉，但是我也只能象征性地去理解了。</p>
-<p>​        首先一个比较关键的前置条件是，我们将使<code>io_list_all</code>指向了<code>&amp;main_arena+88</code>。然后非常灵性地，在<code>&amp;main_arena+88</code>指向的<code>_IO_FILE_plus </code>结构体偏移0x68的地方，正好是一个smallchunk的地址。</p>
-<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-04-11%20%E4%B8%8B%E5%8D%884.20.44.png" alt="截屏2022-04-11 下午4.20.44"></p>
-<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-04-11%20%E4%B8%8B%E5%8D%884.21.27.png" alt="截屏2022-04-11 下午4.21.27">        </p>
-<p>​        具体的原理这里暂时不分析。</p>
-<p>​        总结以上条件，就可以试图伪造一个<code>_IO_FILE_plus </code>结构体了。</p>
 <p>​        最后看一眼伪造前的heap</p>
 <p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-04-11%20%E4%B8%8B%E5%8D%884.31.34.png" alt="截屏2022-04-11 下午4.31.34"></p>
 <p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-04-11%20%E4%B8%8B%E5%8D%884.33.06.png" alt="截屏2022-04-11 下午4.33.06">        </p>
+<h3><span id="伪造结构体">伪造结构体</span></h3><p>​            对于unsorted bin的bk指针，我们直接覆盖为<code>_IO_list_all_addr - 0x10</code>。</p>
+<p>​        按照前面的分析，当我们将unsorted bin取出的时候，就会触发<code>bck-&gt;fd =unsortedbin(av)</code>操作。所以还是回到之前非常抽象的利用方式上，unsorted bin的取出环节实际是通过调用<code>_IO_flush_all_lockp</code>实现的，我们退出程序时，程序会自动调用这个函数，此时我们的<code>_IO_list_all_addr </code>就被指向<code>&amp;main_arena + 88</code>，也就是此时已经成功地将<code>io_list_all</code>劫持，我们只需要在<code>&amp;main_arena + 88</code>指向的地址中构造fake struct就行。</p>
+<p>​        虽然但是，程序并没有给我们机会让我们在&amp;main_arena + 88所指向的地方伪造chunk。</p>
+<p>​        <img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-04-11%20%E4%B8%8B%E5%8D%885.09.35.png" alt="截屏2022-04-11 下午5.09.35"></p>
+<p>​        所以我们选择利用下一个节点，这个节点在结构体中的偏移为0x68，也就是<code>&amp;main_arena + 88 + 0x68</code>，正好也是smallbin[6]的位置，所以我们希望能够伪造这个small chunk作为fake struct。</p>
+<p>​        当unsortedbin size为0x60，当unsortedbin被取出，正好就会被放到这个0x60（？？？？？？？？）大小的small chunk中，我们所覆盖的fake struct也就生效了。</p>
+<p>​        我只想问一个问题，为什么会有0x60的small chunk？</p>
 <p>​        先用垃圾数据把原本的chunk填充。然后为了伪造fake chunk，首先要把上一个chunk的price结构体还原。    </p>
-<p>​        然后溢出unsortedbin，这里被溢出的chunk就是之前利用house of orange从top chunk获得的unsortedbin chunk。将chunk的size改为0x61.</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">payload = <span class="string">b&#x27;a&#x27;</span> * <span class="number">0x400</span> + p64(<span class="number">0</span>) + p64(<span class="number">0x21</span>) + p64(<span class="number">0x1f00000000</span>) + p64(<span class="number">0</span>)</span><br><span class="line">payload = <span class="string">b&#x27;/bin/sh\x00&#x27;</span> + p64(<span class="number">0x61</span>)</span><br></pre></td></tr></table></figure>
+<p>​        然后溢出unsortedbin，这里被溢出的chunk就是之前利用house of orange从top chunk获得的unsortedbin chunk。将chunk的size改为0x61。</p>
+<p>​        接着填充bk，劫持指针。然后就是具体的fake struct的内容，首先需要绕过检测，具体可以看FSOP原理。</p>
+<p>​        然后在fake struct填上vtable的地址，这里是heap+0x510。这个偏移的计算就是此时vtable相对于heap base的偏移加上0x20。也就是这个填入system的地址就是vtable addr指向的地方。</p>
+<p>​        我佛慈悲。        </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">payload = <span class="string">b&#x27;a&#x27;</span> * <span class="number">0x400</span> + p64(<span class="number">0</span>) + p64(<span class="number">0x21</span>) + p64(<span class="number">0x1f00000000</span>) + p64(<span class="number">0</span>)</span><br><span class="line">payload = <span class="string">b&#x27;/bin/sh\x00&#x27;</span> + p64(<span class="number">0x61</span>)</span><br><span class="line">payload += p64(<span class="number">0</span>) + p64(_IO_list_all_addr - <span class="number">0x10</span>)<span class="comment">#modify bk to  _IO_list_all_addr - 0x10 </span></span><br><span class="line">payload += p64(<span class="number">0</span>) + p64(<span class="number">1</span>) <span class="comment">#_IO_write_base &lt; _IO_write_ptr</span></span><br><span class="line">payload = payload.ljust(<span class="number">0xc0</span>,<span class="string">b&#x27;\x00&#x27;</span>) </span><br><span class="line">payload += p32(<span class="number">0</span>) <span class="comment">#_mode&lt;=0</span></span><br><span class="line">payload += p32(<span class="number">0</span>) + p64(<span class="number">0</span>) * <span class="number">2</span></span><br><span class="line">payload += p64(vtable_addr)<span class="comment">#a pointer</span></span><br><span class="line">payload += p64(<span class="number">0</span>) * <span class="number">3</span> </span><br><span class="line">payload += p64(system_addr)<span class="comment">#vtable + offset</span></span><br><span class="line">edit(<span class="built_in">len</span>(payload),payload)</span><br></pre></td></tr></table></figure>
 
 
 
-<p>​            对于unsorted bin的bk指针，我们直接覆盖为<code>_IO_list_all_addr - 0x10</code></p>
-<p>​</p>
+
+
 
             <div class="clearfix"></div>
             <hr class="nogutter">
