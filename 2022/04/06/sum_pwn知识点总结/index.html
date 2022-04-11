@@ -95,8 +95,6 @@
 				    
 				    <li><a href="/categories/HEAP-Unsortedbin/" class="animsition-link">HEAP - Unsortedbin<small>(1)</small></a></li>
 				    
-				    <li><a href="/categories/HEAP-io-file/" class="animsition-link">HEAP - io_file<small>(1)</small></a></li>
-				    
 				    <li><a href="/categories/MESS/" class="animsition-link">MESS<small>(18)</small></a></li>
 				    
 				    <li><a href="/categories/OTHER-IO-FILE/" class="animsition-link">OTHER - IO FILE<small>(1)</small></a></li>
@@ -124,6 +122,8 @@
 				    <li><a href="/categories/STACK-ret2shellcode/" class="animsition-link">STACK - ret2shellcode<small>(1)</small></a></li>
 				    
 				    <li><a href="/categories/STACK-sandbox/" class="animsition-link">STACK - sandbox<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/STACk/" class="animsition-link">STACk<small>(1)</small></a></li>
 				    
 				    <li><a href="/categories/mess/" class="animsition-link">mess<small>(2)</small></a></li>
 				    
@@ -235,7 +235,7 @@
         </div>
         <div class="col-md-8 col-md-offset-2">
       		
-    <div id="aplayer-aNYfKgkl" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div> 
+    <div id="aplayer-oURYOBwM" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div> 
 
 <p>[TOC]</p>
 <h1><span id="stack">stack</span></h1><h2><span id="控制程序执行流">控制程序执行流</span></h2><h3><span id="栈溢出">栈溢出</span></h3><h4><span id="ret2syscall">ret2syscall</span></h4><p>​        利用程序自带的gadget，构造syscall。</p>
@@ -277,7 +277,12 @@
 <h4><span id="mmap-leak">mmap() leak</span></h4><p>​        申请一个巨大的chunk，大到需要利用到<code>mmap()</code>，然后这个申请的范围会与libc加载的地址有一个并不大的固定偏移，我们可以通过leak这个chunk的地址来获得libc的基址。</p>
 <h4><span id="other">other</span></h4><p>​    就是看题的特性（其实大多数题都是靠这个吧）</p>
 <h4><span id></span></h4><h3><span id="getshell">getshell</span></h3><h4><span id="修改hook">修改hook</span></h4><p>​        改<code>malloc_hook</code>、<code>free_hook</code>等</p>
-<h4><span id="修改got">修改got</span></h4><h5><span id></span></h5><p>​</p>
+<h4><span id="修改got">修改got</span></h4><h3><span id="特殊的利用方式">特殊的利用方式</span></h3><h4><span id="tcache">Tcache</span></h4><h5><span id="破坏tcache-头">破坏tcache 头</span></h5><p>（tcache管理chunk）。在管理结构被破坏后，tcache就基本失效了，之后free的chunk都会被放入原本的链表，就可以通过比如申请unsorted bin来leak的方式更进一步利用。</p>
+<h5><span id="劫持tcache-fd">劫持tcache fd</span></h5><p>​        2.29之前的libc不包括对于tcache bin fd位的检测，所以如果有堆溢出漏洞或者uaf，就可以任意地址写，不需要构造什么东西，也没有fastbin那样的对于chunk size合法性的检测。</p>
+<p>​        2.29及之后也只是在tcache bin的bk位增加了检测的key，如果有比较好用的堆溢出的话还是能直接覆盖这个bk为任意垃圾数据而绕过检测。</p>
+<h4><span id="house-of-orange">house of orange</span></h4><p>​        在没有free的情况下获得unsorted bin的方式。利用堆溢出之类的漏洞覆盖top chunk size，然后申请一个大于修改后的top chunk size的chunk，由于堆分配的机制，在绕过一系列检测后，堆会以brk的方式拓展，并把修改后size的top chunk放入unsorted bin。</p>
+<h4><span id="unsorted-bin-attack">unsorted bin attack</span></h4><p>​        </p>
+<p>​</p>
 
             <div class="clearfix"></div>
             <hr class="nogutter">
