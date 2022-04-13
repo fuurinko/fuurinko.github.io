@@ -83,13 +83,13 @@
 				    
 				    <li><a href="/categories/HEAP-House-Of-Force/" class="animsition-link">HEAP - House Of Force<small>(3)</small></a></li>
 				    
-				    <li><a href="/categories/HEAP-House-Of-Orange/" class="animsition-link">HEAP - House Of Orange<small>(1)</small></a></li>
+				    <li><a href="/categories/HEAP-House-Of-Orange/" class="animsition-link">HEAP - House Of Orange<small>(2)</small></a></li>
 				    
 				    <li><a href="/categories/HEAP-Off-By-One/" class="animsition-link">HEAP - Off By One<small>(1)</small></a></li>
 				    
 				    <li><a href="/categories/HEAP-Seccomp/" class="animsition-link">HEAP - Seccomp<small>(1)</small></a></li>
 				    
-				    <li><a href="/categories/HEAP-Tcache/" class="animsition-link">HEAP - Tcache<small>(1)</small></a></li>
+				    <li><a href="/categories/HEAP-Tcache/" class="animsition-link">HEAP - Tcache<small>(3)</small></a></li>
 				    
 				    <li><a href="/categories/HEAP-Unlink/" class="animsition-link">HEAP - Unlink<small>(2)</small></a></li>
 				    
@@ -123,7 +123,7 @@
 				    
 				    <li><a href="/categories/STACK-sandbox/" class="animsition-link">STACK - sandbox<small>(1)</small></a></li>
 				    
-				    <li><a href="/categories/STACk/" class="animsition-link">STACk<small>(1)</small></a></li>
+				    <li><a href="/categories/STACk-OTHERS/" class="animsition-link">STACk - OTHERS<small>(1)</small></a></li>
 				    
 				    <li><a href="/categories/mess/" class="animsition-link">mess<small>(2)</small></a></li>
 				    
@@ -235,7 +235,7 @@
         </div>
         <div class="col-md-8 col-md-offset-2">
       		
-    <div id="aplayer-oURYOBwM" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div> 
+    <div id="aplayer-MjrKOAUO" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div> 
 
 <p>[TOC]</p>
 <h1><span id="stack">stack</span></h1><h2><span id="控制程序执行流">控制程序执行流</span></h2><h3><span id="栈溢出">栈溢出</span></h3><h4><span id="ret2syscall">ret2syscall</span></h4><p>​        利用程序自带的gadget，构造syscall。</p>
@@ -249,7 +249,8 @@
 <p>​        无relro的情况只需要伪造<code>.dynamic</code>节中字符串表地址为目的地址就行。比如将<code>read()</code>字符串替换为<code>system()</code>字符串，然后读入<code>&quot;/bin/sh&quot;</code></p>
 <p>​        partial relro使得<code>.dynamic</code>只读，那么就需要伪造重定位表。</p>
 <p>​        full relro的话，就更加困难了，是需要利用到<code>dt_bug</code>找到<code>link_map</code>，再通过<code>link_map</code>找到<code>dl_runtime_resolve</code>函数的地址，然后再进行常规的利用。相当之复杂。</p>
-<p>​        </p>
+<h4><span id="ret2vsyscall">ret2vsyscall</span></h4><p>​        当pie开启，我们如果能控制程序执行流，但是没有合适的gadget调整栈帧的话，可以利用位置不受pie影响的vsyscall作为ret gadget使用。</p>
+<p>​        vsyscall在程序中地址是固定的<code>0xffffffffff600000-0xffffffffff601000</code>,一般使用<code>0xffffffffff600007</code>等。</p>
 <h3><span id="泄露内存">泄露内存</span></h3><h4><span id="格式化字符串">格式化字符串</span></h4><h5><span id="泄露任意地址">泄露任意地址</span></h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">--------获取栈变量对应的地址------------</span><br><span class="line">%n<span class="variable">$p</span> <span class="comment">#输出栈上第n+1个格式化字符串输出参数</span></span><br><span class="line">--------获取栈变量对应的字符串----------</span><br><span class="line">%n<span class="variable">$s</span><span class="comment">#输出栈上第n+1个格式化字符串参数对应的字符串</span></span><br><span class="line">--------获取任意地址内容---------------</span><br><span class="line">addr%n<span class="variable">$s</span>	</span><br></pre></td></tr></table></figure>
 
 <h6><span id="extra">Extra:</span></h6><p>​        对于格式化字符串地址偏移的计算，32位和64位并不完全相同，32位参数完全由栈传递，所以参数在栈上出现的位次即是偏移（要减去返回地址占的位次），但是64位传参前六位是由寄存器传参，因此在栈上找到的偏移需要加6。</p>
@@ -272,8 +273,20 @@
 <h2><span id="逆向">逆向</span></h2><p>​        一般来说大多数菜单题都会申请的比如说note定义结构体，当然也有那种纯纯利用malloc出的ptr进行读写操作的，但是比较少。</p>
 <p>​        首先需要利用眼力，想 象 力和动调逆出这个结构体里的字段，以及其占用的size，在内存空间的布局。如果足够闲也可以在ida中新建结构体，然后将题目中的结构体与你创建的结构体关联起来，这样伪代码的可读性又会增加很多。</p>
 <p>​        很多题都会在结构体中保存note content的指针，这个指针也是我们解题的关键所在。其他乱七八糟的东西就看出题人是不是爱整活了。</p>
+<p>​        但是关注于堆块管理其实很关键，因为不同的管理系统对应着不同的指针覆盖可能性以及不同的free，show，edit模式。</p>
+<p>一般目前我做到过的堆题关于指针管理的操作大概有这几类：</p>
+<ol>
+<li>不申请任何结构体，不对指针做任何管理，直接使用malloc分配的heap段指针进行增删查。</li>
+<li>不申请任何结构体，但是会把malloc分配的heap段指针保存于bss段。</li>
+<li>对于每个单位chunk，申请具体size的heap段结构体，一般来说地址是与对应chunk相邻，通常保存了对应chunk的size以及data ptr。</li>
+<li>对于每个单位chunk，申请具体size的heap段结构体，并且结构体比较复杂，通常含有几个指针，有时甚至会自己实现一个链表管理系统。</li>
+</ol>
 <h2><span id="利用">利用</span></h2><h3><span id="修改指针">修改指针</span></h3><p>​        </p>
-<h4><span id="uaf">UAF</span></h4><h5><span id="fastbintcahce-double-free">fastbin（Tcahce） double free</span></h5><h5><span id="unlink">unlink</span></h5><h4><span id="offbyone">offbyone</span></h4><h5><span id="chunk-overlapping">chunk overlapping</span></h5><h5><span id="house-of-en啥啥啥">house of en啥啥啥</span></h5><h4><span id="堆溢出">堆溢出</span></h4><h5><span id="house-of-force">house of force</span></h5><h3><span id="内存泄露">内存泄露</span></h3><h4><span id="unsortedbin-leak">unsortedbin leak</span></h4><p>​        当unsortedbin双向循环链表中只有一个bin时，fd会指向<code>main_arena</code>的内部，这样我们就可以通过leak这个bin的相关地址来获得<code>main_arena</code>的地址，而<code>malloc_hook</code>与<code>main_arena</code>有固定的偏移，一般情况为0x10，也就算是获得了<code>malloc_hook</code>的地址。</p>
+<h4><span id="uaf">UAF</span></h4><h5><span id="fastbintcahce-double-free">fastbin（Tcahce） double free</span></h5><p>​        fake chunk所处的内存区域需要满足chunk size合法。可以利用字节错位构造。</p>
+<h5><span id="unlink">unlink</span></h5><p>​        布置fastbin的bk和fd，分别覆盖为 <code>target - 0x18</code>，<code>target - 0x10</code>，触发unlink后就能使为<code>target </code>指向<code>target - 0x18</code>        。32位需改机器字长。</p>
+<h4><span id="offbyone">offbyone</span></h4><h5><span id="chunk-overlapping">chunk overlapping</span></h5><p>​        一般是通过chunk overlapping先构造出uaf，再unlink劫持指针。</p>
+<h5><span id="house-of-en啥啥啥">house of en啥啥啥</span></h5><p>​        off by one中修改prev_inuse的情况。</p>
+<h4><span id="堆溢出">堆溢出</span></h4><h5><span id="house-of-force">house of force</span></h5><h3><span id="内存泄露">内存泄露</span></h3><h4><span id="unsortedbin-leak">unsortedbin leak</span></h4><p>​        当unsortedbin双向循环链表中只有一个bin时，fd会指向<code>main_arena</code>的内部，这样我们就可以通过leak这个bin的相关地址来获得<code>main_arena</code>的地址，而<code>malloc_hook</code>与<code>main_arena</code>有固定的偏移，一般情况为0x10，也就算是获得了<code>malloc_hook</code>的地址。</p>
 <h4><span id="mmap-leak">mmap() leak</span></h4><p>​        申请一个巨大的chunk，大到需要利用到<code>mmap()</code>，然后这个申请的范围会与libc加载的地址有一个并不大的固定偏移，我们可以通过leak这个chunk的地址来获得libc的基址。</p>
 <h4><span id="other">other</span></h4><p>​    就是看题的特性（其实大多数题都是靠这个吧）</p>
 <h4><span id></span></h4><h3><span id="getshell">getshell</span></h3><h4><span id="修改hook">修改hook</span></h4><p>​        改<code>malloc_hook</code>、<code>free_hook</code>等</p>
@@ -281,7 +294,15 @@
 <h5><span id="劫持tcache-fd">劫持tcache fd</span></h5><p>​        2.29之前的libc不包括对于tcache bin fd位的检测，所以如果有堆溢出漏洞或者uaf，就可以任意地址写，不需要构造什么东西，也没有fastbin那样的对于chunk size合法性的检测。</p>
 <p>​        2.29及之后也只是在tcache bin的bk位增加了检测的key，如果有比较好用的堆溢出的话还是能直接覆盖这个bk为任意垃圾数据而绕过检测。</p>
 <h4><span id="house-of-orange">house of orange</span></h4><p>​        在没有free的情况下获得unsorted bin的方式。利用堆溢出之类的漏洞覆盖top chunk size，然后申请一个大于修改后的top chunk size的chunk，由于堆分配的机制，在绕过一系列检测后，堆会以brk的方式拓展，并把修改后size的top chunk放入unsorted bin。</p>
-<h4><span id="unsorted-bin-attack">unsorted bin attack</span></h4><p>​        </p>
+<h4><span id="unsorted-bin-attack">unsorted bin attack</span></h4><p>​        当unsorted bin被取出时，会执行以下操作：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">unsorted_chunks (av)-&gt;bk = bck;</span><br><span class="line"> = unsorted_chunks (av);</span><br></pre></td></tr></table></figure>
+
+<p>​        </p>
+<p>如果将其bk劫持，这样<code>bck-&gt;fd</code>就可以被修改为<code>unsorted_chunks (av)</code>，也就是任意地址+0x10 =<code>unsorted_chunks (av)</code>。 </p>
+<h4><span id="io_file">IO_FILE</span></h4><p>​        因为利用条件比较复杂，所以目前也只做过经典例题。</p>
+<h5><span id="劫持vtable">劫持vtable</span></h5><p>​        根据libc版本不同，利用方式也不同，2.23及以后的版本只能伪造vtable，之前的话可以直接修改。</p>
+<h5><span id="fsop">fsop</span></h5><p>​        劫持<code>io_list_all</code>指针，使其指向fake chunk，在chunk中构造vtable。</p>
+<p>​        </p>
 <p>​</p>
 
             <div class="clearfix"></div>

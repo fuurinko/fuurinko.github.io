@@ -80,13 +80,13 @@
 				    
 				    <li><a href="/categories/HEAP-House-Of-Force/" class="animsition-link">HEAP - House Of Force<small>(3)</small></a></li>
 				    
-				    <li><a href="/categories/HEAP-House-Of-Orange/" class="animsition-link">HEAP - House Of Orange<small>(1)</small></a></li>
+				    <li><a href="/categories/HEAP-House-Of-Orange/" class="animsition-link">HEAP - House Of Orange<small>(2)</small></a></li>
 				    
 				    <li><a href="/categories/HEAP-Off-By-One/" class="animsition-link">HEAP - Off By One<small>(1)</small></a></li>
 				    
 				    <li><a href="/categories/HEAP-Seccomp/" class="animsition-link">HEAP - Seccomp<small>(1)</small></a></li>
 				    
-				    <li><a href="/categories/HEAP-Tcache/" class="animsition-link">HEAP - Tcache<small>(1)</small></a></li>
+				    <li><a href="/categories/HEAP-Tcache/" class="animsition-link">HEAP - Tcache<small>(3)</small></a></li>
 				    
 				    <li><a href="/categories/HEAP-Unlink/" class="animsition-link">HEAP - Unlink<small>(2)</small></a></li>
 				    
@@ -120,7 +120,7 @@
 				    
 				    <li><a href="/categories/STACK-sandbox/" class="animsition-link">STACK - sandbox<small>(1)</small></a></li>
 				    
-				    <li><a href="/categories/STACk/" class="animsition-link">STACk<small>(1)</small></a></li>
+				    <li><a href="/categories/STACk-OTHERS/" class="animsition-link">STACk - OTHERS<small>(1)</small></a></li>
 				    
 				    <li><a href="/categories/mess/" class="animsition-link">mess<small>(2)</small></a></li>
 				    
@@ -249,6 +249,94 @@
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
                 <div class="col-md-4">
+                    <h3><a href="/2022/04/12/heap_learning_Tcache利用总结/">Tcache利用总结</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-04-12T09:47:45.264Z" itemprop="datePublished">
+          2022-04-12
+      </time>
+    
+    
+    | 
+    <a href='/tags/learning/'>learning</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+     
+
+​        最近碰到的tcache比较多，人都给整傻了。故总结整理一下。
+tcache chunk的freefree一个普通的tcache bin，一般情况下会将fd和bk位置为0和tcache struct data ptr。
+这是一个普通的chunk
+free它。
+
+可以看到fd位为tcache strut data的指针。bk位为0（2.29的话也有key）
+![截屏2022-04-12 下午5.45.21]
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/04/12/heap_learning_Tcache利用总结/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2022/04/12/week7-2.1md/">攻防世界 - one_man_army</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-04-12T02:02:09.112Z" itemprop="datePublished">
+          2022-04-12
+      </time>
+    
+    
+    | 
+    <a href='/tags/xctf/'>xctf</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+     
+
+
+
+overview
+libc是2.27。
+逆向增删查改。
+add没有什么特别的地方，纯纯的指针操作。没有结构体，没有保存指针到bss上。但是会对输入的size取低九位，虽然可以输入15位的size，但是生效的只有九位。所以只能add出 一个chunk。有点lonely wolf的味道。
+12345678printf(&quot;Size: &quot;); read(0, size_4, 0xFuLL); size_2
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/04/12/week7-2.1md/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
                     <h3><a href="/2022/04/11/week7-1.1/">攻防世界 - 100levels</a></h3>
                     <span>
                         <span class="post-meta">
@@ -333,12 +421,17 @@ overview大致原理​        glibc定义了_IO_FILE这样一个结构体来管
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
                 <div class="col-md-4">
-                    <h3><a href="/2022/04/10/week6-7.2/"></a></h3>
+                    <h3><a href="/2022/04/10/week6-7.2/">攻防世界 - house of orange</a></h3>
                     <span>
                         <span class="post-meta">
       <time datetime="2022-04-10T09:02:58.445Z" itemprop="datePublished">
           2022-04-10
       </time>
+    
+    
+    | 
+    <a href='/tags/heap/'>heap</a>
+    
     
 </span>
                     </span>
@@ -346,11 +439,14 @@ overview大致原理​        glibc定义了_IO_FILE这样一个结构体来管
                 <div class="col-md-8">
                     <p>
                       
-                        overview
+                        
+     
+
+overview
 逆向​        没有free，只有增查改。
 ​        这个题程序逻辑比较简单，主要是利用相对比较复杂。
 add​        最多申请三个house。并且在申请house开始为每个house创建了0x10 size的结构体，只有两个字段，size和content ptr。在输入name的阶段会把name读入content ptr指向的地址。
-12printf(&quot;Name :&quot;);re
+12printf(&quot;Name :&q
                       
                     </p>
                     
@@ -566,93 +662,6 @@ re123456ssize_t vuln()&#123;  char buf[40]; // [esp+0h] [ebp-28h] BYREF  return 
                     
                     <p class="pull-right readMore">
                         <a href="/2022/04/08/幻想曲-02-春夜/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2022/04/08/pwn.college_RaceCondition/">RaceCondition.md</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2022-04-07T17:11:22.484Z" itemprop="datePublished">
-          2022-04-08
-      </time>
-    
-    
-    | 
-    <a href='/tags/pwncollege/'>pwncollege</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-     
-
-
-
-
-
-0​        感觉pwncollege的堆题意思并不是很大，直接做条件竞争娱乐一下。
-level1​        笑死了，根本没学过，不会做。
-
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2022/04/08/pwn.college_RaceCondition/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2022/04/07/ciscn_2019_double/">double</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2022-04-07T12:38:02.382Z" itemprop="datePublished">
-          2022-04-07
-      </time>
-    
-    
-    | 
-    <a href='/tags/ciscn/'>ciscn</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-			
-				console.error("ReferenceError: value is not defined");
-			     
-
-overview
-​            可以改表
-re​        这个题如果只看ida的话其实感觉挺乱的，所以以动调为主会比较好。在理清了程序运行的一些逻辑后再反过来看伪代码会清晰很多。
-add1head_ptr = (unsigned int *)malloc(0x18uLL);
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2022/04/07/ciscn_2019_double/">Read More...</a>
                     </p>
                     
                 </div>
