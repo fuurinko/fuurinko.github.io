@@ -72,9 +72,9 @@
 				    
 				    <li><a href="/categories/Generalization/" class="animsition-link">Generalization<small>(2)</small></a></li>
 				    
-				    <li><a href="/categories/HEAP/" class="animsition-link">HEAP<small>(1)</small></a></li>
+				    <li><a href="/categories/HEAP-Fastbin-Attack/" class="animsition-link">HEAP - Fastbin Attack<small>(10)</small></a></li>
 				    
-				    <li><a href="/categories/HEAP-Fastbin-Attack/" class="animsition-link">HEAP - Fastbin Attack<small>(9)</small></a></li>
+				    <li><a href="/categories/HEAP-Heap/" class="animsition-link">HEAP - Heap<small>(1)</small></a></li>
 				    
 				    <li><a href="/categories/HEAP-Heap-overflow/" class="animsition-link">HEAP - Heap overflow<small>(1)</small></a></li>
 				    
@@ -245,6 +245,51 @@
 
 <section id="intro">
     <div class="container">
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2022/01/29/pwn.college_Assembly_Refresher/">Assembly_Refresher</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-01-29T13:51:29.070Z" itemprop="datePublished">
+          2022-01-29
+      </time>
+    
+    
+    | 
+    <a href='/tags/pwncollege/'>pwncollege</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+     
+
+
+
+Level1需要设置*rdi = 0x1337，
+如果是按照目的意思程序的汇编代码长这样子：
+12345.section .text    .intel_syntax noprefix    .global _start    _start :        mov rdi, 0x1337
+
+但是可以直接用pwntools传输mov rdi, 0x1337这一句。
+12345678910111213#!/usr/bi
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/01/29/pwn.college_Assembly_Refresher/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
         
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
@@ -624,54 +669,6 @@ Seccomp的模式以及参数比
                     
                     <p class="pull-right readMore">
                         <a href="/2021/11/11/stack_learning_Seccomp机制学习/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2021/11/11/mess_pwndocker的pwn题体验（下）/">pwndocker的pwn题体验（下</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2021-11-10T20:04:03.336Z" itemprop="datePublished">
-          2021-11-11
-      </time>
-    
-    
-    | 
-    <a href='/tags/mess/'>mess</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-     
-
-0）​        哈哈，还是连续剧，我也想不到捏。我也不想捏。
-1）问题​        pwndocker体验了快一周，目前来说主要问题有这几个：
-
-启动tmux进行调试时机器发热严重，风扇狂转
-
-挂载文件夹内文件不同步
-
-快照的制作相对麻烦（时间久，步骤多）
-
-打开需要输入命令，有点烦。
-​    想了怪久的，就想到这三点，第三点纯属鸡蛋里挑骨头，主要pwndocker体验确实比较优雅，为了美观用vim编辑exp
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2021/11/11/mess_pwndocker的pwn题体验（下）/">Read More...</a>
                     </p>
                     
                 </div>
