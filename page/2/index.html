@@ -72,7 +72,7 @@
 				    
 				    <li><a href="/categories/CSAPP-LAB/" class="animsition-link">CSAPP LAB<small>(1)</small></a></li>
 				    
-				    <li><a href="/categories/Generalization/" class="animsition-link">Generalization<small>(2)</small></a></li>
+				    <li><a href="/categories/Generalization/" class="animsition-link">Generalization<small>(3)</small></a></li>
 				    
 				    <li><a href="/categories/HEAP-Fastbin-Attack/" class="animsition-link">HEAP - Fastbin Attack<small>(10)</small></a></li>
 				    
@@ -412,7 +412,7 @@ readd​        size不能大于0x78。
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
                 <div class="col-md-4">
-                    <h3><a href="/2022/04/06/sum_pwn知识点总结/">pwn知识点总结</a></h3>
+                    <h3><a href="/2022/04/06/sum_stack_summary/">stack知识点总结</a></h3>
                     <span>
                         <span class="post-meta">
       <time datetime="2022-04-05T16:00:00.000Z" itemprop="datePublished">
@@ -433,16 +433,17 @@ readd​        size不能大于0x78。
                         
      
 
-[TOC]
+
+
 stack控制程序执行流栈溢出ret2syscall​        利用程序自带的gadget，构造syscall。
 ​        对应板子
 ret2libc/csu​        比较模版化，值得一题的就是，system()的执行要求此时栈是16位对齐的，所以如果getshell失败不妨多ret一次。        
-ret2shellcode​        在rwx的内存空间(不一定是栈）上写s
+ret2shellcode​        在rwx的内存空间(不一定是栈）上写shell
                       
                     </p>
                     
                     <p class="pull-right readMore">
-                        <a href="/2022/04/06/sum_pwn知识点总结/">Read More...</a>
+                        <a href="/2022/04/06/sum_stack_summary/">Read More...</a>
                     </p>
                     
                 </div>

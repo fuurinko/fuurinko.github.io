@@ -72,7 +72,7 @@
 				    
 				    <li><a href="/categories/CSAPP-LAB/" class="animsition-link">CSAPP LAB<small>(1)</small></a></li>
 				    
-				    <li><a href="/categories/Generalization/" class="animsition-link">Generalization<small>(2)</small></a></li>
+				    <li><a href="/categories/Generalization/" class="animsition-link">Generalization<small>(3)</small></a></li>
 				    
 				    <li><a href="/categories/HEAP-Fastbin-Attack/" class="animsition-link">HEAP - Fastbin Attack<small>(10)</small></a></li>
 				    
@@ -605,16 +605,16 @@ stackret2shellcode123456789101112from pwn import*from LibcSearcher import LibcSe
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
                 <div class="col-md-4">
-                    <h3><a href="/2022/03/20/stack_ret2csu/">jarvisoj_level5</a></h3>
+                    <h3><a href="/2022/03/21/sum_pwn知识点总结/">heap知识点总结</a></h3>
                     <span>
                         <span class="post-meta">
-      <time datetime="2022-03-19T17:15:06.878Z" itemprop="datePublished">
-          2022-03-20
+      <time datetime="2022-03-21T07:55:07.636Z" itemprop="datePublished">
+          2022-03-21
       </time>
     
     
     | 
-    <a href='/tags/ret2csu/'>ret2csu</a>
+    <a href='/tags/summary/'>summary</a>
     
     
 </span>
@@ -626,13 +626,15 @@ stackret2shellcode123456789101112from pwn import*from LibcSearcher import LibcSe
                         
      
 
-jarvisoj_level5​        这个题吧，我好像以前做过，是个纯纯的ret2csu的板子题。
-12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364from pwn import*from LibcSearcher impo
+[TOC]
+Heap堆题的内存泄露和修改其实是结合在一起的，所以也不好分开讨论
+逆向​        一般来说大多数菜单题都会申请的比如说note定义结构体，当然也有那种纯纯利用malloc出的ptr进行读写操作的，但是比较少。
+​        首先需要利用眼力，想 象 力和动调逆出这个结构体里的字段，以及其占用的size，在内存空间的布局。如果足够闲也可以在ida中新建结构体，然后将题目中的结构体与你创建的结构体关联
                       
                     </p>
                     
                     <p class="pull-right readMore">
-                        <a href="/2022/03/20/stack_ret2csu/">Read More...</a>
+                        <a href="/2022/03/21/sum_pwn知识点总结/">Read More...</a>
                     </p>
                     
                 </div>
