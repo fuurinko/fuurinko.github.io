@@ -231,12 +231,12 @@
         </div>
         <div class="col-md-8 col-md-offset-2">
       		
-    <div id="aplayer-ZmRKgMnR" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div> 
+    <div id="aplayer-uTWHLSbU" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div> 
 
 <p>[TOC]</p>
-<h1><span id="heap">Heap</span></h1><p>堆题的内存泄露和修改其实是结合在一起的，所以也不好分开讨论</p>
-<h2><span id="逆向">逆向</span></h2><p>​        一般来说大多数菜单题都会申请的比如说note定义结构体，当然也有那种纯纯利用malloc出的ptr进行读写操作的，但是比较少。</p>
-<p>​        首先需要利用眼力，想 象 力和动调逆出这个结构体里的字段，以及其占用的size，在内存空间的布局。如果足够闲也可以在ida中新建结构体，然后将题目中的结构体与你创建的结构体关联起来，这样伪代码的可读性又会增加很多。</p>
+<p>​        对于这些天题目的一些小归纳。目前的涵盖范围是高级house技术以及高版本glibc应用以外的所有题型。</p>
+<h1><span id="逆向">逆向</span></h1><h2><span id="大致">大致</span></h2><p>​        一般来说大多数菜单题都会申请的比如说note定义结构体，当然也有那种纯纯利用malloc出的ptr进行读写操作的，但是比较少。</p>
+<h2><span id="结构体逆向">结构体逆向</span></h2><p>​        首先需要利用眼力，想 象 力和动调逆出这个结构体里的字段，以及其占用的size，在内存空间的布局。如果足够闲也可以在ida中新建结构体，然后将题目中的结构体与你创建的结构体关联起来，这样伪代码的可读性又会增加很多。</p>
 <p>​        很多题都会在结构体中保存note content的指针，这个指针也是我们解题的关键所在。其他乱七八糟的东西就看出题人是不是爱整活了。</p>
 <p>​        但是关注于堆块管理其实很关键，因为不同的管理系统对应着不同的指针覆盖可能性以及不同的free，show，edit模式。</p>
 <p>一般目前我做到过的堆题关于指针管理的操作大概有这几类：</p>
@@ -246,17 +246,43 @@
 <li>对于每个单位chunk，申请具体size的heap段结构体，一般来说地址是与对应chunk相邻，通常保存了对应chunk的size以及data ptr。</li>
 <li>对于每个单位chunk，申请具体size的heap段结构体，并且结构体比较复杂，通常含有几个指针，有时甚至会自己实现一个链表管理系统。</li>
 </ol>
-<p>​        以上每种类型不一定逆向简单利用就简单，但是逆向难的题通常利用起来也很头晕（</p>
-<h2><span id="利用">利用</span></h2><h3><span id="保护">保护？</span></h3><p>​        拿到题首先查保护，比较关键的就是pie和relro保护。</p>
+<h2><span id="free逆向">free逆向</span></h2><h3><span id="uaf">UAF</span></h3><p>​        对于每种结构体，不同的指针管理也造就了不同质量的uaf（如果有）。</p>
+<p>​        比如说第一种，（这种太少了，例子都不好找），例子就是pwn.college的babyheap module的前几个level。</p>
+<p>​        意会一下,正如前文说到的，没有任何结构体，只是用一个数组将不同idx的ptr组织在了一起，所以free也就是free对应malloc出的ptr。</p>
+<p>​        <img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-04-13%20%E4%B8%8B%E5%8D%889.29.01.png" alt="截屏2022-04-13 下午9.29.01"></p>
+<p>​        </p>
+<p>​        在gdb中看就是将chunk data ptr对应的8字节清空，然后将ptr+1置为fd。如图（这个是tcache，不过问题不大）</p>
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-04-13%20%E4%B8%8B%E5%8D%889.33.39.png" alt="截屏2022-04-13 下午9.33.39"></p>
+<p>​        所以我们很容易地就能够二次利用这个free chunk。</p>
+<p>​        对于第二种结构体，uaf的质量和第一种类似，因为本身还是咩有结构体，所以只会影响后续利用，并不会影响uaf的强度。</p>
+<p>​        对于第三种结构体，一个经典的例子就是hitcon training的hack note。</p>
+<p>​        先看结构体的gdb。</p>
+<p>​        <img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-16%20%E4%B8%8A%E5%8D%8810.51.14.png" alt="截屏2022-03-16 上午10.51.14"></p>
+<p>​        32位程序，指令用错了，别骂了（</p>
+<p>​        还有f5，这里截取了一些关键操作。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">*(&amp;notelist + i) = <span class="built_in">malloc</span>(<span class="number">8u</span>);<span class="comment">//在bss段保存的指针上malloc一个8size的结构体chunk</span></span><br><span class="line">**(&amp;notelist + i) = print_note_content;<span class="comment">//调用了puts函数的一个函数地址，题目的解题点就在于覆盖这个为后门。</span></span><br><span class="line">v0 = *(&amp;notelist + i);</span><br><span class="line">*(v0 + <span class="number">4</span>) = <span class="built_in">malloc</span>(size);<span class="comment">//申请size大小的chunk，将返回的ptr储存于ptr+4</span></span><br><span class="line">read(<span class="number">0</span>, *(*(&amp;notelist + i) + <span class="number">1</span>), size);<span class="comment">//读取size大小的data</span></span><br></pre></td></tr></table></figure>
+
+<p>​        这里关键看free函数。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> ( *(&amp;notelist + idx) )</span><br><span class="line"> &#123;</span><br><span class="line">   <span class="built_in">free</span>(*(*(&amp;notelist + idx) + <span class="number">1</span>));</span><br><span class="line">   <span class="built_in">free</span>(*(&amp;notelist + idx));</span><br><span class="line">   <span class="built_in">puts</span>(<span class="string">&quot;Success&quot;</span>);</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+
+<p>​        这里uaf小白兔都能看出来，我们关注的重点是free的ptr。free的第一个指针指向chunk data，第二个指向结构体指针，就是那个0x8的chunk。</p>
+<p>​        随便申请一个0x20的chunk，是这样。</p>
+<p>​        <img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-04-14%20%E4%B8%8A%E5%8D%8812.21.11.png" alt="截屏2022-04-14 上午12.21.11"></p>
+<p>​        free它。可以看到，确实验证了我们的说法，分别清空了chunk data指针和结构体指针。而我们之前写在chunk上的数据并不会被清空，实际上，一般来说这个数据都不会被清空。</p>
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-04-14%20%E4%B8%8A%E5%8D%8812.22.03.png" alt="截屏2022-04-14 上午12.22.03"></p>
+<p>​        到这里想一想，我们刚才申请的每一个note中，分别是一个data的content和一个结构体的ptr，并且free也是将这两个指针free，也并没有置0，所以我们还能够利用的就是结构体中printnote的指针。</p>
+<p>以上每种类型不一定逆向简单利用就简单，但是逆向难的题通常利用起来也很头晕（</p>
+<h1><span id="利用">利用</span></h1><h2><span id="保护">保护？</span></h2><p>​        拿到题首先查保护，比较关键的就是pie和relro保护。</p>
 <p>​        不过pie对于堆题的杀伤力似乎是没有栈题大的，栈一开pie如果没有leak的话直接亲妈不认没法rop了。</p>
 <p>​        relro决定了这道题是修改got表呢，还是改hook，其实两者都需要任意地址写和leak（有时改hook不需要leak，比如xctf-NoLeak这道题），真正比起来，一般来说利用难度差得并不是特别大。</p>
+<p>​        有时候有些题也会选择一些非常奇怪的保护，比如xctf上的noleak，没有nx，所以其实需要我们在可控地址写shellcode。但是这都是比较简单的情况。</p>
 <p>​        </p>
-<h3><span id="利用思路">利用思路？</span></h3><p>​        逆向完之后肯定就是找漏洞点了。以libc版本来分类，这里主要讨论2.23和2.27两大版本的题。</p>
+<h2><span id="利用思路">利用思路？</span></h2><p>​        逆向完之后肯定就是找漏洞点了。以libc版本来分类，这里主要讨论2.23和2.27两大版本的题。</p>
 <p>一般来说普通堆题的两大关键步骤就是leak和任意地址写。leak主要又是unsorted bin leak，目前做的几道题，十道有八道都是靠各种古怪的方式进行unsorted bin leak，剩下两道估计又是覆盖空字节造成输出不截断。而任意地址写，就是靠各种漏洞劫持某个指针使其指向malloc_hook或者什么got表的地址，然后修改内容。</p>
 <p>​        非常遗憾地，leak和构造任意地址写的顺序并不是分割的，我们很难提供一个系统化的思路来归纳先leak再劫持指针balabala，很多情况下，是一个操作的思路同时达到了leak和劫持指针的效果。</p>
 <p>​        先后顺序这种东西虽然做题没有，但是归纳可以有。</p>
-<h4><span id="leak">leak</span></h4><p>​        先看leak吧。正因为确实十有八九都是依靠unsorted bin leak，所以大致总结一下我碰到过的所有实现了unsorted bin leak的方式，当然非unsorted bin的也有（</p>
-<h5><span id="简单直白的leak">简单直白的leak</span></h5><p>​        复习一下unsorted bin的原理。直接从wiki上面偷图了。</p>
+<h3><span id="leak">leak</span></h3><p>​        先看leak吧。正因为确实十有八九都是依靠unsorted bin leak，所以大致总结一下我碰到过的所有实现了unsorted bin leak的方式，当然非unsorted bin的也有（</p>
+<p>​        复习一下unsorted bin的原理。直接从wiki上面偷图了。</p>
 <p>​        </p>
 <p><img src="https://ctf-wiki.org/pwn/linux/user-mode/heap/ptmalloc2/figure/unsortedbins-struct.jpg" alt="img"></p>
 <p>​                所以最后插入链表的bin的fd其实是指向<code>main_arena</code>内部的。</p>
@@ -265,20 +291,23 @@
 <p>​        这样就比较清楚了。</p>
 <p>​        下面是我遇到的几种方式，其实不管哪种方式，核心目的都是让chunk进入unsorted bin，并且找到合适的方法把这个chunk的data打印。</p>
 <p>先说非unsorted bin leak的吧。</p>
-<p>1:利用mmap() leak libc。</p>
-<p>相关题目是gyctf_2020_force，</p>
-<h6><span id="直接free-smalllarge-chunk并show">直接free small/large chunk并show</span></h6><p>9447_CTF-Search Engine：    比较直白，利用程序的trick直接free一个small chunk，让其进入unsorted bin并利用程序的trick show出它。这里放一段leak的exp。</p>
+<h4><span id="奇怪的leak方式">奇怪的leak方式</span></h4><h5><span id="1利用mmap-leak-libc">1:利用mmap() leak libc。</span></h5><p>相关题目是gyctf_2020_force。</p>
+<p>​        这个题的前置条件是，没有任何输出函数，got也没有办法篡改，漏洞是白给了heap addr，还可以任意分配size，并且有堆溢出可以修改next chunk size。所以利用上很明显是house of force，但是我们需要考虑如何leak。</p>
+<p>​        程序给出了目前申请的每个chunk的heap段上的地址，所以突破口就在这里，我们可以利用<code>mmap()</code>拓展一个巨大的chunk，这个chunk被分配在libc.so加载段的低地址，只与它有一个较小的偏移，且我们又可以直接拿到这个chunk的地址，因此我们就四舍五入leak 了libc。</p>
+<p>​        这张图中，我们add的chunk addr为<code>0x7fe8af273000</code>，就在<code>libc - 0x76F000</code>的地方。</p>
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-30%20%E4%B8%8B%E5%8D%883.49.58.png" alt="截屏2022-03-30 下午3.49.58"></p>
+<h4><span id="unsorted-bin-leak">unsorted bin leak</span></h4><p>实现unsorted bin的两个关键</p>
+<ol>
+<li>如何将chunk放入unsorted bin</li>
+<li>如何将bin fd show出？</li>
+</ol>
+<h6><span id="直接free-smalllarge-chunk并show">直接free small/large chunk并show</span></h6><p>这个方法是对上面两个问题最直白的回应：如何放入？free small/large chunk。如何show？uaf直接show。至于如何进行free或者show，就是对于程序理解的问题了。</p>
+<p>9447_CTF-Search Engine：    利用程序的trick直接free一个small chunk，让其进入unsorted bin并利用程序的trick show出它。这里放一段leak的exp。这里的难点就是，searh word的操作给free和show甚至漏洞点本身加上了一层壳，如何看透壶中日月呢？就需要逆清楚程序捏。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">sentence = <span class="string">b&#x27;a&#x27;</span>*<span class="number">0x80</span> + <span class="string">b&#x27;bbbb bbbb bbbb b&#x27;</span><span class="comment">#首先申请非fastbin chunk，如果是tcache的话建议申请large chunk。</span></span><br><span class="line">index_sentence(<span class="built_in">len</span>(sentence),sentence)<span class="comment">#add上面的那个chunk</span></span><br><span class="line">search_word(<span class="number">1</span>,<span class="string">&quot;b&quot;</span>) <span class="comment">#search的功能就是一个free操作的前置条件，只有在句子中找到了对应的单词才能free，这里我们在刚刚add的‘bbbb bbbb bbbb b’中寻找‘b’，所以返回了我们申请的句子chunk的ptr。</span></span><br><span class="line">delete()<span class="comment">#free 这个句子，句子chunk（0x80的small chunk）进入unsortedbin。</span></span><br><span class="line">search_word(<span class="number">1</span>,<span class="string">&#x27;\x00&#x27;</span>)<span class="comment">#利用题目的trick，也就是一个uaf，虽然我们刚free了句子chunk，但是指针并没有置0，所以搜索功能还是合法的。因此搜索空字节，就能找到我们刚刚free的unsorted bin。</span></span><br><span class="line">p.recvuntil(<span class="string">&#x27;Found&#x27;</span> + <span class="built_in">str</span>(<span class="built_in">len</span>(sentence)) + <span class="string">&#x27;: &#x27;</span>)<span class="comment">#利用show功能打印出来。</span></span><br><span class="line">unsorted_bin_addr = u64(p.recv(<span class="number">8</span>))</span><br><span class="line">p.recvuntil(<span class="string">&quot;Delete this sentence (y/n)?&quot;</span>)</span><br><span class="line">p.sendline(<span class="string">&#x27;n&#x27;</span>)</span><br></pre></td></tr></table></figure>
 
 
 
-
-
-
-
-
-
-<h4><span id="任意地址写">任意地址写</span></h4><p>​        首先需要明确，需要劫持什么指针。一般程序提供的可以被覆盖的指针有这几种：</p>
+<h5><span id="劫持bin-fd伪造unsorted-bin-chunk">劫持bin fd，伪造unsorted bin chunk。</span></h5><h4><span id="任意地址写">任意地址写</span></h4><p>​        首先需要明确，需要劫持什么指针。一般程序提供的可以被覆盖的指针有这几种：</p>
 <ol>
 <li><p>程序刻意构造的，通过调用指针完成的功能。例如在hitcon_training11中，程序在switch case 5中调用了一个内容可控的指针，我们就可以修改这个指针为<code>one_gadget</code>或者其他东西。</p>
 </li>
@@ -304,7 +333,9 @@
 <h4><span id="mmap-leak">mmap() leak</span></h4><p>​        申请一个巨大的chunk，大到需要利用到<code>mmap()</code>，然后这个申请的范围会与libc加载的地址有一个并不大的固定偏移，我们可以通过leak这个chunk的地址来获得libc的基址。</p>
 <h4><span id="other">other</span></h4><p>​    就是看题的特性（其实大多数题都是靠这个吧）</p>
 <h4><span id></span></h4><h3><span id="getshell">getshell</span></h3><h4><span id="修改hook">修改hook</span></h4><p>​        改<code>malloc_hook</code>、<code>free_hook</code>等</p>
-<h4><span id="修改got">修改got</span></h4><h3><span id="特殊的利用方式">特殊的利用方式</span></h3><h4><span id="tcache">Tcache</span></h4><h5><span id="破坏tcache-头">破坏tcache 头</span></h5><p>（tcache管理chunk）。在管理结构被破坏后，tcache就基本失效了，之后free的chunk都会被放入原本的链表，就可以通过比如申请unsorted bin来leak的方式更进一步利用。</p>
+<h4><span id="修改got">修改got</span></h4><h3><span id="特殊的利用方式">特殊的利用方式</span></h3><h4><span id="越界free">越界free</span></h4><p>​    例如ciscn_2019_daliy（我发现国赛真的很喜欢出越界balabla，栈就数组越界读，堆就越界free，蚌埠住了）</p>
+<p>​    </p>
+<h4><span id="tcache">Tcache</span></h4><h5><span id="破坏tcache-头">破坏tcache 头</span></h5><p>（tcache管理chunk）。在管理结构被破坏后，tcache就基本失效了，之后free的chunk都会被放入原本的链表，就可以通过比如申请unsorted bin来leak的方式更进一步利用。</p>
 <h5><span id="劫持tcache-fd">劫持tcache fd</span></h5><p>​        2.29之前的libc不包括对于tcache bin fd位的检测，所以如果有堆溢出漏洞或者uaf，就可以任意地址写，不需要构造什么东西，也没有fastbin那样的对于chunk size合法性的检测。</p>
 <p>​        2.29及之后也只是在tcache bin的bk位增加了检测的key，如果有比较好用的堆溢出的话还是能直接覆盖这个bk为任意垃圾数据而绕过检测。</p>
 <h4><span id="house-of-orange">house of orange</span></h4><p>​        在没有free的情况下获得unsorted bin的方式。利用堆溢出之类的漏洞覆盖top chunk size，然后申请一个大于修改后的top chunk size的chunk，由于堆分配的机制，在绕过一系列检测后，堆会以brk的方式拓展，并把修改后size的top chunk放入unsorted bin。</p>
