@@ -72,11 +72,9 @@
 				    
 				    <li><a href="/categories/CSAPP-LAB/" class="animsition-link">CSAPP LAB<small>(1)</small></a></li>
 				    
-				    <li><a href="/categories/Generalization/" class="animsition-link">Generalization<small>(3)</small></a></li>
+				    <li><a href="/categories/Generalization/" class="animsition-link">Generalization<small>(5)</small></a></li>
 				    
 				    <li><a href="/categories/HEAP-Fastbin-Attack/" class="animsition-link">HEAP - Fastbin Attack<small>(10)</small></a></li>
-				    
-				    <li><a href="/categories/HEAP-Heap/" class="animsition-link">HEAP - Heap<small>(1)</small></a></li>
 				    
 				    <li><a href="/categories/HEAP-Heap-overflow/" class="animsition-link">HEAP - Heap overflow<small>(1)</small></a></li>
 				    
@@ -94,7 +92,9 @@
 				    
 				    <li><a href="/categories/HEAP-Unsortedbin/" class="animsition-link">HEAP - Unsortedbin<small>(1)</small></a></li>
 				    
-				    <li><a href="/categories/MESS/" class="animsition-link">MESS<small>(18)</small></a></li>
+				    <li><a href="/categories/HEAP-sourcecode-analysis/" class="animsition-link">HEAP - sourcecode analysis<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/MESS/" class="animsition-link">MESS<small>(16)</small></a></li>
 				    
 				    <li><a href="/categories/OTHER-IO-FILE/" class="animsition-link">OTHER - IO FILE<small>(1)</small></a></li>
 				    
@@ -241,6 +241,46 @@
 
 <section id="intro">
     <div class="container">
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2022/04/02/heap_fastbin中uaf实现任意地址分配的检测问题/">fastbin中uaf实现任意地址分配的检测问题</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-04-02T00:37:40.817Z" itemprop="datePublished">
+          2022-04-02
+      </time>
+    
+    
+    | 
+    <a href='/tags/heap/'>heap</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+     
+
+
+
+​        目前做到的与fastbin有关（包括Tcache），并且存在uaf漏洞，需要通过任意地址分配来实现利用的题大致有两类，一类对于申请的chunk，通过简单或者复杂的结构体管理，在一个note的结构体中通常包括size，content甚至指针等字段，我们可以通过覆盖指针实现任意地址分配。另一类则是相对逻辑比较简单的，并没有为note定义结构体，仅仅使用了类似数组的形式，这样的话覆盖free chunk的
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/04/02/heap_fastbin中uaf实现任意地址分配的检测问题/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
         
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
@@ -598,44 +638,6 @@ re​        含有后门函数，直接的想法是利用hof将chunk分配至�
                     
                     <p class="pull-right readMore">
                         <a href="/2022/03/24/heap_hof_hitcontraininf11/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2022/03/21/sum_一些板子/">一些板子</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2022-03-21T08:45:02.536Z" itemprop="datePublished">
-          2022-03-21
-      </time>
-    
-    
-    | 
-    <a href='/tags/summary/'>summary</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-     
-
-stackret2shellcode123456789101112from pwn import*from LibcSearcher import LibcSearchercontext.terminal = [&#x27;tmux&#x27;,&#x27;splitw&#x27;,&#x27;-h&#x27;]context.log_level = &quot;debug&quot;p = process(&quot;
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2022/03/21/sum_一些板子/">Read More...</a>
                     </p>
                     
                 </div>
