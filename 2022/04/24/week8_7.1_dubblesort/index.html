@@ -8,7 +8,7 @@
 
 <head>
 
-  <title>Category: HEAP - sourcecode analysis | Rin</title>
+  <title>攻防世界 - doubblesort | Rin</title>
   <!-- Meta data -->
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -45,10 +45,13 @@
   
 
   <style>.col-md-8.col-md-offset-2.opening-statement img{display:none;}</style>
-<link rel="stylesheet" href="/css/prism.css" type="text/css"></head>
+<link rel="stylesheet" href="/css/prism.css" type="text/css"><link rel="stylesheet" href="/assets/css/APlayer.min.css" class="aplayer-style-marker">
+<script src="/assets/js/APlayer.min.js" class="aplayer-script-marker"></script>
+<script src="/assets/js/Meting.min.js" class="meting-script-marker"></script>
+</head>
 
 <!--
-<body class="home-template">
+<body class="post-template">
 -->
 <body id="index" class="lightnav animsition">
       <!-- ============================ Off-canvas navigation =========================== -->
@@ -88,13 +91,11 @@
 				    
 				    <li><a href="/categories/HEAP-Seccomp/" class="animsition-link">HEAP - Seccomp<small>(1)</small></a></li>
 				    
-				    <li><a href="/categories/HEAP-Tcache/" class="animsition-link">HEAP - Tcache<small>(3)</small></a></li>
+				    <li><a href="/categories/HEAP-Tcache/" class="animsition-link">HEAP - Tcache<small>(4)</small></a></li>
 				    
 				    <li><a href="/categories/HEAP-Unlink/" class="animsition-link">HEAP - Unlink<small>(2)</small></a></li>
 				    
 				    <li><a href="/categories/HEAP-Unsortedbin/" class="animsition-link">HEAP - Unsortedbin<small>(1)</small></a></li>
-				    
-				    <li><a href="/categories/HEAP-sourcecode-analysis/" class="animsition-link">HEAP - sourcecode analysis<small>(1)</small></a></li>
 				    
 				    <li><a href="/categories/MESS/" class="animsition-link">MESS<small>(16)</small></a></li>
 				    
@@ -209,69 +210,160 @@
         <!-- ============================ Header & Logo bar =========================== -->
 
 
-      <!-- ============================ Hero Image =========================== -->
-
-<section id="hero" class="scrollme">
-    <div class="container-fluid element-img" style="background: url(https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/cover.jpg) no-repeat center center fixed;background-size: cover">
-        <div class="row">
-            <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-8 col-md-offset-2 vertical-align cover boost text-center">
-                <div class="center-me animateme" data-when="exit" data-from="0" data-to="0.6" data-opacity="0" data-translatey="100">
-                    <div>
-                        
-                        <h2><span>RIN777</span></h2>
-                        <p></p>
-                        
-                        <h2></h2>
-                        <p>努力は嘘をつく、でも無駄にはならない</p>
-                        
-
-                    </div>
-                </div>
-            </div>
-            <!-- // .col-md-12 -->
-        </div>
-        <div class="herofade beige-dk"></div>
-    </div>
-</section>
-
-<!-- Height spacing helper -->
-<div class="heightblock"></div>
-<!-- // End height spacing helper -->
-
-<!-- ============================ END Hero Image =========================== -->
-
-
-
-
-<section id="services">
+      
+<section id="intro">
     <div class="container">
-        <div class="row">
-            <div class="col-md-10 col-md-offset-1">
-                <div class="row boxes">
-                    
-                    
-                        
-                        
-                        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 wow fadeInUp" data-wow-delay="0.3s">
-                            
-                              <h4 class="title"><a href="/2022/04/13/heap_learning_glibc源码分析/">ptmalloc2源码分析</a></h4>
-                            
-                            <p><time datetime="2022-04-13T03:21:41.918Z"><a href="/2022/04/13/heap_learning_glibc源码分析/">2022-04-13</a></time></p>
-                        </div>
-                    
-                </div>
-            </div>    
+        <div class="row col-md-offset-2">
+            <div class="col-md-8">
+    			<span class="post-meta">
+      <time datetime="2022-04-24T07:07:29.428Z" itemprop="datePublished">
+          2022-04-24
+      </time>
+    
+    
+    | 
+    <a href='/tags/xctf/'>xctf</a>
+    
+    
+</span>
+                <h1>攻防世界 - doubblesort</h1>
+            </div>
         </div>
-    </div>
-</section> 
+        <div class="col-md-8 col-md-offset-2">
+      		
+    <div id="aplayer-KWnQdXeP" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div> 
 
-<section id="statement">
-    <div class="container text-center wow fadeInUp" data-wow-delay="0.5s">
-        <div class="row">
-            <p>“试着开心，好吗？”</p>
+<h1><span id="overview">overview</span></h1><p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-04-24%20%E4%B8%8B%E5%8D%883.08.45.png" alt="截屏2022-04-24 下午3.08.45"></p>
+<p>​    </p>
+<h1><span id="逆向">逆向</span></h1><p>​    又是排序。但是这个是个纯纯的栈题，并且保护全开，那就是不能rop，估计又是要逆清然后找漏洞捏。照我之前做的那个快排的经验，排序本身应该没有漏洞，漏洞出在num地址的溢出。</p>
+<h3><span id="main">main</span></h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> __cdecl <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">const</span> <span class="keyword">char</span> **argv, <span class="keyword">const</span> <span class="keyword">char</span> **envp)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">unsigned</span> <span class="keyword">int</span> sort_num; <span class="comment">// eax</span></span><br><span class="line">  _BYTE *num_order; <span class="comment">// edi</span></span><br><span class="line">  <span class="keyword">unsigned</span> <span class="keyword">int</span> i; <span class="comment">// esi</span></span><br><span class="line">  <span class="keyword">unsigned</span> <span class="keyword">int</span> j; <span class="comment">// esi</span></span><br><span class="line">  <span class="keyword">int</span> result; <span class="comment">// eax</span></span><br><span class="line">  <span class="keyword">unsigned</span> <span class="keyword">int</span> num; <span class="comment">// [esp+18h] [ebp-74h] BYREF</span></span><br><span class="line">  _BYTE v9[<span class="number">32</span>]; <span class="comment">// [esp+1Ch] [ebp-70h] BYREF</span></span><br><span class="line">  <span class="keyword">char</span> buf[<span class="number">64</span>]; <span class="comment">// [esp+3Ch] [ebp-50h] BYREF</span></span><br><span class="line">  <span class="keyword">unsigned</span> <span class="keyword">int</span> v11; <span class="comment">// [esp+7Ch] [ebp-10h]</span></span><br><span class="line"></span><br><span class="line">  v11 = __readgsdword(<span class="number">0x14</span>u);</span><br><span class="line">  init();                                       <span class="comment">// init</span></span><br><span class="line">  print(<span class="number">1</span>, <span class="string">&quot;What your name :&quot;</span>);</span><br><span class="line">  read(<span class="number">0</span>, buf, <span class="number">0x40</span>u);                          <span class="comment">// buf =&gt; 64 byte , NO OVERFLOW</span></span><br><span class="line">  print(<span class="number">1</span>, <span class="string">&quot;Hello %s,How many numbers do you what to sort :&quot;</span>);</span><br><span class="line">  __isoc99_scanf(<span class="string">&quot;%u&quot;</span>, &amp;num);                   <span class="comment">// uint</span></span><br><span class="line">  sort_num = num;</span><br><span class="line">  <span class="keyword">if</span> ( num )</span><br><span class="line">  &#123;</span><br><span class="line">    num_order = v9;</span><br><span class="line">    <span class="keyword">for</span> ( i = <span class="number">0</span>; i &lt; num; ++i )</span><br><span class="line">    &#123;</span><br><span class="line">      print(<span class="number">1</span>, <span class="string">&quot;Enter the %d number : &quot;</span>);</span><br><span class="line">      fflush(<span class="built_in">stdout</span>);</span><br><span class="line">      __isoc99_scanf(<span class="string">&quot;%u&quot;</span>, num_order);</span><br><span class="line">      sort_num = num;</span><br><span class="line">      num_order += <span class="number">4</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  sort(v9, sort_num);                           <span class="comment">// sort</span></span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">&quot;Result :&quot;</span>);</span><br><span class="line">  <span class="keyword">if</span> ( num )</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="keyword">for</span> ( j = <span class="number">0</span>; j &lt; num; ++j )</span><br><span class="line">      print(<span class="number">1</span>, <span class="string">&quot;%u &quot;</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  result = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">if</span> ( __readgsdword(<span class="number">0x14</span>u) != v11 )</span><br><span class="line">    sub_BA0();                                  <span class="comment">// smash</span></span><br><span class="line">  <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>​        这里是比较奇怪的就是程序记录num的次序是在栈上定义的一个指针，然后将对应的num输入到指针指向的地方，所以如果我们能够劫持这个指针或许就找到了突破口。</p>
+<p>​        这里有一个看起来有一些奇怪的逻辑，每一次输入num，num_order 加4，也就是对应两个uint长度，似乎也没有什么用.</p>
+<p>​        但是找不到劫持的方法，sort的步骤看起来合情合理，并没有什么明显的漏洞。</p>
+<h3><span id="sort">sort</span></h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">unsigned</span> <span class="keyword">int</span> __cdecl <span class="title">sub_931</span><span class="params">(<span class="keyword">unsigned</span> <span class="keyword">int</span> *a1, <span class="keyword">int</span> num)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">int</span> last_num; <span class="comment">// ecx</span></span><br><span class="line">  <span class="keyword">int</span> i; <span class="comment">// edi</span></span><br><span class="line">  <span class="keyword">unsigned</span> <span class="keyword">int</span> v4; <span class="comment">// edx</span></span><br><span class="line">  <span class="keyword">unsigned</span> <span class="keyword">int</span> v5; <span class="comment">// esi</span></span><br><span class="line">  <span class="keyword">unsigned</span> <span class="keyword">int</span> *v6; <span class="comment">// eax</span></span><br><span class="line">  <span class="keyword">unsigned</span> <span class="keyword">int</span> result; <span class="comment">// eax</span></span><br><span class="line">  <span class="keyword">unsigned</span> <span class="keyword">int</span> v8; <span class="comment">// [esp+1Ch] [ebp-20h]</span></span><br><span class="line"></span><br><span class="line">  v8 = __readgsdword(<span class="number">0x14</span>u);</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">&quot;Processing......&quot;</span>);</span><br><span class="line">  sleep(<span class="number">1u</span>);</span><br><span class="line">  <span class="keyword">if</span> ( num != <span class="number">1</span> )</span><br><span class="line">  &#123;</span><br><span class="line">    last_num = num - <span class="number">2</span>;</span><br><span class="line">    <span class="keyword">for</span> ( i = (<span class="keyword">int</span>)&amp;a1[num - <span class="number">1</span>]; ; i -= <span class="number">4</span> )</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="keyword">if</span> ( last_num != <span class="number">-1</span> )</span><br><span class="line">      &#123;</span><br><span class="line">        v6 = a1;</span><br><span class="line">        <span class="keyword">do</span></span><br><span class="line">        &#123;</span><br><span class="line">          v4 = *v6;</span><br><span class="line">          v5 = v6[<span class="number">1</span>];</span><br><span class="line">          <span class="keyword">if</span> ( *v6 &gt; v5 )</span><br><span class="line">          &#123;</span><br><span class="line">            *v6 = v5;</span><br><span class="line">            v6[<span class="number">1</span>] = v4;</span><br><span class="line">          &#125;</span><br><span class="line">          ++v6;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">while</span> ( (<span class="keyword">unsigned</span> <span class="keyword">int</span> *)i != v6 );</span><br><span class="line">        <span class="keyword">if</span> ( !last_num )</span><br><span class="line">          <span class="keyword">break</span>;</span><br><span class="line">      &#125;</span><br><span class="line">      --last_num;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  result = __readgsdword(<span class="number">0x14</span>u) ^ v8;</span><br><span class="line">  <span class="keyword">if</span> ( result )</span><br><span class="line">    sub_BA0();</span><br><span class="line">  <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>​        基本所有关键的变量都是uint。怪，我记得之前sort里面是有一个强制类型转换的。。。。</p>
+<h1><span id="利用">利用</span></h1><h2><span id></span></h2><h2><span id="一些很乱的做题笔记">一些很乱的做题笔记</span></h2><p>下一个part有整理捏。</p>
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-04-24%20%E4%B8%8B%E5%8D%884.44.44.png" alt="截屏2022-04-24 下午4.44.44"></p>
+<p>​        这个题的栈还算清楚，至少找得到东西，没有乱七八糟。可以比较直观地看出d60c开始存着我们的name，然后是八个字节的空字节，这样就基本没有任何通过name leak的可能性了，但是问题不大。</p>
+<p>​        <img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-04-24%20%E4%B8%8B%E5%8D%888.12.56.png" alt="截屏2022-04-24 下午8.12.56"></p>
+<p>​        进入sort之前，参数在栈中的状态。那么如果溢出最后一个num为一个很大的数会怎样呢。笑死，溢出不了捏。</p>
+<p>​        <img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-04-24%20%E4%B8%8B%E5%8D%888.21.00.png" alt="截屏2022-04-24 下午8.21.00"></p>
+<p>​        然后进行sort，把参数按照规则交换以后pop到合适的位置。</p>
+<p>​        此外，如果我们在输入name的时候随便输入一些东西，比如1，其实除了1还会打印出一些很奇怪的东西，</p>
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-04-24%20%E4%B8%8B%E5%8D%888.30.10.png" alt="截屏2022-04-24 下午8.30.10"></p>
+<p>​        我们查看name储存的栈内存，发现确实是有东西的，但是这个值是随机的，但最低位是<code>\x00</code>，所以只要我们输入一个字节的name就不会影响。</p>
+<p>​        <img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-04-24%20%E4%B8%8B%E5%8D%888.28.51.png" alt="截屏2022-04-24 下午8.28.51"></p>
+<p>​        这个值是完全随机的，并且末尾是空字节，按照第六感，我就基本上把它看作是canary了。所以通过这一步我们获得了main栈帧的canary。（也许</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">p.recvuntil(<span class="string">&quot;What your name :&quot;</span>)</span><br><span class="line">p.sendline(<span class="string">b&#x27;1&#x27;</span>)</span><br><span class="line">p.recvuntil(<span class="string">&quot;Hello&quot;</span>)</span><br><span class="line">data = p.recv()[<span class="number">1</span>:<span class="number">5</span>]</span><br><span class="line">main_canary = u32(data.ljust(<span class="number">4</span>,<span class="string">b&#x27;\x00&#x27;</span>)) - <span class="number">0x31</span></span><br><span class="line">log.success(<span class="string">&quot;main_canary =&gt; &#123;&#125;&quot;</span>.<span class="built_in">format</span>(<span class="built_in">hex</span>(main_canary)))</span><br></pre></td></tr></table></figure>
+
+<p>​    说点有的没的，识别canary并无坑获取这一点虽然非常简单，但是我真的很熟练，可能是我这么熟练，pwncollege要负全责，他那个stack overflow的modlue真的非常之折磨，而我居然全部做完了（</p>
+<p>​    获得canary就比较快乐，但是程序并没有给我们直接的溢出的机会，然而输入num的地址是一个空间有限的数组，所以我们可能可以通过输入比较多的数字来覆盖num 地址之后的指针。</p>
+<p>看样子可行，d61c原本是一个指针，但是现在它是1了。那么现在需要搞清楚这些可以被覆盖的指针分别指向什么，以及覆盖以后如何利用。</p>
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-04-24%20%E4%B8%8B%E5%8D%889.07.50.png" alt="截屏2022-04-24 下午9.07.50"></p>
+<p>​        输入十个数，栈中情况：</p>
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-04-26%20%E4%B8%8A%E5%8D%8810.41.35.png" alt="截屏2022-04-26 上午10.41.35"></p>
+<p>​    输入十五个数，栈中情况：</p>
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-04-26%20%E4%B8%8A%E5%8D%8810.42.31.png" alt="截屏2022-04-26 上午10.42.31"></p>
+<p>​        </p>
+<p>​        粗浅看了一下，感觉并没有特别好的思路，指针确实是被覆盖了，但是如何利用呢？</p>
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-04-26%20%E4%B8%8A%E5%8D%8810.46.01.png" alt="截屏2022-04-26 上午10.46.01"></p>
+<p>​    可以被覆盖的指针大致指向这些东西，似乎也没有很好的利用方式。呜呜。</p>
+<p>​    大意了。昨天做pic adc，脑子都麻了没有想到可以直接覆盖空字节来leak栈地址，今天一筹莫展的时候在想为什么程序只给我们一个莫名其妙的canary啊，也没有栈溢出啥的，然后就突然意识到是我脑残了，其实这里就是一个栈的leak，把canary的空字节覆盖掉就好了（</p>
+<p>​        话说这里覆盖掉canary为什么不会smash。</p>
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-04-26%20%E4%B8%8A%E5%8D%8810.54.35.png" alt="截屏2022-04-26 上午10.54.35"></p>
+<p>​        观察一下就可以看到我们能够leak 空字节前的所有地址，再观察一下可以发现这些地址不仅是栈上的，还有libc上的，这样就相当于可以leak stack和libc了。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># leak stack and libc</span></span><br><span class="line">p.recvuntil(<span class="string">&quot;What your name :&quot;</span>)</span><br><span class="line">p.send(<span class="string">b&#x27;aaaaaaaa&#x27;</span>)</span><br><span class="line">p.recvuntil(<span class="string">&quot;aaaaaaaa&quot;</span>)</span><br><span class="line">data = p.recv()[<span class="number">4</span>:<span class="number">12</span>]</span><br><span class="line">log.success(<span class="string">&quot;data =&gt; &#123;&#125;&quot;</span>.<span class="built_in">format</span>(data))</span><br><span class="line"></span><br><span class="line">stack_addr = u32(data[<span class="number">0</span>:<span class="number">4</span>])</span><br><span class="line">libc_addr = u32(data[<span class="number">4</span>:<span class="number">8</span>])</span><br><span class="line">libc_base = libc_addr - libc_offset</span><br><span class="line">onegadget = libc_base + <span class="number">0x4f3d5</span></span><br><span class="line"><span class="comment">#0x4f432</span></span><br><span class="line"><span class="comment">#0x10a41c</span></span><br><span class="line">log.success(<span class="string">&quot;stack_addr =&gt; &#123;&#125;&quot;</span>.<span class="built_in">format</span>(<span class="built_in">hex</span>(stack_addr)))</span><br><span class="line">log.success(<span class="string">&quot;libc_base =&gt; &#123;&#125;&quot;</span>.<span class="built_in">format</span>(<span class="built_in">hex</span>(libc_base)))</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-04-26%20%E4%B8%8A%E5%8D%8811.13.12.png" alt="截屏2022-04-26 上午11.13.12"></p>
+<p>​        </p>
+<p>​        接下来不是完全没有思路，而是可以用的思路太多，混淆视听了。稍微理一下。</p>
+<ol>
+<li>利用num溢出改变程序执行流,直接跳转到<code>one_gadget</code>。</li>
+<li>劫持num指针，修改其为<code>exit_hook</code>或者什么got表的地址，然后在其中写入<code>one_gadget</code>。</li>
+</ol>
+<p>​</p>
+
+            <div class="clearfix"></div>
+            <hr class="nogutter">
         </div>
+        <nav class="m-pagination col-md-8 col-md-offset-2 col-sm-24" role="pagination">
+    
+    
+    <a class="pull-right" href="../../16/heap_challenge_*ctf_2022_examination/">
+        examination →
+    </a>
+    
+</nav>
+
+        <div class="col-md-8 col-md-offset-2 col-sm-24"><script type="text/javascript">
+  /**
+   * 搜狐畅言
+   */
+
+  /*
+  document.write('<div id="SOHUCS" sid="' + window.location.pathname.slice(1) + '" ></div>');
+
+  window.onload = function () {
+    (function () {
+      var appid = 'cytXXXX';
+      var conf = 'prod_xxxxxxxxxxxxxxxxx';
+      var width = window.innerWidth || document.documentElement.clientWidth;
+      var loadJs = function (d, a, id) {
+        var c = document.getElementsByTagName("head")[0] || document.head || document.documentElement;
+        var b = document.createElement("script");
+        b.setAttribute("type", "text/javascript");
+        b.setAttribute("charset", "UTF-8");
+        b.setAttribute("src", d);
+        if (id) {
+          b.setAttribute("id", id);
+        }
+        if (typeof a === "function") {
+          if (window.attachEvent) {
+            b.onreadystatechange = function () {
+              var e = b.readyState;
+              if (e === "loaded" || e === "complete") {
+                b.onreadystatechange = null;
+                a()
+              }
+            }
+          } else {
+            b.onload = a
+          }
+        }
+        c.appendChild(b)
+      };
+
+      loadJs("https://changyan.sohu.com/upload/changyan.js", function () {
+        window.changyan.api.config({
+          appid: appid,
+          conf: conf
+        })
+      });
+    })();
+  }
+  */
+
+</script>
+</div>
     </div>
 </section>
+
+<!-- Highlight.js -->
+
+<link rel="stylesheet"
+href="//highlightjs.org/static/demo/styles/atom-one-light.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js">
+</script>
+<script>
+hljs.initHighlightingOnLoad();
+
+</script>
+
+
       
 <!-- ============================ Footer =========================== -->
 
