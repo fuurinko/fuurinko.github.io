@@ -108,7 +108,7 @@
 				    
 				    <li><a href="/categories/STACK-OTHERS/" class="animsition-link">STACK - OTHERS<small>(1)</small></a></li>
 				    
-				    <li><a href="/categories/STACK-Other/" class="animsition-link">STACK - Other<small>(1)</small></a></li>
+				    <li><a href="/categories/STACK-Other/" class="animsition-link">STACK - Other<small>(2)</small></a></li>
 				    
 				    <li><a href="/categories/STACK-ROP/" class="animsition-link">STACK - ROP<small>(1)</small></a></li>
 				    
@@ -243,6 +243,45 @@
 
 <section id="intro">
     <div class="container">
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2022/04/04/heap_leaarning_off by one/">off by one /chunk overlapping</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-04-03T16:00:00.000Z" itemprop="datePublished">
+          2022-04-04
+      </time>
+    
+    
+    | 
+    <a href='/tags/learning/'>learning</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+     
+
+0​        这篇笔记最早是在大概21年的11月开始的，当时其实也是抱着复习的心理去写的，毕竟堆题在完全吃透之前，只要不是经常做题，那么就基本是学了就忘的状态。更别说我这种就没怎么做题的人。
+​        现在是2022年四月，我看着这篇笔记，只觉得当时那些卡了很久的点，实在过于愚蠢，完全无法理解当时自己为什么会这么想。这些困难点大多源于我看代码不仔细，以及对于指针操作的一些不理解，或者说对于chunk结构的不
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/04/04/heap_leaarning_off by one/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
         
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
@@ -602,45 +641,6 @@ index sentence​        指针操作有点多，配合gdb观看效果更佳。
                     
                     <p class="pull-right readMore">
                         <a href="/2022/03/26/mess_hexo调教合集/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2022/03/25/heap_hof_bcloud/">bcloud</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2022-03-25T12:33:06.204Z" itemprop="datePublished">
-          2022-03-25
-      </time>
-    
-    
-    | 
-    <a href='/tags/heap/'>heap</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-    
-
-overview​        partial relro，可以改got表，也可以劫持hook。
-REinit1234567memset(s, 0, 0x50u); puts(&quot;Input your name:&quot;); my_read((int)s, 64, 10); v2 = (char *)malloc(0x40u); dword_804B0CC = (int)v2; strcpy(v2, s); 
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2022/03/25/heap_hof_bcloud/">Read More...</a>
                     </p>
                     
                 </div>

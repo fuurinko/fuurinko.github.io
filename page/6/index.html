@@ -108,7 +108,7 @@
 				    
 				    <li><a href="/categories/STACK-OTHERS/" class="animsition-link">STACK - OTHERS<small>(1)</small></a></li>
 				    
-				    <li><a href="/categories/STACK-Other/" class="animsition-link">STACK - Other<small>(1)</small></a></li>
+				    <li><a href="/categories/STACK-Other/" class="animsition-link">STACK - Other<small>(2)</small></a></li>
 				    
 				    <li><a href="/categories/STACK-ROP/" class="animsition-link">STACK - ROP<small>(1)</small></a></li>
 				    
@@ -243,6 +243,51 @@
 
 <section id="intro">
     <div class="container">
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2022/03/03/pwn.college_ProgramMisuse/">ProgramMisuse</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-03-03T03:09:26.547Z" itemprop="datePublished">
+          2022-03-03
+      </time>
+    
+    
+    | 
+    <a href='/tags/pwncollege/'>pwncollege</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+     
+
+
+
+
+
+​        关于这个module，做出题目的话大致有两个思路，一个是利用/bin/sh    来对整个shell提权，另外一个是利用设置了suid的特殊程序来读取flag。一般来说是第二个方法比较简单，但是有时候只有第一个方法可以行得通。
+Level1​        没有看视频，并不知道这个Misuse是什么意义，但是level1只要执行给的程序就能get flag。
+
+Level2​        到第
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/03/03/pwn.college_ProgramMisuse/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
         
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
@@ -624,54 +669,6 @@ fastbin​    长度在32-160(32位系统是16-80)的free堆块。通过fastbinl
                     
                     <p class="pull-right readMore">
                         <a href="/2021/12/06/heap_learning_fastbin_attack/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2021/12/03/mess_malloc_lab/">csapp malloc lab</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2021-12-03T08:46:22.570Z" itemprop="datePublished">
-          2021-12-03
-      </time>
-    
-    
-    | 
-    <a href='/tags/csapp-lab/'>csapp lab</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-     
-
-0）前言​        鸽了三个月的malloc lab，作为复习堆题的开始。
-​        计画完成时间是12.5之前，也就是三天。
-1）大体设计​        对于整体的操作的大致模型以及allocater和freer需要做的工作如下：
-​        分配器：
-
-在第一次分配chunk时，对堆空间进行初始化=&gt;mm_init()    
-
-创建指定类型的chunk。
-​    free
-
-利用隐式空
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2021/12/03/mess_malloc_lab/">Read More...</a>
                     </p>
                     
                 </div>

