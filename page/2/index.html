@@ -68,7 +68,7 @@
         		<a class="sb-toggle-submenu">Categories<span class="sb-caret"></span></a>
             	<ul class="sb-submenu">
 				  	
-				    <li><a href="/categories/AUDITION/" class="animsition-link">AUDITION<small>(6)</small></a></li>
+				    <li><a href="/categories/AUDITION/" class="animsition-link">AUDITION<small>(7)</small></a></li>
 				    
 				    <li><a href="/categories/CSAPP-LAB/" class="animsition-link">CSAPP LAB<small>(1)</small></a></li>
 				    
@@ -108,7 +108,7 @@
 				    
 				    <li><a href="/categories/STACK-OTHERS/" class="animsition-link">STACK - OTHERS<small>(1)</small></a></li>
 				    
-				    <li><a href="/categories/STACK-Other/" class="animsition-link">STACK - Other<small>(3)</small></a></li>
+				    <li><a href="/categories/STACK-Other/" class="animsition-link">STACK - Other<small>(4)</small></a></li>
 				    
 				    <li><a href="/categories/STACK-ROP/" class="animsition-link">STACK - ROP<small>(1)</small></a></li>
 				    
@@ -243,6 +243,90 @@
 
 <section id="intro">
     <div class="container">
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2022/04/11/week7-1.1/">攻防世界 - 100levels</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-04-11T12:02:33.312Z" itemprop="datePublished">
+          2022-04-11
+      </time>
+    
+    
+    | 
+    <a href='/tags/xctf/'>xctf</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+     
+
+overviewpartial relro，没有canary，栈溢出。
+逆向12if ( unk_20208C )  sprintf(v1, &quot;Hint: %p\n&quot;, &amp;system);
+
+​        如果能在这个变量上写东西，就能leak。那就不是ret2libc了。并且开了pie，也不好rop。
+123456789&#123;  __int64 buf[4]; // [rsp+0h
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/04/11/week7-1.1/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2022/04/10/heap_learning_io_file/">IO_FILE学习</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-04-10T14:44:00.000Z" itemprop="datePublished">
+          2022-04-10
+      </time>
+    
+    
+    | 
+    <a href='/tags/io-file/'>io_file</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+     
+
+
+
+overview大致原理​        glibc定义了_IO_FILE这样一个结构体来管理io file。io_file结构体里定义了一堆相关的变量，但是真正关键的是其中包含的_IO_FILE_plus结构。 libc2.23 版本下，32 位的 vtable 偏移为 0x94，64 位偏移为 0xd8。
+​        结构源码如下：
+12345struct _IO_FILE_plus&#123;    _I
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/04/10/heap_learning_io_file/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
         
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
@@ -575,90 +659,6 @@ add1head_ptr = (unsigned int *)malloc(0x18uLL);
                     
                     <p class="pull-right readMore">
                         <a href="/2022/04/07/ciscn_2019_double/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2022/04/06/ciscn_2021_lonelywolf/">LonelyWolf</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2022-04-06T12:19:37.401Z" itemprop="datePublished">
-          2022-04-06
-      </time>
-    
-    
-    | 
-    <a href='/tags/ciscn/'>ciscn</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-     
-
-overview​        开始做一些ciscn了。
-
-readd​        size不能大于0x78。
-1234567ptr = malloc(size);if ( ptr )&#123; size_struct = size_1; content_struct = ptr;//蚌埠住了，每次都会把这个指针覆盖为最新分配的content ptr。这下idx直接报废。 puts(&quot;Done!&quo
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2022/04/06/ciscn_2021_lonelywolf/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2022/04/06/sum_stack_summary/">stack知识点总结</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2022-04-05T16:00:00.000Z" itemprop="datePublished">
-          2022-04-06
-      </time>
-    
-    
-    | 
-    <a href='/tags/summary/'>summary</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-     
-
-
-
-stack控制程序执行流栈溢出ret2syscall​        利用程序自带的gadget，构造syscall。
-​        对应板子
-ret2libc/csu​        比较模版化，值得一题的就是，system()的执行要求此时栈是16位对齐的，所以如果getshell失败不妨多ret一次。        
-ret2shellcode​        在rwx的内存空间(不一定是栈）上写shell
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2022/04/06/sum_stack_summary/">Read More...</a>
                     </p>
                     
                 </div>
