@@ -94,6 +94,8 @@
 				    
 				    <li><a href="/categories/HEAP-Unsortedbin/" class="animsition-link">HEAP - Unsortedbin<small>(1)</small></a></li>
 				    
+				    <li><a href="/categories/IO-FILE/" class="animsition-link">IO_FILE<small>(1)</small></a></li>
+				    
 				    <li><a href="/categories/MESS/" class="animsition-link">MESS<small>(16)</small></a></li>
 				    
 				    <li><a href="/categories/OTHER-IO-FILE/" class="animsition-link">OTHER - IO FILE<small>(1)</small></a></li>
@@ -243,6 +245,49 @@
 
 <section id="intro">
     <div class="container">
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2022/05/07/week10-6.1_pwnable_seethefile/">pwnable - seethe file</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-05-07T07:49:45.348Z" itemprop="datePublished">
+          2022-05-07
+      </time>
+    
+    
+    | 
+    <a href='/tags/pwnable/'>pwnable</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+    
+
+overview
+reverseopen​        打开一个文件，但是文件名不能包含flag.顺便在0x804B0C0上初始化了一块magic buf，此外，一次只能打开一个文件。
+read​        读取文件到magic buf。
+1result = fread(magicbuf, 0x18Fu, 1u, fp);
+
+write​        对flag的一些字符串进行过滤，然后put magic buf。
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/05/07/week10-6.1_pwnable_seethefile/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
         
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
@@ -618,50 +663,6 @@ bin中如图：
                     
                     <p class="pull-right readMore">
                         <a href="/2022/04/12/heap_learning_Tcache利用总结/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2022/04/12/week7-2.1md/">攻防世界 - one_man_army</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2022-04-12T02:02:09.112Z" itemprop="datePublished">
-          2022-04-12
-      </time>
-    
-    
-    | 
-    <a href='/tags/xctf/'>xctf</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-     
-
-
-
-overview
-libc是2.27。
-逆向增删查改。
-add没有什么特别的地方，纯纯的指针操作。没有结构体，没有保存指针到bss上。但是会对输入的size取低九位，虽然可以输入15位的size，但是生效的只有九位。所以只能add出 一个chunk。有点lonely wolf的味道。
-12345678printf(&quot;Size: &quot;); read(0, size_4, 0xFuLL); size_2
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2022/04/12/week7-2.1md/">Read More...</a>
                     </p>
                     
                 </div>
