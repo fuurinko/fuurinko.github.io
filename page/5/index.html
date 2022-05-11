@@ -74,6 +74,8 @@
 				    
 				    <li><a href="/categories/Generalization/" class="animsition-link">Generalization<small>(5)</small></a></li>
 				    
+				    <li><a href="/categories/HEAP/" class="animsition-link">HEAP<small>(1)</small></a></li>
+				    
 				    <li><a href="/categories/HEAP-ChunkOverlapping/" class="animsition-link">HEAP - ChunkOverlapping<small>(1)</small></a></li>
 				    
 				    <li><a href="/categories/HEAP-Fastbin-Attack/" class="animsition-link">HEAP - Fastbin Attack<small>(10)</small></a></li>
@@ -245,6 +247,92 @@
 
 <section id="intro">
     <div class="container">
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2022/03/20/stack_challenge_PicoCTF_2018_got-shell/">PicoCTF_2018_got-shell</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-03-19T17:15:01.790Z" itemprop="datePublished">
+          2022-03-20
+      </time>
+    
+    
+    | 
+    <a href='/tags/EZ-STACK/'>EZ_STACK</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+     
+
+PicoCTF_2018_got-shell​        虽然但是，这个题为什么这么pwncollege。guide的风格，函数的名字。。。完全一致好吧。
+​        可以写4字节，正好可以修改got表为后门函数。那就修改puts咯？
+
+
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/03/20/stack_challenge_PicoCTF_2018_got-shell/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2022/03/19/stack_learning_fmt/">格式化字符串</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-03-18T17:22:00.000Z" itemprop="datePublished">
+          2022-03-19
+      </time>
+    
+    
+    | 
+    <a href='/tags/FMT/'>FMT</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+     
+
+
+
+1）前言​        绿盟杯pwn1，格式化字符串+沙盒orw。保护全开。
+​        首先对于格式化字符串我的理解就不是很深刻，甚至从来没有完整地刷过一道格式化字符串的题目。
+​        所以碰到这道题，算是又给我敲了第nn个警钟。
+​        非常清晰地告诉我：我是垃圾。
+2）格式化字符串基本原理​        ctfwiki上的格式化字符串教程写得挺好的，可以参考。
+格式化字符串参数1%
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/03/19/stack_learning_fmt/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
         
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
@@ -571,90 +659,6 @@ wustctf2020_easyfastchecksec :
                     
                     <p class="pull-right readMore">
                         <a href="/2022/03/15/week3-1.1/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2022/03/14/ciscn_2019_your_pwn/">2019_your_pwn</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2022-03-14T10:30:34.805Z" itemprop="datePublished">
-          2022-03-14
-      </time>
-    
-    
-    | 
-    <a href='/tags/cisin/'>cisin</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-			
-				console.error("ReferenceError: value is not defined");
-			     
-
-​        因为是数组越界，每次只能读取一个字节，所以脚本需要循环，首先计算出偏移获取函数的地址，一般来说比较常规的思路是拿libc_start_main    ,只是这里的偏移比较远。
-​    ps： 关于如何在看起来比较混乱的栈中找到偏移量这件事
-​        首先要搞清楚函
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2022/03/14/ciscn_2019_your_pwn/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2022/03/12/mess_pwn中的python字符串处理问题/">pwn中的python字符串处理问题</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2022-03-12T02:50:45.551Z" itemprop="datePublished">
-          2022-03-12
-      </time>
-    
-    
-    | 
-    <a href='/tags/mess/'>mess</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-     
-
-​        最近在pwncollege做题的时候常常遇到接收的字符串处理不当的问题，故总结整理一下。
-字符串截取123456789p.recv()[0:6]		#截取1-5个字符串p.recv()[2:6]		#截取2-5个字符串p.recv()[:]		#截取完整字符串p.recv()[2:]#从第二个索引开始截取p.recv()[-4:]#截取最后四个字符
-
-​        
-字符串处理​        一般
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2022/03/12/mess_pwn中的python字符串处理问题/">Read More...</a>
                     </p>
                     
                 </div>
