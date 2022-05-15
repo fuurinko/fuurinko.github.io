@@ -239,7 +239,7 @@
         </div>
         <div class="col-md-8 col-md-offset-2">
       		
-    <div id="aplayer-jTLgfDcK" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div>
+    <div id="aplayer-xRCoTAft" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div>
 
 <h1><span id="overview">overview</span></h1><p>​        上一道题不给我调试符号，我还能找到类似的版本用，这里直接不告诉我版本了，真牛。</p>
 <p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-05-14%20%E4%B8%8B%E5%8D%882.44.17.png" alt="截屏2022-05-14 下午2.44.17"></p>
@@ -306,6 +306,7 @@
 <p>​        这样换一下size再重复一次，就构造出了两个tcahce的dup，然后我们先把第一个atoll改为printf。</p>
 <p>​        然后直接利用格式化字符串leak libc。</p>
 <p>​        leak之后直接再利用第二个atoll将got改为system。这里的利用就比较套路化，没有什么值得研究的了，就是需要注意在最后一次申请的时候是利用printf的返回值作为长度。</p>
+<p>​        pwnable的环境好恶心啊。</p>
 <p>​        </p>
 <p>​</p>
 
