@@ -8,7 +8,7 @@
 
 <head>
 
-  <title>hexo调教合集 | Rin</title>
+  <title>chunk_overlapping 学习 | Rin</title>
   <!-- Meta data -->
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -45,7 +45,10 @@
   
 
   <style>.col-md-8.col-md-offset-2.opening-statement img{display:none;}</style>
-<link rel="stylesheet" href="/css/prism.css" type="text/css"></head>
+<link rel="stylesheet" href="/css/prism.css" type="text/css"><link rel="stylesheet" href="/assets/css/APlayer.min.css" class="aplayer-style-marker">
+<script src="/assets/js/APlayer.min.js" class="aplayer-script-marker"></script>
+<script src="/assets/js/Meting.min.js" class="meting-script-marker"></script>
+</head>
 
 <!--
 <body class="post-template">
@@ -219,153 +222,59 @@
         <div class="row col-md-offset-2">
             <div class="col-md-8">
     			<span class="post-meta">
-      <time datetime="2022-03-26T04:12:52.291Z" itemprop="datePublished">
-          2022-03-26
+      <time datetime="2022-05-16T12:47:57.494Z" itemprop="datePublished">
+          2022-05-16
       </time>
     
     
     | 
-    <a href='/tags/mess/'>mess</a>
+    <a href='/tags/learning/'>learning</a>
     
     
 </span>
-                <h1>hexo调教合集</h1>
+                <h1>chunk_overlapping 学习</h1>
             </div>
         </div>
         <div class="col-md-8 col-md-offset-2">
-      		<p>​        如何实现一个好看且满足我所有需求的blog？</p>
-<h4><span id="高亮">高亮</span></h4><p>​    之前我以为是博客主题配置的问题（就是highlight对象的值的问题），但是无论用怎么样的方法都不太行。</p>
-<p>​    在研究代码高亮的过程中，我才知道原来有个项目叫highlight.js,里面有各种各样的代码高亮的css文件。</p>
-<p>​    一开始我是将博客原本的代码高亮的css文件替换成我想要的样式，但是无论替换成什么样式，博客中代码都是蓝色，清一色的蓝色。然后我意识到，这根本不是什么代码高亮的样式，这根本就是，没有代码高亮。</p>
-<p>​    然后我开始在网上寻找解决方案，搜索的关键词是hexo 无法显示代码高亮，辗转来回，找到了一篇文章。</p>
-<p>​    <a target="_blank" rel="noopener" href="https://igeek.cloud/2021/01/13/hexo%E4%B8%ADhighlight-js%E4%BB%A3%E7%A0%81%E9%AB%98%E4%BA%AE%E7%9A%84%E4%BF%AE%E6%94%B9%E6%96%B9%E6%B3%95/">hexo中highlight.js代码高亮的修改方法</a></p>
-<p>​    按照文章中的方法，我在主题layout文件夹中的_post.ejs文件随便找了个角落，把</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">COPY<span class="comment">&lt;!-- Highlight.js --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">&quot;stylesheet&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">href</span>=<span class="string">&quot;//highlightjs.org/static/demo/styles/night-owl.css&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line">    hljs.initHighlightingOnLoad();</span><br><span class="line">&lt;/script</span><br></pre></td></tr></table></figure>
+      		
+    <div id="aplayer-tPQZlCVP" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div> 
 
-<p>丢了进去。</p>
-<p>​    然后我的博客就成功的显示了代码高亮。</p>
-<p>​    高亮的样式可以通过更改<code>sytels/xx</code>来实现，具体的样式可以从Highlight.js官网找到。</p>
-<h4><span id="音乐播放器">音乐播放器</span></h4><p>​        步骤其实比较简单。</p>
-<h5><span id="1安装插件">1:安装插件</span></h5><p>​        ```</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --save hexo-tag-aplayer</span><br></pre></td></tr></table></figure>
+<h2><span id="从一个例子开始">从一个例子开始：</span></h2><p>​        先还原一个很适合的情景，pwnable的secret of my heart这道题。</p>
+<p>​        我们有一个非常好用的空字节溢出，2.23的libc，可以申请的size最大为0x100，heap base已知，没有更多特殊的限制，现在我们需要leak libc，同时需要double free来任意地址写，我们有什么好的思路？</p>
+<p>​        首先由于我们有一个空字节溢出，所以假如有三个连续的allocated chunk，可以先free掉第一个chunk，再申请回来，溢出一个空字节到下面的堆块的size位，覆盖previnuse位</p>
+<p>​        </p>
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-05-15%20%E4%B8%8B%E5%8D%8811.26.48.png" alt="截屏2022-05-15 下午11.26.48"></p>
+<p>​        例如这个情况。</p>
+<p>​        所以如果我们这时候free 1，会发生什么情况呢？不难想象，通常情况下我们free chunk1，会将这个bin放入unsorted bin中，但是由于没有uaf，所以既不能double free也不能leak。</p>
+<p>​        然而实际情况是这样的：</p>
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-05-16%20%E4%B8%8B%E5%8D%889.03.51.png" alt="截屏2022-05-16 下午9.03.51"></p>
+<p>​        可以看到原本的-0x20chunk和0x100chunk合并成了一个0x120的chunk，并被放入了bin中，而0x100的chunk纹丝不动。</p>
+<p>​        这就这涉及到free chunk的合并机制了。这里我们用的是向前合并。</p>
+<h2><span id="向前合并">向前合并</span></h2><h3><span id="原理">原理</span></h3><p>​        当free chunk时，首先根据当前chunk的prev inuse位判断前一个chunk（物理相邻）是否是free状态，如果是，则会触发unlink。prev size则用来计算上一个chunk的地址（以及大小），所以我们可以发现这里chunk是否合并，如何合并，完全可以被我们控制。</p>
+<p>​        所以在我们之前的例子中，当我们free 这个0x100chunk，此时我们构造chunk的prev size为0x20，那么0x100chunk就认定其前一个chunk也是free chunk，因此需要进行合并。</p>
+<p>​        合并的过程需要unlink将其从free list中取出，而这个过程有一定的check，首先就要求</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chunksize(P) = prev_size (next_chunk(P))</span><br></pre></td></tr></table></figure>
 
+<p>​        也就是下一个chunk的prev size需要与当前chunksize相等。这里的当前chunk实际是我们正在free chunk的上一个chunk，在例子中就是chunk0，其size需要等于chunk1 prev size，也就是20。</p>
+<p>​            然而我们仅仅伪造这个是不够的。我们还需要满足</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(FD-&gt;bk = P || BK-&gt;fd = P)</span><br></pre></td></tr></table></figure>
 
+<p>​        这里p就是chunk0，所以需要满足这个条件，就可以吧p的fd和bk全部设为自己，那么不管怎么指都能满足条件。</p>
+<p>​        然后进行unlink，但是由于fd 和bk都是p，所以这里虽然size会变化，但是内存分布是没有变化的。</p>
+<p>​        此外，因为向前合并了，所以chunk1被认为是freechunk，chunk2的prevsize位以及prev inuse位就会为0x120和0x70。</p>
+<p>​        此时继续申请0x68chunk，分割unsroted bin。同时由于chunk overlap，这个0x68既是原本0x20chunk0，又是合并后的chunk1.这样就形成了double free。接着就比较好搞了。</p>
+<p>​        总结一下，首先通过空字节溢出，构造unsorted bin，这个题相对来说特殊一些，然后通过堆叠以及double free构造两个重合的指针。</p>
+<p>​        </p>
+<p>​</p>
 
-
-
-<h5><span id="2更改配置">2:更改配置</span></h5><p>​        在hexo主题的config文件中增加</p>
-<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">aplayer:</span></span><br><span class="line">  <span class="attr">meting:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
-
-
-
-
-
-<h5><span id="3在正文中添加tag">3:在正文中添加tag</span></h5><p>例子</p>
-<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-26%20%E4%B8%8B%E5%8D%889.47.51.png" alt="截屏2022-03-26 下午9.47.51"></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;% meting &quot;7342554262&quot; &quot;netease&quot; &quot;playlist&quot; &quot;theme:#555&quot; &quot;mutex:true&quot; &quot;listmaxheight:340px&quot; &quot;preload:auto&quot; %&#125; </span><br></pre></td></tr></table></figure>
-
-<table>
-<thead>
-<tr>
-<th align="left">选项</th>
-<th>默认值</th>
-<th>描述</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">id</td>
-<td><strong>必须值</strong></td>
-<td>歌曲 id / 播放列表 id / 相册 id / 搜索关键字</td>
-</tr>
-<tr>
-<td align="left">server</td>
-<td><strong>必须值</strong></td>
-<td>音乐平台: <code>netease</code>, <code>tencent</code>, <code>kugou</code>, <code>xiami</code>, <code>baidu</code></td>
-</tr>
-<tr>
-<td align="left">type</td>
-<td><strong>必须值</strong></td>
-<td><code>song</code>, <code>playlist</code>, <code>album</code>, <code>search</code>, <code>artist</code></td>
-</tr>
-<tr>
-<td align="left">fixed</td>
-<td><code>false</code></td>
-<td>开启固定模式</td>
-</tr>
-<tr>
-<td align="left">mini</td>
-<td><code>false</code></td>
-<td>开启迷你模式</td>
-</tr>
-<tr>
-<td align="left">loop</td>
-<td><code>all</code></td>
-<td>列表循环模式：<code>all</code>, <code>one</code>,<code>none</code></td>
-</tr>
-<tr>
-<td align="left">order</td>
-<td><code>list</code></td>
-<td>列表播放模式： <code>list</code>, <code>random</code></td>
-</tr>
-<tr>
-<td align="left">volume</td>
-<td>0.7</td>
-<td>播放器音量</td>
-</tr>
-<tr>
-<td align="left">lrctype</td>
-<td>0</td>
-<td>歌词格式类型</td>
-</tr>
-<tr>
-<td align="left">listfolded</td>
-<td><code>false</code></td>
-<td>指定音乐播放列表是否折叠</td>
-</tr>
-<tr>
-<td align="left">storagename</td>
-<td><code>metingjs</code></td>
-<td>LocalStorage 中存储播放器设定的键名</td>
-</tr>
-<tr>
-<td align="left">autoplay</td>
-<td><code>true</code></td>
-<td>自动播放，移动端浏览器暂时不支持此功能</td>
-</tr>
-<tr>
-<td align="left">mutex</td>
-<td><code>true</code></td>
-<td>该选项开启时，如果同页面有其他 aplayer 播放，该播放器会暂停</td>
-</tr>
-<tr>
-<td align="left">listmaxheight</td>
-<td><code>340px</code></td>
-<td>播放列表的最大长度</td>
-</tr>
-<tr>
-<td align="left">preload</td>
-<td><code>auto</code></td>
-<td>音乐文件预载入模式，可选项： <code>none</code>, <code>metadata</code>, <code>auto</code></td>
-</tr>
-<tr>
-<td align="left">theme</td>
-<td><code>#ad7a86</code></td>
-<td>播放器风格色彩设置</td>
-</tr>
-</tbody></table>
-<h4><span id="一些报错">一些报错</span></h4>
             <div class="clearfix"></div>
             <hr class="nogutter">
         </div>
         <nav class="m-pagination col-md-8 col-md-offset-2 col-sm-24" role="pagination">
     
-    <a class="pull-left" href="../../28/stack_ret2shellcode/" style="float: left;">
-        ← ret2shellcode
-    </a>
     
-    
-    <a class="pull-right" href="../../25/heap_hof_bcloud/">
-        bcloud →
+    <a class="pull-right" href="../../15/week11_7.2_pawnable_secret_of_my_heart/">
+        pawnable - secret_of_my_heart →
     </a>
     
 </nav>
