@@ -105,6 +105,8 @@
 				    
 				    <li><a href="/categories/PWN-COLLEGE/" class="animsition-link">PWN.COLLEGE<small>(11)</small></a></li>
 				    
+				    <li><a href="/categories/STACK/" class="animsition-link">STACK<small>(1)</small></a></li>
+				    
 				    <li><a href="/categories/STACK-ARRAY-OUT-OF-BOUNDS/" class="animsition-link">STACK - ARRAY OUT OF BOUNDS<small>(1)</small></a></li>
 				    
 				    <li><a href="/categories/STACK-Canary/" class="animsition-link">STACK - Canary<small>(1)</small></a></li>
@@ -237,7 +239,7 @@
         </div>
         <div class="col-md-8 col-md-offset-2">
       		
-    <div id="aplayer-tPQZlCVP" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div> 
+    <div id="aplayer-PMTBHpqu" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div> 
 
 <h2><span id="从一个例子开始">从一个例子开始：</span></h2><p>​        先还原一个很适合的情景，pwnable的secret of my heart这道题。</p>
 <p>​        我们有一个非常好用的空字节溢出，2.23的libc，可以申请的size最大为0x100，heap base已知，没有更多特殊的限制，现在我们需要leak libc，同时需要double free来任意地址写，我们有什么好的思路？</p>
@@ -264,6 +266,8 @@
 <p>​        此外，因为向前合并了，所以chunk1被认为是freechunk，chunk2的prevsize位以及prev inuse位就会为0x120和0x70。</p>
 <p>​        此时继续申请0x68chunk，分割unsroted bin。同时由于chunk overlap，这个0x68既是原本0x20chunk0，又是合并后的chunk1.这样就形成了double free。接着就比较好搞了。</p>
 <p>​        总结一下，首先通过空字节溢出，构造unsorted bin，这个题相对来说特殊一些，然后通过堆叠以及double free构造两个重合的指针。</p>
+<h2><span id="向后合并">向后合并</span></h2><p>​        刚刚我们研究了前向合并的解法，当然这道题作为一个比较经典的chunk overlapping题，也可以进行后向合并。</p>
+<p>​        </p>
 <p>​        </p>
 <p>​</p>
 
@@ -271,6 +275,10 @@
             <hr class="nogutter">
         </div>
         <nav class="m-pagination col-md-8 col-md-offset-2 col-sm-24" role="pagination">
+    
+    <a class="pull-left" href="../../17/week12_2_pawnable_spirited_away/" style="float: left;">
+        ← pawnable - spirited_away
+    </a>
     
     
     <a class="pull-right" href="../../15/week11_7.2_pawnable_secret_of_my_heart/">

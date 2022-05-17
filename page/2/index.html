@@ -102,6 +102,8 @@
 				    
 				    <li><a href="/categories/PWN-COLLEGE/" class="animsition-link">PWN.COLLEGE<small>(11)</small></a></li>
 				    
+				    <li><a href="/categories/STACK/" class="animsition-link">STACK<small>(1)</small></a></li>
+				    
 				    <li><a href="/categories/STACK-ARRAY-OUT-OF-BOUNDS/" class="animsition-link">STACK - ARRAY OUT OF BOUNDS<small>(1)</small></a></li>
 				    
 				    <li><a href="/categories/STACK-Canary/" class="animsition-link">STACK - Canary<small>(1)</small></a></li>
@@ -247,6 +249,49 @@
 
 <section id="intro">
     <div class="container">
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2022/04/29/week9_5.1_pwnable---apple store/">pwnable - applestore</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-04-29T10:12:32.969Z" itemprop="datePublished">
+          2022-04-29
+      </time>
+    
+    
+    | 
+    <a href='/tags/pwnable/'>pwnable</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+    
+
+overview​        怎么这么多32位的。
+
+​        这个题我去年暑假的时候就做过，但是当时明显超出了我的能力范围，属于是wp都看不懂。不过pwnable这几个题目前来说我都能独立完成，所以这个也说不定。
+​        总觉得我现在做题的类型很怪。
+reverse​        还是没有去除符号表，好。我依稀记得去年八月的时候我觉得这个题非常难逆，然后是实现了一个双链表。
+main​      
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/04/29/week9_5.1_pwnable---apple store/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
         
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
@@ -628,48 +673,6 @@ overviewpartial relro，没有canary，栈溢出。
                     
                     <p class="pull-right readMore">
                         <a href="/2022/04/11/week7-1.1/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2022/04/10/heap_learning_io_file/">IO_FILE学习</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2022-04-10T14:44:00.000Z" itemprop="datePublished">
-          2022-04-10
-      </time>
-    
-    
-    | 
-    <a href='/tags/io-file/'>io_file</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-     
-
-
-
-overview大致原理​        glibc定义了_IO_FILE这样一个结构体来管理io file。io_file结构体里定义了一堆相关的变量，但是真正关键的是其中包含的_IO_FILE_plus结构。 libc2.23 版本下，32 位的 vtable 偏移为 0x94，64 位偏移为 0xd8。
-​        结构源码如下：
-12345struct _IO_FILE_plus&#123;    _I
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2022/04/10/heap_learning_io_file/">Read More...</a>
                     </p>
                     
                 </div>

@@ -102,6 +102,8 @@
 				    
 				    <li><a href="/categories/PWN-COLLEGE/" class="animsition-link">PWN.COLLEGE<small>(11)</small></a></li>
 				    
+				    <li><a href="/categories/STACK/" class="animsition-link">STACK<small>(1)</small></a></li>
+				    
 				    <li><a href="/categories/STACK-ARRAY-OUT-OF-BOUNDS/" class="animsition-link">STACK - ARRAY OUT OF BOUNDS<small>(1)</small></a></li>
 				    
 				    <li><a href="/categories/STACK-Canary/" class="animsition-link">STACK - Canary<small>(1)</small></a></li>
@@ -247,6 +249,49 @@
 
 <section id="intro">
     <div class="container">
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2022/05/17/week12_2_pawnable_spirited_away/">pawnable - spirited_away</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-05-17T02:47:48.848Z" itemprop="datePublished">
+          2022-05-17
+      </time>
+    
+    
+    | 
+    <a href='/tags/pwnable/'>pwnable</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+    
+
+overview​    栈题。
+reverse有一点诡异。
+整体的逻辑非常清晰简单，但是有疑惑的地方。
+12345if ( choice == &#x27;Y&#x27; || choice == &#x27;y&#x27; )&#123;  free(name);                               // UAF??  goto LABEL_2;&#125;
+
+​        这里将name 
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/05/17/week12_2_pawnable_spirited_away/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
         
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
@@ -611,49 +656,6 @@ write​        对flag的一些字符串进行过滤，然后put magic buf。
                     
                     <p class="pull-right readMore">
                         <a href="/2022/04/30/2022年四月/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2022/04/29/week9_5.1_pwnable---apple store/">pwnable - applestore</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2022-04-29T10:12:32.969Z" itemprop="datePublished">
-          2022-04-29
-      </time>
-    
-    
-    | 
-    <a href='/tags/pwnable/'>pwnable</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-    
-
-overview​        怎么这么多32位的。
-
-​        这个题我去年暑假的时候就做过，但是当时明显超出了我的能力范围，属于是wp都看不懂。不过pwnable这几个题目前来说我都能独立完成，所以这个也说不定。
-​        总觉得我现在做题的类型很怪。
-reverse​        还是没有去除符号表，好。我依稀记得去年八月的时候我觉得这个题非常难逆，然后是实现了一个双链表。
-main​      
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2022/04/29/week9_5.1_pwnable---apple store/">Read More...</a>
                     </p>
                     
                 </div>
