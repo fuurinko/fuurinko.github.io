@@ -104,7 +104,7 @@
 				    
 				    <li><a href="/categories/PWN-COLLEGE/" class="animsition-link">PWN.COLLEGE<small>(11)</small></a></li>
 				    
-				    <li><a href="/categories/STACK/" class="animsition-link">STACK<small>(1)</small></a></li>
+				    <li><a href="/categories/STACK/" class="animsition-link">STACK<small>(2)</small></a></li>
 				    
 				    <li><a href="/categories/STACK-ARRAY-OUT-OF-BOUNDS/" class="animsition-link">STACK - ARRAY OUT OF BOUNDS<small>(1)</small></a></li>
 				    
@@ -251,6 +251,49 @@
 
 <section id="intro">
     <div class="container">
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2022/03/30/week5-3.1/">gyctf_2020_force</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-03-30T03:21:26.675Z" itemprop="datePublished">
+          2022-03-30
+      </time>
+    
+    
+    | 
+    <a href='/tags/hof/'>hof</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+     
+
+overview
+好绿。
+逆向​        程序比较简约，只有add和put两个功能。逻辑也不复杂。漏洞的话也比较明显，一个是程序直接把heap base白给了。另一个是虽然询问了size的大小，但是在实际add的时候完全没有根据size分配chunk,并且可以分配很大size的chunk。
+​        
+​        导致我们可以很轻易地修改top chunk的size。        
+​       
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/03/30/week5-3.1/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
         
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
@@ -605,46 +648,6 @@ PicoCTF_2018_got-shell​        虽然但是，这个题为什么这么pwncolle
                     
                     <p class="pull-right readMore">
                         <a href="/2022/03/19/stack_learning_fmt/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2022/03/17/mess_ida的结构体识别/">ida的结构体识别</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2022-03-17T12:35:07.220Z" itemprop="datePublished">
-          2022-03-17
-      </time>
-    
-    
-    | 
-    <a href='/tags/mess/'>mess</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-     
-
-0​        最近发现做堆题最慢的不是调试，而是在逆向的过程中寻找思路，而一般堆题的菜单都是由结构体管理，所以如果能在ida中快速方便地查看结构体相关的指针操作就再好不过了。然而一般来说ida是无法直接识别结构体这种比较高级的数据结构的，所以需要我们手动去创建并修改。
-1​        首先可以在idastructures的界面手动添加一些结构体
-​        右键空白处，选择add struct type，
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2022/03/17/mess_ida的结构体识别/">Read More...</a>
                     </p>
                     
                 </div>
