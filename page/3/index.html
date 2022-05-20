@@ -74,6 +74,8 @@
 				    
 				    <li><a href="/categories/Generalization/" class="animsition-link">Generalization<small>(5)</small></a></li>
 				    
+				    <li><a href="/categories/HEAP/" class="animsition-link">HEAP<small>(1)</small></a></li>
+				    
 				    <li><a href="/categories/HEAP-ChunkOverlapping/" class="animsition-link">HEAP - ChunkOverlapping<small>(3)</small></a></li>
 				    
 				    <li><a href="/categories/HEAP-Fastbin-Attack/" class="animsition-link">HEAP - Fastbin Attack<small>(10)</small></a></li>
@@ -251,6 +253,52 @@
 
 <section id="intro">
     <div class="container">
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2022/04/12/heap_learning_Tcache利用总结/">Tcache利用总结</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-04-12T09:47:45.264Z" itemprop="datePublished">
+          2022-04-12
+      </time>
+    
+    
+    | 
+    <a href='/tags/learning/'>learning</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+     
+
+​        最近碰到的tcache比较多，人都给整傻了。故总结整理一下。
+tcache chunk的freefree一个普通的tcache bin，一般情况下会将fd和bk位置为0和tcache struct data ptr。
+这是一个普通的chunk
+free它。
+
+可以看到fd位为tcache strut data的指针。bk位为0（2.29的话也有key）
+
+bin中如图：
+
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/04/12/heap_learning_Tcache利用总结/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
         
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
@@ -624,50 +672,6 @@ re123456ssize_t vuln()&#123;  char buf[40]; // [esp+0h] [ebp-28h] BYREF  return 
                     
                     <p class="pull-right readMore">
                         <a href="/2022/04/08/幻想曲-02-春夜/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2022/04/08/pwn.college_RaceCondition/">RaceCondition.md</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2022-04-07T17:11:22.484Z" itemprop="datePublished">
-          2022-04-08
-      </time>
-    
-    
-    | 
-    <a href='/tags/pwncollege/'>pwncollege</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-     
-
-
-
-
-
-0​        感觉pwncollege的堆题意思并不是很大，直接做条件竞争娱乐一下。
-level1​        笑死了，根本没学过，不会做。
-
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2022/04/08/pwn.college_RaceCondition/">Read More...</a>
                     </p>
                     
                 </div>
