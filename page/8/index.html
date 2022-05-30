@@ -124,6 +124,8 @@
 				    
 				    <li><a href="/categories/STACK-SROP/" class="animsition-link">STACK - SROP<small>(1)</small></a></li>
 				    
+				    <li><a href="/categories/STACK-Shellcode/" class="animsition-link">STACK - Shellcode<small>(1)</small></a></li>
+				    
 				    <li><a href="/categories/STACK-Stack-Overflow/" class="animsition-link">STACK - Stack Overflow<small>(2)</small></a></li>
 				    
 				    <li><a href="/categories/STACK-ret2dlreslove/" class="animsition-link">STACK - ret2dlreslove<small>(1)</small></a></li>
@@ -253,6 +255,101 @@
 
 <section id="intro">
     <div class="container">
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2022/02/15/pwn.college_ReverseEngineering/">ReverseEngineering</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-02-14T20:11:23.367Z" itemprop="datePublished">
+          2022-02-15
+      </time>
+    
+    
+    | 
+    <a href='/tags/pwncollege/'>pwncollege</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+     
+
+
+
+
+
+
+
+Level1.0
+Level1.1​        同上，一样的做法。
+Level2.0​        交换idx3和idx4的位置
+Level2.1​        交换idx1和idx4.
+​        ps：
+
+​        输入五个字符，转化为ascii后以int类型贮存，从栈布局可以看出v10大小是4个字，所以第五个字被储存在v11。
+Level3.0​        reverse
+Le
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/02/15/pwn.college_ReverseEngineering/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2022/02/14/pwn.college_Debugging Refresher/">Debugging Refresher</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-02-14T08:16:26.477Z" itemprop="datePublished">
+          2022-02-14
+      </time>
+    
+    
+    | 
+    <a href='/tags/pwncollege/'>pwncollege</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+     
+
+Level1​        直接r，然后c到断点。
+Level2​        p/x $r12
+Level3​        不好描述，可以根据后面的正确随机数在栈中找到对应的位置，然后重新执行并输入。
+Level4​        。。。。
+Level5gdb脚本。
+
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/02/14/pwn.college_Debugging Refresher/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
         
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
@@ -587,96 +684,6 @@ fastbin​    长度在32-160(32位系统是16-80)的free堆块。通过fastbinl
                     
                     <p class="pull-right readMore">
                         <a href="/2021/11/22/other_openstack学习笔记/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2021/11/18/stack_challenge_pwnable-calc/">pwnable-calc</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2021-11-18T02:30:24.678Z" itemprop="datePublished">
-          2021-11-18
-      </time>
-    
-    
-    | 
-    <a href='/tags/pwnable/'>pwnable</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-     
-
-逆向​        程序实现了一个简单的计算器功能。运算有加减乘除四种。
-​        
-​        并且程序再次自带计时功能，需要patch。
-​        
-​        静态链接，所以肯定不能用ret2libc那一套，只能试图ROP一下。
-​        程序主要功能通过get_expr和calculate（原本不叫这个）两个函数实现。
-​        get_expr主要用于定位我们输入的
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2021/11/18/stack_challenge_pwnable-calc/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2021/11/11/stack_learning_Seccomp机制学习/">Seccomp机制学习</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2021-11-11T13:12:47.210Z" itemprop="datePublished">
-          2021-11-11
-      </time>
-    
-    
-    | 
-    <a href='/tags/pwnable/'>pwnable</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-     
-
-1）Seccomp基础Seccomp简介​        就像ALSR，NX这样，Seccomp也是linux内核的一种安全机制。这种保护机制会禁用某些系统调用，有效避免了越权行为的发生。
-启动Seccomp​        如果要编写调用Seccomp的程序，需要先安装相应的头文件。
-1apt install libseccomp-dev libseccomp2 seccomp
-
-
-
-
-
-Seccomp的模式以及参数比
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2021/11/11/stack_learning_Seccomp机制学习/">Read More...</a>
                     </p>
                     
                 </div>

