@@ -71,7 +71,7 @@
         		<a class="sb-toggle-submenu">Categories<span class="sb-caret"></span></a>
             	<ul class="sb-submenu">
 				  	
-				    <li><a href="/categories/AUDITION/" class="animsition-link">AUDITION<small>(9)</small></a></li>
+				    <li><a href="/categories/AUDITION/" class="animsition-link">AUDITION<small>(10)</small></a></li>
 				    
 				    <li><a href="/categories/CSAPP-LAB/" class="animsition-link">CSAPP LAB<small>(1)</small></a></li>
 				    
@@ -243,13 +243,13 @@
         </div>
         <div class="col-md-8 col-md-offset-2">
       		
-    <div id="aplayer-zkqaMkeC" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div>
+    <div id="aplayer-olUuXOUe" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div>
 
 <p>给分享会准备的一个简单的复现。</p>
 <h2><span id="太长不看">太长不看</span></h2><ol>
 <li>逆向确定漏洞点-uaf以及越界读写</li>
 <li>glibc2.32指针异或绕过</li>
-<li>glibc2.34取消malloc free hook的利用方式</li>
+<li>glibc2.34取消malloc free hook后的利用方式</li>
 </ol>
 <h2><span id="check">check</span></h2><p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-06-11%20%E4%B8%8B%E5%8D%883.35.04.png" alt="截屏2022-06-11 下午3.35.04"></p>
 <p>​        依旧是保护全开。这里比较不好的地方就是libc的版本比较高。2.34有一个众所周知的更新就是去掉了<code>malloc_hook</code>以及<code>free_hook</code>。所以劫持程序流的方式也不再是从前的无脑打hook了。像湖湘杯的house of emma是利用fsop，有的题也可以找到exit hook来打。</p>
@@ -272,15 +272,13 @@
 <p>​        不过很显然这里有uaf。</p>
 <h2><span id="利用">利用</span></h2><p>​        总结一下逆向过程中发现的漏洞点以及疑点。</p>
 <p>​        首先就是free的uaf，简单直白，这个点的利用涉及到后面的任意地址写。</p>
-<p>​        其次是idx的大小可以自由规定，相当于一个越界读写。比如我们在设置idx值的时候设置为一个特别大的数，比如说0x2000000，那么这个size肯定已经需要mmap来申请libc上的地址了，所以这时候ptr实际是一个libc的偏移基准值，我们就可以通过show出构造好的idx来leak libc。此外也正是因为这里idx_max特别大，所以三个功能中对于idx的合法性检测基本都可以无视。</p>
+<p>​        其次是idx的大小可以自由规定，相当于一个越界读写。比如我们在设置idx值的时候设置为一个特别大的数，比如说0x20000000，那么这个size肯定已经需要mmap来申请libc上的地址了，所以这时候ptr实际是一个libc的偏移基准值，我们就可以通过show出构造好的idx来leak libc。此外也正是因为这里idx_max特别大，所以三个功能中对于idx的合法性检测基本都可以无视。</p>
 <p>​        所以这里第一步就是leak libc。</p>
 <h3><span id="leak-libc">leak libc</span></h3><p>​        为了确定思路的合理性，先测试一下。</p>
 <p>确实能够打印出东西，那么这里我们需要了leak libc。所以需要选择一个位于libc，但内容也为libc地址的地址，种类我们选择<code>main_arena</code>。</p>
 <p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-06-11%20%E4%B8%8B%E5%8D%888.46.24.png" alt="截屏2022-06-11 下午8.46.24"></p>
 <p>​        关于main_arena的偏移如何找，可以直接将libc用ida打开，找到<code>malloc_trim</code>函数，然后</p>
-<p>​        （偷图）</p>
-<p>​        <img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-06-11%20%E4%B8%8B%E5%8D%888.55.43.png" alt="截屏2022-06-11 下午8.55.43"></p>
-<p>​        </p>
+<p>​        （偷图）        <img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-06-11%20%E4%B8%8B%E5%8D%888.55.43.png" alt="截屏2022-06-11 下午8.55.43">`</p>
 <p>​        这里的偏移是<code>0x218C60</code>。</p>
 <p>​        但是加上偏移以后实际地址对应的值是0，但是下面一片地址倒是有值，干脆就用他们来计算了。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">off1 = <span class="number">0x7ffff7fa9ce0</span>-<span class="number">0x7ffff7b8d000</span></span><br><span class="line">off2 = <span class="number">0x7ffff7fa9ce0</span>-<span class="number">0x7ffff7d91000</span></span><br><span class="line"></span><br><span class="line">p.recvuntil(<span class="string">&quot;A small notebook keeps everything&quot;</span>)</span><br><span class="line">p.recvuntil(<span class="string">&quot;How many pages your notebook will be? :&quot;</span>)</span><br><span class="line"></span><br><span class="line">p.sendline(<span class="built_in">str</span>(<span class="number">0x20040000</span>))</span><br><span class="line">show(off1/<span class="number">8</span>)</span><br><span class="line">p.recvuntil(<span class="string">&quot;Content: &quot;</span>)</span><br><span class="line">libcbase = u64(p.recv(<span class="number">6</span>).ljust(<span class="number">8</span>,<span class="string">b&#x27;\x00&#x27;</span>)) - off2 + <span class="number">0x10</span>   </span><br><span class="line">system = libcbase + libc.sym[<span class="string">&#x27;system&#x27;</span>]</span><br><span class="line">log.info(<span class="built_in">hex</span>(libcbase))</span><br></pre></td></tr></table></figure>
@@ -306,14 +304,12 @@
 <p>2.31前可以直接套公式，exit hook是</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">libc-2.23 : 0×5f0040+3848 </span><br><span class="line">libc-2.27 : 0×61b060 + 3840</span><br></pre></td></tr></table></figure>
 
-
-
 <p>2.31后</p>
 <p><code>libc2.31 9.2</code>下偏移为0x1ED608</p>
 <p>libc2.31 9.7只能利用fsop。</p>
 <p>而这里其实与2，31后9.2的情况类似，对应libc段是可写的。</p>
 <p>其他情况的原理就不分析了，这里主要看一下当前libc的exit hook 。</p>
-<p>其实也是通过<code>__run_exit_handlers</code>调用<code>__libc_atexit</code>中的函数，而`__libc_atexit是libc中的一个段，所以可以找到对应的偏移。</p>
+<p>其实也是通过<code>__run_exit_handlers</code>调用<code>__libc_atexit</code>中的函数，而<code>__libc_atexit</code>是libc中的一个段，所以可以找到对应的偏移。</p>
 <p>这里我寻找的方式是ida,偏移为0x21A6C8。具体方式是通过搜索定位到<code>fpclose</code>-&gt;<code>fpclose(0)</code>，找到后者对应的偏移。</p>
 <p>注意到这里偏移为0x21A6C8，但是实际exp编写的时候是0x21A6C0。有一个八字节的偏差。这里其实就是一个16字节对齐的问题，如果是c8就会报错，所以改成c0，这里随便怎么改其实只要对齐然后不要差得超过0x30就行。比如c8 -0x10 ，然后多来几个个onegadget效果也是一样的。</p>
 <p>这里具体的原理就不介绍了，感兴趣可以去搜一下。</p>
@@ -338,6 +334,10 @@
             <hr class="nogutter">
         </div>
         <nav class="m-pagination col-md-8 col-md-offset-2 col-sm-24" role="pagination">
+    
+    <a class="pull-left" href="../../21/vivi-%E6%B7%B1%E5%A4%9C%E9%94%90%E8%AF%84%E6%8B%BF%E4%B8%8D%E6%8B%BF/" style="float: left;">
+        ← 深夜锐评拿不拿
+    </a>
     
     
     <a class="pull-right" href="../../../05/30/ciscn_2022_login/">
