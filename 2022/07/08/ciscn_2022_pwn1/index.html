@@ -8,7 +8,7 @@
 
 <head>
 
-  <title>pwn1 | Rin</title>
+  <title>pwn1（已弃） | Rin</title>
   <!-- Meta data -->
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -240,12 +240,12 @@
     
     
 </span>
-                <h1>pwn1</h1>
+                <h1>pwn1（已弃）</h1>
             </div>
         </div>
         <div class="col-md-8 col-md-offset-2">
       		
-    <div id="aplayer-ZXVBhauJ" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div>
+    <div id="aplayer-kWTOvYJu" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div>
 
 <p>一个简单的复建，题目是今年西南赛区pwn1，是一个很常规的栈的rop，套了orw。</p>
 <h2><span id="逆向">逆向</span></h2><p>​        这个题的逆向不算复杂，同样也是操作符控制指令的形式，输多少个操作符就执行多少次指令，具体的过程就不写了。</p>
@@ -256,12 +256,12 @@
 <p>​        由于有沙箱，所以直接考虑rop+orw，这一段不算太复杂，只需要找对地址套板子。</p>
 <h2><span id="利用">利用</span></h2><p>​        大体的思路就是利用越界读leak，再用越界写将返回地址改为rop链。看起来非常简单，但是还是有很多细节需要注意。由于是栈上orw，首先读入flag的地址需要被leak，这就要求我们leak libc和stack。</p>
 <p>​        首先leak libc。</p>
-<p>​                <img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-07-08%20%E4%B8%8B%E5%8D%882.28.17.png" alt="截屏2022-07-08 下午2.28.17"></p>
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-07-08%20%E4%B8%8B%E5%8D%882.28.17.png" alt="截屏2022-07-08 下午2.28.17"></p>
 <p>​        buf是一个栈上的数组。</p>
 <p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-07-08%20%E4%B8%8B%E5%8D%882.28.28.png" alt="截屏2022-07-08 下午2.28.28"></p>
 <p>​        这里则打印对应栈上的数据，每次只读1个字节。</p>
 <p>​        呜呜，现在我的旁边有一只猫猫，猫猫在看我打字。</p>
-<p>​        当初做题的时候被这里卡住了，其实思路一直有但是不知道为什么，buf明明是在栈上的地址，但是无论怎么都读不到，我感觉很有可能是我的环境问题。</p>
+<p>​        不是很想做了，就这样吧，真的不喜欢这种无聊栈题。</p>
 <p>​</p>
 
             <div class="clearfix"></div>
