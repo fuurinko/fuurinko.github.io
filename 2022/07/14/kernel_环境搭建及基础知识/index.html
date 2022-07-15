@@ -8,7 +8,7 @@
 
 <head>
 
-  <title>环境搭建 | Rin</title>
+  <title>kernel环境+基础知识 | Rin</title>
   <!-- Meta data -->
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -97,6 +97,8 @@
 				    <li><a href="/categories/HEAP-sourcecode-analysis/" class="animsition-link">HEAP - sourcecode analysis<small>(1)</small></a></li>
 				    
 				    <li><a href="/categories/IO-FILE/" class="animsition-link">IO_FILE<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/KERNEL/" class="animsition-link">KERNEL<small>(1)</small></a></li>
 				    
 				    <li><a href="/categories/MESS/" class="animsition-link">MESS<small>(16)</small></a></li>
 				    
@@ -229,12 +231,18 @@
           2022-07-14
       </time>
     
+    
+    | 
+    <a href='/tags/KERNEL/'>KERNEL</a>
+    
+    
 </span>
-                <h1>环境搭建</h1>
+                <h1>kernel环境+基础知识</h1>
             </div>
         </div>
         <div class="col-md-8 col-md-offset-2">
-      		<h2><span id="环境搭建">环境搭建</span></h2><p>一般来说教程都会要求我们编译一个内核，安装一个busybox以及qemu，但是实际做题需要的环境只有qemu，因为题目会提供一个内核镜像，而busybox也不是必须，但是在这里还是都搭建一下。</p>
+      		<p>% meting “7342554262” “netease” “playlist” “theme:#555” “mutex:true” “listmaxheight:340px” “preload:auto” %}     </p>
+<h4><span id></span></h4><h2><span id="环境搭建">环境搭建</span></h2><p>一般来说教程都会要求我们编译一个内核，安装一个busybox以及qemu，但是实际做题需要的环境只有qemu，因为题目会提供一个内核镜像，而busybox也不是必须，但是在这里还是都搭建一下。</p>
 <h3><span id="qemu">qemu</span></h3><p>一般来说elf的话只需要用包管理器下载：<br><code>sudo apt install qemu-system</code></p>
 <p>有特殊需求可以用源码编译。但是暂时就省去这一步了。</p>
 <h3><span id="kernel">kernel</span></h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">curl -O -L https://mirrors.tuna.tsinghua.edu.cn/kernel/v5.x/linux-5.9.8.tar.xz</span><br><span class="line">unxz linux-5.9.8.tar.xz</span><br><span class="line">tar -xf linux-5.9.8.tar</span><br><span class="line"><span class="built_in">cd</span> linux-5.9.8</span><br><span class="line">make menuconfig</span><br></pre></td></tr></table></figure>
@@ -261,6 +269,42 @@
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 </span><br><span class="line">	-initrd_rootfs.cpio </span><br><span class="line">	-kernel bzImage</span><br><span class="line">	-append &#x27;console = ttyS0 root = /dev/ram oops = panic panic = 1&#x27;</span><br><span class="line">	-enable-kvm </span><br><span class="line">	-monitor /dev/null </span><br><span class="line">	-m 64M --nographic  </span><br><span class="line">	-smp cores=1,threads=1 </span><br><span class="line">	-cpu kvm64,+smep</span><br></pre></td></tr></table></figure>
 
 <p>这里分别解释一下。</p>
+<table>
+<thead>
+<tr>
+<th>kernel</th>
+<th>指定内核镜像文件的路径</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>ignited</td>
+<td>设置内核启动的内存文件系统，也就是指定我们的<code>rootfs.cpio</code> 文件。</td>
+</tr>
+<tr>
+<td>append</td>
+<td>附加选项。<code>console=ttyS0</code>意为在当前终端启动虚拟机。<code>oops = panic panic = 1</code>大致是指设置一下当进程崩的时候的状况<code>root = /dev/ram</code>不清楚具体功能。</td>
+</tr>
+<tr>
+<td>-enable-kvm</td>
+<td>启用KVM？</td>
+</tr>
+<tr>
+<td>-m</td>
+<td>设置内存大小</td>
+</tr>
+<tr>
+<td>-smp</td>
+<td>配置客户机的smp系统。例如设置每个cpu socket上的core数量以及将core上的线程数。</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>-cpu</td>
+<td>设置cpu模型。这里的<code>+smep</code>意为禁止cpu处于ring0时执行用户空间代码。</td>
+</tr>
+</tbody></table>
 <h5><span id="ignited">ignited</span></h5><p>设置内核启动的内存文件系统，也就是指定我们的<code>rootfs.cpio</code> 文件。</p>
 <h5><span id="kernel">kernel</span></h5><p>指定内核镜像文件的路径</p>
 <h5><span id="append">append</span></h5><p>附加选项。<code>console=ttyS0</code>意为在当前终端启动虚拟机。<code>oops = panic panic = 1</code>大致是指设置一下当进程崩的时候的状况<code>root = /dev/ram</code>不清楚具体功能。</p>
