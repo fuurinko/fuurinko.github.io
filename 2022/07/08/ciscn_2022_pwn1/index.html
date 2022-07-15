@@ -8,7 +8,7 @@
 
 <head>
 
-  <title>Archives: 2021/11 | Rin</title>
+  <title>pwn1 | Rin</title>
   <!-- Meta data -->
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -45,10 +45,13 @@
   
 
   <style>.col-md-8.col-md-offset-2.opening-statement img{display:none;}</style>
-<link rel="stylesheet" href="/css/prism.css" type="text/css"></head>
+<link rel="stylesheet" href="/css/prism.css" type="text/css"><link rel="stylesheet" href="/assets/css/APlayer.min.css" class="aplayer-style-marker">
+<script src="/assets/js/APlayer.min.js" class="aplayer-script-marker"></script>
+<script src="/assets/js/Meting.min.js" class="meting-script-marker"></script>
+</head>
 
 <!--
-<body class="home-template">
+<body class="post-template">
 -->
 <body id="index" class="lightnav animsition">
       <!-- ============================ Off-canvas navigation =========================== -->
@@ -219,117 +222,123 @@
         <!-- ============================ Header & Logo bar =========================== -->
 
 
-      <!-- ============================ Hero Image =========================== -->
-
-<section id="hero" class="scrollme">
-    <div class="container-fluid element-img" style="background: url(https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/cover.jpg) no-repeat center center fixed;background-size: cover">
-        <div class="row">
-            <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-8 col-md-offset-2 vertical-align cover boost text-center">
-                <div class="center-me animateme" data-when="exit" data-from="0" data-to="0.6" data-opacity="0" data-translatey="100">
-                    <div>
-                        
-                        <h2><span>RIN777</span></h2>
-                        <p></p>
-                        
-                        <h2></h2>
-                        <p>努力は嘘をつく、でも無駄にはならない</p>
-                        
-
-                    </div>
-                </div>
-            </div>
-            <!-- // .col-md-12 -->
-        </div>
-        <div class="herofade beige-dk"></div>
-    </div>
-</section>
-
-<!-- Height spacing helper -->
-<div class="heightblock"></div>
-<!-- // End height spacing helper -->
-
-<!-- ============================ END Hero Image =========================== -->
-
-
-
-
-<section id="services">
+      
+<section id="intro">
     <div class="container">
-        <div class="row">
-            <div class="col-md-10 col-md-offset-1">
-                <div class="row boxes">
-                    
-                    
-                        
-                        
-                        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 wow fadeInUp" data-wow-delay="0.3s">
-                            
-                              <h4 class="title"><a href="/2021/11/22/other_openstack学习笔记/">openstack学习笔记</a></h4>
-                            
-                            <p><time datetime="2021-11-22T08:56:23.363Z"><a href="/2021/11/22/other_openstack学习笔记/">2021-11-22</a></time></p>
-                        </div>
-                    
-                        
-                        
-                        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 wow fadeInUp" data-wow-delay="0.3s">
-                            
-                              <h4 class="title"><a href="/2021/11/18/stack_challenge_pwnable-calc/">pwnable-calc</a></h4>
-                            
-                            <p><time datetime="2021-11-18T02:30:24.678Z"><a href="/2021/11/18/stack_challenge_pwnable-calc/">2021-11-18</a></time></p>
-                        </div>
-                    
-                        
-                        
-                        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 wow fadeInUp" data-wow-delay="0.3s">
-                            
-                              <h4 class="title"><a href="/2021/11/11/stack_learning_Seccomp机制学习/">Seccomp机制学习</a></h4>
-                            
-                            <p><time datetime="2021-11-11T13:12:47.210Z"><a href="/2021/11/11/stack_learning_Seccomp机制学习/">2021-11-11</a></time></p>
-                        </div>
-                    
-                        
-                        
-                        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 wow fadeInUp" data-wow-delay="0.3s">
-                            
-                              <h4 class="title"><a href="/2021/11/11/mess_pwndocker的pwn题体验（下）/">pwndocker的pwn题体验（下</a></h4>
-                            
-                            <p><time datetime="2021-11-10T20:04:03.336Z"><a href="/2021/11/11/mess_pwndocker的pwn题体验（下）/">2021-11-11</a></time></p>
-                        </div>
-                    
-                        
-                            </div><div class="row boxes">
-                            
-                        
-                        
-                        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 wow fadeInUp" data-wow-delay="0.3s">
-                            
-                              <h4 class="title"><a href="/2021/11/07/stack_learningsrop学习/">SROP学习</a></h4>
-                            
-                            <p><time datetime="2021-11-07T11:11:19.208Z"><a href="/2021/11/07/stack_learningsrop学习/">2021-11-07</a></time></p>
-                        </div>
-                    
-                        
-                        
-                        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 wow fadeInUp" data-wow-delay="0.3s">
-                            
-                              <h4 class="title"><a href="/2021/11/02/mess_pwndocker的pwn题体验（上）/">pwndocker的pwn题体验（上）</a></h4>
-                            
-                            <p><time datetime="2021-11-02T14:54:29.012Z"><a href="/2021/11/02/mess_pwndocker的pwn题体验（上）/">2021-11-02</a></time></p>
-                        </div>
-                    
-                </div>
-            </div>    
+        <div class="row col-md-offset-2">
+            <div class="col-md-8">
+    			<span class="post-meta">
+      <time datetime="2022-07-08T05:47:13.868Z" itemprop="datePublished">
+          2022-07-08
+      </time>
+    
+    
+    | 
+    <a href='/tags/ciscn/'>ciscn</a>
+    
+    
+</span>
+                <h1>pwn1</h1>
+            </div>
         </div>
-    </div>
-</section> 
+        <div class="col-md-8 col-md-offset-2">
+      		
+    <div id="aplayer-ZXVBhauJ" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div>
 
-<section id="statement">
-    <div class="container text-center wow fadeInUp" data-wow-delay="0.5s">
-        <div class="row">
-            <p>“试着开心，好吗？”</p>
+<p>一个简单的复建，题目是今年西南赛区pwn1，是一个很常规的栈的rop，套了orw。</p>
+<h2><span id="逆向">逆向</span></h2><p>​        这个题的逆向不算复杂，同样也是操作符控制指令的形式，输多少个操作符就执行多少次指令，具体的过程就不写了。</p>
+<p>​        操作符对应的指令如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#1 --&gt; &gt;	[++buf_idx]</span></span><br><span class="line"><span class="comment">#2 --&gt; &lt;	[--buf_idx]	</span></span><br><span class="line"><span class="comment">#3 --&gt; +	[++buf[buf_idx]]</span></span><br><span class="line"><span class="comment">#4 --&gt; -	[--buf[buf_idx]]</span></span><br><span class="line"><span class="comment">#5 --&gt; .	[write(1, &amp;buf[buf_idx], 1uLL)]</span></span><br><span class="line"><span class="comment">#6 --&gt; ,	[getchar]</span></span><br><span class="line"><span class="comment">#7 --&gt; [	[idx = word_4042[2 * idx];]</span></span><br><span class="line"><span class="comment">#8 --&gt; ]	[idx = word_4042[2 * idx];]</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>​            因为题目给我们提供了写和读的操作，并且还能够控制idx，那么很显然这又是一道越界读写。</p>
+<p>​        由于有沙箱，所以直接考虑rop+orw，这一段不算太复杂，只需要找对地址套板子。</p>
+<h2><span id="利用">利用</span></h2><p>​        大体的思路就是利用越界读leak，再用越界写将返回地址改为rop链。看起来非常简单，但是还是有很多细节需要注意。由于是栈上orw，首先读入flag的地址需要被leak，这就要求我们leak libc和stack。</p>
+<p>​        首先leak libc。</p>
+<p>​                <img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-07-08%20%E4%B8%8B%E5%8D%882.28.17.png" alt="截屏2022-07-08 下午2.28.17"></p>
+<p>​        buf是一个栈上的数组。</p>
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-07-08%20%E4%B8%8B%E5%8D%882.28.28.png" alt="截屏2022-07-08 下午2.28.28"></p>
+<p>​        这里则打印对应栈上的数据，每次只读1个字节。</p>
+<p>​        呜呜，现在我的旁边有一只猫猫，猫猫在看我打字。</p>
+<p>​        当初做题的时候被这里卡住了，其实思路一直有但是不知道为什么，buf明明是在栈上的地址，但是无论怎么都读不到，我感觉很有可能是我的环境问题。</p>
+<p>​</p>
+
+            <div class="clearfix"></div>
+            <hr class="nogutter">
         </div>
+        <nav class="m-pagination col-md-8 col-md-offset-2 col-sm-24" role="pagination">
+    
+    
+    <a class="pull-right" href="../../07/2022%E5%B9%B4%E4%B8%83%E6%9C%88/">
+        七月 →
+    </a>
+    
+</nav>
+
+        <div class="col-md-8 col-md-offset-2 col-sm-24"><script type="text/javascript">
+  /**
+   * 搜狐畅言
+   */
+
+  /*
+  document.write('<div id="SOHUCS" sid="' + window.location.pathname.slice(1) + '" ></div>');
+
+  window.onload = function () {
+    (function () {
+      var appid = 'cytXXXX';
+      var conf = 'prod_xxxxxxxxxxxxxxxxx';
+      var width = window.innerWidth || document.documentElement.clientWidth;
+      var loadJs = function (d, a, id) {
+        var c = document.getElementsByTagName("head")[0] || document.head || document.documentElement;
+        var b = document.createElement("script");
+        b.setAttribute("type", "text/javascript");
+        b.setAttribute("charset", "UTF-8");
+        b.setAttribute("src", d);
+        if (id) {
+          b.setAttribute("id", id);
+        }
+        if (typeof a === "function") {
+          if (window.attachEvent) {
+            b.onreadystatechange = function () {
+              var e = b.readyState;
+              if (e === "loaded" || e === "complete") {
+                b.onreadystatechange = null;
+                a()
+              }
+            }
+          } else {
+            b.onload = a
+          }
+        }
+        c.appendChild(b)
+      };
+
+      loadJs("https://changyan.sohu.com/upload/changyan.js", function () {
+        window.changyan.api.config({
+          appid: appid,
+          conf: conf
+        })
+      });
+    })();
+  }
+  */
+
+</script>
+</div>
     </div>
 </section>
+
+<!-- Highlight.js -->
+
+<link rel="stylesheet"
+href="//highlightjs.org/static/demo/styles/atom-one-light.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js">
+</script>
+<script>
+hljs.initHighlightingOnLoad();
+
+</script>
+
+
       
 <!-- ============================ Footer =========================== -->
 

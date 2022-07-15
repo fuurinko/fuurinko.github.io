@@ -118,7 +118,7 @@
 				    
 				    <li><a href="/categories/STACK-Other/" class="animsition-link">STACK - Other<small>(5)</small></a></li>
 				    
-				    <li><a href="/categories/STACK-ROP/" class="animsition-link">STACK - ROP<small>(2)</small></a></li>
+				    <li><a href="/categories/STACK-ROP/" class="animsition-link">STACK - ROP<small>(3)</small></a></li>
 				    
 				    <li><a href="/categories/STACK-SROP/" class="animsition-link">STACK - SROP<small>(1)</small></a></li>
 				    
@@ -253,6 +253,49 @@
 
 <section id="intro">
     <div class="container">
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2021/04/24/sum_杂碎的指令/">杂碎的指令</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2021-04-23T16:50:26.062Z" itemprop="datePublished">
+          2021-04-24
+      </time>
+    
+    
+    | 
+    <a href='/tags/mess/'>mess</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        [TOC]
+
+     
+
+杂碎的知识点1）调试相关1）gdbropgagdet
+ROPgadget –binary （） –only “pop|ret” | grep rdi
+(基本适用于ret2csu这种万能gagdet的寻找)
+例如ROPgadget --binary calc --only &quot;pop|ret&quot; | grep eax
+2）内存断点？硬件断点？原理对所访问内存地址设置为不可读写，当访问时触发中断。
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2021/04/24/sum_杂碎的指令/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
         
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
