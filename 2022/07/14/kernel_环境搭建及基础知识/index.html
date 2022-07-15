@@ -8,7 +8,7 @@
 
 <head>
 
-  <title>Rin</title>
+  <title>环境搭建 | Rin</title>
   <!-- Meta data -->
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -48,7 +48,7 @@
 <link rel="stylesheet" href="/css/prism.css" type="text/css"></head>
 
 <!--
-<body class="home-template">
+<body class="post-template">
 -->
 <body id="index" class="lightnav animsition">
       <!-- ============================ Off-canvas navigation =========================== -->
@@ -219,484 +219,133 @@
         <!-- ============================ Header & Logo bar =========================== -->
 
 
-      <!-- ============================ Hero Image =========================== -->
-
-<section id="hero" class="scrollme">
-    <div class="container-fluid element-img" style="background: url(https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/cover.jpg) no-repeat center center fixed;background-size: cover">
-        <div class="row">
-            <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-8 col-md-offset-2 vertical-align cover boost text-center">
-                <div class="center-me animateme" data-when="exit" data-from="0" data-to="0.6" data-opacity="0" data-translatey="100">
-                    <div>
-                        
-                        <h2><span>RIN777</span></h2>
-                        <p></p>
-                        
-                        <h2></h2>
-                        <p>努力は嘘をつく、でも無駄にはならない</p>
-                        
-
-                    </div>
-                </div>
-            </div>
-            <!-- // .col-md-12 -->
-        </div>
-        <div class="herofade beige-dk"></div>
-    </div>
-</section>
-
-<!-- Height spacing helper -->
-<div class="heightblock"></div>
-<!-- // End height spacing helper -->
-
-<!-- ============================ END Hero Image =========================== -->
-<!-- ============================ Content =========================== -->
-
+      
 <section id="intro">
     <div class="container">
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2021/12/10/mess_ida 7.0 for mac疑难杂症： positive sp value has been found/">positive sp value has been found</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2021-12-10T08:05:39.212Z" itemprop="datePublished">
-          2021-12-10
+        <div class="row col-md-offset-2">
+            <div class="col-md-8">
+    			<span class="post-meta">
+      <time datetime="2022-07-14T14:09:06.354Z" itemprop="datePublished">
+          2022-07-14
       </time>
     
-    
-    | 
-    <a href='/tags/逆向/'>逆向</a>
-    
-    
 </span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-     
-
-
-
-0）​        自从抛弃虚拟机，利用ida for mac+pwndocker实现完全mac环境以后，深觉优雅的同时，也遇见了不少坑。
-​        其中ida的坑更是坑人于无形之中。因为如果不打开win的7.5（甚至7.6）做对比，你甚至不知道你遇见的一些奇怪的东西，是7.0 mac版特有的，已经被优化了的坑，还是自身逆向水平问题。
-​        作为一个逆向废物，7.0 for mac属实是给本来就
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2021/12/10/mess_ida 7.0 for mac疑难杂症： positive sp value has been found/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
+                <h1>环境搭建</h1>
             </div>
         </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2021/12/06/heap_learning_fastbin_attack/">fastbin attack</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2021-12-06T08:17:00.507Z" itemprop="datePublished">
-          2021-12-06
-      </time>
-    
-    
-    | 
-    <a href='/tags/learning/'>learning</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-     
+        <div class="col-md-8 col-md-offset-2">
+      		<h2><span id="环境搭建">环境搭建</span></h2><p>一般来说教程都会要求我们编译一个内核，安装一个busybox以及qemu，但是实际做题需要的环境只有qemu，因为题目会提供一个内核镜像，而busybox也不是必须，但是在这里还是都搭建一下。</p>
+<h3><span id="qemu">qemu</span></h3><p>一般来说elf的话只需要用包管理器下载：<br><code>sudo apt install qemu-system</code></p>
+<p>有特殊需求可以用源码编译。但是暂时就省去这一步了。</p>
+<h3><span id="kernel">kernel</span></h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">curl -O -L https://mirrors.tuna.tsinghua.edu.cn/kernel/v5.x/linux-5.9.8.tar.xz</span><br><span class="line">unxz linux-5.9.8.tar.xz</span><br><span class="line">tar -xf linux-5.9.8.tar</span><br><span class="line"><span class="built_in">cd</span> linux-5.9.8</span><br><span class="line">make menuconfig</span><br></pre></td></tr></table></figure>
 
-fastbin​    长度在32-160(32位系统是16-80)的free堆块。通过fastbinlist储存，单向链表，所以fast。fastbin attack一个最简单的利用就是UAF，其次就是fastbin double free。ctf pwn中与fastbin相关的还有就是在unsortedbin attack中涉及到的，也是ptmalloc机制中的一种的malloc_consolidate，其中也有可以
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2021/12/06/heap_learning_fastbin_attack/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
+<p>这一步弹出一个图形化窗口，选择</p>
+<p><code>Kernel hacking -&gt; Compile-time checks and compiler options -&gt; Compile the kernel with debug info</code></p>
+<p><code>Kernel hacking -&gt; Generic Kernel Debugging Instruments -&gt; KGDB: kernel debugger</code></p>
+<p>接着<code>make -j3 bzImage</code></p>
+<p>基本没有过多的报错，反正我没有遇到。</p>
+<h3><span id="busybox">busybox</span></h3><p>还是下载源码编译。</p>
+<p>ubuntu 20.04 编译只有一个报错，产生的原因是没有安装<code>glibc-static</code>依赖。可以直接用包管理器安装，然后直接编译。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">wget https://busybox.net/downloads/busybox-1.34.1.tar.bz2</span><br><span class="line">tar -jxf busybox-1.34.1.tar.bz2</span><br></pre></td></tr></table></figure>
+
+<p>勾选<code>Setttings -&gt; Build static binary (no shared libs),</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> busybox-1.34.1</span><br><span class="line">make menuconfig</span><br><span class="line">make -j 8</span><br></pre></td></tr></table></figure>
+
+<p>安装到这里就差不多了，后面的步骤比较抽象，这里就直接用题目来举例。</p>
+<h2><span id="基础知识">基础知识</span></h2><p>例题还是<code>CISCN2017_babydriver</code>，可以在ctf wiki上对应章节找到原题。</p>
+<p>题目给了我们三个文件，一般来说内核题都会提供这样的三种文件。<img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-07-15%20%E4%B8%8B%E5%8D%882.39.57.png" alt="截屏2022-07-15 下午2.39.57"></p>
+<p>总体来说，<code>boot.sh</code>是一个启动内核的脚本，大致是利用qemu启动，然后规定了启动的一些参数。<code>bzImage</code>则是内核本身，<code>rootfs.cpio</code>是运行qemu需要的一些文件系统。我们分别详细地看一看。</p>
+<h3><span id="bootsh">boot.sh</span></h3><p>当环境准备完善以后，直接执行shell脚本就能够启动题目所给的内核镜像。启动成功的话效果大致如下：</p>
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-07-15%20%E4%B8%8B%E5%8D%883.20.54.png" alt="截屏2022-07-15 下午3.20.54"></p>
+<p>可以看到整个脚本主要是指定了八个参数。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 </span><br><span class="line">	-initrd_rootfs.cpio </span><br><span class="line">	-kernel bzImage</span><br><span class="line">	-append &#x27;console = ttyS0 root = /dev/ram oops = panic panic = 1&#x27;</span><br><span class="line">	-enable-kvm </span><br><span class="line">	-monitor /dev/null </span><br><span class="line">	-m 64M --nographic  </span><br><span class="line">	-smp cores=1,threads=1 </span><br><span class="line">	-cpu kvm64,+smep</span><br></pre></td></tr></table></figure>
+
+<p>这里分别解释一下。</p>
+<h5><span id="ignited">ignited</span></h5><p>设置内核启动的内存文件系统，也就是指定我们的<code>rootfs.cpio</code> 文件。</p>
+<h5><span id="kernel">kernel</span></h5><p>指定内核镜像文件的路径</p>
+<h5><span id="append">append</span></h5><p>附加选项。<code>console=ttyS0</code>意为在当前终端启动虚拟机。<code>oops = panic panic = 1</code>大致是指设置一下当进程崩的时候的状况<code>root = /dev/ram</code>不清楚具体功能。</p>
+<h5><span id="-enable-kvm">-enable-kvm</span></h5><p>启用KVM？</p>
+<h5><span id="-monitor">-monitor</span></h5><h5><span id="-m">-m</span></h5><p>设置内存大小</p>
+<h5><span id="-smp">-smp</span></h5><p>配置客户机的smp系统。例如设置每个cpu socket上的core数量以及将core上的线程数。</p>
+<h5><span id="-cpu">-cpu</span></h5><p>设置cpu模型。这里的<code>+smep</code>意为禁止cpu处于ring0时执行用户空间代码。</p>
+<h3><span id="bzimage">bzimage</span></h3><p>一种主流kernel镜像模式，意为big kernel。</p>
+<h3><span id="rootscpio">roots.cpio</span></h3>
+            <div class="clearfix"></div>
+            <hr class="nogutter">
         </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2021/12/03/mess_malloc_lab/">csapp malloc lab</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2021-12-03T08:46:22.570Z" itemprop="datePublished">
-          2021-12-03
-      </time>
+        <nav class="m-pagination col-md-8 col-md-offset-2 col-sm-24" role="pagination">
     
     
-    | 
-    <a href='/tags/csapp-lab/'>csapp lab</a>
+    <a class="pull-right" href="../../08/ciscn_2022_pwn1/">
+        pwn1 →
+    </a>
     
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-     
+</nav>
 
-0）前言​        鸽了三个月的malloc lab，作为复习堆题的开始。
-​        计画完成时间是12.5之前，也就是三天。
-1）大体设计​        对于整体的操作的大致模型以及allocater和freer需要做的工作如下：
-​        分配器：
+        <div class="col-md-8 col-md-offset-2 col-sm-24"><script type="text/javascript">
+  /**
+   * 搜狐畅言
+   */
 
-在第一次分配chunk时，对堆空间进行初始化=&gt;mm_init()    
+  /*
+  document.write('<div id="SOHUCS" sid="' + window.location.pathname.slice(1) + '" ></div>');
 
-创建指定类型的chunk。
-​    free
+  window.onload = function () {
+    (function () {
+      var appid = 'cytXXXX';
+      var conf = 'prod_xxxxxxxxxxxxxxxxx';
+      var width = window.innerWidth || document.documentElement.clientWidth;
+      var loadJs = function (d, a, id) {
+        var c = document.getElementsByTagName("head")[0] || document.head || document.documentElement;
+        var b = document.createElement("script");
+        b.setAttribute("type", "text/javascript");
+        b.setAttribute("charset", "UTF-8");
+        b.setAttribute("src", d);
+        if (id) {
+          b.setAttribute("id", id);
+        }
+        if (typeof a === "function") {
+          if (window.attachEvent) {
+            b.onreadystatechange = function () {
+              var e = b.readyState;
+              if (e === "loaded" || e === "complete") {
+                b.onreadystatechange = null;
+                a()
+              }
+            }
+          } else {
+            b.onload = a
+          }
+        }
+        c.appendChild(b)
+      };
 
-利用隐式空
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2021/12/03/mess_malloc_lab/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2021/11/22/other_openstack学习笔记/">openstack学习笔记</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2021-11-22T08:56:23.363Z" itemprop="datePublished">
-          2021-11-22
-      </time>
-    
-    
-    | 
-    <a href='/tags/SRE/'>SRE</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        ​    
-     
-​        为了跟上网校的集群重构计划，这下狠狠地开始学习运维了。
-​        在开始具体的openstack学习之前，首先需要学习一下一些基本的运维概念。
-虚拟化/容器化​        之前在学习docker的时候对于容器化已经有一个比较到位的认知了，而与容器化相对应的虚拟化并没有深入理解。
-​        这里的虚拟化特指服务器虚拟化。就是在一台服务器上运行虚拟运行多个服务器。
-虚拟化分类完全
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2021/11/22/other_openstack学习笔记/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2021/11/18/stack_challenge_pwnable-calc/">pwnable-calc</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2021-11-18T02:30:24.678Z" itemprop="datePublished">
-          2021-11-18
-      </time>
-    
-    
-    | 
-    <a href='/tags/pwnable/'>pwnable</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-     
+      loadJs("https://changyan.sohu.com/upload/changyan.js", function () {
+        window.changyan.api.config({
+          appid: appid,
+          conf: conf
+        })
+      });
+    })();
+  }
+  */
 
-逆向​        程序实现了一个简单的计算器功能。运算有加减乘除四种。
-​        
-​        并且程序再次自带计时功能，需要patch。
-​        
-​        静态链接，所以肯定不能用ret2libc那一套，只能试图ROP一下。
-​        程序主要功能通过get_expr和calculate（原本不叫这个）两个函数实现。
-​        get_expr主要用于定位我们输入的
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2021/11/18/stack_challenge_pwnable-calc/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2021/11/11/stack_learning_Seccomp机制学习/">Seccomp机制学习</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2021-11-11T13:12:47.210Z" itemprop="datePublished">
-          2021-11-11
-      </time>
-    
-    
-    | 
-    <a href='/tags/pwnable/'>pwnable</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-     
-
-1）Seccomp基础Seccomp简介​        就像ALSR，NX这样，Seccomp也是linux内核的一种安全机制。这种保护机制会禁用某些系统调用，有效避免了越权行为的发生。
-启动Seccomp​        如果要编写调用Seccomp的程序，需要先安装相应的头文件。
-1apt install libseccomp-dev libseccomp2 seccomp
-
-
-
-
-
-Seccomp的模式以及参数比
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2021/11/11/stack_learning_Seccomp机制学习/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2021/11/11/mess_pwndocker的pwn题体验（下）/">pwndocker的pwn题体验（下</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2021-11-10T20:04:03.336Z" itemprop="datePublished">
-          2021-11-11
-      </time>
-    
-    
-    | 
-    <a href='/tags/mess/'>mess</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-     
-
-0）​        哈哈，还是连续剧，我也想不到捏。我也不想捏。
-1）问题​        pwndocker体验了快一周，目前来说主要问题有这几个：
-
-启动tmux进行调试时机器发热严重，风扇狂转
-
-挂载文件夹内文件不同步
-
-快照的制作相对麻烦（时间久，步骤多）
-
-打开需要输入命令，有点烦。
-​    想了怪久的，就想到这三点，第三点纯属鸡蛋里挑骨头，主要pwndocker体验确实比较优雅，为了美观用vim编辑exp
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2021/11/11/mess_pwndocker的pwn题体验（下）/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2021/11/07/stack_learningsrop学习/">SROP学习</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2021-11-07T11:11:19.208Z" itemprop="datePublished">
-          2021-11-07
-      </time>
-    
-    
-    | 
-    <a href='/tags/stack/'>stack</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-     
-
-1)前言​        在看完csapp的异常控制流之后，对于信号以及系统调用有了更加深入的了解，故借此机会探明SROP，这个本身并不复杂的知识点。
-2）SROP原理​         当用户向内核发起signal时，此时系统切换为内核态，并且由内核保存进程的上下文（通常是一些寄存器状态）至用户栈，然后切换回用户态，执行信号处理程序。程序执行完毕后，再次切换成内核态，将保存的寄存器状态恢复后返回用户态。
-​      
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2021/11/07/stack_learningsrop学习/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2021/11/02/mess_pwndocker的pwn题体验（上）/">pwndocker的pwn题体验（上）</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2021-11-02T14:54:29.012Z" itemprop="datePublished">
-          2021-11-02
-      </time>
-    
-    
-    | 
-    <a href='/tags/pwnable/'>pwnable</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-     
-
-1）前言​        之前看到star大哥开始学pwn力，而且是使用的iterm+pwndocker的环境，觉得非常优雅，便一直想尝试一下，正好最近在研究docker的使用，可以拿来试一试。并且pwndocker也可以十分优雅地指定我们环境的glibc版本，所以是一个非常值得尝试的事。
-2）pwndocker启动​        首先是如何build pwndocker的问题。
-​        如果直接docker
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2021/11/02/mess_pwndocker的pwn题体验（上）/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2021/10/31/mess_基于ctf pwn环境的docker配置/">基于ctf pwn环境的docker搭建</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2021-10-31T15:04:01.604Z" itemprop="datePublished">
-          2021-10-31
-      </time>
-    
-    
-    | 
-    <a href='/tags/mess/'>mess</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-     
-
-
-
-​    最近为了校内的萌新赛，需要出一些简单的pwn题，然后把它们搓进docker。虽然步骤并不是非常复杂，而且有现成的框架，但我发现如果纯粹按照网上框架的一件脚本运行的话，遇到报错根本无法解决，所以看图说话之外我还需要较为系统地学习docker知识。
-docker基础架构​    对于docker，在了解基础命令之前我们需要了解的就是，容器以及虚拟化的大致概念。
-1.1    为什么要有docker？​    一
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2021/10/31/mess_基于ctf pwn环境的docker配置/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <nav class="pagination" role="pagination">
-          <a class="pull-left" href="../8/">← Newer Posts</a>
-          <a class="pull-right" href="../10/">Older Posts →</a>
-        </nav>
+</script>
+</div>
     </div>
 </section>
-<section id="statement">
-    <div class="container text-center wow fadeInUp" data-wow-delay="0.5s">
-        <div class="row">
-            <p>“试着开心，好吗？”</p>
-        </div>
-    </div>
-</section>
-<!-- ============================ END Content =========================== -->
+
+<!-- Highlight.js -->
+
+<link rel="stylesheet"
+href="//highlightjs.org/static/demo/styles/atom-one-light.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js">
+</script>
+<script>
+hljs.initHighlightingOnLoad();
+
+</script>
+
 
       
 <!-- ============================ Footer =========================== -->

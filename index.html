@@ -257,6 +257,39 @@
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
                 <div class="col-md-4">
+                    <h3><a href="/2022/07/14/kernel_环境搭建及基础知识/">环境搭建</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-07-14T14:09:06.354Z" itemprop="datePublished">
+          2022-07-14
+      </time>
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        环境搭建一般来说教程都会要求我们编译一个内核，安装一个busybox以及qemu，但是实际做题需要的环境只有qemu，因为题目会提供一个内核镜像，而busybox也不是必须，但是在这里还是都搭建一下。
+qemu一般来说elf的话只需要用包管理器下载：sudo apt install qemu-system
+有特殊需求可以用源码编译。但是暂时就省去这一步了。
+kernel12345curl -O -L https://mirrors.tu
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/07/14/kernel_环境搭建及基础知识/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
                     <h3><a href="/2022/07/08/ciscn_2022_pwn1/">pwn1</a></h3>
                     <span>
                         <span class="post-meta">
@@ -629,46 +662,6 @@ reverse有一点诡异。
                     
                     <p class="pull-right readMore">
                         <a href="/2022/05/17/week12_2_pawnable_spirited_away/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2022/05/16/heap_learning_chunk_overlapping-学习/">chunk_overlapping 学习</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2022-05-16T12:47:57.494Z" itemprop="datePublished">
-          2022-05-16
-      </time>
-    
-    
-    | 
-    <a href='/tags/learning/'>learning</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-     
-
-从一个例子开始：​        先还原一个很适合的情景，pwnable的secret of my heart这道题。
-​        我们有一个非常好用的空字节溢出，2.23的libc，可以申请的size最大为0x100，heap base已知，没有更多特殊的限制，现在我们需要leak libc，同时需要double free来任意地址写，我们有什么好的思路？
-​        首先由于我们有一个空字节溢出，所以假如
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2022/05/16/heap_learning_chunk_overlapping-学习/">Read More...</a>
                     </p>
                     
                 </div>
