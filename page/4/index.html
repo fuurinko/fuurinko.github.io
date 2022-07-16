@@ -68,7 +68,7 @@
         		<a class="sb-toggle-submenu">Categories<span class="sb-caret"></span></a>
             	<ul class="sb-submenu">
 				  	
-				    <li><a href="/categories/AUDITION/" class="animsition-link">AUDITION<small>(11)</small></a></li>
+				    <li><a href="/categories/AUDITION/" class="animsition-link">AUDITION<small>(12)</small></a></li>
 				    
 				    <li><a href="/categories/CSAPP-LAB/" class="animsition-link">CSAPP LAB<small>(1)</small></a></li>
 				    
@@ -98,7 +98,7 @@
 				    
 				    <li><a href="/categories/IO-FILE/" class="animsition-link">IO_FILE<small>(1)</small></a></li>
 				    
-				    <li><a href="/categories/KERNEL/" class="animsition-link">KERNEL<small>(1)</small></a></li>
+				    <li><a href="/categories/KERNEL/" class="animsition-link">KERNEL<small>(2)</small></a></li>
 				    
 				    <li><a href="/categories/MESS/" class="animsition-link">MESS<small>(17)</small></a></li>
 				    
@@ -255,6 +255,172 @@
 
 <section id="intro">
     <div class="container">
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2022/04/13/2022年三月/">三月</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-04-13T03:35:35.186Z" itemprop="datePublished">
+          2022-04-13
+      </time>
+    
+    
+    | 
+    <a href='/tags/vivi/'>vivi</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        愛で世界が変わるもんか。
+上个月做了什么：​        刷了很多题，从简单的栈题到简单的fastbin，然后四月上旬刷了很多2.27的tcache或者unsorted bin，unlink之类的稍微有一点点难度的堆题，但基本都是闷头刷，遇到不理解的地方也都是零散地学一些知识，没有总结归纳，没有系统的问题解决。
+感想：​        写了很多blog，但是质量并不是特别高。做题方面，逆向的速度明显增加了，思考题目也更加地逻辑化，但是
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/04/13/2022年三月/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2022/04/13/heap_learning_glibc源码分析/">ptmalloc2源码分析</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-04-13T03:21:41.918Z" itemprop="datePublished">
+          2022-04-13
+      </time>
+    
+    
+    | 
+    <a href='/tags/源码分析/'>源码分析</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+     
+
+prelude​        感觉源码分析是很多佬都做过的一件事情，但是对于我来说源码分析确实是件比较困难的事，但正因为困难，才有必要攻克，之后的高版本或者诡异版本glibc题少不了源码分析，也当是一个修炼吧。文章分析的大致顺序是按照int_malloc以及int_free的函数顺序介绍的，其中会穿插一些被调用的函数的介绍。
+csapp malloc lab review​        在着手看源码之前先复习一下cs
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/04/13/heap_learning_glibc源码分析/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2022/04/12/heap_learning_Tcache利用总结/">Tcache利用总结</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-04-12T09:47:45.264Z" itemprop="datePublished">
+          2022-04-12
+      </time>
+    
+    
+    | 
+    <a href='/tags/learning/'>learning</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+     
+
+​        最近碰到的tcache比较多，人都给整傻了。故总结整理一下。
+tcache chunk的freefree一个普通的tcache bin，一般情况下会将fd和bk位置为0和tcache struct data ptr。
+这是一个普通的chunk
+free它。
+
+可以看到fd位为tcache strut data的指针。bk位为0（2.29的话也有key）
+
+bin中如图：
+
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/04/12/heap_learning_Tcache利用总结/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2022/04/12/week7-2.1md/">攻防世界 - one_man_army</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-04-12T02:02:09.112Z" itemprop="datePublished">
+          2022-04-12
+      </time>
+    
+    
+    | 
+    <a href='/tags/xctf/'>xctf</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+     
+
+
+
+overview
+libc是2.27。
+逆向增删查改。
+add没有什么特别的地方，纯纯的指针操作。没有结构体，没有保存指针到bss上。但是会对输入的size取低九位，虽然可以输入15位的size，但是生效的只有九位。所以只能add出 一个chunk。有点lonely wolf的味道。
+12345678printf(&quot;Size: &quot;); read(0, size_4, 0xFuLL); size_2
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/04/12/week7-2.1md/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
         
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
@@ -500,177 +666,6 @@ Readd​        第一次申请chunk时，操作如下：
                     
                     <p class="pull-right readMore">
                         <a href="/2022/04/09/ciscn_2019_daliy/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2022/04/09/ciscn_2019_baby_pwn/">baby_pwn</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2022-04-09T07:56:00.647Z" itemprop="datePublished">
-          2022-04-09
-      </time>
-    
-    
-    | 
-    <a href='/tags/ciscn/'>ciscn</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-			
-				console.error("ReferenceError: value is not defined");
-			     
-
-overview
-​        怪椰。
-re123456ssize_t vuln()&#123;  char buf[40]; // [esp+0h] [ebp-28h] BYREF  return read(0, buf, 0x100u);&#125;
-
-​    
-蚌埠住了，ret2
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2022/04/09/ciscn_2019_baby_pwn/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2022/04/08/幻想曲-02-春夜/">春夜</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2022-04-07T17:25:10.897Z" itemprop="datePublished">
-          2022-04-08
-      </time>
-    
-    
-    | 
-    <a href='/tags/幻想曲/'>幻想曲</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        ​    
-         
-​        现在是2022年四月八日凌晨一点二十六分，其实按照这个月以来的作息，现在已经是熬夜的范畴了，但是我还是不能睡觉，因为万恶的glibc已经编译一个小时了。
-​        其实也可以放着让它编译，但是我比较心疼我的电脑，这边编译占用了docker，我也不想再开一个窗口来做题了，于是抱着电脑在初春的夜里无所事事。
-​        强调初春，是因为我今天去网上查铃兰的养殖注意事项，发现铃兰
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2022/04/08/幻想曲-02-春夜/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2022/04/08/pwn.college_RaceCondition/">RaceCondition.md</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2022-04-07T17:11:22.484Z" itemprop="datePublished">
-          2022-04-08
-      </time>
-    
-    
-    | 
-    <a href='/tags/pwncollege/'>pwncollege</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-     
-
-
-
-
-
-0​        感觉pwncollege的堆题意思并不是很大，直接做条件竞争娱乐一下。
-level1​        笑死了，根本没学过，不会做。
-
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2022/04/08/pwn.college_RaceCondition/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2022/04/07/ciscn_2019_double/">double</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2022-04-07T12:38:02.382Z" itemprop="datePublished">
-          2022-04-07
-      </time>
-    
-    
-    | 
-    <a href='/tags/ciscn/'>ciscn</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-			
-				console.error("ReferenceError: value is not defined");
-			     
-
-overview
-​            可以改表
-re​        这个题如果只看ida的话其实感觉挺乱的，所以以动调为主会比较好。在理清了程序运行的一些逻辑后再反过来看伪代码会清晰很多。
-add1head_ptr = (unsigned int *)malloc(0x18uLL);
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2022/04/07/ciscn_2019_double/">Read More...</a>
                     </p>
                     
                 </div>
