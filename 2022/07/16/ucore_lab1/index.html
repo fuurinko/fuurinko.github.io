@@ -1,0 +1,978 @@
+<!DOCTYPE html>
+<!--[if lte IE 8 ]>
+<html class="ie" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US">
+<![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!-->
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
+<!--<![endif]-->
+
+<head>
+
+  <title>ucore lab1 | Rin</title>
+  <!-- Meta data -->
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content="Rin">
+    <meta name="author" content="Rin777">
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+
+    <!-- Favicon, (keep icon in root folder) -->
+    <link rel="Shortcut Icon" href="/img/favicon.ico" type="image/ico">
+
+    <link rel="alternate" href="/atom.xml" title="Rin" type="application/atom+xml">
+    <link rel="stylesheet" href="/css/all.css" media="screen" type="text/css">
+    
+
+    <!--[if IE 8]>
+    <link rel="stylesheet" type="text/css" href="/css/ie8.css" />
+    <![endif]-->
+
+    <!-- jQuery | Load our jQuery, with an alternative source fallback to a local version if request is unavailable -->
+    <script src="/js/jquery-1.11.1.min.js"></script>
+    <script>window.jQuery || document.write('<script src="js/jquery-1.11.1.min.js"><\/script>')</script>
+
+    <!-- Load these in the <head> for quicker IE8+ load times -->
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="/js/html5shiv.min.js"></script>
+    <script src="/js/respond.min.js"></script>
+    <![endif]-->
+
+  
+  
+  
+
+  <style>.col-md-8.col-md-offset-2.opening-statement img{display:none;}</style>
+<link rel="stylesheet" href="/css/prism.css" type="text/css"></head>
+
+<!--
+<body class="post-template">
+-->
+<body id="index" class="lightnav animsition">
+      <!-- ============================ Off-canvas navigation =========================== -->
+
+    <div class="sb-slidebar sb-right sb-style-overlay sb-momentum-scrolling">
+        <div class="sb-close" aria-label="Close Menu" aria-hidden="true">
+            <img src="/img/close.png" alt="Close"/>
+        </div>
+        <!-- Lists in Slidebars -->
+        <ul class="sb-menu">
+            <li><a href="/" class="animsition-link" title="Home">Home</a></li>
+            <li><a href="/archives" class="animsition-link" title="archive">archives</a></li>
+            <!-- Dropdown Menu -->
+			 
+            
+        	<li>
+        		<a class="sb-toggle-submenu">Categories<span class="sb-caret"></span></a>
+            	<ul class="sb-submenu">
+				  	
+				    <li><a href="/categories/AUDITION/" class="animsition-link">AUDITION<small>(12)</small></a></li>
+				    
+				    <li><a href="/categories/CSAPP-LAB/" class="animsition-link">CSAPP LAB<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/Generalization/" class="animsition-link">Generalization<small>(5)</small></a></li>
+				    
+				    <li><a href="/categories/HEAP-ChunkOverlapping/" class="animsition-link">HEAP - ChunkOverlapping<small>(3)</small></a></li>
+				    
+				    <li><a href="/categories/HEAP-Fastbin-Attack/" class="animsition-link">HEAP - Fastbin Attack<small>(12)</small></a></li>
+				    
+				    <li><a href="/categories/HEAP-Heap-overflow/" class="animsition-link">HEAP - Heap overflow<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/HEAP-House-Of-Force/" class="animsition-link">HEAP - House Of Force<small>(3)</small></a></li>
+				    
+				    <li><a href="/categories/HEAP-House-Of-Orange/" class="animsition-link">HEAP - House Of Orange<small>(2)</small></a></li>
+				    
+				    <li><a href="/categories/HEAP-Off-By-One/" class="animsition-link">HEAP - Off By One<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/HEAP-Seccomp/" class="animsition-link">HEAP - Seccomp<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/HEAP-Tcache/" class="animsition-link">HEAP - Tcache<small>(3)</small></a></li>
+				    
+				    <li><a href="/categories/HEAP-Unlink/" class="animsition-link">HEAP - Unlink<small>(2)</small></a></li>
+				    
+				    <li><a href="/categories/HEAP-Unsortedbin/" class="animsition-link">HEAP - Unsortedbin<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/HEAP-sourcecode-analysis/" class="animsition-link">HEAP - sourcecode analysis<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/IO-FILE/" class="animsition-link">IO_FILE<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/KERNEL/" class="animsition-link">KERNEL<small>(2)</small></a></li>
+				    
+				    <li><a href="/categories/MESS/" class="animsition-link">MESS<small>(17)</small></a></li>
+				    
+				    <li><a href="/categories/OTHER-IO-FILE/" class="animsition-link">OTHER - IO FILE<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/PWN-COLLEGE/" class="animsition-link">PWN.COLLEGE<small>(11)</small></a></li>
+				    
+				    <li><a href="/categories/STACK/" class="animsition-link">STACK<small>(2)</small></a></li>
+				    
+				    <li><a href="/categories/STACK-ARRAY-OUT-OF-BOUNDS/" class="animsition-link">STACK - ARRAY OUT OF BOUNDS<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/STACK-Canary/" class="animsition-link">STACK - Canary<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/STACK-DynELF/" class="animsition-link">STACK - DynELF<small>(2)</small></a></li>
+				    
+				    <li><a href="/categories/STACK-Format/" class="animsition-link">STACK - Format<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/STACK-OTHERS/" class="animsition-link">STACK - OTHERS<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/STACK-Other/" class="animsition-link">STACK - Other<small>(5)</small></a></li>
+				    
+				    <li><a href="/categories/STACK-ROP/" class="animsition-link">STACK - ROP<small>(3)</small></a></li>
+				    
+				    <li><a href="/categories/STACK-SROP/" class="animsition-link">STACK - SROP<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/STACK-Shellcode/" class="animsition-link">STACK - Shellcode<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/STACK-Stack-Overflow/" class="animsition-link">STACK - Stack Overflow<small>(2)</small></a></li>
+				    
+				    <li><a href="/categories/STACK-ret2dlreslove/" class="animsition-link">STACK - ret2dlreslove<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/STACK-ret2dlresolve/" class="animsition-link">STACK - ret2dlresolve<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/STACK-ret2shellcode/" class="animsition-link">STACK - ret2shellcode<small>(2)</small></a></li>
+				    
+				    <li><a href="/categories/STACK-sandbox/" class="animsition-link">STACK - sandbox<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/Tcache/" class="animsition-link">Tcache<small>(2)</small></a></li>
+				    
+				    <li><a href="/categories/ucore/" class="animsition-link">ucore<small>(1)</small></a></li>
+				    
+				</ul>
+        	</li>
+			
+            
+            <li>
+                <a class="sb-toggle-submenu">Links<span class="sb-caret"></span></a>
+                <ul class="sb-submenu">
+                    
+                    <li><a target="_blank" rel="noopener" href="https://weibo.com/u/1682818607" class="animsition-link">没有营养的推广页</a></li>
+                    
+                    <li><a target="_blank" rel="noopener" href="http://www.2323bb.ltd" class="animsition-link">cc_sakura</a></li>
+                    
+                    <li><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_36995313" class="animsition-link">F@LLe0</a></li>
+                    
+                    <li><a target="_blank" rel="noopener" href="https://yyz9.cn" class="animsition-link">YYZ</a></li>
+                    
+                    <li><a target="_blank" rel="noopener" href="https://www.star123.top" class="animsition-link">star</a></li>
+                    
+                </ul>
+            </li>
+            
+        </ul>
+        <!-- Lists in Slidebars -->
+        <ul class="sb-menu secondary">
+            
+            <li><a href="javascript:;" class="popup-trigger" title="Search"><span class="search-icon"></span>Search</a></li>
+            
+            <li><a href="/about.html" class="animsition-link" title="about">About</a></li>
+            <li><a href="/atom.xml" class="animsition-link" title="rss">RSS</a></li>
+        </ul>
+    </div>
+    
+    <!-- ============================ END Off-canvas navigation =========================== -->
+
+    <!-- ============================ #sb-site Main Page Wrapper =========================== -->
+
+    <div id="sb-site">
+        <!-- #sb-site - All page content should be contained within this id, except the off-canvas navigation itself -->
+
+        <!-- ============================ Header & Logo bar =========================== -->
+
+        <div id="navigation" class="navbar navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="container">
+                    <!-- Nav logo -->
+                    <div class="logo">
+                        <a href="/" title="Logo" class="animsition-link">
+                         <img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/IMG_0282.jpg" alt="Logo" width="35px;"/> 
+                        </a>
+                    </div>
+                    <!-- // Nav logo -->
+                    <!-- Info-bar -->
+                    <nav>
+                        <ul class="nav">
+                            <li><a href="/" class="animsition-link">Rin</a></li>
+                            <li class="nolink"><span>Always </span>Creative.</li>
+                            
+                            <li><a href="https://github.com/" title="Github" target="_blank"><i class="icon-github"></i></a></li>
+                            
+                            
+                            
+                            
+                            
+                            <li class="nolink"><span>Welcome!</span></li>
+                        </ul>
+                    </nav>
+                    <!--// Info-bar -->
+                </div>
+                <!-- // .container -->
+                <div class="learnmore sb-toggle-right">More</div>
+                <button type="button" class="navbar-toggle menu-icon sb-toggle-right" title="More">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar before"></span>
+                <span class="icon-bar main"></span>
+                <span class="icon-bar after"></span>
+                </button>
+            </div>
+            <!-- // .navbar-inner -->
+        </div>
+
+        <!-- ============================ Header & Logo bar =========================== -->
+
+
+      
+<section id="intro">
+    <div class="container">
+        <div class="row col-md-offset-2">
+            <div class="col-md-8">
+    			<span class="post-meta">
+      <time datetime="2022-07-16T10:01:36.685Z" itemprop="datePublished">
+          2022-07-16
+      </time>
+    
+    
+    | 
+    <a href='/tags/os/'>os</a>
+    
+    
+</span>
+                <h1>ucore lab1</h1>
+            </div>
+        </div>
+        <div class="col-md-8 col-md-offset-2">
+      		<h1><span id="0环境">0：环境</span></h1><h2><span id="需要准备">需要准备</span></h2><ol>
+<li>能正常运行qemu的环境。</li>
+<li>实验手册：<a target="_blank" rel="noopener" href="https://objectkuan.gitbooks.io/ucore-docs/content/lab1/lab1_1_goals.html">https://objectkuan.gitbooks.io/ucore-docs/content/lab1/lab1_1_goals.html</a></li>
+<li>实验代码：<a target="_blank" rel="noopener" href="https://github.com/chyyuu/os_kernel_lab/tree/lab1_X">https://github.com/chyyuu/os_kernel_lab/tree/lab1_X</a></li>
+</ol>
+<h1><span id="1-实验目的">1: 实验目的</span></h1><p>分析加载操作系统的boot loader，并了解相关计算机原理。</p>
+<h1><span id="2-基础知识">2: 基础知识</span></h1><h2><span id="bios启动过程">bios启动过程</span></h2><p>bios（(Basic Input Output System）作用为在计算机被加电之初，完成计算机io初始化，也就是读取硬盘主引导扇区到内存，并跳转到对应内存中执行bootloader。</p>
+<p>大体过程是 <code>硬件加电 -&gt; bios -&gt; bootloader -&gt;os</code></p>
+<h2><span id="bootloader">bootloader</span></h2><ul>
+<li>切换到保护模式，启用分段机制</li>
+<li>读磁盘中ELF执行文件格式的ucore操作系统到内存</li>
+<li>显示字符串信息</li>
+<li>把控制权交给ucore操作系统</li>
+</ul>
+<h2><span id="保护模式和分段机制">保护模式和分段机制</span></h2><h3><span id="实模式">实模式</span></h3><p>在bootloader接手BIOS的工作后，当前的PC系统处于实模式（16位模式）运行状态，操作系统和用户程序并没有区别对待，而且每一个指针都是指向实际的物理地址。用户程序的一个指针如果指向了操作系统区域或其他用户程序区域，并修改了内容，那么其后果就很可能是灾难性的。</p>
+<h3><span id="保护模式">保护模式</span></h3><p>隔离操作系统与用户空间，并且只有在保护模式下系统才可以使用分段以及分页储存管理机制。</p>
+<h4><span id="分段存储">分段存储</span></h4><p>该储存方式涉及了四个关键内容</p>
+<ol>
+<li>逻辑地址（由段选择子selector和段偏移offset组成）</li>
+<li>段描述符（描述段的属性）</li>
+<li>段描述符表（包含多个段描述符的“数组”）</li>
+<li>段选择子（段寄存器，用于定位段描述符表中表项的索引）</li>
+</ol>
+<p>从逻辑地址到物理地址的转换：</p>
+<p>获取逻辑地址中的段选择子以及偏移 -&gt; 以段选择子为索引，找到段描述符表中对应段描述符 -&gt; 将段描述符表中储存的段基址加上偏移，形成线性地址。（若不启动分页管理机制，则此线性地址为物理地址）</p>
+<h4><span id="段描述符">段描述符</span></h4><h5><span id="段基地址">段基地址</span></h5><p>规定线性地址空间中段的起始地址。</p>
+<h5><span id="段界限">段界限</span></h5><p>规定段大小</p>
+<h5><span id="段属性">段属性</span></h5><p>确定段的各种属性。</p>
+<p><img src="https://objectkuan.gitbooks.io/ucore-docs/content/lab1_figs/image003.png"></p>
+<h4><span id="全局描述符表">全局描述符表</span></h4><p>保存多个段描述符的“数组”，其起始地址保存在GDTR（全局描述符表寄存器）中。</p>
+<h4><span id="段选择子">段选择子</span></h4><p>选择段描述符表，且选择该表中的描述符。</p>
+<h2><span id="保护模式下的特权级">保护模式下的特权级</span></h2><p>ring0 （最高）- ring3（最低）</p>
+<p>ring3一般用于用户态。ring0用于内核态。</p>
+<p>在任一时刻，x86 CPU都是在一个特定的特权级下运行的，从而决定了代码可以做什么，不可以做什么。</p>
+<h2><span id="地址空间">地址空间</span></h2><p>主要分为逻辑地址以及物理地址。逻辑地址指编程时使用的抽象虚拟地址，而物理地址空间则是一个“大数组”，CPU通过索引（物理地址）来访问这个“大数组”中的内容。物理地址是指CPU提交到内存总线上用于访问计算机内存和外设的最终地址。</p>
+<h2><span id="中断">中断</span></h2><p>操作系统中特殊的中断有三种：</p>
+<ol>
+<li>由外部io设备引发的异步中断</li>
+<li>cpu非正常执行引发的同步中断/内部中断，简称异常</li>
+<li>例如系统调用一类的陷入中断，也称软中断。</li>
+</ol>
+<p>当cpu收到中断或异常时，当前执行任务被暂停，并通过一定机制跳转到负责处理这个信号的相关处理例程中。这个机制主要由IDT（中断描述符表）负责。</p>
+<h4><span id="中断描述符表">中断描述符表</span></h4><p>中断描述符表把每个中断或异常编号和一个指向中断服务，是一个8字节的描述符数组。CPU通过IDT寄存器（IDTR）的内容来寻址IDT的起始地址，并将中断（异常）号乘以8做为IDT的索引。</p>
+<h5><span id="idt-gate-descriptors">IDT gate descriptors</span></h5><h1><span id="3-练习">3: 练习</span></h1><h2><span id="练习一">练习一</span></h2><h3><span id="1操作系统镜像文件ucoreimg是如何一步一步生成的">1：操作系统镜像文件ucore.img是如何一步一步生成的？</span></h3><!--(需要比较详细地解释Makefile中每一条相关命令和命令参数的含义，以及说明命令导致的结果)-->
+
+<p>这篇文章对于makefile的分析非常详细。</p>
+<p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/2f95d38afa1d?u_atoken=52459ad4-5e6f-410b-9bf3-3b09d5b827bb&u_asession=01Ssg0C8ZiXCdwbFTRPk8Q20t0VyepeIDUbsrIGTSY2WDjD5AWyHeWNI3iBIyLfwATX0KNBwm7Lovlpxjd_P_q4JsKWYrT3W_NKPr8w6oU7K9irYCEcJW6DYYfqn8pomqxMKWrbBzYAhXhkL4v5_cjQmBkFo3NEHBv0PZUm6pbxQU&u_asig=05aKhHCfLIMI7ffgmH0YvZE_eKiGOWiXCuqxMVGny8AgjDvTZ1fL7YSwAXh03JMCrAWGj6rUgIukDeoFvVS3ijri5lhkA9QkCm4bwpZu7F0r6IUaF18BYnbBYOJBnVOqza4M-K4-BybICRVhibP02H1OKA1cgY0dTU35B9t-hLfDz9JS7q8ZD7Xtz2Ly-b0kmuyAKRFSVJkkdwVUnyHAIJzXA7666rNQ9I6z2mlavrOQsvcsAhkZe-tnh2yiBtxRphdf9JIAkyKervFWgmMgV8j-3h9VXwMyh6PgyDIVSG1W9xeShRoqPZZDIv1hOQrCMpiC5haaDpMo85GGl7nYBJOUfUBE6RMV2Q4XyfWcAQOb3_XSVvFWReDxdO8KmQuGfgmWspDxyAEEo4kbsryBKb9Q&u_aref=dXPvnYU6qbVvOKeiKdE6bbhpbyM=">清华大学操作系统课程 ucore Lab 1 系统软件启动过程 实验报告</a></p>
+<h3><span id="2-一个被系统认为是符合规范的硬盘主引导扇区的特征是什么">2： 一个被系统认为是符合规范的硬盘主引导扇区的特征是什么？</span></h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//tools/sign.c</span></span><br><span class="line">buf[<span class="number">510</span>] = <span class="number">0x55</span>;</span><br><span class="line">    buf[<span class="number">511</span>] = <span class="number">0xAA</span>;</span><br><span class="line">    FILE *ofp = fopen(argv[<span class="number">2</span>], <span class="string">&quot;wb+&quot;</span>);</span><br><span class="line">    size = fwrite(buf, <span class="number">1</span>, <span class="number">512</span>, ofp);</span><br><span class="line">    <span class="keyword">if</span> (size != <span class="number">512</span>) &#123;</span><br><span class="line">        <span class="built_in">fprintf</span>(<span class="built_in">stderr</span>, <span class="string">&quot;write &#x27;%s&#x27; error, size is %d.\n&quot;</span>, argv[<span class="number">2</span>], size);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>可以看出，首先扇区的大小为512字节，其次，最后两个字节为0x55AA。</p>
+<h2><span id="练习二">练习二</span></h2><h4><span id="使用qemu执行并调试lab1中的软件">使用qemu执行并调试lab1中的软件</span></h4><ol>
+<li>从CPU加电后执行的第一条指令开始，单步跟踪BIOS的执行。</li>
+<li>在初始化位置0x7c00设置实地址断点,测试断点正常。</li>
+<li>从0x7c00开始跟踪代码运行,将单步跟踪反汇编得到的代码与bootasm.S和 bootblock.asm进行比较。</li>
+<li>自己找一个bootloader或内核中的代码位置，设置断点并进行测试。</li>
+</ol>
+<p>将 <code>tools/gdbinit</code>修改为</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">set</span> architecture i8086</span><br><span class="line">target remote :1234</span><br></pre></td></tr></table></figure>
+
+<p>回到lab1目录下，执行<code>make debug</code>,此时画面如下：</p>
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-07-19%20%E4%B8%8B%E5%8D%889.50.09.png" alt="截屏2022-07-19 下午9.50.09"></p>
+<p>可以看到在<code>0xfff0</code>处断下。此时执行的代码是<code>kern/init/init.c</code>。</p>
+<p>设置<code>gdbinit</code></p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">set</span> arch i8086</span><br><span class="line">target remote: <span class="number">1234</span></span><br><span class="line">b *<span class="number">0x7c00</span></span><br><span class="line"><span class="keyword">continue</span></span><br></pre></td></tr></table></figure>
+
+<p>相当于下实地址断点。</p>
+<h2><span id="练习3分析bootloader进入保护模式的过程">练习3：分析bootloader进入保护模式的过程。</span></h2><ul>
+<li>为何开启A20，以及如何开启A20</li>
+<li>如何初始化GDT表</li>
+<li>如何使能和进入保护模式</li>
+</ul>
+<p>参考<a target="_blank" rel="noopener" href="https://objectkuan.gitbooks.io/ucore-docs/content/lab1/lab1_appendix_a20.html">https://objectkuan.gitbooks.io/ucore-docs/content/lab1/lab1_appendix_a20.html</a></p>
+<h4><span id="为何开启a20">为何开启A20</span></h4><p>早期8086提供20根地址线，而数据处理宽度最大为16位，因此使用<strong>段寄存器值 &lt;&lt; 4 + 段内偏移值</strong>的方式来访问地址，但这种方式计算出的地址最大值超过来20位地址线能够表示的范围，因此会发生“回卷”。而80386使用24根地址总线，因此就算使用相同的寻址方式也不会发生回卷，然而这就造成了向下不兼容的问题，为了解决这个问题，IBM决定在计算机系统上加入一个硬件逻辑，来模仿回卷。这个硬件逻辑就是A20 GATE。</p>
+<h5><span id="a20-gate">A20 gate</span></h5><p>将键盘控制器输出与A20地址线进行and操作，从而控制A20地址线的打开和关闭。</p>
+<p>最初A20总是关闭状态，直到系统软件通过一定的io操作打开。（<code>bootasm.S</code>）</p>
+<p>当A20地址线关闭时，1MB以上的地址不可访问。</p>
+<h4><span id="如何开启a20">如何开启A20</span></h4><p>首先需要向键盘控制器8042发送一个命令，接着键盘控制器会讲它的某个输出引脚的输出置为高电平，作为A20地址线控制输入。</p>
+<p>键盘控制器8042早期由单片机芯片实现，具体结构如下图：</p>
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/image012.png" alt="image012"></p>
+<p>io端口为 0x60～0x6f。实际使用的只有0x60和0x64两个端口。输出端口P2用于特定目的。位0（P20引脚）用于实现CPU复位操作，位1（P21引脚）用户控制A20信号线的开启与否。</p>
+<p>（插一句，这个东西好像我们那奇怪的pic课内容）</p>
+<p>其实就是通过改变状态寄存器，设置不同的状态，从而进行io操作，</p>
+<p>而打开A20 Gate的具体步骤如下：</p>
+<ol>
+<li>等待8042 Input buffer为空；</li>
+<li>发送Write 8042 Output Port （P2）命令到8042 Input buffer；</li>
+<li>等待8042 Input buffer为空；</li>
+<li>将8042 Output Port（P2）得到字节的第2位置1，然后写入8042 Input buffer；</li>
+</ol>
+<p>对应在<code>bootasm.S</code>中的内容。</p>
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-07-20%20%E4%B8%8B%E5%8D%885.29.21.png" alt="截屏2022-07-20 下午5.29.21"></p>
+<h4><span id="如何初始化gdt表">如何初始化GDT表</span></h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"># Bootstrap GDT</span><br><span class="line">.p2align 2                                          # force 4 byte alignment</span><br><span class="line">gdt:</span><br><span class="line">    SEG_NULLASM                                     # null seg</span><br><span class="line">    SEG_ASM(STA_X|STA_R, 0x0, 0xffffffff)           # code seg for bootloader and kernel</span><br><span class="line">    SEG_ASM(STA_W, 0x0, 0xffffffff)                 # data seg for bootloader and kernel</span><br><span class="line"></span><br><span class="line">gdtdesc:</span><br><span class="line">    .word 0x17                                      # sizeof(gdt) - 1</span><br><span class="line">    .long gdt                                       # address gdt</span><br></pre></td></tr></table></figure>
+
+
+
+<p>首先设置第一项描述符为null。</p>
+<p>第二行设置描述符为代码段，属性rwx。</p>
+<p>第三行设置描述符为数据段，属性rw。</p>
+<h4><span id="如何使能和进入保护模式">如何使能和进入保护模式</span></h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">.set CR0_PE_ON,             0x1                     # protected mode enable flag</span><br><span class="line"></span><br><span class="line"># Switch from real to protected mode, using a bootstrap GDT</span><br><span class="line"># and segment translation that makes virtual addresses</span><br><span class="line"># identical to physical addresses, so that the</span><br><span class="line"># effective memory map does not change during the switch.</span><br><span class="line">lgdt gdtdesc</span><br><span class="line">movl %cr0, %eax</span><br><span class="line">orl $CR0_PE_ON, %eax</span><br><span class="line">movl %eax</span><br><span class="line"></span><br><span class="line"># Jump to next instruction, but in 32-bit code segment.</span><br><span class="line"># Switches processor into 32-bit mode.</span><br><span class="line">ljmp $PROT_MODE_CSEG, $protcseg</span><br></pre></td></tr></table></figure>
+
+<p>从代码可以看出，进入保护模式需要设置cr0寄存器为0x1，也就是<code>CR0_PE_ON</code>的值，接着</p>
+<p>执行指令<code>ljmp $PROT_MODE_CSEG, $protcseg</code></p>
+<h2><span id="练习四分析bootloader加载elf格式的os的过程">练习四：分析bootloader加载ELF格式的OS的过程</span></h2><p>阅读<code>bootmain.c</code>，了解bootloader如何加载ELF文件。通过分析源代码和通过qemu来运行并调试bootloader&amp;OS。</p>
+<ul>
+<li>bootloader如何读取硬盘扇区的？</li>
+</ul>
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-07-20%20%E4%B8%8B%E5%8D%8810.24.16.png" alt="截屏2022-07-20 下午10.24.16"></p>
+<p>查表。</p>
+<p>可以看到程序中对应的代码段：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span></span></span><br><span class="line"><span class="function"><span class="title">readsect</span><span class="params">(<span class="keyword">void</span> *dst, <span class="keyword">uint32_t</span> secno)</span> </span>&#123;</span><br><span class="line">    waitdisk();<span class="comment">//等待磁盘准备</span></span><br><span class="line">    outb(<span class="number">0x1F2</span>, <span class="number">1</span>);                        <span class="comment">//根据表可以看出，读取一个扇区。</span></span><br><span class="line">    outb(<span class="number">0x1F3</span>, secno &amp; <span class="number">0xFF</span>);						<span class="comment">//分别设置lba参数的0-27位</span></span><br><span class="line">    outb(<span class="number">0x1F4</span>, (secno &gt;&gt; <span class="number">8</span>) &amp; <span class="number">0xFF</span>);</span><br><span class="line">    outb(<span class="number">0x1F5</span>, (secno &gt;&gt; <span class="number">16</span>) &amp; <span class="number">0xFF</span>);</span><br><span class="line">    outb(<span class="number">0x1F6</span>, ((secno &gt;&gt; <span class="number">24</span>) &amp; <span class="number">0xF</span>) | <span class="number">0xE0</span>);</span><br><span class="line">    outb(<span class="number">0x1F7</span>, <span class="number">0x20</span>);                      <span class="comment">// 设置为读取</span></span><br><span class="line">    waitdisk();<span class="comment">//等待磁盘准备</span></span><br><span class="line">    insl(<span class="number">0x1F0</span>, dst, SECTSIZE / <span class="number">4</span>);<span class="comment">//从0x1f0端口读取数据</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li>bootloader是如何加载ELF格式的OS？</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span></span></span><br><span class="line"><span class="function"><span class="title">bootmain</span><span class="params">(<span class="keyword">void</span>)</span> </span>&#123;</span><br><span class="line">    readseg((<span class="keyword">uintptr_t</span>)ELFHDR, SECTSIZE * <span class="number">8</span>, <span class="number">0</span>);<span class="comment">//从磁盘中读取第一页数据</span></span><br><span class="line">    <span class="keyword">if</span> (ELFHDR-&gt;e_magic != ELF_MAGIC) &#123;</span><br><span class="line">        <span class="keyword">goto</span> bad;</span><br><span class="line">    &#125;<span class="comment">//判断是否为有效elf</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">proghdr</span> *<span class="title">ph</span>, *<span class="title">eph</span>;</span></span><br><span class="line">    <span class="comment">// 加载每个程度的段</span></span><br><span class="line">    ph = (struct proghdr *)((<span class="keyword">uintptr_t</span>)ELFHDR + ELFHDR-&gt;e_phoff);</span><br><span class="line">    eph = ph + ELFHDR-&gt;e_phnum;</span><br><span class="line">    <span class="keyword">for</span> (; ph &lt; eph; ph ++) &#123;</span><br><span class="line">        readseg(ph-&gt;p_va &amp; <span class="number">0xFFFFFF</span>, ph-&gt;p_memsz, ph-&gt;p_offset);</span><br><span class="line">    &#125;</span><br><span class="line">  	<span class="comment">//跳转到程序入口点</span></span><br><span class="line">    ((<span class="keyword">void</span> (*)(<span class="keyword">void</span>))(ELFHDR-&gt;e_entry &amp; <span class="number">0xFFFFFF</span>))();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2><span id="练习五实现函数调用堆栈跟踪函数">练习五：实现函数调用堆栈跟踪函数</span></h2><p>通过函数print_stackframe来跟踪函数调用堆栈中记录的返回地址。</p>
+<p>（四舍五入相当于一个dbg系统）</p>
+<p>从0 - 栈长，分别打印ebp，rip以及对应的代码信息。</p>
+<p>读取ebp和eip的函数已经给出，并且对应的数据类型都已经设置好。</p>
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-07-21%20%E4%B8%8B%E5%8D%884.47.26.png" alt="截屏2022-07-21 下午4.47.26"></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span></span></span><br><span class="line"><span class="function"><span class="title">print_stackframe</span><span class="params">(<span class="keyword">void</span>)</span> </span>&#123;</span><br><span class="line">     <span class="comment">/* LAB1 YOUR CODE : STEP 1 */</span></span><br><span class="line">     <span class="comment">/* (1) call read_ebp() to get the value of ebp. the type is (uint32_t);</span></span><br><span class="line"><span class="comment">      * (2) call read_eip() to get the value of eip. the type is (uint32_t);</span></span><br><span class="line"><span class="comment">      * (3) from 0 .. STACKFRAME_DEPTH</span></span><br><span class="line"><span class="comment">      *    (3.1) printf value of ebp, eip</span></span><br><span class="line"><span class="comment">      *    (3.2) (uint32_t)calling arguments [0..4] = the contents in address (unit32_t)ebp +2 [0..4]</span></span><br><span class="line"><span class="comment">      *    (3.3) cprintf(&quot;\n&quot;);</span></span><br><span class="line"><span class="comment">      *    (3.4) call print_debuginfo(eip-1) to print the C calling function name and line number, etc.</span></span><br><span class="line"><span class="comment">      *    (3.5) popup a calling stackframe</span></span><br><span class="line"><span class="comment">      *           NOTICE: the calling funciton&#x27;s return addr eip  = ss:[ebp+4]</span></span><br><span class="line"><span class="comment">      *                   the calling funciton&#x27;s ebp = ss:[ebp]</span></span><br><span class="line"><span class="comment">      */</span></span><br><span class="line">    <span class="keyword">uint32_t</span> ebp = read_ebp();  <span class="comment">//(1) call read_ebp() to get the value of ebp. the type is (uint32_t);</span></span><br><span class="line">    <span class="keyword">uint32_t</span> eip = read_eip();  <span class="comment">//(2) call read_eip() to get the value of eip. the type is (uint32_t);</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; STACKFRAME_DEPTH; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        cprintf(<span class="string">&quot;ebp : 0x%x&quot;</span>,ebp);</span><br><span class="line">        cprintf(<span class="string">&quot;eip : 0x%x&quot;</span>,eip);<span class="comment">//分别打印eip和ebp的值</span></span><br><span class="line">        <span class="keyword">uint32_t</span>* args = (<span class="keyword">uint32_t</span>*)ebp + <span class="number">2</span>; <span class="comment">//接着打印对应的参数</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> <span class="keyword">uint32_t</span> j = <span class="number">0</span>; j &lt; <span class="number">4</span>; ++j)</span><br><span class="line">        &#123;</span><br><span class="line">            cprintf(<span class="string">&quot;args: 0x%x\n&quot;</span>,args[j]);</span><br><span class="line">        &#125;</span><br><span class="line">        print_debuginfo(eip<span class="number">-1</span>);<span class="comment">//这里就是打印类似kern/debug/kdebug.c:306: print_stackframe+37的信息</span></span><br><span class="line">        eip = *((<span class="keyword">uintptr_t</span>*)ebp + <span class="number">1</span>);<span class="comment">//设置新的eip为ebp+1处的地址</span></span><br><span class="line">        ebp = *(<span class="keyword">uintptr_t</span>*)ebp;<span class="comment">//设置新的ebp</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2><span id="练习6完善中断初始化和处理">练习6：完善中断初始化和处理</span></h2><h4><span id="中断描述符表也可简称为保护模式下的中断向量表中一个表项占多少字节其中哪几位代表中断处理代码的入口">中断描述符表（也可简称为保护模式下的中断向量表）中一个表项占多少字节？其中哪几位代表中断处理代码的入口？</span></h4><p>在<code>mm/mmu.h</code>中可以看到</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* Gate descriptors for interrupts and traps */</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">gatedesc</span> &#123;</span></span><br><span class="line">    <span class="keyword">unsigned</span> gd_off_15_0 : <span class="number">16</span>;        <span class="comment">// low 16 bits of offset in segment</span></span><br><span class="line">    <span class="keyword">unsigned</span> gd_ss : <span class="number">16</span>;            <span class="comment">// segment selector</span></span><br><span class="line">    <span class="keyword">unsigned</span> gd_args : <span class="number">5</span>;            <span class="comment">// # args, 0 for interrupt/trap gates</span></span><br><span class="line">    <span class="keyword">unsigned</span> gd_rsv1 : <span class="number">3</span>;            <span class="comment">// reserved(should be zero I guess)</span></span><br><span class="line">    <span class="keyword">unsigned</span> gd_type : <span class="number">4</span>;            <span class="comment">// type(STS_&#123;TG,IG32,TG32&#125;)</span></span><br><span class="line">    <span class="keyword">unsigned</span> gd_s : <span class="number">1</span>;                <span class="comment">// must be 0 (system)</span></span><br><span class="line">    <span class="keyword">unsigned</span> gd_dpl : <span class="number">2</span>;            <span class="comment">// descriptor(meaning new) privilege level</span></span><br><span class="line">    <span class="keyword">unsigned</span> gd_p : <span class="number">1</span>;                <span class="comment">// Present</span></span><br><span class="line">    <span class="keyword">unsigned</span> gd_off_31_16 : <span class="number">16</span>;        <span class="comment">// high bits of offset in segment</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>一个gatedesc的大小8 byte。</p>
+<p><code>gd_off_15_0</code>和<code>gd_off_31_16</code>指定了段偏移，<code>gd_桑桑</code>制定了段基址，这三个成员共同确定了中断处理程序的地址，作为中断处理代码的入口。</p>
+<h4><span id="请编程完善kerntraptrapc中对中断向量表进行初始化的函数idt_init-在idt_init函数中依次对所有中断入口进行初始化-使用mmuh中的setgate宏填充idt数组内容-每个中断的入口由toolsvectorsc生成使用trapc中声明的vectors数组即可">请编程完善kern/trap/trap.c中对中断向量表进行初始化的函数idt_init。在idt_init函数中，依次对所有中断入口进行初始化。使用mmu.h中的SETGATE宏，填充idt数组内容。每个中断的入口由tools/vectors.c生成，使用trap.c中声明的vectors数组即可。</span></h4><h4><span id="请编程完善trapc中的中断处理函数trap在对时钟中断进行处理的部分填写trap函数中处理时钟中断的部分使操作系统每遇到100次时钟中断后调用print_ticks子程序向屏幕上打印一行文字100-ticks">请编程完善trap.c中的中断处理函数trap，在对时钟中断进行处理的部分填写trap函数中处理时钟中断的部分，使操作系统每遇到100次时钟中断后，调用print_ticks子程序，向屏幕上打印一行文字”100 ticks”。</span></h4>
+            <div class="clearfix"></div>
+            <hr class="nogutter">
+        </div>
+        <nav class="m-pagination col-md-8 col-md-offset-2 col-sm-24" role="pagination">
+    
+    
+    <a class="pull-right" href="../2022%E5%B9%B4%E4%B8%83%E6%9C%88/">
+        七月 →
+    </a>
+    
+</nav>
+
+        <div class="col-md-8 col-md-offset-2 col-sm-24"><script type="text/javascript">
+  /**
+   * 搜狐畅言
+   */
+
+  /*
+  document.write('<div id="SOHUCS" sid="' + window.location.pathname.slice(1) + '" ></div>');
+
+  window.onload = function () {
+    (function () {
+      var appid = 'cytXXXX';
+      var conf = 'prod_xxxxxxxxxxxxxxxxx';
+      var width = window.innerWidth || document.documentElement.clientWidth;
+      var loadJs = function (d, a, id) {
+        var c = document.getElementsByTagName("head")[0] || document.head || document.documentElement;
+        var b = document.createElement("script");
+        b.setAttribute("type", "text/javascript");
+        b.setAttribute("charset", "UTF-8");
+        b.setAttribute("src", d);
+        if (id) {
+          b.setAttribute("id", id);
+        }
+        if (typeof a === "function") {
+          if (window.attachEvent) {
+            b.onreadystatechange = function () {
+              var e = b.readyState;
+              if (e === "loaded" || e === "complete") {
+                b.onreadystatechange = null;
+                a()
+              }
+            }
+          } else {
+            b.onload = a
+          }
+        }
+        c.appendChild(b)
+      };
+
+      loadJs("https://changyan.sohu.com/upload/changyan.js", function () {
+        window.changyan.api.config({
+          appid: appid,
+          conf: conf
+        })
+      });
+    })();
+  }
+  */
+
+</script>
+</div>
+    </div>
+</section>
+
+<!-- Highlight.js -->
+
+<link rel="stylesheet"
+href="//highlightjs.org/static/demo/styles/atom-one-light.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js">
+</script>
+<script>
+hljs.initHighlightingOnLoad();
+
+</script>
+
+
+      
+<!-- ============================ Footer =========================== -->
+
+<footer>
+    <div class="container">
+            <div class="copy">
+                <p>
+                    &copy; 2014<script>new Date().getFullYear()>2010&&document.write("-"+new Date().getFullYear());</script>, Content By Rin777. All Rights Reserved.
+                </p>
+                <p>Theme By <a target="_blank" rel="noopener" href="//go.kieran.top" style="color: #767D84">Kieran</a></p>
+            </div>
+            <div class="social">
+                <ul>
+                    
+                    <li><a href="https://github.com/" title="Github" target="_blank"><i class="icon-github"></i></a>&nbsp;</li>
+                    
+                    
+                    
+                    
+                    
+                </ul>
+            </div>
+            <div class="clearfix"> </div>
+        </div>
+</footer>
+
+<!-- ============================ END Footer =========================== -->
+      <!-- Load our scripts -->
+<!-- Resizable 'on-demand' full-height hero -->
+<script type="text/javascript">
+    var resizeHero = function () {
+        var hero = $(".cover,.heightblock"),
+            window1 = $(window);
+        hero.css({
+            "height": window1.height()
+        });
+    };
+
+    resizeHero();
+
+    $(window).resize(function () {
+        resizeHero();
+    });
+</script>
+<script src="/js/plugins.min.js"></script><!-- Bootstrap core and concatenated plugins always load here -->
+<script src="/js/scripts.js"></script><!-- Theme scripts -->
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$('#intro').find('img').each(function(){
+  var alt = this.alt;
+
+  if (alt){
+    $(this).after('<span class="caption" style="display:none">' + alt + '</span>');
+  }
+
+  $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox" rel="gallery" />');
+});
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+      
+            <style>
+.local-search-popup {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  background: rgba(255, 255, 255, .9);
+  color: #333;
+  z-index: 9999;
+  border-radius: 5px;
+  overflow: scroll;
+}
+#local-search-input {
+  width: 100%;
+  border: none;
+  outline: none;
+  border-bottom: 1px solid #151515;
+  background-color: initial;
+}
+.search-result-list {
+  list-style: none;
+  padding-left: 0;
+}
+.search-result-list > li {
+  margin-top: 15px;
+  border-bottom: 1px solid #ddd;
+  transition: all ease .3s;
+}
+.search-result-list > li:hover {
+  border-bottom: 1px solid gray;
+}
+.search-result-title {
+  font-size: 16px;
+}
+.search-result {
+  line-height: 20px;
+}
+.search-keyword {
+  font-weight: normal;
+  color: #c00;
+}
+
+@media (min-width: 890px) {
+  .popup-btn-close {
+    position: absolute;
+    top: 15px;
+    left: 35px;
+    border: 1px solid #151515;
+    padding: 0px 10px;
+    border-top-left-radius: 8px;
+    cursor: pointer;
+    transition: all ease .3s;
+  }
+  .popup-btn-close:hover {
+    background: #151515;
+    opacity: .9;
+    color: #fff;
+  }
+}
+@media (max-width: 890px) {
+  .popup-btn-close {
+    font-size: 0;
+    position: fixed;
+    right: 20px;
+    bottom: 50px;
+    width: 50px;
+    height: 50px;
+    background: #fff;
+    border-radius: 50%;
+    box-shadow: 1px 1px 5px #888;
+    cursor: pointer;
+  }
+  .popup-btn-close::after {
+    content: '←';
+    color: #151515;
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-size: 20px;
+    width: 100%;
+    height: 100%;
+    line-height: 50px;
+    text-align: center;
+  }
+}
+</style>
+
+<div class="popup search-popup local-search-popup">
+  <span class="popup-btn-close">
+    ESC
+  </span>
+  <div class="container">
+    <div class="col-md-8 col-md-offset-2">
+      <div class="local-search-header clearfix">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="local-search-input-wrapper">
+          <input autocomplete="off" placeholder="Search..." type="text" id="local-search-input">
+        </div>
+      </div>
+      <div id="local-search-result"></div>
+    </div>
+  </div>
+</div>
+
+<script src="/js/ziploader.js"></script>
+
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.json";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').fadeOut(300);
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $('.popup').fadeIn(300);
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // get search zip version
+    $.get('/searchVersion.txt?t=' + (+new Date()), function(res) {
+      if (localStorage.getItem('searchVersion') !== res) {
+        localStorage.setItem('searchVersion', res);
+        initSearchJson();
+      }
+    });
+
+    function initSearchJson () {
+      initLoad(['/search.zip'], {
+        loadOptions: {
+          success: function(obj) {
+            localStorage.setItem('searchJson', obj['search.json'])
+          },
+          error: function(e) {
+            return console.log(e)
+          }
+        },
+        returnOptions: {
+          'json': TYPE_TEXT
+        },
+        mimeOptions:{
+          'json':'application/json'
+        }
+      })
+    }
+
+
+    // search function;
+    var searchFunc = function(search_id, content_id) {
+      'use strict';
+
+      isfetched = true;
+      var datas = JSON.parse(localStorage.getItem('searchJson'));
+      console.log(search_id)
+      var input = document.getElementById(search_id);
+      var resultContent = document.getElementById(content_id);
+      var inputEventFunction = function() {
+        var searchText = input.value.trim().toLowerCase();
+        var keywords = searchText.split(/[\s\-]+/);
+        if (keywords.length > 1) {
+          keywords.push(searchText);
+        }
+        var resultItems = [];
+        if (searchText.length > 0) {
+          // perform local searching
+          datas.forEach(function(data) {
+            var isMatch = false;
+            var hitCount = 0;
+            var searchTextCount = 0;
+            var title = data.title ? data.title.trim() : '';
+            var titleInLowerCase = title.toLowerCase();
+            var content = data.content ? data.content.trim().replace(/<[^>]+>/g,"") : '';
+            var contentInLowerCase = content.toLowerCase();
+            var articleUrl = decodeURIComponent(data.url);
+            var indexOfTitle = [];
+            var indexOfContent = [];
+            // only match articles with not empty titles
+            keywords.forEach(function(keyword) {
+              function getIndexByWord(word, text, caseSensitive) {
+                var wordLen = word.length;
+                if (wordLen === 0) {
+                  return [];
+                }
+                var startPosition = 0, position = [], index = [];
+                if (!caseSensitive) {
+                  text = text.toLowerCase();
+                  word = word.toLowerCase();
+                }
+                while ((position = text.indexOf(word, startPosition)) > -1) {
+                  index.push({position: position, word: word});
+                  startPosition = position + wordLen;
+                }
+                return index;
+              }
+
+              indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+              indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+            });
+            if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+              isMatch = true;
+              hitCount = indexOfTitle.length + indexOfContent.length;
+            }
+
+            // show search results
+
+            if (isMatch) {
+              // sort index by position of keyword
+
+              [indexOfTitle, indexOfContent].forEach(function (index) {
+                index.sort(function (itemLeft, itemRight) {
+                  if (itemRight.position !== itemLeft.position) {
+                    return itemRight.position - itemLeft.position;
+                  } else {
+                    return itemLeft.word.length - itemRight.word.length;
+                  }
+                });
+              });
+
+              // merge hits into slices
+
+              function mergeIntoSlice(text, start, end, index) {
+                var item = index[index.length - 1];
+                var position = item.position;
+                var word = item.word;
+                var hits = [];
+                var searchTextCountInSlice = 0;
+                while (position + word.length <= end && index.length != 0) {
+                  if (word === searchText) {
+                    searchTextCountInSlice++;
+                  }
+                  hits.push({position: position, length: word.length});
+                  var wordEnd = position + word.length;
+
+                  // move to next position of hit
+
+                  index.pop();
+                  while (index.length != 0) {
+                    item = index[index.length - 1];
+                    position = item.position;
+                    word = item.word;
+                    if (wordEnd > position) {
+                      index.pop();
+                    } else {
+                      break;
+                    }
+                  }
+                }
+                searchTextCount += searchTextCountInSlice;
+                return {
+                  hits: hits,
+                  start: start,
+                  end: end,
+                  searchTextCount: searchTextCountInSlice
+                };
+              }
+
+              var slicesOfTitle = [];
+              if (indexOfTitle.length != 0) {
+                slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+              }
+
+              var slicesOfContent = [];
+              while (indexOfContent.length != 0) {
+                var item = indexOfContent[indexOfContent.length - 1];
+                var position = item.position;
+                var word = item.word;
+                // cut out 100 characters
+                var start = position - 20;
+                var end = position + 80;
+                if(start < 0){
+                  start = 0;
+                }
+                if (end < position + word.length) {
+                  end = position + word.length;
+                }
+                if(end > content.length){
+                  end = content.length;
+                }
+                slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+              }
+
+              // sort slices in content by search text's count and hits' count
+
+              slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                  return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                  return sliceRight.hits.length - sliceLeft.hits.length;
+                } else {
+                  return sliceLeft.start - sliceRight.start;
+                }
+              });
+
+              // select top N slices in content
+
+              var upperBound = parseInt('2');
+              if (upperBound >= 0) {
+                slicesOfContent = slicesOfContent.slice(0, upperBound);
+              }
+
+              // highlight title and content
+
+              function highlightKeyword(text, slice) {
+                var result = '';
+                var prevEnd = slice.start;
+                slice.hits.forEach(function (hit) {
+                  result += text.substring(prevEnd, hit.position);
+                  var end = hit.position + hit.length;
+                  result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                  prevEnd = end;
+                });
+                result += text.substring(prevEnd, slice.end);
+                return result;
+              }
+
+              var resultItem = '';
+
+              if (slicesOfTitle.length != 0) {
+                resultItem += "<li><a target='_blank' href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+              } else {
+                resultItem += "<li><a target='_blank' href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+              }
+
+              slicesOfContent.forEach(function (slice) {
+                resultItem += "<a target='_blank' href='" + articleUrl + "'>" +
+                  "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                  "...</p>" + "</a>";
+              });
+
+              resultItem += "</li>";
+              resultItems.push({
+                item: resultItem,
+                searchTextCount: searchTextCount,
+                hitCount: hitCount,
+                id: resultItems.length
+              });
+            }
+          })
+        };
+        if (keywords.length === 1 && keywords[0] === "") {
+          resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+        } else if (resultItems.length === 0) {
+          resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+        } else {
+          resultItems.sort(function (resultLeft, resultRight) {
+            if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+              return resultRight.searchTextCount - resultLeft.searchTextCount;
+            } else if (resultLeft.hitCount !== resultRight.hitCount) {
+              return resultRight.hitCount - resultLeft.hitCount;
+            } else {
+              return resultRight.id - resultLeft.id;
+            }
+          });
+          var searchResultList = '<ul class=\"search-result-list\">';
+          resultItems.forEach(function (result) {
+            searchResultList += result.item;
+          })
+          searchResultList += "</ul>";
+          resultContent.innerHTML = searchResultList;
+        }
+      }
+
+      if ('auto' === 'auto') {
+        input.addEventListener('input', inputEventFunction);
+      } else {
+        $('.search-icon').click(inputEventFunction);
+        input.addEventListener('keypress', function (event) {
+          if (event.keyCode === 13) {
+            inputEventFunction();
+          }
+        });
+      }
+
+      // remove loading animation
+      $('body').css('overflow', '');
+
+      proceedsearch();
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        $('.sb-close').click();
+        searchFunc('local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+      
+      
+
+<!--
+
+<link rel="stylesheet" href="/dist/APlayer.min.css">
+<div id="aplayer"></div>
+<script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+<meting-js
+      server="netease"
+      type="playlist"
+      id="4904272454">
+</meting-js>
+-->
+
+</body>
+
+</html>
+
+
+
+
+
+
+

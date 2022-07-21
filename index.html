@@ -138,6 +138,8 @@
 				    
 				    <li><a href="/categories/Tcache/" class="animsition-link">Tcache<small>(2)</small></a></li>
 				    
+				    <li><a href="/categories/ucore/" class="animsition-link">ucore<small>(1)</small></a></li>
+				    
 				</ul>
         	</li>
 			
@@ -259,6 +261,47 @@
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
                 <div class="col-md-4">
+                    <h3><a href="/2022/07/16/ucore_lab1/">ucore lab1</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-07-16T10:01:36.685Z" itemprop="datePublished">
+          2022-07-16
+      </time>
+    
+    
+    | 
+    <a href='/tags/os/'>os</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        0：环境需要准备
+能正常运行qemu的环境。
+实验手册：https://objectkuan.gitbooks.io/ucore-docs/content/lab1/lab1_1_goals.html
+实验代码：https://github.com/chyyuu/os_kernel_lab/tree/lab1_X
+
+1: 实验目的分析加载操作系统的boot loader，并了解相关计算机原理。
+2: 基础知识bios启动过程bios（(
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/07/16/ucore_lab1/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
                     <h3><a href="/2022/07/16/2022年七月/">七月</a></h3>
                     <span>
                         <span class="post-meta">
@@ -307,7 +350,7 @@ kernel pwn相关的知识点。至少到能做一点简单的题的程度。
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
                 <div class="col-md-4">
-                    <h3><a href="/2022/07/16/kernel-rop/">kernel rop</a></h3>
+                    <h3><a href="/2022/07/16/kernel-rop/">kernel题型</a></h3>
                     <span>
                         <span class="post-meta">
       <time datetime="2022-07-16T08:35:53.016Z" itemprop="datePublished">
@@ -328,8 +371,9 @@ kernel pwn相关的知识点。至少到能做一点简单的题的程度。
                         
          
 
-之前搭建了环境，并接触了简单的kernel uaf，现在来看看内核rop。
-
+一个简单的归纳，待更新。
+UAFuaf改写cred结构体提权例题ciscn2017 babydriver。
+ROP
                       
                     </p>
                     
@@ -617,55 +661,6 @@ libc2.33
                     
                     <p class="pull-right readMore">
                         <a href="/2022/05/30/ciscn_2022_login/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2022/05/21/week12_6_pwnable_secret_garden/">pwnable - secret garden(tbc)</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2022-05-21T07:22:51.685Z" itemprop="datePublished">
-          2022-05-21
-      </time>
-    
-    
-    | 
-    <a href='/tags/pwnable/'>pwnable</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-    
-
-overview
-reverse​        依旧是比较传统的菜单，这个应该不会还是栈题了吧。
-add​        相对比较清晰，malloc使用的是size[0]，这个值是可以自己控制的，但是也不排除有溢出的可能性。
-
-
-​        后面则是将flower的ptr插入到head中。
-
-show​        没啥特别的，就是打印出来。
-​        
-free这里有可能有溢出，并且有uaf
-
-free
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2022/05/21/week12_6_pwnable_secret_garden/">Read More...</a>
                     </p>
                     
                 </div>
