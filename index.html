@@ -138,7 +138,9 @@
 				    
 				    <li><a href="/categories/Tcache/" class="animsition-link">Tcache<small>(2)</small></a></li>
 				    
-				    <li><a href="/categories/ucore/" class="animsition-link">ucore<small>(1)</small></a></li>
+				    <li><a href="/categories/ucore/" class="animsition-link">ucore<small>(2)</small></a></li>
+				    
+				    <li><a href="/categories/weekly/" class="animsition-link">weekly<small>(1)</small></a></li>
 				    
 				</ul>
         	</li>
@@ -257,6 +259,84 @@
 
 <section id="intro">
     <div class="container">
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2022/07/22/weekly_第一周/">第一周</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-07-22T08:41:49.255Z" itemprop="datePublished">
+          2022-07-22
+      </time>
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        ​    
+         
+
+完成ucore lab1 2
+
+每晚半小时阅读时间。
+
+完成bc 2-4。
+
+完成kernel rop学习
+
+
+
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/07/22/weekly_第一周/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2022/07/22/ucore-lab2/">ucore lab2</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-07-22T08:31:27.591Z" itemprop="datePublished">
+          2022-07-22
+      </time>
+    
+    
+    | 
+    <a href='/tags/os/'>os</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        基础知识系统物理内存探测当操作系统被启动后，需要探测当前内存，了解当下物理内存分布状态。一半探测内存的方式有BIOS中断调用和直接探测两种，
+在ucore中，系统选择通过bios调用的INT 15h中断中的e820h中断获取内存信息，并把其映射结构保存在物理地址0x8000处。而这些操作只能在实模式下完成，所以在bootloader进入保护模式前完成这一部分工作比较合适。这些部分由boot/bootasm.S中从probe_memory
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/07/22/ucore-lab2/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
         
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
@@ -573,94 +653,6 @@ qemu一般来说elf的话只需要用包管理器下载：sudo apt install qemu-
                     
                     <p class="pull-right readMore">
                         <a href="/2022/06/21/vivi-深夜锐评拿不拿/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2022/06/11/ciscn_2022_newest_note/">newest_note</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2022-06-11T04:51:16.916Z" itemprop="datePublished">
-          2022-06-11
-      </time>
-    
-    
-    | 
-    <a href='/tags/ciscn/'>ciscn</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-    
-
-给分享会准备的一个简单的复现。
-太长不看
-逆向确定漏洞点-uaf以及越界读写
-glibc2.32指针异或绕过
-glibc2.34取消malloc free hook后的利用方式
-
-check
-​        依旧是保护全开。这里比较不好的地方就是libc的版本比较高。2.34有一个众所周知的更新就是去掉了malloc_hook以及free_hook。所以劫持程序流的方式也不再是从前的无脑打hook了。像湖湘杯的house
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2022/06/11/ciscn_2022_newest_note/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2022/05/30/ciscn_2022_login/">login_normal</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2022-05-30T05:14:03.237Z" itemprop="datePublished">
-          2022-05-30
-      </time>
-    
-    
-    | 
-    <a href='/tags/ciscn/'>ciscn</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-     
-
-好久没有写博客了，水一个，后面两天在写完信号与系统大作业以后预计复现一下另外两道题。这题还是蛮简单的也就是两个点，第一操作符逻辑能不能逆出来，第二能不能第一时间反应这个是可见字符shellcode。调试主要都在逆向阶段了，利用真的没有任何难度。主要可能是别的队pwn手还是少了，不然这个题可能解会超过web。
-checksec
-libc2.33
-逆向首先我们在s处可以输入一个比较大的字符串。
-
-参考2021 ciscn g
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2022/05/30/ciscn_2022_login/">Read More...</a>
                     </p>
                     
                 </div>
