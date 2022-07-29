@@ -116,8 +116,6 @@
 				    
 				    <li><a href="/categories/STACK-Format/" class="animsition-link">STACK - Format<small>(1)</small></a></li>
 				    
-				    <li><a href="/categories/STACK-OTHERS/" class="animsition-link">STACK - OTHERS<small>(1)</small></a></li>
-				    
 				    <li><a href="/categories/STACK-Other/" class="animsition-link">STACK - Other<small>(5)</small></a></li>
 				    
 				    <li><a href="/categories/STACK-ROP/" class="animsition-link">STACK - ROP<small>(3)</small></a></li>
@@ -138,9 +136,9 @@
 				    
 				    <li><a href="/categories/Tcache/" class="animsition-link">Tcache<small>(2)</small></a></li>
 				    
-				    <li><a href="/categories/ucore/" class="animsition-link">ucore<small>(2)</small></a></li>
+				    <li><a href="/categories/qemu/" class="animsition-link">qemu<small>(1)</small></a></li>
 				    
-				    <li><a href="/categories/weekly/" class="animsition-link">weekly<small>(1)</small></a></li>
+				    <li><a href="/categories/ucore/" class="animsition-link">ucore<small>(2)</small></a></li>
 				    
 				</ul>
         	</li>
@@ -263,12 +261,17 @@
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
                 <div class="col-md-4">
-                    <h3><a href="/2022/07/22/weekly_第一周/">第一周</a></h3>
+                    <h3><a href="/2022/07/25/qemu_qemu学习/">qemu逃逸学习</a></h3>
                     <span>
                         <span class="post-meta">
-      <time datetime="2022-07-22T08:41:49.255Z" itemprop="datePublished">
-          2022-07-22
+      <time datetime="2022-07-25T07:32:08.971Z" itemprop="datePublished">
+          2022-07-25
       </time>
+    
+    
+    | 
+    <a href='/tags/qemu/'>qemu</a>
+    
     
 </span>
                     </span>
@@ -276,24 +279,22 @@
                 <div class="col-md-8">
                     <p>
                       
-                        ​    
-         
+                        
+     
 
-完成ucore lab1 2
-
-每晚半小时阅读时间。
-
-完成bc 2-4。
-
-完成kernel rop学习
-
-
-
+因为一些奇怪的原因，开始学一下qemu。
+环境准备busybox
+基础知识内存结构qemu使用mmap出0x40000000大小的内存作为虚拟机的物理内存，在qemu存在两个转换层，分别是：
+用户地址-&gt;物理地址
+物理地址-&gt;qemu虚拟地址
+具体转换如下：
+/proc/$pid/pagemap 中储存了当前进程的页表，使得用户空间可以根据页表找到每个虚拟页面映射的物理帧。
+通过读取这个页表，就能够实现从用户
                       
                     </p>
                     
                     <p class="pull-right readMore">
-                        <a href="/2022/07/22/weekly_第一周/">Read More...</a>
+                        <a href="/2022/07/25/qemu_qemu学习/">Read More...</a>
                     </p>
                     
                 </div>
