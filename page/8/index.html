@@ -104,6 +104,8 @@
 				    
 				    <li><a href="/categories/MESS/" class="animsition-link">MESS<small>(17)</small></a></li>
 				    
+				    <li><a href="/categories/Machine-Learning/" class="animsition-link">Machine Learning<small>(1)</small></a></li>
+				    
 				    <li><a href="/categories/OTHER-IO-FILE/" class="animsition-link">OTHER - IO FILE<small>(1)</small></a></li>
 				    
 				    <li><a href="/categories/PWN-COLLEGE/" class="animsition-link">PWN.COLLEGE<small>(11)</small></a></li>
@@ -261,6 +263,45 @@
 
 <section id="intro">
     <div class="container">
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2022/03/16/week3-2.2/">ccmc_pwnme2</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-03-16T11:18:25.856Z" itemprop="datePublished">
+          2022-03-16
+      </time>
+    
+    
+    | 
+    <a href='/tags/ret2gadgets/'>ret2gadgets</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        ​    
+     
+ccmc_pwnme2一道看起来人畜无害的栈题。但是有几个非常奇怪的函数。
+​        所以这是一道相对有些奇怪的rop，控制这三个函数的其中两个的参数为指定字符串，就能较为方便地读取flag。
+12345678910111213141516from pwn import *p = remote(&#x27;node4.buuoj.cn&#x27;,27653)#p = process(&#x27;./pw
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/03/16/week3-2.2/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
         
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
@@ -635,51 +676,6 @@ Le
                     
                     <p class="pull-right readMore">
                         <a href="/2022/03/03/pwn.college_MemoryErrors/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2022/03/03/pwn.college_ProgramMisuse/">ProgramMisuse</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2022-03-03T03:09:26.547Z" itemprop="datePublished">
-          2022-03-03
-      </time>
-    
-    
-    | 
-    <a href='/tags/pwncollege/'>pwncollege</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-     
-
-
-
-
-
-​        关于这个module，做出题目的话大致有两个思路，一个是利用/bin/sh    来对整个shell提权，另外一个是利用设置了suid的特殊程序来读取flag。一般来说是第二个方法比较简单，但是有时候只有第一个方法可以行得通。
-Level1​        没有看视频，并不知道这个Misuse是什么意义，但是level1只要执行给的程序就能get flag。
-
-Level2​        到第
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2022/03/03/pwn.college_ProgramMisuse/">Read More...</a>
                     </p>
                     
                 </div>

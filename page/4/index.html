@@ -104,6 +104,8 @@
 				    
 				    <li><a href="/categories/MESS/" class="animsition-link">MESS<small>(17)</small></a></li>
 				    
+				    <li><a href="/categories/Machine-Learning/" class="animsition-link">Machine Learning<small>(1)</small></a></li>
+				    
 				    <li><a href="/categories/OTHER-IO-FILE/" class="animsition-link">OTHER - IO FILE<small>(1)</small></a></li>
 				    
 				    <li><a href="/categories/PWN-COLLEGE/" class="animsition-link">PWN.COLLEGE<small>(11)</small></a></li>
@@ -261,6 +263,58 @@
 
 <section id="intro">
     <div class="container">
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2022/04/27/week9_3.1_3x17/">pwnable - 3x17</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-04-27T03:44:23.414Z" itemprop="datePublished">
+          2022-04-27
+      </time>
+    
+    
+    | 
+    <a href='/tags/pwnable/'>pwnable</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+    
+
+
+
+
+
+overview
+​        轻松快乐的栈题，没有canary和pie那估计就是rop力。
+
+​        怪耶。
+​        居然是静态链接捏，那就不是ret2libc力。
+
+Reverse​    开幕雷击
+
+​    这是啥？
+​    秉持着看不懂就假装没有看到的原则，先看看得懂的地方。
+12345678910result = ++::result;if ( ::result == 1 )&
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/04/27/week9_3.1_3x17/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
         
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
@@ -629,48 +683,6 @@ overview大致原理​        glibc定义了_IO_FILE这样一个结构体来管
                     
                     <p class="pull-right readMore">
                         <a href="/2022/04/10/heap_learning_io_file/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2022/04/10/week6-7.2/">攻防世界 - house of orange</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2022-04-10T09:02:58.445Z" itemprop="datePublished">
-          2022-04-10
-      </time>
-    
-    
-    | 
-    <a href='/tags/xctf/'>xctf</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-     
-
-overview
-逆向​        没有free，只有增查改。
-​        这个题程序逻辑比较简单，主要是利用相对比较复杂。
-add​        最多申请三个house。并且在申请house开始为每个house创建了0x10 size的结构体，只有两个字段，size和content ptr。在输入name的阶段会把name读入content ptr指向的地址。
-12printf(&quot;Name :&q
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2022/04/10/week6-7.2/">Read More...</a>
                     </p>
                     
                 </div>
