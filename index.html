@@ -338,82 +338,6 @@
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
                 <div class="col-md-4">
-                    <h3><a href="/2022/08/22/萌新赛-文本/"></a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2022-08-22T02:06:47.028Z" itemprop="datePublished">
-          2022-08-22
-      </time>
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        第一天​        拓拓从沉睡中醒来。
-​        黑暗笼罩着四周，伸手不见五指。
-​        “这是哪？”
-​        拓拓眉头紧锁，他警惕地环顾周围，却只收获了一片深不见底的漆黑。
-​        心跳声在绝对安静的身侧咚咚作响，细密的汗珠从太阳穴滑落，消失在颈窝深处。
-​        一切都是那么不对劲，让人头皮发麻。
-​        突然，不知从哪里传来细细碎碎的沙沙声，那声音像什么电流的底噪，却又过
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2022/08/22/萌新赛-文本/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2022/08/22/萌新赛/"></a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2022-08-22T01:58:34.601Z" itemprop="datePublished">
-          2022-08-22
-      </time>
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        出题log
-今际之国拓拓酱题目内容tag：金手指：
-第一关
-简单的got表内容读取（输入表地址，读取内容，大概形式就是给一个地址，金手指读取内容）
-got表内容替换为后门函数地址。
-执行实为后门函数的函数。
-
-第二关抽象的栈溢出。
-other一个简单的blind pwn，但提示全部由文本提供，一些查看地址的task则由文本附件提供。
-文本从第一步开始，介绍指引解题者。
-程序写成简单的菜单，选择剧情模式or游戏模式，游戏模式直接开始答题，
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2022/08/22/萌新赛/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
                     <h3><a href="/2022/08/09/heap_ctf-fuzz/">堆题中的fuzz</a></h3>
                     <span>
                         <span class="post-meta">
@@ -655,6 +579,83 @@ ROP
                     
                     <p class="pull-right readMore">
                         <a href="/2022/07/16/kernel-rop/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2022/07/15/mess_vmware fusion无法复制粘贴问题/">vmware fusion无法复制粘贴问题</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-07-15T14:28:51.623Z" itemprop="datePublished">
+          2022-07-15
+      </time>
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        Ubuntu20.04安装vmware tools时显示segment fault，虽然最后显示成功安装，但是没有任何效果，依旧不能复制粘贴。
+解决方式：
+首先删除已经安装的vmware tools。具体方法是
+12cd vmware-tools-distrib/binsudo ./vmware-uninstall-tools.pl
+
+接着直接
+1sudo apt-get install open-vm-tools open-vm-to
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/07/15/mess_vmware fusion无法复制粘贴问题/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2022/07/14/kernel_环境搭建及基础知识/">kernel环境+基础知识</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-07-14T14:09:06.354Z" itemprop="datePublished">
+          2022-07-14
+      </time>
+    
+    
+    | 
+    <a href='/tags/KERNEL/'>KERNEL</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+         
+
+环境搭建一般来说教程都会要求我们编译一个内核，安装一个busybox以及qemu，但是实际做题需要的环境只有qemu，因为题目会提供一个内核镜像，而busybox也不是必须，但是在这里还是都搭建一下。
+qemu一般来说elf的话只需要用包管理器下载：sudo apt install qemu-system
+有特殊需求可以用源码编译。但是暂时就省去这一步了。
+（ps：这里有一个坑，对于macos + pd的组合，你
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/07/14/kernel_环境搭建及基础知识/">Read More...</a>
                     </p>
                     
                 </div>
