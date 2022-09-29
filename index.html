@@ -72,6 +72,8 @@
 				    
 				    <li><a href="/categories/CSAPP-LAB/" class="animsition-link">CSAPP LAB<small>(1)</small></a></li>
 				    
+				    <li><a href="/categories/Fuzz-heap/" class="animsition-link">Fuzz-heap<small>(1)</small></a></li>
+				    
 				    <li><a href="/categories/Generalization/" class="animsition-link">Generalization<small>(5)</small></a></li>
 				    
 				    <li><a href="/categories/HEAP-ChunkOverlapping/" class="animsition-link">HEAP - ChunkOverlapping<small>(3)</small></a></li>
@@ -135,6 +137,8 @@
 				    <li><a href="/categories/STACK-sandbox/" class="animsition-link">STACK - sandbox<small>(1)</small></a></li>
 				    
 				    <li><a href="/categories/Tcache/" class="animsition-link">Tcache<small>(2)</small></a></li>
+				    
+				    <li><a href="/categories/cve/" class="animsition-link">cve<small>(1)</small></a></li>
 				    
 				    <li><a href="/categories/qemu/" class="animsition-link">qemu<small>(1)</small></a></li>
 				    
@@ -257,6 +261,197 @@
 
 <section id="intro">
     <div class="container">
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2022/09/26/Untitled/"></a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-09-26T07:36:50.391Z" itemprop="datePublished">
+          2022-09-26
+      </time>
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/09/26/Untitled/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2022/09/14/cve-2016-10190/">cve-2016-10190分析</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-09-14T14:13:10.306Z" itemprop="datePublished">
+          2022-09-14
+      </time>
+    
+    
+    | 
+    <a href='/tags/cve/'>cve</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+    
+
+米版阉割，原文加上代码将近3w字，这里就随便挑一点重点放上来。而且图懒得搞了，就当记录一下。
+环境搭建首先下载源码：
+1wget https://github.com/FFmpeg/FFmpeg/archive/n3.2.1.tar.gz
+
+4） ffmpeg编译按照https://trac.ffmpeg.org/wiki/CompilationGuide/Ubuntu，安装编译相关依赖
+12345678910111213
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/09/14/cve-2016-10190/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2022/08/22/萌新赛-文本/"></a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-08-22T02:06:47.028Z" itemprop="datePublished">
+          2022-08-22
+      </time>
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        第一天​        拓拓从沉睡中醒来。
+​        黑暗笼罩着四周，伸手不见五指。
+​        “这是哪？”
+​        拓拓眉头紧锁，他警惕地环顾周围，却只收获了一片深不见底的漆黑。
+​        心跳声在绝对安静的身侧咚咚作响，细密的汗珠从太阳穴滑落，消失在颈窝深处。
+​        一切都是那么不对劲，让人头皮发麻。
+​        突然，不知从哪里传来细细碎碎的沙沙声，那声音像什么电流的底噪，却又过
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/08/22/萌新赛-文本/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2022/08/22/萌新赛/"></a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-08-22T01:58:34.601Z" itemprop="datePublished">
+          2022-08-22
+      </time>
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        出题log
+今际之国拓拓酱题目内容tag：金手指：
+第一关
+简单的got表内容读取（输入表地址，读取内容，大概形式就是给一个地址，金手指读取内容）
+got表内容替换为后门函数地址。
+执行实为后门函数的函数。
+
+第二关抽象的栈溢出。
+other一个简单的blind pwn，但提示全部由文本提供，一些查看地址的task则由文本附件提供。
+文本从第一步开始，介绍指引解题者。
+程序写成简单的菜单，选择剧情模式or游戏模式，游戏模式直接开始答题，
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/08/22/萌新赛/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2022/08/09/heap_ctf-fuzz/">堆题中的fuzz</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-08-09T09:42:37.120Z" itemprop="datePublished">
+          2022-08-09
+      </time>
+    
+    
+    | 
+    <a href='/tags/fuzz/'>fuzz</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+			
+				console.error("ReferenceError: value is not defined");
+			     
+
+0一直对fuzz很感兴趣，现在市面上有名的一些fuzz工具大多针对于代码体量大的大型程序，而想到对ctf中的题目进行fuzz，一般只需要一个简单的脚本。
+对于漏洞原理简单，但逆向分析复杂的题目来说（例如c++，rust pwn，或者复杂的算法），fuzz是一种捷径。
+1：例Actf2022 
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/08/09/heap_ctf-fuzz/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
         
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
@@ -460,200 +655,6 @@ ROP
                     
                     <p class="pull-right readMore">
                         <a href="/2022/07/16/kernel-rop/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2022/07/15/mess_vmware fusion无法复制粘贴问题/">vmware fusion无法复制粘贴问题</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2022-07-15T14:28:51.623Z" itemprop="datePublished">
-          2022-07-15
-      </time>
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        Ubuntu20.04安装vmware tools时显示segment fault，虽然最后显示成功安装，但是没有任何效果，依旧不能复制粘贴。
-解决方式：
-首先删除已经安装的vmware tools。具体方法是
-12cd vmware-tools-distrib/binsudo ./vmware-uninstall-tools.pl
-
-接着直接
-1sudo apt-get install open-vm-tools open-vm-to
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2022/07/15/mess_vmware fusion无法复制粘贴问题/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2022/07/14/kernel_环境搭建及基础知识/">kernel环境+基础知识</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2022-07-14T14:09:06.354Z" itemprop="datePublished">
-          2022-07-14
-      </time>
-    
-    
-    | 
-    <a href='/tags/KERNEL/'>KERNEL</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-         
-
-环境搭建一般来说教程都会要求我们编译一个内核，安装一个busybox以及qemu，但是实际做题需要的环境只有qemu，因为题目会提供一个内核镜像，而busybox也不是必须，但是在这里还是都搭建一下。
-qemu一般来说elf的话只需要用包管理器下载：sudo apt install qemu-system
-有特殊需求可以用源码编译。但是暂时就省去这一步了。
-（ps：这里有一个坑，对于macos + pd的组合，你
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2022/07/14/kernel_环境搭建及基础知识/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2022/07/08/ciscn_2022_pwn1/">pwn1（已弃）</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2022-07-08T05:47:13.868Z" itemprop="datePublished">
-          2022-07-08
-      </time>
-    
-    
-    | 
-    <a href='/tags/ciscn/'>ciscn</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-    
-
-一个简单的复建，题目是今年西南赛区pwn1，是一个很常规的栈的rop，套了orw。
-逆向​        这个题的逆向不算复杂，同样也是操作符控制指令的形式，输多少个操作符就执行多少次指令，具体的过程就不写了。
-​        操作符对应的指令如下：
-123456789#1 --&gt; &gt;	[++buf_idx]#2 --&gt; &lt;	[--buf_idx]	#3 --&gt; +	[++buf[buf_i
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2022/07/08/ciscn_2022_pwn1/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2022/07/07/2022年六月/">六月</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2022-07-07T07:27:40.124Z" itemprop="datePublished">
-          2022-07-07
-      </time>
-    
-    
-    | 
-    <a href='/tags/vivi/'>vivi</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        ​        今日小暑。
-​        久违地重新开始写博客了，之前由于期末周，一直没有来得及整理。昨天把所有试全部考完了，国赛西南分赛区半决赛也打完了，师傅们非常强。
-​        之所以写下这些，实在是因为脑子里空空的，心里也空空的，不知该干什么，心情理应舒畅，然而现在却是一滩死水。我不知道该干什么了，只有一团乱麻似的思绪在胸口发闷。
-​        我开始萌生一些悔意了。大约三个月前，我的想法和现在从结果上来说有一些
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2022/07/07/2022年六月/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2022/06/21/vivi-深夜锐评拿不拿/">深夜锐评拿不拿</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2022-06-20T16:31:06.109Z" itemprop="datePublished">
-          2022-06-21
-      </time>
-    
-    
-    | 
-    <a href='/tags/幻想曲/'>幻想曲</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        ​    
-     
-0​        期末周，绩点比国赛重要，所以摆烂没有刷题。今天yrsk放了三首月光再演的曲子，拿厨都哭了，于是自然地多听了一些yrsk，并且看到了豆瓣上对于盗作的评论，有点不开心，故记录一下。
-1​        目前关于拿曲，尤其是yrsk时期的曲子，最大的批评是“同质化严重”，并且我个人也认为拿不拿所追求的“创作出不迎合大众的曲子”与他本身写出来的东西是相矛盾的。曾经我自己给自己台阶下，认为yrsk的“不
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2022/06/21/vivi-深夜锐评拿不拿/">Read More...</a>
                     </p>
                     
                 </div>
