@@ -104,7 +104,7 @@
 				    
 				    <li><a href="/categories/MESS/" class="animsition-link">MESS<small>(17)</small></a></li>
 				    
-				    <li><a href="/categories/Machine-Learning/" class="animsition-link">Machine Learning<small>(1)</small></a></li>
+				    <li><a href="/categories/Machine-Learning/" class="animsition-link">Machine Learning<small>(2)</small></a></li>
 				    
 				    <li><a href="/categories/OTHER-IO-FILE/" class="animsition-link">OTHER - IO FILE<small>(1)</small></a></li>
 				    
@@ -263,6 +263,44 @@
 
 <section id="intro">
     <div class="container">
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2021/12/06/heap_learning_fastbin_attack/">fastbin attack</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2021-12-06T08:17:00.507Z" itemprop="datePublished">
+          2021-12-06
+      </time>
+    
+    
+    | 
+    <a href='/tags/learning/'>learning</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+     
+
+fastbin​    长度在32-160(32位系统是16-80)的free堆块。通过fastbinlist储存，单向链表，所以fast。fastbin attack一个最简单的利用就是UAF，其次就是fastbin double free。ctf pwn中与fastbin相关的还有就是在unsortedbin attack中涉及到的，也是ptmalloc机制中的一种的malloc_consolidate，其中也有可以
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2021/12/06/heap_learning_fastbin_attack/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
         
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
@@ -645,49 +683,6 @@ docker基础架构​    对于docker，在了解基础命令之前我们需要�
                     
                     <p class="pull-right readMore">
                         <a href="/2021/10/29/mess_typora主题配置的一些心得/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2021/10/27/mess_解决gcc无法编译32位程序的问题/">解决gcc无法编译32位程序的问题</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2021-10-27T12:26:56.705Z" itemprop="datePublished">
-          2021-10-27
-      </time>
-    
-    
-    | 
-    <a href='/tags/linux-primary/'>linux primary</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-     
-
-1）前言​    之前一直被gcc无法编译32位程序而困扰，但是问题一直拖着没有解决，趁着今天比较闲，把这个问题彻底解决一下。
-2)过程​    首先我们尝试编译32位程序，gcc报错：
-​    缺少头文件，实则是没有安装多架构gcc。
-​    试图安装，失败，报错如下：
-​    这里有个坑了我好久的东西，就是这个报错
-E: Unable to correct problems, you have held bro
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2021/10/27/mess_解决gcc无法编译32位程序的问题/">Read More...</a>
                     </p>
                     
                 </div>
