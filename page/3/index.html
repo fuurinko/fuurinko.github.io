@@ -68,7 +68,7 @@
         		<a class="sb-toggle-submenu">Categories<span class="sb-caret"></span></a>
             	<ul class="sb-submenu">
 				  	
-				    <li><a href="/categories/AUDITION/" class="animsition-link">AUDITION<small>(14)</small></a></li>
+				    <li><a href="/categories/AUDITION/" class="animsition-link">AUDITION<small>(15)</small></a></li>
 				    
 				    <li><a href="/categories/CSAPP-LAB/" class="animsition-link">CSAPP LAB<small>(1)</small></a></li>
 				    
@@ -263,6 +263,49 @@
 
 <section id="intro">
     <div class="container">
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2022/05/30/ciscn_2022_login/">login_normal</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-05-30T05:14:03.237Z" itemprop="datePublished">
+          2022-05-30
+      </time>
+    
+    
+    | 
+    <a href='/tags/ciscn/'>ciscn</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+     
+
+好久没有写博客了，水一个，后面两天在写完信号与系统大作业以后预计复现一下另外两道题。这题还是蛮简单的也就是两个点，第一操作符逻辑能不能逆出来，第二能不能第一时间反应这个是可见字符shellcode。调试主要都在逆向阶段了，利用真的没有任何难度。主要可能是别的队pwn手还是少了，不然这个题可能解会超过web。
+checksec
+libc2.33
+逆向首先我们在s处可以输入一个比较大的字符串。
+
+参考2021 ciscn g
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/05/30/ciscn_2022_login/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
         
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
@@ -641,47 +684,6 @@ overview​        上一道题不给我调试符号，我还能找到类似的�
                     
                     <p class="pull-right readMore">
                         <a href="/2022/05/13/幻想曲-03-夏/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2022/05/13/week11_5_pwnable_teacher_tear/">pwnable - teacher_tear</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2022-05-13T12:24:56.686Z" itemprop="datePublished">
-          2022-05-13
-      </time>
-    
-    
-    | 
-    <a href='/tags/pwnable/'>pwnable</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-    
-
-overview​        除了pie其他都开，这样就不能修改got表了。
-​        libc是2.27，需要考虑的就是tcache，
-reverse​        这道题的逻辑也比较简单，堆块的分配给我的感觉是比较类似21年ciscn的lonelywolf，也是只能申请一个chunk，然后free处直接free整个malloc出的ptr，info则是打印我们输入的name。
-12printf(&quot;
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2022/05/13/week11_5_pwnable_teacher_tear/">Read More...</a>
                     </p>
                     
                 </div>
