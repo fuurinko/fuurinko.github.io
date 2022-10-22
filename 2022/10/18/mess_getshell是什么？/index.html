@@ -8,7 +8,7 @@
 
 <head>
 
-  <title>法压壶 | Rin</title>
+  <title>getshell是什么？（待完成） | Rin</title>
   <!-- Meta data -->
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -68,11 +68,11 @@
         		<a class="sb-toggle-submenu">Categories<span class="sb-caret"></span></a>
             	<ul class="sb-submenu">
 				  	
-				    <li><a href="/categories/AUDITION/" class="animsition-link">AUDITION<small>(15)</small></a></li>
+				    <li><a href="/categories/AUDITION/" class="animsition-link">AUDITION<small>(13)</small></a></li>
 				    
 				    <li><a href="/categories/CSAPP-LAB/" class="animsition-link">CSAPP LAB<small>(1)</small></a></li>
 				    
-				    <li><a href="/categories/Fuzz-heap/" class="animsition-link">Fuzz-heap<small>(1)</small></a></li>
+				    <li><a href="/categories/FUZZ-AFL/" class="animsition-link">FUZZ_AFL<small>(1)</small></a></li>
 				    
 				    <li><a href="/categories/Generalization/" class="animsition-link">Generalization<small>(5)</small></a></li>
 				    
@@ -102,7 +102,7 @@
 				    
 				    <li><a href="/categories/KERNEL/" class="animsition-link">KERNEL<small>(2)</small></a></li>
 				    
-				    <li><a href="/categories/MESS/" class="animsition-link">MESS<small>(17)</small></a></li>
+				    <li><a href="/categories/MESS/" class="animsition-link">MESS<small>(18)</small></a></li>
 				    
 				    <li><a href="/categories/Machine-Learning/" class="animsition-link">Machine Learning<small>(3)</small></a></li>
 				    
@@ -235,45 +235,41 @@
         <div class="row col-md-offset-2">
             <div class="col-md-8">
     			<span class="post-meta">
-      <time datetime="2022-03-09T16:34:14.000Z" itemprop="datePublished">
-          2022-03-10
+      <time datetime="2022-10-18T07:01:02.029Z" itemprop="datePublished">
+          2022-10-18
       </time>
     
-    
-    | 
-    <a href='/tags/vivi/'>vivi</a>
-    
-    
 </span>
-                <h1>法压壶</h1>
+                <h1>getshell是什么？（待完成）</h1>
             </div>
         </div>
         <div class="col-md-8 col-md-offset-2">
-      		<h3><span id="咖啡豆选择">咖啡豆选择：</span></h3><p>喜欢比较苦的口感的，请选择“深烘”tag的咖啡豆</p>
-<p>喜欢酸中带甜口感的，请选择“浅烘”tag的咖啡豆。</p>
-<h4><span id="咖啡器具">咖啡器具</span></h4><p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%9C%AA%E5%91%BD%E5%90%8D%E4%BD%9C%E5%93%81%201.jpg" alt="未命名作品 1"></p>
-<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%9C%AA%E5%91%BD%E5%90%8D%E4%BD%9C%E5%93%81.jpg" alt="未命名作品"></p>
-<h5><span id="1磨制咖啡豆">1）磨制咖啡豆</span></h5><p>​        量豆勺量取适量咖啡豆【一勺（豆面与勺面持平）大约4-5g，一杯咖啡建议水粉比为1：18】，抽出磨豆机手柄盖，将咖啡豆倒入后安装手柄，并旋转直到手柄旋转无阻力即可。旋开磨豆机底部的咖啡粉收集器，即可获得磨制好的咖啡豆。</p>
-<h5><span id="2冲煮">2）冲煮</span></h5><p>​        取法压壶，将壶盖以及滤网组成的整体移出，将咖啡豆倒入杯身。接适量开水（整个壶的容量是350ml，一般15g咖啡豆需要三分之二杯身的水），盖上杯盖（滤网不要先压下去），静置4分钟后，将滤网往下压，过滤杯内悬浮的咖啡粉末，最后将咖啡倒入茶杯中）（下面的木头柜子第二层有一次性纸杯）。</p>
-<h4><span id="注意">注意</span></h4><ol>
-<li> 冲煮完咖啡后，请务必清洗法压壶（用清水洗涤）。</li>
-<li>请注意冲煮时间，如果咖啡粉浸泡过久会造成口感酸涩，非常不好喝（但是没毒）</li>
-<li>懂哥请忽略以上所有文字，按自己喜爱的方式来，但是记得付钱。</li>
-</ol>
-<p>​</p>
-
+      		<h1><span id="0-冗长的前言">0 冗长的前言</span></h1><p>​        最近比较忙，唯一和安全有关的活动就是漏洞复现，我自己是跟着wp走，比较轻松，没有啥需要自己动脑子的地方，但是学弟在复现cve-2016-10191的时候，遇到了一个比较无语的坑，就是exp中用来栈迁移的gadget找不到。</p>
+<p>​        本来这件事应当是比较常见的，只不过我的运气实在是太好了，接连两个洞都没有任何阻力地做完了，学弟就不那么走运了。</p>
+<p>​        于是我，学弟和胖爷爷三个人研究了挺久（其中学弟功劳是最多的，我充其量就是个打杂的）。</p>
+<p>​        因为程序已经可以控制执行流了，所以学弟决定给rip覆盖<code>one_gadget</code>一把梭。</p>
+<p>​        但是很不幸，gdb中，就算作弊更改寄存器的值，让程序走到<code>execve(&#39;/bin/sh&#39;,0,0)</code>的程度，但是效果仅仅是在当前进程下堪堪弹出一个无法交互的shell，这样的成果肯定是没有办法交付的，在学弟焦头烂额的同时，我想起以前看轩哥的博客中的一些文章，决定趁着今天没什么课，把这个问题搞清楚——getshell到底是什么？</p>
+<h1><span id="1-ctf-pwn中的getshell">1 ctf pwn中的getshell</span></h1><p>本文中的例子分别为</p>
+<p>cve-2016-10190</p>
+<p>cve-2018-1160</p>
+<p>cve-2016-10191</p>
+<p>以及简单的pwn题的本地环境和远程环境。 </p>
+<p>首先从简单的ctf pwn开始。</p>
+<h2><span id="getshell方式">getshell方式</span></h2><p>其实无非就是两种</p>
+<p>控制程序执行流，调用<code>system(&#39;/bin/sh&#39;)</code></p>
+<h1><span id="真实漏洞环境中的getshell">真实漏洞环境中的getshell</span></h1><h1><span id="参考">参考</span></h1>
             <div class="clearfix"></div>
             <hr class="nogutter">
         </div>
         <nav class="m-pagination col-md-8 col-md-offset-2 col-sm-24" role="pagination">
     
-    <a class="pull-left" href="../mess_%E6%89%8B%E5%86%B2%E5%A3%B6/" style="float: left;">
-        ← 手冲壶
+    <a class="pull-left" href="../../22/fuzz_%E5%86%8D%E8%AF%86AFL/" style="float: left;">
+        ← 再识AFL
     </a>
     
     
-    <a class="pull-right" href="../../03/pwn.college_MemoryErrors/">
-        MemoryErrors →
+    <a class="pull-right" href="../../15/vivi_%E5%B0%8F%E5%85%94%E5%AD%A6%E7%94%B5%E8%B7%AF%E7%A0%B4%E9%98%B2%E6%97%A5%E8%AE%B0/">
+        小兔的EE破防日记 →
     </a>
     
 </nav>

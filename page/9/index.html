@@ -68,11 +68,11 @@
         		<a class="sb-toggle-submenu">Categories<span class="sb-caret"></span></a>
             	<ul class="sb-submenu">
 				  	
-				    <li><a href="/categories/AUDITION/" class="animsition-link">AUDITION<small>(15)</small></a></li>
+				    <li><a href="/categories/AUDITION/" class="animsition-link">AUDITION<small>(13)</small></a></li>
 				    
 				    <li><a href="/categories/CSAPP-LAB/" class="animsition-link">CSAPP LAB<small>(1)</small></a></li>
 				    
-				    <li><a href="/categories/Fuzz-heap/" class="animsition-link">Fuzz-heap<small>(1)</small></a></li>
+				    <li><a href="/categories/FUZZ-AFL/" class="animsition-link">FUZZ_AFL<small>(1)</small></a></li>
 				    
 				    <li><a href="/categories/Generalization/" class="animsition-link">Generalization<small>(5)</small></a></li>
 				    
@@ -102,7 +102,7 @@
 				    
 				    <li><a href="/categories/KERNEL/" class="animsition-link">KERNEL<small>(2)</small></a></li>
 				    
-				    <li><a href="/categories/MESS/" class="animsition-link">MESS<small>(17)</small></a></li>
+				    <li><a href="/categories/MESS/" class="animsition-link">MESS<small>(18)</small></a></li>
 				    
 				    <li><a href="/categories/Machine-Learning/" class="animsition-link">Machine Learning<small>(3)</small></a></li>
 				    
@@ -267,6 +267,50 @@
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
                 <div class="col-md-4">
+                    <h3><a href="/2022/03/15/week3-1.1/">wustctf2020_easyfast</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-03-15T07:37:41.226Z" itemprop="datePublished">
+          2022-03-15
+      </time>
+    
+    
+    | 
+    <a href='/tags/UAF/'>UAF</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+     
+
+2022-3-15
+wustctf2020_easyfastchecksec :
+
+
+​        简单逆向一下，有后门函数，当这个地址上储存的数小于等于0时getshell。整体的程序的话是一个没什么特别的菜单，free处有uaf，edit处能对堆指针任意写。
+​        首先逆向以后大体的思路是利用这个UAF进行0x602090的地址处的覆盖。
+​        所以我们需要构造chunk pointer为
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/03/15/week3-1.1/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
                     <h3><a href="/2022/03/14/ciscn_2019_your_pwn/">2019_your_pwn</a></h3>
                     <span>
                         <span class="post-meta">
@@ -381,88 +425,6 @@ Level1​        最最最基础的rop了，和前前一个module的前面的有
                     
                     <p class="pull-right readMore">
                         <a href="/2022/03/10/pwn.college_ROP/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2022/03/10/mess_手冲壶/">手冲壶</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2022-03-09T16:34:14.000Z" itemprop="datePublished">
-          2022-03-10
-      </time>
-    
-    
-    | 
-    <a href='/tags/vivi/'>vivi</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        咖啡豆选择：喜欢比较苦的口感的，请选择“深烘”tag的咖啡豆
-喜欢酸中带甜口感的，请选择“浅烘”tag的咖啡豆。
-咖啡器具
-
-1）磨制咖啡豆​        量豆勺量取适量咖啡豆【一勺（豆面与勺面持平）大约4-5g，一杯咖啡建议水粉比为1：18】，抽出磨豆机手柄盖，将咖啡豆倒入后安装手柄，并旋转直到手柄旋转无阻力即可。旋开磨豆机底部的咖啡粉收集器，即可获得磨制好的咖啡豆。
-2）冲煮
-将滤纸取出放进滤杯，尽量使其平整一些。
-把磨好的咖啡粉
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2022/03/10/mess_手冲壶/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2022/03/10/mess_法压壶/">法压壶</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2022-03-09T16:34:14.000Z" itemprop="datePublished">
-          2022-03-10
-      </time>
-    
-    
-    | 
-    <a href='/tags/vivi/'>vivi</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        咖啡豆选择：喜欢比较苦的口感的，请选择“深烘”tag的咖啡豆
-喜欢酸中带甜口感的，请选择“浅烘”tag的咖啡豆。
-咖啡器具
-
-1）磨制咖啡豆​        量豆勺量取适量咖啡豆【一勺（豆面与勺面持平）大约4-5g，一杯咖啡建议水粉比为1：18】，抽出磨豆机手柄盖，将咖啡豆倒入后安装手柄，并旋转直到手柄旋转无阻力即可。旋开磨豆机底部的咖啡粉收集器，即可获得磨制好的咖啡豆。
-2）冲煮​        取法压壶，将壶盖以及滤网组成的整体移出
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2022/03/10/mess_法压壶/">Read More...</a>
                     </p>
                     
                 </div>
@@ -690,6 +652,51 @@ Level5gdb脚本。
                     
                     <p class="pull-right readMore">
                         <a href="/2022/02/14/pwn.college_Debugging Refresher/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2022/01/29/pwn.college_Assembly_Refresher/">Assembly_Refresher</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-01-29T13:51:29.070Z" itemprop="datePublished">
+          2022-01-29
+      </time>
+    
+    
+    | 
+    <a href='/tags/pwncollege/'>pwncollege</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+     
+
+
+
+Level1需要设置*rdi = 0x1337，
+如果是按照目的意思程序的汇编代码长这样子：
+12345.section .text    .intel_syntax noprefix    .global _start    _start :        mov rdi, 0x1337
+
+但是可以直接用pwntools传输mov rdi, 0x1337这一句。
+12345678910111213#!/usr/bi
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/01/29/pwn.college_Assembly_Refresher/">Read More...</a>
                     </p>
                     
                 </div>

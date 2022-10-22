@@ -68,11 +68,11 @@
         		<a class="sb-toggle-submenu">Categories<span class="sb-caret"></span></a>
             	<ul class="sb-submenu">
 				  	
-				    <li><a href="/categories/AUDITION/" class="animsition-link">AUDITION<small>(15)</small></a></li>
+				    <li><a href="/categories/AUDITION/" class="animsition-link">AUDITION<small>(13)</small></a></li>
 				    
 				    <li><a href="/categories/CSAPP-LAB/" class="animsition-link">CSAPP LAB<small>(1)</small></a></li>
 				    
-				    <li><a href="/categories/Fuzz-heap/" class="animsition-link">Fuzz-heap<small>(1)</small></a></li>
+				    <li><a href="/categories/FUZZ-AFL/" class="animsition-link">FUZZ_AFL<small>(1)</small></a></li>
 				    
 				    <li><a href="/categories/Generalization/" class="animsition-link">Generalization<small>(5)</small></a></li>
 				    
@@ -102,7 +102,7 @@
 				    
 				    <li><a href="/categories/KERNEL/" class="animsition-link">KERNEL<small>(2)</small></a></li>
 				    
-				    <li><a href="/categories/MESS/" class="animsition-link">MESS<small>(17)</small></a></li>
+				    <li><a href="/categories/MESS/" class="animsition-link">MESS<small>(18)</small></a></li>
 				    
 				    <li><a href="/categories/Machine-Learning/" class="animsition-link">Machine Learning<small>(3)</small></a></li>
 				    
@@ -263,6 +263,76 @@
 
 <section id="intro">
     <div class="container">
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2022/10/22/fuzz_再识AFL/">再识AFL</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-10-22T02:55:57.639Z" itemprop="datePublished">
+          2022-10-22
+      </time>
+    
+    
+    | 
+    <a href='/tags/afl/'>afl</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        0​        其实大概半年前就已经搭建过环境，成功运行过AFL了，但是当时完全只是在看图说话，对这个东西没有任何系统的认识。现在趁着愉快的周末时间学习一会儿。
+环境搭建​        这里提前防止PD背刺无法使用嵌套虚拟化，选用vmware ，搭的是ubuntu20.04 lts的环境。顺带插一句，只要把“针对游戏优化”关掉就能让鼠标在虚拟机和物理机之间顺畅移动。
+首先是安装一些必要软件。
+12sudo apt install 
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/10/22/fuzz_再识AFL/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2022/10/18/mess_getshell是什么？/">getshell是什么？（待完成）</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-10-18T07:01:02.029Z" itemprop="datePublished">
+          2022-10-18
+      </time>
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        0 冗长的前言​        最近比较忙，唯一和安全有关的活动就是漏洞复现，我自己是跟着wp走，比较轻松，没有啥需要自己动脑子的地方，但是学弟在复现cve-2016-10191的时候，遇到了一个比较无语的坑，就是exp中用来栈迁移的gadget找不到。
+​        本来这件事应当是比较常见的，只不过我的运气实在是太好了，接连两个洞都没有任何阻力地做完了，学弟就不那么走运了。
+​        于是我，学弟和胖爷爷三个人研究了挺久
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/10/18/mess_getshell是什么？/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
         
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
@@ -600,93 +670,6 @@ CVE恰米计划
                     
                     <p class="pull-right readMore">
                         <a href="/2022/09/14/cve-2016-10190/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2022/08/09/未完成——heap_ctf-fuzz/">堆题中的fuzz（未完成）</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2022-08-09T09:42:37.120Z" itemprop="datePublished">
-          2022-08-09
-      </time>
-    
-    
-    | 
-    <a href='/tags/fuzz/'>fuzz</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-			
-				console.error("ReferenceError: value is not defined");
-			     
-
-0一直对fuzz很感兴趣，现在市面上有名的一些fuzz工具大多针对于代码体量大的大型程序，而想到对ctf中的题目进行fuzz，一般只需要一个简单的脚本。
-对于漏洞原理简单，但逆向分析复杂的题目来说（例如c++，rust pwn，或者复杂的算法），fuzz是一种捷径。
-1：例Actf2022 
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2022/08/09/未完成——heap_ctf-fuzz/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2022/07/25/qemu_qemu学习/">qemu逃逸学习</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2022-07-25T07:32:08.971Z" itemprop="datePublished">
-          2022-07-25
-      </time>
-    
-    
-    | 
-    <a href='/tags/qemu/'>qemu</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-     
-
-因为一些奇怪的原因，开始学一下qemu。
-环境准备busybox
-基础知识内存结构qemu使用mmap出0x40000000大小的内存作为虚拟机的物理内存，在qemu存在两个转换层，分别是：
-用户地址-&gt;物理地址
-物理地址-&gt;qemu虚拟地址
-具体转换如下：
-/proc/$pid/pagemap 中储存了当前进程的页表，使得用户空间可以根据页表找到每个虚拟页面映射的物理帧。
-通过读取这个页表，就能够实现从用户
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2022/07/25/qemu_qemu学习/">Read More...</a>
                     </p>
                     
                 </div>

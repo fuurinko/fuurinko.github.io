@@ -8,7 +8,7 @@
 
 <head>
 
-  <title>Tag: fuzz | Rin</title>
+  <title>再识AFL | Rin</title>
   <!-- Meta data -->
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -48,7 +48,7 @@
 <link rel="stylesheet" href="/css/prism.css" type="text/css"></head>
 
 <!--
-<body class="home-template">
+<body class="post-template">
 -->
 <body id="index" class="lightnav animsition">
       <!-- ============================ Off-canvas navigation =========================== -->
@@ -68,11 +68,11 @@
         		<a class="sb-toggle-submenu">Categories<span class="sb-caret"></span></a>
             	<ul class="sb-submenu">
 				  	
-				    <li><a href="/categories/AUDITION/" class="animsition-link">AUDITION<small>(15)</small></a></li>
+				    <li><a href="/categories/AUDITION/" class="animsition-link">AUDITION<small>(13)</small></a></li>
 				    
 				    <li><a href="/categories/CSAPP-LAB/" class="animsition-link">CSAPP LAB<small>(1)</small></a></li>
 				    
-				    <li><a href="/categories/Fuzz-heap/" class="animsition-link">Fuzz-heap<small>(1)</small></a></li>
+				    <li><a href="/categories/FUZZ-AFL/" class="animsition-link">FUZZ_AFL<small>(1)</small></a></li>
 				    
 				    <li><a href="/categories/Generalization/" class="animsition-link">Generalization<small>(5)</small></a></li>
 				    
@@ -102,7 +102,7 @@
 				    
 				    <li><a href="/categories/KERNEL/" class="animsition-link">KERNEL<small>(2)</small></a></li>
 				    
-				    <li><a href="/categories/MESS/" class="animsition-link">MESS<small>(17)</small></a></li>
+				    <li><a href="/categories/MESS/" class="animsition-link">MESS<small>(18)</small></a></li>
 				    
 				    <li><a href="/categories/Machine-Learning/" class="animsition-link">Machine Learning<small>(3)</small></a></li>
 				    
@@ -229,69 +229,167 @@
         <!-- ============================ Header & Logo bar =========================== -->
 
 
-      <!-- ============================ Hero Image =========================== -->
-
-<section id="hero" class="scrollme">
-    <div class="container-fluid element-img" style="background: url(https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/IMG_3356.JPG) no-repeat center center fixed;background-size: cover">
-        <div class="row">
-            <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-8 col-md-offset-2 vertical-align cover boost text-center">
-                <div class="center-me animateme" data-when="exit" data-from="0" data-to="0.6" data-opacity="0" data-translatey="100">
-                    <div>
-                        
-                        <h2><span>Rin777</span></h2>
-                        <p></p>
-                        
-                        <h2></h2>
-                        <p><span>みんあはそっだよって、君もそうなの</span></p>
-                        
-
-                    </div>
-                </div>
-            </div>
-            <!-- // .col-md-12 -->
-        </div>
-        <div class="herofade beige-dk"></div>
-    </div>
-</section>
-
-<!-- Height spacing helper -->
-<div class="heightblock"></div>
-<!-- // End height spacing helper -->
-
-<!-- ============================ END Hero Image =========================== -->
-
-
-
-
-<section id="services">
+      
+<section id="intro">
     <div class="container">
-        <div class="row">
-            <div class="col-md-10 col-md-offset-1">
-                <div class="row boxes">
-                    
-                    
-                        
-                        
-                        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 wow fadeInUp" data-wow-delay="0.3s">
-                            
-                              <h4 class="title"><a href="/2022/08/09/未完成——heap_ctf-fuzz/">堆题中的fuzz（未完成）</a></h4>
-                            
-                            <p><time datetime="2022-08-09T09:42:37.120Z"><a href="/2022/08/09/未完成——heap_ctf-fuzz/">2022-08-09</a></time></p>
-                        </div>
-                    
-                </div>
-            </div>    
+        <div class="row col-md-offset-2">
+            <div class="col-md-8">
+    			<span class="post-meta">
+      <time datetime="2022-10-22T02:55:57.639Z" itemprop="datePublished">
+          2022-10-22
+      </time>
+    
+    
+    | 
+    <a href='/tags/afl/'>afl</a>
+    
+    
+</span>
+                <h1>再识AFL</h1>
+            </div>
         </div>
-    </div>
-</section> 
+        <div class="col-md-8 col-md-offset-2">
+      		<h2><span id="0">0</span></h2><p>​        其实大概半年前就已经搭建过环境，成功运行过AFL了，但是当时完全只是在看图说话，对这个东西没有任何系统的认识。现在趁着愉快的周末时间学习一会儿。</p>
+<h2><span id="环境搭建">环境搭建</span></h2><p>​        这里提前防止PD背刺无法使用嵌套虚拟化，选用vmware ，搭的是ubuntu20.04 lts的环境。顺带插一句，只要把“针对游戏优化”关掉就能让鼠标在虚拟机和物理机之间顺畅移动。</p>
+<p>首先是安装一些必要软件。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install clang</span><br><span class="line">sudo apt install llvm</span><br></pre></td></tr></table></figure>
 
-<section id="statement">
-    <div class="container text-center wow fadeInUp" data-wow-delay="0.5s">
-        <div class="row">
-            <p>生きていくのはこんなにも痛いけど。</p>
+<p>接着编译afl</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">wget http://lcamtuf.coredump.cx/afl/releases/afl-2.52b.tgz</span><br><span class="line">tar -zxvf afl-2.52b.tgz</span><br><span class="line"><span class="built_in">cd</span> afl-2.52b</span><br><span class="line">make</span><br><span class="line">sudo make install</span><br></pre></td></tr></table></figure>
+
+<p>只按以上指令执行我印象中是会有一些依赖的问题，但是时间太过久远，也不是什么关键问题，就忽略了。</p>
+<p>编译好是这个界面：</p>
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-10-22%20%E4%B8%8B%E5%8D%884.29.13.png" alt="截屏2022-10-22 下午4.29.13"></p>
+<h2><span id="试用1">试用1</span></h2><p>利用afl提供的编译器编译代码（以便于插桩）。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">../afl-gcc -g -o vul1 ./vul1.c </span><br></pre></td></tr></table></figure>
+
+
+
+<p>![截屏2022-10-22 下午4.31.15](/Users/rin/Desktop/截屏2022-10-22 下午4.31.15.png)</p>
+<p>然后我们需要建立我们的输入，以及输出文件夹。分别创建文件夹 <code>in</code>和<code>out</code>。这个1就是为这个漏洞程序构建的语料。可以看到是一连串垃圾字符。</p>
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-10-22%20%E4%B8%8B%E5%8D%884.34.23.png" alt="截屏2022-10-22 下午4.34.23"></p>
+<p>最后</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./afl-fuzz -i ./<span class="keyword">in</span> -o ./out ./<span class="built_in">test</span>/vul1</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-10-22%20%E4%B8%8B%E5%8D%884.42.07.png" alt="截屏2022-10-22 下午4.42.07"></p>
+<h2><span id="一些功能amp参数">一些功能&amp;参数</span></h2><h5><span id="process-timing">process timing</span></h5><p>运行时长，最近找到的的路径、崩溃、挂起的时间。</p>
+<h5><span id="overall-results">overall results</span></h5><p>完成的循环数、找到的总路径数，崩溃及挂起数</p>
+<h5><span id="cycle-progress">cycle progress</span></h5><p>本次循环进度。</p>
+<h5><span id="map-coverage">map coverage</span></h5><p>目标二进制文件中的插桩代码所观察到覆盖范围的细节。</p>
+<h5><span id="stage-progress">stage progress</span></h5><p>执行的文件的变异策略、执行次数和执行速度。</p>
+<h5><span id="fuzzing-strategy-yields">Fuzzing strategy yields</span></h5><p>模糊测试策略的结果。</p>
+<h2><span id="试用2">试用2</span></h2><p>这次还是利用上一次的代码&amp;二进制文件，我们利用afl提供给我们的默认的语料。</p>
+<p>代码</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span> </span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span> </span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span> </span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span> </span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;signal.h&gt;</span> </span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">vuln</span><span class="params">(<span class="keyword">char</span> *str)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> len = <span class="built_in">strlen</span>(str);</span><br><span class="line">    <span class="keyword">if</span>(str[<span class="number">0</span>] == <span class="string">&#x27;A&#x27;</span> &amp;&amp; len == <span class="number">66</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        raise(SIGSEGV);</span><br><span class="line">        <span class="comment">//如果输入的字符串的首字符为A并且长度为66，则异常退出</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(str[<span class="number">0</span>] == <span class="string">&#x27;F&#x27;</span> &amp;&amp; len == <span class="number">6</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        raise(SIGSEGV);</span><br><span class="line">        <span class="comment">//如果输入的字符串的首字符为F并且长度为6，则异常退出</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;it is good!\n&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> *argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">char</span> buf[<span class="number">100</span>]=&#123;<span class="number">0</span>&#125;;</span><br><span class="line">    gets(buf);<span class="comment">//存在栈溢出漏洞</span></span><br><span class="line">    <span class="built_in">printf</span>(buf);<span class="comment">//存在格式化字符串漏洞</span></span><br><span class="line">    vuln(buf);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./afl-fuzz -i ./testcases/ -o ./out ./<span class="built_in">test</span>/vul1</span><br></pre></td></tr></table></figure>
+
+<p>跑。</p>
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-10-22%20%E4%B8%8B%E5%8D%885.32.10.png" alt="截屏2022-10-22 下午5.32.10"></p>
+<p>我跑到这里就结束进程了。</p>
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-10-22%20%E4%B8%8B%E5%8D%885.32.45.png" alt="截屏2022-10-22 下午5.32.45"></p>
+<p><code>out</code>中多了很多文件。依次打开来看看：</p>
+<h4><span id="fuzzer_stats">fuzzer_stats</span></h4><p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-10-22%20%E4%B8%8B%E5%8D%885.34.40.png" alt="截屏2022-10-22 下午5.34.40"></p>
+<p>就是显示了fuzz过程的一些信息。</p>
+<h4><span id="fuzz_bitmap">fuzz_bitmap</span></h4><p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-10-22%20%E4%B8%8B%E5%8D%885.36.21.png" alt="截屏2022-10-22 下午5.36.21"></p>
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-10-22%20%E4%B8%8B%E5%8D%885.37.05.png" alt="截屏2022-10-22 下午5.37.05"></p>
+<p>？？</p>
+<h4><span id="plot_data">plot_data</span></h4><p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-10-22%20%E4%B8%8B%E5%8D%885.39.00.png" alt="截屏2022-10-22 下午5.39.00"></p>
+<p>还是什么相关的信息。</p>
+<h4><span id="quene">quene</span></h4><p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-10-22%20%E4%B8%8B%E5%8D%885.40.31.png" alt="截屏2022-10-22 下午5.40.31"></p>
+<p>？</p>
+<h4><span id="crashes">crashes</span></h4><p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-10-22%20%E4%B8%8B%E5%8D%885.43.14.png" alt="截屏2022-10-22 下午5.43.14"></p>
+<p>这个就是需要我们认真分析的数据了，整理一下就是：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1:��<span class="string">&#x27;�����*&#x27;</span>9<span class="string">&#x27;&#x27;</span>��*<span class="string">&#x27;���k��f�&#x27;</span><span class="string">&#x27;.	&#x27;</span><span class="string">&#x27;.&#x27;</span>9<span class="string">&#x27;&#x27;</span>��*<span class="string">&#x27;9&#x27;</span><span class="string">&#x27;��*&#x27;</span><span class="string">&#x27;&#x27;</span>	<span class="string">&#x27;&#x27;</span>P<span class="string">&#x27;���k��f���&#x27;</span><span class="string">&#x27;����������...���@&#x27;</span></span><br><span class="line">2:��dddj�dA@@@@3@@�Xddt��?ddddddddddddd�X���?ddddddddddddd�X����������ddd� �%������ddd� ���@@��\���Xd�����������ddd���Wd�d��</span><br><span class="line">3:5%n��� //触发格式化字符串</span><br><span class="line">4:F====P //首字母为F，len为6</span><br></pre></td></tr></table></figure>
+
+<p>可以看到找到了两个漏洞。</p>
+<p>maker一下这几篇文章</p>
+<p><a target="_blank" rel="noopener" href="https://bbs.pediy.com/thread-273639.htm#msg_header_h2_5">https://bbs.pediy.com/thread-273639.htm#msg_header_h2_5</a></p>
+<p><a target="_blank" rel="noopener" href="https://myfzy.top/2021/03/04/AFL/#%E7%BC%96%E8%AF%91%E5%B9%B6%E5%AE%89%E8%A3%85AFL">https://myfzy.top/2021/03/04/AFL/#编译并安装AFL</a></p>
+<h2><span id="参考">参考</span></h2><p><a target="_blank" rel="noopener" href="https://cjovi.icu/fuzzing/1138.html">https://cjovi.icu/fuzzing/1138.html</a></p>
+<p><a target="_blank" rel="noopener" href="https://cjovi.icu/fuzzing/1140.html">https://cjovi.icu/fuzzing/1140.html</a></p>
+
+            <div class="clearfix"></div>
+            <hr class="nogutter">
         </div>
+        <nav class="m-pagination col-md-8 col-md-offset-2 col-sm-24" role="pagination">
+    
+    
+    <a class="pull-right" href="../../18/mess_getshell%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F/">
+        getshell是什么？（待完成） →
+    </a>
+    
+</nav>
+
+        <div class="col-md-8 col-md-offset-2 col-sm-24"><script type="text/javascript">
+  /**
+   * 搜狐畅言
+   */
+
+  /*
+  document.write('<div id="SOHUCS" sid="' + window.location.pathname.slice(1) + '" ></div>');
+
+  window.onload = function () {
+    (function () {
+      var appid = 'cytXXXX';
+      var conf = 'prod_xxxxxxxxxxxxxxxxx';
+      var width = window.innerWidth || document.documentElement.clientWidth;
+      var loadJs = function (d, a, id) {
+        var c = document.getElementsByTagName("head")[0] || document.head || document.documentElement;
+        var b = document.createElement("script");
+        b.setAttribute("type", "text/javascript");
+        b.setAttribute("charset", "UTF-8");
+        b.setAttribute("src", d);
+        if (id) {
+          b.setAttribute("id", id);
+        }
+        if (typeof a === "function") {
+          if (window.attachEvent) {
+            b.onreadystatechange = function () {
+              var e = b.readyState;
+              if (e === "loaded" || e === "complete") {
+                b.onreadystatechange = null;
+                a()
+              }
+            }
+          } else {
+            b.onload = a
+          }
+        }
+        c.appendChild(b)
+      };
+
+      loadJs("https://changyan.sohu.com/upload/changyan.js", function () {
+        window.changyan.api.config({
+          appid: appid,
+          conf: conf
+        })
+      });
+    })();
+  }
+  */
+
+</script>
+</div>
     </div>
 </section>
+
+<!-- Highlight.js -->
+
+<link rel="stylesheet"
+href="//highlightjs.org/static/demo/styles/atom-one-light.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js">
+</script>
+<script>
+hljs.initHighlightingOnLoad();
+
+</script>
+
+
       
 <!-- ============================ Footer =========================== -->
 
