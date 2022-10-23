@@ -78,7 +78,7 @@
 				    
 				    <li><a href="/categories/HEAP-ChunkOverlapping/" class="animsition-link">HEAP - ChunkOverlapping<small>(3)</small></a></li>
 				    
-				    <li><a href="/categories/HEAP-Fastbin-Attack/" class="animsition-link">HEAP - Fastbin Attack<small>(12)</small></a></li>
+				    <li><a href="/categories/HEAP-Fastbin-Attack/" class="animsition-link">HEAP - Fastbin Attack<small>(13)</small></a></li>
 				    
 				    <li><a href="/categories/HEAP-Heap-overflow/" class="animsition-link">HEAP - Heap overflow<small>(1)</small></a></li>
 				    
@@ -255,8 +255,8 @@
 <p>cve-2016-10191</p>
 <p>以及简单的pwn题的本地环境和远程环境。 </p>
 <p>首先从简单的ctf pwn开始。</p>
-<h2><span id="getshell方式">getshell方式</span></h2><p>其实无非就是两种</p>
-<p>控制程序执行流，调用<code>system(&#39;/bin/sh&#39;)</code></p>
+<h2><span id="getshell">getshell</span></h2><p>​        平时我们getshell的思路——控制程序执行流，rip劫持为提取函数。比如说覆盖某个函数指针为<code>system(&quot;/bin/sh&quot;)</code>，一般的流程是这样：本地打通后，连接远程环境，一般情况下也能拿到远程机器的shell。</p>
+<p>​        但是我们究竟是怎么与远端程序进行通信的？</p>
 <h1><span id="真实漏洞环境中的getshell">真实漏洞环境中的getshell</span></h1><h1><span id="参考">参考</span></h1>
             <div class="clearfix"></div>
             <hr class="nogutter">

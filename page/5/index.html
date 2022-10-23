@@ -78,7 +78,7 @@
 				    
 				    <li><a href="/categories/HEAP-ChunkOverlapping/" class="animsition-link">HEAP - ChunkOverlapping<small>(3)</small></a></li>
 				    
-				    <li><a href="/categories/HEAP-Fastbin-Attack/" class="animsition-link">HEAP - Fastbin Attack<small>(12)</small></a></li>
+				    <li><a href="/categories/HEAP-Fastbin-Attack/" class="animsition-link">HEAP - Fastbin Attack<small>(13)</small></a></li>
 				    
 				    <li><a href="/categories/HEAP-Heap-overflow/" class="animsition-link">HEAP - Heap overflow<small>(1)</small></a></li>
 				    
@@ -263,6 +263,46 @@
 
 <section id="intro">
     <div class="container">
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2022/04/16/heap_challenge_*ctf_2022_examination/">examination</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-04-16T07:37:48.671Z" itemprop="datePublished">
+          2022-04-16
+      </time>
+    
+    
+    | 
+    <a href='/tags/starctf/'>starctf</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+     
+
+overivew
+​        其实把程序简化来看的话就是一道比较常规的chunk overlapping，漏洞很明显，但是又不完全明显，需要先认真把程序逆清楚。在pwn题的几个环节中，逆向确定漏洞点，分析漏洞寻找思路，写exp布置堆风水，调试扣细节，我觉得最头疼的可能就是逆向了，虽然过程也许不难，但是真的很bewilder。
+​        其实这个程序看似非常复杂，菜单就写了十五分钟，但逆来逆去最关键居然的还是
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/04/16/heap_challenge_*ctf_2022_examination/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
         
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
@@ -634,47 +674,6 @@ add​        最多申请三个house。并且在申请house开始为每个house
                     
                     <p class="pull-right readMore">
                         <a href="/2022/04/10/heap_learning_house_of_orange/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2022/04/10/ciscn_2021_silverwolf/">SilverWolf</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2022-04-10T00:54:01.043Z" itemprop="datePublished">
-          2022-04-10
-      </time>
-    
-    
-    | 
-    <a href='/tags/ciscn/'>ciscn</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-     
-
-overview​        这个题在程序上与lonewolf只有一个区别就是开了沙箱，需要orw，但是堆上的seccomp和栈上的利用难度可以说是毫无关系，因为之前已经做了lonelywolf，并且从来没有做过堆上的orw，漏洞点就不看了，只关注于orw的实现吧。
-
-​        init()过程中开启了seccomp，禁用了除orw以外的所有系统调用。
-利用orw前的一些操作​        orw part
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2022/04/10/ciscn_2021_silverwolf/">Read More...</a>
                     </p>
                     
                 </div>
