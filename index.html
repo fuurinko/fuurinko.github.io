@@ -102,7 +102,7 @@
 				    
 				    <li><a href="/categories/KERNEL/" class="animsition-link">KERNEL<small>(2)</small></a></li>
 				    
-				    <li><a href="/categories/MESS/" class="animsition-link">MESS<small>(18)</small></a></li>
+				    <li><a href="/categories/MESS/" class="animsition-link">MESS<small>(19)</small></a></li>
 				    
 				    <li><a href="/categories/Machine-Learning/" class="animsition-link">Machine Learning<small>(3)</small></a></li>
 				    
@@ -267,6 +267,43 @@
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
                 <div class="col-md-4">
+                    <h3><a href="/2022/10/24/mess_GDB 中ni 与 si的魔法/">mess_GDB 中ni与si的魔法</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-10-24T11:57:06.272Z" itemprop="datePublished">
+          2022-10-24
+      </time>
+    
+    
+    | 
+    <a href='/tags/GDB/'>GDB</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        https://www.cnblogs.com/tsecer/category/1413042.html
+​        关于gdb中ni 、n、si、s的区别，是一个很基础的问题：n/s都是C语言级的断点定位。s会进入C函数内部，n不会。ni/si都是汇编级别的断点定位。si会进入汇编和C函数内部, ni不会。
+​        然而众所周知，gdb下软件断点的原理是在代码中插入 int 0xcc，引发中断，那么同样是插入指令，为什
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/10/24/mess_GDB 中ni 与 si的魔法/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
                     <h3><a href="/2022/10/22/sum_基础知识点总结/">基础知识</a></h3>
                     <span>
                         <span class="post-meta">
@@ -345,7 +382,7 @@
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
                 <div class="col-md-4">
-                    <h3><a href="/2022/10/18/mess_getshell是什么？/">getshell是什么？（待完成）</a></h3>
+                    <h3><a href="/2022/10/18/mess_getshell是什么？/">getshell是什么？</a></h3>
                     <span>
                         <span class="post-meta">
       <time datetime="2022-10-18T07:01:02.029Z" itemprop="datePublished">
@@ -359,9 +396,10 @@
                     <p>
                       
                         0 前言​        研究2018-1160的时候，看到一篇文章中的一句话，让我费解到了现在：
+HITCON CTF 2019 Pwn 371 Netatalk
 
 非常不幸的是，最近在研究2016-10191的时候也遇到了同样的问题——onegadget无法getshell，以上种种让我对getshell这个看似简单的概念产生了巨大的疑惑，遂有了这一篇文章–getshell到底是什么？
-问题解答？​        首先讲我对于“自行dup i/o”的理解，可能有不对的地方。一般情况下，我们利用pw
+问题解答？​        首先讲我对于“自行
                       
                     </p>
                     
@@ -630,44 +668,6 @@ CVE恰米计划
                     
                     <p class="pull-right readMore">
                         <a href="/2022/09/30/ml_CS 329P ｜ note 2/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2022/09/29/ml_note1/">CS 329P note1</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2022-09-29T01:24:04.320Z" itemprop="datePublished">
-          2022-09-29
-      </time>
-    
-    
-    | 
-    <a href='/tags/Machine-Learning/'>Machine Learning</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        ​    
-         
-0：胡言乱语由于一些奇怪的原因，半被迫开始学习机器学习。关于学习资料，某位不愿意公开姓名的老同学特别给我推荐了https://www.bilibili.com/video/BV1Xh411p7M9/?spm_id_from=333.788&amp;vd_source=b424d92c840f16ffa9a14a3d99dfc564这套课程，说这是他压箱底的宝贝资源。
-所以大致记录一下学习过程，第一part
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2022/09/29/ml_note1/">Read More...</a>
                     </p>
                     
                 </div>
