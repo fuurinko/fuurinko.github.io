@@ -74,7 +74,7 @@
 				    
 				    <li><a href="/categories/FUZZ-AFL/" class="animsition-link">FUZZ_AFL<small>(1)</small></a></li>
 				    
-				    <li><a href="/categories/Generalization/" class="animsition-link">Generalization<small>(5)</small></a></li>
+				    <li><a href="/categories/Generalization/" class="animsition-link">Generalization<small>(6)</small></a></li>
 				    
 				    <li><a href="/categories/HEAP-ChunkOverlapping/" class="animsition-link">HEAP - ChunkOverlapping<small>(3)</small></a></li>
 				    
@@ -90,7 +90,7 @@
 				    
 				    <li><a href="/categories/HEAP-Seccomp/" class="animsition-link">HEAP - Seccomp<small>(1)</small></a></li>
 				    
-				    <li><a href="/categories/HEAP-Tcache/" class="animsition-link">HEAP - Tcache<small>(3)</small></a></li>
+				    <li><a href="/categories/HEAP-Tcache/" class="animsition-link">HEAP - Tcache<small>(2)</small></a></li>
 				    
 				    <li><a href="/categories/HEAP-Unlink/" class="animsition-link">HEAP - Unlink<small>(2)</small></a></li>
 				    
@@ -141,8 +141,6 @@
 				    <li><a href="/categories/Tcache/" class="animsition-link">Tcache<small>(2)</small></a></li>
 				    
 				    <li><a href="/categories/cve/" class="animsition-link">cve<small>(2)</small></a></li>
-				    
-				    <li><a href="/categories/mess/" class="animsition-link">mess<small>(1)</small></a></li>
 				    
 				    <li><a href="/categories/qemu/" class="animsition-link">qemu<small>(1)</small></a></li>
 				    
@@ -265,47 +263,6 @@
 
 <section id="intro">
     <div class="container">
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2022/04/10/ciscn_2021_silverwolf/">SilverWolf</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2022-04-10T00:54:01.043Z" itemprop="datePublished">
-          2022-04-10
-      </time>
-    
-    
-    | 
-    <a href='/tags/ciscn/'>ciscn</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-     
-
-overview​        这个题在程序上与lonewolf只有一个区别就是开了沙箱，需要orw，但是堆上的seccomp和栈上的利用难度可以说是毫无关系，因为之前已经做了lonelywolf，并且从来没有做过堆上的orw，漏洞点就不看了，只关注于orw的实现吧。
-
-​        init()过程中开启了seccomp，禁用了除orw以外的所有系统调用。
-利用orw前的一些操作​        orw part
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2022/04/10/ciscn_2021_silverwolf/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
         
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
@@ -678,6 +635,44 @@ UNLINKunlink大致概念​        就是将free chunk从双向循环链表中�
                     
                     <p class="pull-right readMore">
                         <a href="/2022/04/04/heap_leaarning_off by one/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2022/04/03/幻想曲-01-春天/">春日和</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-04-02T16:00:00.000Z" itemprop="datePublished">
+          2022-04-03
+      </time>
+    
+    
+    | 
+    <a href='/tags/幻想曲/'>幻想曲</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        ​    
+         
+​        一系列的事情最终使我感觉，春天确实已经到了。
+​        首先是刷牙时无意发现的丢在洗衣机旁阴暗角落的，去年秋天栽下去的铃兰花长出的鲜嫩的叶片。那时候和小戴怀着赌一把的心理，一起将一些看起来黄不拉几的铃兰根系一颗一颗地埋在土里，还非常认真地每隔几天就浇水，但是泛着土色的幼芽接连几个月都毫无起色，有时候甚至看起来像发霉了一般，于是后几个月我和小戴谁也没有管它——我们俩一致认为它已经死
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/04/03/幻想曲-01-春天/">Read More...</a>
                     </p>
                     
                 </div>

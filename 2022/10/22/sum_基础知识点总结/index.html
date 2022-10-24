@@ -74,7 +74,7 @@
 				    
 				    <li><a href="/categories/FUZZ-AFL/" class="animsition-link">FUZZ_AFL<small>(1)</small></a></li>
 				    
-				    <li><a href="/categories/Generalization/" class="animsition-link">Generalization<small>(5)</small></a></li>
+				    <li><a href="/categories/Generalization/" class="animsition-link">Generalization<small>(6)</small></a></li>
 				    
 				    <li><a href="/categories/HEAP-ChunkOverlapping/" class="animsition-link">HEAP - ChunkOverlapping<small>(3)</small></a></li>
 				    
@@ -90,7 +90,7 @@
 				    
 				    <li><a href="/categories/HEAP-Seccomp/" class="animsition-link">HEAP - Seccomp<small>(1)</small></a></li>
 				    
-				    <li><a href="/categories/HEAP-Tcache/" class="animsition-link">HEAP - Tcache<small>(3)</small></a></li>
+				    <li><a href="/categories/HEAP-Tcache/" class="animsition-link">HEAP - Tcache<small>(2)</small></a></li>
 				    
 				    <li><a href="/categories/HEAP-Unlink/" class="animsition-link">HEAP - Unlink<small>(2)</small></a></li>
 				    
@@ -141,8 +141,6 @@
 				    <li><a href="/categories/Tcache/" class="animsition-link">Tcache<small>(2)</small></a></li>
 				    
 				    <li><a href="/categories/cve/" class="animsition-link">cve<small>(2)</small></a></li>
-				    
-				    <li><a href="/categories/mess/" class="animsition-link">mess<small>(1)</small></a></li>
 				    
 				    <li><a href="/categories/qemu/" class="animsition-link">qemu<small>(1)</small></a></li>
 				    
@@ -243,7 +241,7 @@
     
     
     | 
-    <a href='/tags/mess/'>mess</a>
+    <a href='/tags/sum/'>sum</a>
     
     
 </span>
@@ -251,7 +249,19 @@
             </div>
         </div>
         <div class="col-md-8 col-md-offset-2">
-      		<h2><span id="编程语言">编程语言</span></h2><h4><span id="camppython">c&amp;python</span></h4><h4><span id="汇编">汇编</span></h4><p>首先就是取址的几种方式：</p>
+      		<p>这是一些也许很基础但是一直没有搞透彻or忘了or巩固的一些知识点的集合，空的就是还没有来得及填，</p>
+<h2><span id="编程语言">编程语言</span></h2><h4><span id="c">c</span></h4><h4><span id="python">python</span></h4><h4><span id="汇编">汇编</span></h4><p>首先就是寻址的几种方式：</p>
+<h3><span id="1寻址">1）寻址</span></h3><h5><span id="1直接寻址">1/直接寻址</span></h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mov     rax, fs:28h #直接寻址，fs段寄存器+偏移量。这里其实是一个canary的值。</span><br></pre></td></tr></table></figure>
+
+<h5><span id="2间接寻址">2/间接寻址</span></h5><p>间接在使用指针以及解引用的形式</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mov     [rbp+var_8], rax # 寄存器相对寻址。相当于把rax，也就是这个canary值放到rbp+var_8的地方。</span><br></pre></td></tr></table></figure>
+
+<h5><span id="3比例寻址">3/比例寻址</span></h5><p>例如在数组遍历中</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">.data</span><br><span class="line">arrayD 1,2,3,4</span><br><span class="line">.code</span><br><span class="line">mov esi,3</span><br><span class="line">mov eax,arrayD[esi*4]					;eax = 4  </span><br></pre></td></tr></table></figure>
+
+<p>其中，比例因子“4”代表数组的元素个数，esi的值代表下标。</p>
+<h2><span id="2段寄存器">2）段寄存器</span></h2><p>其实就是段的基址，起寻址索引作用。例子就比如</p>
+<p><code>mov rax fs：28h</code></p>
 <p>然后是一些常见的寄存器含义。</p>
 <p>最后是一些容易忘，但是一定要记住的指令。</p>
 <h2><span id="二进制栈漏洞利用">二进制栈漏洞利用</span></h2><h3><span id="保护机制">保护机制</span></h3><p>由于面向的是底层原理，所以在这个part，每一个机制都将围绕以下几个部分阐述：</p>
@@ -298,7 +308,19 @@
 <p><code>gcc -D_FORTIFY_SOURCE=2</code> 程序执行时也会有检查 (如果检查到缓冲区溢出，就终止程序)</p>
 <h5><span id="绕过">绕过</span></h5><p>由于一般这个保护在编译时就已经将危险的函数优化了，所以没有什么可绕过之说。（我感觉）</p>
 <h3><span id="漏洞">漏洞</span></h3><p>略，这个其实比较简单。。</p>
-<h4><span id="栈溢出">栈溢出</span></h4><h4><span id="整数溢出">整数溢出</span></h4><h4><span id="格式化字符串">格式化字符串</span></h4><h4><span id="数组越界">数组越界</span></h4><h4><span id="rop">ROP</span></h4><h5><span id="ret2dl">ret2dl</span></h5><h5><span id="srop">srop</span></h5><h5><span id="ret2csu">ret2csu</span></h5><h2><span id="二进制堆漏洞利用">二进制堆漏洞利用</span></h2><p>略</p>
+<h4><span id="栈溢出">栈溢出</span></h4><h4><span id="整数溢出">整数溢出</span></h4><h4><span id="格式化字符串">格式化字符串</span></h4><p>对于每一个 %s，printf() 都会从栈上取一个数字，把该数字视为地址，然后打印出该地址指向的内存内容，由于不可能获取的每一个数字都是地址，所以数字对应的内容可能不存在，或者这个地址是被保护的，那么便会使程序崩溃。</p>
+<h4><span id="数组越界">数组越界</span></h4><h4><span id="rop">ROP</span></h4><h5><span id="ret2dl">ret2dl</span></h5><h5><span id="srop">srop</span></h5><p>当用户向内核发起signal时，此时系统切换为内核态，并且由内核保存进程的上下文（通常是一些寄存器状态）至用户栈，然后切换回用户态，执行信号处理程序。程序执行完毕后，再次切换成内核态，将保存的寄存器状态恢复后返回用户态。</p>
+<p>​        所以这一串来回切换中，一个缺陷就是第一次切换时上下文保存于用户栈中，所以正好我们可以通过栈溢出控制栈中的数据，而且当寄存器恢复时，内核并不会检查栈中的内容是否被篡改。</p>
+<p>具体利用：可以利用<code>sys_sigreturn</code>将伪造的栈内内容恢复到寄存器上。</p>
+<h5><span id="ret2csu">ret2csu</span></h5><h4><span id="trick">trick</span></h4><h5><span id="dynelf">DynELF</span></h5><p>​        DynELF的意义在于当我们无法找到目标libc中具体的符号偏移时，可以利用它来搜索内存中的函数地址,而不需要再通过libc来获取。</p>
+<p>搜索主要为两步：</p>
+<ol>
+<li><p>寻找elf文件加载基址：基地址内存页起始的字符串为<code>\0x7fELF</code>，所以可以指定内存中的地址，然后对地址进行页对齐，再与当前内存页起始字符串进行对比，如果不符合则不断与更低地址内存页的起始字符串对比，直到找到。</p>
+</li>
+<li><p>寻找glibc加载基址：efl在内存中有一个叫做<code>link_map</code>的双向链表，在学习ret2dl的时候遇见过，大致是指向elf的一些表项相关数据结构的链表，其中包含了每个动态加载的库的路径和加载基址等信息。对于如何找到<code>link_map</code>    ,一般来说有两种方式，在full relro以外的elf中，可以在<code>Dynamic</code>段的<code>.got.plt</code>节中找到，对于启用full relro的elf，可以在<code>Dynamic</code>段的<code>DT_DEBUG</code>中找到。<code>Dynamic</code>段的地址则需要通过ELF文件的段表得到，由于我们已经获得了ELF的内存基地址，所以也能得到段表的地址。</p>
+</li>
+</ol>
+<h2><span id="二进制堆漏洞利用">二进制堆漏洞利用</span></h2><p>略</p>
 <h4><span id="off-by-one">off by one</span></h4><h4><span id="unlink">unlink</span></h4><h4><span id="chunk-overlapping">chunk overlapping</span></h4><h4><span id="house-series">house series</span></h4><h2><span id="操作系统基础重要"><strong>操作系统基础</strong>（重要）</span></h2><h3><span id="中断">中断</span></h3><p>利用<code>int 0x80</code>=&gt; <code>syscall</code>来实现内核陷入。</p>
 <h3><span id="函数调用栈">函数调用栈</span></h3><h4><span id="寄存器传参规则32amp64">寄存器传参规则（32&amp;64）</span></h4><h4><span id="调用约定">调用约定</span></h4><h5><span id="stdcall">stdcall</span></h5><ul>
 <li>参数从右向左压入堆栈 </li>
@@ -430,15 +452,76 @@
 
 <p>第一次调用 func 函数时，首先会跳转到 PLT 执行 <code>jmp *(func@got)</code>，由于该函数没被调用过，func@got 中的值不是 func 函数的地址，而是 PLT 中的 “preapre resolver” 指令的地址，所以会跳转到 “preapre resolver” 执行，接着调用 <code>_dl_runtime_resolve </code>解析<code> func</code> 函数的地址，并将该函数真正的地址填充到 <code>func@got</code>，最后跳转到 func 函数继续执行代码。当再次调用 func 函数时，由于 <code>func@got</code> 中已填充正确的函数地址，此时执行 PLT 中的 <code>jmp *(func@got)</code> 即可成功跳转到 func 函数中执行。</p>
 <p>太长不看：首次调用函数时，plt表调用 <code>_dl_runtime_resolve </code>函数填充got表为真实地址，再次调用时，plt调用got表则直接执行到目标函数。</p>
-<h3><span id="虚拟内存">虚拟内存</span></h3><h4><span id="内存页">内存页</span></h4><h3><span id="进程间通信网络编程">进程间通信（网络编程）</span></h3><h2><span id="其他">其他</span></h2><h3><span id="kernel-漏洞">kernel 漏洞</span></h3><h4><span id="kernel-uaf">kernel uaf</span></h4><h4><span id="kernel-rop">kernel rop</span></h4><h3><span id="fuzz">fuzz</span></h3><h4><span id="afl使用">afl使用</span></h4><p>呃呃，不知怎么说，感觉其实我现在学的还是一些非常基础的东西。</p>
+<h3><span id="虚拟内存">虚拟内存</span></h3><h4><span id="内存页">内存页</span></h4><h3><span id="进程间通信">进程间通信</span></h3><h4><span id="进程间通信">进程间通信：</span></h4><p>信号、管道、消息队列、共享内存</p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/luo77/p/5816326.html">https://www.cnblogs.com/luo77/p/5816326.html</a></p>
+<h4><span id="管道">管道</span></h4><p>管道的实质是一个内核缓冲区，进程以先进先出的方式从缓冲区存取数据,管道一端的进程顺序地将进程数据写入缓冲区，另一端的进程则顺序地读取数据，该缓冲区可以看做一个循环队列，读和写的位置都是自动增加的，一个数据只能被读一次，读出以后再缓冲区都不复存在了。</p>
+<h5><span id="pipe无名管道">pipe（无名管道）</span></h5><p>通过<code>pipe()</code>系统调用来创建并打开。</p>
+<h5><span id="fifo命名管道">fifo（命名管道）</span></h5><p>通过<code>mknode()</code>系统调用或者<code>mkfifo()</code>函数来建立</p>
+<h4><span id="消息队列">消息队列</span></h4><p>消息队列，就是一个消息的链表，是一系列保存在内核中消息的列表。用户进程可以向消息队列添加消息，也可以向消息队列读取消息。</p>
+<h4><span id="共享存储">共享存储</span></h4><p>共享内存就是映射一段能被其他进程所访问的内存，这段共享内存由一个进程创建，但多个进程都可以访问。共享内存是最快的 IPC 方式，它是针对其他进程间通信方式运行效率低而专门设计的。它往往与其他通信机制，如信号两，配合使用，来实现进程间的同步和通信。</p>
+<p>例如<code>mmap()</code>就可以实现共享内存。</p>
+<h4><span id="套接字">套接字</span></h4><h4><span id="信号">信号</span></h4><p>信号是Linux系统中用于进程之间通信或操作的一种机制。信号是在软件层次上对中断机制的一种模拟，是一种异步通信方式，信号可以在用户空间进程和内核之间直接交互。内核也可以利用信号来通知用户空间的进程来通知用户空间发生了哪些系统事件。信号事件有两个来源：</p>
+<p>1）硬件来源，例如按下了cltr+C，通常产生中断信号sigint</p>
+<p>2）软件来源，例如使用系统调用或者命令发出信号。最常用的发送信号的系统函数是kill,raise,setitimer,sigation,sigqueue函数。软件来源还包括一些非法运算等操作。</p>
+<p>有两个信号是应用进程无法捕捉和忽略的，即SIGKILL和SEGSTOP，这是为了使系统管理员能在任何时候中断或结束某一特定的进程。</p>
+<h4><span id="fork">fork()</span></h4><p>操作系统会复制一个与父进程完全相同的子进程，虽说是父子关系，但是在操作系统看来，他们更像兄弟关系，这2个进程共享代码空间，但是数据空间是互相独立的，子进程数据空间中的内容是父进程的<strong>完整拷贝</strong>，指令指针也完全相同，子进程拥有父进程当前运行到的位置。</p>
+<h3><span id="网络编程">网络编程</span></h3><h4><span id="socket编程">SOCKET编程</span></h4><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/180556309">https://zhuanlan.zhihu.com/p/180556309</a></p>
+<p>上一个part讲了进程间通信的几种常用方式，但是无论哪种，都仅限于本机之间的通信。而网间进程通信要解决的是不同主机进程间的相互通信问题。</p>
+<p>同一主机上，不同进程可用进程号（PID）唯一标识。但在网络环境下，各主机独立分配的进程号不能唯一标识该进程。 其次，操作系统支持的网络协议众多，不同协议的工作方式不同，地址格式也不同。因此，网间进程通信还要解决多重协议的识别问题。</p>
+<p>例如TCP/IP协议族利用ip地址，协议，端口即可标识网络的进程。使用TCP/IP协议的应用程序通常采用应用编程接口：UNIX BSD的套接字（socket）来实现网络进程之间的通信。</p>
+<h5><span id="tcpip">TCP/IP</span></h5><p><img src="https://pic3.zhimg.com/80/v2-d2614341b32b9946bfa10fd3b1419002_1440w.webp" alt="img"></p>
+<p>太具体的什么协议之类的就不放了</p>
+<h5><span id="socket是什么">socket是什么</span></h5><p>其实网上讲得都还蛮抽象的，我的理解就是这个东西是一个帮助我们进行tcp/ip通信的工具，就比如说我要给山崎桑送生日礼物，原本我需要拿到山崎桑的地址，然后坐飞机飞到日本，再打车去找他，但是现在有ems国际了，所以我只需要利用国际邮政，填一下地址就行了这样。所以这里这个ems就是socket，地址就是ip和port，它将复杂的协议通信抽象为了一个api。</p>
+<p>（说到山崎，今天的日九还没看555，吃饭看吧）</p>
+<h5><span id="socket通信流程">socket通信流程</span></h5><p>socket通信流程如下：</p>
+<p>连接</p>
+<ol>
+<li>服务器端会根据IP地址类型（IPv4/IPv6)、Socket 类型和协议创建一个socket，并为为 Socket 绑定 IP 地址和端口号，然后监听端口请求，随时准备接收客户端发来的连接。</li>
+<li>客户端打开 Socket，根据服务器 IP 地址和端口试图连接服务端的Socket。务器Socket接收到客户端Socket请求，被动打开开始接收客户端请求，直到客户端返回连接信息，此时 Socket 进入阻塞状态。</li>
+</ol>
+<p>交互</p>
+<ol>
+<li>客户端连接成功向服务端发送连接状态信息</li>
+<li>服务端 Accept 返回连接成功</li>
+<li>客户端向 Socket 写入数据</li>
+<li>服务端读取数据</li>
+<li>客户端关闭</li>
+</ol>
+<h3><span id="linux文件系统">linux文件系统</span></h3><h4><span id="概述">概述</span></h4><p><img src="https://www.runoob.com/wp-content/uploads/2014/06/d0c50-linux2bfile2bsystem2bhierarchy.jpg" alt="img"></p>
+<ul>
+<li><strong>/etc：</strong><br>etc 是 Etcetera(等等) 的缩写,这个目录用来存放所有的系统管理所需要的配置文件和子目录。</li>
+<li><strong>/bin</strong>：<br>bin 是 Binaries (二进制文件) 的缩写, 这个目录存放着最经常使用的命令。</li>
+<li><strong>/proc</strong>：<br>proc 是 Processes(进程) 的缩写，/proc 是一种伪文件系统（也即虚拟文件系统），存储的是当前内核运行状态的一系列特殊文件，这个目录是一个虚拟的目录，它是系统内存的映射，我们可以通过直接访问这个目录来获取系统信息。</li>
+<li><strong>/sbin</strong>：<br>s 就是 Super User 的意思，是 Superuser Binaries (超级用户的二进制文件) 的缩写，这里存放的是系统管理员使用的系统管理程序。</li>
+<li><strong>/usr</strong>：<br> usr 是 unix shared resources(共享资源) 的缩写，这是一个非常重要的目录，用户的很多应用程序和文件都放在这个目录下，类似于 windows 下的 program files 目录。</li>
+<li><strong>/usr/src：</strong><br>内核源代码默认的放置目录。</li>
+</ul>
+<h4><span id="软硬连接">软硬连接</span></h4><h5><span id="软链接">软链接</span></h5><p>为某个文件在另外一个位置建立一个同不的链接。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ln -s 源文件 目标文件。 </span><br></pre></td></tr></table></figure>
+
+<h5><span id="硬链接">硬链接</span></h5><p>允许一个文件拥有多个有效路径名，这样用户就可以建立硬连接到重要文件，以防止“误删”的功能。</p>
+<h4><span id="环境变量">环境变量</span></h4><p>。</p>
+<h2><span id="其他">其他</span></h2><h3><span id="kernel-漏洞">kernel 漏洞</span></h3><h4><span id="kernel-uaf">kernel uaf</span></h4><h4><span id="kernel-rop">kernel rop</span></h4><h3><span id="fuzz">fuzz</span></h3><h4><span id="基本原理">基本原理</span></h4><p>Fuzzing引擎算法中，测试用例的生成方式主要有2种：</p>
+<p>1）基于变异：根据已知数据样本通过变异的方法生成新的测试用例；</p>
+<p>2）基于生成：根据已知的协议或接口规范进行建模，生成测试用例；</p>
+<p>AFL就是著名的基于变异的Fuzzer。</p>
+<h5><span id="变异">变异：</span></h5><p>afl中变异其实就是对输入进行移位，reverse等操作。</p>
+<h4><span id="afl">afl</span></h4><p>饿</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/gengzhikui1992/article/details/50844857">https://blog.csdn.net/gengzhikui1992/article/details/50844857</a></p>
+<p><a target="_blank" rel="noopener" href="https://paper.seebug.org/496/">AFL(American Fuzzy Lop)实现细节与文件变异</a></p>
+<p><a target="_blank" rel="noopener" href="http://rk700.github.io/2017/12/28/afl-internals/">AFL内部实现细节小记</a></p>
+<p><a target="_blank" rel="noopener" href="https://kiprey.github.io/2020/07/AFL-LLVM-Mode/">AFL的LLVM_Mode</a></p>
 <h4><span id="syzkaller使用">syzkaller使用</span></h4><p>白盒fz。</p>
 <h4><span id="基本的fuzz代码优化">基本的fuzz代码优化</span></h4><p>不知道orz</p>
+<h4><span id="llvm">llvm</span></h4><h3><span id="v8ampchrome">v8&amp;Chrome</span></h3><p><a target="_blank" rel="noopener" href="https://kiprey.github.io/2020/11/fetch-chromium/">https://kiprey.github.io/2020/11/fetch-chromium/</a></p>
+<p><a target="_blank" rel="noopener" href="https://kiprey.github.io/2020/10/CVE-2020-6549/">https://kiprey.github.io/2020/10/CVE-2020-6549/</a></p>
+<p><a target="_blank" rel="noopener" href="https://kiprey.github.io/2020/10/CVE-2019-5826/#%E4%B8%80%E3%80%81%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA">https://kiprey.github.io/2020/10/CVE-2019-5826/#一、环境搭建</a></p>
 <h3><span id="gdb使用">gdb使用</span></h3><h4><span id="断点原理内存amp硬件amp软件断点">断点原理（内存&amp;硬件&amp;软件断点）</span></h4><p>软件断点：由非法指令异常实现，适用于运行于内存中的程序（软件实现）。以x86为例，向某个地址打入断点，实际上就是往该地址写入断点指令INT 3，即0xCC。目标程序运行到这条指令之后就会触发SIGTRAP信号，gdb捕获到这个信号，根据目标程序当前停止位置查询gdb维护的断点链表，若发现在该地址确实存在断点，则可判定为断点命中。</p>
 <p>硬件断点：由硬件特性实现（数量有限），适用于直接在flash中运行的程序。</p>
 <p>之所以要区分硬件和软件断点，是因为软件断点要往某个地址写入断点指令的，那么最起码该地址应该是可写的吧？大多数时候，我们的程序是会被加载到<a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=%E5%86%85%E5%AD%98&spm=1001.2101.3001.7020">内存</a>（RAM）中执行的，RAM是可读可写，这时候软件断电就是有效的。<br>但是，对于某些比较重要的程序，可能会直接在flash中执行，并且flash对用户可能是只读的，这时候软件断点就没有用了，因为没办法写进断点指令，此时必须依赖于硬件断点。这就是软件断点和硬件断点使用上的不同。</p>
 <p>hb为硬件断点，使用方式与软中断相同。</p>
 <p>内存断点：<code>watch</code>指令。监控变量或表达式的值。</p>
-<h4><span id="附加调试相关">附加调试相关</span></h4><h4><span id="一些常见指令">一些常见指令</span></h4><p><a target="_blank" rel="noopener" href="https://wizardforcel.gitbooks.io/100-gdb-tips/content/show-version.html">https://wizardforcel.gitbooks.io/100-gdb-tips/content/show-version.html</a></p>
+<h4><span id="一些常见指令">一些常见指令</span></h4><p><a target="_blank" rel="noopener" href="https://wizardforcel.gitbooks.io/100-gdb-tips/content/show-version.html">https://wizardforcel.gitbooks.io/100-gdb-tips/content/show-version.html</a></p>
 <h3><span id="iot">iot</span></h3><h4><span id="测信道攻击俺只知道这个">测信道攻击（俺只知道这个）</span></h4><h3><span id="条件竞争">条件竞争</span></h3><p>呃呃，只有一点了解。</p>
 
             <div class="clearfix"></div>

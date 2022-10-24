@@ -74,7 +74,7 @@
 				    
 				    <li><a href="/categories/FUZZ-AFL/" class="animsition-link">FUZZ_AFL<small>(1)</small></a></li>
 				    
-				    <li><a href="/categories/Generalization/" class="animsition-link">Generalization<small>(5)</small></a></li>
+				    <li><a href="/categories/Generalization/" class="animsition-link">Generalization<small>(6)</small></a></li>
 				    
 				    <li><a href="/categories/HEAP-ChunkOverlapping/" class="animsition-link">HEAP - ChunkOverlapping<small>(3)</small></a></li>
 				    
@@ -90,7 +90,7 @@
 				    
 				    <li><a href="/categories/HEAP-Seccomp/" class="animsition-link">HEAP - Seccomp<small>(1)</small></a></li>
 				    
-				    <li><a href="/categories/HEAP-Tcache/" class="animsition-link">HEAP - Tcache<small>(3)</small></a></li>
+				    <li><a href="/categories/HEAP-Tcache/" class="animsition-link">HEAP - Tcache<small>(2)</small></a></li>
 				    
 				    <li><a href="/categories/HEAP-Unlink/" class="animsition-link">HEAP - Unlink<small>(2)</small></a></li>
 				    
@@ -141,8 +141,6 @@
 				    <li><a href="/categories/Tcache/" class="animsition-link">Tcache<small>(2)</small></a></li>
 				    
 				    <li><a href="/categories/cve/" class="animsition-link">cve<small>(2)</small></a></li>
-				    
-				    <li><a href="/categories/mess/" class="animsition-link">mess<small>(1)</small></a></li>
 				    
 				    <li><a href="/categories/qemu/" class="animsition-link">qemu<small>(1)</small></a></li>
 				    
@@ -269,7 +267,7 @@
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
                 <div class="col-md-4">
-                    <h3><a href="/2022/10/22/mess_基础知识点总结/">基础知识</a></h3>
+                    <h3><a href="/2022/10/22/sum_基础知识点总结/">基础知识</a></h3>
                     <span>
                         <span class="post-meta">
       <time datetime="2022-10-22T15:33:18.118Z" itemprop="datePublished">
@@ -278,7 +276,7 @@
     
     
     | 
-    <a href='/tags/mess/'>mess</a>
+    <a href='/tags/sum/'>sum</a>
     
     
 </span>
@@ -287,22 +285,17 @@
                 <div class="col-md-8">
                     <p>
                       
-                        编程语言c&amp;python汇编首先就是取址的几种方式：
-然后是一些常见的寄存器含义。
-最后是一些容易忘，但是一定要记住的指令。
-二进制栈漏洞利用保护机制由于面向的是底层原理，所以在这个part，每一个机制都将围绕以下几个部分阐述：
+                        这是一些也许很基础但是一直没有搞透彻or忘了or巩固的一些知识点的集合，空的就是还没有来得及填，
+编程语言cpython汇编首先就是寻址的几种方式：
+1）寻址1/直接寻址1mov     rax, fs:28h #直接寻址，fs段寄存器+偏移量。这里其实是一个canary的值。
 
-源码层面的原理
-动态分析中的具体行为
-利用的方式
-
-aslr&amp;pie原理&amp;行为一些参数
-1230 - 表示关闭进程地址空间随机化。1 - 表示将mmap的基址，stack和vdso页面
+2/间接寻址间接在使用指针以及解引用的形式
+1mov     [rbp+var_8], rax # 寄存器相对寻址。相当于把rax，也就是这个canary值放
                       
                     </p>
                     
                     <p class="pull-right readMore">
-                        <a href="/2022/10/22/mess_基础知识点总结/">Read More...</a>
+                        <a href="/2022/10/22/sum_基础知识点总结/">Read More...</a>
                     </p>
                     
                 </div>
@@ -323,7 +316,7 @@ aslr&amp;pie原理&amp;行为一些参数
     
     
     | 
-    <a href='/tags/afl/'>afl</a>
+    <a href='/tags/FUZZ/'>FUZZ</a>
     
     
 </span>
