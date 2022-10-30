@@ -318,9 +318,9 @@
 <p>跟进<code>handle</code>函数，但其实没有什么好看的，直接finish。</p>
 <p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-10-30%20%E4%B8%8B%E5%8D%8810.06.00.png" alt="截屏2022-10-30 下午10.06.00"></p>
 <p>跳过<code>handle</code>后，可以看到code被写入了，用的akaya师傅的测试exp。</p>
-<p>![截屏2022-10-30 下午10.11.56](/Users/rin/Library/Application Support/typora-user-images/截屏2022-10-30 下午10.11.56.png)</p>
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-10-30%20%E4%B8%8B%E5%8D%8810.11.56.png" alt="截屏2022-10-30 下午10.11.56"></p>
 <p>编写好exp后：</p>
-<p>![截屏2022-10-30 下午10.15.35](/Users/rin/Library/Application Support/typora-user-images/截屏2022-10-30 下午10.15.35.png)</p>
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-10-30%20%E4%B8%8B%E5%8D%8810.15.35.png" alt="截屏2022-10-30 下午10.15.35"></p>
 <p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-10-30%20%E4%B8%8B%E5%8D%8810.16.01.png" alt="截屏2022-10-30 下午10.16.01"></p>
 <p>exp大致逻辑就是第一次jit填充0xff0size的指令，没有任何用处，然后在<code>0x7ffff7ffbff2</code>上写jmp shellcode，shellcode的地址就在前面0x1000的地方找一个，第二次jit时写上即可。shellcode的编写有很大的限制。</p>
 <p>偷一个师傅的图：</p>
