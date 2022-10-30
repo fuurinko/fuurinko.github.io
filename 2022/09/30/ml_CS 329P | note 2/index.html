@@ -8,7 +8,7 @@
 
 <head>
 
-  <title>六月 | Rin</title>
+  <title>CS 329P note2 | Rin</title>
   <!-- Meta data -->
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -45,7 +45,10 @@
   
 
   <style>.col-md-8.col-md-offset-2.opening-statement img{display:none;}</style>
-<link rel="stylesheet" href="/css/prism.css" type="text/css"></head>
+<link rel="stylesheet" href="/css/prism.css" type="text/css"><link rel="stylesheet" href="/assets/css/APlayer.min.css" class="aplayer-style-marker">
+<script src="/assets/js/APlayer.min.js" class="aplayer-script-marker"></script>
+<script src="/assets/js/Meting.min.js" class="meting-script-marker"></script>
+</head>
 
 <!--
 <body class="post-template">
@@ -100,7 +103,9 @@
 				    
 				    <li><a href="/categories/IO-FILE/" class="animsition-link">IO_FILE<small>(1)</small></a></li>
 				    
-				    <li><a href="/categories/KERNEL/" class="animsition-link">KERNEL<small>(2)</small></a></li>
+				    <li><a href="/categories/KERNEL/" class="animsition-link">KERNEL<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/LLVM/" class="animsition-link">LLVM<small>(1)</small></a></li>
 				    
 				    <li><a href="/categories/MESS/" class="animsition-link">MESS<small>(19)</small></a></li>
 				    
@@ -235,49 +240,69 @@
         <div class="row col-md-offset-2">
             <div class="col-md-8">
     			<span class="post-meta">
-      <time datetime="2022-07-07T07:27:40.124Z" itemprop="datePublished">
-          2022-07-07
+      <time datetime="2022-09-30T14:15:50.845Z" itemprop="datePublished">
+          2022-09-30
       </time>
     
     
     | 
-    <a href='/tags/vivi/'>vivi</a>
+    <a href='/tags/Machine-Learning/'>Machine Learning</a>
     
     
 </span>
-                <h1>六月</h1>
+                <h1>CS 329P note2</h1>
             </div>
         </div>
         <div class="col-md-8 col-md-offset-2">
-      		<p>​        今日小暑。</p>
-<p>​        久违地重新开始写博客了，之前由于期末周，一直没有来得及整理。昨天把所有试全部考完了，国赛西南分赛区半决赛也打完了，师傅们非常强。</p>
-<p>​        之所以写下这些，实在是因为脑子里空空的，心里也空空的，不知该干什么，心情理应舒畅，然而现在却是一滩死水。我不知道该干什么了，只有一团乱麻似的思绪在胸口发闷。</p>
-<p>​        我开始萌生一些悔意了。大约三个月前，我的想法和现在从结果上来说有一些相似，大致是：“人生没有意义”。但是推演出结论的过程却截然不同，三个月前的我站在谷底向着仰望着永远无法触及的地平线悲鸣，三个月后我坐在28度空调房里，腿裹着被子，抿着冰镇的茉莉绿茶，思考人生与死的关系，从这个角度看，我是不是进步了。（笑</p>
-<p>​        “人终有一死”这句话有无数种解答方式。“不以物喜，不以己悲”——这是我的答案。</p>
-<p>​        实际上对于“人生意义何在”与“人终有一死”的解答存在着微妙的偏差，或者说后者通常用于对前者作补充说明。</p>
-<p>​        当今文艺作品热衷于以批判性思维审视社会风潮，提倡我们回归本心，遵循自身。中午吃饭的时候张麻子给我看了一部半个钟头的小电影，讲的是一个高三学生为了追求分数，差点走火入魔放弃自己爱好与梦想的故事，可以看出导演想要表达的就是“高考并不是人生的全部”。说来也好笑，人生并不是只有一次高考，我一直认为任何需要花费时间与精力进行的选拔性考验，都可以称之为高考。不过这就有些跑题了，显然这个电影想告诉我们，人生的美好也来源于对美好事物的追求。</p>
-<p>​        我又想起很早之前看过的一个动画电影，叫做心灵奇旅，虽然我当时完全是因为里面的jazz元素才会对这个电影产生兴趣的，但是看完以后，不得不说其中有一些观点与思考至今影响着我。毕竟是动画片，所以导演将他的想法不加掩盖地展示出来——人生的意义，在于活着的每一点细节。仅仅是听着脚下踩过的枯叶发出的嘎吱声——我便感觉我是实实在在活着的。</p>
-<p>​        再往前推，还是一部动画电影，应当是大名鼎鼎了，叫做寻梦环游记，给出的答案也很清晰——事业并不是构成人生幸福的全部，家人与自我的陪伴同等重要。</p>
-<p>​        这些作品给出的答案都是相似的，人不应该被现实束缚，不应该被自身束缚，按照自己的想法，过好每一天，实际就是幸福所在。因为人终有一死，无论生前功名如何，死后只是一剖黄土，风一吹，就被永远遗忘了。那么与其累死累活拼搏一辈子，不如快乐地过每一天，至少人生没有白费。</p>
-<p>​        这是他们的观点，不是我的观点。诸如此类的想法只会在当我心情极度低落的时候才会被拿来利用，试图让我自己开心一些。而仅仅抱持着这一种态度过活的人，我个人认为是极度自私的。</p>
-<p>​        现实永远是充满了无穷多变量的，遵循理想条件活着的人，要么物质条件极为富余，要么一无所有。形而上学的概念通常在理想条件下被研究，回归了现实，这就是狗屁不通的胡言乱语，任何有关于社会学，心理学研究实验的结果，都需要绝对精准地控制变量。任何放在现实条件下讨论人性的议题，都需要对细节进行绝对的把控。</p>
-<p>​        失之毫厘，差之千里，用在心理学实验上毫不为过。然而就是在这样的事实下，文艺作品大张旗鼓，用极为高贵的人格水准要求我们断舍离，要求我们回归自我，要求我们不要忘记年少轻狂，我不否认这其中的道理，这就像高中班主任苦口婆心希望学生们用心学习一样，学不学是他们自己的事情。</p>
-<p>​        或许可能会认为我写这些是在批评什么东西，但实则不然，从始至终我都只是在批评自己。其实无非是一个“想做”和“应该做”的事情选择的问题，但是矛盾在于这两者并不是完全对立的，并且想做的事情某一天也会变得不想做，应该做的事情也有毫无意义的可能，人生的意义便在此体现。并且，无论是有意义或者无意义，随着人生命的终结，任何意义都化为了无意义。</p>
-<p>​        今天写下这些不明所以的东西，起初是因为一个人在协会，感到了孤独。现在已经好很多了，并且也有猫来陪我。很久没有感到孤独了，所以也不常写这种，今天当破一次例了，如果不小心被人看到这篇语无伦次没有重点的杂记，请不要嘲笑我。</p>
-<p>​</p>
+      		<p>​    
+    <div id="aplayer-FmsOJVSc" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div>     </p>
+<h2><span id="0-胡言乱语1">0: 胡言乱语1</span></h2><p>note2，进入模型的学习部分，这一部分似乎并没有涉及太多的代码知识，主要是讲解数学原理。</p>
+<p>众所周知md也不好打公式，这一篇水水就过去了。</p>
+<h2><span id="2-复习">2: 复习</span></h2><h3><span id="ml算法概述">ml算法概述</span></h3><p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/img2.svg" alt="img2"></p>
+<h3><span id="最简单的决策树">最简单的决策树</span></h3><h4><span id="概述">概述</span></h4><p>类似if else的逻辑，将大的数据不断分类，直到达到最小单位（？</p>
+<p>图中演示了两种决策树，左边是用于数据的分类，右边用于数据的回归，但是本质上两者都是一样的。</p>
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-10-01%20%E4%B8%8A%E5%8D%8811.08.32.png" alt="截屏2022-10-01 上午11.08.32"></p>
+<h4><span id="建立决策树">建立决策树</span></h4><ol>
+<li>从根节点开始</li>
+<li>对于每个父节点，选择一个特征来划分数据。</li>
+</ol>
+<h4><span id="决策树的局限性">决策树的局限性</span></h4><ol>
+<li>过于复杂的决策树会过拟合数据</li>
+<li>决策树对于数据的敏感程度较高</li>
+<li>难以进行并行运算</li>
+</ol>
+<p>ps：过拟合：</p>
+<p>大概指的是衡量模型好坏的两个指标分别是泛化和训练误差。</p>
+<p>训练误差指模型对于喂给的数据集的拟合结果的误差，泛化误差指模型对未知数据集的拟合结果的误差，</p>
+<p>而衡量泛化的直观表现就是模型是否欠拟合或过拟合。</p>
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/v2-0ecc4dee7383ccf1995de08cdddc84d9_720w.jpg" alt="img"></p>
+<p>欠拟合指模型对于训练数据的拟合能力不够，而过拟合指模型过于复杂时，便有些僵硬地只善于反馈训练的数据集，而不会举一反三拟合未知的数据，导致泛化误差变大，也侧面证实了前文中“过于复杂的决策树模型容易导致过拟合。”</p>
+<h4><span id="随机森林决策树-pro-max">随机森林（决策树 pro max）</span></h4><p>简单来说就是训练多颗决策树，组成森林，并且每个树的训练过程都是独立并行的。</p>
+<p>为了提升决策树稳定性，最终训练结果可能是整个随机森林的均值。</p>
+<h5><span id="随机性">随机性</span></h5><p>随机森林的“随机性”来源于两点</p>
+<ol>
+<li>样本bagging</li>
+<li>对数据集特征进行采样，挑选出子集用来训练。</li>
+</ol>
+<p>bagging值对于一个大的数据集，随机地采样生成新的数据集后用来训练，每一棵树的数据集都是随机生成的新数据集。（比如大的数据集<code>[1,2,3,4,5,6,7]</code>进行随机采样生成随机数据集1<code>[1,1,1,2,3,5,2]</code>，然后用这个生成的数据集喂模型。</p>
+<h5><span id="gradient-boosting">Gradient Boosting</span></h5><p>提升决策树模型的方法之一。</p>
+<p>梯度boosting（不好翻译，可能直译就是梯度提升）</p>
+<p>用当前训练的n颗树预测n+1颗树的值，并用真实的n+1颗树的值减去前面的预测值得到残差，并在残差上做当前树的训练。</p>
+<p>这一块的梯度部分没搞懂。</p>
+<p>有点看烦了，去看一点内核题，顺便复习一下dsp，搞完了再来看。</p>
 
             <div class="clearfix"></div>
             <hr class="nogutter">
         </div>
         <nav class="m-pagination col-md-8 col-md-offset-2 col-sm-24" role="pagination">
     
-    <a class="pull-left" href="../../08/ciscn_2022_pwn1/" style="float: left;">
-        ← pwn1（已弃）
+    <a class="pull-left" href="../../../10/01/vivi_2022%E5%B9%B4%E5%8D%81%E6%9C%88/" style="float: left;">
+        ← 十月
     </a>
     
     
-    <a class="pull-right" href="../../../06/21/vivi-%E6%B7%B1%E5%A4%9C%E9%94%90%E8%AF%84%E6%8B%BF%E4%B8%8D%E6%8B%BF/">
-        深夜锐评拿不拿 →
+    <a class="pull-right" href="../../29/ml_CS%20329P%20%7C%20%20note1/">
+        CS 329P note1 →
     </a>
     
 </nav>

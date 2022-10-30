@@ -100,7 +100,9 @@
 				    
 				    <li><a href="/categories/IO-FILE/" class="animsition-link">IO_FILE<small>(1)</small></a></li>
 				    
-				    <li><a href="/categories/KERNEL/" class="animsition-link">KERNEL<small>(2)</small></a></li>
+				    <li><a href="/categories/KERNEL/" class="animsition-link">KERNEL<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/LLVM/" class="animsition-link">LLVM<small>(1)</small></a></li>
 				    
 				    <li><a href="/categories/MESS/" class="animsition-link">MESS<small>(19)</small></a></li>
 				    
@@ -267,7 +269,49 @@
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
                 <div class="col-md-4">
-                    <h3><a href="/2022/10/24/mess_GDB 中ni 与 si的魔法/">mess_GDB 中ni与si的魔法</a></h3>
+                    <h3><a href="/2022/10/25/llvm_llvm-pass/">llvm pass - satool</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-10-25T05:15:33.102Z" itemprop="datePublished">
+          2022-10-25
+      </time>
+    
+    
+    | 
+    <a href='/tags/ciscn/'>ciscn</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        基础知识​        我之前一直以为llvm是一个虚拟机，然而查了资料以后发现llvm除了名字以外与虚拟机再无半分关系。
+​        llvm的官方解释其实比较抽象：
+
+LLVM项目是模块化、可重用的编译器以及工具链技术的集合。
+
+​        说白了就是很多工具模块，统称llvm，之前已经接触过的略微熟悉的就是llvm的子项目clang。
+
+LLVM项目的一个子项目，基于LLVM架构的C/C++/Objective-C编
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/10/25/llvm_llvm-pass/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2022/10/24/mess_GDB 中ni 与 si的魔法/">mess_GDB中ni与si的魔法</a></h3>
                     <span>
                         <span class="post-meta">
       <time datetime="2022-10-24T11:57:06.272Z" itemprop="datePublished">
@@ -285,9 +329,9 @@
                 <div class="col-md-8">
                     <p>
                       
-                        https://www.cnblogs.com/tsecer/category/1413042.html
-​        关于gdb中ni 、n、si、s的区别，是一个很基础的问题：n/s都是C语言级的断点定位。s会进入C函数内部，n不会。ni/si都是汇编级别的断点定位。si会进入汇编和C函数内部, ni不会。
-​        然而众所周知，gdb下软件断点的原理是在代码中插入 int 0xcc，引发中断，那么同样是插入指令，为什
+                        ​        关于gdb中ni 、n、si、s的区别，是一个很基础的问题：n/s都是C语言级的断点定位。s会进入C函数内部，n不会。ni/si都是汇编级别的断点定位。si会进入汇编和C函数内部, ni不会。
+​        然而众所周知，gdb下软件断点的原理是在代码中插入 int 3，引发中断后执行系统调用ptrace，那么同样是插入指令，为什么这两种指令会有不同影响？
+gdb指令级单步的实现首先还是复习一下老生常谈（的软硬断点
                       
                     </p>
                     
@@ -502,7 +546,7 @@ poc1234
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
                 <div class="col-md-4">
-                    <h3><a href="/2022/10/13/幻想曲-05追忆似水年华/">追忆似水年华</a></h3>
+                    <h3><a href="/2022/10/13/幻想曲-05-追忆似水年华/">追忆似水年华</a></h3>
                     <span>
                         <span class="post-meta">
       <time datetime="2022-10-13T11:34:04.095Z" itemprop="datePublished">
@@ -530,7 +574,7 @@ poc1234
                     </p>
                     
                     <p class="pull-right readMore">
-                        <a href="/2022/10/13/幻想曲-05追忆似水年华/">Read More...</a>
+                        <a href="/2022/10/13/幻想曲-05-追忆似水年华/">Read More...</a>
                     </p>
                     
                 </div>
@@ -542,7 +586,7 @@ poc1234
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
                 <div class="col-md-4">
-                    <h3><a href="/2022/10/13/ml_CS-329P-note3/">CS 329P note3</a></h3>
+                    <h3><a href="/2022/10/13/ml_CS 329P | note3/">CS 329P note3</a></h3>
                     <span>
                         <span class="post-meta">
       <time datetime="2022-10-13T02:13:04.244Z" itemprop="datePublished">
@@ -579,7 +623,7 @@ ps：上一个note说到主要利用决策树进行分类。
                     </p>
                     
                     <p class="pull-right readMore">
-                        <a href="/2022/10/13/ml_CS-329P-note3/">Read More...</a>
+                        <a href="/2022/10/13/ml_CS 329P | note3/">Read More...</a>
                     </p>
                     
                 </div>
@@ -591,7 +635,7 @@ ps：上一个note说到主要利用决策树进行分类。
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
                 <div class="col-md-4">
-                    <h3><a href="/2022/10/01/2022年十月/">十月</a></h3>
+                    <h3><a href="/2022/10/01/vivi_2022年十月/">十月</a></h3>
                     <span>
                         <span class="post-meta">
       <time datetime="2022-10-01T07:07:35.450Z" itemprop="datePublished">
@@ -622,52 +666,7 @@ CVE恰米计划
                     </p>
                     
                     <p class="pull-right readMore">
-                        <a href="/2022/10/01/2022年十月/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2022/09/30/ml_CS 329P ｜ note 2/">CS 329P note2</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2022-09-30T14:15:50.845Z" itemprop="datePublished">
-          2022-09-30
-      </time>
-    
-    
-    | 
-    <a href='/tags/Machine-Learning/'>Machine Learning</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        ​    
-         
-0: 胡言乱语1note2，进入模型的学习部分，这一部分似乎并没有涉及太多的代码知识，主要是讲解数学原理。
-众所周知md也不好打公式，这一篇水水就过去了。
-2: 复习ml算法概述
-最简单的决策树概述类似if else的逻辑，将大的数据不断分类，直到达到最小单位（？
-图中演示了两种决策树，左边是用于数据的分类，右边用于数据的回归，但是本质上两者都是一样的。
-
-建立决策树
-从根节点开始
-对于每个父节点，选择一
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2022/09/30/ml_CS 329P ｜ note 2/">Read More...</a>
+                        <a href="/2022/10/01/vivi_2022年十月/">Read More...</a>
                     </p>
                     
                 </div>

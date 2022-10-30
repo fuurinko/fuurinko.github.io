@@ -8,7 +8,7 @@
 
 <head>
 
-  <title>追忆似水年华 | Rin</title>
+  <title>llvm pass - satool | Rin</title>
   <!-- Meta data -->
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -45,10 +45,7 @@
   
 
   <style>.col-md-8.col-md-offset-2.opening-statement img{display:none;}</style>
-<link rel="stylesheet" href="/css/prism.css" type="text/css"><link rel="stylesheet" href="/assets/css/APlayer.min.css" class="aplayer-style-marker">
-<script src="/assets/js/APlayer.min.js" class="aplayer-script-marker"></script>
-<script src="/assets/js/Meting.min.js" class="meting-script-marker"></script>
-</head>
+<link rel="stylesheet" href="/css/prism.css" type="text/css"></head>
 
 <!--
 <body class="post-template">
@@ -103,7 +100,9 @@
 				    
 				    <li><a href="/categories/IO-FILE/" class="animsition-link">IO_FILE<small>(1)</small></a></li>
 				    
-				    <li><a href="/categories/KERNEL/" class="animsition-link">KERNEL<small>(2)</small></a></li>
+				    <li><a href="/categories/KERNEL/" class="animsition-link">KERNEL<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/LLVM/" class="animsition-link">LLVM<small>(1)</small></a></li>
 				    
 				    <li><a href="/categories/MESS/" class="animsition-link">MESS<small>(19)</small></a></li>
 				    
@@ -238,50 +237,113 @@
         <div class="row col-md-offset-2">
             <div class="col-md-8">
     			<span class="post-meta">
-      <time datetime="2022-10-13T11:34:04.095Z" itemprop="datePublished">
-          2022-10-13
+      <time datetime="2022-10-25T05:15:33.102Z" itemprop="datePublished">
+          2022-10-25
       </time>
     
     
     | 
-    <a href='/tags/幻想曲/'>幻想曲</a>
+    <a href='/tags/ciscn/'>ciscn</a>
     
     
 </span>
-                <h1>追忆似水年华</h1>
+                <h1>llvm pass - satool</h1>
             </div>
         </div>
         <div class="col-md-8 col-md-offset-2">
-      		<p>​    
-    <div id="aplayer-wSdYVFIn" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div>     </p>
-<p>​        花了大半个月，我看了追忆似水年华第一部的四分之一，以睡前读十五分钟的形式。</p>
-<p>​        我完全不想写什么读后感之类的东西，因此如果可以，我希望模仿普鲁斯特的文笔去记录一些事。这就是我的全部感想。</p>
-<p>​        于是在我决定动笔的一瞬间，这件事就已经划上了句号。</p>
-<p>​        就像从一个只装有蓝球和红球的袋子中拿出一个红球，就瞬间知道袋子里剩下的球是蓝色一样，我贫瘠的记忆中并不包含任何使我足以写出匹及普鲁斯特哪怕十分之一的文字来的成分。对自然的观察，空气中气味的捕捉，以及恐怖阅读量和对艺术的狂热喜爱，普鲁斯特的伟大是前无古人后无来者的。写下这些话前我没有查阅任何关于他的背景或者生平，单单凭着这一百多页的文字，我看到了真正的文艺。我甚至羞愧于与普鲁斯特产生的那么一丝丝的共鸣感，但这都不是什么重要的事了。</p>
-<p>​        在此之前，我对于传世的外国古典文学的认知主要来源于两方面，一方面是儿童启蒙时期被迫阅读的一些“世界名著”，另一方面就是这一年来读的一些思想较为悲观的哲学书籍或者日本文学。说来也好笑，我小时候抗拒于阅读任何一本所谓的名著，不论篇幅和国籍，甚至到高中后依然深以为傲，将其写入了作文，主题是“我真的不喜欢语文”。多亏我的语文老师算是一个见识相对高远的人，不知是欣赏我这幼稚的反骨，还是觉得我的文字功力尚且过关，给了我一个相当好看的分数，让本就有着莫名其妙自豪感的我更加沾沾自喜。</p>
-<p>​        我没有办法系统地评估“不喜欢读书”这件事给我带来的影响究竟是正面还是负面的。也许是正面的吧，正因为中学时代阅读量的匮乏，导致我疯狂地想要弥补，于是还愿意抽出那么一点点宝贵的时间，分给阅读这件事。</p>
-<p>​        说回我对于外国名著的印象，我读过的西方名著屈指可数，有印象的更是能够直接列举。去年看了《红与黑》、卡夫卡的《变形记》《城堡》以及一些短篇、荣格的《红书》和一些莫名其妙的哲学书比如《作为意志和表象的世界》，《悲剧的诞生》以及一些奇怪的拉康选集（以上的哲学书我通通我没有看完）。日本文学相对多一些，川端康成的经典中篇我看了两部，三岛由纪夫的代表作我基本都看过，村上春树只看过《挪威的森林》，渡边淳一那种我都不打算让他算数。</p>
-<p>​        为什么要列举，因为首先量确实很少，少到可以列举完全，其次， 你会发现这些书或多或少都印有时代悲伤的烙印，日本文学更甚。或是角色本身的悲剧，或是大时代历史的必然，寂寥悲伤的情绪总是挥之不去。</p>
-<p>​        然而追忆带给我的只有阳光灿烂的星期日，坐在后花园读书的孤独与自由的情绪。</p>
-<p>​        这种情绪带给我的是浓烈的新奇感以及吸引力，从来没有人能将干枯的日子描绘得如此多汁多味，连正午刺眼的阳光都变成了价值连城的金子。我最愿意形容将这样的文字形容为“自由的生命”，虽然也许主人公的童年是孤独的，但这样的孤独确实使我满足的。</p>
-<p>​        孤独不代表悲伤，相反，孤独也是能够享受的一种情绪，在之前的日子里我已经学会了如何享受痛苦，现在我要开始学习如何享受孤独了。</p>
-<p>​        「胡言乱语：谢谢慎也桑的安利。」</p>
+      		<h2><span id="基础知识">基础知识</span></h2><p>​        我之前一直以为llvm是一个虚拟机，然而查了资料以后发现llvm除了名字以外与虚拟机再无半分关系。</p>
+<p>​        llvm的官方解释其实比较抽象：</p>
+<blockquote>
+<p>LLVM项目是模块化、可重用的编译器以及工具链技术的集合。</p>
+</blockquote>
+<p>​        说白了就是很多工具模块，统称llvm，之前已经接触过的略微熟悉的就是llvm的子项目clang。</p>
+<blockquote>
+<p>LLVM项目的一个子项目，基于LLVM架构的C/C++/Objective-C编译器前端。</p>
+</blockquote>
+<p>​        那么llvm pass呢？</p>
+<blockquote>
+<p>pass是一种编译器开发的结构化技术，用于完成编译对象（如IR）的转换、分析或优化等功能。</p>
+</blockquote>
+<p>如果学过编译原理的话，应该知道编译过程主要可以划分为前端与后端：</p>
+<ul>
+<li>前端把源代码翻译成中间表示 (IR)。</li>
+<li>后端把IR编译成目标平台的机器码。当然，IR也可以给解释器解释执行。</li>
+</ul>
+<p>经典的gcc等编译器使用较为整体的设计，从源代码到IR，再从IR到到机器码，这之间的过程是封装好的，用户不需要知道其中IR是什么样的，也不会为用户暴露可操作IR的接口，然而LLVM的设计理念就是将IR的部分单独抽出来，作为一个接口提供给用户。</p>
+<p>因此，用户只要能够完成从源码到IR的设计，后续便能直接使用LLVM进行后端的编译，并享受到IR到可执行文件这之间的LLVM提供的所有优化、分析或者代码插桩的能力。而LLVM PASS就是用来一个处理IR文件的东西，利用它我们可以优化已有的IR。</p>
+<h2><span id="satool">satool</span></h2><h3><span id="逆向">逆向</span></h3><p>首先找到<code>runOnFunction</code>函数</p>
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-10-30%20%E4%B8%8B%E5%8D%883.09.13.png" alt="截屏2022-10-30 下午3.09.13"></p>
+<p>​        大概长这个样。之前没有怎么做过这种代码比较辣眼睛的题，要么都只是逻辑相对复杂。</p>
+<p>​        所以话说回来，其实只要说服了眼睛，这种题也不算很难逆。</p>
 <p>​        </p>
+<p>​        首先是一个限制，<code>arg_size</code>以及<code>size</code>需为一。</p>
+<p>​        接着执行一个</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>[<span class="number">5</span>] = <span class="keyword">this</span>[<span class="number">4</span>];</span><br><span class="line">  mprotect(<span class="keyword">this</span>[<span class="number">4</span>], <span class="number">0x1000</span>uLL, <span class="number">3</span>);</span><br><span class="line">  `anonymous <span class="keyword">namespace</span><span class="number">&#x27;</span>::MBAPass::handle((_anonymous_namespace_::MBAPass *)<span class="keyword">this</span>, v29);</span><br><span class="line">  mprotect(<span class="keyword">this</span>[<span class="number">4</span>], <span class="number">0x1000</span>uLL, <span class="number">5</span>);</span><br></pre></td></tr></table></figure>
+
+<p>​        这里先不看。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">v27 = `anonymous <span class="keyword">namespace</span><span class="number">&#x27;</span>::MBAPass::callCode((_anonymous_namespace_::MBAPass *)<span class="keyword">this</span>);</span><br></pre></td></tr></table></figure>
+
+<p>​        这里调用了<code>callCode</code>。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">__int64 __fastcall `anonymous <span class="keyword">namespace</span><span class="number">&#x27;</span>::MBAPass::callCode(</span><br><span class="line">        __int64 (__fastcall **<span class="keyword">this</span>)(_anonymous_namespace_::MBAPass *, __int64),</span><br><span class="line">        __int64 a2)</span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">this</span>[<span class="number">4</span>]((_anonymous_namespace_::MBAPass *)<span class="keyword">this</span>, a2);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>​        可以看到这个函数是直接调用<code>this[4]</code></p>
+<p>​        回到</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>[<span class="number">5</span>] = <span class="keyword">this</span>[<span class="number">4</span>];</span><br><span class="line">  mprotect(<span class="keyword">this</span>[<span class="number">4</span>], <span class="number">0x1000</span>uLL, <span class="number">3</span>);</span><br><span class="line">  `anonymous <span class="keyword">namespace</span><span class="number">&#x27;</span>::MBAPass::handle((_anonymous_namespace_::MBAPass *)<span class="keyword">this</span>, v29);</span><br><span class="line">  mprotect(<span class="keyword">this</span>[<span class="number">4</span>], <span class="number">0x1000</span>uLL, <span class="number">5</span>);</span><br></pre></td></tr></table></figure>
+
+<p>​        这里首先在<code>this[4]</code>开辟了一个0x1000的可执行空间。然后执行<code>handle</code>,最后<code>callCode</code>执行这个<code>this[4]</code>。那么来看<code>handle</code>。</p>
+<p>​        这里的逻辑第一次看比较费解。回想一下之前的知识，llvm pass 是用来处理IR代码的，这里的<code>this</code>实际是用来储存需要处理的IR代码，所以前面的逻辑是：利用handle处理IR代码，最后执行处理完的代码。</p>
+<p>​        <code>handle</code>的逻辑比较复杂，目前还没有逆明白，先挑一段出来：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> ( (((__int64 (__fastcall *)(__int64 *))llvm::isa&lt;llvm::Constant,llvm::Value *&gt;)(&amp;Operand) &amp; <span class="number">1</span>) != <span class="number">0</span> )<span class="comment">// if operant = 1</span></span><br><span class="line">  &#123;</span><br><span class="line">    *((_DWORD *)<span class="keyword">this</span> + <span class="number">12</span>) = <span class="number">0</span>;</span><br><span class="line">    v2 = (llvm::ConstantInt *)((__int64 (__fastcall *)(__int64))llvm::dyn_cast&lt;llvm::ConstantInt,llvm::Value&gt;)(Operand);<span class="comment">// if arg =1 </span></span><br><span class="line">    SExtValue = get_sextvalue(v2);</span><br><span class="line">    `anonymous <span class="keyword">namespace</span><span class="number">&#x27;</span>::MBAPass::writeMovImm64(<span class="keyword">this</span>, <span class="number">0</span>, SExtValue);<span class="comment">// mov imm64</span></span><br><span class="line">    <span class="keyword">return</span> `anonymous <span class="keyword">namespace</span><span class="number">&#x27;</span>::MBAPass::writeRet(<span class="keyword">this</span>);<span class="comment">// ret</span></span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+<p>​            </p>
+<p>​        调用了一堆看不懂的函数，然后一个比较关键的<code>SExtValue</code>即储存了需要被处理的IR代码，再调用<code>writeMovImm64(this, 0, SExtValue)</code>函数。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">_anonymous_namespace_::MBAPass *__fastcall `anonymous <span class="keyword">namespace</span><span class="number">&#x27;</span>::MBAPass::writeMovImm64(</span><br><span class="line">        _anonymous_namespace_::MBAPass *<span class="keyword">this</span>,</span><br><span class="line">        <span class="keyword">int</span> a2,</span><br><span class="line">        __int64 a3)</span><br><span class="line">&#123;</span><br><span class="line">  _anonymous_namespace_::MBAPass *result; <span class="comment">// rax</span></span><br><span class="line"></span><br><span class="line">  **((_BYTE **)<span class="keyword">this</span> + <span class="number">5</span>) = <span class="number">0x48</span>;</span><br><span class="line">  <span class="keyword">if</span> ( a2 )</span><br><span class="line">    *(_BYTE *)(*((_QWORD *)<span class="keyword">this</span> + <span class="number">5</span>) + <span class="number">1LL</span>) = <span class="number">0xBB</span>;<span class="comment">// movabs rbx, xxx</span></span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">    *(_BYTE *)(*((_QWORD *)<span class="keyword">this</span> + <span class="number">5</span>) + <span class="number">1LL</span>) = <span class="number">0xB8</span>;<span class="comment">// movabs rax,xxx</span></span><br><span class="line">  result = <span class="keyword">this</span>;</span><br><span class="line">  *(_QWORD *)(*((_QWORD *)<span class="keyword">this</span> + <span class="number">5</span>) + <span class="number">2LL</span>) = a3;</span><br><span class="line">  *((_QWORD *)<span class="keyword">this</span> + <span class="number">5</span>) += <span class="number">10LL</span>;</span><br><span class="line">  <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>​        </p>
-<p>​</p>
+<p>​        可以大致知道这里的功能就是将我们传入的IR指令翻译为机器码，具体可以看ayaka师傅的博客。</p>
+<p>​        于是同理，下面的<code>writeRet(this)</code>也是在<code>this + 5</code>的地方插入<code>ret</code>。</p>
+<p>​        玄学地理解一下，<code>handle</code>函数就是将ir翻译为机器码执行。具体的细节之后再研究。</p>
+<p>​        然后看题，漏洞出在</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">v30 = *((_QWORD *)<span class="keyword">this</span> + <span class="number">4</span>) + <span class="number">0xFF0</span>LL;</span><br></pre></td></tr></table></figure>
+
+<p>​        缓冲区大小为0x1000（可以在mmap处看到），但是这里<code>this+4</code>却写成<code>0xFF0</code>，但是每次执行的时候缓冲区不会被清空，且都会执行0x1000字节的代码，所以多了八个可以供我们写的字节，我们可以控制写入的字节数，继而控制程序执行我们写入的指令。</p>
+<p>​        ayaka给出的思路是，第一次JIT时，在0xff0处，将jmp指令假装成操作数的样子写入，第二次jit时，只生成0xff0长度的指令， 于是程序就会继续执行jmp。</p>
+<h3><span id="调试">调试</span></h3><p>首先</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install llvm-12</span><br></pre></td></tr></table></figure>
+
+<p>gdb调试opt，设置参数为启动参数。</p>
+<p>先在<code>llvm::Pass::preparePassManager</code>下断点，然后可以断在<code>MBAPass::runOnFunction</code>。</p>
+<p>执行到这里，就是利用mprotect设置缓冲区为可执行。</p>
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-10-30%20%E4%B8%8B%E5%8D%8810.02.03.png" alt="截屏2022-10-30 下午10.02.03">        </p>
+<p>跟进<code>handle</code>函数，但其实没有什么好看的，直接finish。</p>
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-10-30%20%E4%B8%8B%E5%8D%8810.06.00.png" alt="截屏2022-10-30 下午10.06.00"></p>
+<p>跳过<code>handle</code>后，可以看到code被写入了，用的akaya师傅的测试exp。</p>
+<p>![截屏2022-10-30 下午10.11.56](/Users/rin/Library/Application Support/typora-user-images/截屏2022-10-30 下午10.11.56.png)</p>
+<p>编写好exp后：</p>
+<p>![截屏2022-10-30 下午10.15.35](/Users/rin/Library/Application Support/typora-user-images/截屏2022-10-30 下午10.15.35.png)</p>
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-10-30%20%E4%B8%8B%E5%8D%8810.16.01.png" alt="截屏2022-10-30 下午10.16.01"></p>
+<p>exp大致逻辑就是第一次jit填充0xff0size的指令，没有任何用处，然后在<code>0x7ffff7ffbff2</code>上写jmp shellcode，shellcode的地址就在前面0x1000的地方找一个，第二次jit时写上即可。shellcode的编写有很大的限制。</p>
+<p>偷一个师傅的图：</p>
+<p><a target="_blank" rel="noopener" href="https://lakwsh.net/?p=457">https://lakwsh.net/?p=457</a></p>
+<p><img src="https://lakwsh.net/wp-content/uploads/2022/05/image-7.png" alt="img"></p>
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-10-30%20%E4%B8%8B%E5%8D%8810.21.58.png" alt="截屏2022-10-30 下午10.21.58"></p>
+<p>效果大概是这样。</p>
+<h2><span id="总结">总结</span></h2><p>这个漏洞的点比较怪，我看其他的类似的题也没有类似的点，但是确实能够总结出一些简单的做题规律。</p>
+<p>首先找<code>runOnFunction</code>,这个函数就相当于elf的<code>main</code>，然后如果是pass类，那么其主要漏洞也许都是发生在处理IR的过程中，搞清几个变量的含义之类的很重要（我现在还看不太明白那个处理的过程）。</p>
+<p>最后是调试，调试的话直接<code>gdb opt</code>+<code>set args</code>，然后需要先断在<code>llvm::Pass::preparePassManager</code>，然后环境中才会有那些什么<code>mbaPass::</code>的符号。</p>
+<h2><span id="参考">参考</span></h2><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/290946850">https://zhuanlan.zhihu.com/p/290946850</a></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/122522485">https://zhuanlan.zhihu.com/p/122522485</a></p>
+<p><a target="_blank" rel="noopener" href="https://bbs.pediy.com/thread-273229.html">https://bbs.pediy.com/thread-273229.html</a></p>
+<p><a target="_blank" rel="noopener" href="https://bbs.pediy.com/thread-273119.html">https://bbs.pediy.com/thread-273119.html</a></p>
 
             <div class="clearfix"></div>
             <hr class="nogutter">
         </div>
         <nav class="m-pagination col-md-8 col-md-offset-2 col-sm-24" role="pagination">
     
-    <a class="pull-left" href="../../15/cve-2018-1160/" style="float: left;">
-        ← cve-2018-1160分析
-    </a>
     
-    
-    <a class="pull-right" href="../ml_CS-329P-note3/">
-        CS 329P note3 →
+    <a class="pull-right" href="../../24/mess_GDB%20%E4%B8%ADni%20%E4%B8%8E%20si%E7%9A%84%E9%AD%94%E6%B3%95/">
+        mess_GDB中ni与si的魔法 →
     </a>
     
 </nav>

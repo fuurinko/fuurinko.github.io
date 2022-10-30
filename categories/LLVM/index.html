@@ -8,7 +8,7 @@
 
 <head>
 
-  <title>七月 | Rin</title>
+  <title>Category: LLVM | Rin</title>
   <!-- Meta data -->
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -48,7 +48,7 @@
 <link rel="stylesheet" href="/css/prism.css" type="text/css"></head>
 
 <!--
-<body class="post-template">
+<body class="home-template">
 -->
 <body id="index" class="lightnav animsition">
       <!-- ============================ Off-canvas navigation =========================== -->
@@ -100,7 +100,9 @@
 				    
 				    <li><a href="/categories/IO-FILE/" class="animsition-link">IO_FILE<small>(1)</small></a></li>
 				    
-				    <li><a href="/categories/KERNEL/" class="animsition-link">KERNEL<small>(2)</small></a></li>
+				    <li><a href="/categories/KERNEL/" class="animsition-link">KERNEL<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/LLVM/" class="animsition-link">LLVM<small>(1)</small></a></li>
 				    
 				    <li><a href="/categories/MESS/" class="animsition-link">MESS<small>(19)</small></a></li>
 				    
@@ -229,128 +231,69 @@
         <!-- ============================ Header & Logo bar =========================== -->
 
 
-      
-<section id="intro">
-    <div class="container">
-        <div class="row col-md-offset-2">
-            <div class="col-md-8">
-    			<span class="post-meta">
-      <time datetime="2022-07-16T08:36:24.556Z" itemprop="datePublished">
-          2022-07-16
-      </time>
-    
-    
-    | 
-    <a href='/tags/vivi/'>vivi</a>
-    
-    
-</span>
-                <h1>七月</h1>
+      <!-- ============================ Hero Image =========================== -->
+
+<section id="hero" class="scrollme">
+    <div class="container-fluid element-img" style="background: url(https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/IMG_3356.JPG) no-repeat center center fixed;background-size: cover">
+        <div class="row">
+            <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-8 col-md-offset-2 vertical-align cover boost text-center">
+                <div class="center-me animateme" data-when="exit" data-from="0" data-to="0.6" data-opacity="0" data-translatey="100">
+                    <div>
+                        
+                        <h2><span>Rin777</span></h2>
+                        <p></p>
+                        
+                        <h2></h2>
+                        <p><span>みんあはそっだよって、君もそうなの</span></p>
+                        
+
+                    </div>
+                </div>
             </div>
+            <!-- // .col-md-12 -->
         </div>
-        <div class="col-md-8 col-md-offset-2">
-      		<p>​        不想学英语，不想学英语，不想学英语。</p>
-<p>​        简单列一下这个暑假的计划。</p>
-<p>​        看了一些群友的博客，感触颇多。</p>
-<h5><span id="二进制">二进制</span></h5><ol>
-<li>kernel pwn相关的知识点。至少到能做一点简单的题的程度。</li>
-<li>简单的cve复现。</li>
-<li>熟悉fuzz。</li>
-<li>随缘做一点天问之路的task。</li>
-<li>偶尔做一点高版本glibc题。</li>
-<li>做一点pwncollege玩一玩。</li>
-</ol>
-<h5><span id="其他">其他</span></h5><ol>
-<li>看完我列的书。目前在看谈美，不过争取这个暑假把红书和叔本华看完先。</li>
-<li>每天还是听一听英语吧。</li>
-<li>不要再熬夜看小说了姐姐，男童文学毫无营养啊。</li>
-</ol>
-<h5><span id="碎碎念">碎碎念</span></h5><ol>
-<li>最近每天会花半个多小时做饮料喝，比如什么茉莉芒果西瓜桃子冰，今天还做了抹茶拿铁，不过想突破一下，做一点好看（但不一定好喝）的鸡尾酒。初衷其实是为了省钱，做这些虽然能感受到时间的流逝，不过还是很开心。</li>
-<li>每天坚持写一点东西其实挺好的，但是知识摄入太少了，所以根本写不出来什么有价值的东西，只有自己的生活以及感想，wp什么的就根本不算，还是得多看书。</li>
-</ol>
-
-            <div class="clearfix"></div>
-            <hr class="nogutter">
-        </div>
-        <nav class="m-pagination col-md-8 col-md-offset-2 col-sm-24" role="pagination">
-    
-    <a class="pull-left" href="../ucore_lab1/" style="float: left;">
-        ← ucore lab1
-    </a>
-    
-    
-    <a class="pull-right" href="../kernel-rop/">
-        kernel题型 →
-    </a>
-    
-</nav>
-
-        <div class="col-md-8 col-md-offset-2 col-sm-24"><script type="text/javascript">
-  /**
-   * 搜狐畅言
-   */
-
-  /*
-  document.write('<div id="SOHUCS" sid="' + window.location.pathname.slice(1) + '" ></div>');
-
-  window.onload = function () {
-    (function () {
-      var appid = 'cytXXXX';
-      var conf = 'prod_xxxxxxxxxxxxxxxxx';
-      var width = window.innerWidth || document.documentElement.clientWidth;
-      var loadJs = function (d, a, id) {
-        var c = document.getElementsByTagName("head")[0] || document.head || document.documentElement;
-        var b = document.createElement("script");
-        b.setAttribute("type", "text/javascript");
-        b.setAttribute("charset", "UTF-8");
-        b.setAttribute("src", d);
-        if (id) {
-          b.setAttribute("id", id);
-        }
-        if (typeof a === "function") {
-          if (window.attachEvent) {
-            b.onreadystatechange = function () {
-              var e = b.readyState;
-              if (e === "loaded" || e === "complete") {
-                b.onreadystatechange = null;
-                a()
-              }
-            }
-          } else {
-            b.onload = a
-          }
-        }
-        c.appendChild(b)
-      };
-
-      loadJs("https://changyan.sohu.com/upload/changyan.js", function () {
-        window.changyan.api.config({
-          appid: appid,
-          conf: conf
-        })
-      });
-    })();
-  }
-  */
-
-</script>
-</div>
+        <div class="herofade beige-dk"></div>
     </div>
 </section>
 
-<!-- Highlight.js -->
+<!-- Height spacing helper -->
+<div class="heightblock"></div>
+<!-- // End height spacing helper -->
 
-<link rel="stylesheet"
-href="//highlightjs.org/static/demo/styles/atom-one-light.css">
-<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js">
-</script>
-<script>
-hljs.initHighlightingOnLoad();
-
-</script>
+<!-- ============================ END Hero Image =========================== -->
 
 
+
+
+<section id="services">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1">
+                <div class="row boxes">
+                    
+                    
+                        
+                        
+                        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 wow fadeInUp" data-wow-delay="0.3s">
+                            
+                              <h4 class="title"><a href="/2022/10/25/llvm_llvm-pass/">llvm pass - satool</a></h4>
+                            
+                            <p><time datetime="2022-10-25T05:15:33.102Z"><a href="/2022/10/25/llvm_llvm-pass/">2022-10-25</a></time></p>
+                        </div>
+                    
+                </div>
+            </div>    
+        </div>
+    </div>
+</section> 
+
+<section id="statement">
+    <div class="container text-center wow fadeInUp" data-wow-delay="0.5s">
+        <div class="row">
+            <p>生きていくのはこんなにも痛いけど。</p>
+        </div>
+    </div>
+</section>
       
 <!-- ============================ Footer =========================== -->
 

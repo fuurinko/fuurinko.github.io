@@ -8,7 +8,7 @@
 
 <head>
 
-  <title>CS 329P note3 | Rin</title>
+  <title>六月 | Rin</title>
   <!-- Meta data -->
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -45,10 +45,7 @@
   
 
   <style>.col-md-8.col-md-offset-2.opening-statement img{display:none;}</style>
-<link rel="stylesheet" href="/css/prism.css" type="text/css"><link rel="stylesheet" href="/assets/css/APlayer.min.css" class="aplayer-style-marker">
-<script src="/assets/js/APlayer.min.js" class="aplayer-script-marker"></script>
-<script src="/assets/js/Meting.min.js" class="meting-script-marker"></script>
-</head>
+<link rel="stylesheet" href="/css/prism.css" type="text/css"></head>
 
 <!--
 <body class="post-template">
@@ -103,7 +100,9 @@
 				    
 				    <li><a href="/categories/IO-FILE/" class="animsition-link">IO_FILE<small>(1)</small></a></li>
 				    
-				    <li><a href="/categories/KERNEL/" class="animsition-link">KERNEL<small>(2)</small></a></li>
+				    <li><a href="/categories/KERNEL/" class="animsition-link">KERNEL<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/LLVM/" class="animsition-link">LLVM<small>(1)</small></a></li>
 				    
 				    <li><a href="/categories/MESS/" class="animsition-link">MESS<small>(19)</small></a></li>
 				    
@@ -238,103 +237,49 @@
         <div class="row col-md-offset-2">
             <div class="col-md-8">
     			<span class="post-meta">
-      <time datetime="2022-10-13T02:13:04.244Z" itemprop="datePublished">
-          2022-10-13
+      <time datetime="2022-07-07T07:27:40.124Z" itemprop="datePublished">
+          2022-07-07
       </time>
     
     
     | 
-    <a href='/tags/Machine-Learning/'>Machine Learning</a>
+    <a href='/tags/vivi/'>vivi</a>
     
     
 </span>
-                <h1>CS 329P note3</h1>
+                <h1>六月</h1>
             </div>
         </div>
         <div class="col-md-8 col-md-offset-2">
-      		<p>​    
-    <div id="aplayer-qshelOzV" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div>     </p>
-<h2><span id="胡言乱语">胡言乱语</span></h2><p>part3，聚焦于线性模型算法。</p>
-<p>为什么note2和note3隔了这么久，因为看cs 329发现完全看不懂，于是又去从头看了229，把线性模型的part看完之后反过来又去review 329，终于发现能看懂了orz。</p>
-<h2><span id="线性模型分类">线性模型分类</span></h2><ol>
-<li>回归</li>
-<li>分类</li>
-</ol>
-<p>ps：上一个note说到主要利用决策树进行分类。</p>
-<h3><span id="线性模型的参数amp方程">线性模型的参数&amp;方程</span></h3><p>比较重要的方程就是</p>
-<ol>
-<li>预测模型的假设函数</li>
-<li>用于拟合数据的代价函数</li>
-</ol>
-<p>参数则就是假设函数中的参数，而代价函数的作用就是通过不断优化参数来使得梯度下降到达局部收敛，最后记录相关参数的值。</p>
-<h4><span id="回归">回归</span></h4><p>post一些笔记/// </p>
-<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/IMG_4681.jpg" alt="IMG_4681"></p>
-<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/IMG_4682.jpg" alt="IMG_4682"></p>
-<p>ps：多元线性回归与一元线性回归在模型中其实计算的核心思想都是利用线性的参数矩阵的转置与变量矩阵相乘，变量则可以利用复合函数的思想，将其优化为一元变量，只不多在特征缩放时需要多加注意。</p>
-<h4><span id="分类">分类</span></h4><p>还没看orz。</p>
-<h2><span id="练习">练习</span></h2><p>所有文档的链接来自<a target="_blank" rel="noopener" href="https://github.com/kaieye/2022-Machine-Learning-Specialization">https://github.com/kaieye/2022-Machine-Learning-Specialization</a></p>
-<p>这里看的是<code>2022-Machine-Learning-Specialization-main/Supervised Machine Learning Regression and Classification/week1/work</code></p>
-<p>也就是监督学习的week1。</p>
-<h3><span id="lab1">lab1</span></h3><p>？？python入门？</p>
-<h3><span id="lab2">lab2</span></h3><p>打不开？</p>
-<h3><span id="lab3">lab3</span></h3><p>单变量的线性回归模型。</p>
-<p>导入包，还是matplotlib和numpy。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line">plt.style.use(<span class="string">&#x27;./deeplearning.mplstyle&#x27;</span>)</span><br></pre></td></tr></table></figure>
-
-<p>要求对于一个<strong>两个样本</strong>的数据集进行<strong>线性模型的拟合</strong>。</p>
-<p>方式是</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># x_train is the input variable (size in 1000 square feet)</span></span><br><span class="line"><span class="comment"># y_train is the target (price in 1000s of dollars)</span></span><br><span class="line">x_train = np.array([<span class="number">1.0</span>, <span class="number">2.0</span>])</span><br><span class="line">y_train = np.array([<span class="number">300.0</span>, <span class="number">500.0</span>])</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;x_train = <span class="subst">&#123;x_train&#125;</span>&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;y_train = <span class="subst">&#123;y_train&#125;</span>&quot;</span>)</span><br></pre></td></tr></table></figure>
-
-<p>我们的目的是生成价格关于房子尺寸的图表，于是x轴为面积，y轴为价格，将<strong>数据集的数据作为数组元素输入</strong>到<code>x_train</code>和<code>y_train</code>中去。</p>
-<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-10-13%20%E4%B8%8B%E5%8D%884.02.35.png" alt="截屏2022-10-13 下午4.02.35"></p>
-<p>接下来介绍了<strong>获取样本数量</strong>的两种方式，一种是直接用<code>len()</code>函数，另一种是利用<code>numpy</code>的<code>shape</code>方法。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">m1 = <span class="built_in">len</span>(x_train)</span><br><span class="line">m2 = x_train.shape[<span class="number">0</span>]<span class="comment">#shape[0] 返回数组长度</span></span><br><span class="line"><span class="built_in">print</span>(m1)</span><br><span class="line"><span class="built_in">print</span>(m2)</span><br></pre></td></tr></table></figure>
-
-<p>回显：</p>
-<figure class="highlight zsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">rin@Ste1nsG4t3 work % python3 lab3.py</span><br><span class="line">x_train = [1. 2.]</span><br><span class="line">y_train = [300. 500.]</span><br><span class="line">2</span><br><span class="line">2</span><br></pre></td></tr></table></figure>
-
-<p>将<strong>数组标号</strong>。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">2</span>):</span><br><span class="line">	x_i = x_train[i]</span><br><span class="line">	y_i = y_train[i]</span><br><span class="line">	<span class="built_in">print</span>(<span class="string">f&quot;(x^(<span class="subst">&#123;i&#125;</span>), y^(<span class="subst">&#123;i&#125;</span>)) = (<span class="subst">&#123;x_i&#125;</span>, <span class="subst">&#123;y_i&#125;</span>)&quot;</span>)</span><br></pre></td></tr></table></figure>
-
-<p>回显：</p>
-<figure class="highlight zsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">rin@Ste1nsG4t3 work % python3 lab3.py</span><br><span class="line">x_train = [1. 2.]</span><br><span class="line">y_train = [300. 500.]</span><br><span class="line">(x^(0), y^(0)) = (1.0, 300.0)</span><br><span class="line">(x^(1), y^(1)) = (2.0, 500.0)</span><br></pre></td></tr></table></figure>
-
-<p>接着绘制数据。我们需要用到<code>matplotlib</code>包中的<code>scatter()</code>函数。</p>
-<p>有点像Matlab里的操作。（喂你在胡言乱语什么，本来就是matplotlib）</p>
-<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-10-13%20%E4%B8%8B%E5%8D%884.38.43.png" alt="截屏2022-10-13 下午4.38.43"></p>
-<p>设置初始变量。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">w = <span class="number">100</span></span><br><span class="line">b = <span class="number">100</span></span><br></pre></td></tr></table></figure>
-
-<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-10-13%20%E4%B8%8B%E5%8D%885.21.59.png" alt="截屏2022-10-13 下午5.21.59"></p>
-<p>其实就是计算这个<code>f_wb</code>的值，懒得打公式，截个图。</p>
-<p>算法也非常好理解,虽然但是我还是逐行注释了。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">compute_model_output</span>(<span class="params">x, w, b</span>):</span></span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    Computes the prediction of a linear model</span></span><br><span class="line"><span class="string">    Args:</span></span><br><span class="line"><span class="string">      x (ndarray (m,)): Data, m examples </span></span><br><span class="line"><span class="string">      w,b (scalar)    : model parameters  </span></span><br><span class="line"><span class="string">    Returns</span></span><br><span class="line"><span class="string">      y (ndarray (m,)): target values</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    m = x.shape[<span class="number">0</span>]<span class="comment">#获取样本数量</span></span><br><span class="line">    f_wb = np.zeros(m)<span class="comment">#初始化一个m列内容为0的数组。</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(m):</span><br><span class="line">        f_wb[i] = w * x[i] + b<span class="comment">#纯纯的计算</span></span><br><span class="line">        </span><br><span class="line">    <span class="keyword">return</span> f_wb <span class="comment">#返回计算值</span></span><br></pre></td></tr></table></figure>
-
-<p>然后画出图</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">tmp_f_wb = compute_model_output(x_train, w, b,)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Plot our model prediction</span></span><br><span class="line">plt.plot(x_train, tmp_f_wb, c=<span class="string">&#x27;b&#x27;</span>,label=<span class="string">&#x27;Our Prediction&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Plot the data points</span></span><br><span class="line">plt.scatter(x_train, y_train, marker=<span class="string">&#x27;x&#x27;</span>, c=<span class="string">&#x27;r&#x27;</span>,label=<span class="string">&#x27;Actual Values&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Set the title</span></span><br><span class="line">plt.title(<span class="string">&quot;Housing Prices&quot;</span>)</span><br><span class="line"><span class="comment"># Set the y-axis label</span></span><br><span class="line">plt.ylabel(<span class="string">&#x27;Price (in 1000s of dollars)&#x27;</span>)</span><br><span class="line"><span class="comment"># Set the x-axis label</span></span><br><span class="line">plt.xlabel(<span class="string">&#x27;Size (1000 sqft)&#x27;</span>)</span><br><span class="line">plt.legend()</span><br><span class="line"></span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-10-13%20%E4%B8%8B%E5%8D%885.29.13.png" alt="截屏2022-10-13 下午5.29.13"></p>
-<p>guidance非常贱地给了一句“你看，这个线不符合我们的点。”</p>
-<p>所以challenge就是尝试不同的参数，找到适合的那一条线。</p>
-<p>猴子都知道应该是什么，这个hint也给得很贱。</p>
-<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-10-13%20%E4%B8%8B%E5%8D%885.34.47.png" alt="截屏2022-10-13 下午5.34.47"></p>
-<p>完整的代码</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line">plt.style.use(<span class="string">&#x27;./deeplearning.mplstyle&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># x_train is the input variable (size in 1000 square feet)</span></span><br><span class="line"><span class="comment"># y_train is the target (price in 1000s of dollars)</span></span><br><span class="line">x_train = np.array([<span class="number">1.0</span>, <span class="number">2.0</span>])</span><br><span class="line">y_train = np.array([<span class="number">300.0</span>, <span class="number">500.0</span>])</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;x_train = <span class="subst">&#123;x_train&#125;</span>&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;y_train = <span class="subst">&#123;y_train&#125;</span>&quot;</span>)</span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">m1 = len(x_train)</span></span><br><span class="line"><span class="string">m2 = x_train.shape[0]</span></span><br><span class="line"><span class="string">print(m1)</span></span><br><span class="line"><span class="string">print(m2)</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">2</span>):</span><br><span class="line">	x_i = x_train[i]</span><br><span class="line">	y_i = y_train[i]</span><br><span class="line">	<span class="built_in">print</span>(<span class="string">f&quot;(x^(<span class="subst">&#123;i&#125;</span>), y^(<span class="subst">&#123;i&#125;</span>)) = (<span class="subst">&#123;x_i&#125;</span>, <span class="subst">&#123;y_i&#125;</span>)&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Plot the data points</span></span><br><span class="line">plt.scatter(x_train, y_train, marker=<span class="string">&#x27;x&#x27;</span>, c=<span class="string">&#x27;r&#x27;</span>)</span><br><span class="line"><span class="comment"># Set the title</span></span><br><span class="line">plt.title(<span class="string">&quot;Housing Prices&quot;</span>)</span><br><span class="line"><span class="comment"># Set the y-axis label</span></span><br><span class="line">plt.ylabel(<span class="string">&#x27;Price (in 1000s of dollars)&#x27;</span>)</span><br><span class="line"><span class="comment"># Set the x-axis label</span></span><br><span class="line">plt.xlabel(<span class="string">&#x27;Size (1000 sqft)&#x27;</span>)</span><br><span class="line"><span class="comment">#plt.show()</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">w = <span class="number">200</span></span><br><span class="line">b = <span class="number">100</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">compute_model_output</span>(<span class="params">x, w, b</span>):</span></span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    Computes the prediction of a linear model</span></span><br><span class="line"><span class="string">    Args:</span></span><br><span class="line"><span class="string">      x (ndarray (m,)): Data, m examples </span></span><br><span class="line"><span class="string">      w,b (scalar)    : model parameters  </span></span><br><span class="line"><span class="string">    Returns</span></span><br><span class="line"><span class="string">      y (ndarray (m,)): target values</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    m = x.shape[<span class="number">0</span>]<span class="comment">#获取样本数量</span></span><br><span class="line">    f_wb = np.zeros(m)<span class="comment">#初始化一个m列内容为0的数组。</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(m):</span><br><span class="line">        f_wb[i] = w * x[i] + b<span class="comment">#纯纯的计算</span></span><br><span class="line">        </span><br><span class="line">    <span class="keyword">return</span> f_wb <span class="comment">#返回计算值</span></span><br><span class="line"></span><br><span class="line">tmp_f_wb = compute_model_output(x_train, w, b,)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Plot our model prediction</span></span><br><span class="line">plt.plot(x_train, tmp_f_wb, c=<span class="string">&#x27;b&#x27;</span>,label=<span class="string">&#x27;Our Prediction&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Plot the data points</span></span><br><span class="line">plt.scatter(x_train, y_train, marker=<span class="string">&#x27;x&#x27;</span>, c=<span class="string">&#x27;r&#x27;</span>,label=<span class="string">&#x27;Actual Values&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Set the title</span></span><br><span class="line">plt.title(<span class="string">&quot;Housing Prices&quot;</span>)</span><br><span class="line"><span class="comment"># Set the y-axis label</span></span><br><span class="line">plt.ylabel(<span class="string">&#x27;Price (in 1000s of dollars)&#x27;</span>)</span><br><span class="line"><span class="comment"># Set the x-axis label</span></span><br><span class="line">plt.xlabel(<span class="string">&#x27;Size (1000 sqft)&#x27;</span>)</span><br><span class="line">plt.legend()</span><br><span class="line"></span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
-
-<p>![](<a target="_blank" rel="noopener" href="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-10-13">https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/截屏2022-10-13</a> 下午5.21.59.png)</p>
+      		<p>​        今日小暑。</p>
+<p>​        久违地重新开始写博客了，之前由于期末周，一直没有来得及整理。昨天把所有试全部考完了，国赛西南分赛区半决赛也打完了，师傅们非常强。</p>
+<p>​        之所以写下这些，实在是因为脑子里空空的，心里也空空的，不知该干什么，心情理应舒畅，然而现在却是一滩死水。我不知道该干什么了，只有一团乱麻似的思绪在胸口发闷。</p>
+<p>​        我开始萌生一些悔意了。大约三个月前，我的想法和现在从结果上来说有一些相似，大致是：“人生没有意义”。但是推演出结论的过程却截然不同，三个月前的我站在谷底向着仰望着永远无法触及的地平线悲鸣，三个月后我坐在28度空调房里，腿裹着被子，抿着冰镇的茉莉绿茶，思考人生与死的关系，从这个角度看，我是不是进步了。（笑</p>
+<p>​        “人终有一死”这句话有无数种解答方式。“不以物喜，不以己悲”——这是我的答案。</p>
+<p>​        实际上对于“人生意义何在”与“人终有一死”的解答存在着微妙的偏差，或者说后者通常用于对前者作补充说明。</p>
+<p>​        当今文艺作品热衷于以批判性思维审视社会风潮，提倡我们回归本心，遵循自身。中午吃饭的时候张麻子给我看了一部半个钟头的小电影，讲的是一个高三学生为了追求分数，差点走火入魔放弃自己爱好与梦想的故事，可以看出导演想要表达的就是“高考并不是人生的全部”。说来也好笑，人生并不是只有一次高考，我一直认为任何需要花费时间与精力进行的选拔性考验，都可以称之为高考。不过这就有些跑题了，显然这个电影想告诉我们，人生的美好也来源于对美好事物的追求。</p>
+<p>​        我又想起很早之前看过的一个动画电影，叫做心灵奇旅，虽然我当时完全是因为里面的jazz元素才会对这个电影产生兴趣的，但是看完以后，不得不说其中有一些观点与思考至今影响着我。毕竟是动画片，所以导演将他的想法不加掩盖地展示出来——人生的意义，在于活着的每一点细节。仅仅是听着脚下踩过的枯叶发出的嘎吱声——我便感觉我是实实在在活着的。</p>
+<p>​        再往前推，还是一部动画电影，应当是大名鼎鼎了，叫做寻梦环游记，给出的答案也很清晰——事业并不是构成人生幸福的全部，家人与自我的陪伴同等重要。</p>
+<p>​        这些作品给出的答案都是相似的，人不应该被现实束缚，不应该被自身束缚，按照自己的想法，过好每一天，实际就是幸福所在。因为人终有一死，无论生前功名如何，死后只是一剖黄土，风一吹，就被永远遗忘了。那么与其累死累活拼搏一辈子，不如快乐地过每一天，至少人生没有白费。</p>
+<p>​        这是他们的观点，不是我的观点。诸如此类的想法只会在当我心情极度低落的时候才会被拿来利用，试图让我自己开心一些。而仅仅抱持着这一种态度过活的人，我个人认为是极度自私的。</p>
+<p>​        现实永远是充满了无穷多变量的，遵循理想条件活着的人，要么物质条件极为富余，要么一无所有。形而上学的概念通常在理想条件下被研究，回归了现实，这就是狗屁不通的胡言乱语，任何有关于社会学，心理学研究实验的结果，都需要绝对精准地控制变量。任何放在现实条件下讨论人性的议题，都需要对细节进行绝对的把控。</p>
+<p>​        失之毫厘，差之千里，用在心理学实验上毫不为过。然而就是在这样的事实下，文艺作品大张旗鼓，用极为高贵的人格水准要求我们断舍离，要求我们回归自我，要求我们不要忘记年少轻狂，我不否认这其中的道理，这就像高中班主任苦口婆心希望学生们用心学习一样，学不学是他们自己的事情。</p>
+<p>​        或许可能会认为我写这些是在批评什么东西，但实则不然，从始至终我都只是在批评自己。其实无非是一个“想做”和“应该做”的事情选择的问题，但是矛盾在于这两者并不是完全对立的，并且想做的事情某一天也会变得不想做，应该做的事情也有毫无意义的可能，人生的意义便在此体现。并且，无论是有意义或者无意义，随着人生命的终结，任何意义都化为了无意义。</p>
+<p>​        今天写下这些不明所以的东西，起初是因为一个人在协会，感到了孤独。现在已经好很多了，并且也有猫来陪我。很久没有感到孤独了，所以也不常写这种，今天当破一次例了，如果不小心被人看到这篇语无伦次没有重点的杂记，请不要嘲笑我。</p>
+<p>​</p>
 
             <div class="clearfix"></div>
             <hr class="nogutter">
         </div>
         <nav class="m-pagination col-md-8 col-md-offset-2 col-sm-24" role="pagination">
     
-    <a class="pull-left" href="../%E5%B9%BB%E6%83%B3%E6%9B%B2-05%E8%BF%BD%E5%BF%86%E4%BC%BC%E6%B0%B4%E5%B9%B4%E5%8D%8E/" style="float: left;">
-        ← 追忆似水年华
+    <a class="pull-left" href="../../08/ciscn_2022_pwn1/" style="float: left;">
+        ← pwn1（已弃）
     </a>
     
     
-    <a class="pull-right" href="../../01/2022%E5%B9%B4%E5%8D%81%E6%9C%88/">
-        十月 →
+    <a class="pull-right" href="../../../06/21/vivi_%E6%B7%B1%E5%A4%9C%E9%94%90%E8%AF%84%E6%8B%BF%E4%B8%8D%E6%8B%BF/">
+        深夜锐评拿不拿 →
     </a>
     
 </nav>

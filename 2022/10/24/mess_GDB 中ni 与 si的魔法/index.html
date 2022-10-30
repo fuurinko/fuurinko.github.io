@@ -8,7 +8,7 @@
 
 <head>
 
-  <title>mess_GDB 中ni与si的魔法 | Rin</title>
+  <title>mess_GDB中ni与si的魔法 | Rin</title>
   <!-- Meta data -->
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -100,7 +100,9 @@
 				    
 				    <li><a href="/categories/IO-FILE/" class="animsition-link">IO_FILE<small>(1)</small></a></li>
 				    
-				    <li><a href="/categories/KERNEL/" class="animsition-link">KERNEL<small>(2)</small></a></li>
+				    <li><a href="/categories/KERNEL/" class="animsition-link">KERNEL<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/LLVM/" class="animsition-link">LLVM<small>(1)</small></a></li>
 				    
 				    <li><a href="/categories/MESS/" class="animsition-link">MESS<small>(19)</small></a></li>
 				    
@@ -245,18 +247,41 @@
     
     
 </span>
-                <h1>mess_GDB 中ni与si的魔法</h1>
+                <h1>mess_GDB中ni与si的魔法</h1>
             </div>
         </div>
         <div class="col-md-8 col-md-offset-2">
-      		<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/tsecer/category/1413042.html">https://www.cnblogs.com/tsecer/category/1413042.html</a></p>
-<p>​        关于gdb中ni 、n、si、s的区别，是一个很基础的问题：n/s都是C语言级的断点定位。s会进入C函数内部，n不会。ni/si都是汇编级别的断点定位。si会进入汇编和C函数内部, ni不会。</p>
-<p>​        然而众所周知，gdb下软件断点的原理是在代码中插入 int 0xcc，引发中断，那么同样是插入指令，为什么这两种指令会有不同影响？</p>
+      		<p>​        关于gdb中ni 、n、si、s的区别，是一个很基础的问题：n/s都是C语言级的断点定位。s会进入C函数内部，n不会。ni/si都是汇编级别的断点定位。si会进入汇编和C函数内部, ni不会。</p>
+<p>​        然而众所周知，gdb下软件断点的原理是在代码中插入 <code>int 3</code>，引发中断后执行系统调用<code>ptrace</code>，那么同样是插入指令，为什么这两种指令会有不同影响？</p>
+<h3><span id="gdb指令级单步的实现">gdb指令级单步的实现</span></h3><p>首先还是复习一下老生常谈（的软硬断点问题。</p>
+<p>硬件单步指cpu架构（如x86、ppc）本身支持指令级单步，目标程序可以在运行一条指令后自动停止。x86是通过设置EFLAGAS寄存器中的TF标志将cpu置于单步模式。cpu每执行一条指令，就会产生一个单步异常，通知gdb处理。</p>
+<h3><span id="nextampstep命令">next&amp;step命令</span></h3><p>即n指令。</p>
+<p>执行next命令时，gdb会计算出当前停止位置的c语句的第一条指令的地址作为<code>step_range_start</code>,下一行的c语句的第一条指令地址作为<code>step_range_end</code>。next命令的结束条件为</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pc&lt; step_range_start || pc &gt;= step_range_end</span><br></pre></td></tr></table></figure>
+
+<p>这里可以简单地理解为当pc离开当前执行的代码就算一次next指令的完成。</p>
+<p>那么next指令是如何跳过函数调用的呢？</p>
+<p>事实上是当gdb发现子函数第一条指令为函数调用后，就立即在函数返回地址插入一个临时断点，并一直运行到该断点处。</p>
+<p>step指令与next都是c源码级别的单步，只不过并不会跳过函数调用。</p>
+<h3><span id="next-iampstepi指令">next i&amp;stepi指令</span></h3><p>加上“i”后，gdb实现指令级单步。</p>
+<h3><span id="回答">回答</span></h3><p>基于我个人的理解，可以将si认为是单步的最小单位，而不同的指令只是不同函数功能的体现罢了。</p>
+<p>这样回答似乎很弱智，真的很弱智？</p>
+<h3><span id="真的有这么简单吗">真的有这么简单吗？？？</span></h3><p>来看<code>breakpoint.c</code>（ps：gdb的源码我感觉有一点点乱，这个文件不在子文件夹中）</p>
+<p>代码还是蛮长的，有一万五千多行，光是找到函数就已经是个体力活了。</p>
+<p>还没写完，鸽一下，去看llvm了，最近高强度学习新知识ing。</p>
+<h2><span id="参考">参考</span></h2><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/tsecer/category/1413042.html">https://www.cnblogs.com/tsecer/category/1413042.html</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/xuchenhuics/article/details/79680435">https://blog.csdn.net/xuchenhuics/article/details/79680435</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.docin.com/p-18618736.html">https://www.docin.com/p-18618736.html</a></p>
+<p><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/1823077">https://cloud.tencent.com/developer/article/1823077</a></p>
 
             <div class="clearfix"></div>
             <hr class="nogutter">
         </div>
         <nav class="m-pagination col-md-8 col-md-offset-2 col-sm-24" role="pagination">
+    
+    <a class="pull-left" href="../../25/llvm_llvm-pass/" style="float: left;">
+        ← llvm pass - satool
+    </a>
     
     
     <a class="pull-right" href="../../22/sum_%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86%E7%82%B9%E6%80%BB%E7%BB%93/">
