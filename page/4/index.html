@@ -106,11 +106,13 @@
 				    
 				    <li><a href="/categories/MESS/" class="animsition-link">MESS<small>(19)</small></a></li>
 				    
-				    <li><a href="/categories/Machine-Learning/" class="animsition-link">Machine Learning<small>(3)</small></a></li>
+				    <li><a href="/categories/Machine-Learning/" class="animsition-link">Machine Learning<small>(4)</small></a></li>
 				    
 				    <li><a href="/categories/OTHER-IO-FILE/" class="animsition-link">OTHER - IO FILE<small>(1)</small></a></li>
 				    
 				    <li><a href="/categories/PWN-COLLEGE/" class="animsition-link">PWN.COLLEGE<small>(11)</small></a></li>
+				    
+				    <li><a href="/categories/Race-Condition/" class="animsition-link">Race Condition<small>(1)</small></a></li>
 				    
 				    <li><a href="/categories/STACK/" class="animsition-link">STACK<small>(2)</small></a></li>
 				    
@@ -265,6 +267,88 @@
 
 <section id="intro">
     <div class="container">
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2022/05/16/heap_learning_chunk_overlapping-学习/">chunk_overlapping 学习</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-05-16T12:47:57.494Z" itemprop="datePublished">
+          2022-05-16
+      </time>
+    
+    
+    | 
+    <a href='/tags/learning/'>learning</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+     
+
+从一个例子开始：​        先还原一个很适合的情景，pwnable的secret of my heart这道题。
+​        我们有一个非常好用的空字节溢出，2.23的libc，可以申请的size最大为0x100，heap base已知，没有更多特殊的限制，现在我们需要leak libc，同时需要double free来任意地址写，我们有什么好的思路？
+​        首先由于我们有一个空字节溢出，所以假如
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/05/16/heap_learning_chunk_overlapping-学习/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2022/05/15/week11_7.2_pawnable_secret_of_my_heart/">pawnable - secret_of_my_heart</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-05-15T06:05:36.744Z" itemprop="datePublished">
+          2022-05-15
+      </time>
+    
+    
+    | 
+    <a href='/tags/pwnable/'>pwnable</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+    
+
+overview​        蛮好，好久没有做到全绿的题了。
+
+​        程序还是菜单，增删查三个功能，并不是特别友好。
+reversemem_init​        初始化了一个随机地址的0x1000的空间，并把它的指针存放在bss段上。
+1234while ( v2 &lt;= 0x10000 )    v2 = rand() &amp; 0xFFFFF000;  unk_202018 = mmap((v
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/05/15/week11_7.2_pawnable_secret_of_my_heart/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
         
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
@@ -590,100 +674,6 @@ main​
                     
                     <p class="pull-right readMore">
                         <a href="/2022/04/29/week9_5.1_pwnable---apple store/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2022/04/28/week9_4.1_silver_bullet/">pwnable - silver_bullet</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2022-04-28T14:34:48.209Z" itemprop="datePublished">
-          2022-04-28
-      </time>
-    
-    
-    | 
-    <a href='/tags/pwnable/'>pwnable</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-    
-
-overview
-reverse​        好，还有符号表，真好。这个题比较怪，这是一个菜单题，但是却是栈题。
-​        好像还是个简单的小游戏。
-create_bullet​        这个逻辑看来也是只能创建一个bullet这样。
-12345678if ( *bullet_list )  return puts(&quot;You have been created the Bullet !&quot
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2022/04/28/week9_4.1_silver_bullet/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2022/04/27/week9_3.1_3x17/">pwnable - 3x17</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2022-04-27T03:44:23.414Z" itemprop="datePublished">
-          2022-04-27
-      </time>
-    
-    
-    | 
-    <a href='/tags/pwnable/'>pwnable</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-    
-
-
-
-
-
-overview
-​        轻松快乐的栈题，没有canary和pie那估计就是rop力。
-
-​        怪耶。
-​        居然是静态链接捏，那就不是ret2libc力。
-
-Reverse​    开幕雷击
-
-​    这是啥？
-​    秉持着看不懂就假装没有看到的原则，先看看得懂的地方。
-12345678910result = ++::result;if ( ::result == 1 )&
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2022/04/27/week9_3.1_3x17/">Read More...</a>
                     </p>
                     
                 </div>
