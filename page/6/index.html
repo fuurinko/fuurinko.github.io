@@ -68,7 +68,7 @@
         		<a class="sb-toggle-submenu">Categories<span class="sb-caret"></span></a>
             	<ul class="sb-submenu">
 				  	
-				    <li><a href="/categories/AUDITION/" class="animsition-link">AUDITION<small>(13)</small></a></li>
+				    <li><a href="/categories/AUDITION/" class="animsition-link">AUDITION<small>(14)</small></a></li>
 				    
 				    <li><a href="/categories/CSAPP-LAB/" class="animsition-link">CSAPP LAB<small>(1)</small></a></li>
 				    
@@ -104,7 +104,7 @@
 				    
 				    <li><a href="/categories/LLVM/" class="animsition-link">LLVM<small>(1)</small></a></li>
 				    
-				    <li><a href="/categories/MESS/" class="animsition-link">MESS<small>(19)</small></a></li>
+				    <li><a href="/categories/MESS/" class="animsition-link">MESS<small>(20)</small></a></li>
 				    
 				    <li><a href="/categories/Machine-Learning/" class="animsition-link">Machine Learning<small>(4)</small></a></li>
 				    
@@ -146,7 +146,7 @@
 				    
 				    <li><a href="/categories/cve/" class="animsition-link">cve<small>(2)</small></a></li>
 				    
-				    <li><a href="/categories/qemu/" class="animsition-link">qemu<small>(1)</small></a></li>
+				    <li><a href="/categories/qemu/" class="animsition-link">qemu<small>(2)</small></a></li>
 				    
 				    <li><a href="/categories/ucore/" class="animsition-link">ucore<small>(2)</small></a></li>
 				    
@@ -267,6 +267,173 @@
 
 <section id="intro">
     <div class="container">
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2022/04/13/heap_learning_glibc源码分析/">ptmalloc2源码分析</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-04-13T03:21:41.918Z" itemprop="datePublished">
+          2022-04-13
+      </time>
+    
+    
+    | 
+    <a href='/tags/源码分析/'>源码分析</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+     
+
+prelude​        感觉源码分析是很多佬都做过的一件事情，但是对于我来说源码分析确实是件比较困难的事，但正因为困难，才有必要攻克，之后的高版本或者诡异版本glibc题少不了源码分析，也当是一个修炼吧。文章分析的大致顺序是按照int_malloc以及int_free的函数顺序介绍的，其中会穿插一些被调用的函数的介绍。
+csapp malloc lab review​        在着手看源码之前先复习一下cs
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/04/13/heap_learning_glibc源码分析/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2022/04/12/week7-2.1md/">攻防世界 - one_man_army</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-04-12T02:02:09.112Z" itemprop="datePublished">
+          2022-04-12
+      </time>
+    
+    
+    | 
+    <a href='/tags/xctf/'>xctf</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+     
+
+
+
+overview
+libc是2.27。
+逆向增删查改。
+add没有什么特别的地方，纯纯的指针操作。没有结构体，没有保存指针到bss上。但是会对输入的size取低九位，虽然可以输入15位的size，但是生效的只有九位。所以只能add出 一个chunk。有点lonely wolf的味道。
+12345678printf(&quot;Size: &quot;); read(0, size_4, 0xFuLL); size_2
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/04/12/week7-2.1md/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2022/04/11/week7-1.1/">攻防世界 - 100levels</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-04-11T12:02:33.312Z" itemprop="datePublished">
+          2022-04-11
+      </time>
+    
+    
+    | 
+    <a href='/tags/xctf/'>xctf</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+     
+
+overviewpartial relro，没有canary，栈溢出。
+逆向12if ( unk_20208C )  sprintf(v1, &quot;Hint: %p\n&quot;, &amp;system);
+
+​        如果能在这个变量上写东西，就能leak。那就不是ret2libc了。并且开了pie，也不好rop。
+123456789&#123;  __int64 buf[4]; // [rsp+0h
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/04/11/week7-1.1/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2022/04/10/heap_learning_io_file/">IO_FILE学习</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-04-10T14:44:00.000Z" itemprop="datePublished">
+          2022-04-10
+      </time>
+    
+    
+    | 
+    <a href='/tags/io-file/'>io_file</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+     
+
+
+
+overview大致原理​        glibc定义了_IO_FILE这样一个结构体来管理io file。io_file结构体里定义了一堆相关的变量，但是真正关键的是其中包含的_IO_FILE_plus结构。 libc2.23 版本下，32 位的 vtable 偏移为 0x94，64 位偏移为 0xd8。
+​        结构源码如下：
+12345struct _IO_FILE_plus&#123;    _I
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/04/10/heap_learning_io_file/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
         
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
@@ -512,177 +679,6 @@ re123456ssize_t vuln()&#123;  char buf[40]; // [esp+0h] [ebp-28h] BYREF  return 
                     
                     <p class="pull-right readMore">
                         <a href="/2022/04/08/幻想曲-02-春夜/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2022/04/08/pwn.college_RaceCondition/">RaceCondition.md</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2022-04-07T17:11:22.484Z" itemprop="datePublished">
-          2022-04-08
-      </time>
-    
-    
-    | 
-    <a href='/tags/pwncollege/'>pwncollege</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-     
-
-
-
-
-
-0​        感觉pwncollege的堆题意思并不是很大，直接做条件竞争娱乐一下。
-level1​        笑死了，根本没学过，不会做。
-
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2022/04/08/pwn.college_RaceCondition/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2022/04/07/ciscn_2019_double/">double</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2022-04-07T12:38:02.382Z" itemprop="datePublished">
-          2022-04-07
-      </time>
-    
-    
-    | 
-    <a href='/tags/ciscn/'>ciscn</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-			
-				console.error("ReferenceError: value is not defined");
-			     
-
-overview
-​            可以改表
-re​        这个题如果只看ida的话其实感觉挺乱的，所以以动调为主会比较好。在理清了程序运行的一些逻辑后再反过来看伪代码会清晰很多。
-add1head_ptr = (unsigned int *)malloc(0x18uLL);
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2022/04/07/ciscn_2019_double/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2022/04/06/ciscn_2021_lonelywolf/">LonelyWolf</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2022-04-06T12:19:37.401Z" itemprop="datePublished">
-          2022-04-06
-      </time>
-    
-    
-    | 
-    <a href='/tags/ciscn/'>ciscn</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-     
-
-overview​        开始做一些ciscn了。
-
-readd​        size不能大于0x78。
-1234567ptr = malloc(size);if ( ptr )&#123; size_struct = size_1; content_struct = ptr;//蚌埠住了，每次都会把这个指针覆盖为最新分配的content ptr。这下idx直接报废。 puts(&quot;Done!&quo
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2022/04/06/ciscn_2021_lonelywolf/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2022/04/06/sum_stack_summary/">stack知识点总结</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2022-04-05T16:00:00.000Z" itemprop="datePublished">
-          2022-04-06
-      </time>
-    
-    
-    | 
-    <a href='/tags/summary/'>summary</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-     
-
-
-
-stack控制程序执行流栈溢出ret2syscall​        利用程序自带的gadget，构造syscall。
-​        对应板子
-ret2libc/csu​        比较模版化，值得一题的就是，system()的执行要求此时栈是16位对齐的，所以如果getshell失败不妨多ret一次。        
-ret2shellcode​        在rwx的内存空间(不一定是栈）上写shell
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2022/04/06/sum_stack_summary/">Read More...</a>
                     </p>
                     
                 </div>

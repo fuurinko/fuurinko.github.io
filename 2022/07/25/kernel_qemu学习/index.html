@@ -71,7 +71,7 @@
         		<a class="sb-toggle-submenu">Categories<span class="sb-caret"></span></a>
             	<ul class="sb-submenu">
 				  	
-				    <li><a href="/categories/AUDITION/" class="animsition-link">AUDITION<small>(13)</small></a></li>
+				    <li><a href="/categories/AUDITION/" class="animsition-link">AUDITION<small>(14)</small></a></li>
 				    
 				    <li><a href="/categories/CSAPP-LAB/" class="animsition-link">CSAPP LAB<small>(1)</small></a></li>
 				    
@@ -107,7 +107,7 @@
 				    
 				    <li><a href="/categories/LLVM/" class="animsition-link">LLVM<small>(1)</small></a></li>
 				    
-				    <li><a href="/categories/MESS/" class="animsition-link">MESS<small>(19)</small></a></li>
+				    <li><a href="/categories/MESS/" class="animsition-link">MESS<small>(20)</small></a></li>
 				    
 				    <li><a href="/categories/Machine-Learning/" class="animsition-link">Machine Learning<small>(4)</small></a></li>
 				    
@@ -149,7 +149,7 @@
 				    
 				    <li><a href="/categories/cve/" class="animsition-link">cve<small>(2)</small></a></li>
 				    
-				    <li><a href="/categories/qemu/" class="animsition-link">qemu<small>(1)</small></a></li>
+				    <li><a href="/categories/qemu/" class="animsition-link">qemu<small>(2)</small></a></li>
 				    
 				    <li><a href="/categories/ucore/" class="animsition-link">ucore<small>(2)</small></a></li>
 				    
@@ -257,7 +257,7 @@
         </div>
         <div class="col-md-8 col-md-offset-2">
       		
-    <div id="aplayer-AFuocyNF" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div> 
+    <div id="aplayer-gYMNFZQn" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div> 
 
 <p>因为一些奇怪的原因，开始学一下qemu。</p>
 <h1><span id="环境准备">环境准备</span></h1><p>busybox</p>
@@ -267,7 +267,8 @@
 <p>具体转换如下：</p>
 <p><code>/proc/$pid/pagemap </code>中储存了当前进程的页表，使得用户空间可以根据页表找到每个虚拟页面映射的物理帧。</p>
 <p>通过读取这个页表，就能够实现从用户虚拟地址到物理地址的转换。</p>
-<h2><span id="pci设备">pci设备</span></h2><p>符合 PCI 总线标准的设备就被称为 PCI 设备。</p>
+<p>例如host为qemu进程分配了0x40000000的虚拟内存空间，地址为<code>  0x7fe37fe00000</code>，通过读取<code>/proc/$pid/pagemap </code>，将qemu中某个程序的虚拟地址转换为物理地址，返回一个偏移，偏移加上qemu进程的基址则是该程序的真实地址。</p>
+<h2><span id="pci">pci</span></h2><p>符合 PCI 总线标准的设备就被称为 PCI 设备。</p>
 <p>pci设备通过pci配置空间来指定关于pci设备的特定信息，其中BAR寄存器指定了设备所需要的内存和io空间的大小（也可以用来存放设备寄存器的地址）。pci设备可以申请两类地址空间，包括<code>memory space(MMIO)</code>和<code>I/O space(PMIO)</code></p>
 <h3><span id="mmio">MMIO</span></h3><p>应用得最为广泛的一种io方法，它使用相同的地址总线来处理内存和io设备</p>
 <ul>
@@ -277,12 +278,15 @@
 <li>Bits 31-4：Base Address，以 16 字节对齐基址</li>
 </ul>
 <p><img src="https://p1.ssl.qhimg.com/t014a4e49a0207d55ec.png" alt="img"></p>
+<p>当cpu访问某个内存地址时，该地址可以是物理内存或io设备的内存，用于访问内存的cpu指令也可来访问io设备。</p>
 <h3><span id="pmio">PMIO</span></h3><h4><span id="io设备与物理内存相互有独立的地址空间">io设备与物理内存相互有独立的地址空间。</span></h4><ul>
 <li>Bit 0：Region Type，总是为 1，用于区分此类型为 I/O</li>
 <li>Bit 1：Reserved</li>
 <li>Bits 31-2：Base Address，以 4 字节对齐基址</li>
 </ul>
 <p><img src="https://p3.ssl.qhimg.com/t01705f97e43a0cc0b5.png" alt="img"></p>
+<p>cpu需要通过特殊的指令来访问io设备，这些指令可以读/写1,2,4个字节（例如：<code>outb</code>, <code>outw</code>, <code>outl</code>）到IO设备上。</p>
+<h2><span id="qemu中查看pci设备">qemu中查看pci设备</span></h2><p><code>lspci</code>命令用于显示当前主机的所有PCI总线信息，以及所有已连接的PCI设备信息。</p>
 <h1><span id="例题">例题</span></h1><h2><span id="blizzard-ctf-2017-strng">Blizzard CTF 2017 Strng</span></h2><p>启动脚本</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">./qemu-system-x86_64 \</span><br><span class="line">    -m 1G \</span><br><span class="line">    -device strng \</span><br><span class="line">    -hda my-disk.img \</span><br><span class="line">    -hdb my-seed.img \</span><br><span class="line">    -nographic \</span><br><span class="line">    -L pc-bios/ \</span><br><span class="line">    -enable-kvm \</span><br><span class="line">    -device e1000,netdev=net0 \</span><br><span class="line">    -netdev user,id=net0,hostfwd=tcp::5555-:22</span><br></pre></td></tr></table></figure>
 

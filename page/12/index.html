@@ -68,7 +68,7 @@
         		<a class="sb-toggle-submenu">Categories<span class="sb-caret"></span></a>
             	<ul class="sb-submenu">
 				  	
-				    <li><a href="/categories/AUDITION/" class="animsition-link">AUDITION<small>(13)</small></a></li>
+				    <li><a href="/categories/AUDITION/" class="animsition-link">AUDITION<small>(14)</small></a></li>
 				    
 				    <li><a href="/categories/CSAPP-LAB/" class="animsition-link">CSAPP LAB<small>(1)</small></a></li>
 				    
@@ -104,7 +104,7 @@
 				    
 				    <li><a href="/categories/LLVM/" class="animsition-link">LLVM<small>(1)</small></a></li>
 				    
-				    <li><a href="/categories/MESS/" class="animsition-link">MESS<small>(19)</small></a></li>
+				    <li><a href="/categories/MESS/" class="animsition-link">MESS<small>(20)</small></a></li>
 				    
 				    <li><a href="/categories/Machine-Learning/" class="animsition-link">Machine Learning<small>(4)</small></a></li>
 				    
@@ -146,7 +146,7 @@
 				    
 				    <li><a href="/categories/cve/" class="animsition-link">cve<small>(2)</small></a></li>
 				    
-				    <li><a href="/categories/qemu/" class="animsition-link">qemu<small>(1)</small></a></li>
+				    <li><a href="/categories/qemu/" class="animsition-link">qemu<small>(2)</small></a></li>
 				    
 				    <li><a href="/categories/ucore/" class="animsition-link">ucore<small>(2)</small></a></li>
 				    
@@ -267,6 +267,174 @@
 
 <section id="intro">
     <div class="container">
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2021/10/29/mess_typora主题配置的一些心得/">typora主题配置的一些心得</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2021-10-29T15:20:57.419Z" itemprop="datePublished">
+          2021-10-29
+      </time>
+    
+    
+    | 
+    <a href='/tags/mess/'>mess</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+     
+
+1）​    由于看腻了typora原主题的python高亮的丑兮兮的屎黄色注释，决定换个主题。然而找遍整个主题列表，并没有我看得上的主题。本来打算作罢，但想起最近因为写小程序，学了一些简单的css，是不是可以尝试一下修改某些主题的css文件，打造一个自己喜欢的主题捏。
+2）​    在下载主题的过程中我大致了解了一下typora主题开发的大致内容，其实主体感觉就是css（除了css，就是各种需要的字体。
+​    这里
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2021/10/29/mess_typora主题配置的一些心得/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2021/10/27/mess_解决gcc无法编译32位程序的问题/">解决gcc无法编译32位程序的问题</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2021-10-27T12:26:56.705Z" itemprop="datePublished">
+          2021-10-27
+      </time>
+    
+    
+    | 
+    <a href='/tags/linux-primary/'>linux primary</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+     
+
+1）前言​    之前一直被gcc无法编译32位程序而困扰，但是问题一直拖着没有解决，趁着今天比较闲，把这个问题彻底解决一下。
+2)过程​    首先我们尝试编译32位程序，gcc报错：
+​    缺少头文件，实则是没有安装多架构gcc。
+​    试图安装，失败，报错如下：
+​    这里有个坑了我好久的东西，就是这个报错
+E: Unable to correct problems, you have held bro
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2021/10/27/mess_解决gcc无法编译32位程序的问题/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2021/10/27/sum_gdb附加调试的一些黑魔法/">gdb附加调试的一些黑魔法</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2021-10-27T03:21:25.650Z" itemprop="datePublished">
+          2021-10-27
+      </time>
+    
+    
+    | 
+    <a href='/tags/gdb/'>gdb</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+     
+
+1）abstract​    这个part主要综合了一些奇怪的调试中遇到的问题，不定期更新。
+2）格式化字符串-cctf-pwn31）pause（p）导致ERROR: Could not find ELF base问题​    在开始动调这个exp的时候，发现一个很奇怪的点就是如果下的断点的模式gdb.attach(sh)，那么程序会异常退出，大概是这样：
+12345678910111213141516171819202
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2021/10/27/sum_gdb附加调试的一些黑魔法/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2021/10/13/sum_汇编基础/">汇编小知识点</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2021-10-13T09:25:43.372Z" itemprop="datePublished">
+          2021-10-13
+      </time>
+    
+    
+    | 
+    <a href='/tags/assemble/'>assemble</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+     
+
+[TOC]
+汇编语言1）寻址1/直接寻址1mov     rax, fs:28h #直接寻址，fs段寄存器+偏移量。这里其实是一个canary的值。
+
+2/间接寻址间接在使用指针以及解引用的形式
+1mov     [rbp+var_8], rax # 寄存器相对寻址。相当于把rax，也就是这个canary值放到rbp+var_8的地方。
+
+3/比例寻址例如在数组遍历中
+123456.dataarrayD 1,2,3,4.
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2021/10/13/sum_汇编基础/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
         
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
@@ -516,173 +684,9 @@ ret2dl_advanced1)review当FULL RELRO保护开启时，通过 dl_run_time来获�
             </div>
         </div>
         
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2021/05/24/heap_challenge_message/">Message</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2021-05-24T09:18:33.269Z" itemprop="datePublished">
-          2021-05-24
-      </time>
-    
-    
-    | 
-    <a href='/tags/UAF/'>UAF</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-     
-
-第二道fastbin double free。
-123free(*(void **)&amp;dword_602060[4 * v1 + 2]);      dword_602060[4 * v1] = 0;      --dword_60204C;
-
-这里没有把指针置为null，所以会产生uaf漏洞。
-ida大体分析了一下就会发现，由于没有后门函数，这道题会比上一道难。而且由于RELRO的开启，got所在的数据段是只读
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2021/05/24/heap_challenge_message/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2021/04/24/sum_杂碎的指令/">杂碎的指令</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2021-04-23T16:50:26.062Z" itemprop="datePublished">
-          2021-04-24
-      </time>
-    
-    
-    | 
-    <a href='/tags/mess/'>mess</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        [TOC]
-
-     
-
-杂碎的知识点1）调试相关1）gdbropgagdet
-ROPgadget –binary （） –only “pop|ret” | grep rdi
-(基本适用于ret2csu这种万能gagdet的寻找)
-例如ROPgadget --binary calc --only &quot;pop|ret&quot; | grep eax
-2）内存断点？硬件断点？原理对所访问内存地址设置为不可读写，当访问时触发中断。
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2021/04/24/sum_杂碎的指令/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/1919/08/10/note_深夜高速-1/">1</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="1919-08-09T15:34:14.000Z" itemprop="datePublished">
-          1919-08-10
-      </time>
-    
-    
-    | 
-    <a href='/tags/深夜高速/'>深夜高速</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        ​    
-         
-0:​        写下这些话的时候，不知不觉地，已经半夜两点了。
-​        其实放在半个月之前的我看来，两点根本不是半夜，而是夜生活的开始。然而仅仅十五天，我将作息强行向前延伸了两小时，所以对于现在的我来说，两点已经是高程度的熬夜了。
-​        熬夜并不是一件坏事，至少我如今也这么认为——只要不是因为玩手机等无意义的事情而浪费生命。
-​        最近的我一直在经受苦难，或者说，我
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/1919/08/10/note_深夜高速-1/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/1919/08/10/幻想曲-04-夏 其二/">夏 其二</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="1919-08-09T15:00:00.000Z" itemprop="datePublished">
-          1919-08-10
-      </time>
-    
-    
-    | 
-    <a href='/tags/幻想曲/'>幻想曲</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        ​    
-     
-​        近来确实是入夏了。
-​        痕迹隐隐约约，但是还是能够感觉得到。坐在室内不开空调，感觉尚且是舒适的，但是一旦在夜里走上十来分钟，体感并没有热意，回过神来却已经汗流浃背。头发开始变得容易滋生出并不算好闻的油味，但是值得庆幸的是洗的衣服如果用洗衣机脱过水的话，一晚上就能干透了。
-​        有时侯坐校车能路过图书馆边上荷花池。大概一两个月前这片并不算大的池塘还是一篇寂寥，现在已经听取
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/1919/08/10/幻想曲-04-夏 其二/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
         <nav class="pagination" role="pagination">
           <a class="pull-left" href="../11/">← Newer Posts</a>
-          
+          <a class="pull-right" href="../13/">Older Posts →</a>
         </nav>
     </div>
 </section>

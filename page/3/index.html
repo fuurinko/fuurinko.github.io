@@ -68,7 +68,7 @@
         		<a class="sb-toggle-submenu">Categories<span class="sb-caret"></span></a>
             	<ul class="sb-submenu">
 				  	
-				    <li><a href="/categories/AUDITION/" class="animsition-link">AUDITION<small>(13)</small></a></li>
+				    <li><a href="/categories/AUDITION/" class="animsition-link">AUDITION<small>(14)</small></a></li>
 				    
 				    <li><a href="/categories/CSAPP-LAB/" class="animsition-link">CSAPP LAB<small>(1)</small></a></li>
 				    
@@ -104,7 +104,7 @@
 				    
 				    <li><a href="/categories/LLVM/" class="animsition-link">LLVM<small>(1)</small></a></li>
 				    
-				    <li><a href="/categories/MESS/" class="animsition-link">MESS<small>(19)</small></a></li>
+				    <li><a href="/categories/MESS/" class="animsition-link">MESS<small>(20)</small></a></li>
 				    
 				    <li><a href="/categories/Machine-Learning/" class="animsition-link">Machine Learning<small>(4)</small></a></li>
 				    
@@ -146,7 +146,7 @@
 				    
 				    <li><a href="/categories/cve/" class="animsition-link">cve<small>(2)</small></a></li>
 				    
-				    <li><a href="/categories/qemu/" class="animsition-link">qemu<small>(1)</small></a></li>
+				    <li><a href="/categories/qemu/" class="animsition-link">qemu<small>(2)</small></a></li>
 				    
 				    <li><a href="/categories/ucore/" class="animsition-link">ucore<small>(2)</small></a></li>
 				    
@@ -267,6 +267,167 @@
 
 <section id="intro">
     <div class="container">
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2022/07/22/ucore-lab2/">ucore lab2</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-07-22T08:31:27.591Z" itemprop="datePublished">
+          2022-07-22
+      </time>
+    
+    
+    | 
+    <a href='/tags/os/'>os</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        基础知识系统物理内存探测当操作系统被启动后，需要探测当前内存，了解当下物理内存分布状态。一半探测内存的方式有BIOS中断调用和直接探测两种，
+在ucore中，系统选择通过bios调用的INT 15h中断中的e820h中断获取内存信息，并把其映射结构保存在物理地址0x8000处。而这些操作只能在实模式下完成，所以在bootloader进入保护模式前完成这一部分工作比较合适。这些部分由boot/bootasm.S中从probe_memory
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/07/22/ucore-lab2/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2022/07/16/ucore_lab1/">ucore lab1</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-07-16T10:01:36.685Z" itemprop="datePublished">
+          2022-07-16
+      </time>
+    
+    
+    | 
+    <a href='/tags/os/'>os</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        0：环境需要准备
+能正常运行qemu的环境。
+实验手册：https://objectkuan.gitbooks.io/ucore-docs/content/lab1/lab1_1_goals.html
+实验代码：https://github.com/chyyuu/os_kernel_lab/tree/lab1_X
+
+1: 实验目的分析加载操作系统的boot loader，并了解相关计算机原理。
+2: 基础知识bios启动过程bios（(
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/07/16/ucore_lab1/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2022/07/16/vivi_2022年七月/">七月</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-07-16T08:36:24.556Z" itemprop="datePublished">
+          2022-07-16
+      </time>
+    
+    
+    | 
+    <a href='/tags/vivi/'>vivi</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        ​        不想学英语，不想学英语，不想学英语。
+​        简单列一下这个暑假的计划。
+​        看了一些群友的博客，感触颇多。
+二进制
+kernel pwn相关的知识点。至少到能做一点简单的题的程度。
+简单的cve复现。
+熟悉fuzz。
+随缘做一点天问之路的task。
+偶尔做一点高版本glibc题。
+做一点pwncollege玩一玩。
+
+其他
+看完我列的书。目前在看谈美，不过争取这个暑假把红书和叔本华看完先。
+每
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/07/16/vivi_2022年七月/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2022/07/15/mess_vmware fusion无法复制粘贴问题/">vmware fusion无法复制粘贴问题</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-07-15T14:28:51.623Z" itemprop="datePublished">
+          2022-07-15
+      </time>
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        Ubuntu20.04安装vmware tools时显示segment fault，虽然最后显示成功安装，但是没有任何效果，依旧不能复制粘贴。
+解决方式：
+首先删除已经安装的vmware tools。具体方法是
+12cd vmware-tools-distrib/binsudo ./vmware-uninstall-tools.pl
+
+接着直接
+1sudo apt-get install open-vm-tools open-vm-to
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/07/15/mess_vmware fusion无法复制粘贴问题/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
         
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
@@ -506,184 +667,6 @@ libc2.33
                     
                     <p class="pull-right readMore">
                         <a href="/2022/05/30/ciscn_2022_login/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2022/05/21/week12_6_pwnable_secret_garden/">pwnable - secret garden(tbc)</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2022-05-21T07:22:51.685Z" itemprop="datePublished">
-          2022-05-21
-      </time>
-    
-    
-    | 
-    <a href='/tags/pwnable/'>pwnable</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-    
-
-overview
-reverse​        依旧是比较传统的菜单，这个应该不会还是栈题了吧。
-add​        相对比较清晰，malloc使用的是size[0]，这个值是可以自己控制的，但是也不排除有溢出的可能性。
-
-
-​        后面则是将flower的ptr插入到head中。
-
-show​        没啥特别的，就是打印出来。
-​        
-free这里有可能有溢出，并且有uaf
-
-free
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2022/05/21/week12_6_pwnable_secret_garden/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2022/05/20/week12_5_pawnable_house_of-grey/">攻防世界 - house of grey</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2022-05-20T07:11:28.316Z" itemprop="datePublished">
-          2022-05-20
-      </time>
-    
-    
-    | 
-    <a href='/tags/pwnable/'>pwnable</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-    
-
-overview​        最近事情比较多，一般来说五月底的事情都很多，这个学期尤为严重。自己做的话一天一题基本不可能了，这里就大致学习一下思路吧。
-
-​        依旧是全绿。
-​        并且似乎是没有libc的，这个应该是攻防世界上的题。还是18年国赛半决赛捏。
-reverse​        程序的大致逻辑其实比较简单。首先还是随机划分一个巨大的空间，然后clone一个进程    。进程中实现了一个
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2022/05/20/week12_5_pawnable_house_of-grey/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2022/05/18/week12_3.1_pawnable_babystack/">pawnable - babystack</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2022-05-18T03:49:48.180Z" itemprop="datePublished">
-          2022-05-18
-      </time>
-    
-    
-    | 
-    <a href='/tags/pwnable/'>pwnable</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-    
-
-overview​        
-​        全绿的栈题。
-reverse​         有了上一次的经验就知道这个题的前面的随机数也是canary了。
-​        所以在略过一些目前看似没有必要的代码之后，整个程序的逻辑大致如下“
-​        输密码，密码是一个空字节。
-​        然后每次可以copy 63 字节的东西,到64字节的char数组中。
-1234printf(&quot;Cop
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2022/05/18/week12_3.1_pawnable_babystack/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2022/05/17/week12_2_pawnable_spirited_away/">pawnable - spirited_away</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2022-05-17T02:47:48.848Z" itemprop="datePublished">
-          2022-05-17
-      </time>
-    
-    
-    | 
-    <a href='/tags/pwnable/'>pwnable</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-    
-
-overview​    栈题。
-reverse有一点诡异。
-整体的逻辑非常清晰简单，但是有疑惑的地方。
-12345if ( choice == &#x27;Y&#x27; || choice == &#x27;y&#x27; )&#123;  free(name);                               // UAF??  goto LABEL_2;&#125;
-
-​        这里将name 
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2022/05/17/week12_2_pawnable_spirited_away/">Read More...</a>
                     </p>
                     
                 </div>

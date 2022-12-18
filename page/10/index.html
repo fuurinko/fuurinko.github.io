@@ -68,7 +68,7 @@
         		<a class="sb-toggle-submenu">Categories<span class="sb-caret"></span></a>
             	<ul class="sb-submenu">
 				  	
-				    <li><a href="/categories/AUDITION/" class="animsition-link">AUDITION<small>(13)</small></a></li>
+				    <li><a href="/categories/AUDITION/" class="animsition-link">AUDITION<small>(14)</small></a></li>
 				    
 				    <li><a href="/categories/CSAPP-LAB/" class="animsition-link">CSAPP LAB<small>(1)</small></a></li>
 				    
@@ -104,7 +104,7 @@
 				    
 				    <li><a href="/categories/LLVM/" class="animsition-link">LLVM<small>(1)</small></a></li>
 				    
-				    <li><a href="/categories/MESS/" class="animsition-link">MESS<small>(19)</small></a></li>
+				    <li><a href="/categories/MESS/" class="animsition-link">MESS<small>(20)</small></a></li>
 				    
 				    <li><a href="/categories/Machine-Learning/" class="animsition-link">Machine Learning<small>(4)</small></a></li>
 				    
@@ -146,7 +146,7 @@
 				    
 				    <li><a href="/categories/cve/" class="animsition-link">cve<small>(2)</small></a></li>
 				    
-				    <li><a href="/categories/qemu/" class="animsition-link">qemu<small>(1)</small></a></li>
+				    <li><a href="/categories/qemu/" class="animsition-link">qemu<small>(2)</small></a></li>
 				    
 				    <li><a href="/categories/ucore/" class="animsition-link">ucore<small>(2)</small></a></li>
 				    
@@ -267,6 +267,179 @@
 
 <section id="intro">
     <div class="container">
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2022/03/10/pwn.college_ROP/">ROP</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-03-10T14:12:38.052Z" itemprop="datePublished">
+          2022-03-10
+      </time>
+    
+    
+    | 
+    <a href='/tags/pwncollege/'>pwncollege</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+     
+
+写在前面：如果是普通的环境，运行程序可能需要capstone，可以直接在官网下载源码编译，然后将编译好的动态链接库cp到lib里
+ cp libcapstone.so.5 /lib/x86_64-linux-gnu/
+Level1​        最最最基础的rop了，和前前一个module的前面的有个level一模一样。
+1234567891011121314from pwn import*#context.termi
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/03/10/pwn.college_ROP/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2022/03/03/pwn.college_MemoryErrors/">MemoryErrors</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-03-03T03:18:50.193Z" itemprop="datePublished">
+          2022-03-03
+      </time>
+    
+    
+    | 
+    <a href='/tags/pwncollege/'>pwncollege</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+     
+
+​        视频主要介绍了栈溢出及其保护。保护的绕过包括canary和pie，并没有提到NX（那个似乎在后面一个module）
+​        传输题目到本地可以使用scp命令。
+1scp -i key -r hacker@dojo.pwn.college:/challenge/babymem_level4.1 /Users/rin/ctf/pwn/pwn_college/MemoryErrors
+
+
+
+
+
+Le
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/03/03/pwn.college_MemoryErrors/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2022/03/03/pwn.college_ProgramMisuse/">ProgramMisuse</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-03-03T03:09:26.547Z" itemprop="datePublished">
+          2022-03-03
+      </time>
+    
+    
+    | 
+    <a href='/tags/pwncollege/'>pwncollege</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+     
+
+
+
+
+
+​        关于这个module，做出题目的话大致有两个思路，一个是利用/bin/sh    来对整个shell提权，另外一个是利用设置了suid的特殊程序来读取flag。一般来说是第二个方法比较简单，但是有时候只有第一个方法可以行得通。
+Level1​        没有看视频，并不知道这个Misuse是什么意义，但是level1只要执行给的程序就能get flag。
+
+Level2​        到第
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/03/03/pwn.college_ProgramMisuse/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2022/02/28/pwn.college_Sandboxing/">Sandboxing</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-02-28T13:59:27.326Z" itemprop="datePublished">
+          2022-02-28
+      </time>
+    
+    
+    | 
+    <a href='/tags/pwncollege/'>pwncollege</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+     
+
+Level1​        首先考察chroot
+​        因为程序在将根目录设置为/jail的时候并没有切换当前工作目录为/jail，所以我们实际上还是在/目录，因此可以直接通过argv[1]    读取flag。
+​        执行脚本的时候需要添加cwd参数，使其工作目录为/
+Level2123shellcode = asm(shellcraft.readfile(&#x27;flag&#x27;,1
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/02/28/pwn.college_Sandboxing/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
         
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
@@ -527,175 +700,6 @@ Level6​        一个输出重定向，创建对应文件./emb
                     
                     <p class="pull-right readMore">
                         <a href="/2021/12/11/heap_unsortedbin leak/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2021/12/10/mess_ida 7.0 for mac疑难杂症： positive sp value has been found/">positive sp value has been found</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2021-12-10T08:05:39.212Z" itemprop="datePublished">
-          2021-12-10
-      </time>
-    
-    
-    | 
-    <a href='/tags/逆向/'>逆向</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-     
-
-
-
-0）​        自从抛弃虚拟机，利用ida for mac+pwndocker实现完全mac环境以后，深觉优雅的同时，也遇见了不少坑。
-​        其中ida的坑更是坑人于无形之中。因为如果不打开win的7.5（甚至7.6）做对比，你甚至不知道你遇见的一些奇怪的东西，是7.0 mac版特有的，已经被优化了的坑，还是自身逆向水平问题。
-​        作为一个逆向废物，7.0 for mac属实是给本来就
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2021/12/10/mess_ida 7.0 for mac疑难杂症： positive sp value has been found/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2021/12/06/heap_learning_fastbin_attack/">fastbin attack</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2021-12-06T08:17:00.507Z" itemprop="datePublished">
-          2021-12-06
-      </time>
-    
-    
-    | 
-    <a href='/tags/learning/'>learning</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-     
-
-fastbin​    长度在32-160(32位系统是16-80)的free堆块。通过fastbinlist储存，单向链表，所以fast。fastbin attack一个最简单的利用就是UAF，其次就是fastbin double free。ctf pwn中与fastbin相关的还有就是在unsortedbin attack中涉及到的，也是ptmalloc机制中的一种的malloc_consolidate，其中也有可以
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2021/12/06/heap_learning_fastbin_attack/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2021/12/03/mess_malloc_lab/">csapp malloc lab</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2021-12-03T08:46:22.570Z" itemprop="datePublished">
-          2021-12-03
-      </time>
-    
-    
-    | 
-    <a href='/tags/csapp-lab/'>csapp lab</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-     
-
-0）前言​        鸽了三个月的malloc lab，作为复习堆题的开始。
-​        计画完成时间是12.5之前，也就是三天。
-1）大体设计​        对于整体的操作的大致模型以及allocater和freer需要做的工作如下：
-​        分配器：
-
-在第一次分配chunk时，对堆空间进行初始化=&gt;mm_init()    
-
-创建指定类型的chunk。
-​    free
-
-利用隐式空
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2021/12/03/mess_malloc_lab/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2021/11/22/other_openstack学习笔记/">openstack学习笔记</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2021-11-22T08:56:23.363Z" itemprop="datePublished">
-          2021-11-22
-      </time>
-    
-    
-    | 
-    <a href='/tags/SRE/'>SRE</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        ​    
-     
-​        为了跟上网校的集群重构计划，这下狠狠地开始学习运维了。
-​        在开始具体的openstack学习之前，首先需要学习一下一些基本的运维概念。
-虚拟化/容器化​        之前在学习docker的时候对于容器化已经有一个比较到位的认知了，而与容器化相对应的虚拟化并没有深入理解。
-​        这里的虚拟化特指服务器虚拟化。就是在一台服务器上运行虚拟运行多个服务器。
-虚拟化分类完全
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2021/11/22/other_openstack学习笔记/">Read More...</a>
                     </p>
                     
                 </div>
