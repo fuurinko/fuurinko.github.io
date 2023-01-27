@@ -146,7 +146,7 @@
 				    
 				    <li><a href="/categories/cve/" class="animsition-link">cve<small>(2)</small></a></li>
 				    
-				    <li><a href="/categories/qemu/" class="animsition-link">qemu<small>(1)</small></a></li>
+				    <li><a href="/categories/qemu/" class="animsition-link">qemu<small>(2)</small></a></li>
 				    
 				    <li><a href="/categories/ucore/" class="animsition-link">ucore<small>(2)</small></a></li>
 				    
@@ -267,6 +267,50 @@
 
 <section id="intro">
     <div class="container">
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2022/03/17/week3-3.2/">2014 hack.lu oreo</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-03-17T07:05:44.803Z" itemprop="datePublished">
+          2022-03-17
+      </time>
+    
+    
+    | 
+    <a href='/tags/UAF/'>UAF</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+         
+
+overview​        
+​        搞不懂为什么这么多题都要stripped。
+逆向add​        申请0x38大小的chunk，user space开始处存枪支的description,+0x19处存放枪支的name。
+​        输入name的时候，最大长度为56，导致能够溢出，覆盖fd字段。
+​        同时每输入信息以后都会有一个保存指针的操作：
+free
+​    
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/03/17/week3-3.2/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
         
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
@@ -634,52 +678,6 @@ Level1​        最最最基础的rop了，和前前一个module的前面的有
                     
                     <p class="pull-right readMore">
                         <a href="/2022/03/10/pwn.college_ROP/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2022/03/03/pwn.college_MemoryErrors/">MemoryErrors</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2022-03-03T03:18:50.193Z" itemprop="datePublished">
-          2022-03-03
-      </time>
-    
-    
-    | 
-    <a href='/tags/pwncollege/'>pwncollege</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-     
-
-​        视频主要介绍了栈溢出及其保护。保护的绕过包括canary和pie，并没有提到NX（那个似乎在后面一个module）
-​        传输题目到本地可以使用scp命令。
-1scp -i key -r hacker@dojo.pwn.college:/challenge/babymem_level4.1 /Users/rin/ctf/pwn/pwn_college/MemoryErrors
-
-
-
-
-
-Le
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2022/03/03/pwn.college_MemoryErrors/">Read More...</a>
                     </p>
                     
                 </div>
