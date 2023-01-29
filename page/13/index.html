@@ -144,6 +144,8 @@
 				    
 				    <li><a href="/categories/Tcache/" class="animsition-link">Tcache<small>(2)</small></a></li>
 				    
+				    <li><a href="/categories/audition/" class="animsition-link">audition<small>(1)</small></a></li>
+				    
 				    <li><a href="/categories/cve/" class="animsition-link">cve<small>(2)</small></a></li>
 				    
 				    <li><a href="/categories/qemu/" class="animsition-link">qemu<small>(2)</small></a></li>
@@ -267,6 +269,48 @@
 
 <section id="intro">
     <div class="container">
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2021/08/02/stack_ret2dl_advanced/">ret2dl_advanced</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2021-08-02T03:22:53.000Z" itemprop="datePublished">
+          2021-08-02
+      </time>
+    
+    
+    | 
+    <a href='/tags/stack/'>stack</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+     
+
+ret2dl_advanced1)review当FULL RELRO保护开启时，通过 dl_run_time来获取libc基址的方式几乎无解。
+但是我们仍然能够找到某种方式来getshell。
+相关论文中给出一种解决方案，即通过dt_bug入口找到突破点。
+(Ps:为什么找不到相关的中文文章)
+2）dt_dbg？dt_dbg这个概念实际上并不新鲜，简单来说它可以被包含在libc.so文件中，比如我们指定一个特定的libc
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2021/08/02/stack_ret2dl_advanced/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
         
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
