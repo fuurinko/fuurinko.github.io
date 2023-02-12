@@ -68,7 +68,7 @@
         		<a class="sb-toggle-submenu">Categories<span class="sb-caret"></span></a>
             	<ul class="sb-submenu">
 				  	
-				    <li><a href="/categories/AUDITION/" class="animsition-link">AUDITION<small>(17)</small></a></li>
+				    <li><a href="/categories/AUDITION/" class="animsition-link">AUDITION<small>(18)</small></a></li>
 				    
 				    <li><a href="/categories/CSAPP-LAB/" class="animsition-link">CSAPP LAB<small>(1)</small></a></li>
 				    
@@ -269,6 +269,43 @@
 
 <section id="intro">
     <div class="container">
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2022/03/24/heap_hof_hitcontraininf11/">hitcon_training11</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-03-24T14:16:18.934Z" itemprop="datePublished">
+          2022-03-24
+      </time>
+    
+    
+    | 
+    <a href='/tags/heap/'>heap</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        % meting “7342554262” “netease” “playlist” “theme:#555” “mutex:true” “listmaxheight:340px” “preload:auto” %}     
+re​        含有后门函数，直接的想法是利用hof将chunk分配至某个可写的位置，然后覆盖为后门。
+1234v4 = malloc(0x10uLL); *v4 = hello_message; v4[1
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/03/24/heap_hof_hitcontraininf11/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
         
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
@@ -632,47 +669,6 @@ ccmc_pwnme2一道看起来人畜无害的栈题。但是有几个非常奇怪的
                     
                     <p class="pull-right readMore">
                         <a href="/2022/03/16/week3-2.1/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2022/03/15/week3-1.2/">lab 10 hacknote</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2022-03-15T13:34:53.564Z" itemprop="datePublished">
-          2022-03-15
-      </time>
-    
-    
-    | 
-    <a href='/tags/UAF/'>UAF</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-     
-
-​        这个题已经做过好多遍了orz，因为不断的摆烂然后复健…..每次又是做这道
-​        逆一下。
-​        话说可以总结一下类似的题目的快速逆向方法。比如说一般肯定会定义一个结构体，结构体中包含比如content和指针的字段，然后如果有可以利用的uaf或者double free的话，就可以覆盖结构体中保存的指针字段，从而进一步攻击。
-​        回到这道题，这里的结构体包含两个字段，一
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2022/03/15/week3-1.2/">Read More...</a>
                     </p>
                     
                 </div>
