@@ -68,7 +68,7 @@
         		<a class="sb-toggle-submenu">Categories<span class="sb-caret"></span></a>
             	<ul class="sb-submenu">
 				  	
-				    <li><a href="/categories/AUDITION/" class="animsition-link">AUDITION<small>(20)</small></a></li>
+				    <li><a href="/categories/AUDITION/" class="animsition-link">AUDITION<small>(21)</small></a></li>
 				    
 				    <li><a href="/categories/CSAPP-LAB/" class="animsition-link">CSAPP LAB<small>(1)</small></a></li>
 				    
@@ -269,6 +269,48 @@
 
 <section id="intro">
     <div class="container">
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2022/11/06/mess_qemu-kvm-KVM- entry failed, hardware error 0x7/">mess_qemu-kvm-KVM - entry failed, hardware error 0x7</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-11-06T13:24:57.286Z" itemprop="datePublished">
+          2022-11-06
+      </time>
+    
+    
+    | 
+    <a href='/tags/mess/'>mess</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+     
+
+一个历史遗留问题，但是没有想到直接影响到俺恰米。
+https://bugzilla.redhat.com/show_bug.cgi?id=1016748
+目前并没有找到导致这个问题的元凶，之前搜索的时候发现这似乎是一个kvm在ubuntu某些特定版本下的历史遗留bug，所以可以通过更换ubuntu版本解决，亲测20.04 LTS是可行的。
+同时可以在qemu的启动参数上加上 cpu kvm64的参数。
+
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/11/06/mess_qemu-kvm-KVM- entry failed, hardware error 0x7/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
         
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
@@ -620,46 +662,6 @@ poc1234
                     
                     <p class="pull-right readMore">
                         <a href="/2022/10/15/cve-2018-1160/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2022/10/13/幻想曲-05-追忆似水年华/">追忆似水年华</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2022-10-13T11:34:04.095Z" itemprop="datePublished">
-          2022-10-13
-      </time>
-    
-    
-    | 
-    <a href='/tags/幻想曲/'>幻想曲</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        ​    
-         
-​        花了大半个月，我看了追忆似水年华第一部的四分之一，以睡前读十五分钟的形式。
-​        我完全不想写什么读后感之类的东西，因此如果可以，我希望模仿普鲁斯特的文笔去记录一些事。这就是我的全部感想。
-​        于是在我决定动笔的一瞬间，这件事就已经划上了句号。
-​        就像从一个只装有蓝球和红球的袋子中拿出一个红球，就瞬间知道袋子里剩下的球是蓝色一样，我贫瘠的记忆中并
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2022/10/13/幻想曲-05-追忆似水年华/">Read More...</a>
                     </p>
                     
                 </div>
