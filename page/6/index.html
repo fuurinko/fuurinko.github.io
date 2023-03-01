@@ -273,6 +273,86 @@
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
                 <div class="col-md-4">
+                    <h3><a href="/2022/05/07/week10_6_ pwnable_sethefile/">pwnable - seethe file</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-05-07T07:49:45.348Z" itemprop="datePublished">
+          2022-05-07
+      </time>
+    
+    
+    | 
+    <a href='/tags/pwnable/'>pwnable</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+    
+
+overview
+reverseopen​        打开一个文件，但是文件名不能包含flag.顺便在0x804B0C0上初始化了一块magic buf，此外，一次只能打开一个文件。
+read​        读取文件到magic buf。
+1result = fread(magicbuf, 0x18Fu, 1u, fp);
+
+write​        对flag的一些字符串进行过滤，然后put magic buf。
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/05/07/week10_6_ pwnable_sethefile/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2022/04/30/vivi_2022年四月/">四月</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-04-30T12:51:57.990Z" itemprop="datePublished">
+          2022-04-30
+      </time>
+    
+    
+    | 
+    <a href='/tags/vivi/'>vivi</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        ​        人生は妥協の連続なんだ。
+​        刷了一些题，但是由于一些事情，放缓了刷题的节奏，且开始做一些简单的栈题，虽然简单，但是完全独立做出来也并不是一件信手拈来的易事。主要是做题的心态从功利性的“做出题，然后变强，然后拿奖”到“享受做题的艺术”。
+​        pwn开始从人生继续的必需品变成了维持生活快乐的娱乐方式，具体的因素有很多，也不太好讲，但是从我意识到，我从始至终是享受学习的过程的时候，我也许就已经进
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/04/30/vivi_2022年四月/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
                     <h3><a href="/2022/04/29/week9_5.1_pwnable---apple store/">pwnable - applestore</a></h3>
                     <span>
                         <span class="post-meta">
@@ -600,92 +680,6 @@ csapp malloc lab review​        在着手看源码之前先复习一下cs
                     
                     <p class="pull-right readMore">
                         <a href="/2022/04/13/heap_learning_glibc源码分析/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2022/04/12/week7-2.1md/">攻防世界 - one_man_army</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2022-04-12T02:02:09.112Z" itemprop="datePublished">
-          2022-04-12
-      </time>
-    
-    
-    | 
-    <a href='/tags/xctf/'>xctf</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-     
-
-
-
-overview
-libc是2.27。
-逆向增删查改。
-add没有什么特别的地方，纯纯的指针操作。没有结构体，没有保存指针到bss上。但是会对输入的size取低九位，虽然可以输入15位的size，但是生效的只有九位。所以只能add出 一个chunk。有点lonely wolf的味道。
-12345678printf(&quot;Size: &quot;); read(0, size_4, 0xFuLL); size_2
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2022/04/12/week7-2.1md/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2022/04/11/week7-1.1/">攻防世界 - 100levels</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2022-04-11T12:02:33.312Z" itemprop="datePublished">
-          2022-04-11
-      </time>
-    
-    
-    | 
-    <a href='/tags/xctf/'>xctf</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-     
-
-overviewpartial relro，没有canary，栈溢出。
-逆向12if ( unk_20208C )  sprintf(v1, &quot;Hint: %p\n&quot;, &amp;system);
-
-​        如果能在这个变量上写东西，就能leak。那就不是ret2libc了。并且开了pie，也不好rop。
-123456789&#123;  __int64 buf[4]; // [rsp+0h
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2022/04/11/week7-1.1/">Read More...</a>
                     </p>
                     
                 </div>

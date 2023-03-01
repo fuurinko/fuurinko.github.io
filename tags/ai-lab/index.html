@@ -8,7 +8,7 @@
 
 <head>
 
-  <title>Rin</title>
+  <title>Tag: ai_lab | Rin</title>
   <!-- Meta data -->
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -265,437 +265,32 @@
 <!-- // End height spacing helper -->
 
 <!-- ============================ END Hero Image =========================== -->
-<!-- ============================ Content =========================== -->
 
-<section id="intro">
+
+
+
+<section id="services">
     <div class="container">
-        
         <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2022/07/16/ucore_lab1/">ucore lab1</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2022-07-16T10:01:36.685Z" itemprop="datePublished">
-          2022-07-16
-      </time>
-    
-    
-    | 
-    <a href='/tags/os/'>os</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        0：环境需要准备
-能正常运行qemu的环境。
-实验手册：https://objectkuan.gitbooks.io/ucore-docs/content/lab1/lab1_1_goals.html
-实验代码：https://github.com/chyyuu/os_kernel_lab/tree/lab1_X
-
-1: 实验目的分析加载操作系统的boot loader，并了解相关计算机原理。
-2: 基础知识bios启动过程bios（(
-                      
-                    </p>
+            <div class="col-md-10 col-md-offset-1">
+                <div class="row boxes">
                     
-                    <p class="pull-right readMore">
-                        <a href="/2022/07/16/ucore_lab1/">Read More...</a>
-                    </p>
                     
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2022/07/16/vivi_2022年七月/">七月</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2022-07-16T08:36:24.556Z" itemprop="datePublished">
-          2022-07-16
-      </time>
-    
-    
-    | 
-    <a href='/tags/vivi/'>vivi</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        ​        不想学英语，不想学英语，不想学英语。
-​        简单列一下这个暑假的计划。
-​        看了一些群友的博客，感触颇多。
-二进制
-kernel pwn相关的知识点。至少到能做一点简单的题的程度。
-简单的cve复现。
-熟悉fuzz。
-随缘做一点天问之路的task。
-偶尔做一点高版本glibc题。
-做一点pwncollege玩一玩。
-
-其他
-看完我列的书。目前在看谈美，不过争取这个暑假把红书和叔本华看完先。
-每
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2022/07/16/vivi_2022年七月/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2022/07/15/mess_vmware fusion无法复制粘贴问题/">vmware fusion无法复制粘贴问题</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2022-07-15T14:28:51.623Z" itemprop="datePublished">
-          2022-07-15
-      </time>
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        Ubuntu20.04安装vmware tools时显示segment fault，虽然最后显示成功安装，但是没有任何效果，依旧不能复制粘贴。
-解决方式：
-首先删除已经安装的vmware tools。具体方法是
-12cd vmware-tools-distrib/binsudo ./vmware-uninstall-tools.pl
-
-接着直接
-1sudo apt-get install open-vm-tools open-vm-to
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2022/07/15/mess_vmware fusion无法复制粘贴问题/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2022/07/14/kernel_环境搭建及基础知识/">kernel环境+基础知识</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2022-07-14T14:09:06.354Z" itemprop="datePublished">
-          2022-07-14
-      </time>
-    
-    
-    | 
-    <a href='/tags/KERNEL/'>KERNEL</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
                         
-         
-
-环境搭建一般来说教程都会要求我们编译一个内核，安装一个busybox以及qemu，但是实际做题需要的环境只有qemu，因为题目会提供一个内核镜像，而busybox也不是必须，但是在这里还是都搭建一下。
-qemu一般来说elf的话只需要用包管理器下载：sudo apt install qemu-system
-有特殊需求可以用源码编译。但是暂时就省去这一步了。
-（ps：这里有一个坑，对于macos + pd的组合，你
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2022/07/14/kernel_环境搭建及基础知识/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2022/07/08/ciscn_2022_pwn1/">pwn1（已弃）</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2022-07-08T05:47:13.868Z" itemprop="datePublished">
-          2022-07-08
-      </time>
-    
-    
-    | 
-    <a href='/tags/ciscn/'>ciscn</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
                         
-    
-
-一个简单的复建，题目是今年西南赛区pwn1，是一个很常规的栈的rop，套了orw。
-逆向​        这个题的逆向不算复杂，同样也是操作符控制指令的形式，输多少个操作符就执行多少次指令，具体的过程就不写了。
-​        操作符对应的指令如下：
-123456789#1 --&gt; &gt;	[++buf_idx]#2 --&gt; &lt;	[--buf_idx]	#3 --&gt; +	[++buf[buf_i
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2022/07/08/ciscn_2022_pwn1/">Read More...</a>
-                    </p>
+                        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 wow fadeInUp" data-wow-delay="0.3s">
+                            
+                              <h4 class="title"><a href="/2023/02/27/ai_lab_note_001/">lab_003_CNN</a></h4>
+                            
+                            <p><time datetime="2023-02-27T09:01:17.627Z"><a href="/2023/02/27/ai_lab_note_001/">2023-02-27</a></time></p>
+                        </div>
                     
                 </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
+            </div>    
         </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2022/07/07/vivi_2022年六月/">六月</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2022-07-07T07:27:40.124Z" itemprop="datePublished">
-          2022-07-07
-      </time>
-    
-    
-    | 
-    <a href='/tags/vivi/'>vivi</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        ​        今日小暑。
-​        久违地重新开始写博客了，之前由于期末周，一直没有来得及整理。昨天把所有试全部考完了，国赛西南分赛区半决赛也打完了，师傅们非常强。
-​        之所以写下这些，实在是因为脑子里空空的，心里也空空的，不知该干什么，心情理应舒畅，然而现在却是一滩死水。我不知道该干什么了，只有一团乱麻似的思绪在胸口发闷。
-​        我开始萌生一些悔意了。大约三个月前，我的想法和现在从结果上来说有一些
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2022/07/07/vivi_2022年六月/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2022/06/21/vivi_深夜锐评拿不拿/">深夜锐评拿不拿</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2022-06-20T16:31:06.109Z" itemprop="datePublished">
-          2022-06-21
-      </time>
-    
-    
-    | 
-    <a href='/tags/幻想曲/'>幻想曲</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        ​    
-     
-0​        期末周，绩点比国赛重要，所以摆烂没有刷题。今天yrsk放了三首月光再演的曲子，拿厨都哭了，于是自然地多听了一些yrsk，并且看到了豆瓣上对于盗作的评论，有点不开心，故记录一下。
-1​        目前关于拿曲，尤其是yrsk时期的曲子，最大的批评是“同质化严重”，并且我个人也认为拿不拿所追求的“创作出不迎合大众的曲子”与他本身写出来的东西是相矛盾的。曾经我自己给自己台阶下，认为yrsk的“不
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2022/06/21/vivi_深夜锐评拿不拿/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2022/06/11/ciscn_2022_newest_note/">newest_note</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2022-06-11T04:51:16.916Z" itemprop="datePublished">
-          2022-06-11
-      </time>
-    
-    
-    | 
-    <a href='/tags/ciscn/'>ciscn</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-    
-
-给分享会准备的一个简单的复现。
-太长不看
-逆向确定漏洞点-uaf以及越界读写
-glibc2.32指针异或绕过
-glibc2.34取消malloc free hook后的利用方式
-
-check
-​        依旧是保护全开。这里比较不好的地方就是libc的版本比较高。2.34有一个众所周知的更新就是去掉了malloc_hook以及free_hook。所以劫持程序流的方式也不再是从前的无脑打hook了。像湖湘杯的house
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2022/06/11/ciscn_2022_newest_note/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2022/05/30/ciscn_2022_login/">login_normal</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2022-05-30T05:14:03.237Z" itemprop="datePublished">
-          2022-05-30
-      </time>
-    
-    
-    | 
-    <a href='/tags/ciscn/'>ciscn</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-     
-
-好久没有写博客了，水一个，后面两天在写完信号与系统大作业以后预计复现一下另外两道题。这题还是蛮简单的也就是两个点，第一操作符逻辑能不能逆出来，第二能不能第一时间反应这个是可见字符shellcode。调试主要都在逆向阶段了，利用真的没有任何难度。主要可能是别的队pwn手还是少了，不然这个题可能解会超过web。
-checksec
-libc2.33
-逆向首先我们在s处可以输入一个比较大的字符串。
-
-参考2021 ciscn g
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2022/05/30/ciscn_2022_login/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2022/05/21/week12_6_pwnable_secret_garden/">pwnable - secret garden(tbc)</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2022-05-21T07:22:51.685Z" itemprop="datePublished">
-          2022-05-21
-      </time>
-    
-    
-    | 
-    <a href='/tags/pwnable/'>pwnable</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-    
-
-overview
-reverse​        依旧是比较传统的菜单，这个应该不会还是栈题了吧。
-add​        相对比较清晰，malloc使用的是size[0]，这个值是可以自己控制的，但是也不排除有溢出的可能性。
-
-
-​        后面则是将flower的ptr插入到head中。
-
-show​        没啥特别的，就是打印出来。
-​        
-free这里有可能有溢出，并且有uaf
-
-free
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2022/05/21/week12_6_pwnable_secret_garden/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <nav class="pagination" role="pagination">
-          <a class="pull-left" href="../3/">← Newer Posts</a>
-          <a class="pull-right" href="../5/">Older Posts →</a>
-        </nav>
     </div>
-</section>
+</section> 
+
 <section id="statement">
     <div class="container text-center wow fadeInUp" data-wow-delay="0.5s">
         <div class="row">
@@ -703,8 +298,6 @@ free
         </div>
     </div>
 </section>
-<!-- ============================ END Content =========================== -->
-
       
 <!-- ============================ Footer =========================== -->
 

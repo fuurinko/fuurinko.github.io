@@ -273,6 +273,92 @@
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
                 <div class="col-md-4">
+                    <h3><a href="/2022/03/17/week3-3.2/">2014 hack.lu oreo</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-03-17T07:05:44.803Z" itemprop="datePublished">
+          2022-03-17
+      </time>
+    
+    
+    | 
+    <a href='/tags/UAF/'>UAF</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+         
+
+overview​        
+​        搞不懂为什么这么多题都要stripped。
+逆向add​        申请0x38大小的chunk，user space开始处存枪支的description,+0x19处存放枪支的name。
+​        输入name的时候，最大长度为56，导致能够溢出，覆盖fd字段。
+​        同时每输入信息以后都会有一个保存指针的操作：
+free
+​    
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/03/17/week3-3.2/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2022/03/17/week3-3.1/">xdctf2015_pwn200</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-03-17T06:43:25.178Z" itemprop="datePublished">
+          2022-03-17
+      </time>
+    
+    
+    | 
+    <a href='/tags/DynELF/'>DynELF</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+         
+
+xdctf2015_pwn200​    
+​        练习一下DynELF。
+​        看起来像ret2csu+DynELF。
+​        没啥好分析的，溢出112,然后直接写leak函数。
+1234567891011121314151617def leak(addr):	payload = b&#x27;a&#x27;*offset	payload += p32(write_plt)	pa
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/03/17/week3-3.1/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
                     <h3><a href="/2022/03/16/stack_learning_DynELF/">DynELF学习</a></h3>
                     <span>
                         <span class="post-meta">
@@ -594,97 +680,6 @@ Level1​        最最最基础的rop了，和前前一个module的前面的有
                     
                     <p class="pull-right readMore">
                         <a href="/2022/03/10/pwn.college_ROP/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2022/03/03/pwn.college_MemoryErrors/">MemoryErrors</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2022-03-03T03:18:50.193Z" itemprop="datePublished">
-          2022-03-03
-      </time>
-    
-    
-    | 
-    <a href='/tags/pwncollege/'>pwncollege</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-     
-
-​        视频主要介绍了栈溢出及其保护。保护的绕过包括canary和pie，并没有提到NX（那个似乎在后面一个module）
-​        传输题目到本地可以使用scp命令。
-1scp -i key -r hacker@dojo.pwn.college:/challenge/babymem_level4.1 /Users/rin/ctf/pwn/pwn_college/MemoryErrors
-
-
-
-
-
-Le
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2022/03/03/pwn.college_MemoryErrors/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2022/03/03/pwn.college_ProgramMisuse/">ProgramMisuse</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2022-03-03T03:09:26.547Z" itemprop="datePublished">
-          2022-03-03
-      </time>
-    
-    
-    | 
-    <a href='/tags/pwncollege/'>pwncollege</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-     
-
-
-
-
-
-​        关于这个module，做出题目的话大致有两个思路，一个是利用/bin/sh    来对整个shell提权，另外一个是利用设置了suid的特殊程序来读取flag。一般来说是第二个方法比较简单，但是有时候只有第一个方法可以行得通。
-Level1​        没有看视频，并不知道这个Misuse是什么意义，但是level1只要执行给的程序就能get flag。
-
-Level2​        到第
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2022/03/03/pwn.college_ProgramMisuse/">Read More...</a>
                     </p>
                     
                 </div>
