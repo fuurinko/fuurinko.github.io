@@ -273,6 +273,97 @@
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
                 <div class="col-md-4">
+                    <h3><a href="/2022/05/21/week12_6_pwnable_secret_garden/">pwnable - secret garden(tbc)</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-05-21T07:22:51.685Z" itemprop="datePublished">
+          2022-05-21
+      </time>
+    
+    
+    | 
+    <a href='/tags/pwnable/'>pwnable</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+    
+
+overview
+reverse​        依旧是比较传统的菜单，这个应该不会还是栈题了吧。
+add​        相对比较清晰，malloc使用的是size[0]，这个值是可以自己控制的，但是也不排除有溢出的可能性。
+
+
+​        后面则是将flower的ptr插入到head中。
+
+show​        没啥特别的，就是打印出来。
+​        
+free这里有可能有溢出，并且有uaf
+
+free
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/05/21/week12_6_pwnable_secret_garden/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2022/05/20/week12_5_pawnable_house_of-grey/">攻防世界 - house of grey</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-05-20T07:11:28.316Z" itemprop="datePublished">
+          2022-05-20
+      </time>
+    
+    
+    | 
+    <a href='/tags/pwnable/'>pwnable</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+    
+
+overview​        最近事情比较多，一般来说五月底的事情都很多，这个学期尤为严重。自己做的话一天一题基本不可能了，这里就大致学习一下思路吧。
+
+​        依旧是全绿。
+​        并且似乎是没有libc的，这个应该是攻防世界上的题。还是18年国赛半决赛捏。
+reverse​        程序的大致逻辑其实比较简单。首先还是随机划分一个巨大的空间，然后clone一个进程    。进程中实现了一个
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/05/20/week12_5_pawnable_house_of-grey/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
                     <h3><a href="/2022/05/18/week12_3.1_pawnable_babystack/">pawnable - babystack</a></h3>
                     <span>
                         <span class="post-meta">
@@ -597,92 +688,6 @@ reverse​        这道题的逻辑也比较简单，堆块的分配给我的�
                     
                     <p class="pull-right readMore">
                         <a href="/2022/05/13/week11_5_pwnable_teacher_tear/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2022/05/11/week11_3_ pwnable_deathnote/">pwnable - death_note</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2022-05-11T10:52:04.960Z" itemprop="datePublished">
-          2022-05-11
-      </time>
-    
-    
-    | 
-    <a href='/tags/pwnable/'>pwnable</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-    
-
-
-
-overview&amp;reverse​        
-​        
-​    比较明显是一道堆上的shellcode，程序逻辑比较简单,就是以idx创建不同的note，然后每个note只储存name，没有结构体啥的，Name，也就是我们输入进堆块的数据，必须是可见字符。之前做过一道类似的题，也是一个可见字符shellcode，可以用专门的工具或者嗯写出对应的可见字符版本的shellcode。
-利用​    
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2022/05/11/week11_3_ pwnable_deathnote/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2022/05/07/week10_6_ pwnable_sethefile/">pwnable - seethe file</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2022-05-07T07:49:45.348Z" itemprop="datePublished">
-          2022-05-07
-      </time>
-    
-    
-    | 
-    <a href='/tags/pwnable/'>pwnable</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-    
-
-overview
-reverseopen​        打开一个文件，但是文件名不能包含flag.顺便在0x804B0C0上初始化了一块magic buf，此外，一次只能打开一个文件。
-read​        读取文件到magic buf。
-1result = fread(magicbuf, 0x18Fu, 1u, fp);
-
-write​        对flag的一些字符串进行过滤，然后put magic buf。
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2022/05/07/week10_6_ pwnable_sethefile/">Read More...</a>
                     </p>
                     
                 </div>

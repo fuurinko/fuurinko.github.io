@@ -273,6 +273,90 @@
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
                 <div class="col-md-4">
+                    <h3><a href="/2022/03/17/mess_ida的结构体识别/">ida的结构体识别</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-03-17T12:35:07.220Z" itemprop="datePublished">
+          2022-03-17
+      </time>
+    
+    
+    | 
+    <a href='/tags/mess/'>mess</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+     
+
+0​        最近发现做堆题最慢的不是调试，而是在逆向的过程中寻找思路，而一般堆题的菜单都是由结构体管理，所以如果能在ida中快速方便地查看结构体相关的指针操作就再好不过了。然而一般来说ida是无法直接识别结构体这种比较高级的数据结构的，所以需要我们手动去创建并修改。
+1​        首先可以在idastructures的界面手动添加一些结构体
+​        右键空白处，选择add struct type，
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/03/17/mess_ida的结构体识别/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2022/03/17/week3-3.2/">2014 hack.lu oreo</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-03-17T07:05:44.803Z" itemprop="datePublished">
+          2022-03-17
+      </time>
+    
+    
+    | 
+    <a href='/tags/UAF/'>UAF</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+         
+
+overview​        
+​        搞不懂为什么这么多题都要stripped。
+逆向add​        申请0x38大小的chunk，user space开始处存枪支的description,+0x19处存放枪支的name。
+​        输入name的时候，最大长度为56，导致能够溢出，覆盖fd字段。
+​        同时每输入信息以后都会有一个保存指针的操作：
+free
+​    
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/03/17/week3-3.2/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
                     <h3><a href="/2022/03/17/week3-3.1/">xdctf2015_pwn200</a></h3>
                     <span>
                         <span class="post-meta">
@@ -595,93 +679,6 @@ wustctf2020_easyfastchecksec :
                     
                     <p class="pull-right readMore">
                         <a href="/2022/03/12/mess_pwn中的python字符串处理问题/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2022/03/10/pwn.college_ROP/">ROP</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2022-03-10T14:12:38.052Z" itemprop="datePublished">
-          2022-03-10
-      </time>
-    
-    
-    | 
-    <a href='/tags/pwncollege/'>pwncollege</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-     
-
-写在前面：如果是普通的环境，运行程序可能需要capstone，可以直接在官网下载源码编译，然后将编译好的动态链接库cp到lib里
- cp libcapstone.so.5 /lib/x86_64-linux-gnu/
-Level1​        最最最基础的rop了，和前前一个module的前面的有个level一模一样。
-1234567891011121314from pwn import*#context.termi
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2022/03/10/pwn.college_ROP/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2022/03/03/pwn.college_MemoryErrors/">MemoryErrors</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2022-03-03T03:18:50.193Z" itemprop="datePublished">
-          2022-03-03
-      </time>
-    
-    
-    | 
-    <a href='/tags/pwncollege/'>pwncollege</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-     
-
-​        视频主要介绍了栈溢出及其保护。保护的绕过包括canary和pie，并没有提到NX（那个似乎在后面一个module）
-​        传输题目到本地可以使用scp命令。
-1scp -i key -r hacker@dojo.pwn.college:/challenge/babymem_level4.1 /Users/rin/ctf/pwn/pwn_college/MemoryErrors
-
-
-
-
-
-Le
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2022/03/03/pwn.college_MemoryErrors/">Read More...</a>
                     </p>
                     
                 </div>
