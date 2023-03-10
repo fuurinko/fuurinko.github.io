@@ -71,7 +71,7 @@
         		<a class="sb-toggle-submenu">Categories<span class="sb-caret"></span></a>
             	<ul class="sb-submenu">
 				  	
-				    <li><a href="/categories/AUDITION/" class="animsition-link">AUDITION<small>(22)</small></a></li>
+				    <li><a href="/categories/AUDITION/" class="animsition-link">AUDITION<small>(23)</small></a></li>
 				    
 				    <li><a href="/categories/CSAPP-LAB/" class="animsition-link">CSAPP LAB<small>(1)</small></a></li>
 				    
@@ -259,17 +259,30 @@
         </div>
         <div class="col-md-8 col-md-offset-2">
       		
-    <div id="aplayer-NhCXwkXy" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div>
+    <div id="aplayer-vScmchRT" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div>
 
-<h2><span id="data-preprocessing">data preprocessing</span></h2><h4><span id="create-a-manul-dataset">create a manul dataset</span></h4>
+<p>obsidian://open?vault=_posts&amp;file=D2L_002_data_preprocessing</p>
+<h2><span id="data-preprocessing">data preprocessing</span></h2><h4><span id="create-a-manul-dataset">create a manul dataset</span></h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"></span><br><span class="line">os.makedirs(os.path.join(<span class="string">&#x27;..&#x27;</span>, <span class="string">&#x27;data&#x27;</span>), exist_ok=<span class="literal">True</span>)</span><br><span class="line">data_file = os.path.join(<span class="string">&#x27;..&#x27;</span>, <span class="string">&#x27;data&#x27;</span>, <span class="string">&#x27;house_tiny.csv&#x27;</span>)</span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(data_file, <span class="string">&#x27;w&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">    f.write(<span class="string">&#x27;&#x27;&#x27;NumRooms,RoofType,Price</span></span><br><span class="line"><span class="string">NA,NA,127500</span></span><br><span class="line"><span class="string">2,NA,106000</span></span><br><span class="line"><span class="string">4,Slate,178100</span></span><br><span class="line"><span class="string">NA,NA,140000&#x27;&#x27;&#x27;</span>)</span><br><span class="line"></span><br><span class="line">data = pd.read_csv(data_file)</span><br><span class="line"><span class="built_in">print</span>(data)</span><br></pre></td></tr></table></figure>
+
+
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/Screen%20Shot%202023-03-10%20at%2011.52.10%20AM.png" alt="Screen Shot 2023-03-10 at 11.52.10 AM"></p>
+<p>Manually input all the values of each rows and colmuns ,then save it in csv(Comma-separated values).</p>
+<p>and we usually use <code>pandas</code> to load the csv file, so do some manipulations.</p>
+<h4><span id="clear-the-lost-data">clear the lost data</span></h4><p>typical methods to address the lost datas are</p>
+<ol>
+<li>insert numbers with estimates values (<em>imputation</em> )</li>
+<li>discards the whole rows or columns that contain missing values(<em>deletion</em>)</li>
+</ol>
+<h5><span id="insert">insert</span></h5><p>use <code>iloc</code></p>
+<h3><span id></span></h3>
             <div class="clearfix"></div>
             <hr class="nogutter">
         </div>
         <nav class="m-pagination col-md-8 col-md-offset-2 col-sm-24" role="pagination">
     
     
-    <a class="pull-right" href="../../09/D2L_002_data_preprocessing/">
-        D2L_02_data_manipulation →
+    <a class="pull-right" href="../%E9%9A%8F%E8%AE%B0-007/">
+        随记-007 →
     </a>
     
 </nav>
