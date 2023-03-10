@@ -273,6 +273,48 @@
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
                 <div class="col-md-4">
+                    <h3><a href="/2022/04/01/week6-3.1/">NoLeak</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-04-01T13:34:22.000Z" itemprop="datePublished">
+          2022-04-01
+      </time>
+    
+    
+    | 
+    <a href='/tags/Chunk-Overlapping/'>Chunk Overlapping</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+     
+
+overview
+​        非常之畸形。
+re​        逻辑比较简单，结构体中只有一个chunk bp的字段。漏洞点也很魔幻，free只free结构体中保存的指针，而没有free malloc出来的ptr本身，并且没有置0，顺便edit的时候size没有限定，可以造成堆溢出。
+​        并且题目并没有可控的输出功能,虽然调用了write()，但是我们很难通过改got表来调用。    
+利用​   
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/04/01/week6-3.1/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
                     <h3><a href="/2022/04/01/pwn.college_Dynamic_Allocator_Misuse/">Dynamic_Allocator_Misuse</a></h3>
                     <span>
                         <span class="post-meta">
@@ -622,45 +664,6 @@ stackret2shellcode123456789101112from pwn import*from LibcSearcher import LibcSe
                     
                     <p class="pull-right readMore">
                         <a href="/2022/03/21/sum_一些板子/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2022/03/20/stack_ret2csu/">jarvisoj_level5</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2022-03-19T17:15:06.878Z" itemprop="datePublished">
-          2022-03-20
-      </time>
-    
-    
-    | 
-    <a href='/tags/ret2csu/'>ret2csu</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-     
-
-jarvisoj_level5​        这个题吧，我好像以前做过，是个纯纯的ret2csu的板子题。
-12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364from pwn import*from LibcSearcher impo
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2022/03/20/stack_ret2csu/">Read More...</a>
                     </p>
                     
                 </div>
