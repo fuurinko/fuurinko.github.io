@@ -75,7 +75,7 @@
         		<a class="sb-toggle-submenu">Categories<span class="sb-caret"></span></a>
             	<ul class="sb-submenu">
 				  	
-				    <li><a href="/categories/AUDITION/" class="animsition-link">AUDITION<small>(23)</small></a></li>
+				    <li><a href="/categories/AUDITION/" class="animsition-link">AUDITION<small>(22)</small></a></li>
 				    
 				    <li><a href="/categories/CSAPP-LAB/" class="animsition-link">CSAPP LAB<small>(1)</small></a></li>
 				    
@@ -263,8 +263,7 @@
         </div>
         <div class="col-md-8 col-md-offset-2">
       		
-    <div id="aplayer-PMTBHpqu" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div> 
-
+    <div id="aplayer-ZqQDWRJf" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div> 
 <h2><span id="从一个例子开始">从一个例子开始：</span></h2><p>​        先还原一个很适合的情景，pwnable的secret of my heart这道题。</p>
 <p>​        我们有一个非常好用的空字节溢出，2.23的libc，可以申请的size最大为0x100，heap base已知，没有更多特殊的限制，现在我们需要leak libc，同时需要double free来任意地址写，我们有什么好的思路？</p>
 <p>​        首先由于我们有一个空字节溢出，所以假如有三个连续的allocated chunk，可以先free掉第一个chunk，再申请回来，溢出一个空字节到下面的堆块的size位，覆盖previnuse位</p>
@@ -280,11 +279,9 @@
 <p>​        所以在我们之前的例子中，当我们free 这个0x100chunk，此时我们构造chunk的prev size为0x20，那么0x100chunk就认定其前一个chunk也是free chunk，因此需要进行合并。</p>
 <p>​        合并的过程需要unlink将其从free list中取出，而这个过程有一定的check，首先就要求</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chunksize(P) = prev_size (next_chunk(P))</span><br></pre></td></tr></table></figure>
-
 <p>​        也就是下一个chunk的prev size需要与当前chunksize相等。这里的当前chunk实际是我们正在free chunk的上一个chunk，在例子中就是chunk0，其size需要等于chunk1 prev size，也就是20。</p>
 <p>​            然而我们仅仅伪造这个是不够的。我们还需要满足</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(FD-&gt;bk = P || BK-&gt;fd = P)</span><br></pre></td></tr></table></figure>
-
 <p>​        这里p就是chunk0，所以需要满足这个条件，就可以吧p的fd和bk全部设为自己，那么不管怎么指都能满足条件。</p>
 <p>​        然后进行unlink，但是由于fd 和bk都是p，所以这里虽然size会变化，但是内存分布是没有变化的。</p>
 <p>​        此外，因为向前合并了，所以chunk1被认为是freechunk，chunk2的prevsize位以及prev inuse位就会为0x120和0x70。</p>

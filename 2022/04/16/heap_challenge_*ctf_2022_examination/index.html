@@ -75,7 +75,7 @@
         		<a class="sb-toggle-submenu">Categories<span class="sb-caret"></span></a>
             	<ul class="sb-submenu">
 				  	
-				    <li><a href="/categories/AUDITION/" class="animsition-link">AUDITION<small>(23)</small></a></li>
+				    <li><a href="/categories/AUDITION/" class="animsition-link">AUDITION<small>(22)</small></a></li>
 				    
 				    <li><a href="/categories/CSAPP-LAB/" class="animsition-link">CSAPP LAB<small>(1)</small></a></li>
 				    
@@ -263,8 +263,7 @@
         </div>
         <div class="col-md-8 col-md-offset-2">
       		
-    <div id="aplayer-UmHlxZiH" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div> 
-
+    <div id="aplayer-ArpeOhtM" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div> 
 <h1><span id="overivew">overivew</span></h1><p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-04-21%20%E4%B8%8B%E5%8D%888.26.01.png" alt="截屏2022-04-21 下午8.26.01"></p>
 <p>​        其实把程序简化来看的话就是一道比较常规的chunk overlapping，漏洞很明显，但是又不完全明显，需要先认真把程序逆清楚。在pwn题的几个环节中，逆向确定漏洞点，分析漏洞寻找思路，写exp布置堆风水，调试扣细节，我觉得最头疼的可能就是逆向了，虽然过程也许不难，但是真的很bewilder。</p>
 <p>​        其实这个程序看似非常复杂，菜单就写了十五分钟，但逆来逆去最关键居然的还是那个一眼uint溢出的漏洞，真的很难绷。利用它获得heap base和任意地址加1，于是比较自然的思路就是构造一个off by one进行chunk overlap。虽然但是当时花了大半天时间看musl pwn，没看出来，晚上还被拉出去看电影了，于是examination也懒得看了。主要是逆向逆得脑壳疼，程序没逆干净那个任意地址+1也没有利用的完整思路，晚上十点多坐在麦当劳写了会儿菜单就爬了，总共也没看超过一个小时，第二天起床发现学长通宵排堆结果失误了，确实没有绷住。这么会堆风水，以后职业算卦好了。</p>
@@ -276,44 +275,30 @@
 <p>bss段上定义一个结构体，第一个字段为chunk1 ptr，然后输入question的数量，并将数量存入chunk2，也就是<code>**chunk1 ptr</code>。</p>
 <p>大致的字段如下：</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">head[<span class="number">1</span>] = chunk1_ptr</span><br><span class="line">*chunk1_ptr = chunk2_ptr</span><br><span class="line">*chunk2_ptr = num</span><br></pre></td></tr></table></figure>
-
-
-
 <h3><span id="give-scores">give scores</span></h3><p>​        改卷，这个read暂时不管，然后生成学生的成绩。这时如果:</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> ( *(_DWORD *)(head[i] + <span class="number">24LL</span>) == <span class="number">1</span> )</span><br><span class="line">&#123;</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">&quot;the student is lazy! b@d!&quot;</span>);</span><br><span class="line">  v2 -= <span class="number">10</span>;</span><br><span class="line">&#125;</span><br><span class="line">*(_DWORD *)(*(_QWORD *)head[i] + <span class="number">4LL</span>) = v2;</span><br></pre></td></tr></table></figure>
-
 <p>​        v2是个uint，考虑可以溢出。</p>
 <h3><span id="review">review</span></h3><p>​        为学生添加一个review，然后在<code>*(head[idx] + 8LL)</code>创建comment chunk，将size保存在<code>*(head[idx] + 16)</code>。</p>
 <h3><span id="call">call</span></h3><p>​        类似free。只有三次机会。没有uaf。</p>
 <h3><span id="never_pray">never_pray</span></h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">v0 = <span class="built_in">malloc</span>(<span class="number">0x300</span>uLL);</span><br><span class="line">read_str(<span class="number">0LL</span>, v0, <span class="number">768LL</span>);</span><br></pre></td></tr></table></figure>
-
-
-
 <p>下辈子再逆吧。</p>
 <h1><span id="思路">思路</span></h1><p>​        这个part只是寻找思路，不管堆风水啥的。</p>
 <h2><span id="get-reward">get reward</span></h2><p>​        首先一眼uint溢出，鉴定为真。乱利用一下。</p>
 <p>​        先看teacher module 的give score part。</p>
 <p>​        如果要执行到lazy,需要满足一些条件。</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">  buf[<span class="number">0</span>] &amp;= <span class="number">127u</span>;</span><br><span class="line">  score = buf[<span class="number">0</span>] % (<span class="number">10</span> * chunk_list[i]-&gt;info_ptr-&gt;quesNum);</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;score for the %dth student is %d\n&quot;</span>, i, score);</span><br><span class="line">  <span class="keyword">if</span> ( LODWORD(chunk_list[i]-&gt;is_lazy_pray_union) == <span class="number">1</span> )</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="built_in">puts</span>(<span class="string">&quot;the student is lazy! b@d!&quot;</span>);</span><br><span class="line">    score -= <span class="number">10</span>;                              <span class="comment">// overflow</span></span><br><span class="line">  &#125;</span><br><span class="line">  chunk_list[i]-&gt;info_ptr-&gt;score = score;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">puts</span>(<span class="string">&quot;finish&quot;</span>);</span><br></pre></td></tr></table></figure>
-
 <p>​        首先确定score的值。</p>
 <p>​        它的最初值来源于</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">score = buf[<span class="number">0</span>] % (<span class="number">10</span> * chunk_list[i]-&gt;info_ptr-&gt;quesNum);<span class="comment">//？？？？？？？</span></span><br></pre></td></tr></table></figure>
-
 <p>​        而这个buf0来源于：</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> ( i = <span class="number">0</span>; i &lt; count; ++i )</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="keyword">if</span> ( read(fd, buf, <span class="number">8uLL</span>) != <span class="number">8</span> )             <span class="comment">// fd is point to a random number</span></span><br><span class="line">    &#123;</span><br><span class="line">      <span class="built_in">puts</span>(<span class="string">&quot;read_error&quot;</span>);</span><br><span class="line">      <span class="built_in">exit</span>(<span class="number">-1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    buf[<span class="number">0</span>] &amp;= <span class="number">0x7F</span>u;</span><br></pre></td></tr></table></figure>
-
 <p>​        所以buf[0]就是一个只有7位的随机数，最大值为127。</p>
 <p>​        这里有一个 <code>is_lazy_pray_union</code>,在stu module的pray part中被设置。只要stu第一次pray的话就会被设置为1。</p>
 <p>​        所以大概一个这样的步骤就能稳定get reward。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">io.recvuntil(<span class="string">&#x27;role: &lt;0.teacher/1.student&gt;: &#x27;</span>)</span><br><span class="line">io.sendline(<span class="string">&#x27;0&#x27;</span>)</span><br><span class="line">add_student(<span class="number">1</span>)</span><br><span class="line">change_role(<span class="number">1</span>)</span><br><span class="line">pray()</span><br><span class="line">change_role(<span class="number">0</span>)</span><br><span class="line">give_score()</span><br><span class="line">change_role(<span class="number">1</span>)</span><br><span class="line">check()</span><br></pre></td></tr></table></figure>
-
 <h2><span id="任意地址加1">任意地址加1？</span></h2><p>​        reward提供给我们了两个功能，一个是leak heap，一个是任意地址+1。正如前面所说的那样，我们能很自然地想到利用off by one 构造 chunk overlapping，条件的话确实都是齐全的。</p>
 <p>​        并且虽然每一个student只能获得一次reward，但是我们能够申请很多个stu，并且程序提供给我们了change stu id功能，以至于每一个stu我们都能获得一次rewatd。</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> ( HIDWORD(chunk_list[student_id]-&gt;is_lazy_pray_union) == <span class="number">1</span> )<span class="comment">// </span></span><br><span class="line">  &#123;</span><br><span class="line">    <span class="built_in">puts</span>(<span class="string">&quot;already gained the reward!&quot;</span>);</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
-
-
-
 <p>​        但是overlapping哪个chunk呢？其实不难想，只是这个题申请的东西乱七八糟的，东西太多了混淆了视听，但是仔细理一下，虽然程序功能很多，但是能对chunk进行写有意义的操作的只有comment ，set mode 和 never pray again。</p>
 <p>​        而never pray again看起来并不像是一个在过程中被溢出的chunk，而比较像是题目为我们刻意创造以修改<code>exit_hook</code>的。</p>
 <p>​        而set mode 的size则为固定的0x20，反观comment size却是结构体中的字段，也确实可以+1。</p>
@@ -324,8 +309,7 @@
 <p>​        可以比较清楚地看到comment chunk的下一个物理相邻的chunk是某个结构体chunk。我们则可以很轻易地将其<code>prev_inuse</code>位覆盖为0（这里控制好chunk size，不能以16字节对齐，从而使得当前chunk的最后八字节输入在下一个chunk的<code>prev_size</code>位上。）</p>
 <p>​        之前通过逆向我们可以知道程序分别为老师以及学生定义了一个结构体，而学生结构体的指针是保存在老师结构体中的。所以这里的可以被覆盖的chunk就是老师的结构体。也就是</p>
 <p>伪代码中v2指向的chunk。</p>
-<img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-04-22%20%E4%B8%8B%E5%8D%882.14.52.png" alt="截屏2022-04-22 下午2.14.52" style="zoom:50%;">
-
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-04-22%20%E4%B8%8B%E5%8D%882.14.52.png" alt="截屏2022-04-22 下午2.14.52" style="zoom:50%;"></p>
 <p>​        这样我们就已经有溢出的target chunk了。但是注意到libc版本是2.31。这样我们就没有办法伪造chunk prev size位，并改prev inuse位为0来造成overlapping，所以如果我们只能溢出几个字节的话，就只能关注与chunk的size位。</p>
 <p>​        但是，但是。</p>
 <p>​        这个任意地址+1确实太离谱了，尤其还是在comment size是储存在chunk上的，地址是绝对可控的，所以我们可以精确到位地将size在十位甚至百位上修改。这样就能造成比较简单的堆溢出，然后直接将下一个chunk全部覆盖掉成为fake chunk。</p>
@@ -339,7 +323,7 @@
 <p>​        d310保存该id对应的comment的size，其上一个字段则是指向comment也就是d308指向的内容，所以假设这个id是1，我们就可以完全控制student 2的chunk。</p>
 <p>​        控制这个chunk首先比较简洁的方式是直接把comment chunk的size改成一个比较大的数，于是能直接打印出下一个comment chunk，而这个chunk 会在后面的步骤中被free，于是能够直接通过打印fd 和bk位从而leak libc。</p>
 <p>​        所以基本的思路就是，add stu 0 comment，然后对应size的地址内容+1，将size改为一个较大的数，然后直接edit comment，溢出下一个stu 以及teacher 结构体chunk，伪造其储存的comment chunk的size，然后free 下一个chunk的comment（这个chunk应该为一个small chunk/large chunk），最后通过打印comment1直接leak libc。    </p>
-<h3><span id="改freehook为one_gadget">改freehook为one_gadget</span></h3><p>​        leak libc后，我们可以利用相似的方法直接覆盖comment指针为<code>free_hook    </code>地址，然后二次edit comment改其内容为<code>one_gadget</code>。</p>
+<h3><span id="改freehook为one_gadget">改freehook为one_gadget</span></h3><p>​        leak libc后，我们可以利用相似的方法直接覆盖comment指针为<code>free_hook</code>地址，然后二次edit comment改其内容为<code>one_gadget</code>。</p>
 <p>​        exp暂时不发。</p>
 
             <div class="clearfix"></div>

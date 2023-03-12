@@ -72,7 +72,7 @@
         		<a class="sb-toggle-submenu">Categories<span class="sb-caret"></span></a>
             	<ul class="sb-submenu">
 				  	
-				    <li><a href="/categories/AUDITION/" class="animsition-link">AUDITION<small>(23)</small></a></li>
+				    <li><a href="/categories/AUDITION/" class="animsition-link">AUDITION<small>(22)</small></a></li>
 				    
 				    <li><a href="/categories/CSAPP-LAB/" class="animsition-link">CSAPP LAB<small>(1)</small></a></li>
 				    
@@ -380,13 +380,11 @@
                       
                         
     
-
 米版阉割，原文加上代码将近3w字，这里就随便挑一点重点放上来。而且图懒得搞了，就当记录一下。
-环境搭建首先下载源码：
+ 环境搭建首先下载源码：
 1wget https://github.com/FFmpeg/FFmpeg/archive/n3.2.1.tar.gz
-
 4） ffmpeg编译按照https://trac.ffmpeg.org/wiki/CompilationGuide/Ubuntu，安装编译相关依赖
-12345678910111213
+123456789101112131
                       
                     </p>
                     
@@ -423,15 +421,14 @@
                       
                         
      
-
 因为一些奇怪的原因，开始学一下qemu。
 环境准备busybox
 基础知识内存结构qemu使用mmap出0x40000000大小的内存作为虚拟机的物理内存，在qemu存在两个转换层，分别是：
 用户地址-&gt;物理地址
 物理地址-&gt;qemu虚拟地址
 具体转换如下：
-/proc/$pid/pagemap 中储存了当前进程的页表，使得用户空间可以根据页表找到每个虚拟页面映射的物理帧。
-通过读取这个页表，就能够实现从用户
+/proc/$pid/pagemap中储存了当前进程的页表，使得用户空间可以根据页表找到每个虚拟页面映射的物理帧。
+通过读取这个页表，就能够实现从用户虚拟
                       
                     </p>
                     
@@ -466,8 +463,8 @@
                 <div class="col-md-8">
                     <p>
                       
-                        基础知识系统物理内存探测当操作系统被启动后，需要探测当前内存，了解当下物理内存分布状态。一半探测内存的方式有BIOS中断调用和直接探测两种，
-在ucore中，系统选择通过bios调用的INT 15h中断中的e820h中断获取内存信息，并把其映射结构保存在物理地址0x8000处。而这些操作只能在实模式下完成，所以在bootloader进入保护模式前完成这一部分工作比较合适。这些部分由boot/bootasm.S中从probe_memory
+                         基础知识系统物理内存探测当操作系统被启动后，需要探测当前内存，了解当下物理内存分布状态。一半探测内存的方式有BIOS中断调用和直接探测两种，
+在ucore中，系统选择通过bios调用的INT 15h中断中的e820h中断获取内存信息，并把其映射结构保存在物理地址0x8000处。而这些操作只能在实模式下完成，所以在bootloader进入保护模式前完成这一部分工作比较合适。这些部分由boot/bootasm.S中从probe_memor
                       
                     </p>
                     
@@ -590,9 +587,8 @@ kernel pwn相关的知识点。至少到能做一点简单的题的程度。
 解决方式：
 首先删除已经安装的vmware tools。具体方法是
 12cd vmware-tools-distrib/binsudo ./vmware-uninstall-tools.pl
-
 接着直接
-1sudo apt-get install open-vm-tools open-vm-to
+1sudo apt-get install open-vm-tools open-vm-too
                       
                     </p>
                     
@@ -629,11 +625,10 @@ kernel pwn相关的知识点。至少到能做一点简单的题的程度。
                       
                         
          
-
 环境搭建一般来说教程都会要求我们编译一个内核，安装一个busybox以及qemu，但是实际做题需要的环境只有qemu，因为题目会提供一个内核镜像，而busybox也不是必须，但是在这里还是都搭建一下。
 qemu一般来说elf的话只需要用包管理器下载：sudo apt install qemu-system
 有特殊需求可以用源码编译。但是暂时就省去这一步了。
-（ps：这里有一个坑，对于macos + pd的组合，你
+（ps：这里有一个坑，对于macos + pd的组合，你的
                       
                     </p>
                     
@@ -670,11 +665,10 @@ qemu一般来说elf的话只需要用包管理器下载：sudo apt install qemu-
                       
                         
     
-
 一个简单的复建，题目是今年西南赛区pwn1，是一个很常规的栈的rop，套了orw。
 逆向​        这个题的逆向不算复杂，同样也是操作符控制指令的形式，输多少个操作符就执行多少次指令，具体的过程就不写了。
 ​        操作符对应的指令如下：
-123456789#1 --&gt; &gt;	[++buf_idx]#2 --&gt; &lt;	[--buf_idx]	#3 --&gt; +	[++buf[buf_i
+123456789#1 --&gt; &gt;	[++buf_idx]#2 --&gt; &lt;	[--buf_idx]	#3 --&gt; +	[++buf[buf_id
                       
                     </p>
                     

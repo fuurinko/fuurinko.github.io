@@ -75,7 +75,7 @@
         		<a class="sb-toggle-submenu">Categories<span class="sb-caret"></span></a>
             	<ul class="sb-submenu">
 				  	
-				    <li><a href="/categories/AUDITION/" class="animsition-link">AUDITION<small>(23)</small></a></li>
+				    <li><a href="/categories/AUDITION/" class="animsition-link">AUDITION<small>(22)</small></a></li>
 				    
 				    <li><a href="/categories/CSAPP-LAB/" class="animsition-link">CSAPP LAB<small>(1)</small></a></li>
 				    
@@ -263,8 +263,7 @@
         </div>
         <div class="col-md-8 col-md-offset-2">
       		
-    <div id="aplayer-pBeakTHx" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div> 
-
+    <div id="aplayer-NXiTyIoj" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div> 
 <h3><span id="patch-alarm">patch alarm</span></h3><p>比较弱智的一个操作，但是如果没注意到的话还是有一点点坑。</p>
 <p>一般来说许多题都喜欢在main函数里加alarm。</p>
 <p>alarm会导致调试的时候超时，如果没有解决的话基本不能调试。算最基础的的反调试手法了。</p>
@@ -288,15 +287,14 @@
 <p>但是紧接着第二问个问题，这个py脚本通篇是python2，而我日常无论哪个系统都是py3。</p>
 <p>所以解决方式有2</p>
 <ol>
-<li> 将roputils转换为py3</li>
-<li> ubuntu切换py版本</li>
+<li>将roputils转换为py3</li>
+<li>ubuntu切换py版本</li>
 </ol>
 <p>反正第一种就是用一个叫2to3的脚本。是py2自带的，使用需要先安装py2.7，我ubuntu18.04自带py2.7，所以就直接<code>2to3 -w roputils.py</code></p>
 <p>具体参数可以google。</p>
 <p>然后又来了第三个问题。</p>
 <p>来看我的报错。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[+] Starting local process <span class="string">&#x27;./babystack&#x27;</span>: pid <span class="number">745</span></span><br><span class="line">Traceback (most recent call last):</span><br><span class="line">  File <span class="string">&quot;babystack.py&quot;</span>, line <span class="number">23</span>, <span class="keyword">in</span> &lt;module&gt;</span><br><span class="line">    rop = roputils.ROP(<span class="string">&#x27;./babystack&#x27;</span>)</span><br><span class="line">  File <span class="string">&quot;/home/fur1n/pwn/week1/roputils.py&quot;</span>, line <span class="number">440</span>, <span class="keyword">in</span> __init__</span><br><span class="line">    ELF.__init__(self, *args, **kwargs)</span><br><span class="line">  File <span class="string">&quot;/home/fur1n/pwn/week1/roputils.py&quot;</span>, line <span class="number">85</span>, <span class="keyword">in</span> __init__</span><br><span class="line">    m = re.search(<span class="string">r&#x27;^\s*(?P&lt;key&gt;[^:]+):\s+(?P&lt;value&gt;.+)$&#x27;</span>, line)</span><br><span class="line">  File <span class="string">&quot;/usr/lib/python3.6/re.py&quot;</span>, line <span class="number">182</span>, <span class="keyword">in</span> search</span><br><span class="line">    <span class="keyword">return</span> _<span class="built_in">compile</span>(pattern, flags).search(string)</span><br><span class="line">TypeError: cannot use a string pattern on a <span class="built_in">bytes</span>-like <span class="built_in">object</span></span><br></pre></td></tr></table></figure>
-
 <p>这个功能好像并不会在byte前加b。。。</p>
 <p>目前来说并没有发现解决方法。</p>
 <p>所以只能尝试更换默认的py版本。具体可以google</p>

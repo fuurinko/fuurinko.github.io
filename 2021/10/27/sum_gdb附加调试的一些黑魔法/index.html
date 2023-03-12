@@ -75,7 +75,7 @@
         		<a class="sb-toggle-submenu">Categories<span class="sb-caret"></span></a>
             	<ul class="sb-submenu">
 				  	
-				    <li><a href="/categories/AUDITION/" class="animsition-link">AUDITION<small>(23)</small></a></li>
+				    <li><a href="/categories/AUDITION/" class="animsition-link">AUDITION<small>(22)</small></a></li>
 				    
 				    <li><a href="/categories/CSAPP-LAB/" class="animsition-link">CSAPP LAB<small>(1)</small></a></li>
 				    
@@ -263,14 +263,10 @@
         </div>
         <div class="col-md-8 col-md-offset-2">
       		
-    <div id="aplayer-VnvAOHgY" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div> 
-
+    <div id="aplayer-NbHlkApZ" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div> 
 <h2><span id="1abstract">1）abstract</span></h2><p>​    这个part主要综合了一些奇怪的调试中遇到的问题，不定期更新。</p>
 <h2><span id="2格式化字符串-cctf-pwn3">2）格式化字符串-cctf-pwn3</span></h2><h3><span id="1pausep导致error-could-not-find-elf-base">1）pause（p）导致ERROR: Could not find ELF base</span></h3><h5><span id="问题">问题</span></h5><p>​    在开始动调这个exp的时候，发现一个很奇怪的点就是如果下的断点的模式gdb.attach(sh)，那么程序会异常退出，大概是这样：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">Attaching to program: /home/rin/pwn/ctf-wiki/format/cctf-pwn3/pwn3, process 27837</span><br><span class="line">Reading symbols from /lib/i386-linux-gnu/libc.so.6...Reading symbols from /usr/lib/debug//lib/i386-linux-gnu/libc-2.27.so...done.</span><br><span class="line">ERROR: Could not find ELF base!</span><br><span class="line"><span class="keyword">done</span>.</span><br><span class="line">Reading symbols from /lib/ld-linux.so.2...Reading symbols from /usr/lib/debug//lib/i386-linux-gnu/ld-2.27.so...done.</span><br><span class="line"><span class="keyword">done</span>.</span><br><span class="line">Cannot access memory at address 0xf7fad924</span><br><span class="line"></span><br><span class="line">warning: Unable to find dynamic linker breakpoint <span class="keyword">function</span>.</span><br><span class="line">GDB will be unable to debug shared library initializers</span><br><span class="line">and track explicitly loaded dynamic code.</span><br><span class="line">Failed to <span class="built_in">read</span> a valid object file image from memory.</span><br><span class="line">ERROR: Could not find ELF base!</span><br><span class="line">ERROR: Could not find ELF base!</span><br><span class="line">ERROR: Could not find ELF base!</span><br><span class="line">ERROR: Could not find ELF base!</span><br><span class="line">ERROR: Could not find ELF base!</span><br><span class="line">ERROR: Could not find ELF base!</span><br><span class="line">ERROR: Could not find ELF base!</span><br><span class="line">0xf7f85b59 <span class="keyword">in</span> ?? ()</span><br><span class="line">ERROR: Could not find ELF base!</span><br><span class="line">ERROR: Could not find ELF base!</span><br><span class="line">ERROR: Could not find ELF base!</span><br><span class="line">ERROR: Could not find ELF base!</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-
 <p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-10-27%20%E4%B8%8A%E5%8D%8811.17.59.png" alt="截屏2021-10-27 上午11.17.59"></p>
 <p>​    首先需要知道这个报错的原因。</p>
 <p>​    虽然我并没有查到<code>ERROR: Could not find ELF base!</code>这个报错发生的直接trigger，但是很显然这个报错发生是因为程序进程中止，因此无法找到elf base。</p>
@@ -285,11 +281,11 @@
 <p>​    <code>__kernel_vsyscal</code> is the method used by linux-gate.so (a part of the Linux kernel) to make a system call using the fastest available method, preferably the <code>sysenter</code> instruction. </p>
 </blockquote>
 <p>​    这其实就是个系统调用方法，回想一下在srop中的知识点，其实每个系统调用都是一个中断，然后系统切换至内核态进行工作，完成后再切换回用户态，并将结果返回至用户态。</p>
-<p>​    所以出现   <code>__kernel_vsyscal</code> 意味着此刻程序正在进行系统调用。我们同时可以注意到，当  <code>__kernel_vsyscal</code> 函数执行完成，下一个函数则是<code>read</code>函数，也符合我们程序的逻辑–一个菜单题，exp中任何一条语句的结束都将使得函数执行流回到main函数，等待我们的指令。</p>
+<p>​    所以出现   <code>__kernel_vsyscal</code> 意味着此刻程序正在进行系统调用。我们同时可以注意到，当  <code>__kernel_vsyscal</code> 函数执行完成，下一个函数则是<code>read</code>函数，也符合我们程序的逻辑—一个菜单题，exp中任何一条语句的结束都将使得函数执行流回到main函数，等待我们的指令。</p>
 <p>当然要结束这个函数我们只需要gdb finish。</p>
 <p>或者直接使用gdb.attach(sh,”break xxx”)。</p>
 <p>关于系统调用我想又可以写一篇专门的博客来研究，这里就不费笔墨了，详情可见：</p>
-<h2><span id="4gdb附加调试下断点的几种姿势">4）gdb附加调试下断点的几种姿势。</span></h2><h5><span id="1gdbattachp">1）gdb.attach(p)</span></h5><h5><span id="2gdbattachpbreak-ltfunc-namegt">2）gdb.attach(p,”break &lt;func name&gt;”)</span></h5><h5><span id="3p-gdbdebugelfbreak-ltfunc-namegt">3）p = gdb.debug(“elf”,”break &lt;func name&gt;” )</span></h5><h2><span id="5p-gdbdebugelfbreak-ltfunc-namegt">5）p = gdb.debug(“elf”,”break &lt;func name&gt;” )</span></h2><p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-04%20%E4%B8%8B%E5%8D%887.35.02.png" alt="截屏2021-11-04 下午7.35.02">   </p>
+<h2><span id="4gdb附加调试下断点的几种姿势">4）gdb附加调试下断点的几种姿势。</span></h2><h5><span id="1gdbattachp">1）gdb.attach(p)</span></h5><h5><span id="2gdbattachpbreak">2）gdb.attach(p,”break \<func name>“)</func></span></h5><h5><span id="3p-gdbdebugelfbreak">3）p = gdb.debug(“elf”,”break \<func name>“ )</func></span></h5><h2><span id="5p-gdbdebugelfbreak">5）p = gdb.debug(“elf”,”break \<func name>“ )</func></span></h2><p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-04%20%E4%B8%8B%E5%8D%887.35.02.png" alt="截屏2021-11-04 下午7.35.02">   </p>
 <p>​    </p>
 <h2><span id="6linux-signal">6）Linux Signal</span></h2><p>​            在调试萌新赛题目的时候总是按ctrl+c试图终给程序一个断点，然后就报错。如图</p>
 <p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-11-05%20%E4%B8%8B%E5%8D%882.46.31.png" alt="截屏2021-11-05 下午2.46.31"></p>

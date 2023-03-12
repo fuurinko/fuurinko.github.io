@@ -75,7 +75,7 @@
         		<a class="sb-toggle-submenu">Categories<span class="sb-caret"></span></a>
             	<ul class="sb-submenu">
 				  	
-				    <li><a href="/categories/AUDITION/" class="animsition-link">AUDITION<small>(23)</small></a></li>
+				    <li><a href="/categories/AUDITION/" class="animsition-link">AUDITION<small>(22)</small></a></li>
 				    
 				    <li><a href="/categories/CSAPP-LAB/" class="animsition-link">CSAPP LAB<small>(1)</small></a></li>
 				    
@@ -263,8 +263,7 @@
         </div>
         <div class="col-md-8 col-md-offset-2">
       		
-    <div id="aplayer-JWQPBjaj" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div> 
-
+    <div id="aplayer-JEPYAelX" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div> 
 <h4><span id="1概述">1）概述</span></h4><p>这是一件悲伤的事情，我的ubuntu它又崩了。</p>
 <p>最开始的时候，发现pwndbg无法查看heap等信息，这个问题我之前也遇到过，但是情况有非常大的区别。</p>
 <p>之前是我2.32的本地默认libc，执行程序时加载2.23，然后因为指定的lbc-2.23.so没有附带调试符号信息，所以也看不了heap，但是这一次，本机都看不了了？</p>
@@ -281,7 +280,6 @@
 </ol>
 <p>等等为什么ld和libc都没了。。</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">pwndbg: created $rebase, $<span class="function">ida gdb <span class="title">functions</span> <span class="params">(can be used with print/<span class="keyword">break</span>)</span></span></span><br><span class="line"><span class="function">Reading symbols from ./worldline...done.</span></span><br><span class="line"><span class="function">Attaching to program: /home/fur1n/pwn/heap/merely_game/wordline/worldline, process 12250</span></span><br><span class="line"><span class="function">Reading symbols from /lib/x86_64-linux-gnu/libc.so.6...</span></span><br><span class="line"><span class="function">warning: the debug information found in &quot;/usr/lib/debug<span class="comment">//lib/x86_64-linux-gnu/libc-2.27.so&quot; does not match &quot;/lib/x86_64-linux-gnu/libc.so.6&quot; (CRC mismatch)</span></span></span><br></pre></td></tr></table></figure>
-
 <p>好嘛。</p>
 <blockquote>
 <h6><span id="about-crc-errors">About CRC Errors</span></h6><p>A CRC error indicates that some data in your Zip file (.zip or .zipx) is damaged. CRC stands for <strong>cyclic redundancy check</strong>. It is a calculation made from all the data in a file to insure accuracy. When you add a file to a Zip file, WinZip calculates a CRC value for the file and saves the value in the Zip file. When you later extract the file from the Zip file, WinZip calculates the CRC of the extracted file and compares it to the value stored when the file was zipped. If these two CRC values do not match, the file that was extracted does not match the original file, and WinZip will display a <strong>CRC Error</strong> message.</p>
@@ -296,13 +294,13 @@
 <p>GDB supports two ways of specifying the separate debug info file:</p>
 <ul>
 <li>The executable contains a <em>debug link</em> that specifies the name of the separate debug info file. The separate debug file’s name is usually executable.debug, where executable is the name of the corresponding executable file without leading directories (e.g., ls.debug for /usr/bin/ls). In addition, the debug link specifies a 32-bit <em>Cyclic Redundancy Check</em> (CRC) checksum for the debug file, which GDB uses to validate that the executable and the debug file came from the same build.</li>
-<li>The executable contains a <em>build ID</em>, a unique bit string that is also present in the corresponding debug info file. (This is supported only on some operating systems, when using the ELF or PE file formats for binary files and the GNU Binutils.) For more details about this feature, see the description of the –build-id command-line option in <a target="_blank" rel="noopener" href="http://sourceware.org/binutils/docs/ld/Options.html#Options">Command Line Options</a> in The GNU Linker. The debug info file’s name is not specified explicitly by the build ID, but can be computed from the build ID, see below.</li>
+<li>The executable contains a <em>build ID</em>, a unique bit string that is also present in the corresponding debug info file. (This is supported only on some operating systems, when using the ELF or PE file formats for binary files and the GNU Binutils.) For more details about this feature, see the description of the —build-id command-line option in <a target="_blank" rel="noopener" href="http://sourceware.org/binutils/docs/ld/Options.html#Options">Command Line Options</a> in The GNU Linker. The debug info file’s name is not specified explicitly by the build ID, but can be computed from the build ID, see below.</li>
 </ul>
 </blockquote>
 <p>在某些系统中（比如我们的ubunut），由于调试文件可能比可执行程序都大，所以通常将可执行文件以及调试文件分开存放。一般来说调试信息</p>
 <p>的后缀是<code>.debug</code>。</p>
 <p>gdb支持两种寻找调试info文件的方式。</p>
-<p>一种是可执行文件包含指向调试信息文件的路径。就比如ls在<code> /usr/bin/ls)</code>中，同时这个文件夹还包含<code>ls.debug</code>文件。</p>
+<p>一种是可执行文件包含指向调试信息文件的路径。就比如ls在<code>/usr/bin/ls)</code>中，同时这个文件夹还包含<code>ls.debug</code>文件。</p>
 <p>然后调试链接器还通过crc检查来使来源于同一个编译的可执行文件和调试文件生效。</p>
 <p>此外还有就是通过匹配build ID来指定。关于build ID，这个确实是有的。</p>
 <p>然后当可执行文件已经指定好调试文件，gdb还需要去寻找它。就像小张跟小静说我要找小王，小静只是知道他需要找到小王，但是还不知道怎么找。</p>
@@ -322,9 +320,8 @@
 </blockquote>
 <p>一个就是普通的在子目录中寻找对应的文件，</p>
 <p>另外一个根据build ID，在名为<code>.build-id</code>的子目录中寻找build ID对应的文件夹。</p>
-<p>也就是说如果要调试<code> /usr/bin/ls</code></p>
+<p>也就是说如果要调试<code>/usr/bin/ls</code></p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">/usr/lib/debug/.build-id/ab/cdef1234.debug</span><br><span class="line">/usr/bin/ls.debug</span><br><span class="line">/usr/bin/.debug/ls.debug</span><br><span class="line">/usr/lib/debug/usr/bin/ls.debug.</span><br></pre></td></tr></table></figure>
-
 <p>这四种路径都能帮助gdb找到对应的调试文件。</p>
 <p>所以无论如何实际上没有解决任何问题。比如我找到的在stackoverflow上的相同报错，基本上都是在对应文件夹中缺少他编译文件的<code>.debug</code>文件，但是这个和我感觉咩有关系。因为感觉libc这种本来就是咩有debug文件的。。。。</p>
 <p>网上也一会儿找不到和我相同的情况。好离谱</p>
@@ -336,7 +333,6 @@
 <p>这就很怪了。</p>
 <p>想一下，之前报错就是说libc.so.6和libc的调试文件不匹配</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">warning: the debug information found <span class="keyword">in</span> <span class="string">&quot;/usr/lib/debug//lib/x86_64-linux-gnu/ld-2.27.so&quot;</span> does not match <span class="string">&quot;/lib64/ld-linux-x86-64.so.2&quot;</span> (CRC mismatch).</span><br><span class="line">warning: the debug information found <span class="keyword">in</span> <span class="string">&quot;/usr/lib/debug//lib/x86_64-linux-gnu/libc-2.27.so&quot;</span> does not match <span class="string">&quot;/lib/x86_64-linux-gnu/libc.so.6&quot;</span> (CRC mismatch).</span><br></pre></td></tr></table></figure>
-
 <p><code>/lib64/ld-linux-x86-64.so.2</code>是一个软连接，在这里链接的是<code>/lib/x86_64-linux-gnu/ld-2.27.so</code>,也就相当于ld-2.27.so</p>
 
             <div class="clearfix"></div>

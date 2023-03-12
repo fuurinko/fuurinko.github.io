@@ -72,7 +72,7 @@
         		<a class="sb-toggle-submenu">Categories<span class="sb-caret"></span></a>
             	<ul class="sb-submenu">
 				  	
-				    <li><a href="/categories/AUDITION/" class="animsition-link">AUDITION<small>(23)</small></a></li>
+				    <li><a href="/categories/AUDITION/" class="animsition-link">AUDITION<small>(22)</small></a></li>
 				    
 				    <li><a href="/categories/CSAPP-LAB/" class="animsition-link">CSAPP LAB<small>(1)</small></a></li>
 				    
@@ -266,7 +266,6 @@
 <h3><span id="nextampstep命令">next&amp;step命令</span></h3><p>即n指令。</p>
 <p>执行next命令时，gdb会计算出当前停止位置的c语句的第一条指令的地址作为<code>step_range_start</code>,下一行的c语句的第一条指令地址作为<code>step_range_end</code>。next命令的结束条件为</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pc&lt; step_range_start || pc &gt;= step_range_end</span><br></pre></td></tr></table></figure>
-
 <p>这里可以简单地理解为当pc离开当前执行的代码就算一次next指令的完成。</p>
 <p>那么next指令是如何跳过函数调用的呢？</p>
 <p>事实上是当gdb发现子函数第一条指令为函数调用后，就立即在函数返回地址插入一个临时断点，并一直运行到该断点处。</p>

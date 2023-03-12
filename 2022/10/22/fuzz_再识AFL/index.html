@@ -72,7 +72,7 @@
         		<a class="sb-toggle-submenu">Categories<span class="sb-caret"></span></a>
             	<ul class="sb-submenu">
 				  	
-				    <li><a href="/categories/AUDITION/" class="animsition-link">AUDITION<small>(23)</small></a></li>
+				    <li><a href="/categories/AUDITION/" class="animsition-link">AUDITION<small>(22)</small></a></li>
 				    
 				    <li><a href="/categories/CSAPP-LAB/" class="animsition-link">CSAPP LAB<small>(1)</small></a></li>
 				    
@@ -263,26 +263,18 @@
 <h2><span id="环境搭建">环境搭建</span></h2><p>​        这里提前防止PD背刺无法使用嵌套虚拟化，选用vmware ，搭的是ubuntu20.04 lts的环境。顺带插一句，只要把“针对游戏优化”关掉就能让鼠标在虚拟机和物理机之间顺畅移动。</p>
 <p>首先是安装一些必要软件。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install clang</span><br><span class="line">sudo apt install llvm</span><br></pre></td></tr></table></figure>
-
 <p>接着编译afl</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">wget http://lcamtuf.coredump.cx/afl/releases/afl-2.52b.tgz</span><br><span class="line">tar -zxvf afl-2.52b.tgz</span><br><span class="line"><span class="built_in">cd</span> afl-2.52b</span><br><span class="line">make</span><br><span class="line">sudo make install</span><br></pre></td></tr></table></figure>
-
 <p>只按以上指令执行我印象中是会有一些依赖的问题，但是时间太过久远，也不是什么关键问题，就忽略了。</p>
 <p>编译好是这个界面：</p>
 <p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-10-22%20%E4%B8%8B%E5%8D%884.29.13.png" alt="截屏2022-10-22 下午4.29.13"></p>
 <h2><span id="试用1">试用1</span></h2><p>利用afl提供的编译器编译代码（以便于插桩）。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">../afl-gcc -g -o vul1 ./vul1.c </span><br></pre></td></tr></table></figure>
-
-
-
-<p>![截屏2022-10-22 下午4.31.15](/Users/rin/Desktop/截屏2022-10-22 下午4.31.15.png)</p>
+<p><img src="/Users/rin/Desktop/截屏2022-10-22 下午4.31.15.png" alt="截屏2022-10-22 下午4.31.15"></p>
 <p>然后我们需要建立我们的输入，以及输出文件夹。分别创建文件夹 <code>in</code>和<code>out</code>。这个1就是为这个漏洞程序构建的语料。可以看到是一连串垃圾字符。</p>
 <p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-10-22%20%E4%B8%8B%E5%8D%884.34.23.png" alt="截屏2022-10-22 下午4.34.23"></p>
 <p>最后</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./afl-fuzz -i ./<span class="keyword">in</span> -o ./out ./<span class="built_in">test</span>/vul1</span><br></pre></td></tr></table></figure>
-
-
-
 <p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-10-22%20%E4%B8%8B%E5%8D%884.42.07.png" alt="截屏2022-10-22 下午4.42.07"></p>
 <h2><span id="一些功能amp参数">一些功能&amp;参数</span></h2><h5><span id="process-timing">process timing</span></h5><p>运行时长，最近找到的的路径、崩溃、挂起的时间。</p>
 <h5><span id="overall-results">overall results</span></h5><p>完成的循环数、找到的总路径数，崩溃及挂起数</p>
@@ -293,11 +285,7 @@
 <h2><span id="试用2">试用2</span></h2><p>这次还是利用上一次的代码&amp;二进制文件，我们利用afl提供给我们的默认的语料。</p>
 <p>代码</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span> </span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span> </span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span> </span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span> </span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;signal.h&gt;</span> </span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">vuln</span><span class="params">(<span class="keyword">char</span> *str)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> len = <span class="built_in">strlen</span>(str);</span><br><span class="line">    <span class="keyword">if</span>(str[<span class="number">0</span>] == <span class="string">&#x27;A&#x27;</span> &amp;&amp; len == <span class="number">66</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        raise(SIGSEGV);</span><br><span class="line">        <span class="comment">//如果输入的字符串的首字符为A并且长度为66，则异常退出</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(str[<span class="number">0</span>] == <span class="string">&#x27;F&#x27;</span> &amp;&amp; len == <span class="number">6</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        raise(SIGSEGV);</span><br><span class="line">        <span class="comment">//如果输入的字符串的首字符为F并且长度为6，则异常退出</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;it is good!\n&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> *argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">char</span> buf[<span class="number">100</span>]=&#123;<span class="number">0</span>&#125;;</span><br><span class="line">    gets(buf);<span class="comment">//存在栈溢出漏洞</span></span><br><span class="line">    <span class="built_in">printf</span>(buf);<span class="comment">//存在格式化字符串漏洞</span></span><br><span class="line">    vuln(buf);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./afl-fuzz -i ./testcases/ -o ./out ./<span class="built_in">test</span>/vul1</span><br></pre></td></tr></table></figure>
-
 <p>跑。</p>
 <p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-10-22%20%E4%B8%8B%E5%8D%885.32.10.png" alt="截屏2022-10-22 下午5.32.10"></p>
 <p>我跑到这里就结束进程了。</p>
@@ -315,11 +303,10 @@
 <h4><span id="crashes">crashes</span></h4><p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-10-22%20%E4%B8%8B%E5%8D%885.43.14.png" alt="截屏2022-10-22 下午5.43.14"></p>
 <p>这个就是需要我们认真分析的数据了，整理一下就是：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1:��<span class="string">&#x27;�����*&#x27;</span>9<span class="string">&#x27;&#x27;</span>��*<span class="string">&#x27;���k��f�&#x27;</span><span class="string">&#x27;.	&#x27;</span><span class="string">&#x27;.&#x27;</span>9<span class="string">&#x27;&#x27;</span>��*<span class="string">&#x27;9&#x27;</span><span class="string">&#x27;��*&#x27;</span><span class="string">&#x27;&#x27;</span>	<span class="string">&#x27;&#x27;</span>P<span class="string">&#x27;���k��f���&#x27;</span><span class="string">&#x27;����������...���@&#x27;</span></span><br><span class="line">2:��dddj�dA@@@@3@@�Xddt��?ddddddddddddd�X���?ddddddddddddd�X����������ddd� �%������ddd� ���@@��\���Xd�����������ddd���Wd�d��</span><br><span class="line">3:5%n��� //触发格式化字符串</span><br><span class="line">4:F====P //首字母为F，len为6</span><br></pre></td></tr></table></figure>
-
 <p>可以看到找到了两个漏洞。</p>
 <p>maker一下这几篇文章</p>
 <p><a target="_blank" rel="noopener" href="https://bbs.pediy.com/thread-273639.htm#msg_header_h2_5">https://bbs.pediy.com/thread-273639.htm#msg_header_h2_5</a></p>
-<p><a target="_blank" rel="noopener" href="https://myfzy.top/2021/03/04/AFL/#%E7%BC%96%E8%AF%91%E5%B9%B6%E5%AE%89%E8%A3%85AFL">https://myfzy.top/2021/03/04/AFL/#编译并安装AFL</a></p>
+<p><a target="_blank" rel="noopener" href="https://myfzy.top/2021/03/04/AFL/#编译并安装AFL">https://myfzy.top/2021/03/04/AFL/#编译并安装AFL</a></p>
 <h2><span id="参考">参考</span></h2><p><a target="_blank" rel="noopener" href="https://cjovi.icu/fuzzing/1138.html">https://cjovi.icu/fuzzing/1138.html</a></p>
 <p><a target="_blank" rel="noopener" href="https://cjovi.icu/fuzzing/1140.html">https://cjovi.icu/fuzzing/1140.html</a></p>
 

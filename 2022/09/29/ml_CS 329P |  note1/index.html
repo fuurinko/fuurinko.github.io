@@ -75,7 +75,7 @@
         		<a class="sb-toggle-submenu">Categories<span class="sb-caret"></span></a>
             	<ul class="sb-submenu">
 				  	
-				    <li><a href="/categories/AUDITION/" class="animsition-link">AUDITION<small>(23)</small></a></li>
+				    <li><a href="/categories/AUDITION/" class="animsition-link">AUDITION<small>(22)</small></a></li>
 				    
 				    <li><a href="/categories/CSAPP-LAB/" class="animsition-link">CSAPP LAB<small>(1)</small></a></li>
 				    
@@ -263,8 +263,8 @@
         </div>
         <div class="col-md-8 col-md-offset-2">
       		<p>​    
-    <div id="aplayer-vBLmPwcL" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div>     </p>
-<h3><span id="0胡言乱语">0：胡言乱语</span></h3><p>由于一些奇怪的原因，半被迫开始学习机器学习。关于学习资料，某位不愿意公开姓名的老同学特别给我推荐了<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1Xh411p7M9/?spm_id_from=333.788&amp;vd_source=b424d92c840f16ffa9a14a3d99dfc564%E8%BF%99%E5%A5%97%E8%AF%BE%E7%A8%8B%EF%BC%8C%E8%AF%B4%E8%BF%99%E6%98%AF%E4%BB%96%E5%8E%8B%E7%AE%B1%E5%BA%95%E7%9A%84%E5%AE%9D%E8%B4%9D%E8%B5%84%E6%BA%90%E3%80%82">https://www.bilibili.com/video/BV1Xh411p7M9/?spm_id_from=333.788&amp;vd_source=b424d92c840f16ffa9a14a3d99dfc564这套课程，说这是他压箱底的宝贝资源。</a></p>
+    <div id="aplayer-YwfTUBHK" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div>     </p>
+<h3><span id="0胡言乱语">0：胡言乱语</span></h3><p>由于一些奇怪的原因，半被迫开始学习机器学习。关于学习资料，某位不愿意公开姓名的老同学特别给我推荐了<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1Xh411p7M9/?spm_id_from=333.788&amp;vd_source=b424d92c840f16ffa9a14a3d99dfc564这套课程，说这是他压箱底的宝贝资源。">https://www.bilibili.com/video/BV1Xh411p7M9/?spm_id_from=333.788&amp;vd_source=b424d92c840f16ffa9a14a3d99dfc564这套课程，说这是他压箱底的宝贝资源。</a></p>
 <p>所以大致记录一下学习过程，第一part的笔记主要针对数据处理部分。</p>
 <p>ps：俺是0基础。</p>
 <h3><span id="1-内容巩固">1: 内容巩固</span></h3><p>chapter 1和chapter 2主要针对数据的获取以及简单的处理方式，包括清洗，变换以及特征工程。</p>
@@ -276,10 +276,8 @@
 <h4><span id="环境">环境</span></h4><p>python3.9 macosx。</p>
 <p>安装相关依赖。（其实我也不记得安装了啥依赖，反正缺啥就<code>pip3 instal</code></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip3 install numpy pandas autogluon mxnet --upgrade</span><br></pre></td></tr></table></figure>
-
 <p>ps：之前我用py脚本写，然后在zsh上运行这个：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> dataclasses <span class="keyword">import</span> dataclass</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> scipy</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> seaborn <span class="keyword">as</span> sns</span><br><span class="line"><span class="keyword">from</span> IPython <span class="keyword">import</span> display</span><br><span class="line"><span class="keyword">import</span> pyarrow</span><br><span class="line">matplotlib_inline.set_matplotlib_formats(<span class="string">&#x27;svg&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#data = pd.read_feather(&#x27;house_sales.ftr&#x27;)</span></span><br><span class="line"><span class="comment">#ab = (data[])</span></span><br><span class="line">data = pd.read_feather(<span class="string">&#x27;house_sales.ftr&#x27;</span>)</span><br><span class="line">data.shape</span><br><span class="line">data.head()</span><br></pre></td></tr></table></figure>
-
 <p>结果是终端没有任何回显，如果是在vscode的终端中运行会报错</p>
 <p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-09-29%20%E4%B8%8A%E5%8D%8810.52.41.png" alt="截屏2022-09-29 上午10.52.41"></p>
 <p>听说是pyarrow包有问题，但是我浅显地搜了一下并没有很好的解决办法。</p>
@@ -289,7 +287,6 @@
 <p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-09-29%20%E4%B8%8A%E5%8D%8810.55.34.png" alt="截屏2022-09-29 上午10.55.34"></p>
 <p>于是显示效果就是这样，和视频里没有太大的区别。</p>
 <figure class="highlight zsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">In [12]: data = pd.read_feather(<span class="string">&#x27;house_sales.ftr&#x27;</span>)</span><br><span class="line"></span><br><span class="line">In [13]: data.shape</span><br><span class="line">Out[13]: (164944, 1789)</span><br><span class="line"></span><br><span class="line">In [14]: data.head()</span><br><span class="line">Out[14]: </span><br><span class="line">           Id                    Address   Sold Price  ... Tax Legal Tract Number Building Name    Zip</span><br><span class="line">0  2080183300            11205 Monterey,   <span class="variable">$2</span>,000,000  ...                   None          None  95046</span><br><span class="line">1    20926300            5281 Castle Rd,   <span class="variable">$2</span>,100,000  ...                   None          None  91011</span><br><span class="line">2    19595300           3581 Butcher Dr,   <span class="variable">$1</span>,125,000  ...                   None          None  95051</span><br><span class="line">3   300472200      2021 N Milpitas Blvd,  <span class="variable">$36</span>,250,000  ...                   None          None  95035</span><br><span class="line">4  2074492000  LOT 4 Tool Box Spring Rd,     <span class="variable">$140</span>,000  ...                   None          None  92561</span><br><span class="line"></span><br><span class="line">[5 rows x 1789 columns]</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
 <p>到这里为止还都是些猴子都能理解的简单操作。</p>
 <p>稍微看一下<code>pandas</code>的官方文档。<a target="_blank" rel="noopener" href="https://pandas.pydata.org/docs/user_guide/index.html#user-guide">https://pandas.pydata.org/docs/user_guide/index.html#user-guide</a></p>
 <p>大致是一个很好用的数据处理分析软件，只要有数据基本什么分析都能完成。</p>
@@ -298,9 +295,8 @@
 <p>就是返回一个<code>tuple</code>（元组，可以理解为一个表）的列和行数。</p>
 <p><code>head()</code>方法就是现实n行的数据（n默认为5）。</p>
 <p>挺有意思的，可以看到我们显示的行和视频不太一样，中间有很多项被省略了，我发现这个和终端窗口大小有关，窗口越宽显示的东西越多。那有没有什么办法能让它全部显示呢。</p>
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weekdawn/article/details/81389865%E8%BF%99%E7%AF%87%E6%96%87%E7%AB%A0%E6%9C%89%E8%A7%A3%E9%87%8A%E3%80%82">https://blog.csdn.net/weekdawn/article/details/81389865这篇文章有解释。</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weekdawn/article/details/81389865这篇文章有解释。">https://blog.csdn.net/weekdawn/article/details/81389865这篇文章有解释。</a></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">In [37]: data.dtypes</span><br><span class="line">Out[37]: </span><br><span class="line">Id                        object</span><br><span class="line">Address                   object</span><br><span class="line">Sold Price                object</span><br><span class="line">Sold On                   object</span><br><span class="line">Summary                   object</span><br><span class="line">                           ...  </span><br><span class="line">Tax Legal Lot Number      object</span><br><span class="line">Tax Legal Block Number    object</span><br><span class="line">Tax Legal Tract Number    object</span><br><span class="line">Building Name             object</span><br><span class="line">Zip                       object</span><br><span class="line">Length: 1789, dtype: object</span><br></pre></td></tr></table></figure>
-
 <p>可以看到这个数据集非常牛逼，所有项的类型都是<code>object</code>。</p>
 <h3><span id="3作业">3:作业</span></h3><p>大致看了一下，作业给出的数据集内容和课程里的内容差别还是有的，其中给出的任务也不太一样。</p>
 <p>作业的任务大致是</p>
@@ -314,32 +310,24 @@
 <p>但是在拓展之前，先研究一下怎么实现。</p>
 <h4><span id="数据清理">数据清理</span></h4><p>首先依然是导入包，读取数据集。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> scipy</span><br><span class="line">data = pd.read_feather(<span class="string">&#x27;house_sales.ftr&#x27;</span>)</span><br><span class="line">df = data[[<span class="string">&#x27;Sold Price&#x27;</span>, <span class="string">&#x27;Sold On&#x27;</span>, <span class="string">&#x27;Type&#x27;</span>, <span class="string">&#x27;Year built&#x27;</span>, <span class="string">&#x27;Bedrooms&#x27;</span>, <span class="string">&#x27;Bathrooms&#x27;</span>]].copy()</span><br></pre></td></tr></table></figure>
-
 <p>先不管作业的要求，取这些数据出来用作模型训练。</p>
 <p>然后是简单的数据处理</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">c = <span class="string">&#x27;Sold Price&#x27;</span></span><br><span class="line"><span class="keyword">if</span> c <span class="keyword">in</span> df.select_dtypes(<span class="string">&#x27;object&#x27;</span>).columns:</span><br><span class="line">    df.loc[:,c] = np.log10(</span><br><span class="line">            pd.to_numeric(df[c].replace(<span class="string">r&#x27;[$,-]&#x27;</span>, <span class="string">&#x27;&#x27;</span>, regex=<span class="literal">True</span>)) + <span class="number">1</span>)</span><br><span class="line">df = df[(df[<span class="string">&#x27;Sold Price&#x27;</span>] &gt;= <span class="number">4</span> ) &amp; (df[<span class="string">&#x27;Sold Price&#x27;</span>] &lt;= <span class="number">8</span> )]</span><br></pre></td></tr></table></figure>
-
-
-
 <p>因为不太熟悉pands，所以一些方法的使用得一点一点查。</p>
 <p>首先是<code>df.select_dtypes</code></p>
 <p>返回参数指定类型的列表。</p>
-<p>例如这里返回数据集中所有<code>object    </code>类型的数据。</p>
+<p>例如这里返回数据集中所有<code>object</code>类型的数据。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">In [10]: df.select_dtypes(<span class="string">&#x27;object&#x27;</span>)</span><br><span class="line">Out[10]: </span><br><span class="line">                Type Year built Bedrooms Bathrooms</span><br><span class="line">0       SingleFamily    No Data        2       2.0</span><br><span class="line">1       SingleFamily       1951        3       3.0</span><br><span class="line">2       SingleFamily       1954        3       2.0</span><br><span class="line">3          Apartment       1989        0       0.0</span><br><span class="line">4         VacantLand    No Data     None      None</span><br><span class="line">...              ...        ...      ...       ...</span><br><span class="line">164939         Condo       1991        2       2.0</span><br><span class="line">164940         Condo       2009        3       3.0</span><br><span class="line">164941         Condo       2019        2      None</span><br><span class="line">164942  SingleFamily       1973        4       3.0</span><br><span class="line">164943  SingleFamily       1949        4       2.0</span><br><span class="line"></span><br><span class="line">[160839 rows x 4 columns]</span><br></pre></td></tr></table></figure>
-
 <p>所以这里<code>if c in df.select_dtypes(&#39;object&#39;).columns:</code>指每个object类型列中的‘Sold Price’元素。</p>
 <p><code>df.loc</code></p>
 <p>返回由label标的行列数据。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">In [13]: df.loc[1]</span><br><span class="line">Out[13]: </span><br><span class="line">Sold Price                6.32222</span><br><span class="line">Sold On       2021-02-25 00:00:00</span><br><span class="line">Type                 SingleFamily</span><br><span class="line">Year built                   1951</span><br><span class="line">Bedrooms                        3</span><br><span class="line">Bathrooms                     3.0</span><br><span class="line">Name: 1, dtype: object</span><br><span class="line"></span><br><span class="line">In [14]: df.loc[2]</span><br><span class="line">Out[14]: </span><br><span class="line">Sold Price               6.051153</span><br><span class="line">Sold On       2019-11-06 00:00:00</span><br><span class="line">Type                 SingleFamily</span><br><span class="line">Year built                   1954</span><br><span class="line">Bedrooms                        3</span><br><span class="line">Bathrooms                     2.0</span><br><span class="line">Name: 2, dtype: object</span><br></pre></td></tr></table></figure>
-
 <p> <code>df.loc[:,c]</code>表示取出列表中所有行列项中含c的部分。即打印所有<code>&#39;Sold Price&#39;</code></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">In [12]: df.loc[:,c]</span><br><span class="line">Out[12]: </span><br><span class="line">0         6.301030</span><br><span class="line">1         6.322220</span><br><span class="line">2         6.051153</span><br><span class="line">3         7.559308</span><br><span class="line">4         5.146131</span><br><span class="line">            ...   </span><br><span class="line">164939    5.750915</span><br><span class="line">164940    6.423246</span><br><span class="line">164941    6.132580</span><br><span class="line">164942    6.146128</span><br><span class="line">164943    5.352184</span><br><span class="line">Name: Sold Price, Length: 160839, dtype: float64</span><br></pre></td></tr></table></figure>
-
 <p>np.log10</p>
 <p>这里又是包<code>numpy</code>的方法了。官方文档：<a target="_blank" rel="noopener" href="https://numpy.org/doc/stable/reference/generated/numpy.log10.html">https://numpy.org/doc/stable/reference/generated/numpy.log10.html</a></p>
 <p>比较简单易懂，返回log10。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">np.log10(pd.to_numeric(df[c].replace(<span class="string">r&#x27;[$,-]&#x27;</span>, <span class="string">&#x27;&#x27;</span>, regex=<span class="literal">True</span>)) + <span class="number">1</span>)</span><br></pre></td></tr></table></figure>
-
 <p><code>pd.to_numeric</code></p>
 <p>转换为数字类型。根据提供的数据转换为float64或int64。</p>
 <p>转换的数据<code>df[c].replace(r&#39;[$,-]&#39;, &#39;&#39;, regex=True)</code></p>
@@ -347,15 +335,12 @@
 <p>然后留下<code>log10(SoldPrice)</code>在四到八之间的值，其他被视为噪音。</p>
 <p>接着</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">test_start, test_end = pd.Timestamp(<span class="number">2021</span>, <span class="number">2</span>, <span class="number">15</span>), pd.Timestamp(<span class="number">2021</span>, <span class="number">3</span>, <span class="number">1</span>)</span><br><span class="line">train_start = pd.Timestamp(<span class="number">2021</span>, <span class="number">1</span>, <span class="number">1</span>)</span><br><span class="line">df[<span class="string">&#x27;Sold On&#x27;</span>] = pd.to_datetime(df[<span class="string">&#x27;Sold On&#x27;</span>], errors=<span class="string">&#x27;coerce&#x27;</span>)</span><br><span class="line">train = df[(df[<span class="string">&#x27;Sold On&#x27;</span>] &gt;= train_start) &amp; (df[<span class="string">&#x27;Sold On&#x27;</span>] &lt; test_start)]</span><br><span class="line">test = df[(df[<span class="string">&#x27;Sold On&#x27;</span>] &gt;= test_start) &amp; (df[<span class="string">&#x27;Sold On&#x27;</span>] &lt; test_end)]</span><br><span class="line">train.shape, test.shape</span><br></pre></td></tr></table></figure>
-
 <p>设置时间戳，因为训练需要预测不同时间点的数据，</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">rmsle</span>(<span class="params">y_hat, y</span>):</span></span><br><span class="line">    <span class="comment"># we already used log prices before, so we only need to compute RMSE</span></span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">sum</span>((y_hat - y)**<span class="number">2</span> / <span class="built_in">len</span>(y))**<span class="number">0.5</span></span><br></pre></td></tr></table></figure>
-
 <p>没看懂，课程里讲了吗（俺只看到了3.2的三分之一），什么算均方误差？</p>
 <p>然后进行训练。</p>
-<h4><span id="训练">训练</span></h4><p>首先引入<code> from autogluon.tabular import TabularPredictor</code>这个包，用来探测什么模型最适合我们的数据。</p>
+<h4><span id="训练">训练</span></h4><p>首先引入<code>from autogluon.tabular import TabularPredictor</code>这个包，用来探测什么模型最适合我们的数据。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">label = <span class="string">&#x27;Sold Price&#x27;</span>    </span><br><span class="line">predictor = TabularPredictor(label=label).fit(train)</span><br></pre></td></tr></table></figure>
-
 <p>没有什么不好理解的地方吧。</p>
 <p>这里测试了很多模型，其中这个模型告诉我<code>Best model: &quot;WeightedEnsemble_L2&quot;</code>。</p>
 <p>ps：这个<code>root_mean_squared_error</code>不是在报错，是一个数学指标，中文是均方根误差（吃了没文化的亏</p>
@@ -365,16 +350,13 @@
 <p>话说好神奇，我应该是从没有安装过这个包，但是导入的时候也没有报错就运行了。</p>
 <p>官方文档没啥好看的，商业宣传用语，来看看log。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">No path specified. Models will be saved <span class="keyword">in</span>: <span class="string">&quot;AutogluonModels/ag-20220930_122428/&quot;</span></span><br><span class="line">Beginning AutoGluon training ...</span><br><span class="line">AutoGluon will save models to <span class="string">&quot;AutogluonModels/ag-20220930_122428/&quot;</span></span><br><span class="line">AutoGluon Version:  0.5.2</span><br><span class="line">Python Version:     3.9.10</span><br><span class="line">Operating System:   Darwin</span><br><span class="line">Train Data Rows:    24872</span><br><span class="line">Train Data Columns: 5</span><br><span class="line">Label Column: Sold Price</span><br><span class="line">Preprocessing data ...</span><br><span class="line">AutoGluon infers your prediction problem is: <span class="string">&#x27;regression&#x27;</span> (because dtype of label-column == <span class="built_in">float</span> and many unique label-values observed).</span><br></pre></td></tr></table></figure>
-
 <p>因为我的数据都是整数或者浮点，它就自动识别我需要的预测类型为回归。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Label info (max, min, mean, stddev): (7.546542675816042, 4.000043427276863, 5.75084, 0.39719)</span><br><span class="line">If <span class="string">&#x27;regression&#x27;</span> is not the correct problem_type, please manually specify the problem_type parameter during predictor init (You may specify problem_type as one of: [<span class="string">&#x27;binary&#x27;</span>, <span class="string">&#x27;multiclass&#x27;</span>, <span class="string">&#x27;regression&#x27;</span>])</span><br></pre></td></tr></table></figure>
-
 <p>然后打印了一些值。</p>
 <p>并且可以手动修改预测类型。</p>
 <p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-09-30%20%E4%B8%8B%E5%8D%889.58.41.png" alt="截屏2022-09-30 下午9.58.41"></p>
 <p>到这里应该是进行自动的特征工程。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">AutoGluon will gauge predictive performance using evaluation metric: <span class="string">&#x27;root_mean_squared_error&#x27;</span></span><br></pre></td></tr></table></figure>
-
 <p>用均分根误差来预测。</p>
 <p>然后是一些模型的适配。</p>
 <p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-09-30%20%E4%B8%8B%E5%8D%8810.00.44.png" alt="截屏2022-09-30 下午10.00.44"></p>
@@ -383,16 +365,10 @@
 <p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-09-30%20%E4%B8%8B%E5%8D%8810.03.25.png" alt="截屏2022-09-30 下午10.03.25"></p>
 <p>其中还会有一些报错，大概还是因为依赖。懒得装了，等什么时候用上再说。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">predictor.leaderboard(test, silent=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure>
-
-
-
 <p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-09-30%20%E4%B8%8B%E5%8D%8810.06.14.png" alt="截屏2022-09-30 下午10.06.14"></p>
 <p>这一条使数据在每个模型中训练一遍。</p>
 <p>预测。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">In [20]: preds = predictor.predict(test.drop(columns=[label]))</span><br><span class="line">    ...: rmsle(preds, <span class="built_in">test</span>[label])</span><br><span class="line">Out[20]: 0.2798629260751236</span><br></pre></td></tr></table></figure>
-
-
-
 <p>no my solution，thanks.</p>
 <h3><span id="4-胡言乱语2">4： 胡言乱语2</span></h3><p>这一个part主要是介绍了数据处理的流程以及大致的思路，代码量其实不大，也比较简单，熟悉一下pandas就好了。下一个part就涉及到具体的模型了，我浅看了一眼，全是数学，我一个生怕概率论挂科担心了半个寒假的平平无奇的数学废物真的有点害怕。</p>
 

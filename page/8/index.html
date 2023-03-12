@@ -72,7 +72,7 @@
         		<a class="sb-toggle-submenu">Categories<span class="sb-caret"></span></a>
             	<ul class="sb-submenu">
 				  	
-				    <li><a href="/categories/AUDITION/" class="animsition-link">AUDITION<small>(23)</small></a></li>
+				    <li><a href="/categories/AUDITION/" class="animsition-link">AUDITION<small>(22)</small></a></li>
 				    
 				    <li><a href="/categories/CSAPP-LAB/" class="animsition-link">CSAPP LAB<small>(1)</small></a></li>
 				    
@@ -297,11 +297,10 @@
                       
                         
      
-
 overview​        这个题在程序上与lonewolf只有一个区别就是开了沙箱，需要orw，但是堆上的seccomp和栈上的利用难度可以说是毫无关系，因为之前已经做了lonelywolf，并且从来没有做过堆上的orw，漏洞点就不看了，只关注于orw的实现吧。
 
 ​        init()过程中开启了seccomp，禁用了除orw以外的所有系统调用。
-利用orw前的一些操作​        orw part
+利用orw前的一些操作​        orw part之
                       
                     </p>
                     
@@ -340,11 +339,10 @@ overview​        这个题在程序上与lonewolf只有一个区别就是开�
 			
 				console.error("ReferenceError: value is not defined");
 			     
-
 Overview
 ​        还可以。估计是个中等题。libc应该还是2.23。不得不说2019的ciscn初赛pwn确实是没有什么难度的。
 Readd​        第一次申请chunk时，操作如下：
-123456789if ( !v0 )        &#123;       
+123456789if ( !v0 )        &#123;        
                       
                     </p>
                     
@@ -383,13 +381,11 @@ Readd​        第一次申请chunk时，操作如下：
 			
 				console.error("ReferenceError: value is not defined");
 			     
-
 overview
 ​        怪椰。
 re123456ssize_t vuln()&#123;  char buf[40]; // [esp+0h] [ebp-28h] BYREF  return read(0, buf, 0x100u);&#125;
-
 ​    
-蚌埠住了，ret2
+蚌埠住了，ret2dl
                       
                     </p>
                     
@@ -465,11 +461,6 @@ re123456ssize_t vuln()&#123;  char buf[40]; // [esp+0h] [ebp-28h] BYREF  return 
                       
                         
      
-
-
-
-
-
 0​        感觉pwncollege的堆题意思并不是很大，直接做条件竞争娱乐一下。
 level1​        笑死了，根本没学过，不会做。
 
@@ -511,11 +502,11 @@ level1​        笑死了，根本没学过，不会做。
 			
 				console.error("ReferenceError: value is not defined");
 			     
-
 overview
 ​            可以改表
 re​        这个题如果只看ida的话其实感觉挺乱的，所以以动调为主会比较好。在理清了程序运行的一些逻辑后再反过来看伪代码会清晰很多。
 add1head_ptr = (unsigned int *)malloc(0x18uLL);
+
                       
                     </p>
                     
@@ -552,11 +543,10 @@ add1head_ptr = (unsigned int *)malloc(0x18uLL);
                       
                         
      
-
 overview​        开始做一些ciscn了。
 
 readd​        size不能大于0x78。
-1234567ptr = malloc(size);if ( ptr )&#123; size_struct = size_1; content_struct = ptr;//蚌埠住了，每次都会把这个指针覆盖为最新分配的content ptr。这下idx直接报废。 puts(&quot;Done!&quo
+1234567ptr = malloc(size);if ( ptr )&#123; size_struct = size_1; content_struct = ptr;//蚌埠住了，每次都会把这个指针覆盖为最新分配的content ptr。这下idx直接报废。 puts(&quot;Done!&quot
                       
                     </p>
                     
@@ -593,13 +583,10 @@ readd​        size不能大于0x78。
                       
                         
      
-
-
-
 stack控制程序执行流栈溢出ret2syscall​        利用程序自带的gadget，构造syscall。
 ​        对应板子
 ret2libc/csu​        比较模版化，值得一题的就是，system()的执行要求此时栈是16位对齐的，所以如果getshell失败不妨多ret一次。        
-ret2shellcode​        在rwx的内存空间(不一定是栈）上写shell
+ret2shellcode​        在rwx的内存空间(不一定是栈）上写shellcod
                       
                     </p>
                     
@@ -636,12 +623,9 @@ ret2shellcode​        在rwx的内存空间(不一定是栈）上写shell
                       
                         
          
-
-
-
 0:​        还是一个旧的笔记的内容增加以及纠错。这篇我也不记得是什么时候写的了，也是半年前吧。
 UNLINKunlink大致概念​        就是将free chunk从双向循环链表中解链的过程，具体触发这个过程的操作比较常见的有与当前物理相邻的chunk合并的过程等。因为是双向链表，自然已经超出了fastbin的范围，一般申请的chunk也要大于0x60了。
-​        在ptmallo
+​        在ptmalloc中u
                       
                     </p>
                     
@@ -678,9 +662,8 @@ UNLINKunlink大致概念​        就是将free chunk从双向循环链表中�
                       
                         
      
-
 0​        这篇笔记最早是在大概21年的11月开始的，当时其实也是抱着复习的心理去写的，毕竟堆题在完全吃透之前，只要不是经常做题，那么就基本是学了就忘的状态。更别说我这种就没怎么做题的人。
-​        现在是2022年四月，我看着这篇笔记，只觉得当时那些卡了很久的点，实在过于愚蠢，完全无法理解当时自己为什么会这么想。这些困难点大多源于我看代码不仔细，以及对于指针操作的一些不理解，或者说对于chunk结构的不
+​        现在是2022年四月，我看着这篇笔记，只觉得当时那些卡了很久的点，实在过于愚蠢，完全无法理解当时自己为什么会这么想。这些困难点大多源于我看代码不仔细，以及对于指针操作的一些不理解，或者说对于chunk结构的不熟
                       
                     </p>
                     

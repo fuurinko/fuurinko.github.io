@@ -72,7 +72,7 @@
         		<a class="sb-toggle-submenu">Categories<span class="sb-caret"></span></a>
             	<ul class="sb-submenu">
 				  	
-				    <li><a href="/categories/AUDITION/" class="animsition-link">AUDITION<small>(23)</small></a></li>
+				    <li><a href="/categories/AUDITION/" class="animsition-link">AUDITION<small>(22)</small></a></li>
 				    
 				    <li><a href="/categories/CSAPP-LAB/" class="animsition-link">CSAPP LAB<small>(1)</small></a></li>
 				    
@@ -263,44 +263,38 @@
 			<script>
 				console.error("ReferenceError: value is not defined");
 			</script>     
-
 <p>​        做一下条件竞争的题。</p>
 <p>​        话说第一次遇见条件竞争还是在一个不记得名字的比赛中有一个夹带asoul的叫做红色高跟鞋的题，虽然珈乐已经毕业，但是这个题给我的印象还是很深。</p>
 <h2><span id="re">re</span></h2><p>​    <code>attack</code>函数中有一个栈溢出，但是只有monster的血量小于等于0时才能执行，并且这个debuff还得是3.</p>
 <p>​    先看怎么让monster血量清零。</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//&#x27;attack:42&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> ( hero_skill_2 &lt; mon_skill_1 )</span><br><span class="line">    gHero-&gt;surplus -= mon_skill_1 - hero_skill_2;</span><br><span class="line">  <span class="keyword">if</span> ( mon_skill_2 &lt; hero_skill_1 )</span><br><span class="line">    gMonster-&gt;surplus -= hero_skill_1 - mon_skill_2;</span><br></pre></td></tr></table></figure>
-
 <p>​        </p>
 <p>​        可以看到如果这个隐藏技能的技能点高于怪兽技能，就能够伤害怪兽。每打败一次怪兽就debuff提升一点。</p>
 <p>​        </p>
 <p>​        逆得睡着了zzzzzzz。</p>
 <p>​        再来看<code>init_new_db_file(char *file)</code>这个函数</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> __cdecl <span class="title">init_new_db_file</span><span class="params">(<span class="keyword">char</span> *file)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">int</span> fd; <span class="comment">// [esp+Ch] [ebp-Ch]</span></span><br><span class="line"></span><br><span class="line">  fd = open(file, <span class="number">66</span>, <span class="number">438</span>);                     <span class="comment">// open &quot;name&quot;</span></span><br><span class="line">  gHero = (struct_gHero *)<span class="built_in">malloc</span>(<span class="number">0x54</span>u);        <span class="comment">// create gHero </span></span><br><span class="line">  <span class="built_in">memset</span>(gHero, <span class="number">0</span>, <span class="number">0x54</span>u);                      <span class="comment">// init gHero</span></span><br><span class="line">  <span class="built_in">strcpy</span>((<span class="keyword">char</span> *)&amp;gHero[<span class="number">1</span>], file);              <span class="comment">// copy the input &quot;name&quot; to the hero name</span></span><br><span class="line">  gHero[<span class="number">5</span>].kill_type = &amp;g_hero_kill_type;       <span class="comment">// init kill type</span></span><br><span class="line">  write(fd, gHero, <span class="number">0x54</span>u);                      <span class="comment">// write gHero &#x27; content to fd</span></span><br><span class="line">  <span class="keyword">return</span> close(fd);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <p>以及这个<code>init_db(name);</code></p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">struct_gHero *__cdecl <span class="title">init_db</span><span class="params">(<span class="keyword">char</span> *file)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  struct_gHero *result; <span class="comment">// eax</span></span><br><span class="line"></span><br><span class="line">  gfd = open(file, <span class="number">2</span>);                          <span class="comment">// open &quot;name&quot;</span></span><br><span class="line">  result = (struct_gHero *)mmap(<span class="number">0</span>, <span class="number">0x1000</span>u, <span class="number">3</span>, <span class="number">1</span>, gfd, <span class="number">0</span>);<span class="comment">// re_init gHero</span></span><br><span class="line">  gHero = result;</span><br><span class="line">  <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <p>​        这里将gHero mmap到了这个0x1000的地方,也就是这一块内存是共享的，这就意味着如果不同进程同时访问的话就有可能造成条件竞争。</p>
 <p>​        重新整理一下，如果需要打败monster，需要<code>gMonster-&gt;surplus</code>小于0，也就是<code>mon_skill_2 &lt; hero_skill_1</code>，也就是<code>*(gMonster-&gt;methods + 16)&lt;*gHero[5].kill_type;</code></p>
 <p>​        这<code>*gHero[5].kill_type;</code>就是那个ddos。</p>
 <p>​        如果正常打的话，可以赢两把，但是第三把monster的伤害和血量都会大大提高，所以正常操作必死无疑。</p>
-<p>​    <code>    hero_skill_1</code>是某个数值，那么如果同时运行两个程序，并且用户名相同，则会利用同一块<code>gHero</code>的内存空间。</p>
+<p>​    <code>hero_skill_1</code>是某个数值，那么如果同时运行两个程序，并且用户名相同，则会利用同一块<code>gHero</code>的内存空间。</p>
 <p>​        所以如果我们注册两个name，在name1询问是否使用隐藏技能的时候，修改name2的隐藏技能点，使得这个技能点数大于怪兽的点数，就能够一直打败怪兽。</p>
 <p>​    </p>
 <p>​        直接点开<code>kill_type</code>地址，可以发现是一排这样的：</p>
 <p>​        <img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-11-01%20%E4%B8%8B%E5%8D%881.43.04.png" alt="截屏2022-11-01 下午1.43.04"></p>
 <p>将类型转换为dd</p>
-<p>![截屏2022-11-01 下午1.43.53](/Users/rin/Library/Application Support/typora-user-images/截屏2022-11-01 下午1.43.53.png)</p>
+<p><img src="/Users/rin/Library/Application Support/typora-user-images/截屏2022-11-01 下午1.43.53.png" alt="截屏2022-11-01 下午1.43.53"></p>
 <p>​        可以看到地址对应了一堆字符串的指针，我们的<code>*gHero[5].kill_type</code>非常明显是开头这个dd 19h。</p>
 <p>​        所以这个技能的无论是展示也好，切换也好，就是通过这里。</p>
 <p>​        切换技能时:</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">result = read_int();</span><br><span class="line"><span class="keyword">if</span> ( result &lt;= <span class="number">3</span> )</span><br><span class="line">&#123;</span><br><span class="line">  result = <span class="number">20</span> * result + <span class="number">0x804B0C0</span>;           <span class="comment">// g_hero_kill_type + 20 * result</span></span><br><span class="line">  gHero[<span class="number">5</span>].kill_type = result;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">return</span> result;</span><br></pre></td></tr></table></figure>
-
 <p>找到这个对应地址，每20个字节对应一种技能的描述。在技能选择ddos的情况下，<code>gHero[5].kill_type + 4</code>是<code>12</code>。</p>
 <p>由于每个回合都会回复血量，所以只是从程序来看其实挺迷惑的。</p>
 <p>大概就是几个技能，技能三是回血，所以如果在io1使用技能三点隐藏技能时利用io2修改其点数，就能造成hero血量增加，monster血量减少。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">change_skill(io1, <span class="number">3</span>)  </span><br><span class="line">attack(io1)  </span><br><span class="line">change_skill(io2,<span class="number">1</span>)  </span><br><span class="line">use_hide(io1, <span class="number">1</span>)  </span><br></pre></td></tr></table></figure>
-
 
             <div class="clearfix"></div>
             <hr class="nogutter">

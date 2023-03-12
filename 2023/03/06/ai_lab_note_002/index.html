@@ -75,7 +75,7 @@
         		<a class="sb-toggle-submenu">Categories<span class="sb-caret"></span></a>
             	<ul class="sb-submenu">
 				  	
-				    <li><a href="/categories/AUDITION/" class="animsition-link">AUDITION<small>(23)</small></a></li>
+				    <li><a href="/categories/AUDITION/" class="animsition-link">AUDITION<small>(22)</small></a></li>
 				    
 				    <li><a href="/categories/CSAPP-LAB/" class="animsition-link">CSAPP LAB<small>(1)</small></a></li>
 				    
@@ -263,27 +263,24 @@
         </div>
         <div class="col-md-8 col-md-offset-2">
       		
-    <div id="aplayer-UMUNwgLc" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div>
-
+    <div id="aplayer-vWwFxJKd" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div>
 <h2><span id="0-preface">0) preface</span></h2><p>So at the last article we introduced how to use the python package <code>keras</code> to achieve the realization of the CNN, and  now we can immerse to explore the basic principle of CNN, the convolutional neural network.</p>
 <p>Extra:The article based on some of the prominent blogs in chinese SNS, my honor to meet them.</p>
 <h2><span id="1-basic-idea-of-cnn">1) basic idea of CNN</span></h2><h3><span id="why-cnn">WHY CNN</span></h3><h4><span id="from-fully-connection-layers-perception-to-convolutions">from fully connection layers perception to convolutions</span></h4><p>In the past ,the traditional photo digitalization technology faces a series of difficulties.</p>
+<p>1) When processing the picture through machine learning, it is a arduous procedue to analyze with a enormous amount of pixels in just a simple photo.</p>
 <ol>
-<li>When processing the picture through machine learning, it is a arduous procedue to analyze with a enormous amount of pixels in just a simple photo.</li>
-</ol>
-<ol start="2">
 <li>The traditional way of simplely sampling at specific point can’t retain the features of the photo.</li>
 </ol>
 <p>And without doubt, CNN can solve this problem perfectly.</p>
 <p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/Screen%20Shot%202023-03-07%20at%204.47.28%20PM.png" alt="Screen Shot 2023-03-07 at 4.47.28 PM"></p>
-<p>The photo above demostrates a traditinal multi layter perception with full connected layer, the conception somewhat likes the communication network of the mesh structure – if any additional input node is required, the  total cost will be dramastically increased. </p>
-<h3><span id="how-cnn">HOW CNN</span></h3><p>Inspirated by some research within the filed of physical , we gain the basic principle of CNN–imitating the human visual system to identify the different layers with gradually complicated featrues.</p>
+<p>The photo above demostrates a traditinal multi layter perception with full connected layer, the conception somewhat likes the communication network of the mesh structure — if any additional input node is required, the  total cost will be dramastically increased. </p>
+<h3><span id="how-cnn">HOW CNN</span></h3><p>Inspirated by some research within the filed of physical , we gain the basic principle of CNN—imitating the human visual system to identify the different layers with gradually complicated featrues.</p>
 <p><img src="https://easyai.tech/wp-content/uploads/2022/08/d447a-2019-06-19-renlei-shijue2.jpg" alt="人类视觉原理2"></p>
 <h3><span id="realization-of-cnn">REALIZATION OF CNN</span></h3><p>Typical CNN consisted of 3 components.</p>
 <ol>
-<li>convolution layer – extract the featrues of the photo.</li>
-<li>pooling layer – decrease the magnitude of parameters.</li>
-<li>fully connected layer – output the outcome.</li>
+<li>convolution layer — extract the featrues of the photo.</li>
+<li>pooling layer — decrease the magnitude of parameters.</li>
+<li>fully connected layer — output the outcome.</li>
 </ol>
 <h4><span id="convolution-layer">convolution layer</span></h4><p><strong>description: using convolutional kernels to scan the photo to extract the features.</strong></p>
 <p>tbc</p>

@@ -75,7 +75,7 @@
         		<a class="sb-toggle-submenu">Categories<span class="sb-caret"></span></a>
             	<ul class="sb-submenu">
 				  	
-				    <li><a href="/categories/AUDITION/" class="animsition-link">AUDITION<small>(23)</small></a></li>
+				    <li><a href="/categories/AUDITION/" class="animsition-link">AUDITION<small>(22)</small></a></li>
 				    
 				    <li><a href="/categories/CSAPP-LAB/" class="animsition-link">CSAPP LAB<small>(1)</small></a></li>
 				    
@@ -263,13 +263,11 @@
         </div>
         <div class="col-md-8 col-md-offset-2">
       		
-    <div id="aplayer-MWEIfYnB" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div>
-
+    <div id="aplayer-vdiDdfkl" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div>
 <p>一个简单的复建，题目是今年西南赛区pwn1，是一个很常规的栈的rop，套了orw。</p>
 <h2><span id="逆向">逆向</span></h2><p>​        这个题的逆向不算复杂，同样也是操作符控制指令的形式，输多少个操作符就执行多少次指令，具体的过程就不写了。</p>
 <p>​        操作符对应的指令如下：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#1 --&gt; &gt;	[++buf_idx]</span></span><br><span class="line"><span class="comment">#2 --&gt; &lt;	[--buf_idx]	</span></span><br><span class="line"><span class="comment">#3 --&gt; +	[++buf[buf_idx]]</span></span><br><span class="line"><span class="comment">#4 --&gt; -	[--buf[buf_idx]]</span></span><br><span class="line"><span class="comment">#5 --&gt; .	[write(1, &amp;buf[buf_idx], 1uLL)]</span></span><br><span class="line"><span class="comment">#6 --&gt; ,	[getchar]</span></span><br><span class="line"><span class="comment">#7 --&gt; [	[idx = word_4042[2 * idx];]</span></span><br><span class="line"><span class="comment">#8 --&gt; ]	[idx = word_4042[2 * idx];]</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
 <p>​            因为题目给我们提供了写和读的操作，并且还能够控制idx，那么很显然这又是一道越界读写。</p>
 <p>​        由于有沙箱，所以直接考虑rop+orw，这一段不算太复杂，只需要找对地址套板子。</p>
 <h2><span id="利用">利用</span></h2><p>​        大体的思路就是利用越界读leak，再用越界写将返回地址改为rop链。看起来非常简单，但是还是有很多细节需要注意。由于是栈上orw，首先读入flag的地址需要被leak，这就要求我们leak libc和stack。</p>

@@ -75,7 +75,7 @@
         		<a class="sb-toggle-submenu">Categories<span class="sb-caret"></span></a>
             	<ul class="sb-submenu">
 				  	
-				    <li><a href="/categories/AUDITION/" class="animsition-link">AUDITION<small>(23)</small></a></li>
+				    <li><a href="/categories/AUDITION/" class="animsition-link">AUDITION<small>(22)</small></a></li>
 				    
 				    <li><a href="/categories/CSAPP-LAB/" class="animsition-link">CSAPP LAB<small>(1)</small></a></li>
 				    
@@ -263,10 +263,7 @@
         </div>
         <div class="col-md-8 col-md-offset-2">
       		
-    <div id="aplayer-ZBzqIcAS" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div> 
-
-
-
+    <div id="aplayer-yCuEldla" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div> 
 <p>​        多年以后，秃头还记得第一次听梅丽桑德与佩利亚斯的那个下午，德彪西的抽象艺术直接把我整麻了。虽然德彪西真的很好听，但是做题的时候如果一直听德彪西，不协和音程与大量全音阶的使用会让整个人都会变得抽象魔幻起来，最后越做越emo。</p>
 <p>​        此刻因为听了一天抽象音乐而变得呆滞的秃头正打算学习一些轻松愉快的知识来缓解沉闷的气氛，就比如这个久仰大名但是一直没有接触的house of orange。</p>
 <p>​        </p>
@@ -279,7 +276,6 @@
 <p>​        size需要大于0x10。</p>
 <h3><span id="示例">示例</span></h3><p>源码来源于ctf-wiki</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> fake_size 0x41</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">void</span> *ptr;</span><br><span class="line"></span><br><span class="line">    ptr=<span class="built_in">malloc</span>(<span class="number">0x10</span>);</span><br><span class="line">    ptr=(<span class="keyword">void</span> *)((<span class="keyword">long</span> <span class="keyword">long</span>)ptr+<span class="number">24</span>);</span><br><span class="line"></span><br><span class="line">    *((<span class="keyword">long</span> <span class="keyword">long</span>*)ptr)=fake_size; <span class="comment">// overwrite top chunk size</span></span><br><span class="line"></span><br><span class="line">    <span class="built_in">malloc</span>(<span class="number">0x60</span>);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">malloc</span>(<span class="number">0x60</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <p>​        这个程序是无法执行的，因为这里size并没有进行页对齐。</p>
 <h4><span id="页对齐">页对齐</span></h4><p>​        通俗来说就是伪造的top chunk size的结束地址是0x1000的整数倍。</p>
 <p>​        比如说top chunk起始地址为0x602020，size为0x20fe0，那么结束地址就是0x623000</p>

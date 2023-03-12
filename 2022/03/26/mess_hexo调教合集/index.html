@@ -72,7 +72,7 @@
         		<a class="sb-toggle-submenu">Categories<span class="sb-caret"></span></a>
             	<ul class="sb-submenu">
 				  	
-				    <li><a href="/categories/AUDITION/" class="animsition-link">AUDITION<small>(23)</small></a></li>
+				    <li><a href="/categories/AUDITION/" class="animsition-link">AUDITION<small>(22)</small></a></li>
 				    
 				    <li><a href="/categories/CSAPP-LAB/" class="animsition-link">CSAPP LAB<small>(1)</small></a></li>
 				    
@@ -264,121 +264,113 @@
 <p>​    在研究代码高亮的过程中，我才知道原来有个项目叫highlight.js,里面有各种各样的代码高亮的css文件。</p>
 <p>​    一开始我是将博客原本的代码高亮的css文件替换成我想要的样式，但是无论替换成什么样式，博客中代码都是蓝色，清一色的蓝色。然后我意识到，这根本不是什么代码高亮的样式，这根本就是，没有代码高亮。</p>
 <p>​    然后我开始在网上寻找解决方案，搜索的关键词是hexo 无法显示代码高亮，辗转来回，找到了一篇文章。</p>
-<p>​    <a target="_blank" rel="noopener" href="https://igeek.cloud/2021/01/13/hexo%E4%B8%ADhighlight-js%E4%BB%A3%E7%A0%81%E9%AB%98%E4%BA%AE%E7%9A%84%E4%BF%AE%E6%94%B9%E6%96%B9%E6%B3%95/">hexo中highlight.js代码高亮的修改方法</a></p>
+<p>​    <a target="_blank" rel="noopener" href="https://igeek.cloud/2021/01/13/hexo中highlight-js代码高亮的修改方法/">hexo中highlight.js代码高亮的修改方法</a></p>
 <p>​    按照文章中的方法，我在主题layout文件夹中的_post.ejs文件随便找了个角落，把</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">COPY<span class="comment">&lt;!-- Highlight.js --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">&quot;stylesheet&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">href</span>=<span class="string">&quot;//highlightjs.org/static/demo/styles/night-owl.css&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line">    hljs.initHighlightingOnLoad();</span><br><span class="line">&lt;/script</span><br></pre></td></tr></table></figure>
-
 <p>丢了进去。</p>
 <p>​    然后我的博客就成功的显示了代码高亮。</p>
 <p>​    高亮的样式可以通过更改<code>sytels/xx</code>来实现，具体的样式可以从Highlight.js官网找到。</p>
 <h4><span id="音乐播放器">音乐播放器</span></h4><p>​        步骤其实比较简单。</p>
 <h5><span id="1安装插件">1:安装插件</span></h5><p>​        ```</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --save hexo-tag-aplayer</span><br></pre></td></tr></table></figure>
-
-
-
-
-
 <h5><span id="2更改配置">2:更改配置</span></h5><p>​        在hexo主题的config文件中增加</p>
 <figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">aplayer:</span></span><br><span class="line">  <span class="attr">meting:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
-
-
-
-
-
 <h5><span id="3在正文中添加tag">3:在正文中添加tag</span></h5><p>例子</p>
 <p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-26%20%E4%B8%8B%E5%8D%889.47.51.png" alt="截屏2022-03-26 下午9.47.51"></p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;% meting &quot;7342554262&quot; &quot;netease&quot; &quot;playlist&quot; &quot;theme:#555&quot; &quot;mutex:true&quot; &quot;listmaxheight:340px&quot; &quot;preload:auto&quot; %&#125; </span><br></pre></td></tr></table></figure>
-
+<div class="table-container">
 <table>
 <thead>
 <tr>
-<th align="left">选项</th>
+<th style="text-align:left">选项</th>
 <th>默认值</th>
 <th>描述</th>
 </tr>
 </thead>
-<tbody><tr>
-<td align="left">id</td>
+<tbody>
+<tr>
+<td style="text-align:left">id</td>
 <td><strong>必须值</strong></td>
 <td>歌曲 id / 播放列表 id / 相册 id / 搜索关键字</td>
 </tr>
 <tr>
-<td align="left">server</td>
+<td style="text-align:left">server</td>
 <td><strong>必须值</strong></td>
 <td>音乐平台: <code>netease</code>, <code>tencent</code>, <code>kugou</code>, <code>xiami</code>, <code>baidu</code></td>
 </tr>
 <tr>
-<td align="left">type</td>
+<td style="text-align:left">type</td>
 <td><strong>必须值</strong></td>
 <td><code>song</code>, <code>playlist</code>, <code>album</code>, <code>search</code>, <code>artist</code></td>
 </tr>
 <tr>
-<td align="left">fixed</td>
+<td style="text-align:left">fixed</td>
 <td><code>false</code></td>
 <td>开启固定模式</td>
 </tr>
 <tr>
-<td align="left">mini</td>
+<td style="text-align:left">mini</td>
 <td><code>false</code></td>
 <td>开启迷你模式</td>
 </tr>
 <tr>
-<td align="left">loop</td>
+<td style="text-align:left">loop</td>
 <td><code>all</code></td>
 <td>列表循环模式：<code>all</code>, <code>one</code>,<code>none</code></td>
 </tr>
 <tr>
-<td align="left">order</td>
+<td style="text-align:left">order</td>
 <td><code>list</code></td>
 <td>列表播放模式： <code>list</code>, <code>random</code></td>
 </tr>
 <tr>
-<td align="left">volume</td>
+<td style="text-align:left">volume</td>
 <td>0.7</td>
 <td>播放器音量</td>
 </tr>
 <tr>
-<td align="left">lrctype</td>
+<td style="text-align:left">lrctype</td>
 <td>0</td>
 <td>歌词格式类型</td>
 </tr>
 <tr>
-<td align="left">listfolded</td>
+<td style="text-align:left">listfolded</td>
 <td><code>false</code></td>
 <td>指定音乐播放列表是否折叠</td>
 </tr>
 <tr>
-<td align="left">storagename</td>
+<td style="text-align:left">storagename</td>
 <td><code>metingjs</code></td>
 <td>LocalStorage 中存储播放器设定的键名</td>
 </tr>
 <tr>
-<td align="left">autoplay</td>
+<td style="text-align:left">autoplay</td>
 <td><code>true</code></td>
 <td>自动播放，移动端浏览器暂时不支持此功能</td>
 </tr>
 <tr>
-<td align="left">mutex</td>
+<td style="text-align:left">mutex</td>
 <td><code>true</code></td>
 <td>该选项开启时，如果同页面有其他 aplayer 播放，该播放器会暂停</td>
 </tr>
 <tr>
-<td align="left">listmaxheight</td>
+<td style="text-align:left">listmaxheight</td>
 <td><code>340px</code></td>
 <td>播放列表的最大长度</td>
 </tr>
 <tr>
-<td align="left">preload</td>
+<td style="text-align:left">preload</td>
 <td><code>auto</code></td>
 <td>音乐文件预载入模式，可选项： <code>none</code>, <code>metadata</code>, <code>auto</code></td>
 </tr>
 <tr>
-<td align="left">theme</td>
+<td style="text-align:left">theme</td>
 <td><code>#ad7a86</code></td>
 <td>播放器风格色彩设置</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <h4><span id="一些报错">一些报错</span></h4>
             <div class="clearfix"></div>
             <hr class="nogutter">

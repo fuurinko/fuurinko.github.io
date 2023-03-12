@@ -72,7 +72,7 @@
         		<a class="sb-toggle-submenu">Categories<span class="sb-caret"></span></a>
             	<ul class="sb-submenu">
 				  	
-				    <li><a href="/categories/AUDITION/" class="animsition-link">AUDITION<small>(23)</small></a></li>
+				    <li><a href="/categories/AUDITION/" class="animsition-link">AUDITION<small>(22)</small></a></li>
 				    
 				    <li><a href="/categories/CSAPP-LAB/" class="animsition-link">CSAPP LAB<small>(1)</small></a></li>
 				    
@@ -297,11 +297,10 @@
                       
                         
      
-
 overview
 ​    
 逆向​    又是排序。但是这个是个纯纯的栈题，并且保护全开，那就是不能rop，估计又是要逆清然后找漏洞捏。照我之前做的那个快排的经验，排序本身应该没有漏洞，漏洞出在num地址的溢出。
-main12345678910111213141516171819202122232425262728293031323334353637383940414243int __cdecl main(int ar
+main12345678910111213141516171819202122232425262728293031323334353637383940414243int __cdecl main(int arg
                       
                     </p>
                     
@@ -338,10 +337,9 @@ main1234567891011121314151617181920212223242526272829303132333435363738394041424
                       
                         
      
-
 overivew
 ​        其实把程序简化来看的话就是一道比较常规的chunk overlapping，漏洞很明显，但是又不完全明显，需要先认真把程序逆清楚。在pwn题的几个环节中，逆向确定漏洞点，分析漏洞寻找思路，写exp布置堆风水，调试扣细节，我觉得最头疼的可能就是逆向了，虽然过程也许不难，但是真的很bewilder。
-​        其实这个程序看似非常复杂，菜单就写了十五分钟，但逆来逆去最关键居然的还是
+​        其实这个程序看似非常复杂，菜单就写了十五分钟，但逆来逆去最关键居然的还是那
                       
                     </p>
                     
@@ -378,14 +376,9 @@ overivew
                       
                         
      
-
-
-
-
-
 ​        对于这些天题目的一些小归纳。目前的涵盖范围是高级house技术以及高版本glibc应用以外的所有题型。
 逆向大致​        一般来说大多数菜单题都会申请的比如说note定义结构体，当然也有那种纯纯利用malloc出的ptr进行读写操作的，但是比较少。
-结构体逆向​        首先需要利用眼力，想 象 力和动调逆出这个结构体里的字段，以及其占用的size，在内存空间的布局。如果足够闲也可
+结构体逆向​        首先需要利用眼力，想 象 力和动调逆出这个结构体里的字段，以及其占用的size，在内存空间的布局。如果足够闲也可以在ida
                       
                     </p>
                     
@@ -459,9 +452,8 @@ overivew
                       
                         
      
-
 prelude​        感觉源码分析是很多佬都做过的一件事情，但是对于我来说源码分析确实是件比较困难的事，但正因为困难，才有必要攻克，之后的高版本或者诡异版本glibc题少不了源码分析，也当是一个修炼吧。文章分析的大致顺序是按照int_malloc以及int_free的函数顺序介绍的，其中会穿插一些被调用的函数的介绍。
-csapp malloc lab review​        在着手看源码之前先复习一下cs
+csapp malloc lab review​        在着手看源码之前先复习一下csa
                       
                     </p>
                     
@@ -498,14 +490,11 @@ csapp malloc lab review​        在着手看源码之前先复习一下cs
                       
                         
      
-
-
-
 overview
 libc是2.27。
 逆向增删查改。
 add没有什么特别的地方，纯纯的指针操作。没有结构体，没有保存指针到bss上。但是会对输入的size取低九位，虽然可以输入15位的size，但是生效的只有九位。所以只能add出 一个chunk。有点lonely wolf的味道。
-12345678printf(&quot;Size: &quot;); read(0, size_4, 0xFuLL); size_2
+12345678printf(&quot;Size: &quot;); read(0, size_4, 0xFuLL); size_2 = 
                       
                     </p>
                     
@@ -542,12 +531,10 @@ add没有什么特别的地方，纯纯的指针操作。没有结构体，没�
                       
                         
      
-
 overviewpartial relro，没有canary，栈溢出。
 逆向12if ( unk_20208C )  sprintf(v1, &quot;Hint: %p\n&quot;, &amp;system);
-
 ​        如果能在这个变量上写东西，就能leak。那就不是ret2libc了。并且开了pie，也不好rop。
-123456789&#123;  __int64 buf[4]; // [rsp+0h
+123456789&#123;  __int64 buf[4]; // [rsp+0h] 
                       
                     </p>
                     
@@ -584,12 +571,9 @@ overviewpartial relro，没有canary，栈溢出。
                       
                         
      
-
-
-
 overview大致原理​        glibc定义了_IO_FILE这样一个结构体来管理io file。io_file结构体里定义了一堆相关的变量，但是真正关键的是其中包含的_IO_FILE_plus结构。 libc2.23 版本下，32 位的 vtable 偏移为 0x94，64 位偏移为 0xd8。
 ​        结构源码如下：
-12345struct _IO_FILE_plus&#123;    _I
+12345struct _IO_FILE_plus&#123;    _IO_F
                       
                     </p>
                     
@@ -626,12 +610,11 @@ overview大致原理​        glibc定义了_IO_FILE这样一个结构体来管
                       
                         
      
-
 overview
 逆向​        没有free，只有增查改。
 ​        这个题程序逻辑比较简单，主要是利用相对比较复杂。
 add​        最多申请三个house。并且在申请house开始为每个house创建了0x10 size的结构体，只有两个字段，size和content ptr。在输入name的阶段会把name读入content ptr指向的地址。
-12printf(&quot;Name :&q
+12printf(&quot;Name :&qu
                       
                     </p>
                     
@@ -668,12 +651,9 @@ add​        最多申请三个house。并且在申请house开始为每个house
                       
                         
      
-
-
-
 ​        多年以后，秃头还记得第一次听梅丽桑德与佩利亚斯的那个下午，德彪西的抽象艺术直接把我整麻了。虽然德彪西真的很好听，但是做题的时候如果一直听德彪西，不协和音程与大量全音阶的使用会让整个人都会变得抽象魔幻起来，最后越做越emo。
 ​        此刻因为听了一天抽象音乐而变得呆滞的秃头正打算学习一些轻松愉快的知识来缓解沉闷的气氛，就比如这个久仰大名但是一直没有接触的house of orange。
-​ 
+​    
                       
                     </p>
                     

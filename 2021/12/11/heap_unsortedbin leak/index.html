@@ -72,7 +72,7 @@
         		<a class="sb-toggle-submenu">Categories<span class="sb-caret"></span></a>
             	<ul class="sb-submenu">
 				  	
-				    <li><a href="/categories/AUDITION/" class="animsition-link">AUDITION<small>(23)</small></a></li>
+				    <li><a href="/categories/AUDITION/" class="animsition-link">AUDITION<small>(22)</small></a></li>
 				    
 				    <li><a href="/categories/CSAPP-LAB/" class="animsition-link">CSAPP LAB<small>(1)</small></a></li>
 				    
@@ -269,15 +269,9 @@
 <p>​        有两种方式：</p>
 <p>​    1:用IDA找到.so文件的 <code>malloc_trim</code> 函数，就可以获得偏移。</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span></span><br><span class="line">__malloc_trim (<span class="keyword">size_t</span> s)</span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">int</span> result = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (__malloc_initialized &lt; <span class="number">0</span>)</span><br><span class="line">    ptmalloc_init ();</span><br><span class="line"></span><br><span class="line">  mstate ar_ptr = &amp;main_arena;<span class="comment">//&lt;=对main_arena进行了访问，用伪代码看到的结果就是main_arena和libc的固定偏移。</span></span><br><span class="line">  <span class="keyword">do</span></span><br><span class="line">    &#123;</span><br><span class="line">      __libc_lock_lock (ar_ptr-&gt;mutex);</span><br><span class="line">      result |= mtrim (ar_ptr, s);</span><br><span class="line">      __libc_lock_unlock (ar_ptr-&gt;mutex</span><br><span class="line"></span><br><span class="line">      ar_ptr = ar_ptr-&gt;next;</span><br><span class="line">    &#125;</span><br><span class="line">  <span class="keyword">while</span> (ar_ptr != &amp;main_arena);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
 <p>​        </p>
 <p>2:通过<code>malloc_hook</code>算出。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">main_arena_offset = ELF(<span class="string">&quot;libc.so.6&quot;</span>).symbols[<span class="string">&quot;__malloc_hook&quot;</span>] + <span class="number">0x10</span></span><br></pre></td></tr></table></figure>
-
-
-
 
             <div class="clearfix"></div>
             <hr class="nogutter">

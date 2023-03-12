@@ -75,7 +75,7 @@
         		<a class="sb-toggle-submenu">Categories<span class="sb-caret"></span></a>
             	<ul class="sb-submenu">
 				  	
-				    <li><a href="/categories/AUDITION/" class="animsition-link">AUDITION<small>(23)</small></a></li>
+				    <li><a href="/categories/AUDITION/" class="animsition-link">AUDITION<small>(22)</small></a></li>
 				    
 				    <li><a href="/categories/CSAPP-LAB/" class="animsition-link">CSAPP LAB<small>(1)</small></a></li>
 				    
@@ -263,16 +263,13 @@
         </div>
         <div class="col-md-8 col-md-offset-2">
       		
-    <div id="aplayer-LVdKuZLC" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div> 
-
+    <div id="aplayer-AJcpWCPo" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div> 
 <p>​        最近在pwncollege做题的时候常常遇到接收的字符串处理不当的问题，故总结整理一下。</p>
 <h3><span id="字符串截取">字符串截取</span></h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">p.recv()[<span class="number">0</span>:<span class="number">6</span>]		<span class="comment">#截取1-5个字符串</span></span><br><span class="line"></span><br><span class="line">p.recv()[<span class="number">2</span>:<span class="number">6</span>]		<span class="comment">#截取2-5个字符串</span></span><br><span class="line"></span><br><span class="line">p.recv()[:]		<span class="comment">#截取完整字符串</span></span><br><span class="line"></span><br><span class="line">p.recv()[<span class="number">2</span>:]<span class="comment">#从第二个索引开始截取</span></span><br><span class="line"></span><br><span class="line">p.recv()[-<span class="number">4</span>:]<span class="comment">#截取最后四个字符</span></span><br></pre></td></tr></table></figure>
-
 <p>​        </p>
 <h3><span id="字符串处理">字符串处理</span></h3><p>​        一般来说我们接收到的数据是字符串的字节流，然后利用pwntools的unpack  module来转换为int型。并且</p>
 <p>​        所以一般来说这样的payload是不会出问题的。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">canary = u64(p.recv()[<span class="number">41</span>:<span class="number">49</span>])</span><br></pre></td></tr></table></figure>
-
 <p>​        </p>
 <p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-12%20%E4%B8%8A%E5%8D%8811.04.36.png" alt="截屏2022-03-12 上午11.04.36"></p>
 <p>​        所以当接收到类似以下的报错：</p>

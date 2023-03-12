@@ -72,7 +72,7 @@
         		<a class="sb-toggle-submenu">Categories<span class="sb-caret"></span></a>
             	<ul class="sb-submenu">
 				  	
-				    <li><a href="/categories/AUDITION/" class="animsition-link">AUDITION<small>(23)</small></a></li>
+				    <li><a href="/categories/AUDITION/" class="animsition-link">AUDITION<small>(22)</small></a></li>
 				    
 				    <li><a href="/categories/CSAPP-LAB/" class="animsition-link">CSAPP LAB<small>(1)</small></a></li>
 				    
@@ -277,51 +277,6 @@
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
                 <div class="col-md-4">
-                    <h3><a href="/2022/01/29/pwn.college_Assembly_Refresher/">Assembly_Refresher</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2022-01-29T13:51:29.070Z" itemprop="datePublished">
-          2022-01-29
-      </time>
-    
-    
-    | 
-    <a href='/tags/pwncollege/'>pwncollege</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-     
-
-
-
-Level1需要设置*rdi = 0x1337，
-如果是按照目的意思程序的汇编代码长这样子：
-12345.section .text    .intel_syntax noprefix    .global _start    _start :        mov rdi, 0x1337
-
-但是可以直接用pwntools传输mov rdi, 0x1337这一句。
-12345678910111213#!/usr/bi
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2022/01/29/pwn.college_Assembly_Refresher/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
                     <h3><a href="/2022/01/29/pwn.college_Shellcode_Injection/">Shellcode_Injection</a></h3>
                     <span>
                         <span class="post-meta">
@@ -342,16 +297,11 @@ Level1需要设置*rdi = 0x1337，
                       
                         
      
-
-
-
 ​        整个专题其实就是一个shellcode编写的小练习，并不需要自己寻找漏洞点，写好shellcode直接注入就行。
 ​        如果要将服务器的文件传输到本地的话可以使用:
 1scp -i key -r hacker@dojo.pwn.college:/challenge [本地路径]
+Level1​        可以用pwntools的shellcraft模块，但是也可以手写shellcode。
 
-
-
-Level1​        可以用pwntools的shellcraft模块，但是也可以手写shell
                       
                     </p>
                     
@@ -388,14 +338,13 @@ Level1​        可以用pwntools的shellcraft模块，但是也可以手写she
                       
                         
      
-
 「前面不太记得了，从level3记起」
-level3 ./embryoio_level3  xkbdyoisnx    
+level3./embryoio_level3  xkbdyoisnx    
 Level4export jouixn = xxx
 Level5​    一个标准输入重定向的考察，
 ./embryoio_level5 &lt; /tmp/mihsjr
-​        还需要编辑mihsjr 的内容为给的密码。
-Level6​        一个输出重定向，创建对应文件./emb
+​        还需要编辑mihsjr的内容为给的密码。
+Level6​        一个输出重定向，创建对应文件./embryo
                       
                     </p>
                     
@@ -469,12 +418,9 @@ Level6​        一个输出重定向，创建对应文件./emb
                       
                         
      
-
-
-
 0）​        自从抛弃虚拟机，利用ida for mac+pwndocker实现完全mac环境以后，深觉优雅的同时，也遇见了不少坑。
 ​        其中ida的坑更是坑人于无形之中。因为如果不打开win的7.5（甚至7.6）做对比，你甚至不知道你遇见的一些奇怪的东西，是7.0 mac版特有的，已经被优化了的坑，还是自身逆向水平问题。
-​        作为一个逆向废物，7.0 for mac属实是给本来就
+​        作为一个逆向废物，7.0 for mac属实是给本来就逆不出
                       
                     </p>
                     
@@ -511,8 +457,7 @@ Level6​        一个输出重定向，创建对应文件./emb
                       
                         
      
-
-fastbin​    长度在32-160(32位系统是16-80)的free堆块。通过fastbinlist储存，单向链表，所以fast。fastbin attack一个最简单的利用就是UAF，其次就是fastbin double free。ctf pwn中与fastbin相关的还有就是在unsortedbin attack中涉及到的，也是ptmalloc机制中的一种的malloc_consolidate，其中也有可以
+fastbin​    长度在32-160(32位系统是16-80)的free堆块。通过fastbinlist储存，单向链表，所以fast。fastbin attack一个最简单的利用就是UAF，其次就是fastbin double free。ctf pwn中与fastbin相关的还有就是在unsortedbin attack中涉及到的，也是ptmalloc机制中的一种的malloc_consolidate，其中也有可以攻
                       
                     </p>
                     
@@ -549,7 +494,6 @@ fastbin​    长度在32-160(32位系统是16-80)的free堆块。通过fastbinl
                       
                         
      
-
 0）前言​        鸽了三个月的malloc lab，作为复习堆题的开始。
 ​        计画完成时间是12.5之前，也就是三天。
 1）大体设计​        对于整体的操作的大致模型以及allocater和freer需要做的工作如下：
@@ -560,7 +504,7 @@ fastbin​    长度在32-160(32位系统是16-80)的free堆块。通过fastbinl
 创建指定类型的chunk。
 ​    free
 
-利用隐式空
+利用隐式空闲
                       
                     </p>
                     
@@ -638,14 +582,13 @@ fastbin​    长度在32-160(32位系统是16-80)的free堆块。通过fastbinl
                       
                         
      
-
 逆向​        程序实现了一个简单的计算器功能。运算有加减乘除四种。
 ​        
 ​        并且程序再次自带计时功能，需要patch。
 ​        
 ​        静态链接，所以肯定不能用ret2libc那一套，只能试图ROP一下。
 ​        程序主要功能通过get_expr和calculate（原本不叫这个）两个函数实现。
-​        get_expr主要用于定位我们输入的
+​        get_expr主要用于定位我们输入的字
                       
                     </p>
                     
@@ -682,21 +625,62 @@ fastbin​    长度在32-160(32位系统是16-80)的free堆块。通过fastbinl
                       
                         
      
-
 1）Seccomp基础Seccomp简介​        就像ALSR，NX这样，Seccomp也是linux内核的一种安全机制。这种保护机制会禁用某些系统调用，有效避免了越权行为的发生。
 启动Seccomp​        如果要编写调用Seccomp的程序，需要先安装相应的头文件。
 1apt install libseccomp-dev libseccomp2 seccomp
-
-
-
-
-
-Seccomp的模式以及参数比
+Seccomp的模式以及参数比较多，这里只
                       
                     </p>
                     
                     <p class="pull-right readMore">
                         <a href="/2021/11/11/stack_learning_Seccomp机制学习/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2021/11/11/mess_pwndocker的pwn题体验（下）/">pwndocker的pwn题体验（下</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2021-11-10T20:04:03.336Z" itemprop="datePublished">
+          2021-11-11
+      </time>
+    
+    
+    | 
+    <a href='/tags/mess/'>mess</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+     
+0）​        哈哈，还是连续剧，我也想不到捏。我也不想捏。
+1）问题​        pwndocker体验了快一周，目前来说主要问题有这几个：
+
+启动tmux进行调试时机器发热严重，风扇狂转
+
+挂载文件夹内文件不同步
+
+快照的制作相对麻烦（时间久，步骤多）
+
+打开需要输入命令，有点烦。
+​    想了怪久的，就想到这三点，第三点纯属鸡蛋里挑骨头，主要pwndocker体验确实比较优雅，为了美观用vim编辑exp我
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2021/11/11/mess_pwndocker的pwn题体验（下）/">Read More...</a>
                     </p>
                     
                 </div>

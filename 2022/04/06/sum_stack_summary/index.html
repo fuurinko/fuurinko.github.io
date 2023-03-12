@@ -75,7 +75,7 @@
         		<a class="sb-toggle-submenu">Categories<span class="sb-caret"></span></a>
             	<ul class="sb-submenu">
 				  	
-				    <li><a href="/categories/AUDITION/" class="animsition-link">AUDITION<small>(23)</small></a></li>
+				    <li><a href="/categories/AUDITION/" class="animsition-link">AUDITION<small>(22)</small></a></li>
 				    
 				    <li><a href="/categories/CSAPP-LAB/" class="animsition-link">CSAPP LAB<small>(1)</small></a></li>
 				    
@@ -263,12 +263,9 @@
         </div>
         <div class="col-md-8 col-md-offset-2">
       		
-    <div id="aplayer-gaiYiPsb" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div> 
-
-
-
+    <div id="aplayer-VoMjpzpK" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div> 
 <h1><span id="stack">stack</span></h1><h2><span id="控制程序执行流">控制程序执行流</span></h2><h3><span id="栈溢出">栈溢出</span></h3><h4><span id="ret2syscall">ret2syscall</span></h4><p>​        利用程序自带的gadget，构造syscall。</p>
-<p>​        <a href="https://fuurinko.github.io/2022/03/21/%E4%B8%80%E4%BA%9B%E6%9D%BF%E5%AD%90/">对应板子</a></p>
+<p>​        <a href="https://fuurinko.github.io/2022/03/21/一些板子/">对应板子</a></p>
 <h4><span id="ret2libccsu">ret2libc/csu</span></h4><p>​        比较模版化，值得一题的就是，<code>system()</code>的执行要求此时栈是16位对齐的，所以如果getshell失败不妨多ret一次。        </p>
 <h4><span id="ret2shellcode">ret2shellcode</span></h4><p>​        在rwx的内存空间(不一定是栈）上写shellcode，其实利用的姿势挺多的，建议看看pwn.college的ShellcodeInjection module，会刷新世界观。</p>
 <p>​        普通的ret2shellcode一般要求我们leak输入的buf以跳转回去执行，但是还是因题而异，有的题还会对输入或者说要执行的shellcode进行过滤，反正花样挺多。</p>
@@ -281,24 +278,15 @@
 <h4><span id="ret2vsyscall">ret2vsyscall</span></h4><p>​        当pie开启，我们如果能控制程序执行流，但是没有合适的gadget调整栈帧的话，可以利用位置不受pie影响的vsyscall作为ret gadget使用。</p>
 <p>​        vsyscall在程序中地址是固定的<code>0xffffffffff600000-0xffffffffff601000</code>,一般使用<code>0xffffffffff600007</code>等。</p>
 <h3><span id="泄露内存">泄露内存</span></h3><h4><span id="格式化字符串">格式化字符串</span></h4><h5><span id="泄露任意地址">泄露任意地址</span></h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">--------获取栈变量对应的地址------------</span><br><span class="line">%n<span class="variable">$p</span> <span class="comment">#输出栈上第n+1个格式化字符串输出参数</span></span><br><span class="line">--------获取栈变量对应的字符串----------</span><br><span class="line">%n<span class="variable">$s</span><span class="comment">#输出栈上第n+1个格式化字符串参数对应的字符串</span></span><br><span class="line">--------获取任意地址内容---------------</span><br><span class="line">addr%n<span class="variable">$s</span>	</span><br></pre></td></tr></table></figure>
-
 <h6><span id="extra">Extra:</span></h6><p>​        对于格式化字符串地址偏移的计算，32位和64位并不完全相同，32位参数完全由栈传递，所以参数在栈上出现的位次即是偏移（要减去返回地址占的位次），但是64位传参前六位是由寄存器传参，因此在栈上找到的偏移需要加6。</p>
 <h4><span id="数组越界">数组越界</span></h4><p>​        对数组的idx进行非法的索引，以输出相应内存中的数据。</p>
 <h4><span id="覆盖空字节">覆盖空字节</span></h4><p>​        输入或者其他操作时，将字符串结尾的截断空字节覆盖，输出时则会无视截断持续输出，有可能造成内存泄露。这一点在堆题中同样非常好用，尤其是有时候输出字符串与堆结构体的地址相邻。</p>
 <h3><span id="修改内存">修改内存</span></h3><h4><span id="格式化字符串">格式化字符串</span></h4><h5><span id="利用fmt_payload模块自动化写入">利用fmt_payload模块自动化写入</span></h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">payload = fmtstr_payload(offset, &#123;func_got : system_addr&#125;)</span><br></pre></td></tr></table></figure>
-
 <h5><span id="手工构造">手工构造</span></h5><h6><span id="原理">原理</span></h6><p><code>%n</code>参数不输出字符，但是把已成功输出的字符个数写入对应整形指针参数所指的变量。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">addr%k<span class="variable">$n</span><span class="comment">#k为格式化字符串偏移，addr为需要覆盖的地址</span></span><br></pre></td></tr></table></figure>
-
-
-
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">%hhn <span class="comment">#向地址写入单字节</span></span><br><span class="line">%hn <span class="comment">#向地址写入双字节</span></span><br></pre></td></tr></table></figure>
+<p>#</p>
 
-
-
-
-
-<h1><span id></span></h1>
             <div class="clearfix"></div>
             <hr class="nogutter">
         </div>

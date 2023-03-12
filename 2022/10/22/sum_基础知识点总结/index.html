@@ -72,7 +72,7 @@
         		<a class="sb-toggle-submenu">Categories<span class="sb-caret"></span></a>
             	<ul class="sb-submenu">
 				  	
-				    <li><a href="/categories/AUDITION/" class="animsition-link">AUDITION<small>(23)</small></a></li>
+				    <li><a href="/categories/AUDITION/" class="animsition-link">AUDITION<small>(22)</small></a></li>
 				    
 				    <li><a href="/categories/CSAPP-LAB/" class="animsition-link">CSAPP LAB<small>(1)</small></a></li>
 				    
@@ -262,13 +262,10 @@
       		<p>这是一些也许很基础但是一直没有搞透彻or忘了or巩固的一些知识点的集合，空的就是还没有来得及填，</p>
 <h2><span id="编程语言">编程语言</span></h2><h4><span id="c">c</span></h4><h4><span id="python">python</span></h4><h4><span id="汇编">汇编</span></h4><p>首先就是寻址的几种方式：</p>
 <h3><span id="1寻址">1）寻址</span></h3><h5><span id="1直接寻址">1/直接寻址</span></h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mov     rax, fs:28h #直接寻址，fs段寄存器+偏移量。这里其实是一个canary的值。</span><br></pre></td></tr></table></figure>
-
 <h5><span id="2间接寻址">2/间接寻址</span></h5><p>间接在使用指针以及解引用的形式</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mov     [rbp+var_8], rax # 寄存器相对寻址。相当于把rax，也就是这个canary值放到rbp+var_8的地方。</span><br></pre></td></tr></table></figure>
-
 <h5><span id="3比例寻址">3/比例寻址</span></h5><p>例如在数组遍历中</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">.data</span><br><span class="line">arrayD 1,2,3,4</span><br><span class="line">.code</span><br><span class="line">mov esi,3</span><br><span class="line">mov eax,arrayD[esi*4]					;eax = 4  </span><br></pre></td></tr></table></figure>
-
 <p>其中，比例因子“4”代表数组的元素个数，esi的值代表下标。</p>
 <h2><span id="2段寄存器">2）段寄存器</span></h2><p>其实就是段的基址，起寻址索引作用。例子就比如</p>
 <p><code>mov rax fs：28h</code></p>
@@ -282,7 +279,6 @@
 </ol>
 <h4><span id="aslramppie">aslr&amp;pie</span></h4><h5><span id="原理amp行为">原理&amp;行为</span></h5><p>一些参数</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">0 - 表示关闭进程地址空间随机化。</span><br><span class="line">1 - 表示将mmap的基址，stack和vdso页面随机化。</span><br><span class="line">2 - 表示在1的基础上增加栈（heap）的随机化。</span><br></pre></td></tr></table></figure>
-
 <p><code>ASLR</code>对libc段，栈以及堆的加载地址进行随机化，而<code>PIE</code>对代码段<code>.text</code>, 数据段<code>.*data</code>，<code>.bss</code>等固定地址进行随机化，弥补了aslr的不足。</p>
 <p>aslr的绕过原理：</p>
 <p>由于内存的页载入机制，PIE的随机化只能影响到单个内存页，也就是说地址只会以一个内存页为单位进行变化。通常来说，一个内存页大小为0x1000，这就意味着不管地址怎么变，<strong>某条指令的后12位，3个十六进制数的地址是始终不变的。因此我们找到目标地址的后三个十六进制数，然后想办法将返回地址（被压入的ip）后三个十六进制数覆盖成目标地址，从而达到劫持程序流程的目的</strong>。</p>
@@ -292,11 +288,9 @@
 </ol>
 <h4><span id="canary">canary</span></h4><h5><span id="原理amp行为">原理&amp;行为</span></h5><p>针对每个进程，在stack中（具体位置是<code>rbp</code>&amp;<code>ebp</code>前）插入一串以字节<code>\x00</code>结尾（防止泄露）的随机数，长度大概是<code>qword</code>。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mov    rax, qword ptr fs:[0x28]</span><br><span class="line">mov    qword ptr [rbp - 8], rax</span><br></pre></td></tr></table></figure>
-
 <p>可以看到是从<code>fs</code>寄存器0x28偏移的值中取值，然后给到<code>rbp - 8</code>的位置，然后在函数返回前将这个值与目前<code>rbp-8</code>的值异或，若为0则正常返回，否则报错。</p>
 <h6><span id="fs寄存器">fs寄存器？</span></h6><p>fs寄存器指向栈的 TLS 结构：</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">  <span class="keyword">void</span> *tcb;        <span class="comment">/* Pointer to the TCB.  Not necessarily the</span></span><br><span class="line"><span class="comment">                       thread descriptor used by libpthread.  */</span></span><br><span class="line">  <span class="keyword">dtv_t</span> *dtv;</span><br><span class="line">  <span class="keyword">void</span> *self;       <span class="comment">/* Pointer to the thread descriptor.  */</span></span><br><span class="line">  <span class="keyword">int</span> multiple_threads;</span><br><span class="line">  <span class="keyword">uintptr_t</span> sysinfo;</span><br><span class="line">  <span class="keyword">uintptr_t</span> stack_guard; <span class="comment">//fs:0x28</span></span><br><span class="line">  ...</span><br><span class="line">&#125; <span class="keyword">tcbhead_t</span>;</span><br></pre></td></tr></table></figure>
-
 <h5><span id="绕过">绕过</span></h5><p>绕过思路：</p>
 <ol>
 <li>劫持<code>__stack_chk_fail</code>的got表。</li>
@@ -338,19 +332,11 @@
 <li>函数的装饰名(decoration name/mangling name)为函数名自动加前导的下划线, 后面紧跟一个@符号, 其后紧跟着参数的尺寸</li>
 </ul>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">#caller</span><br><span class="line">	push 2; 第二个参数入栈</span><br><span class="line"> push 1; 第一个参数入栈</span><br><span class="line"> call function; 调用函数, 注意此时自动把cs:eip入栈</span><br><span class="line"> </span><br><span class="line"> #callee</span><br><span class="line"> push ebp; 保存ebp寄存器, 该寄存器将用来保存堆栈的栈顶指针, 可以在函数退出时恢复</span><br><span class="line"> mov ebp, esp; 保存栈顶指针</span><br><span class="line"> mov eax, [ebp + 8H];  堆栈中ebp指向位置之前依次保存有ebp, cs:eip, a, b, ebp +8指向a</span><br><span class="line"> add eax, [ebp + 0CH]; 堆栈中ebp + 12处保存了b</span><br><span class="line"> mov esp, ebp; 恢复esp</span><br><span class="line"> pop ebp;</span><br><span class="line"> ret 8;</span><br></pre></td></tr></table></figure>
-
-
-
-
-
 <h5><span id="cdeclc语言缺省调用约定">cdecl（c语言缺省调用约定）</span></h5><ul>
 <li>参数从右向左压入堆栈 </li>
 <li>调用者函数修改堆栈 </li>
 </ul>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"> #caller</span><br><span class="line"> push 1;</span><br><span class="line"> push 2;</span><br><span class="line"> call function; // push retn ; jmp retn(esp - 8)</span><br><span class="line"> add esp, 8; //注意, 这里调用者再恢复堆栈</span><br><span class="line"></span><br><span class="line">#callee</span><br><span class="line">push ebp; 保存ebp, 该寄存器将用来保存堆栈的栈顶指针, 可以在函数退出时恢复</span><br><span class="line">mov ebp, esp; 保存栈顶指针</span><br><span class="line">mov eax, [ebp + 8H]; 堆栈ebp指向位置之前依次保存有ebp, cs:eip, a, b, ebp + 8指向a</span><br><span class="line">add eax, [ebp + 0CH]; 堆栈中ebp + 12处保存了b</span><br><span class="line">mov esp, ebp; 恢复esp</span><br><span class="line">pop ebp;</span><br><span class="line">ret; // pop rsp , jmp retn(esp + 8)</span><br></pre></td></tr></table></figure>
-
-
-
 <h5><span id="fastcall">fastcall</span></h5><ul>
 <li>函数的第一个和第二个DWORD参数（或者尺寸更小的）通过ecx和edx传递, 其他参数通过从右向左的顺序压栈 </li>
 <li>被调用函数清理堆栈 </li>
@@ -364,10 +350,10 @@
 <h5><span id="x86">x86</span></h5><p>根据调用约定用栈传参。</p>
 <h3><span id="elf文件结构">elf文件结构</span></h3><h4><span id="elf文件头">elf文件头：</span></h4><p>稍微看了一眼，感觉没什么特别值得记的。</p>
 <h4><span id="节">节</span></h4><p>通过file或readelf就是读取elf的文件头。</p>
-<p><code>.text</code> <code>.data</code> <code> .bss</code></p>
+<p><code>.text</code> <code>.data</code> <code>.bss</code></p>
 <p>链接视角：<code>section</code></p>
 <p>加载视角：<code>segment</code></p>
-<p><code>.strtab / .shstrtab </code></p>
+<p><code>.strtab / .shstrtab</code></p>
 <p><strong>字符串表</strong></p>
 <p>在ELF文件中，会用到很多字符串，比如节名，变量名等。所以ELF将所有的字符串集中放到一个表里，每一个字符串以’\0’分隔，然后使用字符串在表中的偏移来引用字符串。这样在ELF中引用字符串只需要给出一个数组下标即可。字符串表在ELF也以段的形式保存， .shstrtab是专供section name的字符串表。</p>
 <p><code>.symtab</code> </p>
@@ -375,7 +361,7 @@
 <p>在链接的过程中需要把多个不同的目标文件合并在一起，不同的目标文件相互之间会引用变量和函数。在链接过程中，我们将函数和变量统称为符号，函数名和变量名就是符号名。</p>
 <p>每个定义的符号都有一个相应的值，叫做符号值(Symbol Value)，对于变量和函数，符号值就是它们的地址。</p>
 <p><code>.rel.text</code>：</p>
-<p>一个<code> .text</code> 节中位置的列表，当链接器把这个目标文件和其他文件组合时，需要修改这些位置。一般而言，任何调用外部函数或者引用全局变量的指令都需要修改。另一方面，调用本地函数的指令则不需要修改。注意，可执行目标文件中并不需要重定位信息，因此通常省略，除非用户显式地指示链接器包含这些信息。</p>
+<p>一个<code>.text</code> 节中位置的列表，当链接器把这个目标文件和其他文件组合时，需要修改这些位置。一般而言，任何调用外部函数或者引用全局变量的指令都需要修改。另一方面，调用本地函数的指令则不需要修改。注意，可执行目标文件中并不需要重定位信息，因此通常省略，除非用户显式地指示链接器包含这些信息。</p>
 <p><code>.rel.data</code></p>
 <p>被模块引用或定义的所有全局变量的重定位信息。一般而言，任何已初始化的全局变量，如果它的初始值是一个全局变量地址或者外部定义函数的地址，都需要被修改。</p>
 <p><code>.eh_frame / .eh_frame_hdr</code></p>
@@ -384,10 +370,10 @@
 <p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/302726082">https://zhuanlan.zhihu.com/p/302726082</a></p>
 <h4><span id="其他">其他</span></h4><p>为什么要将数据与代码分开：</p>
 <ol>
-<li><p>可以对不同的节实现不同的权限，例如对数据段设置为可写可读，代码段则设置为只读。</p>
-</li>
-<li><p>ida中的elf文件</p>
-</li>
+<li>可以对不同的节实现不同的权限，例如对数据段设置为可写可读，代码段则设置为只读。</li>
+</ol>
+<ol>
+<li>ida中的elf文件</li>
 </ol>
 <h3><span id="链接amp重定位">链接&amp;重定位</span></h3><p>首先汇编器生成了起始地址为0的代码段和数据段构成的可重定位目标模块。</p>
 <p>这一组模块被输入到链接器中。</p>
@@ -408,16 +394,11 @@
 <p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-10-23%20%E4%B8%8B%E5%8D%884.47.32.png" alt="截屏2022-10-23 下午4.47.32"></p>
 <p>很显然main+0x15的地方只是下一条指令，似乎和我们想要的printf没有什么关联。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">root@--name:/ctf/work<span class="comment"># readelf -x 11 hello.o</span></span><br><span class="line"></span><br><span class="line">Hex dump of section <span class="string">&#x27;.strtab&#x27;</span>:</span><br><span class="line">  0x00000000 0068656c 6c6f2e63 006d6169 6e005f47 .hello.c.main._G</span><br><span class="line">  0x00000010 4c4f4241 4c5f4f46 46534554 5f544142 LOBAL_OFFSET_TAB</span><br><span class="line">  0x00000020 4c455f00 7072696e 746600            LE_.printf.</span><br></pre></td></tr></table></figure>
-
 <p>我们能看到字符串表中的<code>printf</code></p>
 <p>符号表</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">Symbol table <span class="string">&#x27;.symtab&#x27;</span> contains 12 entries:</span><br><span class="line">   Num:    Value          Size Type    Bind   Vis      Ndx Name</span><br><span class="line">     0: 0000000000000000     0 NOTYPE  LOCAL  DEFAULT  UND </span><br><span class="line">     1: 0000000000000000     0 FILE    LOCAL  DEFAULT  ABS hello.c</span><br><span class="line">     2: 0000000000000000     0 SECTION LOCAL  DEFAULT    1 </span><br><span class="line">     3: 0000000000000000     0 SECTION LOCAL  DEFAULT    3 </span><br><span class="line">     4: 0000000000000000     0 SECTION LOCAL  DEFAULT    4 </span><br><span class="line">     5: 0000000000000000     0 SECTION LOCAL  DEFAULT    5 </span><br><span class="line">     6: 0000000000000000     0 SECTION LOCAL  DEFAULT    7 </span><br><span class="line">     7: 0000000000000000     0 SECTION LOCAL  DEFAULT    8 </span><br><span class="line">     8: 0000000000000000     0 SECTION LOCAL  DEFAULT    6 </span><br><span class="line">     9: 0000000000000000    28 FUNC    GLOBAL DEFAULT    1 main</span><br><span class="line">    10: 0000000000000000     0 NOTYPE  GLOBAL DEFAULT  UND _GLOBAL_OFFSET_TABLE_</span><br><span class="line">    11: 0000000000000000     0 NOTYPE  GLOBAL DEFAULT  UND <span class="built_in">printf</span></span><br></pre></td></tr></table></figure>
-
 <p>这个表的列名对应了符号表的结构，UNDEF 代表未定义的符号，也就是在本目标模块中引用，但是却在其他地方定义的符号。</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> &#123;</span></span><br><span class="line">    <span class="keyword">int</span>     name;      <span class="comment">/* String table offset */</span></span><br><span class="line">    <span class="keyword">char</span>    type:<span class="number">4</span>,    <span class="comment">/* Function or data (4 bits) */</span></span><br><span class="line">            binding:<span class="number">4</span>; <span class="comment">/* Local or global (4 bits) */</span></span><br><span class="line">    <span class="keyword">char</span>    reserved;  <span class="comment">/* Unused */</span></span><br><span class="line">    <span class="keyword">short</span>   section;   <span class="comment">/* Section header index */</span></span><br><span class="line">    <span class="keyword">long</span>    value;     <span class="comment">/* Section offset or absolute address */</span></span><br><span class="line">    <span class="keyword">long</span>    size;      <span class="comment">/* Object size in bytes */</span></span><br><span class="line">&#125; Elf64_Symbol;</span><br></pre></td></tr></table></figure>
-
-
-
 <h4><span id="符号解析">符号解析</span></h4><p>解析符号引用的方法是将每个引用与它输入的可重定位目标文件的符号表中的一个确定的符号定义关联起来，这里分为两种情况。</p>
 <ol>
 <li>引用和定义都在同一个模块的局部符号引用。</li>
@@ -434,17 +415,11 @@
 <p>当汇编器遇到一个最终位置未知的引用时，它简单地将立即数0x0放入引用处，并为这个引用生成一个<strong>重定位条目</strong>放在 <code>.rel .text</code> 中，而这个重定位条目拥有足够多的信息指导链接器在链接时将0x0修改为正确的数值。</p>
 <p>重定位条目格式如下</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> &#123;</span></span><br><span class="line">    <span class="keyword">long</span> offset;    <span class="comment">/* Offset of the reference to relocate */</span></span><br><span class="line">    <span class="keyword">long</span> type:<span class="number">32</span>,   <span class="comment">/* Relocation type */</span></span><br><span class="line">         symbol:<span class="number">32</span>; <span class="comment">/* Symbol table index */</span></span><br><span class="line">    <span class="keyword">long</span> addend;    <span class="comment">/* Constant part of relocation expression */</span></span><br><span class="line">&#125; Elf64_Rela;</span><br></pre></td></tr></table></figure>
-
-
-
 <p>其实重定位过程算法简单来说就是将未知引用地址改为运行时地址，例如：</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">*refptr = (<span class="keyword">unsigned</span>) (ADDR(r.symbol) + r.addend);<span class="comment">//绝对寻址</span></span><br></pre></td></tr></table></figure>
-
-
-
 <h3><span id="加载">加载</span></h3><p>一般情况下（aslr未开启），程序由<code>0x400000</code>开始加载。</p>
 <p>当加载器运行时，它创建类似于图 7-15 所示的内存映像。在程序头部表的引导下，加载器将可执行文件的片（chunk）复制到代码段和数据段。接下来，加载器跳转到程序的入口点，也就是 <code>_start</code>函数的地址。这个函数是在系统目标文件 ctrl.o 中定义的，对所有的 C 程序都是一样的。<code>_start</code> 函数调用系统启动函数 __libc_start_main，该函数定义在 libc.so 中。它初始化执行环境，调用用户层的 main 函数，处理 main 函数的返回值，并且在需要的时候把控制返回给内核。</p>
-<p>![img](<a target="_blank" rel="noopener" href="https://1087580735-files.gitbook.io/~/files/v0/b/gitbook-legacy-files/o/assets%2F-MHt_spaxGgCbp2POnfq%2F-MI8pquOBkqRu_B1qWTy%2F-MI8q_Q9zCjP43SJa6VX%2F07-15">https://1087580735-files.gitbook.io/~/files/v0/b/gitbook-legacy-files/o/assets%2F-MHt_spaxGgCbp2POnfq%2F-MI8pquOBkqRu_B1qWTy%2F-MI8q_Q9zCjP43SJa6VX%2F07-15</a> Linux x86-64 运行时内存映像.png?alt=media&amp;token=9d8f7d7e-ccda-48d1-814a-8a38ccb2ff8a)</p>
+<p><img src="https://1087580735-files.gitbook.io/~/files/v0/b/gitbook-legacy-files/o/assets%2F-MHt_spaxGgCbp2POnfq%2F-MI8pquOBkqRu_B1qWTy%2F-MI8q_Q9zCjP43SJa6VX%2F07-15 Linux x86-64 运行时内存映像.png?alt=media&amp;token=9d8f7d7e-ccda-48d1-814a-8a38ccb2ff8a" alt="img"></p>
 <h4><span id="动态链接共享库">动态链接共享库</span></h4><p><strong>共享库</strong>（shared library）是致力于解决静态库缺陷的一个现代创新产物。共享库是一个目标模块，在运行或加载时，可以加载到任意的内存地址，并和一个在内存中的程序链接起来。这个过程称为<strong>动态链接</strong>（dynamic linking），是由一个叫做<strong>动态链接器</strong>（dynamic linker）的程序来执行的，在 Linux 系统中通常用 .so 后缀来表示。微软的操作系统大量地使用了共享库，它们称为 DLL（动态链接库）。</p>
 <p>ld - 动态链接器</p>
 <p>libc - 动态链接库</p>
@@ -457,11 +432,10 @@
 <p><code>GOT[2]</code> 包含动态链接器的延迟绑定代码<code>_dl_runtime_resolve</code>的入口点，用于得到真正的函数地址，回写到对应的got表中;</p>
 <p><code>GOT[3]</code> 开始就是函数的地址。</p>
 <h5><span id="plt">plt</span></h5><p>PLT 是 Linux ELF 文件中用于延迟绑定的表。实际内容是一段代码</p>
-<h5><span id="具体过程">具体过程</span></h5><p>假设程序中调用 <code>func</code> 函数，该函数在<code> .plt</code> 段中相应的项为<code> func@plt</code>，在<code> .got.plt</code> 中相应的项为 <code>func@got</code>，链接器在初始化时将<code> func@got</code> 中的值填充为 “preapre resolver” 指令处的地址。</p>
+<h5><span id="具体过程">具体过程</span></h5><p>假设程序中调用 <code>func</code> 函数，该函数在<code>.plt</code> 段中相应的项为<code>func@plt</code>，在<code>.got.plt</code> 中相应的项为 <code>func@got</code>，链接器在初始化时将<code>func@got</code> 中的值填充为 “preapre resolver” 指令处的地址。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">func@plt:</span><br><span class="line">jmp *(func@got)n//prepare resolver</span><br><span class="line">jmp _dl_runtime_resolve</span><br></pre></td></tr></table></figure>
-
-<p>第一次调用 func 函数时，首先会跳转到 PLT 执行 <code>jmp *(func@got)</code>，由于该函数没被调用过，func@got 中的值不是 func 函数的地址，而是 PLT 中的 “preapre resolver” 指令的地址，所以会跳转到 “preapre resolver” 执行，接着调用 <code>_dl_runtime_resolve </code>解析<code> func</code> 函数的地址，并将该函数真正的地址填充到 <code>func@got</code>，最后跳转到 func 函数继续执行代码。当再次调用 func 函数时，由于 <code>func@got</code> 中已填充正确的函数地址，此时执行 PLT 中的 <code>jmp *(func@got)</code> 即可成功跳转到 func 函数中执行。</p>
-<p>太长不看：首次调用函数时，plt表调用 <code>_dl_runtime_resolve </code>函数填充got表为真实地址，再次调用时，plt调用got表则直接执行到目标函数。</p>
+<p>第一次调用 func 函数时，首先会跳转到 PLT 执行 <code>jmp *(func@got)</code>，由于该函数没被调用过，func@got 中的值不是 func 函数的地址，而是 PLT 中的 “preapre resolver” 指令的地址，所以会跳转到 “preapre resolver” 执行，接着调用 <code>_dl_runtime_resolve</code>解析<code>func</code> 函数的地址，并将该函数真正的地址填充到 <code>func@got</code>，最后跳转到 func 函数继续执行代码。当再次调用 func 函数时，由于 <code>func@got</code> 中已填充正确的函数地址，此时执行 PLT 中的 <code>jmp *(func@got)</code> 即可成功跳转到 func 函数中执行。</p>
+<p>太长不看：首次调用函数时，plt表调用 <code>_dl_runtime_resolve</code>函数填充got表为真实地址，再次调用时，plt调用got表则直接执行到目标函数。</p>
 <h3><span id="虚拟内存">虚拟内存</span></h3><h4><span id="内存页">内存页</span></h4><h3><span id="进程间通信">进程间通信</span></h3><h4><span id="进程间通信">进程间通信：</span></h4><p>信号、管道、消息队列、共享内存</p>
 <p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/luo77/p/5816326.html">https://www.cnblogs.com/luo77/p/5816326.html</a></p>
 <h4><span id="管道">管道</span></h4><p>管道的实质是一个内核缓冲区，进程以先进先出的方式从缓冲区存取数据,管道一端的进程顺序地将进程数据写入缓冲区，另一端的进程则顺序地读取数据，该缓冲区可以看做一个循环队列，读和写的位置都是自动增加的，一个数据只能被读一次，读出以后再缓冲区都不复存在了。</p>
@@ -508,7 +482,6 @@
 </ul>
 <h4><span id="软硬连接">软硬连接</span></h4><h5><span id="软链接">软链接</span></h5><p>为某个文件在另外一个位置建立一个同不的链接。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ln -s 源文件 目标文件。 </span><br></pre></td></tr></table></figure>
-
 <h5><span id="硬链接">硬链接</span></h5><p>允许一个文件拥有多个有效路径名，这样用户就可以建立硬连接到重要文件，以防止“误删”的功能。</p>
 <h4><span id="环境变量">环境变量</span></h4><p>。</p>
 <h2><span id="其他">其他</span></h2><h3><span id="kernel-漏洞">kernel 漏洞</span></h3><h4><span id="kernel-uaf">kernel uaf</span></h4><h4><span id="kernel-rop">kernel rop</span></h4><h3><span id="fuzz">fuzz</span></h3><h4><span id="基本原理">基本原理</span></h4><p>Fuzzing引擎算法中，测试用例的生成方式主要有2种：</p>
@@ -526,10 +499,10 @@
 <h4><span id="基本的fuzz代码优化">基本的fuzz代码优化</span></h4><p>不知道orz</p>
 <h4><span id="llvm">llvm</span></h4><h3><span id="v8ampchrome">v8&amp;Chrome</span></h3><p><a target="_blank" rel="noopener" href="https://kiprey.github.io/2020/11/fetch-chromium/">https://kiprey.github.io/2020/11/fetch-chromium/</a></p>
 <p><a target="_blank" rel="noopener" href="https://kiprey.github.io/2020/10/CVE-2020-6549/">https://kiprey.github.io/2020/10/CVE-2020-6549/</a></p>
-<p><a target="_blank" rel="noopener" href="https://kiprey.github.io/2020/10/CVE-2019-5826/#%E4%B8%80%E3%80%81%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA">https://kiprey.github.io/2020/10/CVE-2019-5826/#一、环境搭建</a></p>
+<p><a target="_blank" rel="noopener" href="https://kiprey.github.io/2020/10/CVE-2019-5826/#一、环境搭建">https://kiprey.github.io/2020/10/CVE-2019-5826/#一、环境搭建</a></p>
 <h3><span id="gdb使用">gdb使用</span></h3><h4><span id="断点原理内存amp硬件amp软件断点">断点原理（内存&amp;硬件&amp;软件断点）</span></h4><p>软件断点：由非法指令异常实现，适用于运行于内存中的程序（软件实现）。以x86为例，向某个地址打入断点，实际上就是往该地址写入断点指令INT 3，即0xCC。目标程序运行到这条指令之后就会触发SIGTRAP信号，gdb捕获到这个信号，根据目标程序当前停止位置查询gdb维护的断点链表，若发现在该地址确实存在断点，则可判定为断点命中。</p>
 <p>硬件断点：由硬件特性实现（数量有限），适用于直接在flash中运行的程序。</p>
-<p>之所以要区分硬件和软件断点，是因为软件断点要往某个地址写入断点指令的，那么最起码该地址应该是可写的吧？大多数时候，我们的程序是会被加载到<a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=%E5%86%85%E5%AD%98&spm=1001.2101.3001.7020">内存</a>（RAM）中执行的，RAM是可读可写，这时候软件断电就是有效的。<br>但是，对于某些比较重要的程序，可能会直接在flash中执行，并且flash对用户可能是只读的，这时候软件断点就没有用了，因为没办法写进断点指令，此时必须依赖于硬件断点。这就是软件断点和硬件断点使用上的不同。</p>
+<p>之所以要区分硬件和软件断点，是因为软件断点要往某个地址写入断点指令的，那么最起码该地址应该是可写的吧？大多数时候，我们的程序是会被加载到<a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=内存&amp;spm=1001.2101.3001.7020">内存</a>（RAM）中执行的，RAM是可读可写，这时候软件断电就是有效的。<br>但是，对于某些比较重要的程序，可能会直接在flash中执行，并且flash对用户可能是只读的，这时候软件断点就没有用了，因为没办法写进断点指令，此时必须依赖于硬件断点。这就是软件断点和硬件断点使用上的不同。</p>
 <p>hb为硬件断点，使用方式与软中断相同。</p>
 <p>内存断点：<code>watch</code>指令。监控变量或表达式的值。</p>
 <h4><span id="一些常见指令">一些常见指令</span></h4><p><a target="_blank" rel="noopener" href="https://wizardforcel.gitbooks.io/100-gdb-tips/content/show-version.html">https://wizardforcel.gitbooks.io/100-gdb-tips/content/show-version.html</a></p>

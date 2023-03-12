@@ -72,7 +72,7 @@
         		<a class="sb-toggle-submenu">Categories<span class="sb-caret"></span></a>
             	<ul class="sb-submenu">
 				  	
-				    <li><a href="/categories/AUDITION/" class="animsition-link">AUDITION<small>(23)</small></a></li>
+				    <li><a href="/categories/AUDITION/" class="animsition-link">AUDITION<small>(22)</small></a></li>
 				    
 				    <li><a href="/categories/CSAPP-LAB/" class="animsition-link">CSAPP LAB<small>(1)</small></a></li>
 				    
@@ -297,11 +297,10 @@
                       
                         
     
-
 overview
 ​        …栈溢出？
 reverse​        这个逻辑应该不是非常好逆。
-buf_init​        首先是一个初始化随机数相关内存空间的一个函数。在bss段上malloc了两个0x10大小的chunk,其中位于高地址的 chunk1 + 8，也就是0x6020F8 + 8地方保存了另外一个0x100 size chunk的指针，而位于chunk0，也就是0x6020F0 的这个ch
+buf_init​        首先是一个初始化随机数相关内存空间的一个函数。在bss段上malloc了两个0x10大小的chunk,其中位于高地址的 chunk1 + 8，也就是0x6020F8 + 8地方保存了另外一个0x100 size chunk的指针，而位于chunk0，也就是0x6020F0 的这个chu
                       
                     </p>
                     
@@ -338,16 +337,14 @@ buf_init​        首先是一个初始化随机数相关内存空间的一个�
                       
                         
     
-
 overview​        上一道题不给我调试符号，我还能找到类似的版本用，这里直接不告诉我版本了，真牛。
 
 如果这样看不出具体版本的话，一般的方法一个是盲测，另外就是在ida中搜索gnu字符串，再或者
 1strings ./libc.so | grep &quot;GNU C Library&quot;
 
-
 `
 ​        这道题的保护也是只有pie没有开，但是got表是可以改的。
-​        2.29
+​        2.29的l
                       
                     </p>
                     
@@ -422,11 +419,10 @@ overview​        上一道题不给我调试符号，我还能找到类似的�
                       
                         
     
-
 overview​        除了pie其他都开，这样就不能修改got表了。
 ​        libc是2.27，需要考虑的就是tcache，
 reverse​        这道题的逻辑也比较简单，堆块的分配给我的感觉是比较类似21年ciscn的lonelywolf，也是只能申请一个chunk，然后free处直接free整个malloc出的ptr，info则是打印我们输入的name。
-12printf(&quot;
+12printf(&quot;N
                       
                     </p>
                     
@@ -463,13 +459,10 @@ reverse​        这道题的逻辑也比较简单，堆块的分配给我的�
                       
                         
     
-
-
-
 overview&amp;reverse​        
 ​        
 ​    比较明显是一道堆上的shellcode，程序逻辑比较简单,就是以idx创建不同的note，然后每个note只储存name，没有结构体啥的，Name，也就是我们输入进堆块的数据，必须是可见字符。之前做过一道类似的题，也是一个可见字符shellcode，可以用专门的工具或者嗯写出对应的可见字符版本的shellcode。
-利用​    
+利用​       
                       
                     </p>
                     
@@ -506,13 +499,12 @@ overview&amp;reverse​
                       
                         
     
-
 overview
 reverseopen​        打开一个文件，但是文件名不能包含flag.顺便在0x804B0C0上初始化了一块magic buf，此外，一次只能打开一个文件。
 read​        读取文件到magic buf。
 1result = fread(magicbuf, 0x18Fu, 1u, fp);
-
 write​        对flag的一些字符串进行过滤，然后put magic buf。
+c
                       
                     </p>
                     
@@ -586,13 +578,12 @@ write​        对flag的一些字符串进行过滤，然后put magic buf。
                       
                         
     
-
 overview​        怎么这么多32位的。
 
 ​        这个题我去年暑假的时候就做过，但是当时明显超出了我的能力范围，属于是wp都看不懂。不过pwnable这几个题目前来说我都能独立完成，所以这个也说不定。
 ​        总觉得我现在做题的类型很怪。
 reverse​        还是没有去除符号表，好。我依稀记得去年八月的时候我觉得这个题非常难逆，然后是实现了一个双链表。
-main​      
+main​       
                       
                     </p>
                     
@@ -629,12 +620,11 @@ main​
                       
                         
     
-
 overview
 reverse​        好，还有符号表，真好。这个题比较怪，这是一个菜单题，但是却是栈题。
 ​        好像还是个简单的小游戏。
 create_bullet​        这个逻辑看来也是只能创建一个bullet这样。
-12345678if ( *bullet_list )  return puts(&quot;You have been created the Bullet !&quot
+12345678if ( *bullet_list )  return puts(&quot;You have been created the Bullet !&quot;
                       
                     </p>
                     
@@ -671,11 +661,6 @@ create_bullet​        这个逻辑看来也是只能创建一个bullet这样�
                       
                         
     
-
-
-
-
-
 overview
 ​        轻松快乐的栈题，没有canary和pie那估计就是rop力。
 
@@ -686,7 +671,7 @@ Reverse​    开幕雷击
 
 ​    这是啥？
 ​    秉持着看不懂就假装没有看到的原则，先看看得懂的地方。
-12345678910result = ++::result;if ( ::result == 1 )&
+12345678910result = ++::result;if ( ::result == 1 )&#123;
                       
                     </p>
                     

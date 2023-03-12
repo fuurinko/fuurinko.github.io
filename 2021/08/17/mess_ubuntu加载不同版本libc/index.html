@@ -75,7 +75,7 @@
         		<a class="sb-toggle-submenu">Categories<span class="sb-caret"></span></a>
             	<ul class="sb-submenu">
 				  	
-				    <li><a href="/categories/AUDITION/" class="animsition-link">AUDITION<small>(23)</small></a></li>
+				    <li><a href="/categories/AUDITION/" class="animsition-link">AUDITION<small>(22)</small></a></li>
 				    
 				    <li><a href="/categories/CSAPP-LAB/" class="animsition-link">CSAPP LAB<small>(1)</small></a></li>
 				    
@@ -263,9 +263,8 @@
         </div>
         <div class="col-md-8 col-md-offset-2">
       		
-    <div id="aplayer-AQZBmdkD" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div> 
-
-<h4><span id="1review">1）review</span></h4><p> 这个问题困扰了我多年，之前年轻的时候不知道为什么有的是题我就是死活调不出，后来才知道呀原来用的ubunt的版本太高了。但是我一直忽视了这个问题以为并不是什么关键的因素。我是这么认为的–只要清楚了利用方法并记住对应的libc版本，无论是不是真的把这道题调试出来了都无所谓。</p>
+    <div id="aplayer-dtGihvpy" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div> 
+<h4><span id="1review">1）review</span></h4><p> 这个问题困扰了我多年，之前年轻的时候不知道为什么有的是题我就是死活调不出，后来才知道呀原来用的ubunt的版本太高了。但是我一直忽视了这个问题以为并不是什么关键的因素。我是这么认为的—只要清楚了利用方法并记住对应的libc版本，无论是不是真的把这道题调试出来了都无所谓。</p>
 <p>然后我就是这样一步一步地变得不会调试的。</p>
 <p>但是完整地把一道题调出来。这才是关键。这才是pwn题的灵魂。</p>
 <p>呜呜呜，我居然一直忽略了它的灵魂</p>
@@ -278,8 +277,8 @@
 <p>它可以影响程序的运行时的链接（Runtime linker），允许你定义在程序运行前优先加载的动态链接库。</p>
 <p>这个功能主要就是用来有选择性的载入不同动态链接库中的相同函数。通过这个环境变量，我们可以在主程序和其动态链接库的中间加载别的动态链接库，甚至覆盖正常的函数库。</p>
 <p>换句话说我们可以通过指定这个环境变量来指定特定的libc版本。</p>
-<h5><span id="2ld_library_path和library_path">2）LD_LIBRARY_PATH和LIBRARY_PATH</span></h5><p>LD_LIBRARY_PATH用于在<em><strong>程序加载运行期间</strong></em>查找动态链接库时指定除了系统默认路径之外的其他路径.</p>
-<p>LIBRARY_PATH环境变量用于在<em><strong>程序编译期间</strong></em>查找动态链接库时指定查找共享库的路径</p>
+<h5><span id="2ld_library_path和library_path">2）LD_LIBRARY_PATH和LIBRARY_PATH</span></h5><p>LD_LIBRARY_PATH用于在<strong><em>程序加载运行期间</em></strong>查找动态链接库时指定除了系统默认路径之外的其他路径.</p>
+<p>LIBRARY_PATH环境变量用于在<strong><em>程序编译期间</em></strong>查找动态链接库时指定查找共享库的路径</p>
 <p>其实可以发现这三个环境变量都是修改程序需要的共享库，但是生效的时间不一样。</p>
 <p>并且在pwn题中基本都是需要在运行前指定另外的共享库的，所以<code>LD_PRELOAD</code>还是比较常见。</p>
 <p>相关（？）环境变量大概就这么多，然后是某些特殊的段。</p>

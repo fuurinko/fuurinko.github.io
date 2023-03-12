@@ -72,7 +72,7 @@
         		<a class="sb-toggle-submenu">Categories<span class="sb-caret"></span></a>
             	<ul class="sb-submenu">
 				  	
-				    <li><a href="/categories/AUDITION/" class="animsition-link">AUDITION<small>(23)</small></a></li>
+				    <li><a href="/categories/AUDITION/" class="animsition-link">AUDITION<small>(22)</small></a></li>
 				    
 				    <li><a href="/categories/CSAPP-LAB/" class="animsition-link">CSAPP LAB<small>(1)</small></a></li>
 				    
@@ -377,9 +377,8 @@ gdb指令级单步的实现首先还是复习一下老生常谈（的软硬断�
                         这是一些也许很基础但是一直没有搞透彻or忘了or巩固的一些知识点的集合，空的就是还没有来得及填，
 编程语言cpython汇编首先就是寻址的几种方式：
 1）寻址1/直接寻址1mov     rax, fs:28h #直接寻址，fs段寄存器+偏移量。这里其实是一个canary的值。
-
 2/间接寻址间接在使用指针以及解引用的形式
-1mov     [rbp+var_8], rax # 寄存器相对寻址。相当于把rax，也就是这个canary值放
+1mov     [rbp+var_8], rax # 寄存器相对寻址。相当于把rax，也就是这个canary值放到
                       
                     </p>
                     
@@ -450,7 +449,7 @@ gdb指令级单步的实现首先还是复习一下老生常谈（的软硬断�
                         0 前言​        研究2018-1160的时候，看到一篇文章中的一句话，让我费解到了现在：
 HITCON CTF 2019 Pwn 371 Netatalk
 
-非常不幸的是，最近在研究2016-10191的时候也遇到了同样的问题——onegadget无法getshell，以上种种让我对getshell这个看似简单的概念产生了巨大的疑惑，遂有了这一篇文章–getshell到底是什么？
+非常不幸的是，最近在研究2016-10191的时候也遇到了同样的问题——onegadget无法getshell，以上种种让我对getshell这个看似简单的概念产生了巨大的疑惑，遂有了这一篇文章—getshell到底是什么？
 问题解答？​        首先讲我对于“自行
                       
                     </p>
@@ -528,16 +527,12 @@ HITCON CTF 2019 Pwn 371 Netatalk
                       
                         
     
-
-
-
 呃呃，这是一个阉割版，但是懒得改了，原文+代码 2.5w字，真的没那么敷衍的。
 环境搭建ubuntu 18.04 （libc-2.27.so）
 netatalk 二进制文件-》可以在pwnable上找到编译好的文件，非常方便。
 4：漏洞复现关闭地址随机化。
 1sudo bash -c &quot;echo 0 &gt; /proc/sys/kernel/randomize_va_space&quot;
-
-poc1234
+poc12345678
                       
                     </p>
                     
