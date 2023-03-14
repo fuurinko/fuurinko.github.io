@@ -262,33 +262,49 @@
       		<h2><span id="61-chain-rule">6.1 Chain Rule</span></h2><h3><span id="610-scalar">6.1.0 Scalar</span></h3><script type="math/tex; mode=display">
 y = f(u),u = g(x)</script><script type="math/tex; mode=display">
 \frac {\partial y}   {\partial x} =\frac {\partial y}   {\partial u}\frac {\partial u}   {\partial x}</script><h3><span id="611-vector">6.1.1 Vector</span></h3><script type="math/tex; mode=display">
-\frac {\partial \mathbf{y}}   {\partial \mathbf} =\frac {\partial  \mathbf{y}}   {\partial  \mathbf}\frac {\partial \mathbf}   {\partial \mathbf}</script><p>(similar with scalar)</p>
-<h5><span id="example-linear-regression">example - linear regression</span></h5><p>assume </p>
-<script type="math/tex; mode=display">
-\mathbf{x},\mathbf{w} \in R^n,y \in R</script><script type="math/tex; mode=display">
-z = (\left \langle \mathbf{x},\mathbf{w} \right \rangle - y)^2</script><p>caculate the </p>
+\frac {\partial \mathbf{y}} {\partial \mathbf{ {x}}} =\frac {\partial \mathbf{y}} {\partial \mathbf{ {u}}}\frac {\partial \mathbf{ {u}}} {\partial \mathbf{ {x}}}</script><p>(similar with scalar)</p>
+<h5><span id="example-linear-regression">example - linear regression</span></h5><p>assume $\mathbf{x},\mathbf{w} \in R^n,y \in R $$z = (\left \langle \mathbf{x},\mathbf{w} \right \rangle - y)^2 $</p>
+<p>caculate the </p>
 <script type="math/tex; mode=display">
 \frac {\partial \mathbf{z}}{\partial \mathbf{w}}</script><ol>
-<li><p>Decompose  =&gt;</p>
-<script type="math/tex; mode=display">
+<li>Decompose  =&gt;<script type="math/tex; mode=display">
 \begin{cases} a =\left \langle \mathbf{x},\mathbf{w} \right \rangle \\ b = a-y \\ z = b^2 \end{cases}</script></li>
-<li><p>Partial derivation</p>
-</li>
+</ol>
+<ol>
+<li>Partial derivation</li>
 </ol>
 <script type="math/tex; mode=display">
-\frac {\partial {z} }   {\partial \mathbf{w} } =\frac {\partial  {z} }   {\partial { {b } } }\frac {\partial  {b}}   {\partial { {a} } }\frac {\partial { {a}}}   {\partial \mathbf{ {w}}}</script><p>3) subsitute a (1) into (2):  </p>
+\frac {\partial {z} }   {\partial \mathbf{w} } =\frac {\partial  {z} }   {\partial { {b }}}\frac {\partial  {b}}   {\partial { {a} } }\frac {\partial { {a}}}   {\partial \mathbf{      {w}}}</script><p>3) subsitute a (1) into (2):  </p>
 <script type="math/tex; mode=display">
    =\frac {\partial  {b^2}}   {\partial { {b}}}\frac {\partial  {a-y}}   {\partial { {a}}}\frac {\partial { {\left \langle \mathbf{x},\mathbf{w} \right \rangle }}}   {\partial \mathbf{ {w}}}</script><script type="math/tex; mode=display">
 =2b \ \cdot \ 1 \cdot \mathbf{x}^T</script><script type="math/tex; mode=display">
-= 2(\left \langle \mathbf{x},\mathbf{w} \right \rangle-y)\mathbf{x}^T</script><h5><span id="summary">summary</span></h5><p>we can draw the conclusion that for any functions ,we can decompose it ,and apply chain rule to expand then.<br>But in pratical case,especially the neutral network, the Calculations are extremly heavy, so we introduce a new method to caculate the derivation of functions.</p>
-<h2><span id="62-automatic-derivation">6.2 Automatic Derivation</span></h2><h3><span id="620-currently-available-methods">6.2.0 currently available methods</span></h3><p>1) symbolic derivation — Memorize some Common Derivation Formulas to work out(mathematica,etc.)<br>2) Numerical Derivation — Use a bunch of datas to fit the formula.</p>
-<h3><span id="621-realization">6.2.1 realization</span></h3><p>Build a _computational graph_ that tracks how each value depends on others.</p>
-<h4><span id="6211-caculation-graph">6.2.1.1 caculation graph</span></h4><p>1) decompose the code into operator.<br>2) present the caculation as a acyclic graph<br><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/Screen%20Shot%202023-03-14%20at%204.54.01%20PM.png" alt="Screen Shot 2023-03-14 at 4.54.01 PM"></p>
-<h4><span id="6212-two-models">6.2.1.2 Two Models</span></h4><h5><span id="forward-propagation">Forward Propagation</span></h5><script type="math/tex; mode=display">
-\frac {\partial  {y}}   {\partial { {x}}}=\frac {\partial  {y}}   {\partial { {u_{n}}}}(\frac {\partial  {y}}   {\partial { {u_{n}}}}(...(\frac {\partial  {u_{2}}}   {\partial { {u_{1}}}}\frac {\partial  {u_{1}}}   {\partial { {x}}}))</script><p>Need to store the Median.</p>
-<h5><span id="back-propagation">Back Propagation</span></h5><script type="math/tex; mode=display">
-\frac {\partial  {y}}   {\partial } = 
-   (((\frac {\partial  y}   {\partial{u_{n}}}\frac {\partial  {u_{n}}}   {\partial { {u_{n-1}}}})...)\frac {\partial  {u_{2}}}   {\partial { {u_{1}}}})\frac {\partial u_{1}}   {\partial x}</script><p>   <img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/Screen%20Shot%202023-03-14%20at%205.12.52%20PM.png" alt="Screen Shot 2023-03-14 at 5.12.52 PM"></p>
+</script><p>= 2(\left \langle \mathbf{x},\mathbf{w} \right \rangle-y)\mathbf{x}^T</p>
+<script type="math/tex; mode=display">
+
+##### summary 
+we can draw the conclusion that for any functions ,we can decompose it ,and apply chain rule to expand then.
+But in pratical case,especially the neutral network, the Calculations are extremly heavy, so we introduce a new method to caculate the derivation of functions.
+
+## 6.2 Automatic Derivation 
+
+### 6.2.0 currently available methods
+1) symbolic derivation -- Memorize some Common Derivation Formulas to work out(mathematica,etc.)
+2) Numerical Derivation -- Use a bunch of datas to fit the formula.
+
+### 6.2.1 realization 
+Build a _computational graph_ that tracks how each value depends on others.
+#### 6.2.1.1 caculation graph
+1) decompose the code into operator.
+2) present the caculation as a acyclic graph
+![Screen Shot 2023-03-14 at 4.54.01 PM](https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/Screen%20Shot%202023-03-14%20at%204.54.01%20PM.png)
+
+#### 6.2.1.2 Two Models
+
+##### Forward Propagation</script><p>\frac {\partial  {y}}   {\partial { {x}}}=\frac {\partial  {y}}   {\partial { {u_{n}}}}(\frac {\partial  {y}}   {\partial { {u_{n}}}}(…(\frac {\partial  {u_{2}}}   {\partial { {u_{1}}}}\frac {\partial  {u_{1}}}   {\partial { {x}}}))\frac {\partial  {y}}   {\partial { {x}}}=\frac {\partial  {y}}   {\partial { {u_{n}}}}(\frac {\partial  {y}}   {\partial { {u_{n}}}}(…(\frac {\partial  {u_{2}}}   {\partial { {u_{1}}}}\frac {\partial  {u_{1}}}   {\partial { {x}}}))</p>
+<script type="math/tex; mode=display">
+Need to store the Median.
+##### Back Propagation</script><p>\frac {\partial  {y}}   {\partial { {x}}} =<br>   (((\frac {\partial  y}   {\partial{u_{n}}}\frac {\partial  {u_{n}}}   {\partial { {u_{n-1}}}})…)\frac {\partial  {u_{2}}}   {\partial { {u_{1}}}})\frac {\partial u_{1}}   {\partial x}\frac {\partial  {y}}   {\partial { {x}}} =<br>   (((\frac {\partial  y}   {\partial{u_{n}}}\frac {\partial  {u_{n}}}   {\partial { {u_{n-1}}}})…)\frac {\partial  {u_{2}}}   {\partial { {u_{1}}}})\frac {\partial u_{1}}   {\partial x} </p>
+<p>$$<br>   <img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/Screen%20Shot%202023-03-14%20at%205.12.52%20PM.png" alt="Screen Shot 2023-03-14 at 5.12.52 PM"></p>
 <h5><span id="comparation">Comparation</span></h5><div class="table-container">
 <table>
 <thead>
