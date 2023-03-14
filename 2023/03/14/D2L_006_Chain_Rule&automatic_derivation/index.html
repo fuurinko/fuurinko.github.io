@@ -8,7 +8,7 @@
 
 <head>
 
-  <title>Rin</title>
+  <title>D2L_006_Chain_Rule&amp;automatic_derivation | Rin</title>
   <!-- Meta data -->
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -52,7 +52,7 @@
 <!-- hexo injector head_end end --><link rel="stylesheet" href="/css/prism.css" type="text/css"></head>
 
 <!--
-<body class="home-template">
+<body class="post-template">
 -->
 <body id="index" class="lightnav animsition">
       <!-- ============================ Off-canvas navigation =========================== -->
@@ -239,452 +239,171 @@
         <!-- ============================ Header & Logo bar =========================== -->
 
 
-      <!-- ============================ Hero Image =========================== -->
-
-<section id="hero" class="scrollme">
-    <div class="container-fluid element-img" style="background: url(https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/IMG_7048.jpg) no-repeat center center fixed;background-size: cover">
-        <div class="row">
-            <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-8 col-md-offset-2 vertical-align cover boost text-center">
-                <div class="center-me animateme" data-when="exit" data-from="0" data-to="0.6" data-opacity="0" data-translatey="100">
-                    <div>
-                        
-                        <h2></h2>
-                        <p><font color = "#E83015">L</font><font color = "#BDC0BA">iberation of <font color = "#E83015"> T</font><font color = "#BDC0BA">echnology , </font><font color = "#E83015">E</font><font color = "#BDC0BA">levation of <font color = "#E83015">M</font><font color = "#BDC0BA">ankind</font></p>
-                        
-
-                    </div>
-                </div>
-            </div>
-            <!-- // .col-md-12 -->
-        </div>
-        <div class="herofade beige-dk"></div>
-    </div>
-</section>
-
-<!-- Height spacing helper -->
-<div class="heightblock"></div>
-<!-- // End height spacing helper -->
-
-<!-- ============================ END Hero Image =========================== -->
-<!-- ============================ Content =========================== -->
-
+      
 <section id="intro">
     <div class="container">
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2021/08/18/mess_main_arana 与多线程/">main_arana 与多线程</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2021-08-18T09:24:05.282Z" itemprop="datePublished">
-          2021-08-18
+        <div class="row col-md-offset-2">
+            <div class="col-md-8">
+    			<span class="post-meta">
+      <time datetime="2023-03-14T03:28:06.174Z" itemprop="datePublished">
+          2023-03-14
       </time>
     
     
     | 
-    <a href='/tags/mess/'>mess</a>
+    <a href='/tags/d2l/'>d2l</a>
     
     
 </span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-     
-在学习Tcache的时候遇到了一些比较奇怪的点，ctf权威指南pwn篇中对于Tcache的解释中第一段如下：
-Tcache全名为Thread Local Caching，它为每个线程创建一个缓存，里面包含了一些小堆块，无需对main_arena上锁即可使用。
+                <h1>D2L_006_Chain_Rule&automatic_derivation</h1>
+            </div>
+        </div>
+        <div class="col-md-8 col-md-offset-2">
+      		<h2><span id="61-chain-rule">6.1 Chain Rule</span></h2><h3><span id="610-scalar">6.1.0 Scalar</span></h3><script type="math/tex; mode=display">
+y = f(u),u = g(x)</script><script type="math/tex; mode=display">
+\frac {\partial y}   {\partial x} =\frac {\partial y}   {\partial u}\frac {\partial u}   {\partial x}</script><h3><span id="611-vector">6.1.1 Vector</span></h3><script type="math/tex; mode=display">
+\frac {\partial \mathbf{y}}   {\partial \mathbf} =\frac {\partial  \mathbf{y}}   {\partial  \mathbf}\frac {\partial \mathbf}   {\partial \mathbf}</script><p>(similar with scalar)</p>
+<h5><span id="example-linear-regression">example - linear regression</span></h5><p>assume </p>
+<script type="math/tex; mode=display">
+\mathbf{x},\mathbf{w} \in R^n,y \in R</script><script type="math/tex; mode=display">
+z = (\left \langle \mathbf{x},\mathbf{w} \right \rangle - y)^2</script><p>caculate the </p>
+<script type="math/tex; mode=display">
+\frac {\partial \mathbf{z}}{\partial \mathbf{w}}</script><ol>
+<li><p>Decompose  =&gt;</p>
+<script type="math/tex; mode=display">
+\begin{cases} a =\left \langle \mathbf{x},\mathbf{w} \right \rangle \\ b = a-y \\ z = b^2 \end{cases}</script></li>
+<li><p>Partial derivation</p>
+</li>
+</ol>
+<script type="math/tex; mode=display">
+\frac {\partial {z} }   {\partial \mathbf{w} } =\frac {\partial  {z} }   {\partial { {b } } }\frac {\partial  {b}}   {\partial { {a} } }\frac {\partial { {a}}}   {\partial \mathbf{ {w}}}</script><p>3) subsitute a (1) into (2):  </p>
+<script type="math/tex; mode=display">
+   =\frac {\partial  {b^2}}   {\partial { {b}}}\frac {\partial  {a-y}}   {\partial { {a}}}\frac {\partial { {\left \langle \mathbf{x},\mathbf{w} \right \rangle }}}   {\partial \mathbf{ {w}}}</script><script type="math/tex; mode=display">
+=2b \ \cdot \ 1 \cdot \mathbf{x}^T</script><script type="math/tex; mode=display">
+= 2(\left \langle \mathbf{x},\mathbf{w} \right \rangle-y)\mathbf{x}^T</script><h5><span id="summary">summary</span></h5><p>we can draw the conclusion that for any functions ,we can decompose it ,and apply chain rule to expand then.<br>But in pratical case,especially the neutral network, the Calculations are extremly heavy, so we introduce a new method to caculate the derivation of functions.</p>
+<h2><span id="62-automatic-derivation">6.2 Automatic Derivation</span></h2><h3><span id="620-currently-available-methods">6.2.0 currently available methods</span></h3><p>1) symbolic derivation — Memorize some Common Derivation Formulas to work out(mathematica,etc.)<br>2) Numerical Derivation — Use a bunch of datas to fit the formula.</p>
+<h3><span id="621-realization">6.2.1 realization</span></h3><p>Build a _computational graph_ that tracks how each value depends on others.</p>
+<h4><span id="6211-caculation-graph">6.2.1.1 caculation graph</span></h4><p>1) decompose the code into operator.<br>2) present the caculation as a acyclic graph<br><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/Screen%20Shot%202023-03-14%20at%204.54.01%20PM.png" alt="Screen Shot 2023-03-14 at 4.54.01 PM"></p>
+<h4><span id="6212-two-models">6.2.1.2 Two Models</span></h4><h5><span id="forward-propagation">Forward Propagation</span></h5><script type="math/tex; mode=display">
+\frac {\partial  {y}}   {\partial { {x}}}=\frac {\partial  {y}}   {\partial { {u_{n}}}}(\frac {\partial  {y}}   {\partial { {u_{n}}}}(...(\frac {\partial  {u_{2}}}   {\partial { {u_{1}}}}\frac {\partial  {u_{1}}}   {\partial { {x}}}))</script><p>Need to store the Median.</p>
+<h5><span id="back-propagation">Back Propagation</span></h5><script type="math/tex; mode=display">
+\frac {\partial  {y}}   {\partial } = 
+   (((\frac {\partial  y}   {\partial{u_{n}}}\frac {\partial  {u_{n}}}   {\partial { {u_{n-1}}}})...)\frac {\partial  {u_{2}}}   {\partial { {u_{1}}}})\frac {\partial u_{1}}   {\partial x}</script><p>   <img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/Screen%20Shot%202023-03-14%20at%205.12.52%20PM.png" alt="Screen Shot 2023-03-14 at 5.12.52 PM"></p>
+<h5><span id="comparation">Comparation</span></h5><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>Characteristic</th>
+<th>Backward</th>
+<th>Forward</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Memorize the media result?</td>
+<td>NO</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Computational complexity</td>
+<td>O(n)</td>
+<td>O(n)</td>
+</tr>
+<tr>
+<td>memory complexity</td>
+<td>O(1)</td>
+<td>O(n)</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2><span id="63-realization-in-pytorch">6.3 Realization in Pytorch</span></h2><h3><span id="631-scalar-function-grad">6.3.1 Scalar Function Grad</span></h3><p>Example 1:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"></span><br><span class="line"><span class="comment">#In [2]:</span></span><br><span class="line"></span><br><span class="line">x = torch.arange(<span class="number">4.0</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#In [5]:</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Can also create x = torch.arange(4.0, requires_grad=True)</span></span><br><span class="line"></span><br><span class="line">x.requires_grad_(<span class="literal">True</span>) <span class="comment">#Store the grad .</span></span><br><span class="line"></span><br><span class="line">x.grad  <span class="comment"># The gradient is None by default</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#In [6]:</span></span><br><span class="line"></span><br><span class="line">y = <span class="number">2</span> * torch.dot(x, x)</span><br><span class="line"></span><br><span class="line">y</span><br><span class="line"></span><br><span class="line"><span class="comment">#Out[6]:</span></span><br><span class="line"></span><br><span class="line">tensor(<span class="number">28.</span>, grad_fn=&lt;MulBackward0&gt;)</span><br></pre></td></tr></table></figure>
+<p>Using backward propagation to caculate the gradient<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">y.backward()</span><br><span class="line">x.grad</span><br><span class="line"><span class="comment">#tensor([ 0.,  4.,  8., 12.])</span></span><br></pre></td></tr></table></figure></p>
+<p>So the above code follows the follwing steps:<br>1) Generate vector<code>x</code>.<br>2) Activate the grad of <code>x</code>.<br>3) Generate  function <code>y</code> .<br>4) Use  <code>y.backward()</code> to caculate the <code>x.grad</code>  gradient automatically.</p>
+<p>Example 2:</p>
+<p>Pytorch will cumulate the gradient defaultly, so when start a new function, we need to clear the grad firstly.<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">x.grad.zero_()<span class="comment">#clear gradient(&quot;_&quot; represent rewrite)</span></span><br></pre></td></tr></table></figure><br>then define a new scalar function <code>y</code><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">y = x.<span class="built_in">sum</span>()</span><br></pre></td></tr></table></figure><br>Using the same way to work out the gradient :<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">y.backward()</span><br><span class="line">x.grad</span><br><span class="line"><span class="comment">#tensor([1., 1., 1., 1.])</span></span><br></pre></td></tr></table></figure></p>
+<h3><span id="632-non-scalar-function-grad">6.3.2 Non-scalar Function Grad</span></h3><p>In deeping , Case that need derivation of the vector funtion is rare, so we can use the scalar  sum to caculate the gradient.<br>like<code>y.sum().backward()</code> or <code>y.backward(gradient=torch.ones(len(y)))</code></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">x.grad.zero_()</span><br><span class="line">y = x * x<span class="comment">#thus y is not a scalar</span></span><br><span class="line">y.backward(gradient=torch.ones(<span class="built_in">len</span>(y)))  </span><br><span class="line"><span class="comment">#Faster: y.sum().backward()</span></span><br><span class="line">x.grad</span><br><span class="line"><span class="comment">#tensor([0., 2., 4., 6.])</span></span><br></pre></td></tr></table></figure>
+<h3><span id="633-detaching-computation">6.3.3 Detaching Computation</span></h3><p>Sometimes we want to just focus on specific varibles. For example, suppose we have <code>z = x * y</code> and <code>y = x * x</code> , but we want to focus on the _direct_ influence of <code>x</code> on <code>z</code> rather than the influence conveyed via <code>y</code>.<br>So we create a new varible <code>u = x * x</code>, but  <code>u</code> has no ancestors in the graph, and gradients do not flow through <code>u</code> to <code>x</code>.<br>We can consider<code>u</code> as a _constant_ with the value of <code>x * x</code>.<br>Thus the gradient value<code>x.grad()</code> will equal to<code>u</code>.<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">x.grad.zero_()</span><br><span class="line">y = x * x</span><br><span class="line">u = y.detach()</span><br><span class="line">z = u * x</span><br><span class="line"></span><br><span class="line">z.<span class="built_in">sum</span>().backward()</span><br><span class="line">x.grad == u</span><br></pre></td></tr></table></figure></p>
+<h2><span id="64-summary">6.4 Summary</span></h2><p>So in this module we learned<br>1) The basic idea of the chain rule.<br>2) The basic idea automatic derivation.<br>3) Gradient realization in python.</p>
 
-首先让我感到不解的就是，“无需对main_arena上锁即可使用”这句话。什么叫对main_arana上锁？之前也遇见过很多文章提到过这个”锁“的相关概念，但是它们
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2021/08/18/mess_main_arana 与多线程/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
+            <div class="clearfix"></div>
+            <hr class="nogutter">
         </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2021/08/17/mess_ubuntu加载不同版本libc/">ubuntu加载不同版本libc</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2021-08-17T02:53:00.000Z" itemprop="datePublished">
-          2021-08-17
-      </time>
+        <nav class="m-pagination col-md-8 col-md-offset-2 col-sm-24" role="pagination">
     
     
-    | 
-    <a href='/tags/linux-primary/'>linux primary</a>
+    <a class="pull-right" href="../../12/D2L_005_Calculus/">
+        D2L_005_Calculus →
+    </a>
     
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-     
-1）review 这个问题困扰了我多年，之前年轻的时候不知道为什么有的是题我就是死活调不出，后来才知道呀原来用的ubunt的版本太高了。但是我一直忽视了这个问题以为并不是什么关键的因素。我是这么认为的—只要清楚了利用方法并记住对应的libc版本，无论是不是真的把这道题调试出来了都无所谓。
-然后我就是这样一步一步地变得不会调试的。
-但是完整地把一道题调出来。这才是关键。这才是pwn题的灵魂。
-呜呜呜，我居然一直忽略了它的灵魂
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2021/08/17/mess_ubuntu加载不同版本libc/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2021/08/16/mess_记一次ubuntu18.04的glibc调教/">记一次ubuntu18.04的glibc调教</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2021-08-16T13:24:18.623Z" itemprop="datePublished">
-          2021-08-16
-      </time>
-    
-    
-    | 
-    <a href='/tags/mess/'>mess</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-     
-1）概述这是一件悲伤的事情，我的ubuntu它又崩了。
-最开始的时候，发现pwndbg无法查看heap等信息，这个问题我之前也遇到过，但是情况有非常大的区别。
-之前是我2.32的本地默认libc，执行程序时加载2.23，然后因为指定的lbc-2.23.so没有附带调试符号信息，所以也看不了heap，但是这一次，本机都看不了了？
-经过一番排查，我们认为是libc本身出现了问题。然后寻找libc-2.27.so的文件打算一探究
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2021/08/16/mess_记一次ubuntu18.04的glibc调教/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2021/08/13/mess_ELF文件下对于PIE保护和ASLR的重新认识/">ELF文件下对于PIE保护和ASLR的重新认识</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2021-08-13T07:06:00.000Z" itemprop="datePublished">
-          2021-08-13
-      </time>
-    
-    
-    | 
-    <a href='/tags/mess/'>mess</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-     
-ELF文件下对于PIE保护和ASLR的重新认识0）​    复现红色高跟鞋的时候，在ida修复swithc结构的时候碰见了一个问题。因为题目的源文件是有pie保护的，所以ida中的地址是很难看的随机化模式。虽然这些随机化的地址对于我们patch文件毫无影响，但是就是突发奇想，看看能不能找到方法来通过patch将elf文件的pie保护给禁用。
-1）​    如果用010editor打开一个PE文件，我们能够很方便的通过修改P
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2021/08/13/mess_ELF文件下对于PIE保护和ASLR的重新认识/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2021/08/03/sum_pwn题中的一些奇怪的姿势/">pwn题中的一些奇怪的姿势</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2021-08-03T06:56:14.000Z" itemprop="datePublished">
-          2021-08-03
-      </time>
-    
-    
-    | 
-    <a href='/tags/sum/'>sum</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-     
-patch alarm比较弱智的一个操作，但是如果没注意到的话还是有一点点坑。
-一般来说许多题都喜欢在main函数里加alarm。
-alarm会导致调试的时候超时，如果没有解决的话基本不能调试。算最基础的的反调试手法了。
-ps:关于超时的那个报错当时还好好研究了一会儿来着。就是一个sigxxx，sigalarm好像，然后默认返回中止程序。
-解决方案也比较弱智。就是直接patch掉就好了。
-ida都关了懒得上图了。
-单双引号
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2021/08/03/sum_pwn题中的一些奇怪的姿势/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2021/08/02/stack_ret2dl_advanced/">ret2dl_advanced</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2021-08-02T03:22:53.000Z" itemprop="datePublished">
-          2021-08-02
-      </time>
-    
-    
-    | 
-    <a href='/tags/stack/'>stack</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-     
-ret2dl_advanced1)review当FULL RELRO保护开启时，通过 dl_run_time来获取libc基址的方式几乎无解。
-但是我们仍然能够找到某种方式来getshell。
-相关论文中给出一种解决方案，即通过dt_bug入口找到突破点。
-(Ps:为什么找不到相关的中文文章)
-2）dt_dbg？dt_dbg这个概念实际上并不新鲜，简单来说它可以被包含在libc.so文件中，比如我们指定一个特定的libc版
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2021/08/02/stack_ret2dl_advanced/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2021/05/24/heap_challenge_message/">Message</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2021-05-24T09:18:33.269Z" itemprop="datePublished">
-          2021-05-24
-      </time>
-    
-    
-    | 
-    <a href='/tags/UAF/'>UAF</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-     
-第二道fastbin double free。
-123free(*(void **)&amp;dword_602060[4 * v1 + 2]);      dword_602060[4 * v1] = 0;      --dword_60204C;
-这里没有把指针置为null，所以会产生uaf漏洞。
-ida大体分析了一下就会发现，由于没有后门函数，这道题会比上一道难。而且由于RELRO的开启，got所在的数据段是只读的，
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2021/05/24/heap_challenge_message/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2021/04/24/sum_杂碎的指令/">杂碎的指令</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2021-04-23T16:50:26.062Z" itemprop="datePublished">
-          2021-04-24
-      </time>
-    
-    
-    | 
-    <a href='/tags/mess/'>mess</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        [TOC]
+</nav>
 
-     
-杂碎的知识点1）调试相关1）gdbropgagdet
-ROPgadget —binary （） —only “pop|ret” | grep rdi
-(基本适用于ret2csu这种万能gagdet的寻找)
-例如ROPgadget --binary calc --only &quot;pop|ret&quot; | grep eax
-2）内存断点？硬件断点？原理对所访问内存地址设置为不可读写，当访问时触发中断。
+        <div class="col-md-8 col-md-offset-2 col-sm-24"><script type="text/javascript">
+  /**
+   * 搜狐畅言
+   */
 
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2021/04/24/sum_杂碎的指令/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2021/01/01/随记-006/">随记-006</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2020-12-31T16:00:00.000Z" itemprop="datePublished">
-          2021-01-01
-      </time>
-    
-    
-    | 
-    <a href='/tags/进步报告/'>进步报告</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        Here's something encrypted, password is required to continue reading.
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2021/01/01/随记-006/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/1919/08/10/note_深夜高速-1/">1</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="1919-08-09T15:34:14.000Z" itemprop="datePublished">
-          1919-08-10
-      </time>
-    
-    
-    | 
-    <a href='/tags/深夜高速/'>深夜高速</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        ​    
-         
-0:​        写下这些话的时候，不知不觉地，已经半夜两点了。
-​        其实放在半个月之前的我看来，两点根本不是半夜，而是夜生活的开始。然而仅仅十五天，我将作息强行向前延伸了两小时，所以对于现在的我来说，两点已经是高程度的熬夜了。
-​        熬夜并不是一件坏事，至少我如今也这么认为——只要不是因为玩手机等无意义的事情而浪费生命。
-​        最近的我一直在经受苦难，或者说，我
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/1919/08/10/note_深夜高速-1/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <nav class="pagination" role="pagination">
-          <a class="pull-left" href="../13/">← Newer Posts</a>
-          <a class="pull-right" href="../15/">Older Posts →</a>
-        </nav>
+  /*
+  document.write('<div id="SOHUCS" sid="' + window.location.pathname.slice(1) + '" ></div>');
+
+  window.onload = function () {
+    (function () {
+      var appid = 'cytXXXX';
+      var conf = 'prod_xxxxxxxxxxxxxxxxx';
+      var width = window.innerWidth || document.documentElement.clientWidth;
+      var loadJs = function (d, a, id) {
+        var c = document.getElementsByTagName("head")[0] || document.head || document.documentElement;
+        var b = document.createElement("script");
+        b.setAttribute("type", "text/javascript");
+        b.setAttribute("charset", "UTF-8");
+        b.setAttribute("src", d);
+        if (id) {
+          b.setAttribute("id", id);
+        }
+        if (typeof a === "function") {
+          if (window.attachEvent) {
+            b.onreadystatechange = function () {
+              var e = b.readyState;
+              if (e === "loaded" || e === "complete") {
+                b.onreadystatechange = null;
+                a()
+              }
+            }
+          } else {
+            b.onload = a
+          }
+        }
+        c.appendChild(b)
+      };
+
+      loadJs("https://changyan.sohu.com/upload/changyan.js", function () {
+        window.changyan.api.config({
+          appid: appid,
+          conf: conf
+        })
+      });
+    })();
+  }
+  */
+
+</script>
+</div>
     </div>
 </section>
-<section id="statement">
-    <div class="container text-center wow fadeInUp" data-wow-delay="0.5s">
-        <div class="row">
-            <p></p>
-        </div>
-    </div>
-</section>
-<!-- ============================ END Content =========================== -->
+
+<!-- Highlight.js -->
+
+<link rel="stylesheet"
+href="//highlightjs.org/static/demo/styles/atom-one-light.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js">
+</script>
+<script>
+hljs.initHighlightingOnLoad();
+
+</script>
+
 
       
 <!-- ============================ Footer =========================== -->
