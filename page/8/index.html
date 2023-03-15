@@ -202,6 +202,47 @@
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
                 <div class="col-md-4">
+                    <h3><a href="/2022/04/10/week6-7.2/">攻防世界 - house of orange</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-04-10T09:02:58.445Z" itemprop="datePublished">
+          2022-04-10
+      </time>
+    
+    
+    | 
+    <a href='/tags/HEAP-House-Of-Orange/'>HEAP - House Of Orange</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+     
+overview
+逆向​        没有free，只有增查改。
+​        这个题程序逻辑比较简单，主要是利用相对比较复杂。
+add​        最多申请三个house。并且在申请house开始为每个house创建了0x10 size的结构体，只有两个字段，size和content ptr。在输入name的阶段会把name读入content ptr指向的地址。
+12printf(&quot;Name :&qu
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/04/10/week6-7.2/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
                     <h3><a href="/2022/04/10/heap_learning_house_of_orange/">house_of_orange trick学习</a></h3>
                     <span>
                         <span class="post-meta">
@@ -552,44 +593,6 @@ UNLINKunlink大致概念​        就是将free chunk从双向循环链表中�
                     
                     <p class="pull-right readMore">
                         <a href="/2022/04/05/heap_learning_unlink/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2022/04/04/heap_leaarning_off by one/">off by one /chunk overlapping</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2022-04-03T16:00:00.000Z" itemprop="datePublished">
-          2022-04-04
-      </time>
-    
-    
-    | 
-    <a href='/tags/HEAP-Off-By-One/'>HEAP - Off By One</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-     
-0​        这篇笔记最早是在大概21年的11月开始的，当时其实也是抱着复习的心理去写的，毕竟堆题在完全吃透之前，只要不是经常做题，那么就基本是学了就忘的状态。更别说我这种就没怎么做题的人。
-​        现在是2022年四月，我看着这篇笔记，只觉得当时那些卡了很久的点，实在过于愚蠢，完全无法理解当时自己为什么会这么想。这些困难点大多源于我看代码不仔细，以及对于指针操作的一些不理解，或者说对于chunk结构的不熟
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2022/04/04/heap_leaarning_off by one/">Read More...</a>
                     </p>
                     
                 </div>

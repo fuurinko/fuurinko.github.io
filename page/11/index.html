@@ -202,6 +202,49 @@
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
                 <div class="col-md-4">
+                    <h3><a href="/2022/03/16/week3-2.1/">hctf2016_fheap</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-03-16T03:48:29.784Z" itemprop="datePublished">
+          2022-03-16
+      </time>
+    
+    
+    | 
+    <a href='/tags/UAF/'>UAF</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        ​    
+     
+​        第三周第二天第一道堆题。应该是一道中等偏下的fastbinattack。
+​        libc是2.23。
+​        
+​        保护全开，pie是个麻烦点。
+​        逆向一下，这个程序的逻辑不算很复杂，但是也需要逆清楚。
+​        
+​        程序在ptr+3的地方保存了一个有着free函数功能的指针，并且当delete str时，也是调用这个指
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/03/16/week3-2.1/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
                     <h3><a href="/2022/03/15/week3-1.2/">lab 10 hacknote</a></h3>
                     <span>
                         <span class="post-meta">
@@ -560,48 +603,6 @@ Level3.1​
                     
                     <p class="pull-right readMore">
                         <a href="/2022/02/15/pwn.college_ReverseEngineering/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2022/02/14/pwn.college_Debugging Refresher/">Debugging Refresher</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2022-02-14T08:16:26.477Z" itemprop="datePublished">
-          2022-02-14
-      </time>
-    
-    
-    | 
-    <a href='/tags/pwncollege/'>pwncollege</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-     
-Level1​        直接r，然后c到断点。
-Level2​        p/x $r12
-Level3​        不好描述，可以根据后面的正确随机数在栈中找到对应的位置，然后重新执行并输入。
-Level4​        。。。。
-Level5gdb脚本。
-
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2022/02/14/pwn.college_Debugging Refresher/">Read More...</a>
                     </p>
                     
                 </div>
