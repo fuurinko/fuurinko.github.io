@@ -49,10 +49,10 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
-<!-- hexo injector head_end end --><link rel="stylesheet" href="/assets/css/APlayer.min.css" class="aplayer-style-marker">
+<!-- hexo injector head_end end --><link rel="stylesheet" href="/css/prism.css" type="text/css"><link rel="stylesheet" href="/assets/css/APlayer.min.css" class="aplayer-style-marker">
 <script src="/assets/js/APlayer.min.js" class="aplayer-script-marker"></script>
 <script src="/assets/js/Meting.min.js" class="meting-script-marker"></script>
-<link rel="stylesheet" href="/css/prism.css" type="text/css"></head>
+</head>
 
 <!--
 <body class="post-template">
@@ -191,11 +191,11 @@
         </div>
         <div class="col-md-8 col-md-offset-2">
       		<p><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML" async></script><br>
-    <div id="aplayer-VgJFuckv" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div></p>
-<h2><span id="71-basics">7.1 Basics</span></h2><p>_Linear regression_ may be both the simplest and most popular among the standard tools for tackling regression problems</p>
+    <div id="aplayer-dsrQqvlt" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div></p>
+<h2><span id="71-basics">7.1 Basics</span></h2><p><strong>Linear regression</strong> may be both the simplest and most popular among the standard tools for tackling regression problems</p>
 <h3><span id="711-a-simplified-model-with-mathmatical-presentation">7.1.1 A simplified model with mathmatical presentation</span></h3><p>Asume we have only three input featrues : number of bedroom , number of wash room and living area ,represented as x1,x2,and x3 respectively.<br>And then consider the final price is a weighted sum of the key featrues , represented as :</p>
 <script type="math/tex; mode=display">
-y  = x_{1}{\mathbf{w_{1}}}+  x_{2}{\mathbf{w_{2}}}+ x_{3}{\mathbf{w_{3}}} + b</script><p> b indicates the _bias_.<br> And we can expand the simple model with a N order sequenial input as a linear form.</p>
+y  = x_{1}{\mathbf{w_{1}}}+  x_{2}{\mathbf{w_{2}}}+ x_{3}{\mathbf{w_{3}}} + b</script><p> b indicates the <strong>bias</strong>.<br> And we can expand the simple model with a N order sequenial input as a linear form.</p>
 <h3><span id="712-linear-form-of-a-general-model">7.1.2 Linear form of a general model</span></h3><p>Given a n-dimension input :</p>
 <script type="math/tex; mode=display">
 \mathbf{x} = [x_{1},x_{2},x_{3}\dots X_{n}]^T</script><p>with a n-dimension weights and a scalar b :</p>
@@ -208,7 +208,7 @@ y = <\mathbf{w},\mathbf{x}>+b</script><p>equals to :</p>
 <script type="math/tex; mode=display">
 y = \mathbf{w}^T\mathbf{x}+b</script><p>we can consider the linear model as a sigle layer nerual network.<br><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/Screen%20Shot%202023-03-16%20at%2010.47.42%20AM.png" alt="Screen Shot 2023-03-16 at 10.47.42 AM"></p>
 <h2><span id="72-loss-function">7.2 Loss Function</span></h2><p>Before we can go about searching for the best parameters ,we will need two more things<br>1) A quality measure for given model<br>2) A procedure for updating the model to improve its quality.</p>
-<p>We introduce _Loss functions_  to quantify the distance between the _real_ and _predicted_ values of the target. And for a linear regression problem , the most common loss function is squared error.</p>
+<p>We introduce <strong>Loss functions</strong> to quantify the distance between the <strong>real</strong> and <strong>predicted</strong> values of the target. And for a linear regression problem , the most common loss function is squared error.</p>
 <h3><span id="721-expression">7.2.1 Expression</span></h3><p>Squared error is given by</p>
 <script type="math/tex; mode=display">
 L(\mathbf{w},b) = \frac{1}{2}(y-\overset{\frown}{y})^2</script><p>subsititute the input to the average  Squared error  function we gain the following expression:</p>
@@ -231,7 +231,7 @@ l(\mathbf{X},\mathbf{Y},\mathbf{w},b) = \frac{1}{2n}\sum _{i=1}^n(y_{i}-,<\mathb
 <p>From the above figure we can observate two vectors , </p>
 <script type="math/tex; mode=display">
 1 : \mathbf{w_{1}}-\mathbf{w_{0}}</script><script type="math/tex; mode=display">
-2 : \mathbf{w_{2}}-\mathbf{w_{1}}</script><p>And each vector’s direction is point out the _fastest descent’s direction_, and vector will be updated constantly, which “draw” a shortest path of descent. And It’s use the “Gradient” to achive the  fastest because of the _partial drivation_ is exactly indicates the fastest vary speed at a given point(time).<br>So how to calculate out the “best”  parameter?</p>
+2 : \mathbf{w_{2}}-\mathbf{w_{1}}</script><p>And each vector’s direction is point out the <strong>fastest descent’s direction</strong>, and vector will be updated constantly, which “draw” a shortest path of descent. And It’s use the “Gradient” to achive the  fastest because of the <strong>partial drivation</strong> is exactly indicates the fastest vary speed at a given point(time).<br>So how to calculate out the “best”  parameter?</p>
 <h3><span id="732-optimize-algorithm">7.3.2 Optimize Algorithm</span></h3><h4><span id="7321-intuitive-description">7.3.2.1 Intuitive Description</span></h4><p>So firstly we can start with a relatively intuitive way to understand  procedures of the optimize algorithm.<br>Back to the graph:<br><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/Screen%20Shot%202023-03-16%20at%2011.26.21%20PM.png" alt="Screen Shot 2023-03-16 at 11.26.21 PM"></p>
 <p>The primary task is to find a minimun value of fuunction J.<br>But in a relatively initial condition, it’s hard to find the minimun value driectily because there is definetely some unkown parameter which are prepared to be caculated.<br>So what we can do is ,for each weight parameter, find out it’s rapidly descent dirction,then repeats this step over and over again , untill all of the weight parameters have been worked out.<br>The step Somehow like the graph :</p>
 <p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/Screen%20Shot%202023-03-16%20at%2011.45.59%20PM.png" alt="Screen Shot 2023-03-16 at 11.45.59 PM"></p>
@@ -255,7 +255,7 @@ l(\mathbf{X},\mathbf{Y},\mathbf{w},b) = \frac{1}{2n}\sum _{i=1}^n(y_{i}-,<\mathb
 <h6><span id="too-small-step">Too small step</span></h6><p>Model will pass overmuch paths to converge.(Expenses will be high)<br><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/Screen%20Shot%202023-03-17%20at%2012.11.49%20AM.png" alt="Screen Shot 2023-03-17 at 12.11.49 AM"></p>
 <h4><span id="7323-mini-batch-gradient-decsent">7.3.2.3 Mini-Batch Gradient Decsent</span></h4><p>When we train our model , maybe it’s unrealistic to use the whole dataset simutaneously, so sampleing some data randomly to approximate the loss is a good choice.<br>And the minibathc Gradient Decsent can be expressed as the following expression:</p>
 <script type="math/tex; mode=display">
-\frac{1}{b} \sum_{i \in I_{b}}\ \ell(\mathbf{x}_{i},y_{i},\mathbf{w})</script><p>The ecpression meant to caculate the average of the sample loss’sum .<br>b is the size of the batch , another important _hyperparameters_.</p>
+\frac{1}{b} \sum_{i \in I_{b}}\ \ell(\mathbf{x}_{i},y_{i},\mathbf{w})</script><p>The ecpression meant to caculate the average of the sample loss’sum .<br>b is the size of the batch , another important <strong>hyperparameters</strong>.</p>
 <h5><span id="discussion-size-of-batch">Discussion: Size of Batch</span></h5><h6><span id="too-small">Too small</span></h6><p>Leads to a too small calculations to waste some resources.</p>
 <h6><span id="too-big">Too big</span></h6><p>A waste of memory or caculation(e.g : All of the samples are same)</p>
 <h2><span id="74-realization-in-python">7.4 Realization in Python</span></h2><p>tbc</p>
