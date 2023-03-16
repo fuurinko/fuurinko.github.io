@@ -8,7 +8,7 @@
 
 <head>
 
-  <title>csapp malloc lab | Rin</title>
+  <title>D2l_007_Linear_Regression | Rin</title>
   <!-- Meta data -->
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -176,155 +176,102 @@
         <div class="row col-md-offset-2">
             <div class="col-md-8">
     			<span class="post-meta">
-      <time datetime="2021-12-03T08:46:22.570Z" itemprop="datePublished">
-          2021-12-03
+      <time datetime="2023-03-14T11:40:02.285Z" itemprop="datePublished">
+          2023-03-14
       </time>
     
     
     | 
-    <a href='/tags/csapp-lab/'>csapp lab</a>
+    <a href='/tags/d2l/'>d2l</a>
     
     
 </span>
-                <h1>csapp malloc lab</h1>
+                <h1>D2l_007_Linear_Regression</h1>
             </div>
         </div>
         <div class="col-md-8 col-md-offset-2">
-      		
-    <div id="aplayer-vqUsuGlE" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div> 
-<h2><span id="0前言">0）前言</span></h2><p>​        鸽了三个月的malloc lab，作为复习堆题的开始。</p>
-<p>​        计画完成时间是12.5之前，也就是三天。</p>
-<h2><span id="1大体设计">1）大体设计</span></h2><p>​        对于整体的操作的大致模型以及allocater和freer需要做的工作如下：</p>
-<p>​        分配器：</p>
-<ol>
-<li><p>在第一次分配chunk时，对堆空间进行初始化=&gt;<code>mm_init()</code>    </p>
-</li>
-<li><p>创建指定类型的chunk。</p>
-<p>​    free</p>
-</li>
-<li><p>利用隐式空闲链表，将free状态的chunk链接。</p>
-</li>
-<li>利用合适的机制，对物理地址相邻的free chunk进行合并</li>
-<li>利用合适的机制，在分配器有需求的时候分割相对应的free chunk，并将其标识为allocated。</li>
-</ol>
-<p>​        其他的驱动代码以及头文件已经给出，我们只需在<code>mm.c</code>中进行编写。</p>
-<p>​        在这个模型中，分配器的分配的chunk的结构大致如下，运用带边界标记的chunk使堆块合并更加优雅。</p>
-<p>​                <img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-12-03%20%E4%B8%8B%E5%8D%885.33.23.png" alt="截屏2021-12-03 下午5.33.23"></p>
-<p>​        </p>
-<h2><span id="2利用宏定义简化指针操作">2）利用宏定义简化指针操作</span></h2><p>​        为了简化在操作chunk在链表中的一些与指针相关的行为，我们可以定义一系列宏来将这些操作打包，使得代码更为简洁，同时一些基本的常数也将被定义。</p>
-<p>​    </p>
-<p>​        <img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-12-04%20%E4%B8%8B%E5%8D%885.05.59.png" alt="截屏2021-12-04 下午5.05.59"></p>
-<p>​            </p>
-<h2><span id="3level1">3）level·1</span></h2><p>​        level1利用隐式空闲链表+首次/下一次/最佳适配三种方式实现。</p>
-<h3><span id="first_fit">first_fit</span></h3><h4><span id="mm_init">mm_init()</span></h4><p>​        首先是<code>mm_init()</code>函数，利用<code>mm_sbrk()</code>创建一个4字的空闲链表，将链表第一个双字的首尾分别标记为序言块的header和footer，然后将第三个字标记为结尾块，然后调用<code>extend_heap()</code>函数初始化堆空间。被初始化的size为<code>CHUNKSIZE/WSIZE</code>也就是<code>1*10^12 / 4</code>。</p>
-<p>​        然后是<code>extend_heap()</code>函数，利用<code>mm_sbrk()</code>创建size大小的空间，size由之前初始化的size决定。并且将整个空chunk的对应位标记头和脚部。最后，在很可能出现的前一个堆以一个空闲块结束的情况，我们调用coalesce函数来合并两个空闲块 ，并返回指向合并后的块的块指针。coalesce函数将在后面的部分被详细分析。</p>
-<h4><span id="mm_malloc">mm_malloc()</span></h4><p>​        堆空间初始化之后，我们首先设计<code>mm_malloc()</code>。</p>
-<p>​        函数大致功能是：</p>
-<ol>
-<li><p>检查请求真假，然后准备分配chunk</p>
-</li>
-<li><p>调整chunk size，在请求size的基础上加入8字节的对齐和8字节的chunk头和chunk脚。也就是说，一个chunk至少会有16字节。</p>
-</li>
-<li><p>在free list中寻找符合size要求的chunk。</p>
-</li>
-<li><p>如果没有在free list中找到，则直接调用<code>extend_heap()</code>生成对应的空间。</p>
-<p>​    </p>
-<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-12-04%20%E4%B8%8B%E5%8D%887.21.02.png" alt="截屏2021-12-04 下午7.21.02">    </p>
-</li>
-</ol>
-<p>   这里csapp没有为我们提供<code>find_fit()</code>以及<code>place()</code>的例子,需要我们自己编写。我们先放着，之后再来讨论。</p>
-<h4><span id="mm_free">mm_free()</span></h4><p>​        <code>mm_malloc()</code>之后，我们来看<code>mm_free()</code></p>
-<p>​        它被用来释放已被分配的chunk，相当于释放malloc所请求的bp，然后需要将被释放的chunk与其物理领接的free chunk合并。</p>
-<p>​        </p>
-<p>​        <img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-12-04%20%E4%B8%8B%E5%8D%885.40.53.png" alt="截屏2021-12-04 下午5.40.53"></p>
-<h4><span id="coalesce">coalesce()</span></h4><p>​        重点来看<code>coalesce()</code></p>
-<p>​        这里用到的合并方式的构思图表如下：</p>
-<p>​        <img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-12-03%20%E4%B8%8B%E5%8D%885.35.04.png" alt="截屏2021-12-03 下午5.35.04"></p>
-<p>​        也是非常地直观容易理解。</p>
-<p>​        它的代码实现也直观地被分为如图四种情况，所以我们先要定义对应图中几种状态的bp状态。</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">size_t</span> prev_alloc = GET_ALLOC(FTRP(PREV_BLKP(bp)));</span><br><span class="line">  <span class="keyword">size_t</span> next_alloc = GET_ALLOC(HDRP(NEXT_BLKP(bp)));</span><br><span class="line">  <span class="keyword">size_t</span> size = GET_SIZE(HDRP(bp));</span><br></pre></td></tr></table></figure>
-<p>​        大致框架如下：</p>
-<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-12-04%20%E4%B8%8B%E5%8D%886.00.07.png" alt="截屏2021-12-04 下午6.00.07"></p>
-<p>​        </p>
-<h4><span id="find_fit">find_fit()</span></h4><p>​        整个malloc lab的重点，需要自己实现一个free chunk的适配寻找。</p>
-<p>​        一些常见的方法有</p>
-<ol>
-<li>首次适配</li>
-<li>下一次适配</li>
-<li>最佳适配</li>
-<li>分离式（复杂）</li>
-</ol>
-<p>​        其实这些并不是完全先进或者落后，各有各的优缺点。在这里为了简单我们选择首次适配，即使用在free list中找到的第一个符合条件的chunk。</p>
-<p>​        按照首次适配的原理，我们的思路是，从头到尾搜索链表，如果遇到合适的free chunk，则按照size将其头和尾部标记。</p>
-<p>​        实现大致是：</p>
-<p>​        指定一个size，在链表中通过判断头部inuse位，找到第一个free chunk的bp,，然后计算next bp是否大于bp + size</p>
-<p>,且状态为free，如果是，将bp标记为allocated，在bp+size的地方标记为footer，分割该chunk，虽然会留下一定的碎片，但这也是首次适配无法避免的缺点。如果不是，则继续寻找下一个free chunk并判断。</p>
-<p>​        然后来研究代码实现：</p>
-<p>​        自己瞎写了一个，问题不大。</p>
-<h4><span id="place">place()</span></h4><p>​        函数功能是将请求块放置在空闲块的起始位置，只有当剩余部分的大小等于或者超出最小块的大小时，才进行分割。</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">place</span><span class="params">(<span class="keyword">void</span> *bp, <span class="keyword">size_t</span> asize)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">size_t</span> size = GET_SIZE(HDRP(bp));</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> ((size - asize) &gt;= (<span class="number">2</span>*DSIZE)) &#123;</span><br><span class="line">        PUT(HDRP(bp),PACK(asize,<span class="number">1</span>));</span><br><span class="line">        PUT(FTRP(bp),PACK(asize,<span class="number">1</span>));</span><br><span class="line">        PUT(HDRP(NEXT_BLKP(bp)),PACK(size - asize,<span class="number">0</span>));</span><br><span class="line">        PUT(FTRP(NEXT_BLKP(bp)),PACK(size - asize,<span class="number">0</span>));</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        PUT(HDRP(bp),PACK(size,<span class="number">1</span>));</span><br><span class="line">        PUT(FTRP(bp),PACK(size,<span class="number">1</span>));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>问题不大</p>
-<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-12-05%20%E4%B8%8A%E5%8D%8811.46.52.png" alt="截屏2021-12-05 上午11.46.52"></p>
-<h3><span id="next_fit">next_fit</span></h3><p>​        下一次适配，主要特点是在第一次在空闲链表中找到合适的chunk以后，下一次搜索就不再是从头到尾，而是从上一次搜索的chunk开始继续搜索。</p>
-<p>​        相比于首次适配，写循环时就不能嗯搞，要处理第一次找到fit chunk后的状态。大致的思路是：先按照首次适配的方式找到第一个适合的chunk，然后记录下chunk的bp，下一次寻找时则从记录的bp开始寻找。</p>
-<p>​            那么肯定需要定义一个外部变量来记录每次找到的bp。</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> *<span class="title">next_find_fit</span><span class="params">(<span class="keyword">size_t</span> asize)</span></span></span><br><span class="line"><span class="function"></span>&#123;  </span><br><span class="line">    <span class="keyword">char</span> * bp = heap_listp;</span><br><span class="line">    <span class="keyword">size_t</span> ALLOC_STATUS;</span><br><span class="line">    <span class="keyword">size_t</span> SIZE;</span><br><span class="line">    <span class="keyword">while</span> (GET_SIZE(HDRP(NEXT_BLKP(bp))) &gt; <span class="number">0</span>)</span><br><span class="line">    &#123;   <span class="keyword">if</span>(mark_bp)</span><br><span class="line">        &#123;</span><br><span class="line">            bp = NEXT_BLKP(mark_bp);</span><br><span class="line">            ALLOC_STATUS = GET_ALLOC(HDRP(bp));</span><br><span class="line">            <span class="keyword">if</span> (ALLOC_STATUS)</span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line">            <span class="keyword">if</span>(SIZE &lt; asize) </span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line">            mark_bp = bp;</span><br><span class="line">            <span class="keyword">return</span> bp; </span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        bp = NEXT_BLKP(bp); </span><br><span class="line">        ALLOC_STATUS = GET_ALLOC(HDRP(bp));</span><br><span class="line">        <span class="keyword">if</span> (ALLOC_STATUS)</span><br><span class="line">        <span class="keyword">continue</span>;</span><br><span class="line">        <span class="keyword">if</span>(SIZE &lt; asize) </span><br><span class="line">        <span class="keyword">continue</span>;</span><br><span class="line">        mark_bp = bp;</span><br><span class="line">        <span class="keyword">return</span> bp; </span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>​        问题不大。</p>
-<h4><span id="best_fit">best_fit</span></h4><p>​        搜索链表中的每一个堆块，选择符合条件的最小空闲块。目前来说思路是这样的：</p>
-<p>​        对整个堆空间进行搜索，标记合适的chunk，并将size储存在数组中，在搜索结束后进行排序，选择最适合的chunk，并将bp返回。</p>
-<p>​        对堆空间进行搜索，大概只需要在原本的算法上去掉结束循环的判定条件。然后排序的话随意找个排序算法来就行，图方便我复制了一个冒泡排序，虽然时间复杂度不太行。</p>
-<p>​        但是存在一个问题就是，排序肯定是以chunk的size为标准，但是如何关联size和bp呢？我将所有符合条件的chunksize排序之后，如何找到对应的bp？</p>
-<p>​        一个比较直观的解决方法就是二维数组，将bp和size同时存放，同时排序，当然也许可以使用类似PACK的宏，或者为每一个size增加一个idx，也是二维数组的思路，但是并不是直接将bp存放，而是存放bp的idx。</p>
-<p>​        考虑到二维数组排序有一些麻烦，故直接定义结构体来存放size与bp的idx。</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> *<span class="title">best_find_fit</span><span class="params">(<span class="keyword">size_t</span> asize)</span></span></span><br><span class="line"><span class="function"></span>&#123;   </span><br><span class="line">    <span class="keyword">char</span> * bp = heap_listp;</span><br><span class="line">    <span class="keyword">size_t</span> ALLOC_STATUS;</span><br><span class="line">    <span class="keyword">size_t</span> SIZE;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">bp_list</span> <span class="title">list</span>[];</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">while</span> (GET_SIZE(HDRP(NEXT_BLKP(bp))) &gt; <span class="number">0</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">for</span> ( <span class="keyword">int</span> i = <span class="number">0</span>; i &lt; CHUNKSIZE/WSIZE; i++)</span><br><span class="line">        &#123;   </span><br><span class="line">            bp = NEXT_BLKP(bp);</span><br><span class="line">            ALLOC_STATUS = GET_ALLOC(HDRP(bp));</span><br><span class="line">            <span class="keyword">if</span> (ALLOC_STATUS) <span class="keyword">continue</span>;</span><br><span class="line">            <span class="keyword">if</span>(SIZE &lt; asize) <span class="keyword">continue</span></span><br><span class="line">            <span class="built_in">list</span>[i].bp_size = GET_SIZE(HDRP(bp));</span><br><span class="line">            <span class="built_in">list</span>[i].bp_idx = i;</span><br><span class="line">            <span class="built_in">list</span>[i].bp = HDRP(bp);</span><br><span class="line">            </span><br><span class="line">        &#125; </span><br><span class="line"></span><br><span class="line">        bubble_sort(<span class="keyword">int</span> <span class="built_in">list</span>[i].bp_size,<span class="keyword">int</span> i);</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">list</span>[i].bp;</span><br><span class="line">            </span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2><span id="4-level2">4) level2</span></h2><p>​        level2利用显式链表和分离适配来实现，同时这种方法也是非常接近ptmalloc2的，所以学习这种方法的思想是十分必要的。</p>
-<h3><span id="数据结构">数据结构</span></h3><h4><span id="显式空闲链表">显式空闲链表</span></h4><p>​        相比于隐式空闲链表没有实际的链表去管理空闲块，显式空闲链表使用新增的双向循环链表，通过在chunk头添加指向逻辑上相邻的chunk的指针来相互连接。显式链表为chunk指针操作增添了更多姿势，突破了隐式性能的局限性。当然这个方案也不是完全没有缺点，为了包含指针和可能的脚部，显式空闲链表的chunk通常会更大一些，潜在地提高了内存碎片的程序。</p>
-<h4><span id="chunk">chunk</span></h4><p>​        显式链表chunk结构如图：</p>
-<p><img src="https://pic1.zhimg.com/80/v2-c0cb0926ad2e469833bfff9e3fffd2e4_720w.jpg" alt="img"></p>
-<p>​        有点类似ptalloc的机制，当chunk为allocated状态，中间为padding，当为free状态，会在padding开始前，也就是之前方案中的<code>bp</code>指向的地方增添两个指针：<code>next_bp</code>， <code>prev_bp</code>。</p>
-<h3><span id="first_fit">First_fit</span></h3><p>​        因为确实不太会写，所以基本算是照着代码分析思路了。</p>
-<p>​        首先是完成显式空闲链表下first_fit的实现，这种方案目的是熟悉如何通过创建一个双向循环链表来管理空闲块。</p>
-<p>​        第一步是创建空闲链表。</p>
-<p>​        </p>
-<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-12-09%20%E4%B8%8B%E5%8D%884.46.18.png" alt="截屏2021-12-09 下午4.46.18"></p>
-<p>​        显式链表下的<code>free()</code>也和隐式空闲链表没区别，都是把chunk 头的size置0，但是多出来了</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SET_PREV(bp, <span class="number">0</span>);</span><br><span class="line">SET_NEXT(bp, <span class="number">0</span>);</span><br></pre></td></tr></table></figure>
-<p>​        也就是先将需要free的chunk的fd和bk位全部设置为0，然后进行合并后放入空闲链表。</p>
-<p>然后编写将chunk插入和取出双向循环链表的操作。</p>
-<h4><span id="insert_from_free_list">insert_from_free_list()</span></h4><p>​    将已分配块释放，chunk bp 被插入free list。</p>
-<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-12-05%20%E4%B8%8B%E5%8D%8811.31.31.png" alt="截屏2021-12-05 下午11.31.31">        </p>
-<h4><span id="remove_from_free_list">remove_from_free_list()</span></h4><p>​        在free list中拿出chunk。与隐式链表类似，分为四种情况。因为是双向循环链表，所以解链的过程也可以理解为unlink。</p>
-<p>​        第一种情况：<code>prev == NULL &amp;&amp; next == NULL</code>，chunk前后都是allocated chunk，双向链表中啥也没有，设置表头为空。</p>
-<p>​        第二种情况：<code>prev == NULL</code>    ，前一个chunk为allocated，前一项为空，说明此时chunk的前面没有chunk，那么bk本身就是空的，解链就需要设置fd为空，也就是next为0。</p>
-<p>​        第三种情况同理。</p>
-<p>​        第四种情况：chunk前后都有free chunk，那么解链相当于一个标准的unlink，就是将前一个chunk的bp的next位设置为下一个chunk的bp，然后下一个chunk的prev位设置为前一个chunk的bp。</p>
-<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-12-05%20%E4%B8%8B%E5%8D%8811.47.40.png" alt="截屏2021-12-05 下午11.47.40"></p>
-<h3><span id="分离适配">分离适配</span></h3><p>​        分离适配的特点就是利用很多储存不同大小范围的chunk的链表来管理free chunk，很大程度上减小了内存碎片的产生。</p>
-<p>​        根据参考资料，我们可以将大小以2^n划分。</p>
-<p>​        <img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-12-05%20%E4%B8%8B%E5%8D%8811.52.48.png" alt="截屏2021-12-05 下午11.52.48"></p>
-<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2021-12-05%20%E4%B8%8B%E5%8D%8811.52.59.png" alt="截屏2021-12-05 下午11.52.59"></p>
-<p>​                    </p>
-<h2><span id="5结果与改进">5）结果与改进</span></h2><p>​        </p>
-<p>​        </p>
-<h2><span id="6反思与思考">6）反思与思考</span></h2><p>​        本来应该是在今年暑假就要完成的东西，因为太过懒散而拖到了现在。不得不说如果沉下心来做，这个lab其实不算很难，最难的实际上是对这个简单的内存分配器从0到逐渐熟悉架构的过程。如果不去认真读csapp，了解程序的大致架构的话，就会一头雾水从而放弃，暑假便是因此。</p>
-<p>​        其实大多数代码并不需要自己完成，也是确实没有这个水平，但是也有我们自己需要思考，然后实现的地方，就比如说适配的方法。我从来没有学过数据结构或者算法，也没有刷过类似的题，c语言也就是局限于看得懂这样的普通计算机专业学生水平，对于这种大面积的指针操作一时确实有些摸不着头脑，但是csapp给了我们一种解：利用宏，将复杂的指针运算以及强制类型转换封装，变得简单易用，这使得在我操作指针时，几乎感受不到指针的复杂所在，也是我觉得收获最大之所在。</p>
-<p>​        关于三种适配方法，第一种我在编写时并不太理解如何实现“继续寻找下一个chunk”，于是自己按照感觉写了一个版本，然后寻找了一些参考，发现我写的除了这一步，其他都问题不大，然后就把自己的版本修正了。之后的两种适配方法都是基于首次适配的代码加以适当的条件修改而成，不得不说其实十分有趣。最佳适配牵涉到数组的排序以及结构体的定义，说实话上一次编写带结构体的c程序还是上学期起哦期末的暑假考核，但是也没有遇到什么障碍，就这么顺着写了。现在想来我们大一上的c语言大作业真是简单捏。</p>
-<p>​        </p>
-<h2><span id="7参考">7）参考</span></h2><p>​        <a target="_blank" rel="noopener" href="https://www.jianshu.com/p/48d5d0554b3b">六 Malloc Lab</a></p>
-<p>​    <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/150100073">CSAPP:Lab5-Malloc Lab</a></p>
+      		<p><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML" async></script><br>
+    <div id="aplayer-VgJFuckv" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div></p>
+<h2><span id="71-basics">7.1 Basics</span></h2><p>_Linear regression_ may be both the simplest and most popular among the standard tools for tackling regression problems</p>
+<h3><span id="711-a-simplified-model-with-mathmatical-presentation">7.1.1 A simplified model with mathmatical presentation</span></h3><p>Asume we have only three input featrues : number of bedroom , number of wash room and living area ,represented as x1,x2,and x3 respectively.<br>And then consider the final price is a weighted sum of the key featrues , represented as :</p>
+<script type="math/tex; mode=display">
+y  = x_{1}{\mathbf{w_{1}}}+  x_{2}{\mathbf{w_{2}}}+ x_{3}{\mathbf{w_{3}}} + b</script><p> b indicates the _bias_.<br> And we can expand the simple model with a N order sequenial input as a linear form.</p>
+<h3><span id="712-linear-form-of-a-general-model">7.1.2 Linear form of a general model</span></h3><p>Given a n-dimension input :</p>
+<script type="math/tex; mode=display">
+\mathbf{x} = [x_{1},x_{2},x_{3}\dots X_{n}]^T</script><p>with a n-dimension weights and a scalar b :</p>
+<script type="math/tex; mode=display">
+\mathbf{w} = [w_{1},w_{2},w_{3}\dots w_{n}]^T</script><p>we obtain a scalar weighted sum y :</p>
+<script type="math/tex; mode=display">
+y = x_{1}w_{1}+x_{2}w_{2}+\dots+x_{n}w_{1n}+b</script><p>Vector form :</p>
+<script type="math/tex; mode=display">
+y = <\mathbf{w},\mathbf{x}>+b</script><p>equals to :</p>
+<script type="math/tex; mode=display">
+y = \mathbf{w}^T\mathbf{x}+b</script><p>we can consider the linear model as a sigle layer nerual network.<br><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/Screen%20Shot%202023-03-16%20at%2010.47.42%20AM.png" alt="Screen Shot 2023-03-16 at 10.47.42 AM"></p>
+<h2><span id="72-loss-function">7.2 Loss Function</span></h2><p>Before we can go about searching for the best parameters ,we will need two more things<br>1) A quality measure for given model<br>2) A procedure for updating the model to improve its quality.</p>
+<p>We introduce _Loss functions_  to quantify the distance between the _real_ and _predicted_ values of the target. And for a linear regression problem , the most common loss function is squared error.</p>
+<h3><span id="721-expression">7.2.1 Expression</span></h3><p>Squared error is given by</p>
+<script type="math/tex; mode=display">
+L(\mathbf{w},b) = \frac{1}{2}(y-\overset{\frown}{y})^2</script><p>subsititute the input to the average  Squared error  function we gain the following expression:</p>
+<script type="math/tex; mode=display">
+l(\mathbf{X},\mathbf{Y},\mathbf{w},b) = \frac{1}{2n}\sum _{i=1}^n(y_{i}-,<\mathbf{x_{i}},\mathbf{w}>-b)^2</script><script type="math/tex; mode=display">
+= \frac{1}{2n} \|\mathbf{y}-\mathbf{X}\mathbf{w}-b\|^2</script><p>(Use “|| ||”  to present a functional)</p>
+<p>And then minimize the loss function to learn the appropriate parameters.</p>
+<script type="math/tex; mode=display">
+\mathbf{w}^*,\mathbf{b}^* = arg min_{\mathbf{w},b}l(\mathbf{X},\mathbf{Y},\mathbf{w},b)</script><h3><span id="722-gradient">7.2.2 Gradient</span></h3><p>Caculate the partial drivation to w, use the caculaiton we learned before at Module:[[D2L_006_Chain_Rule&amp;automatic_derivation]]</p>
+<script type="math/tex; mode=display">
+\frac{\partial l(\mathbf{X},\mathbf{y},\mathbf{w})}{\partial\mathbf{w}} = \frac {1}{n}(\mathbf{y}-\mathbf{X}\mathbf{w})^T \mathbf{X}</script><p>We want the reuslt infinitely closes to 0, so :</p>
+<script type="math/tex; mode=display">
+\frac {1}{n}(\mathbf{y}-\mathbf{X}\mathbf{w})^T \mathbf{X} = 0</script><p>Apply some simple transpose matrix ‘s characteristics, we can gain that:</p>
+<script type="math/tex; mode=display">
+\mathbf{y}\mathbf{X}^T = \mathbf{X^T}\mathbf{X}\mathbf{w}</script><script type="math/tex; mode=display">
+\mathbf{w}^* = (\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{y}</script><h2><span id="73-gradient-descent">7.3 Gradient Descent</span></h2><h3><span id="731-basic-idea">7.3.1 basic idea</span></h3><p>The most naive application of gradient descent consists of taking the derivative of the loss function.<br>Given a quit complex loss function with a height value to present the function value, how can we minimize it ?</p>
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/Screen%20Shot%202023-03-16%20at%2011.26.21%20PM.png" alt="Screen Shot 2023-03-16 at 11.26.21 PM"></p>
+<p>So since the 3D graph is just like mountains ,we can present it as a form of contour line, extract a small piece from the hole function, we can gain the following graph:</p>
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/Screen%20Shot%202023-03-16%20at%2010.28.58%20PM.png" alt="Screen Shot 2023-03-16 at 10.28.58 PM"></p>
+<p>From the above figure we can observate two vectors , </p>
+<script type="math/tex; mode=display">
+1 : \mathbf{w_{1}}-\mathbf{w_{0}}</script><script type="math/tex; mode=display">
+2 : \mathbf{w_{2}}-\mathbf{w_{1}}</script><p>And each vector’s direction is point out the _fastest descent’s direction_, and vector will be updated constantly, which “draw” a shortest path of descent. And It’s use the “Gradient” to achive the  fastest because of the _partial drivation_ is exactly indicates the fastest vary speed at a given point(time).<br>So how to calculate out the “best”  parameter?</p>
+<h3><span id="732-optimize-algorithm">7.3.2 Optimize Algorithm</span></h3><h4><span id="7321-intuitive-description">7.3.2.1 Intuitive Description</span></h4><p>So firstly we can start with a relatively intuitive way to understand  procedures of the optimize algorithm.<br>Back to the graph:<br><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/Screen%20Shot%202023-03-16%20at%2011.26.21%20PM.png" alt="Screen Shot 2023-03-16 at 11.26.21 PM"></p>
+<p>The primary task is to find a minimun value of fuunction J.<br>But in a relatively initial condition, it’s hard to find the minimun value driectily because there is definetely some unkown parameter which are prepared to be caculated.<br>So what we can do is ,for each weight parameter, find out it’s rapidly descent dirction,then repeats this step over and over again , untill all of the weight parameters have been worked out.<br>The step Somehow like the graph :</p>
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/Screen%20Shot%202023-03-16%20at%2011.45.59%20PM.png" alt="Screen Shot 2023-03-16 at 11.45.59 PM"></p>
+<p>When it arrive the local minimum value, we call reach a local convergence.</p>
+<h4><span id="7322-mathmatical-method">7.3.2.2 Mathmatical Method</span></h4><p>First we look at the formula:</p>
+<script type="math/tex; mode=display">
+\mathbf{w_{t}} = \mathbf{w_{t-1}}-\eta\frac{\partial \ell }{\mathbf{w_{t-1}}}</script><p>Let’s start with a simple case:<br>Assume</p>
+<script type="math/tex; mode=display">
+\mathbf{w_{1}} = \mathbf{w_{0}} - \eta\frac{\partial \ell }{\mathbf{w_{0}}}</script><p>So in above expression:</p>
+<script type="math/tex; mode=display">
+ -\frac{\partial \ell }{\mathbf{w_{0}}}</script><p>determines the direction of the vector.</p>
+<script type="math/tex; mode=display">
+ \eta</script><p>is a learning rate to determine the Modulus length(step length ) of the vector.<br>  We can just rewrite the equation to clearify the idea.</p>
+<script type="math/tex; mode=display">
+\mathbf{w_{1}}-\mathbf{w_{0}}  = -\eta\frac{\partial \ell }{\mathbf{w_{0}}}</script><script type="math/tex; mode=display">
+\mathbf{w_{2}}-\mathbf{w_{1}}  = -\eta\frac{\partial \ell }{\mathbf{w_{1}}}</script><script type="math/tex; mode=display">
+\cdots</script><script type="math/tex; mode=display">
+\mathbf{w_{t}}-\mathbf{w_{t-1}}  = -\eta\frac{\partial \ell }{\mathbf{w_{t-1}}}</script><p>And all of the vectors comstitute of the path we “downhill”.</p>
+<h5><span id="discussion-learning-rate">Discussion: Learning Rate</span></h5><p>So you must mentioned that in the above algorithm, the learning rate is fixed , and the different value maybe lead the totally different result.</p>
+<h6><span id="too-big-step">Too big step</span></h6><p>Too big step will cause the model hard to converge(ocsillation).<br><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/Screen%20Shot%202023-03-17%20at%2012.12.08%20AM.png" alt="Screen Shot 2023-03-17 at 12.12.08 AM"></p>
+<h6><span id="too-small-step">Too small step</span></h6><p>Model will pass overmuch paths to converge.(Expenses will be high)<br><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/Screen%20Shot%202023-03-17%20at%2012.11.49%20AM.png" alt="Screen Shot 2023-03-17 at 12.11.49 AM"></p>
+<h4><span id="7323-mini-batch-gradient-decsent">7.3.2.3 Mini-Batch Gradient Decsent</span></h4><p>When we train our model , maybe it’s unrealistic to use the whole dataset simutaneously, so sampleing some data randomly to approximate the loss is a good choice.<br>And the minibathc Gradient Decsent can be expressed as the following expression:</p>
+<script type="math/tex; mode=display">
+\frac{1}{b} \sum_{i \in I_{b}}\ \ell(\mathbf{x}_{i},y_{i},\mathbf{w})</script><p>The ecpression meant to caculate the average of the sample loss’sum .<br>b is the size of the batch , another important _hyperparameters_.</p>
+<h5><span id="discussion-size-of-batch">Discussion: Size of Batch</span></h5><h6><span id="too-small">Too small</span></h6><p>Leads to a too small calculations to waste some resources.</p>
+<h6><span id="too-big">Too big</span></h6><p>A waste of memory or caculation(e.g : All of the samples are same)</p>
+<h2><span id="74-realization-in-python">7.4 Realization in Python</span></h2><p>tbc</p>
 
             <div class="clearfix"></div>
             <hr class="nogutter">
         </div>
         <nav class="m-pagination col-md-8 col-md-offset-2 col-sm-24" role="pagination">
     
-    <a class="pull-left" href="../../06/heap_learning_fastbin_attack/" style="float: left;">
-        ← fastbin attack
+    <a class="pull-left" href="../../15/Paper_Diffusion%20Models/" style="float: left;">
+        ← Diffusion Models
     </a>
     
     
-    <a class="pull-right" href="../../../11/22/other_openstack%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
-        openstack学习笔记 →
+    <a class="pull-right" href="../D2L_006_Chain_Rule&automatic_derivation/">
+        D2L_006_autoderivation →
     </a>
     
 </nav>
