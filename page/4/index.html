@@ -80,7 +80,7 @@
 				    
 				    <li><a href="/categories/Linux/" class="animsition-link">Linux<small>(1)</small></a></li>
 				    
-				    <li><a href="/categories/ML/" class="animsition-link">ML<small>(17)</small></a></li>
+				    <li><a href="/categories/ML/" class="animsition-link">ML<small>(18)</small></a></li>
 				    
 				    <li><a href="/categories/PWN-COLLEGE/" class="animsition-link">PWN.COLLEGE<small>(1)</small></a></li>
 				    
@@ -198,6 +198,44 @@
 
 <section id="intro">
     <div class="container">
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2022/10/22/fuzz_再识AFL/">再识AFL</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-10-22T02:55:57.639Z" itemprop="datePublished">
+          2022-10-22
+      </time>
+    
+    
+    | 
+    <a href='/tags/FUZZ-AFL/'>FUZZ_AFL</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        0​        其实大概半年前就已经搭建过环境，成功运行过AFL了，但是当时完全只是在看图说话，对这个东西没有任何系统的认识。现在趁着愉快的周末时间学习一会儿。
+环境搭建​        这里提前防止PD背刺无法使用嵌套虚拟化，选用vmware ，搭的是ubuntu20.04 lts的环境。顺带插一句，只要把“针对游戏优化”关掉就能让鼠标在虚拟机和物理机之间顺畅移动。
+首先是安装一些必要软件。
+12sudo apt install 
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/10/22/fuzz_再识AFL/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
         
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
@@ -560,50 +598,6 @@ ps：上一个note说到主要利用决策树进行分类。
                     
                     <p class="pull-right readMore">
                         <a href="/2022/09/14/cve-2016-10190/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2022/07/25/kernel_qemu学习/">qemu逃逸学习</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2022-07-25T07:32:08.971Z" itemprop="datePublished">
-          2022-07-25
-      </time>
-    
-    
-    | 
-    <a href='/tags/qemu/'>qemu</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-     
-因为一些奇怪的原因，开始学一下qemu。
-环境准备busybox
-基础知识内存结构qemu使用mmap出0x40000000大小的内存作为虚拟机的物理内存，在qemu存在两个转换层，分别是：
-用户地址-&gt;物理地址
-物理地址-&gt;qemu虚拟地址
-具体转换如下：
-/proc/$pid/pagemap中储存了当前进程的页表，使得用户空间可以根据页表找到每个虚拟页面映射的物理帧。
-通过读取这个页表，就能够实现从用户虚拟
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2022/07/25/kernel_qemu学习/">Read More...</a>
                     </p>
                     
                 </div>
