@@ -8,7 +8,7 @@
 
 <head>
 
-  <title>D2l_008_Linear_Regression | Rin</title>
+  <title>08_Linear_Regression | Rin</title>
   <!-- Meta data -->
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -186,12 +186,12 @@
     
     
 </span>
-                <h1>D2l_008_Linear_Regression</h1>
+                <h1>08_Linear_Regression</h1>
             </div>
         </div>
         <div class="col-md-8 col-md-offset-2">
       		<p><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML" async></script><br>
-    <div id="aplayer-ouGCpmiR" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div></p>
+    <div id="aplayer-OtjaBaFb" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div></p>
 <h2><span id="81-generate-dataset">8.1 Generate Dataset</span></h2><p>Use the normal distribution to generate some random numbers ,input them as vector x , with the indicated weight and b.</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">%matplotlib inline</span><br><span class="line"><span class="keyword">import</span> random</span><br><span class="line"><span class="keyword">from</span> mxnet <span class="keyword">import</span> autograd, np, npx</span><br><span class="line"><span class="keyword">from</span> d2l <span class="keyword">import</span> mxnet <span class="keyword">as</span> d2l</span><br><span class="line">npx.set_np()</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">synthetic_data</span>(<span class="params">w, b, num_examples</span>):</span>  <span class="comment">#@save</span></span><br><span class="line">    X = np.random.normal(<span class="number">0</span>, <span class="number">1</span>, (num_examples, <span class="built_in">len</span>(w)))</span><br><span class="line">    <span class="comment"># Generate w length random x vector.</span></span><br><span class="line">    y = np.dot(X, w) + b</span><br><span class="line">    <span class="comment"># Input x into system.</span></span><br><span class="line">    y += np.random.normal(<span class="number">0</span>, <span class="number">0.01</span>, y.shape)</span><br><span class="line">    <span class="comment"># Complicate y with some random oscillation.</span></span><br><span class="line">    <span class="keyword">return</span> X, y.reshape((-<span class="number">1</span>, <span class="number">1</span>))</span><br><span class="line"></span><br><span class="line">true_w = np.array([<span class="number">2</span>, -<span class="number">3.4</span>])</span><br><span class="line">true_b = <span class="number">4.2</span></span><br><span class="line">features, labels = synthetic_data(true_w, true_b, <span class="number">1000</span>)</span><br><span class="line"></span><br><span class="line">  </span><br><span class="line"></span><br><span class="line"><span class="comment"># features: [1.1630787 2.2122064] </span></span><br><span class="line"><span class="comment"># label: [-1.0015326]</span></span><br></pre></td></tr></table></figure>
 <p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/Screen%20Shot%202023-03-17%20at%204.41.59%20PM.png" alt="Screen Shot 2023-03-17 at 4.41.59 PM"></p>
