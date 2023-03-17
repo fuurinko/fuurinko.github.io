@@ -80,7 +80,7 @@
 				    
 				    <li><a href="/categories/Linux/" class="animsition-link">Linux<small>(1)</small></a></li>
 				    
-				    <li><a href="/categories/ML/" class="animsition-link">ML<small>(16)</small></a></li>
+				    <li><a href="/categories/ML/" class="animsition-link">ML<small>(17)</small></a></li>
 				    
 				    <li><a href="/categories/PWN-COLLEGE/" class="animsition-link">PWN.COLLEGE<small>(1)</small></a></li>
 				    
@@ -198,6 +198,46 @@
 
 <section id="intro">
     <div class="container">
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2022/03/03/pwn.college_MemoryErrors/">MemoryErrors</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-03-03T03:18:50.193Z" itemprop="datePublished">
+          2022-03-03
+      </time>
+    
+    
+    | 
+    <a href='/tags/pwncollege/'>pwncollege</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+     
+​        视频主要介绍了栈溢出及其保护。保护的绕过包括canary和pie，并没有提到NX（那个似乎在后面一个module）
+​        传输题目到本地可以使用scp命令。
+1scp -i key -r hacker@dojo.pwn.college:/challenge/babymem_level4.1 /Users/rin/ctf/pwn/pwn_college/MemoryErrors
+Level1.0
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/03/03/pwn.college_MemoryErrors/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
         
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
@@ -559,43 +599,6 @@ Level6​        一个输出重定向，创建对应文件./embryo
                     
                     <p class="pull-right readMore">
                         <a href="/2021/12/10/mess_ida 7.0 for mac疑难杂症： positive sp value has been found/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2021/12/06/heap_learning_fastbin_attack/">fastbin attack</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2021-12-06T08:17:00.507Z" itemprop="datePublished">
-          2021-12-06
-      </time>
-    
-    
-    | 
-    <a href='/tags/HEAP-Fastbin-Attack/'>HEAP - Fastbin Attack</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-     
-fastbin​    长度在32-160(32位系统是16-80)的free堆块。通过fastbinlist储存，单向链表，所以fast。fastbin attack一个最简单的利用就是UAF，其次就是fastbin double free。ctf pwn中与fastbin相关的还有就是在unsortedbin attack中涉及到的，也是ptmalloc机制中的一种的malloc_consolidate，其中也有可以攻
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2021/12/06/heap_learning_fastbin_attack/">Read More...</a>
                     </p>
                     
                 </div>

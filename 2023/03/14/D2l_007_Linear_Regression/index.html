@@ -83,7 +83,7 @@
 				    
 				    <li><a href="/categories/Linux/" class="animsition-link">Linux<small>(1)</small></a></li>
 				    
-				    <li><a href="/categories/ML/" class="animsition-link">ML<small>(16)</small></a></li>
+				    <li><a href="/categories/ML/" class="animsition-link">ML<small>(17)</small></a></li>
 				    
 				    <li><a href="/categories/PWN-COLLEGE/" class="animsition-link">PWN.COLLEGE<small>(1)</small></a></li>
 				    
@@ -191,7 +191,7 @@
         </div>
         <div class="col-md-8 col-md-offset-2">
       		<p><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML" async></script><br>
-    <div id="aplayer-dsrQqvlt" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div></p>
+    <div id="aplayer-KCQbtVGa" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div></p>
 <h2><span id="71-basics">7.1 Basics</span></h2><p><strong>Linear regression</strong> may be both the simplest and most popular among the standard tools for tackling regression problems</p>
 <h3><span id="711-a-simplified-model-with-mathmatical-presentation">7.1.1 A simplified model with mathmatical presentation</span></h3><p>Asume we have only three input featrues : number of bedroom , number of wash room and living area ,represented as x1,x2,and x3 respectively.<br>And then consider the final price is a weighted sum of the key featrues , represented as :</p>
 <script type="math/tex; mode=display">
@@ -258,7 +258,17 @@ l(\mathbf{X},\mathbf{Y},\mathbf{w},b) = \frac{1}{2n}\sum _{i=1}^n(y_{i}-,<\mathb
 \frac{1}{b} \sum_{i \in I_{b}}\ \ell(\mathbf{x}_{i},y_{i},\mathbf{w})</script><p>The ecpression meant to caculate the average of the sample loss’sum .<br>b is the size of the batch , another important <strong>hyperparameters</strong>.</p>
 <h5><span id="discussion-size-of-batch">Discussion: Size of Batch</span></h5><h6><span id="too-small">Too small</span></h6><p>Leads to a too small calculations to waste some resources.</p>
 <h6><span id="too-big">Too big</span></h6><p>A waste of memory or caculation(e.g : All of the samples are same)</p>
-<h2><span id="74-realization-in-python">7.4 Realization in Python</span></h2><p>tbc</p>
+<h2><span id="74-extra">7.4 Extra</span></h2><h3><span id="740-vectorization-for-speed">7.4.0  Vectorization for Speed</span></h3><p>So at the previous courses we get kown how to caculate matrix through pytorch, and now let us substaintiate it by some pratical evidence.<br>We can comparate the speed of  Vectorization and the ordinary method in a “loop “ perspective.<br><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/Screen%20Shot%202023-03-17%20at%209.18.12%20AM.png" alt="Screen Shot 2023-03-17 at 9.18.12 AM"></p>
+<h3><span id="741-the-normal-distribution-and-squared-loss">7.4.1 The Normal Distribution and Squared Loss</span></h3><h4><span id="normal-distribution">Normal Distribution:</span></h4><script type="math/tex; mode=display">
+p(x) = \frac{1}{\sqrt{2\pi \sigma^2} } \exp(-\frac{1}{2 \sigma^2}(x-\mu^2 ) )</script><p>Python:<br>(just convey it as python language, then plot it out)<br><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/Screen%20Shot%202023-03-17%20at%209.36.00%20AM.png" alt="Screen Shot 2023-03-17 at 9.36.00 AM"></p>
+<h2><span id="75-exercises">7.5 Exercises</span></h2><h4><span id="1">1)</span></h4><p>Assume that we have some data x1,…,xn∈R. Our goal is to find a constant b such that ∑i(xi−b)2 is minimized.</p>
+<ol>
+<li>Find an analytic solution for the optimal value of b.<br>Using gradient decsent method to fit the best “b” with input datas.</li>
+<li>How does this problem and its solution relate to the normal distribution?<br>Assume that observations arise from noisy measurements, where the noise is normally distributed.</li>
+<li>What if we change the loss from ∑i(xi−b)2 to ∑i|xi−b|? Can you find the optimal solution for b?<br>Divide the situations into two case; xi &gt; b or xi &lt; b ,then deplete the absolute value symbol to caculate the gradient.(?) <h4><span id="2">2)</span></h4>Prove that the affine functions that can be expressed by x⊤w+b are equivalent to linear functions on (x,1).<br><strong>For a linear function , b = 0.</strong><br>So if the  linear function pass through point set(x,1) , it will be expanded to affine function.<h4><span id="3">3)</span></h4>Assume that you want to find quadratic functions of x, i.e., f(x)=b+∑iwixi+∑j≤iwijxixj. How would you formulate this in a deep network?<br>Simlipy this question into a intuitive expression: <strong>How to construct a deep network for a general quadratic function</strong>.<br>And we can also summarize the question into : <strong>How to conduct the partial derivation (or just gradient ) for a  quadratic matrix function</strong>.<br>And the caculation as follows:<script type="math/tex; mode=display">
+\frac{\partial x^TAx}{\partial x} = (A + A^T) x</script></li>
+</ol>
+<p>​</p>
 
             <div class="clearfix"></div>
             <hr class="nogutter">
