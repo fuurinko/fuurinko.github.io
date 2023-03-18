@@ -8,7 +8,7 @@
 
 <head>
 
-  <title>Adversarial Examples in ML | Rin</title>
+  <title>RP2 Generation | Rin</title>
   <!-- Meta data -->
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -173,8 +173,8 @@
         <div class="row col-md-offset-2">
             <div class="col-md-8">
     			<span class="post-meta">
-      <time datetime="2023-03-12T16:00:00.000Z" itemprop="datePublished">
-          2023-03-13
+      <time datetime="2023-03-14T23:25:36.524Z" itemprop="datePublished">
+          2023-03-15
       </time>
     
     
@@ -183,16 +183,20 @@
     
     
 </span>
-                <h1>Adversarial Examples in ML</h1>
+                <h1>RP2 Generation</h1>
             </div>
         </div>
         <div class="col-md-8 col-md-offset-2">
       		<p><a target="_blank" rel="noopener" href="https://scholar.google.com/citations?view_op=view_citation&amp;hl=en&amp;user=Juoqtj8AAAAJ&amp;citation_for_view=Juoqtj8AAAAJ:4DMP91E08xMC">Link of Paper</a> </p>
-<h2><span id="abstract">Abstract</span></h2><p>Deep neural networks (DNNs) are vulnerable to adversarial examples.Sometimes in safety-critical situations, adversarial examples could _mislead_ these systems and cause dangerous situations.<br>Paper focus on the physical-world perturbations, introduce <strong>Robust Physical Perturbations ($RP_{2}$)</strong>,to generate physical perturbations for physical-world ob- jects that can consistently cause misclassification in a DNN-based classifier.</p>
-<h2><span id="contributions">Contributions</span></h2><p>1) Introduce the RP2 (**Robust Physical Perturbations )<br>2) Propose an evaluation methodolog to study the effectiveness of physical perturbations in real world scenarios.<br>3) The attacks toward two classifiers lead to a preemilent grade with high midclassify rate.<br>4) Show the generality with attack on microwave to misclassify it to a phone.</p>
-<h2><span id="experiment-outcome">Experiment Outcome</span></h2><h3><span id="lisa-cnn-and-gtsrb-cnn">LISA-CNN and GTSRB-CNN</span></h3><p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/Screen%20Shot%202023-03-15%20at%207.53.19%20AM.png" alt="Screen Shot 2023-03-15 at 7.53.19 AM"></p>
-<h3><span id="lisa-cnn-with-poster-printed-stop-sign-and-a-real-stop-sign">LISA-CNN with poster-printed Stop sign and a real Stop sign</span></h3><p>SL45 = Speed Limit 45, STP = Stop, YLD = Yield, ADL = Added Lane, SA = Signal Ahead, LE = Lane.<br><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/Screen%20Shot%202023-03-15%20at%207.54.10%20AM.png" alt="Screen Shot 2023-03-15 at 7.54.10 AM"></p>
-<h3><span id="a-camouflage-art-attack-on-gtsrb-cnn">A camouflage art attack on GTSRB-CNN</span></h3><p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/Screen%20Shot%202023-03-15%20at%207.56.31%20AM.png" alt="Screen Shot 2023-03-15 at 7.56.31 AM"></p>
+<h2><span id="abstract">Abstract</span></h2><p>Deep neural networks (DNNs) are vulnerable to adversarial examples.Sometimes in safety-critical situations, adversarial examples could _mislead_ these systems and cause dangerous situations.<br>Paper focus on the physical-world perturbations, introduce <strong>Robust Physical Perturbations </strong> to generate physical perturbations for physical-world objects that can consistently cause misclassification in a DNN-based classifier.</p>
+<h2><span id="related-work">Related Work</span></h2><p>First the team survey some related works in the filed like:<br>1) Generating adversarial examples .(Tartget and Untarget attacks)<br>2) Digital Adversarial Examples (The importance of white- box setting)<br>3) Physical Adversarial Examples.(Formal adversarial example analysis )</p>
+<p>Then summarize their own work:<br>1) Choose a inherently unconstrained environment to guarantee the work is robust within diverse physical-world conditions.<br>1) Introduce the RP2 (**Robust Physical Perturbations )<br>2) Propose an evaluation methodolog to study the effectiveness of physical perturbations in real world scenarios.<br>3) The attacks toward two classifiers lead to a preemilent grade with high midclassify rate.<br>4) Show the generality with attack on microwave to misclassify it to a phone.</p>
+<h2><span id="algorithm">Algorithm</span></h2><p>First index x to a perturbated image ,and  use $\delta$ to label the perturbation.<br>so </p>
+<script type="math/tex; mode=display">
+min\  H(x + \delta,x),\ \  \ s.t. \ \ \ f_θ (x + \delta) = y^*</script><p>Using a mask ,denoted by Mx , which is a  Matrix with same size to the classifier inputs, to apply to the original input to cause a misclassify.<br>So how to generate a robust Physical Perturbations with mask?<br>1) Find a vulnerable place to apply mask by using the L1 regularization.<br>2) Using NPS to address fabrication error.<br>3) Using Ti to considerate the transformations(e.g. if the object is rotated, the perturbation is rotated as well).</p>
+<h2><span id="experiment">Experiment</span></h2><h3><span id="outcome">Outcome</span></h3><h4><span id="lisa-cnn-and-gtsrb-cnn">LISA-CNN and GTSRB-CNN</span></h4><p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/Screen%20Shot%202023-03-15%20at%207.53.19%20AM.png" alt="Screen Shot 2023-03-15 at 7.53.19 AM"></p>
+<h4><span id="lisa-cnn-with-poster-printed-stop-sign-and-a-real-stop-sign">LISA-CNN with poster-printed Stop sign and a real Stop sign</span></h4><p>SL45 = Speed Limit 45, STP = Stop, YLD = Yield, ADL = Added Lane, SA = Signal Ahead, LE = Lane.<br><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/Screen%20Shot%202023-03-15%20at%207.54.10%20AM.png" alt="Screen Shot 2023-03-15 at 7.54.10 AM"></p>
+<h4><span id="a-camouflage-art-attack-on-gtsrb-cnn">A camouflage art attack on GTSRB-CNN</span></h4><p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/Screen%20Shot%202023-03-15%20at%207.56.31%20AM.png" alt="Screen Shot 2023-03-15 at 7.56.31 AM"></p>
 <h2><span id="conclusion">Conclusion</span></h2><p>The work introduce a high misclassify rate algorithm (RP2) with precise experiment to evident, and the results show that adversarial sample attacks in physical world will casu some serious consequence, thus future defenses should not rely on physical sources of noise as protection against physical adversarial examples.</p>
 
             <div class="clearfix"></div>
@@ -200,13 +204,13 @@
         </div>
         <nav class="m-pagination col-md-8 col-md-offset-2 col-sm-24" role="pagination">
     
-    <a class="pull-left" href="../../14/D2L_006_Chain_Rule&automatic_derivation/" style="float: left;">
-        ← 06_autoderivation
+    <a class="pull-left" href="../Paper_Taxonomy%20of%20ML%20Safety/" style="float: left;">
+        ← Taxonomy of ML Safety
     </a>
     
     
-    <a class="pull-right" href="../../10/%E9%9A%8F%E8%AE%B0-007/">
-        随记-007 →
+    <a class="pull-right" href="../Paper_Diffusion%20Models/">
+        Diffusion Models →
     </a>
     
 </nav>
