@@ -80,7 +80,7 @@
 				    
 				    <li><a href="/categories/Linux/" class="animsition-link">Linux<small>(1)</small></a></li>
 				    
-				    <li><a href="/categories/ML/" class="animsition-link">ML<small>(19)</small></a></li>
+				    <li><a href="/categories/ML/" class="animsition-link">ML<small>(21)</small></a></li>
 				    
 				    <li><a href="/categories/PWN-COLLEGE/" class="animsition-link">PWN.COLLEGE<small>(1)</small></a></li>
 				    
@@ -198,6 +198,76 @@
 
 <section id="intro">
     <div class="container">
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2023/02/13/随记-004/">随记-004</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2023-02-12T16:00:00.000Z" itemprop="datePublished">
+          2023-02-13
+      </time>
+    
+    
+    | 
+    <a href='/tags/进步报告/'>进步报告</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        Here's something encrypted, password is required to continue reading.
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2023/02/13/随记-004/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2023/02/12/随记-002/">随记-002</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2023-02-11T16:00:00.000Z" itemprop="datePublished">
+          2023-02-12
+      </time>
+    
+    
+    | 
+    <a href='/tags/进步报告/'>进步报告</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        Here's something encrypted, password is required to continue reading.
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2023/02/12/随记-002/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
         
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
@@ -493,85 +563,6 @@ week1-lab5聚焦于梯度下降。
                     
                     <p class="pull-right readMore">
                         <a href="/2022/10/31/ms_CS-329P | note4/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2022/10/25/llvm_llvm-pass/">llvm pass - satool</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2022-10-25T05:15:33.102Z" itemprop="datePublished">
-          2022-10-25
-      </time>
-    
-    
-    | 
-    <a href='/tags/LLVM/'>LLVM</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        基础知识​        我之前一直以为llvm是一个虚拟机，然而查了资料以后发现llvm除了名字以外与虚拟机再无半分关系。
-​        llvm的官方解释其实比较抽象：
-
-LLVM项目是模块化、可重用的编译器以及工具链技术的集合。
-
-​        说白了就是很多工具模块，统称llvm，之前已经接触过的略微熟悉的就是llvm的子项目clang。
-
-LLVM项目的一个子项目，基于LLVM架构的C/C++/Objective-C编
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2022/10/25/llvm_llvm-pass/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2022/10/24/mess_GDB 中ni 与 si的魔法/">mess_GDB中ni与si的魔法</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2022-10-24T11:57:06.272Z" itemprop="datePublished">
-          2022-10-24
-      </time>
-    
-    
-    | 
-    <a href='/tags/GDB/'>GDB</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        ​        关于gdb中ni 、n、si、s的区别，是一个很基础的问题：n/s都是C语言级的断点定位。s会进入C函数内部，n不会。ni/si都是汇编级别的断点定位。si会进入汇编和C函数内部, ni不会。
-​        然而众所周知，gdb下软件断点的原理是在代码中插入 int 3，引发中断后执行系统调用ptrace，那么同样是插入指令，为什么这两种指令会有不同影响？
-gdb指令级单步的实现首先还是复习一下老生常谈（的软硬断点
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2022/10/24/mess_GDB 中ni 与 si的魔法/">Read More...</a>
                     </p>
                     
                 </div>
