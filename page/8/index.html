@@ -80,7 +80,7 @@
 				    
 				    <li><a href="/categories/Linux/" class="animsition-link">Linux<small>(1)</small></a></li>
 				    
-				    <li><a href="/categories/ML/" class="animsition-link">ML<small>(22)</small></a></li>
+				    <li><a href="/categories/ML/" class="animsition-link">ML<small>(23)</small></a></li>
 				    
 				    <li><a href="/categories/PWN-COLLEGE/" class="animsition-link">PWN.COLLEGE<small>(1)</small></a></li>
 				    
@@ -198,6 +198,47 @@
 
 <section id="intro">
     <div class="container">
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2022/04/28/week9_4.1_silver_bullet/">pwnable - silver_bullet</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-04-28T14:34:48.209Z" itemprop="datePublished">
+          2022-04-28
+      </time>
+    
+    
+    | 
+    <a href='/tags/STACK-Other/'>STACK - Other</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+    
+overview
+reverse​        好，还有符号表，真好。这个题比较怪，这是一个菜单题，但是却是栈题。
+​        好像还是个简单的小游戏。
+create_bullet​        这个逻辑看来也是只能创建一个bullet这样。
+12345678if ( *bullet_list )  return puts(&quot;You have been created the Bullet !&quot;
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/04/28/week9_4.1_silver_bullet/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
         
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
@@ -549,47 +590,6 @@ overview大致原理​        glibc定义了_IO_FILE这样一个结构体来管
                     
                     <p class="pull-right readMore">
                         <a href="/2022/04/10/heap_learning_io_file/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2022/04/10/week6-7.2/">攻防世界 - house of orange</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2022-04-10T09:02:58.445Z" itemprop="datePublished">
-          2022-04-10
-      </time>
-    
-    
-    | 
-    <a href='/tags/HEAP-House-Of-Orange/'>HEAP - House Of Orange</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-     
-overview
-逆向​        没有free，只有增查改。
-​        这个题程序逻辑比较简单，主要是利用相对比较复杂。
-add​        最多申请三个house。并且在申请house开始为每个house创建了0x10 size的结构体，只有两个字段，size和content ptr。在输入name的阶段会把name读入content ptr指向的地址。
-12printf(&quot;Name :&qu
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2022/04/10/week6-7.2/">Read More...</a>
                     </p>
                     
                 </div>

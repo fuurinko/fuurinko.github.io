@@ -80,7 +80,7 @@
 				    
 				    <li><a href="/categories/Linux/" class="animsition-link">Linux<small>(1)</small></a></li>
 				    
-				    <li><a href="/categories/ML/" class="animsition-link">ML<small>(22)</small></a></li>
+				    <li><a href="/categories/ML/" class="animsition-link">ML<small>(23)</small></a></li>
 				    
 				    <li><a href="/categories/PWN-COLLEGE/" class="animsition-link">PWN.COLLEGE<small>(1)</small></a></li>
 				    
@@ -206,7 +206,7 @@ y_{i}[<w,x_{i}>+ \ b ] \le 0</script><p>when yi = -1, the prediction shoule be -
 <p>We can use such a expression to describe the MLP</p>
 <script type="math/tex; mode=display">
 \mathbf{h} = \sigma(\mathbf{W_{1}\mathbf{x}+\mathbf{b_{1}}})</script><script type="math/tex; mode=display">
-o = \mathbf{w_{2}^T\mathbf{h}+b_{2}}</script><p>,</p>
+o = \mathbf{w_{2}^T\mathbf{h}+b_{2}}</script><p>where:</p>
 <script type="math/tex; mode=display">
 \sigma()</script><p>is a activate function which is non-linear.</p>
 <h2><span id="113-activation-functions">11.3  Activation Functions</span></h2><h3><span id="1131-sigmoid-function">11.3.1 Sigmoid Function</span></h3><script type="math/tex; mode=display">
@@ -226,7 +226,7 @@ y = softmax(\mathbf{o})</script><h2><span id="115-multi-hidden-layer">11.5 Multi
 \mathbf{h_{1}} = \sigma(\mathbf{W_{1}\mathbf{x}+\mathbf{b_{1}}})</script><script type="math/tex; mode=display">
 \mathbf{h_{2}} = \sigma(\mathbf{W_{2}\mathbf{h_{1}}+\mathbf{b_{2}}})</script><script type="math/tex; mode=display">
 \mathbf{h_{3}} = \sigma(\mathbf{W_{3}\mathbf{h_{2}}+\mathbf{b_{3}}})</script><script type="math/tex; mode=display">
-\mathbf{o} = \mathbf{W_{4}}\mathbf{h_{3}}+\mathbf{b_{4}}</script><p>$$<br>hyperparameter:</p>
+\mathbf{o} = \mathbf{W_{4}}\mathbf{h_{3}}+\mathbf{b_{4}}</script><p>hyperparameter:</p>
 <p>1) number of hidden layers .<br>2) Size of each hidden layers.</p>
 <p>We need to weigh the number of hidden layer of the size of single layer. It’s depends on the datas type itself.</p>
 
@@ -234,6 +234,10 @@ y = softmax(\mathbf{o})</script><h2><span id="115-multi-hidden-layer">11.5 Multi
             <hr class="nogutter">
         </div>
         <nav class="m-pagination col-md-8 col-md-offset-2 col-sm-24" role="pagination">
+    
+    <a class="pull-left" href="../D2L_012_MLP_Realization/" style="float: left;">
+        ← 12_MLP_Realization
+    </a>
     
     
     <a class="pull-right" href="../D2L_010_Softmax_Realization/">
