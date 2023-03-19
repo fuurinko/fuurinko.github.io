@@ -8,7 +8,7 @@
 
 <head>
 
-  <title>Archives: 1919/8 | Rin</title>
+  <title>09_Softmax | Rin</title>
   <!-- Meta data -->
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -52,7 +52,7 @@
 <!-- hexo injector head_end end --><link rel="stylesheet" href="/css/prism.css" type="text/css"></head>
 
 <!--
-<body class="home-template">
+<body class="post-template">
 -->
 <body id="index" class="lightnav animsition">
       <!-- ============================ Off-canvas navigation =========================== -->
@@ -167,75 +167,146 @@
         <!-- ============================ Header & Logo bar =========================== -->
 
 
-      <!-- ============================ Hero Image =========================== -->
-
-<section id="hero" class="scrollme">
-    <div class="container-fluid element-img" style="background: url(https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/IMG_7048.jpg) no-repeat center center fixed;background-size: cover">
-        <div class="row">
-            <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-8 col-md-offset-2 vertical-align cover boost text-center">
-                <div class="center-me animateme" data-when="exit" data-from="0" data-to="0.6" data-opacity="0" data-translatey="100">
-                    <div>
-                        
-                        <h2></h2>
-                        <p><font color = "#E83015">L</font><font color = "#BDC0BA">iberation of <font color = "#E83015"> T</font><font color = "#BDC0BA">echnology , </font><font color = "#E83015">E</font><font color = "#BDC0BA">levation of <font color = "#E83015">M</font><font color = "#BDC0BA">ankind</font></p>
-                        
-
-                    </div>
-                </div>
-            </div>
-            <!-- // .col-md-12 -->
-        </div>
-        <div class="herofade beige-dk"></div>
-    </div>
-</section>
-
-<!-- Height spacing helper -->
-<div class="heightblock"></div>
-<!-- // End height spacing helper -->
-
-<!-- ============================ END Hero Image =========================== -->
-
-
-
-
-<section id="services">
+      
+<section id="intro">
     <div class="container">
-        <div class="row">
-            <div class="col-md-10 col-md-offset-1">
-                <div class="row boxes">
-                    
-                    
-                        
-                        
-                        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 wow fadeInUp" data-wow-delay="0.3s">
-                            
-                              <h4 class="title"><a href="/1919/08/10/note_深夜高速-1/">1</a></h4>
-                            
-                            <p><time datetime="1919-08-09T15:34:14.000Z"><a href="/1919/08/10/note_深夜高速-1/">1919-08-10</a></time></p>
-                        </div>
-                    
-                        
-                        
-                        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 wow fadeInUp" data-wow-delay="0.3s">
-                            
-                              <h4 class="title"><a href="/1919/08/10/幻想曲-04-夏 其二/">夏 其二</a></h4>
-                            
-                            <p><time datetime="1919-08-09T15:00:00.000Z"><a href="/1919/08/10/幻想曲-04-夏 其二/">1919-08-10</a></time></p>
-                        </div>
-                    
-                </div>
-            </div>    
+        <div class="row col-md-offset-2">
+            <div class="col-md-8">
+    			<span class="post-meta">
+      <time datetime="2023-03-17T09:52:10.099Z" itemprop="datePublished">
+          2023-03-17
+      </time>
+    
+    
+    | 
+    <a href='/tags/d2l/'>d2l</a>
+    
+    
+</span>
+                <h1>09_Softmax</h1>
+            </div>
         </div>
-    </div>
-</section> 
+        <div class="col-md-8 col-md-offset-2">
+      		<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
 
-<section id="statement">
-    <div class="container text-center wow fadeInUp" data-wow-delay="0.5s">
-        <div class="row">
-            <p></p>
+<p>So in this module we will expand to a brand-new vision — photo classification.<br>Although the name Softmax regression contains “regression”, it is excatly a method to process the classfication problem.<br>Accounting for saving times, we just omit the the derivation process of how the classfication problem can be expressed in a abstract way, and only focus on the conclusion.</p>
+<h2><span id="91-classification">9.1 Classification</span></h2><h3><span id="911-one-hot-encoding">9.1.1 one-hot encoding</span></h3><p>Using<code>one-hot encoding</code>to present the different classes  because In most conditions we care less about the exact meaning or name of an object, we only want to sort it out.<br>e.g :  (1,0,0) corresponding to “cat”,(0,1,0)to “chicken”, and (0,0,1) to “dog”:</p>
+<script type="math/tex; mode=display">
+y \in \{(1,0,0),(0,1,0),(0,0,1)\}</script><h3><span id="912-model">9.1.2 Model</span></h3><p>So whatever the final outputs are ,it’s definetely a multi-output with coreesponded input.<br>Back to the example before,  we want to classify some pictrues includeing cat,dog,and chicken, so we can easliy image in model with 3 output likes that :<br><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/Screen%20Shot%202023-03-18%20at%207.33.56%20PM.png" alt="Screen Shot 2023-03-18 at 7.33.56 PM"></p>
+<p>And the three output have been encoded with one-hot encoding.<br>So how about input?<br>First of all we clear that what we want to input into the layer is the featrues of our dataset, so let us image a dataset with a 4-type featrues.<br><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/Screen%20Shot%202023-03-18%20at%207.42.31%20PM.png" alt="Screen Shot 2023-03-18 at 7.42.31 PM"></p>
+<p>From the figure we can find that each output is effected by all of the input,we can transform the figure into the form of equation like that:</p>
+<script type="math/tex; mode=display">
+o_{1} = x_{1}w_{11}+x_{2}w_{12}+x_{3}w_{13}+x_{4}w_{14} +b_{1}</script><script type="math/tex; mode=display">
+o_{2} = x_{1}w_{21}+x_{2}w_{22}+x_{3}w_{23}+x_{4}w_{24} +b_{2}</script><script type="math/tex; mode=display">
+o_{3} = x_{1}w_{31}+x_{2}w_{32}+x_{3}w_{33}+x_{4}w_{34} +b_{3}</script><p>And the deep neural network, we call this layer the “full connection layer”.</p>
+<h4><span id="9121-disscusion-parameter-overhead-of-the-full-connection-layer">9.1.2.1 Disscusion: parameter overhead of the full connection layer</span></h4><p>So as we can see in the above equations, the total parameters are 12 ,with the input number multiply the output number.<br>In general ,for a full connection layer , with d input and q output, the parameter overhead is d(dq). It’s a horrorable expense for a network .<br>Fortunately, the solution will be introduced in the latter module.</p>
+<h2><span id="92-softmax">9.2 Softmax</span></h2><p>Think about that question: if our output from the network are the one-hot encoding of any given pictures?</p>
+<p>Maybe they are, but how can we present them?<br>So recall that each categoried can be scripted as that form:</p>
+<script type="math/tex; mode=display">
+\mathbf{y} = [y_{1},y_{2},\dots,y_{n}]^T</script><p>which:</p>
+<script type="math/tex; mode=display">
+y_{i} =  \begin{cases}
+1 \ ,\ \ \ \ if  \ \  \ i=y \\  \\
+0, \ \ \ \ otherwise
+\end{cases}</script><p>Clear that although the categories are diverse, but the output for each epoch only indicates one category.<br>e.g: The picture draws a cat , indexed with one-hot encoding in [0,0,1], so when you input this picture, the model can only consider the  [0,0,1] for a correct outcome.<br>Unexptectly, not everytime the model can output the precise output, sometimes  it will output the vector likes that [0.1,0.2,0.9], and obviously it can’t explicitly tell us the specific category, I can just observe the vector  [0.1,0.2,0.9], somehow ambiguous.<br>Why don’s we present the output as the probability of some categories?<br>Image that we only require one yi which equals to 1(or just close to it), and all of the output’s sum is 1, it’s entirely capatable and legal probability distribution.<br>The idea is clear that: Using probability of sorted into specific category to represent the output, if the  output is [0.1,0.2,0.9], we can say “The probability of a cat is 90%”.<br>But another questions comes behind: how to use mathematical language to discribe this transformation?<br>Finally it’s turn of the softmax fnuction.<br>We introduce softmax function to adapt this problem perfectly,which the idea just derive from the same source — to regulaze  some predictions into standard values.</p>
+<script type="math/tex; mode=display">
+\hat{\mathbf{y}} = softmax(\mathbf{o}),\ \  \ s.t \  \ \hat{y_{i}} = \frac{\exp({o_{j}})}{\sum_{k}\exp(o_{k})}</script><p>BTW, we can still choose the category by judge the output vectors without a softmax function,since:</p>
+<script type="math/tex; mode=display">
+argmax_{j} \hat{y_{j}} = argmax_{j} o_{j}</script><h2><span id="93-loss-function">9.3 Loss Function</span></h2><h3><span id="931-cross-entropy-loss">9.3.1 Cross-Entropy Loss</span></h3><p>Arguably, it’s fanciful to use y - y_hat to estimate the loss since y_hat is a completely probability condition with no relationship with the primary labeled value “1”.<br>Hence we need to work out a new way to judge the model qulity.<br>We introduce Cross-Entropy Loss to address the problem.</p>
+<p>Cross-Entropy Loss is often used to measure the difference of two probability.</p>
+<script type="math/tex; mode=display">
+H(p,q) = \sum_{i}-p_{i}\log(q_{i})</script><p>Applying it into our loss function ,it will change into the form likes that:</p>
+<script type="math/tex; mode=display">
+H(y,\hat{y}) = \sum_{i}-y_{i}\log(\hat{y_{i}})</script><p>since the sum of yi is 1, then loss function can be defineted as:</p>
+<script type="math/tex; mode=display">
+l(\mathbf{y},\hat{\mathbf{y}})=-log \  \hat{y_{i}}</script><h3><span id="931-gradient">9.3.1 Gradient</span></h3><p>Simiarly we can ‘t apply the former method, like work out the partial darivation towards some parameters. Therefore we just use some physical defination , to express the gradient:</p>
+<script type="math/tex; mode=display">
+\partial _{o_{i}}l(\mathbf{y},\mathbf{\hat{y}}) = softmax(o)_{i}-y_{i}</script><h2><span id="94-realization-in-pytorch">9.4 Realization in Pytorch</span></h2><h3><span id="941-dataset-preprocessing">9.4.1 Dataset Preprocessing</span></h3><h4><span id="9411-reading-dataset">9.4.1.1 reading dataset</span></h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">%matplotlib inline</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">import</span> torchvision</span><br><span class="line"><span class="comment">#the specialized package to process graph</span></span><br><span class="line"><span class="keyword">from</span> torchvision <span class="keyword">import</span> transforms</span><br><span class="line"><span class="keyword">from</span> d2l <span class="keyword">import</span> torch <span class="keyword">as</span> d2l</span><br><span class="line"><span class="keyword">from</span> torch.utils <span class="keyword">import</span> data</span><br><span class="line"></span><br><span class="line">d2l.use_svg_display() <span class="comment"># use svg format to display photos</span></span><br><span class="line"></span><br><span class="line">trans = transforms.ToTensor()</span><br><span class="line"><span class="comment"># Convert a PIL Image or n-d array to tensor and scale the values accordingly ---&gt;  [0, 255](PIL) -&gt; [0,1](tensor)</span></span><br><span class="line"></span><br><span class="line">mnist_train = torchvision.datasets.FashionMNIST(</span><br><span class="line">    root=<span class="string">&quot;../data&quot;</span>, train=<span class="literal">True</span>, transform=trans, download=<span class="literal">True</span>)</span><br><span class="line">    </span><br><span class="line">mnist_test = torchvision.datasets.FashionMNIST(</span><br><span class="line">    root=<span class="string">&quot;../data&quot;</span>, train=<span class="literal">False</span>, transform=trans, download=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure>
+<p>One essential step in machine learning is divide the dataset into train set and the test set , and the test set should not to be set too large. </p>
+<h4><span id="9412-dataset-overview">9.4.1.2 dataset overview</span></h4><p>In general we just want to get approximate impression about the dataset, like its size, length, dimension,and maybe some stastic characteristics.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">len</span>(mnist_train), <span class="built_in">len</span>(mnist_test)</span><br><span class="line"><span class="comment">#(60000, 10000)</span></span><br><span class="line">mnist_train[<span class="number">0</span>][<span class="number">0</span>].shape</span><br><span class="line">torch.Size([<span class="number">1</span>, <span class="number">28</span>, <span class="number">28</span>])</span><br></pre></td></tr></table></figure>
+<p><code>torch.Size([1, 28, 28])</code> shows that each of the photo size is 28x28 pixels, with only one color channel(Graysca lmage)<br>Then we tag the the text label with a corresponded number:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_fashion_mnist_labels</span>(<span class="params">labels</span>):</span>  <span class="comment">#@save</span></span><br><span class="line">    <span class="string">&quot;&quot;&quot;return the number label from the txet&quot;&quot;&quot;</span></span><br><span class="line">    text_labels = [<span class="string">&#x27;t-shirt&#x27;</span>, <span class="string">&#x27;trouser&#x27;</span>, <span class="string">&#x27;pullover&#x27;</span>, <span class="string">&#x27;dress&#x27;</span>, <span class="string">&#x27;coat&#x27;</span>,</span><br><span class="line">                   <span class="string">&#x27;sandal&#x27;</span>, <span class="string">&#x27;shirt&#x27;</span>, <span class="string">&#x27;sneaker&#x27;</span>, <span class="string">&#x27;bag&#x27;</span>, <span class="string">&#x27;ankle boot&#x27;</span>]</span><br><span class="line">    <span class="keyword">return</span> [text_labels[<span class="built_in">int</span>(i)] <span class="keyword">for</span> i <span class="keyword">in</span> labels]</span><br></pre></td></tr></table></figure><br>Then we want to draw so<br>me pictures out:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">show_images</span>(<span class="params">imgs, num_rows, num_cols, titles=<span class="literal">None</span>, scale=<span class="number">1.5</span></span>):</span>  <span class="comment">#@save</span></span><br><span class="line">    <span class="string">&quot;&quot;&quot;绘制图像列表&quot;&quot;&quot;</span></span><br><span class="line">    figsize = (num_cols * scale, num_rows * scale)</span><br><span class="line">    _, axes = d2l.plt.subplots(num_rows, num_cols, figsize=figsize)</span><br><span class="line">    axes = axes.flatten()</span><br><span class="line">    <span class="keyword">for</span> i, (ax, img) <span class="keyword">in</span> <span class="built_in">enumerate</span>(<span class="built_in">zip</span>(axes, imgs)):</span><br><span class="line">        <span class="keyword">if</span> torch.is_tensor(img):</span><br><span class="line">            <span class="comment"># 图片张量</span></span><br><span class="line">            ax.imshow(img.numpy())</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="comment"># PIL图片</span></span><br><span class="line">            ax.imshow(img)</span><br><span class="line">        ax.axes.get_xaxis().set_visible(<span class="literal">False</span>)</span><br><span class="line">        ax.axes.get_yaxis().set_visible(<span class="literal">False</span>)</span><br><span class="line">        <span class="keyword">if</span> titles:</span><br><span class="line">            ax.set_title(titles[i])</span><br><span class="line">    <span class="keyword">return</span> axes</span><br><span class="line"></span><br><span class="line">X, y = <span class="built_in">next</span>(<span class="built_in">iter</span>(data.DataLoader(mnist_train, batch_size=<span class="number">18</span>)))</span><br><span class="line"><span class="comment"># automatically read the mini batch of data</span></span><br><span class="line">show_images(X.reshape(<span class="number">18</span>, <span class="number">28</span>, <span class="number">28</span>), <span class="number">2</span>, <span class="number">9</span>, titles=get_fashion_mnist_labels(y));</span><br></pre></td></tr></table></figure></p>
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/Screen%20Shot%202023-03-19%20at%209.57.10%20AM.png" alt="Screen Shot 2023-03-19 at 9.57.10 AM"></p>
+ <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">batch_size = <span class="number">256</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_dataloader_workers</span>():</span>  <span class="comment">#@save</span></span><br><span class="line">    <span class="string">&quot;&quot;&quot;使用4个进程来读取数据&quot;&quot;&quot;</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">4</span></span><br><span class="line"></span><br><span class="line">train_iter = data.DataLoader(mnist_train, batch_size, shuffle=<span class="literal">True</span>, num_workers=get_dataloader_workers())                         </span><br><span class="line">timer = d2l.Timer()</span><br><span class="line"><span class="keyword">for</span> X, y <span class="keyword">in</span> train_iter:</span><br><span class="line">    <span class="keyword">continue</span></span><br><span class="line"><span class="string">f&#x27;<span class="subst">&#123;timer.stop():<span class="number">.2</span>f&#125;</span> sec&#x27;</span></span><br></pre></td></tr></table></figure>
+<h4><span id="9413-integrate-all-components">9.4.1.3 Integrate All Components</span></h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">load_data_fashion_mnist</span>(<span class="params">batch_size, resize=<span class="literal">None</span></span>):</span>  <span class="comment">#@save</span></span><br><span class="line">    <span class="string">&quot;&quot;&quot;下载Fashion-MNIST数据集，然后将其加载到内存中&quot;&quot;&quot;</span></span><br><span class="line">    trans = [transforms.ToTensor()]</span><br><span class="line">    <span class="keyword">if</span> resize:</span><br><span class="line">        trans.insert(<span class="number">0</span>, transforms.Resize(resize))</span><br><span class="line">    trans = transforms.Compose(trans)</span><br><span class="line">    mnist_train = torchvision.datasets.FashionMNIST(</span><br><span class="line">        root=<span class="string">&quot;../data&quot;</span>, train=<span class="literal">True</span>, transform=trans, download=<span class="literal">True</span>)</span><br><span class="line">    mnist_test = torchvision.datasets.FashionMNIST(</span><br><span class="line">        root=<span class="string">&quot;../data&quot;</span>, train=<span class="literal">False</span>, transform=trans, download=<span class="literal">True</span>)</span><br><span class="line">    <span class="keyword">return</span> (data.DataLoader(mnist_train, batch_size, shuffle=<span class="literal">True</span>,num_workers=get_dataloader_workers()),</span><br><span class="line">		    data.DataLoader(mnist_test, batch_size, shuffle=<span class="literal">False</span>,num_workers=get_dataloader_workers()))</span><br><span class="line"></span><br><span class="line">train_iter, test_iter = load_data_fashion_mnist(<span class="number">32</span>, resize=<span class="number">64</span>)</span><br><span class="line"><span class="keyword">for</span> X, y <span class="keyword">in</span> train_iter:</span><br><span class="line">    <span class="built_in">print</span>(X.shape, X.dtype, y.shape, y.dtype)</span><br><span class="line">    <span class="keyword">break</span></span><br></pre></td></tr></table></figure>
+
+            <div class="clearfix"></div>
+            <hr class="nogutter">
         </div>
+        <nav class="m-pagination col-md-8 col-md-offset-2 col-sm-24" role="pagination">
+    
+    
+    <a class="pull-right" href="../D2l_008_Linear_Regression_Implement/">
+        08_LR_Realization →
+    </a>
+    
+</nav>
+
+        <div class="col-md-8 col-md-offset-2 col-sm-24"><script type="text/javascript">
+  /**
+   * 搜狐畅言
+   */
+
+  /*
+  document.write('<div id="SOHUCS" sid="' + window.location.pathname.slice(1) + '" ></div>');
+
+  window.onload = function () {
+    (function () {
+      var appid = 'cytXXXX';
+      var conf = 'prod_xxxxxxxxxxxxxxxxx';
+      var width = window.innerWidth || document.documentElement.clientWidth;
+      var loadJs = function (d, a, id) {
+        var c = document.getElementsByTagName("head")[0] || document.head || document.documentElement;
+        var b = document.createElement("script");
+        b.setAttribute("type", "text/javascript");
+        b.setAttribute("charset", "UTF-8");
+        b.setAttribute("src", d);
+        if (id) {
+          b.setAttribute("id", id);
+        }
+        if (typeof a === "function") {
+          if (window.attachEvent) {
+            b.onreadystatechange = function () {
+              var e = b.readyState;
+              if (e === "loaded" || e === "complete") {
+                b.onreadystatechange = null;
+                a()
+              }
+            }
+          } else {
+            b.onload = a
+          }
+        }
+        c.appendChild(b)
+      };
+
+      loadJs("https://changyan.sohu.com/upload/changyan.js", function () {
+        window.changyan.api.config({
+          appid: appid,
+          conf: conf
+        })
+      });
+    })();
+  }
+  */
+
+</script>
+</div>
     </div>
 </section>
+
+<!-- Highlight.js -->
+
+<link rel="stylesheet"
+href="//highlightjs.org/static/demo/styles/atom-one-light.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js">
+</script>
+<script>
+hljs.initHighlightingOnLoad();
+
+</script>
+
+
       
 <!-- ============================ Footer =========================== -->
 
