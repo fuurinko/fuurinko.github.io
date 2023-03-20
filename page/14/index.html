@@ -80,7 +80,7 @@
 				    
 				    <li><a href="/categories/Linux/" class="animsition-link">Linux<small>(1)</small></a></li>
 				    
-				    <li><a href="/categories/ML/" class="animsition-link">ML<small>(24)</small></a></li>
+				    <li><a href="/categories/ML/" class="animsition-link">ML<small>(25)</small></a></li>
 				    
 				    <li><a href="/categories/PWN-COLLEGE/" class="animsition-link">PWN.COLLEGE<small>(1)</small></a></li>
 				    
@@ -198,6 +198,47 @@
 
 <section id="intro">
     <div class="container">
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2021/11/22/other_openstack学习笔记/">openstack学习笔记</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2021-11-22T08:56:23.363Z" itemprop="datePublished">
+          2021-11-22
+      </time>
+    
+    
+    | 
+    <a href='/tags/SRE/'>SRE</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        ​    
+     
+​        为了跟上网校的集群重构计划，这下狠狠地开始学习运维了。
+​        在开始具体的openstack学习之前，首先需要学习一下一些基本的运维概念。
+虚拟化/容器化​        之前在学习docker的时候对于容器化已经有一个比较到位的认知了，而与容器化相对应的虚拟化并没有深入理解。
+​        这里的虚拟化特指服务器虚拟化。就是在一台服务器上运行虚拟运行多个服务器。
+虚拟化分类完全
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2021/11/22/other_openstack学习笔记/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
         
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
@@ -558,48 +599,6 @@ E: Unable to correct problems, you have held brok
                     
                     <p class="pull-right readMore">
                         <a href="/2021/10/27/sum_gdb附加调试的一些黑魔法/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2021/10/13/sum_汇编基础/">汇编小知识点</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2021-10-13T09:25:43.372Z" itemprop="datePublished">
-          2021-10-13
-      </time>
-    
-    
-    | 
-    <a href='/tags/assemble/'>assemble</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-     
-[TOC]
-汇编语言1）寻址1/直接寻址1mov     rax, fs:28h #直接寻址，fs段寄存器+偏移量。这里其实是一个canary的值。
-2/间接寻址间接在使用指针以及解引用的形式
-1mov     [rbp+var_8], rax # 寄存器相对寻址。相当于把rax，也就是这个canary值放到rbp+var_8的地方。
-3/比例寻址例如在数组遍历中
-123456.dataarrayD 1,2,3,4.cod
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2021/10/13/sum_汇编基础/">Read More...</a>
                     </p>
                     
                 </div>
