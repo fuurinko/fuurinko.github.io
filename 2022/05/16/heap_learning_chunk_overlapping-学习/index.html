@@ -191,7 +191,7 @@
         </div>
         <div class="col-md-8 col-md-offset-2">
       		
-    <div id="aplayer-zTLYqUhv" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div> 
+    <div id="aplayer-ooSiaTtk" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div> 
 <h2><span id="从一个例子开始">从一个例子开始：</span></h2><p>​        先还原一个很适合的情景，pwnable的secret of my heart这道题。</p>
 <p>​        我们有一个非常好用的空字节溢出，2.23的libc，可以申请的size最大为0x100，heap base已知，没有更多特殊的限制，现在我们需要leak libc，同时需要double free来任意地址写，我们有什么好的思路？</p>
 <p>​        首先由于我们有一个空字节溢出，所以假如有三个连续的allocated chunk，可以先free掉第一个chunk，再申请回来，溢出一个空字节到下面的堆块的size位，覆盖previnuse位</p>
