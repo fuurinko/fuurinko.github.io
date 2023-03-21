@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<!--[if lte IE 8 ]>
+<html class="ie" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US">
+<![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!-->
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
+<!--<![endif]-->
+
+<head>
+
+  <title>18_DNN | Rin</title>
+  <!-- Meta data -->
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content="Rin">
+    <meta name="author" content="Rin777">
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+
+    <!-- Favicon, (keep icon in root folder) -->
+    <link rel="Shortcut Icon" href="/img/favicon.ico" type="image/ico">
+
+    <link rel="alternate" href="/atom.xml" title="Rin" type="application/atom+xml">
+    <link rel="stylesheet" href="/css/all.css" media="screen" type="text/css">
+    
+
+    <!--[if IE 8]>
+    <link rel="stylesheet" type="text/css" href="/css/ie8.css" />
+    <![endif]-->
+
+    <!-- jQuery | Load our jQuery, with an alternative source fallback to a local version if request is unavailable -->
+    <script src="/js/jquery-1.11.1.min.js"></script>
+    <script>window.jQuery || document.write('<script src="js/jquery-1.11.1.min.js"><\/script>')</script>
+
+    <!-- Load these in the <head> for quicker IE8+ load times -->
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="/js/html5shiv.min.js"></script>
+    <script src="/js/respond.min.js"></script>
+    <![endif]-->
+
+  
+  
+  
+
+  <style>.col-md-8.col-md-offset-2.opening-statement img{display:none;}</style>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><link rel="stylesheet" href="/css/prism.css" type="text/css"></head>
+
+<!--
+<body class="post-template">
+-->
+<body id="index" class="lightnav animsition">
+      <!-- ============================ Off-canvas navigation =========================== -->
+
+    <div class="sb-slidebar sb-right sb-style-overlay sb-momentum-scrolling">
+        <div class="sb-close" aria-label="Close Menu" aria-hidden="true">
+            <img src="/img/close.png" alt="Close"/>
+        </div>
+        <!-- Lists in Slidebars -->
+        <ul class="sb-menu">
+            <li><a href="/" class="animsition-link" title="Home">Home</a></li>
+            <li><a href="/archives" class="animsition-link" title="archive">archives</a></li>
+            <!-- Dropdown Menu -->
+			 
+            
+        	<li>
+        		<a class="sb-toggle-submenu">Categories<span class="sb-caret"></span></a>
+            	<ul class="sb-submenu">
+				  	
+				    <li><a href="/categories/AUDITION/" class="animsition-link">AUDITION<small>(23)</small></a></li>
+				    
+				    <li><a href="/categories/Binary-security/" class="animsition-link">Binary_security<small>(101)</small></a></li>
+				    
+				    <li><a href="/categories/CSAPP-LAB/" class="animsition-link">CSAPP LAB<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/Linux/" class="animsition-link">Linux<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/ML/" class="animsition-link">ML<small>(28)</small></a></li>
+				    
+				    <li><a href="/categories/PWN-COLLEGE/" class="animsition-link">PWN.COLLEGE<small>(1)</small></a></li>
+				    
+				</ul>
+        	</li>
+			
+            
+            <li>
+                <a class="sb-toggle-submenu">Links<span class="sb-caret"></span></a>
+                <ul class="sb-submenu">
+                    
+                    <li><a target="_blank" rel="noopener" href="https://weibo.com/u/1682818607" class="animsition-link">没有营养的推广页</a></li>
+                    
+                    <li><a target="_blank" rel="noopener" href="http://www.2323bb.ltd" class="animsition-link">cc_sakura</a></li>
+                    
+                    <li><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_36995313" class="animsition-link">F@LLe0</a></li>
+                    
+                    <li><a target="_blank" rel="noopener" href="https://yyz9.cn" class="animsition-link">YYZ</a></li>
+                    
+                    <li><a target="_blank" rel="noopener" href="https://www.star123.top" class="animsition-link">star</a></li>
+                    
+                </ul>
+            </li>
+            
+        </ul>
+        <!-- Lists in Slidebars -->
+        <ul class="sb-menu secondary">
+            
+            <li><a href="javascript:;" class="popup-trigger" title="Search"><span class="search-icon"></span>Search</a></li>
+            
+            <li><a href="/about.html" class="animsition-link" title="about">About</a></li>
+            <li><a href="/atom.xml" class="animsition-link" title="rss">RSS</a></li>
+        </ul>
+    </div>
+    
+    <!-- ============================ END Off-canvas navigation =========================== -->
+
+    <!-- ============================ #sb-site Main Page Wrapper =========================== -->
+
+    <div id="sb-site">
+        <!-- #sb-site - All page content should be contained within this id, except the off-canvas navigation itself -->
+
+        <!-- ============================ Header & Logo bar =========================== -->
+
+        <div id="navigation" class="navbar navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="container">
+                    <!-- Nav logo -->
+                    <div class="logo">
+                        <a href="/" title="Logo" class="animsition-link">
+                         <img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/IMG_0282.jpg" alt="Logo" width="35px;"/> 
+                        </a>
+                    </div>
+                    <!-- // Nav logo -->
+                    <!-- Info-bar -->
+                    <nav>
+                        <ul class="nav">
+                            <li><a href="/" class="animsition-link">Rin</a></li>
+                            <li class="nolink"><span>Always </span>Creative.</li>
+                            
+                            <li><a href="https://github.com/" title="Github" target="_blank"><i class="icon-github"></i></a></li>
+                            
+                            
+                            
+                            
+                            
+                            <li class="nolink"><span>Welcome!</span></li>
+                        </ul>
+                    </nav>
+                    <!--// Info-bar -->
+                </div>
+                <!-- // .container -->
+                <div class="learnmore sb-toggle-right">More</div>
+                <button type="button" class="navbar-toggle menu-icon sb-toggle-right" title="More">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar before"></span>
+                <span class="icon-bar main"></span>
+                <span class="icon-bar after"></span>
+                </button>
+            </div>
+            <!-- // .navbar-inner -->
+        </div>
+
+        <!-- ============================ Header & Logo bar =========================== -->
+
+
+      
+<section id="intro">
+    <div class="container">
+        <div class="row col-md-offset-2">
+            <div class="col-md-8">
+    			<span class="post-meta">
+      <time datetime="2023-03-21T01:10:01.799Z" itemprop="datePublished">
+          2023-03-21
+      </time>
+    
+    
+    | 
+    <a href='/tags/d2l/'>d2l</a>
+    
+    
+</span>
+                <h1>18_DNN</h1>
+            </div>
+        </div>
+        <div class="col-md-8 col-md-offset-2">
+      		<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+
+<p>From this module we begin to explore how to achive a nerwork by using Pytorch, leaning some basic ideas in implement deep nerual network in pytorch.</p>
+<h1><span id="181-modules">18.1 Modules</span></h1><p>It turns out that it’s more valuable to use modules which are bigger than the individual layer  model but smaller than a entire model. We call them “groups of layers”.<br>To achive some complicated  neural networks, we introduce the concept of a neural network <strong>module</strong>.<br>A module could describe a single layer, a component consisting of multiple layers, or the entire model itself. And with the help of moduls, we can  combine them  into larger artifacts, thus writing surprisingly compact code and still implement complex neural networks.</p>
+<h2><span id="1811-review-of-mlp">18.1.1 Review of MLP</span></h2><p>From a programming standpoint, a module is represented by a <strong>class</strong>.<br>And before we undetaking the code, we might as well inspect the code of MLP.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">from</span> torch <span class="keyword">import</span> nn</span><br><span class="line"><span class="keyword">from</span> torch.nn <span class="keyword">import</span> functional <span class="keyword">as</span> F</span><br><span class="line"></span><br><span class="line">net = nn.Sequential(nn.Linear(<span class="number">20</span>, <span class="number">256</span>), nn.ReLU(), nn.Linear(<span class="number">256</span>, <span class="number">10</span>))</span><br><span class="line"></span><br><span class="line">X = torch.rand(<span class="number">2</span>, <span class="number">20</span>)</span><br><span class="line">net(X)</span><br></pre></td></tr></table></figure>
+<p>So the code defined the network is quit simple<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">net = nn.Sequential(nn.Linear(<span class="number">20</span>, <span class="number">256</span>), nn.ReLU(), nn.Linear(<span class="number">256</span>, <span class="number">10</span>))</span><br></pre></td></tr></table></figure></p>
+<p>We construct our model through the function <code>Sequential</code>. And pile the layers we need on the <code>sequential</code>.<br><code>sequential</code> define a special  kind of module. It maintains an ordered list of constituent <code>Module</code>.</p>
+<h2><span id="1812-customized-modules">18.1.2 Customized Modules</span></h2><p>Perhaps the easiest way to develop intuition about how a module works is to implement one ourselves.</p>
+<h3><span id="18121-mlp">18.1.2.1 MLP</span></h3><p>In the following snippet, we code a MLP with one hidden layer with 256 hidden units, and a 10-dimensional output layer.<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MLP</span>(<span class="params">nn.Module</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="comment"># Call the constructor of the parent class nn.Module to perform</span></span><br><span class="line">        <span class="comment"># the necessary initialization</span></span><br><span class="line">        <span class="built_in">super</span>().__init__()</span><br><span class="line">        self.hidden = nn.LazyLinear(<span class="number">256</span>) <span class="comment"># 256 hidden units</span></span><br><span class="line">        self.out = nn.LazyLinear(<span class="number">10</span>) <span class="comment"># 10 output units</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># Define the forward propagation of the model, that is, how to return the</span></span><br><span class="line">    <span class="comment"># required model output based on the input X</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">forward</span>(<span class="params">self, X</span>):</span></span><br><span class="line">        <span class="keyword">return</span> self.out(F.relu(self.hidden(X)))</span><br></pre></td></tr></table></figure></p>
+<h3><span id="18122-sequential">18.1.2.2 Sequential</span></h3><p>Pytorch will aware of that all of the block we add into the squential are essential for caculate,<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MySequential</span>(<span class="params">nn.Module</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, *args</span>):</span></span><br><span class="line">        <span class="built_in">super</span>().__init__() <span class="comment">#initailize parameters</span></span><br><span class="line">        <span class="keyword">for</span> block <span class="keyword">in</span> args:</span><br><span class="line">            self._modules[block] = block </span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">forward</span>(<span class="params">self, X</span>):</span></span><br><span class="line">        <span class="keyword">for</span> block <span class="keyword">in</span> self._modules.values():</span><br><span class="line">            X = block(X) </span><br><span class="line">        <span class="keyword">return</span> X</span><br></pre></td></tr></table></figure></p>
+<p>We can also achive it using some flexiable way, and the following code shows that we can assemb any code into a neural network.<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">FixedHiddenMLP</span>(<span class="params">nn.Module</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="built_in">super</span>().__init__()</span><br><span class="line">        <span class="comment"># 不计算梯度的随机权重参数。因此其在训练期间保持不变</span></span><br><span class="line">        self.rand_weight = torch.rand((<span class="number">20</span>, <span class="number">20</span>), requires_grad=<span class="literal">False</span>)</span><br><span class="line">        self.linear = nn.Linear(<span class="number">20</span>, <span class="number">20</span>)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">forward</span>(<span class="params">self, X</span>):</span></span><br><span class="line">        X = self.linear(X)</span><br><span class="line">        <span class="comment"># 使用创建的常量参数以及relu和mm函数</span></span><br><span class="line">        X = F.relu(torch.mm(X, self.rand_weight) + <span class="number">4</span>)</span><br><span class="line">        <span class="comment"># 复用全连接层。这相当于两个全连接层共享参数</span></span><br><span class="line">        X = self.linear(X)</span><br><span class="line">        <span class="comment"># 控制流</span></span><br><span class="line">        <span class="keyword">while</span> X.<span class="built_in">abs</span>().<span class="built_in">sum</span>() &gt; <span class="number">1</span>: </span><br><span class="line">            X /= <span class="number">2</span></span><br><span class="line">        <span class="keyword">return</span> X.<span class="built_in">sum</span>()</span><br></pre></td></tr></table></figure></p>
+<h2><span id="1813-summary">18.1.3 Summary</span></h2><p>1) A module can constitute with layers or mudules.<br>2)  Module do the inner part of works including backward or parameter initialization.<br>3) The connection of mudules is charged by sequential.</p>
+<p>But the random combination of modules and codes will cause a waste of efficiency, which leaves us a problem waiting for addressing.</p>
+<h1><span id="182-parameter-management">18.2 Parameter Management</span></h1><h2><span id="1821-parameter-access">18.2.1 parameter access</span></h2><p>For a simple primary MLP:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">from</span> torch <span class="keyword">import</span> nn</span><br><span class="line"></span><br><span class="line">net = nn.Sequential(nn.Linear(<span class="number">4</span>, <span class="number">8</span>), nn.ReLU(), nn.Linear(<span class="number">8</span>, <span class="number">1</span>))</span><br><span class="line">X = torch.rand(size=(<span class="number">2</span>, <span class="number">4</span>))</span><br><span class="line">net(X)</span><br></pre></td></tr></table></figure></p>
+<p>We can access its parameter from the function<code>state_dict()</code>(float32)<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(net[<span class="number">2</span>].state_dict())</span><br><span class="line"><span class="comment"># OrderedDict([(&#x27;weight&#x27;, tensor([[ 0.2579, -0.1493,  0.2151, -0.1589, -0.1218, -0.0021, </span></span><br><span class="line"><span class="comment"># 0.0325,  0.1821]])), (&#x27;bias&#x27;, tensor([-0.0143]))])</span></span><br></pre></td></tr></table></figure><br>Certainly, we can directly access to the concrete parameter.<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="built_in">type</span>(net[<span class="number">2</span>].bias))</span><br><span class="line"><span class="built_in">print</span>(net[<span class="number">2</span>].bias)</span><br><span class="line"><span class="built_in">print</span>(net[<span class="number">2</span>].bias.data)</span><br><span class="line"></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">&lt;class &#x27;torch.nn.parameter.Parameter&#x27;&gt; # Optimizable parameter</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Parameter containing:</span></span><br><span class="line"><span class="string">tensor([-0.0143], requires_grad=True)</span></span><br><span class="line"><span class="string">tensor([-0.0143])</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br></pre></td></tr></table></figure><br>We can even access to the gradient of each parameter:<br><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/Screen%20Shot%202023-03-21%20at%203.16.12%20PM.png" alt="Screen Shot 2023-03-21 at 3.16.12 PM"></p>
+<p>Since we have not yet use the backforward to caculate gradient, so it is none.</p>
+<p>Get all of the parameter via the function <code>named_parameters()</code></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(*[(name, param.shape) <span class="keyword">for</span> name, param <span class="keyword">in</span> net[<span class="number">0</span>].named_parameters()])</span><br><span class="line"><span class="comment"># take out the first network layer &#x27;s parameter </span></span><br><span class="line"><span class="built_in">print</span>(*[(name, param.shape) <span class="keyword">for</span> name, param <span class="keyword">in</span> net.named_parameters()])</span><br><span class="line"><span class="comment"># take out the all network layers &#x27;s parameter </span></span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">(<span class="string">&#x27;weight&#x27;</span>, torch.Size([<span class="number">8</span>, <span class="number">4</span>])) (<span class="string">&#x27;bias&#x27;</span>, torch.Size([<span class="number">8</span>]))</span><br><span class="line"><span class="comment"># The second layer ReLU has no parameter. So the label &quot;1&quot; is skipped.</span></span><br><span class="line">(<span class="string">&#x27;0.weight&#x27;</span>, torch.Size([<span class="number">8</span>, <span class="number">4</span>])) (<span class="string">&#x27;0.bias&#x27;</span>, torch.Size([<span class="number">8</span>])) (<span class="string">&#x27;2.weight&#x27;</span>, torch.Size([<span class="number">1</span>, <span class="number">8</span>])) (<span class="string">&#x27;2.bias&#x27;</span>, torch.Size([<span class="number">1</span>]))</span><br></pre></td></tr></table></figure>
+<p>Or we can use the name of parameter to get the data:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">net.state_dict()[<span class="string">&#x27;2.bias&#x27;</span>].data</span><br><span class="line"><span class="comment"># tensor([-0.0143])</span></span><br></pre></td></tr></table></figure></p>
+<h2><span id="1822-access-parameter-from-nesting-module">18.2.2 Access parameter from nesting module</span></h2><p>when we apply a nest module to the network, it looks like that :<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">block1</span>():</span></span><br><span class="line">    <span class="keyword">return</span> nn.Sequential(nn.Linear(<span class="number">4</span>, <span class="number">8</span>), nn.ReLU(),</span><br><span class="line">                         nn.Linear(<span class="number">8</span>, <span class="number">4</span>), nn.ReLU())</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">block2</span>():</span></span><br><span class="line">    net = nn.Sequential()</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">4</span>):</span><br><span class="line">        <span class="comment"># call nest block1 </span></span><br><span class="line">        net.add_module(<span class="string">f&#x27;block <span class="subst">&#123;i&#125;</span>&#x27;</span>, block1())</span><br><span class="line">    <span class="keyword">return</span> net</span><br><span class="line"></span><br><span class="line">rgnet = nn.Sequential(block2(), nn.Linear(<span class="number">4</span>, <span class="number">1</span>))</span><br><span class="line">rgnet(X)</span><br></pre></td></tr></table></figure></p>
+<p>One of the benefits we use <code>add_module</code>is that it allows ue to customize the label ‘s name with “block{i}”, instead of a naked ordered number.</p>
+<p>Then we print the entire network out:<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">Sequential(</span><br><span class="line">  (0): Sequential(</span><br><span class="line">    (block 0): Sequential(</span><br><span class="line">      (0): Linear(in_features=4, out_features=8, bias=True)</span><br><span class="line">      (1): ReLU()</span><br><span class="line">      (2): Linear(in_features=8, out_features=4, bias=True)</span><br><span class="line">      (3): ReLU()</span><br><span class="line">    )</span><br><span class="line">    (block 1): Sequential(</span><br><span class="line">      (0): Linear(in_features=4, out_features=8, bias=True)</span><br><span class="line">      (1): ReLU()</span><br><span class="line">      (2): Linear(in_features=8, out_features=4, bias=True)</span><br><span class="line">      (3): ReLU()</span><br><span class="line">    )</span><br><span class="line">    (block 2): Sequential(</span><br><span class="line">      (0): Linear(in_features=4, out_features=8, bias=True)</span><br><span class="line">      (1): ReLU()</span><br><span class="line">      (2): Linear(in_features=8, out_features=4, bias=True)</span><br><span class="line">      (3): ReLU()</span><br><span class="line">    )</span><br><span class="line">    (block 3): Sequential(</span><br><span class="line">      (0): Linear(in_features=4, out_features=8, bias=True)</span><br><span class="line">      (1): ReLU()</span><br><span class="line">      (2): Linear(in_features=8, out_features=4, bias=True)</span><br><span class="line">      (3): ReLU()</span><br><span class="line">    )</span><br><span class="line">  )</span><br><span class="line">  (1): Linear(in_features=4, out_features=1, bias=True)</span><br><span class="line">)</span><br></pre></td></tr></table></figure><br>As we can see, it’s indeed label each module with a text name .<br>Actually it’s three layer of sequential nest, and we can access the parameter of it’s inner mudule by<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rgnet[<span class="number">0</span>][<span class="number">1</span>][<span class="number">0</span>].bias</span><br></pre></td></tr></table></figure></p>
+<p>It’s index require the access of block 1 ‘s first linear layer .</p>
+<h2><span id="1823-parameter-initialization">18.2.3 Parameter Initialization</span></h2><p>After learning how to access to the parameters ,let us learn how to modify the default parameter configurations or just initialize a series of parameters.</p>
+<h3><span id="18231-default-setting">18.2.3.1 Default Setting</span></h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">init_normal</span>(<span class="params">m</span>):</span></span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">type</span>(m) == nn.Linear:</span><br><span class="line">        nn.init.normal_(m.weight, mean=<span class="number">0</span>, std=<span class="number">0.01</span>)</span><br><span class="line">        nn.init.zeros_(m.bias)</span><br><span class="line">net.apply(init_normal)</span><br><span class="line">net[<span class="number">0</span>].weight.data[<span class="number">0</span>], net[<span class="number">0</span>].bias.data[<span class="number">0</span>]</span><br></pre></td></tr></table></figure>
+<h3><span id="18232-customer-setting">18.2.3.2 Customer Setting</span></h3><p>The code initialize the parameters with a std normal distributed weight and zero bias.<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">init_constant</span>(<span class="params">m</span>):</span></span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">type</span>(m) == nn.Linear:</span><br><span class="line">        nn.init.constant_(m.weight, <span class="number">1</span>)</span><br><span class="line">        nn.init.zeros_(m.bias)</span><br><span class="line">net.apply(init_constant)</span><br><span class="line"><span class="comment"># for all modules in the net, call the init function with a parameter of module itself.</span></span><br><span class="line">net[<span class="number">0</span>].weight.data[<span class="number">0</span>], net[<span class="number">0</span>].bias.data[<span class="number">0</span>]</span><br></pre></td></tr></table></figure><br>So just initialize all of the parameters with 0.</p>
+<p>More advanced method can be applied to initialize the parameters, like <code>Xavier</code> initialization.Also, for any layers we can call the init function to change the parameters.<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">init_xavier</span>(<span class="params">m</span>):</span></span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">type</span>(m) == nn.Linear:</span><br><span class="line">        nn.init.xavier_uniform_(m.weight)</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">init_42</span>(<span class="params">m</span>):</span></span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">type</span>(m) == nn.Linear:</span><br><span class="line">        nn.init.constant_(m.weight, <span class="number">42</span>)</span><br><span class="line"></span><br><span class="line">net[<span class="number">0</span>].apply(init_xavier)</span><br><span class="line">net[<span class="number">2</span>].apply(init_42)</span><br><span class="line"><span class="built_in">print</span>(net[<span class="number">0</span>].weight.data[<span class="number">0</span>])</span><br><span class="line"><span class="built_in">print</span>(net[<span class="number">2</span>].weight.data)</span><br><span class="line"><span class="comment"># tensor([ 0.5837,  0.2075,  0.0964, -0.4666])</span></span><br><span class="line"><span class="comment"># tensor([[42., 42., 42., 42., 42., 42., 42., 42.]])</span></span><br></pre></td></tr></table></figure></p>
+<p>It can also be a relatively complex function:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">my_init</span>(<span class="params">m</span>):</span></span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">type</span>(m) == nn.Linear:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;Init&quot;</span>, *[(name, param.shape)</span><br><span class="line">                        <span class="keyword">for</span> name, param <span class="keyword">in</span> m.named_parameters()][<span class="number">0</span>])</span><br><span class="line">        nn.init.uniform_(m.weight, -<span class="number">10</span>, <span class="number">10</span>)</span><br><span class="line">        m.weight.data *= m.weight.data.<span class="built_in">abs</span>() &gt;= <span class="number">5</span></span><br><span class="line"></span><br><span class="line">net.apply(my_init)</span><br><span class="line">net[<span class="number">0</span>].weight[:<span class="number">2</span>]</span><br></pre></td></tr></table></figure><br>Or just set it manually:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">net[<span class="number">0</span>].weight.data[:] += <span class="number">1</span></span><br><span class="line">net[<span class="number">0</span>].weight.data[<span class="number">0</span>, <span class="number">0</span>] = <span class="number">42</span></span><br><span class="line">net[<span class="number">0</span>].weight.data[<span class="number">0</span>]</span><br></pre></td></tr></table></figure></p>
+<h2><span id="1824-tied-parameters">18.2.4 Tied Parameters</span></h2><p>when we want to use the same parameters in different layers, instead of just apply some same values of weights respectively, we can create the “share” layer, to guarantee the layers ‘s weights are the exactly same objects.<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 我们需要给共享层一个名称，以便可以引用它的参数</span></span><br><span class="line">shared = nn.Linear(<span class="number">8</span>, <span class="number">8</span>)</span><br><span class="line"><span class="comment"># use &quot;share&quot;  as a hidden layer instead of nn.Linear </span></span><br><span class="line">net = nn.Sequential(nn.Linear(<span class="number">4</span>, <span class="number">8</span>), nn.ReLU(),</span><br><span class="line">                    shared, nn.ReLU(),</span><br><span class="line">                    shared, nn.ReLU(),</span><br><span class="line">                    nn.Linear(<span class="number">8</span>, <span class="number">1</span>))</span><br><span class="line">net(X)</span><br></pre></td></tr></table></figure><br>So the weight’s modification will change all of the weights of share layers simutaneously.</p>
+<h2><span id="1825-summary">18.2.5 Summary</span></h2><p>General way:<br>Define a parameter setting function to set the weight to some specific number, then attach the parameter to the model by using <code>apply</code> function thus achiving a Loop execution of parameter setting funvcion for each parameter. </p>
+<p>Four ways to modify the  parameters setting function :<br>1) Using some function like <code>constant_</code> to set the weight with numbers.<br>2) Using the advanced function ,let the weight become complex.<br>3) Manually specify the values by using the array’s property.<br>4) Write custom code.</p>
+<h1><span id="183-custom-layers">18.3 Custom Layers</span></h1><h2><span id="1831-layers-without-parameters">18.3.1 Layers without Parameters</span></h2><p>The layers can also be set as our desire.</p>
+<p>For instance, we create a layer called <code>CenteredLayer</code>, likes <code>nn.Linear</code>, it is another indiviual layer which describe some operation to input.<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CenteredLayer</span>(<span class="params">nn.Module</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="built_in">super</span>().__init__()</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">forward</span>(<span class="params">self, X</span>):</span></span><br><span class="line">        <span class="keyword">return</span> X - X.mean() <span class="comment">#operation --&gt; substract mean</span></span><br><span class="line">layer = CenteredLayer()</span><br><span class="line">layer(torch.tensor([<span class="number">1.0</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>]))</span><br></pre></td></tr></table></figure><br>we can add this custom layer to the sequential as well as a linear layer:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">net = nn.Sequential(nn.Linear(<span class="number">8</span>,<span class="number">128</span>), CenteredLayer())</span><br></pre></td></tr></table></figure></p>
+<h2><span id="1832-layers-with-parameters">18.3.2  Layers with Parameters</span></h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyLinear</span>(<span class="params">nn.Module</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, in_units, units</span>):</span></span><br><span class="line">        <span class="built_in">super</span>().__init__()</span><br><span class="line">        self.weight = nn.Parameter(torch.randn(in_units, units))</span><br><span class="line">        <span class="comment">## use Parameter to manage the custom parameter, with input unit and output units</span></span><br><span class="line">        <span class="comment">## then, activate the gradient caculation for the parameters.</span></span><br><span class="line">        self.bias = nn.Parameter(torch.randn(units,))</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">forward</span>(<span class="params">self, X</span>):</span></span><br><span class="line">        linear = torch.matmul(X, self.weight.data) + self.bias.data</span><br><span class="line">        <span class="comment"># common linear regression expression.</span></span><br><span class="line">        <span class="keyword">return</span> F.relu(linear)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">torch.nn.parameter.Parameter(_data=None_, _requires_grad=True_)</span><br><span class="line"><span class="comment"># https://pytorch.org/docs/stable/generated/torch.nn.parameter.Parameter.html?highlight=nn+parameter#torch.nn.parameter.Parameter</span></span><br></pre></td></tr></table></figure>
+<h2><span id="1833-summary">18.3.3  Summary</span></h2><p>We can create layer<br>1) layer without parameter: pass the <code>nn.Module</code> as a parameter directly to the class, and define the caculation operation in the forward function.<br>2) layer with parameter: Usind <code>nn.Parameter</code> in addition to add parameters.</p>
+<h1><span id="184-file-io">18.4 File I/O</span></h1><p>How to store your result or model ?</p>
+<h2><span id="1841-loading-and-saving-tensors">18.4.1 Loading and Saving Tensors</span></h2><p>For individual tensors, we can directly invoke the <code>load</code> and <code>save</code> functions to read and write them respectively.<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">x = torch.arange(<span class="number">4</span>)</span><br><span class="line">torch.save(x, <span class="string">&#x27;x-file&#x27;</span>)</span><br><span class="line"></span><br><span class="line">x2 = torch.load(<span class="string">&#x27;x-file&#x27;</span>)</span><br><span class="line"><span class="comment">#tensor([0, 1, 2, 3])</span></span><br></pre></td></tr></table></figure><br>For 2d tensor, it works as well.</p>
+<p>Furthermore,  we create a dictionary :<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mydict = &#123;<span class="string">&#x27;x&#x27;</span>: x, <span class="string">&#x27;y&#x27;</span>: y&#125;</span><br><span class="line">torch.save(mydict, <span class="string">&#x27;mydict&#x27;</span>)</span><br><span class="line">mydict2 = torch.load(<span class="string">&#x27;mydict&#x27;</span>)</span><br><span class="line">mydict2</span><br><span class="line"><span class="comment"># &#123;&#x27;x&#x27;: tensor([0, 1, 2, 3]), &#x27;y&#x27;: tensor([0., 0., 0., 0.])&#125;</span></span><br></pre></td></tr></table></figure></p>
+<h2><span id="1842-loading-and-saving-model-parameters">18.4.2 Loading and Saving Model Parameters</span></h2><p>For a MLP, what we truely want to store are it’s weights.<br>For a given mlp model:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MLP</span>(<span class="params">nn.Module</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="built_in">super</span>().__init__()</span><br><span class="line">        self.hidden = nn.Linear(<span class="number">20</span>, <span class="number">256</span>)</span><br><span class="line">        self.output = nn.Linear(<span class="number">256</span>, <span class="number">10</span>)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">forward</span>(<span class="params">self, x</span>):</span></span><br><span class="line">        <span class="keyword">return</span> self.output(F.relu(self.hidden(x)))</span><br><span class="line"></span><br><span class="line">net = MLP()</span><br><span class="line">X = torch.randn(size=(<span class="number">2</span>, <span class="number">20</span>))</span><br><span class="line">Y = net(X)</span><br></pre></td></tr></table></figure></p>
+<p>we can use <code>torch.save(net.state_dict(), &#39;mlp.params&#39;)</code> to memorize the values of weights.<br>And we can load it easliy:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">clone = MLP()</span><br><span class="line"><span class="comment"># for a defination</span></span><br><span class="line">clone.load_state_dict(torch.load(<span class="string">&#x27;mlp.params&#x27;</span>))</span><br><span class="line"><span class="comment"># overwrite the parameter </span></span><br><span class="line">clone.<span class="built_in">eval</span>()</span><br><span class="line"><span class="comment"># Do not caculation gradient</span></span><br></pre></td></tr></table></figure><br>the function<code>state_dict</code> describe all infos about the parameters in the model.<br><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/Screen%20Shot%202023-03-21%20at%205.07.08%20PM.png" alt="Screen Shot 2023-03-21 at 5.07.08 PM"></p>
+<h2><span id="1843-summary">18.4.3 Summary</span></h2><p>1) For individual tensor: use <code>save</code> to store datas,<code>load</code> to reload data.<br>2) For model: use <code>torch.save(net.state_dict(), &#39;mlp.params&#39;)</code> to store model parameters, <code>load_state_dict(torch.load(&#39;mlp.params&#39;))</code> to reload the parameters.5</p>
+
+            <div class="clearfix"></div>
+            <hr class="nogutter">
+        </div>
+        <nav class="m-pagination col-md-8 col-md-offset-2 col-sm-24" role="pagination">
+    
+    
+    <a class="pull-right" href="../../20/D2L_017_Numerical_Stability_and_Initialization/">
+        17_Stability →
+    </a>
+    
+</nav>
+
+        <div class="col-md-8 col-md-offset-2 col-sm-24"><script type="text/javascript">
+  /**
+   * 搜狐畅言
+   */
+
+  /*
+  document.write('<div id="SOHUCS" sid="' + window.location.pathname.slice(1) + '" ></div>');
+
+  window.onload = function () {
+    (function () {
+      var appid = 'cytXXXX';
+      var conf = 'prod_xxxxxxxxxxxxxxxxx';
+      var width = window.innerWidth || document.documentElement.clientWidth;
+      var loadJs = function (d, a, id) {
+        var c = document.getElementsByTagName("head")[0] || document.head || document.documentElement;
+        var b = document.createElement("script");
+        b.setAttribute("type", "text/javascript");
+        b.setAttribute("charset", "UTF-8");
+        b.setAttribute("src", d);
+        if (id) {
+          b.setAttribute("id", id);
+        }
+        if (typeof a === "function") {
+          if (window.attachEvent) {
+            b.onreadystatechange = function () {
+              var e = b.readyState;
+              if (e === "loaded" || e === "complete") {
+                b.onreadystatechange = null;
+                a()
+              }
+            }
+          } else {
+            b.onload = a
+          }
+        }
+        c.appendChild(b)
+      };
+
+      loadJs("https://changyan.sohu.com/upload/changyan.js", function () {
+        window.changyan.api.config({
+          appid: appid,
+          conf: conf
+        })
+      });
+    })();
+  }
+  */
+
+</script>
+</div>
+    </div>
+</section>
+
+<!-- Highlight.js -->
+
+<link rel="stylesheet"
+href="//highlightjs.org/static/demo/styles/atom-one-light.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js">
+</script>
+<script>
+hljs.initHighlightingOnLoad();
+
+</script>
+
+
+      
+<!-- ============================ Footer =========================== -->
+
+<footer>
+    <div class="container">
+            <div class="copy">
+                <p>
+                    &copy; 2014<script>new Date().getFullYear()>2010&&document.write("-"+new Date().getFullYear());</script>, Content By Rin777. All Rights Reserved.
+                </p>
+                <p>Theme By <a target="_blank" rel="noopener" href="//go.kieran.top" style="color: #767D84">Kieran</a></p>
+            </div>
+            <div class="social">
+                <ul>
+                    
+                    <li><a href="https://github.com/" title="Github" target="_blank"><i class="icon-github"></i></a>&nbsp;</li>
+                    
+                    
+                    
+                    
+                    
+                </ul>
+            </div>
+            <div class="clearfix"> </div>
+        </div>
+</footer>
+
+<!-- ============================ END Footer =========================== -->
+      <!-- Load our scripts -->
+<!-- Resizable 'on-demand' full-height hero -->
+<script type="text/javascript">
+    var resizeHero = function () {
+        var hero = $(".cover,.heightblock"),
+            window1 = $(window);
+        hero.css({
+            "height": window1.height()
+        });
+    };
+
+    resizeHero();
+
+    $(window).resize(function () {
+        resizeHero();
+    });
+</script>
+<script src="/js/plugins.min.js"></script><!-- Bootstrap core and concatenated plugins always load here -->
+<script src="/js/scripts.js"></script><!-- Theme scripts -->
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$('#intro').find('img').each(function(){
+  var alt = this.alt;
+
+  if (alt){
+    $(this).after('<span class="caption" style="display:none">' + alt + '</span>');
+  }
+
+  $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox" rel="gallery" />');
+});
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+      
+            <style>
+.local-search-popup {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  background: rgba(255, 255, 255, .9);
+  color: #333;
+  z-index: 9999;
+  border-radius: 5px;
+  overflow: scroll;
+}
+#local-search-input {
+  width: 100%;
+  border: none;
+  outline: none;
+  border-bottom: 1px solid #151515;
+  background-color: initial;
+}
+.search-result-list {
+  list-style: none;
+  padding-left: 0;
+}
+.search-result-list > li {
+  margin-top: 15px;
+  border-bottom: 1px solid #ddd;
+  transition: all ease .3s;
+}
+.search-result-list > li:hover {
+  border-bottom: 1px solid gray;
+}
+.search-result-title {
+  font-size: 16px;
+}
+.search-result {
+  line-height: 20px;
+}
+.search-keyword {
+  font-weight: normal;
+  color: #c00;
+}
+
+@media (min-width: 890px) {
+  .popup-btn-close {
+    position: absolute;
+    top: 15px;
+    left: 35px;
+    border: 1px solid #151515;
+    padding: 0px 10px;
+    border-top-left-radius: 8px;
+    cursor: pointer;
+    transition: all ease .3s;
+  }
+  .popup-btn-close:hover {
+    background: #151515;
+    opacity: .9;
+    color: #fff;
+  }
+}
+@media (max-width: 890px) {
+  .popup-btn-close {
+    font-size: 0;
+    position: fixed;
+    right: 20px;
+    bottom: 50px;
+    width: 50px;
+    height: 50px;
+    background: #fff;
+    border-radius: 50%;
+    box-shadow: 1px 1px 5px #888;
+    cursor: pointer;
+  }
+  .popup-btn-close::after {
+    content: '←';
+    color: #151515;
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-size: 20px;
+    width: 100%;
+    height: 100%;
+    line-height: 50px;
+    text-align: center;
+  }
+}
+</style>
+
+<div class="popup search-popup local-search-popup">
+  <span class="popup-btn-close">
+    ESC
+  </span>
+  <div class="container">
+    <div class="col-md-8 col-md-offset-2">
+      <div class="local-search-header clearfix">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="local-search-input-wrapper">
+          <input autocomplete="off" placeholder="Search..." type="text" id="local-search-input">
+        </div>
+      </div>
+      <div id="local-search-result"></div>
+    </div>
+  </div>
+</div>
+
+<script src="/js/ziploader.js"></script>
+
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.json";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').fadeOut(300);
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $('.popup').fadeIn(300);
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // get search zip version
+    $.get('/searchVersion.txt?t=' + (+new Date()), function(res) {
+      if (localStorage.getItem('searchVersion') !== res) {
+        localStorage.setItem('searchVersion', res);
+        initSearchJson();
+      }
+    });
+
+    function initSearchJson () {
+      initLoad(['/search.zip'], {
+        loadOptions: {
+          success: function(obj) {
+            localStorage.setItem('searchJson', obj['search.json'])
+          },
+          error: function(e) {
+            return console.log(e)
+          }
+        },
+        returnOptions: {
+          'json': TYPE_TEXT
+        },
+        mimeOptions:{
+          'json':'application/json'
+        }
+      })
+    }
+
+
+    // search function;
+    var searchFunc = function(search_id, content_id) {
+      'use strict';
+
+      isfetched = true;
+      var datas = JSON.parse(localStorage.getItem('searchJson'));
+      console.log(search_id)
+      var input = document.getElementById(search_id);
+      var resultContent = document.getElementById(content_id);
+      var inputEventFunction = function() {
+        var searchText = input.value.trim().toLowerCase();
+        var keywords = searchText.split(/[\s\-]+/);
+        if (keywords.length > 1) {
+          keywords.push(searchText);
+        }
+        var resultItems = [];
+        if (searchText.length > 0) {
+          // perform local searching
+          datas.forEach(function(data) {
+            var isMatch = false;
+            var hitCount = 0;
+            var searchTextCount = 0;
+            var title = data.title ? data.title.trim() : '';
+            var titleInLowerCase = title.toLowerCase();
+            var content = data.content ? data.content.trim().replace(/<[^>]+>/g,"") : '';
+            var contentInLowerCase = content.toLowerCase();
+            var articleUrl = decodeURIComponent(data.url);
+            var indexOfTitle = [];
+            var indexOfContent = [];
+            // only match articles with not empty titles
+            keywords.forEach(function(keyword) {
+              function getIndexByWord(word, text, caseSensitive) {
+                var wordLen = word.length;
+                if (wordLen === 0) {
+                  return [];
+                }
+                var startPosition = 0, position = [], index = [];
+                if (!caseSensitive) {
+                  text = text.toLowerCase();
+                  word = word.toLowerCase();
+                }
+                while ((position = text.indexOf(word, startPosition)) > -1) {
+                  index.push({position: position, word: word});
+                  startPosition = position + wordLen;
+                }
+                return index;
+              }
+
+              indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+              indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+            });
+            if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+              isMatch = true;
+              hitCount = indexOfTitle.length + indexOfContent.length;
+            }
+
+            // show search results
+
+            if (isMatch) {
+              // sort index by position of keyword
+
+              [indexOfTitle, indexOfContent].forEach(function (index) {
+                index.sort(function (itemLeft, itemRight) {
+                  if (itemRight.position !== itemLeft.position) {
+                    return itemRight.position - itemLeft.position;
+                  } else {
+                    return itemLeft.word.length - itemRight.word.length;
+                  }
+                });
+              });
+
+              // merge hits into slices
+
+              function mergeIntoSlice(text, start, end, index) {
+                var item = index[index.length - 1];
+                var position = item.position;
+                var word = item.word;
+                var hits = [];
+                var searchTextCountInSlice = 0;
+                while (position + word.length <= end && index.length != 0) {
+                  if (word === searchText) {
+                    searchTextCountInSlice++;
+                  }
+                  hits.push({position: position, length: word.length});
+                  var wordEnd = position + word.length;
+
+                  // move to next position of hit
+
+                  index.pop();
+                  while (index.length != 0) {
+                    item = index[index.length - 1];
+                    position = item.position;
+                    word = item.word;
+                    if (wordEnd > position) {
+                      index.pop();
+                    } else {
+                      break;
+                    }
+                  }
+                }
+                searchTextCount += searchTextCountInSlice;
+                return {
+                  hits: hits,
+                  start: start,
+                  end: end,
+                  searchTextCount: searchTextCountInSlice
+                };
+              }
+
+              var slicesOfTitle = [];
+              if (indexOfTitle.length != 0) {
+                slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+              }
+
+              var slicesOfContent = [];
+              while (indexOfContent.length != 0) {
+                var item = indexOfContent[indexOfContent.length - 1];
+                var position = item.position;
+                var word = item.word;
+                // cut out 100 characters
+                var start = position - 20;
+                var end = position + 80;
+                if(start < 0){
+                  start = 0;
+                }
+                if (end < position + word.length) {
+                  end = position + word.length;
+                }
+                if(end > content.length){
+                  end = content.length;
+                }
+                slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+              }
+
+              // sort slices in content by search text's count and hits' count
+
+              slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                  return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                  return sliceRight.hits.length - sliceLeft.hits.length;
+                } else {
+                  return sliceLeft.start - sliceRight.start;
+                }
+              });
+
+              // select top N slices in content
+
+              var upperBound = parseInt('2');
+              if (upperBound >= 0) {
+                slicesOfContent = slicesOfContent.slice(0, upperBound);
+              }
+
+              // highlight title and content
+
+              function highlightKeyword(text, slice) {
+                var result = '';
+                var prevEnd = slice.start;
+                slice.hits.forEach(function (hit) {
+                  result += text.substring(prevEnd, hit.position);
+                  var end = hit.position + hit.length;
+                  result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                  prevEnd = end;
+                });
+                result += text.substring(prevEnd, slice.end);
+                return result;
+              }
+
+              var resultItem = '';
+
+              if (slicesOfTitle.length != 0) {
+                resultItem += "<li><a target='_blank' href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+              } else {
+                resultItem += "<li><a target='_blank' href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+              }
+
+              slicesOfContent.forEach(function (slice) {
+                resultItem += "<a target='_blank' href='" + articleUrl + "'>" +
+                  "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                  "...</p>" + "</a>";
+              });
+
+              resultItem += "</li>";
+              resultItems.push({
+                item: resultItem,
+                searchTextCount: searchTextCount,
+                hitCount: hitCount,
+                id: resultItems.length
+              });
+            }
+          })
+        };
+        if (keywords.length === 1 && keywords[0] === "") {
+          resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+        } else if (resultItems.length === 0) {
+          resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+        } else {
+          resultItems.sort(function (resultLeft, resultRight) {
+            if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+              return resultRight.searchTextCount - resultLeft.searchTextCount;
+            } else if (resultLeft.hitCount !== resultRight.hitCount) {
+              return resultRight.hitCount - resultLeft.hitCount;
+            } else {
+              return resultRight.id - resultLeft.id;
+            }
+          });
+          var searchResultList = '<ul class=\"search-result-list\">';
+          resultItems.forEach(function (result) {
+            searchResultList += result.item;
+          })
+          searchResultList += "</ul>";
+          resultContent.innerHTML = searchResultList;
+        }
+      }
+
+      if ('auto' === 'auto') {
+        input.addEventListener('input', inputEventFunction);
+      } else {
+        $('.search-icon').click(inputEventFunction);
+        input.addEventListener('keypress', function (event) {
+          if (event.keyCode === 13) {
+            inputEventFunction();
+          }
+        });
+      }
+
+      // remove loading animation
+      $('body').css('overflow', '');
+
+      proceedsearch();
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        $('.sb-close').click();
+        searchFunc('local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+      
+      
+
+<!--
+
+<link rel="stylesheet" href="/dist/APlayer.min.css">
+<div id="aplayer"></div>
+<script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+<meting-js
+      server="netease"
+      type="playlist"
+      id="4904272454">
+</meting-js>
+-->
+
+</body>
+
+</html>
+
+
+
+
+
+
+
