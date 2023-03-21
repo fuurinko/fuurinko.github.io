@@ -80,7 +80,7 @@
 				    
 				    <li><a href="/categories/Linux/" class="animsition-link">Linux<small>(1)</small></a></li>
 				    
-				    <li><a href="/categories/ML/" class="animsition-link">ML<small>(28)</small></a></li>
+				    <li><a href="/categories/ML/" class="animsition-link">ML<small>(29)</small></a></li>
 				    
 				    <li><a href="/categories/PWN-COLLEGE/" class="animsition-link">PWN.COLLEGE<small>(1)</small></a></li>
 				    
@@ -198,6 +198,45 @@
 
 <section id="intro">
     <div class="container">
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2022/10/22/sum_基础知识点总结/">基础知识</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-10-22T15:33:18.118Z" itemprop="datePublished">
+          2022-10-22
+      </time>
+    
+    
+    | 
+    <a href='/tags/Generalization/'>Generalization</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        这是一些也许很基础但是一直没有搞透彻or忘了or巩固的一些知识点的集合，空的就是还没有来得及填，
+编程语言cpython汇编首先就是寻址的几种方式：
+1）寻址1/直接寻址1mov     rax, fs:28h #直接寻址，fs段寄存器+偏移量。这里其实是一个canary的值。
+2/间接寻址间接在使用指针以及解引用的形式
+1mov     [rbp+var_8], rax # 寄存器相对寻址。相当于把rax，也就是这个canary值放到
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/10/22/sum_基础知识点总结/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
         
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
@@ -557,47 +596,6 @@ ps：上一个note说到主要利用决策树进行分类。
                     
                     <p class="pull-right readMore">
                         <a href="/2022/09/29/ml_CS 329P |  note1/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2022/09/14/cve-2016-10190/">cve-2016-10190分析</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2022-09-14T14:13:10.306Z" itemprop="datePublished">
-          2022-09-14
-      </time>
-    
-    
-    | 
-    <a href='/tags/cve/'>cve</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-    
-米版阉割，原文加上代码将近3w字，这里就随便挑一点重点放上来。而且图懒得搞了，就当记录一下。
- 环境搭建首先下载源码：
-1wget https://github.com/FFmpeg/FFmpeg/archive/n3.2.1.tar.gz
-4） ffmpeg编译按照https://trac.ffmpeg.org/wiki/CompilationGuide/Ubuntu，安装编译相关依赖
-123456789101112131
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2022/09/14/cve-2016-10190/">Read More...</a>
                     </p>
                     
                 </div>

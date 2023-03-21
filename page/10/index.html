@@ -80,7 +80,7 @@
 				    
 				    <li><a href="/categories/Linux/" class="animsition-link">Linux<small>(1)</small></a></li>
 				    
-				    <li><a href="/categories/ML/" class="animsition-link">ML<small>(28)</small></a></li>
+				    <li><a href="/categories/ML/" class="animsition-link">ML<small>(29)</small></a></li>
 				    
 				    <li><a href="/categories/PWN-COLLEGE/" class="animsition-link">PWN.COLLEGE<small>(1)</small></a></li>
 				    
@@ -198,6 +198,49 @@
 
 <section id="intro">
     <div class="container">
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2022/04/09/ciscn_2019_baby_pwn/">baby_pwn</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-04-09T07:56:00.647Z" itemprop="datePublished">
+          2022-04-09
+      </time>
+    
+    
+    | 
+    <a href='/tags/STACK-ret2dlreslove/'>STACK - ret2dlreslove</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+			
+				console.error("ReferenceError: value is not defined");
+			     
+overview
+​        怪椰。
+re123456ssize_t vuln()&#123;  char buf[40]; // [esp+0h] [ebp-28h] BYREF  return read(0, buf, 0x100u);&#125;
+​    
+蚌埠住了，ret2dl
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/04/09/ciscn_2019_baby_pwn/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
         
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
@@ -542,50 +585,6 @@ re​        逻辑比较简单，结构体中只有一个chunk bp的字段。�
                     
                     <p class="pull-right readMore">
                         <a href="/2022/04/01/week6-3.1/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2022/04/01/pwn.college_Dynamic_Allocator_Misuse/">Dynamic_Allocator_Misuse</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2022-04-01T12:34:14.000Z" itemprop="datePublished">
-          2022-04-01
-      </time>
-    
-    
-    | 
-    <a href='/tags/pwncollege/'>pwncollege</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-     
-Level1​        
-​        开门绿，你从未拥有过的全新体验（
-​        给出了增删查以及load flag的四个功能，free有uaf，纯纯的uaf啊。
-​        直接malloc flag_chunk_size，free，然后load flag，flag chunk被load在chunk0内存空间，然后puts就行。
-
-Level1.1​        故技重施。
-
-Level2.0
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2022/04/01/pwn.college_Dynamic_Allocator_Misuse/">Read More...</a>
                     </p>
                     
                 </div>
