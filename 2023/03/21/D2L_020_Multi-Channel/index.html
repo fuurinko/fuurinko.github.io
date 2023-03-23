@@ -8,7 +8,7 @@
 
 <head>
 
-  <title>Tag: IO_FILE | Rin</title>
+  <title>20_Multi-Channel | Rin</title>
   <!-- Meta data -->
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -52,7 +52,7 @@
 <!-- hexo injector head_end end --><link rel="stylesheet" href="/css/prism.css" type="text/css"></head>
 
 <!--
-<body class="home-template">
+<body class="post-template">
 -->
 <body id="index" class="lightnav animsition">
       <!-- ============================ Off-canvas navigation =========================== -->
@@ -167,66 +167,126 @@
         <!-- ============================ Header & Logo bar =========================== -->
 
 
-      <!-- ============================ Hero Image =========================== -->
-
-<section id="hero" class="scrollme">
-    <div class="container-fluid element-img" style="background: url(https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/IMG_7048.jpg) no-repeat center center fixed;background-size: cover">
-        <div class="row">
-            <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-8 col-md-offset-2 vertical-align cover boost text-center">
-                <div class="center-me animateme" data-when="exit" data-from="0" data-to="0.6" data-opacity="0" data-translatey="100">
-                    <div>
-                        
-                        <h2></h2>
-                        <p><font color = "#E83015">L</font><font color = "#BDC0BA">iberation of <font color = "#E83015"> T</font><font color = "#BDC0BA">echnology , </font><font color = "#E83015">E</font><font color = "#BDC0BA">levation of <font color = "#E83015">M</font><font color = "#BDC0BA">ankind</font></p>
-                        
-
-                    </div>
-                </div>
-            </div>
-            <!-- // .col-md-12 -->
-        </div>
-        <div class="herofade beige-dk"></div>
-    </div>
-</section>
-
-<!-- Height spacing helper -->
-<div class="heightblock"></div>
-<!-- // End height spacing helper -->
-
-<!-- ============================ END Hero Image =========================== -->
-
-
-
-
-<section id="services">
+      
+<section id="intro">
     <div class="container">
-        <div class="row">
-            <div class="col-md-10 col-md-offset-1">
-                <div class="row boxes">
-                    
-                    
-                        
-                        
-                        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 wow fadeInUp" data-wow-delay="0.3s">
-                            
-                              <h4 class="title"><a href="/2022/05/07/week10_6_ pwnable_sethefile/">pwnable - seethe file</a></h4>
-                            
-                            <p><time datetime="2022-05-07T07:49:45.348Z"><a href="/2022/05/07/week10_6_ pwnable_sethefile/">2022-05-07</a></time></p>
-                        </div>
-                    
-                </div>
-            </div>    
+        <div class="row col-md-offset-2">
+            <div class="col-md-8">
+    			<span class="post-meta">
+      <time datetime="2023-03-21T13:53:38.722Z" itemprop="datePublished">
+          2023-03-21
+      </time>
+    
+    
+    | 
+    <a href='/tags/d2l/'>d2l</a>
+    
+    
+</span>
+                <h1>20_Multi-Channel</h1>
+            </div>
         </div>
-    </div>
-</section> 
+        <div class="col-md-8 col-md-offset-2">
+      		<p><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML" async></script></p>
+<h1><span id="201-multi-input-channel">20.1 Multi-input Channel</span></h1><p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/Screen%20Shot%202023-03-23%20at%207.37.24%20PM.png" alt="Screen Shot 2023-03-23 at 7.37.24 PM"></p>
+<p>Prepare a kernel for each convolutional layer channel. Caculate the each outcome,then sum them up.</p>
+<script type="math/tex; mode=display">
+Input: \mathbf{X}: c_{i} \times n_{h} \times n_{w}</script><script type="math/tex; mode=display">
+Kernel \ : \mathbf{K}: c_{i} \times k_{h} \times k_{w}</script><script type="math/tex; mode=display">
+output : \mathbf{Y}:m_{h} \times m_{w}</script><script type="math/tex; mode=display">
+\sum_{i=0}^{c_{i}}\mathbf{X_{i,:,:}}*\mathbf{W}_{i,:,:}</script><h1><span id="202-multi-output-channel">20.2 Multi-Output Channel</span></h1><p>What if we want to acquire the multiple output channel?<br>A simple way is add a dimension for the convolutional kernel:<br>from:</p>
+<script type="math/tex; mode=display">
+ \mathbf{K}: c_{i} \times k_{h} \times k_{w}</script><p> to</p>
+<script type="math/tex; mode=display">
+ \mathbf{K}:c_{0} \times  c_{i} \times k_{h} \times k_{w}</script><p>For the 3D kernel, we only gain a one channel output, but when we use more than one 3D kernel to gain a multi-channl output.<br>thus the output is </p>
+<script type="math/tex; mode=display">
+output : \mathbf{Y}:c_{o} \times m_{h} \times m_{w}</script><h1><span id="relationship">Relationship</span></h1><p>How tow understand the propose of mulyi input and output?<br>For the output, we can consider it as  a specific pattern of the picture, each different output corrsponds to different pattern.<br>And the input, refers to that, when we input the outputs from the last convolutional layers, we use the milti-input to combine the patterns , and via the learnable weight parameters to adjust the importance of different input patterns.</p>
+<h1><span id="203-1x1-convolutional-layer">20.3 1x1 convolutional layer</span></h1><p>1x1 convilutional layer will not congnize the pattern, but only merge the channel.</p>
+<p>equals to the full connection layer with shape of </p>
+<script type="math/tex; mode=display">
+n_{h}n_{w} \times c_{i}</script><p>and weight</p>
+<script type="math/tex; mode=display">
+c_{o} \times c_{i}</script><h1><span id="204-realization-on-pytorch">20.4 Realization on Pytorch</span></h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">from</span> d2l <span class="keyword">import</span> torch <span class="keyword">as</span> d2l</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">corr2d_multi_in</span>(<span class="params">X, K</span>):</span></span><br><span class="line">    <span class="comment"># 先遍历“X”和“K”的第0个维度（通道维度），再把它们加在一起</span></span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">sum</span>(d2l.corr2d(x, k) <span class="keyword">for</span> x, k <span class="keyword">in</span> <span class="built_in">zip</span>(X, K))</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">corr2d_multi_out</span>(<span class="params">X,K</span>):</span></span><br><span class="line">    <span class="comment"># 遍历K的0维度，并以其为label将input计算的和叠起来</span></span><br><span class="line">    <span class="keyword">return</span> torch.stack([corr2d_multi_in(X,K) <span class="keyword">for</span> k <span class="keyword">in</span> K],<span class="number">0</span>)</span><br></pre></td></tr></table></figure>
+<p>Create a 4D kernel<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">K = torch.stack((K, K + <span class="number">1</span>, K + <span class="number">2</span>), <span class="number">0</span>)</span><br></pre></td></tr></table></figure><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">corr2d_multi_out(X, K)</span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">tensor([[[ 56.,  72.],</span></span><br><span class="line"><span class="string">         [104., 120.]],</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">        [[ 76., 100.],</span></span><br><span class="line"><span class="string">         [148., 172.]],</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">        [[ 96., 128.],</span></span><br><span class="line"><span class="string">         [192., 224.]]])</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br></pre></td></tr></table></figure></p>
+<p>Next we tend to use the full connection layer to implement a 1x1 convolutional layer.<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">corr2d_multi_in_out_1x1</span>(<span class="params">X, K</span>):</span></span><br><span class="line">    c_i, h, w = X.shape</span><br><span class="line">    c_o = K.shape[<span class="number">0</span>]</span><br><span class="line">    X = X.reshape((c_i, h * w))<span class="comment">#reshape from 3d to 2d</span></span><br><span class="line">    K = K.reshape((c_o, c_i))<span class="comment"># reshape from 4d to 2d </span></span><br><span class="line">    <span class="comment"># matrix multiply</span></span><br><span class="line">    Y = torch.matmul(K, X)</span><br><span class="line">    <span class="keyword">return</span> Y.reshape((c_o, h, w))</span><br></pre></td></tr></table></figure><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">X = torch.normal(<span class="number">0</span>, <span class="number">1</span>, (<span class="number">3</span>, <span class="number">3</span>, <span class="number">3</span>))</span><br><span class="line"><span class="comment">#3D,std normal distribution</span></span><br><span class="line">K = torch.normal(<span class="number">0</span>, <span class="number">1</span>, (<span class="number">2</span>, <span class="number">3</span>, <span class="number">1</span>, <span class="number">1</span>))</span><br><span class="line"><span class="comment">#4D,std normal distribution</span></span><br><span class="line">Y1 = corr2d_multi_in_out_1x1(X, K)</span><br><span class="line">Y2 = corr2d_multi_in_out(X, K)</span><br><span class="line"><span class="keyword">assert</span> <span class="built_in">float</span>(torch.<span class="built_in">abs</span>(Y1 - Y2).<span class="built_in">sum</span>()) &lt; <span class="number">1e-6</span></span><br></pre></td></tr></table></figure></p>
 
-<section id="statement">
-    <div class="container text-center wow fadeInUp" data-wow-delay="0.5s">
-        <div class="row">
-            <p></p>
+            <div class="clearfix"></div>
+            <hr class="nogutter">
         </div>
+        <nav class="m-pagination col-md-8 col-md-offset-2 col-sm-24" role="pagination">
+    
+    
+    <a class="pull-right" href="../D2L_018_DNN_overview/">
+        18_DNN →
+    </a>
+    
+</nav>
+
+        <div class="col-md-8 col-md-offset-2 col-sm-24"><script type="text/javascript">
+  /**
+   * 搜狐畅言
+   */
+
+  /*
+  document.write('<div id="SOHUCS" sid="' + window.location.pathname.slice(1) + '" ></div>');
+
+  window.onload = function () {
+    (function () {
+      var appid = 'cytXXXX';
+      var conf = 'prod_xxxxxxxxxxxxxxxxx';
+      var width = window.innerWidth || document.documentElement.clientWidth;
+      var loadJs = function (d, a, id) {
+        var c = document.getElementsByTagName("head")[0] || document.head || document.documentElement;
+        var b = document.createElement("script");
+        b.setAttribute("type", "text/javascript");
+        b.setAttribute("charset", "UTF-8");
+        b.setAttribute("src", d);
+        if (id) {
+          b.setAttribute("id", id);
+        }
+        if (typeof a === "function") {
+          if (window.attachEvent) {
+            b.onreadystatechange = function () {
+              var e = b.readyState;
+              if (e === "loaded" || e === "complete") {
+                b.onreadystatechange = null;
+                a()
+              }
+            }
+          } else {
+            b.onload = a
+          }
+        }
+        c.appendChild(b)
+      };
+
+      loadJs("https://changyan.sohu.com/upload/changyan.js", function () {
+        window.changyan.api.config({
+          appid: appid,
+          conf: conf
+        })
+      });
+    })();
+  }
+  */
+
+</script>
+</div>
     </div>
 </section>
+
+<!-- Highlight.js -->
+
+<link rel="stylesheet"
+href="//highlightjs.org/static/demo/styles/atom-one-light.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js">
+</script>
+<script>
+hljs.initHighlightingOnLoad();
+
+</script>
+
+
       
 <!-- ============================ Footer =========================== -->
 
