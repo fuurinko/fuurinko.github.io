@@ -80,7 +80,7 @@
 				    
 				    <li><a href="/categories/Linux/" class="animsition-link">Linux<small>(1)</small></a></li>
 				    
-				    <li><a href="/categories/ML/" class="animsition-link">ML<small>(30)</small></a></li>
+				    <li><a href="/categories/ML/" class="animsition-link">ML<small>(31)</small></a></li>
 				    
 				    <li><a href="/categories/PWN-COLLEGE/" class="animsition-link">PWN.COLLEGE<small>(1)</small></a></li>
 				    
@@ -198,6 +198,47 @@
 
 <section id="intro">
     <div class="container">
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2022/01/29/pwn.college_Shellcode_Injection/">Shellcode_Injection</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-01-29T09:37:52.632Z" itemprop="datePublished">
+          2022-01-29
+      </time>
+    
+    
+    | 
+    <a href='/tags/pwncollege/'>pwncollege</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+     
+​        整个专题其实就是一个shellcode编写的小练习，并不需要自己寻找漏洞点，写好shellcode直接注入就行。
+​        如果要将服务器的文件传输到本地的话可以使用:
+1scp -i key -r hacker@dojo.pwn.college:/challenge [本地路径]
+Level1​        可以用pwntools的shellcraft模块，但是也可以手写shellcode。
+
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/01/29/pwn.college_Shellcode_Injection/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
         
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
@@ -565,45 +606,6 @@ Seccomp的模式以及参数比较多，这里只
                     
                     <p class="pull-right readMore">
                         <a href="/2021/11/11/mess_pwndocker的pwn题体验（下）/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2021/11/07/stack_learningsrop学习/">SROP学习</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2021-11-07T11:11:19.208Z" itemprop="datePublished">
-          2021-11-07
-      </time>
-    
-    
-    | 
-    <a href='/tags/STACK-SROP/'>STACK - SROP</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-     
-1)前言​        在看完csapp的异常控制流之后，对于信号以及系统调用有了更加深入的了解，故借此机会探明SROP，这个本身并不复杂的知识点。
-2）SROP原理​         当用户向内核发起signal时，此时系统切换为内核态，并且由内核保存进程的上下文（通常是一些寄存器状态）至用户栈，然后切换回用户态，执行信号处理程序。程序执行完毕后，再次切换成内核态，将保存的寄存器状态恢复后返回用户态。
-​       
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2021/11/07/stack_learningsrop学习/">Read More...</a>
                     </p>
                     
                 </div>
