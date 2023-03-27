@@ -80,7 +80,7 @@
 				    
 				    <li><a href="/categories/Linux/" class="animsition-link">Linux<small>(1)</small></a></li>
 				    
-				    <li><a href="/categories/ML/" class="animsition-link">ML<small>(33)</small></a></li>
+				    <li><a href="/categories/ML/" class="animsition-link">ML<small>(34)</small></a></li>
 				    
 				    <li><a href="/categories/PWN-COLLEGE/" class="animsition-link">PWN.COLLEGE<small>(1)</small></a></li>
 				    
@@ -198,6 +198,45 @@
 
 <section id="intro">
     <div class="container">
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2022/03/16/week3-2.2/">ccmc_pwnme2</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-03-16T11:18:25.856Z" itemprop="datePublished">
+          2022-03-16
+      </time>
+    
+    
+    | 
+    <a href='/tags/ret2gadgets/'>ret2gadgets</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        ​    
+     
+ccmc_pwnme2一道看起来人畜无害的栈题。但是有几个非常奇怪的函数。
+​        所以这是一道相对有些奇怪的rop，控制这三个函数的其中两个的参数为指定字符串，就能较为方便地读取flag。
+12345678910111213141516from pwn import *p = remote(&#x27;node4.buuoj.cn&#x27;,27653)#p = process(&#x27;./pw
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/03/16/week3-2.2/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
         
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
@@ -558,51 +597,6 @@ Level2123shellcode = asm(shellcraft.readfile(&#x27;flag&#x27;,1)
                     
                     <p class="pull-right readMore">
                         <a href="/2022/02/28/pwn.college_Sandboxing/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2022/02/15/pwn.college_ReverseEngineering/">ReverseEngineering</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2022-02-14T20:11:23.367Z" itemprop="datePublished">
-          2022-02-15
-      </time>
-    
-    
-    | 
-    <a href='/tags/pwncollege/'>pwncollege</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-     
-Level1.0
-Level1.1​        同上，一样的做法。
-Level2.0​        交换idx3和idx4的位置
-Level2.1​        交换idx1和idx4.
-​        ps：
-
-​        输入五个字符，转化为ascii后以int类型贮存，从栈布局可以看出v10大小是4个字，所以第五个字被储存在v11。
-Level3.0​        reverse
-Level3.1​
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2022/02/15/pwn.college_ReverseEngineering/">Read More...</a>
                     </p>
                     
                 </div>

@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<!--[if lte IE 8 ]>
+<html class="ie" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US">
+<![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!-->
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
+<!--<![endif]-->
+
+<head>
+
+  <title>D2L_23_Sequence_Model | Rin</title>
+  <!-- Meta data -->
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content="Rin">
+    <meta name="author" content="Rin777">
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+
+    <!-- Favicon, (keep icon in root folder) -->
+    <link rel="Shortcut Icon" href="/img/favicon.ico" type="image/ico">
+
+    <link rel="alternate" href="/atom.xml" title="Rin" type="application/atom+xml">
+    <link rel="stylesheet" href="/css/all.css" media="screen" type="text/css">
+    
+
+    <!--[if IE 8]>
+    <link rel="stylesheet" type="text/css" href="/css/ie8.css" />
+    <![endif]-->
+
+    <!-- jQuery | Load our jQuery, with an alternative source fallback to a local version if request is unavailable -->
+    <script src="/js/jquery-1.11.1.min.js"></script>
+    <script>window.jQuery || document.write('<script src="js/jquery-1.11.1.min.js"><\/script>')</script>
+
+    <!-- Load these in the <head> for quicker IE8+ load times -->
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="/js/html5shiv.min.js"></script>
+    <script src="/js/respond.min.js"></script>
+    <![endif]-->
+
+  
+  
+  
+
+  <style>.col-md-8.col-md-offset-2.opening-statement img{display:none;}</style>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><link rel="stylesheet" href="/css/prism.css" type="text/css"></head>
+
+<!--
+<body class="post-template">
+-->
+<body id="index" class="lightnav animsition">
+      <!-- ============================ Off-canvas navigation =========================== -->
+
+    <div class="sb-slidebar sb-right sb-style-overlay sb-momentum-scrolling">
+        <div class="sb-close" aria-label="Close Menu" aria-hidden="true">
+            <img src="/img/close.png" alt="Close"/>
+        </div>
+        <!-- Lists in Slidebars -->
+        <ul class="sb-menu">
+            <li><a href="/" class="animsition-link" title="Home">Home</a></li>
+            <li><a href="/archives" class="animsition-link" title="archive">archives</a></li>
+            <!-- Dropdown Menu -->
+			 
+            
+        	<li>
+        		<a class="sb-toggle-submenu">Categories<span class="sb-caret"></span></a>
+            	<ul class="sb-submenu">
+				  	
+				    <li><a href="/categories/AUDITION/" class="animsition-link">AUDITION<small>(23)</small></a></li>
+				    
+				    <li><a href="/categories/Binary-security/" class="animsition-link">Binary_security<small>(101)</small></a></li>
+				    
+				    <li><a href="/categories/CSAPP-LAB/" class="animsition-link">CSAPP LAB<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/Linux/" class="animsition-link">Linux<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/ML/" class="animsition-link">ML<small>(34)</small></a></li>
+				    
+				    <li><a href="/categories/PWN-COLLEGE/" class="animsition-link">PWN.COLLEGE<small>(1)</small></a></li>
+				    
+				</ul>
+        	</li>
+			
+            
+            <li>
+                <a class="sb-toggle-submenu">Links<span class="sb-caret"></span></a>
+                <ul class="sb-submenu">
+                    
+                    <li><a target="_blank" rel="noopener" href="https://weibo.com/u/1682818607" class="animsition-link">没有营养的推广页</a></li>
+                    
+                    <li><a target="_blank" rel="noopener" href="http://www.2323bb.ltd" class="animsition-link">cc_sakura</a></li>
+                    
+                    <li><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_36995313" class="animsition-link">F@LLe0</a></li>
+                    
+                    <li><a target="_blank" rel="noopener" href="https://yyz9.cn" class="animsition-link">YYZ</a></li>
+                    
+                    <li><a target="_blank" rel="noopener" href="https://www.star123.top" class="animsition-link">star</a></li>
+                    
+                </ul>
+            </li>
+            
+        </ul>
+        <!-- Lists in Slidebars -->
+        <ul class="sb-menu secondary">
+            
+            <li><a href="javascript:;" class="popup-trigger" title="Search"><span class="search-icon"></span>Search</a></li>
+            
+            <li><a href="/about.html" class="animsition-link" title="about">About</a></li>
+            <li><a href="/atom.xml" class="animsition-link" title="rss">RSS</a></li>
+        </ul>
+    </div>
+    
+    <!-- ============================ END Off-canvas navigation =========================== -->
+
+    <!-- ============================ #sb-site Main Page Wrapper =========================== -->
+
+    <div id="sb-site">
+        <!-- #sb-site - All page content should be contained within this id, except the off-canvas navigation itself -->
+
+        <!-- ============================ Header & Logo bar =========================== -->
+
+        <div id="navigation" class="navbar navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="container">
+                    <!-- Nav logo -->
+                    <div class="logo">
+                        <a href="/" title="Logo" class="animsition-link">
+                         <img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/IMG_0282.jpg" alt="Logo" width="35px;"/> 
+                        </a>
+                    </div>
+                    <!-- // Nav logo -->
+                    <!-- Info-bar -->
+                    <nav>
+                        <ul class="nav">
+                            <li><a href="/" class="animsition-link">Rin</a></li>
+                            <li class="nolink"><span>Always </span>Creative.</li>
+                            
+                            <li><a href="https://github.com/" title="Github" target="_blank"><i class="icon-github"></i></a></li>
+                            
+                            
+                            
+                            
+                            
+                            <li class="nolink"><span>Welcome!</span></li>
+                        </ul>
+                    </nav>
+                    <!--// Info-bar -->
+                </div>
+                <!-- // .container -->
+                <div class="learnmore sb-toggle-right">More</div>
+                <button type="button" class="navbar-toggle menu-icon sb-toggle-right" title="More">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar before"></span>
+                <span class="icon-bar main"></span>
+                <span class="icon-bar after"></span>
+                </button>
+            </div>
+            <!-- // .navbar-inner -->
+        </div>
+
+        <!-- ============================ Header & Logo bar =========================== -->
+
+
+      
+<section id="intro">
+    <div class="container">
+        <div class="row col-md-offset-2">
+            <div class="col-md-8">
+    			<span class="post-meta">
+      <time datetime="2023-03-27T08:17:59.741Z" itemprop="datePublished">
+          2023-03-27
+      </time>
+    
+    
+    | 
+    <a href='/tags/d2l/'>d2l</a>
+    
+    
+</span>
+                <h1>D2L_23_Sequence_Model</h1>
+            </div>
+        </div>
+        <div class="col-md-8 col-md-offset-2">
+      		<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+
+<h2><span id="231-preface">23.1 Preface</span></h2><p>So this module involving the natrue language processing problem.<br>And the first basics are sequential model.</p>
+<h2><span id="232-description">23.2 Description</span></h2><p>Arguablely, time is a important factor in a lot of problems, for example ,if we want to predict the performance of the sale of a film, there are large amounts of  factors which consider time as a key variable.<br>Silmilarly, it’s more difficult to predict the price of a stake at the next day than yesterday, and all of the music, audio, text ,etc, are relate with time strongly,if we detach the time element , items will become meaningless.</p>
+<p>So how can we analyze the time element mathematically?</p>
+<h2><span id="233-autoregressive-model">23.3 Autoregressive Model</span></h2><p>Asume several dependent variables x1,x2…xt,<br>then :</p>
+<script type="math/tex; mode=display">
+p(\mathbf{x}) = p(x_{1}) \cdot{p(x_{2}|x_{1})}\cdot{p(x_{3}|x_{1},x_{2})}\dots p(x_{T}|x_{T-1}\cdot x_{T-2}\dots x_{1})</script><p>=</p>
+<script type="math/tex; mode=display">
+p(\mathbf{x}) = p(x_{T}) \cdot{p(x_{T-1}|x_{T})}\cdot{p(x_{T-2}|x_{T-1},x_{T})}\dots p(x_{1}|x_{T}\cdot x_{T-1}\dots x_{1})</script><p>So what we want to predict is the values at the t time point,which is </p>
+<script type="math/tex; mode=display">
+p(x_{T}|x_{T-1}\cdot x_{T-2}\dots x_{1})</script><p>we can derive the model using the former datas</p>
+<script type="math/tex; mode=display">
+p(x_{T}|x_{T-1}\cdot x_{T-2}\dots x_{1}) = p(x_{T}|f(x_{1},\dots x_{t-1}))</script><p>and the prediction is a sample itself, thus we can call it the autoregression model.</p>
+<h3><span id="2331-markov-models">23.3.1  Markov Models</span></h3><p>Markov Model assumes that the time point t only relates with the specific time period , rather than relates with all of the past datas.<br>For example, the time 5 may only relates with time 3 and time 4, we in that condition ,we have no need to care about the time 1 and 2 anymore.</p>
+<h3><span id="2332-latent">23.3.2 Latent</span></h3><h2><span id="234-realization-in-pytorch">23.4 Realization in Pytorch</span></h2><h3><span id="2341-generate-sequence">23.4.1 Generate Sequence</span></h3><p>Generate some sequential data use the sine function a nd some additive noise.<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">%matplotlib inline</span><br><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">from</span> torch <span class="keyword">import</span> nn</span><br><span class="line"><span class="keyword">from</span> d2l <span class="keyword">import</span> torch <span class="keyword">as</span> d2l</span><br><span class="line"></span><br><span class="line">T = <span class="number">1000</span>  <span class="comment"># 1000 point totally</span></span><br><span class="line">time = torch.arange(<span class="number">1</span>, T + <span class="number">1</span>, dtype=torch.float32)</span><br><span class="line"><span class="comment"># sine function and noise</span></span><br><span class="line">x = torch.sin(<span class="number">0.01</span> * time) + torch.normal(<span class="number">0</span>, <span class="number">0.2</span>, (T,))</span><br><span class="line">d2l.plot(time, [x], <span class="string">&#x27;time&#x27;</span>, <span class="string">&#x27;x&#x27;</span>, xlim=[<span class="number">1</span>, <span class="number">1000</span>], figsize=(<span class="number">6</span>, <span class="number">3</span>))</span><br></pre></td></tr></table></figure></p>
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/Screen%20Shot%202023-03-27%20at%207.22.15%20PM.png" alt="Screen Shot 2023-03-27 at 7.22.15 PM"></p>
+<p>For the given sine sequence with some noise , if we can predict the future data?</p>
+<h3><span id="2342-generate-the-featrue-and-label">23.4.2 Generate The Featrue And Label</span></h3><p>Use a simple MLP to construce the model.And the key factor is the construction of the featrue and labels:<br>Using the idea of Markov model, we assume that: for a n length sequence, we consider the 1~(n-1) time point value as the featrue to predict, so the n th time point value is the prediction value, then we need to predict the n+1 time point value, so we so the (2 - n) time points value as the featrues to predict..and so on.<br>So we need to redivide the x in to the form likes:<br>x[1,2,3,4,5,6,7,…n] —&gt; x[1,2,3,4],[2,3,4,5],[3,4,5,6]…<br>and the label is 5,6,7,8,…<br>Derive it in pytorch:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">tau = <span class="number">4</span></span><br><span class="line"><span class="comment">#each T numbers of  samples ,use the first four samples as the featrues,and the 5 th value need to be predicted .</span></span><br><span class="line">features = torch.zeros((T - tau, tau))</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(tau):</span><br><span class="line">    features[:, i] = x[i: T - tau + i]</span><br><span class="line">    </span><br><span class="line">labels = x[tau:].reshape((-<span class="number">1</span>, <span class="number">1</span>))</span><br><span class="line"><span class="comment"># for the fisrt 5 datas, x[5] is the labels, for the second ,x[6] is the labels ,etc.</span></span><br></pre></td></tr></table></figure>
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/Screen%20Shot%202023-03-27%20at%208.29.08%20PM.png" alt="Screen Shot 2023-03-27 at 8.29.08 PM"><br><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/Screen%20Shot%202023-03-27%20at%208.29.26%20PM.png" alt="Screen Shot 2023-03-27 at 8.29.26 PM"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">batch_size, n_train = <span class="number">16</span>, <span class="number">600</span></span><br><span class="line"><span class="comment"># 只有前n_train个样本用于训练</span></span><br><span class="line">train_iter = d2l.load_array((features[:n_train], labels[:n_train]),</span><br><span class="line">                            batch_size, is_train=<span class="literal">True</span>)</span><br><span class="line">batch_size, n_train = <span class="number">16</span>, <span class="number">600</span></span><br><span class="line"><span class="comment"># 只有前n_train个样本用于训练</span></span><br><span class="line">train_iter = d2l.load_array((features[:n_train], labels[:n_train]),</span><br><span class="line">                            batch_size, is_train=<span class="literal">True</span>)</span><br><span class="line"><span class="comment"># 初始化网络权重的函数</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">init_weights</span>(<span class="params">m</span>):</span></span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">type</span>(m) == nn.Linear:</span><br><span class="line">        nn.init.xavier_uniform_(m.weight)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 一个简单的多层感知机</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_net</span>():</span></span><br><span class="line">    net = nn.Sequential(nn.Linear(<span class="number">4</span>, <span class="number">10</span>),</span><br><span class="line">                        nn.ReLU(),</span><br><span class="line">                        nn.Linear(<span class="number">10</span>, <span class="number">1</span>))</span><br><span class="line">    net.apply(init_weights)</span><br><span class="line">    <span class="keyword">return</span> net</span><br><span class="line"></span><br><span class="line"><span class="comment"># 平方损失。注意：MSELoss计算平方误差时不带系数1/2</span></span><br><span class="line">loss = nn.MSELoss(reduction=<span class="string">&#x27;none&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">train</span>(<span class="params">net, train_iter, loss, epochs, lr</span>):</span></span><br><span class="line">    trainer = torch.optim.Adam(net.parameters(), lr)</span><br><span class="line">    <span class="keyword">for</span> epoch <span class="keyword">in</span> <span class="built_in">range</span>(epochs):</span><br><span class="line">        <span class="keyword">for</span> X, y <span class="keyword">in</span> train_iter:</span><br><span class="line">            trainer.zero_grad()</span><br><span class="line">            l = loss(net(X), y)</span><br><span class="line">            l.<span class="built_in">sum</span>().backward()</span><br><span class="line">            trainer.step()</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&#x27;epoch <span class="subst">&#123;epoch + <span class="number">1</span>&#125;</span>, &#x27;</span></span><br><span class="line">              <span class="string">f&#x27;loss: <span class="subst">&#123;d2l.evaluate_loss(net, train_iter, loss):f&#125;</span>&#x27;</span>)</span><br><span class="line"></span><br><span class="line">net = get_net()</span><br><span class="line">train(net, train_iter, loss, <span class="number">5</span>, <span class="number">0.01</span>)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/Screen%20Shot%202023-03-27%20at%208.31.03%20PM.png" alt="Screen Shot 2023-03-27 at 8.31.03 PM"></p>
+<h3><span id="2343-prediction">23.4.3 Prediction</span></h3><h4><span id="23431-one-step">23.4.3.1 One-Step</span></h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">onestep_preds = net(features)</span><br><span class="line">d2l.plot([time, time[tau:]],</span><br><span class="line">         [x.detach().numpy(), onestep_preds.detach().numpy()], <span class="string">&#x27;time&#x27;</span>,</span><br><span class="line">         <span class="string">&#x27;x&#x27;</span>, legend=[<span class="string">&#x27;data&#x27;</span>, <span class="string">&#x27;1-step preds&#x27;</span>], xlim=[<span class="number">1</span>, <span class="number">1000</span>],</span><br><span class="line">         figsize=(<span class="number">6</span>, <span class="number">3</span>))</span><br></pre></td></tr></table></figure>
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/Screen%20Shot%202023-03-27%20at%208.33.37%20PM.png" alt="Screen Shot 2023-03-27 at 8.33.37 PM"></p>
+<p>Can’t predicte the noise.</p>
+<h4><span id="23432-multi-step">23.4.3.2 Multi-Step</span></h4><p>So the one-step always use the true value to predict ,what will happen if we use the prediction value as a sample to achive a multi-step prediction?</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">multistep_preds = torch.zeros(T)</span><br><span class="line">multistep_preds[: n_train + tau] = x[: n_train + tau]</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(n_train + tau, T):</span><br><span class="line">    multistep_preds[i] = net(</span><br><span class="line">        multistep_preds[i - tau:i].reshape((<span class="number">1</span>, -<span class="number">1</span>)))</span><br><span class="line"></span><br><span class="line">d2l.plot([time, time[tau:], time[n_train + tau:]],</span><br><span class="line">         [x.detach().numpy(), onestep_preds.detach().numpy(),</span><br><span class="line">          multistep_preds[n_train + tau:].detach().numpy()], <span class="string">&#x27;time&#x27;</span>,</span><br><span class="line">         <span class="string">&#x27;x&#x27;</span>, legend=[<span class="string">&#x27;data&#x27;</span>, <span class="string">&#x27;1-step preds&#x27;</span>, <span class="string">&#x27;multistep preds&#x27;</span>],</span><br><span class="line">         xlim=[<span class="number">1</span>, <span class="number">1000</span>], figsize=(<span class="number">6</span>, <span class="number">3</span>))</span><br></pre></td></tr></table></figure>
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/Screen%20Shot%202023-03-27%20at%2010.01.39%20PM.png" alt="Screen Shot 2023-03-27 at 10.01.39 PM"></p>
+<p>We can examinate our predicted value , obviously it is not a ideal curve.What causes this outcome ?<br>In fact , each steps will generate some error, and if we use the prediction value as a input, the errors will accumulate to a huge scale, leading to the bad results.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">max_steps = <span class="number">64</span></span><br><span class="line"></span><br><span class="line">features = torch.zeros((T - tau - max_steps + <span class="number">1</span>, tau + max_steps))</span><br><span class="line"><span class="comment"># 列i（i&lt;tau）是来自x的观测，其时间步从（i）到（i+T-tau-max_steps+1）</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(tau):</span><br><span class="line">    features[:, i] = x[i: i + T - tau - max_steps + <span class="number">1</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 列i（i&gt;=tau）是来自（i-tau+1）步的预测，其时间步从（i）到（i+T-tau-max_steps+1）</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(tau, tau + max_steps):</span><br><span class="line">    features[:, i] = net(features[:, i - tau:i]).reshape(-<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">steps = (<span class="number">1</span>, <span class="number">4</span>, <span class="number">16</span>, <span class="number">64</span>)</span><br><span class="line">d2l.plot([time[tau + i - <span class="number">1</span>: T - max_steps + i] <span class="keyword">for</span> i <span class="keyword">in</span> steps],</span><br><span class="line">         [features[:, tau + i - <span class="number">1</span>].detach().numpy() <span class="keyword">for</span> i <span class="keyword">in</span> steps], <span class="string">&#x27;time&#x27;</span>, <span class="string">&#x27;x&#x27;</span>,</span><br><span class="line">         legend=[<span class="string">f&#x27;<span class="subst">&#123;i&#125;</span>-step preds&#x27;</span> <span class="keyword">for</span> i <span class="keyword">in</span> steps], xlim=[<span class="number">5</span>, <span class="number">1000</span>],</span><br><span class="line">         figsize=(<span class="number">6</span>, <span class="number">3</span>))</span><br></pre></td></tr></table></figure>
+<p>For different steps, 1,4,16,64,mean that :give 4 points, then predict the futrue 1 or 4 or 16 or 64 ponits respectively.</p>
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/Screen%20Shot%202023-03-27%20at%2010.08.17%20PM.png" alt="Screen Shot 2023-03-27 at 10.08.17 PM"></p>
+<h2><span id="235-summary">23.5 Summary</span></h2><p>1) The difficulty for predict a time sequence is that it’s hard to predict the far futrue, each simple error will accumulate to a big fail.<br>2) We can use specific stastical tools to analyze the time sequence prediction, such as Markov model.</p>
+<h2><span id="235-exercise">23.5 Exercise</span></h2><p>1) Improve the model in the experiment of this section.</p>
+<pre><code>1.  Incorporate more than the past 4 observations? How many do you really need?
+2.  How many past observations would you need if there was no noise? Hint: you can write sinand cos as a differential equation.
+3.  Can you incorporate older observations while keeping the total number of features constant? Does this improve accuracy? Why?
+4.  Change the neural network architecture and evaluate the performance. You may train the new model with more epochs. What do you observe?
+</code></pre><p>2) An investor wants to find a good security to buy. He looks at past returns to decide which one is likely to do well. What could possibly go wrong with this strategy?</p>
+<p>3)  Does causality also apply to text? To which extent?</p>
+<p>4) Give an example for when a latent autoregressive model might be needed to capture the dynamic of the data.</p>
+
+            <div class="clearfix"></div>
+            <hr class="nogutter">
+        </div>
+        <nav class="m-pagination col-md-8 col-md-offset-2 col-sm-24" role="pagination">
+    
+    
+    <a class="pull-right" href="../../24/ml_%E8%8F%9C%E9%B8%9F%E4%BA%91GPU%E6%96%B9%E6%A1%88/">
+        菜鸟云GPU方案 →
+    </a>
+    
+</nav>
+
+        <div class="col-md-8 col-md-offset-2 col-sm-24"><script type="text/javascript">
+  /**
+   * 搜狐畅言
+   */
+
+  /*
+  document.write('<div id="SOHUCS" sid="' + window.location.pathname.slice(1) + '" ></div>');
+
+  window.onload = function () {
+    (function () {
+      var appid = 'cytXXXX';
+      var conf = 'prod_xxxxxxxxxxxxxxxxx';
+      var width = window.innerWidth || document.documentElement.clientWidth;
+      var loadJs = function (d, a, id) {
+        var c = document.getElementsByTagName("head")[0] || document.head || document.documentElement;
+        var b = document.createElement("script");
+        b.setAttribute("type", "text/javascript");
+        b.setAttribute("charset", "UTF-8");
+        b.setAttribute("src", d);
+        if (id) {
+          b.setAttribute("id", id);
+        }
+        if (typeof a === "function") {
+          if (window.attachEvent) {
+            b.onreadystatechange = function () {
+              var e = b.readyState;
+              if (e === "loaded" || e === "complete") {
+                b.onreadystatechange = null;
+                a()
+              }
+            }
+          } else {
+            b.onload = a
+          }
+        }
+        c.appendChild(b)
+      };
+
+      loadJs("https://changyan.sohu.com/upload/changyan.js", function () {
+        window.changyan.api.config({
+          appid: appid,
+          conf: conf
+        })
+      });
+    })();
+  }
+  */
+
+</script>
+</div>
+    </div>
+</section>
+
+<!-- Highlight.js -->
+
+<link rel="stylesheet"
+href="//highlightjs.org/static/demo/styles/atom-one-light.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js">
+</script>
+<script>
+hljs.initHighlightingOnLoad();
+
+</script>
+
+
+      
+<!-- ============================ Footer =========================== -->
+
+<footer>
+    <div class="container">
+            <div class="copy">
+                <p>
+                    &copy; 2014<script>new Date().getFullYear()>2010&&document.write("-"+new Date().getFullYear());</script>, Content By Rin777. All Rights Reserved.
+                </p>
+                <p>Theme By <a target="_blank" rel="noopener" href="//go.kieran.top" style="color: #767D84">Kieran</a></p>
+            </div>
+            <div class="social">
+                <ul>
+                    
+                    <li><a href="https://github.com/" title="Github" target="_blank"><i class="icon-github"></i></a>&nbsp;</li>
+                    
+                    
+                    
+                    
+                    
+                </ul>
+            </div>
+            <div class="clearfix"> </div>
+        </div>
+</footer>
+
+<!-- ============================ END Footer =========================== -->
+      <!-- Load our scripts -->
+<!-- Resizable 'on-demand' full-height hero -->
+<script type="text/javascript">
+    var resizeHero = function () {
+        var hero = $(".cover,.heightblock"),
+            window1 = $(window);
+        hero.css({
+            "height": window1.height()
+        });
+    };
+
+    resizeHero();
+
+    $(window).resize(function () {
+        resizeHero();
+    });
+</script>
+<script src="/js/plugins.min.js"></script><!-- Bootstrap core and concatenated plugins always load here -->
+<script src="/js/scripts.js"></script><!-- Theme scripts -->
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$('#intro').find('img').each(function(){
+  var alt = this.alt;
+
+  if (alt){
+    $(this).after('<span class="caption" style="display:none">' + alt + '</span>');
+  }
+
+  $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox" rel="gallery" />');
+});
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+      
+            <style>
+.local-search-popup {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  background: rgba(255, 255, 255, .9);
+  color: #333;
+  z-index: 9999;
+  border-radius: 5px;
+  overflow: scroll;
+}
+#local-search-input {
+  width: 100%;
+  border: none;
+  outline: none;
+  border-bottom: 1px solid #151515;
+  background-color: initial;
+}
+.search-result-list {
+  list-style: none;
+  padding-left: 0;
+}
+.search-result-list > li {
+  margin-top: 15px;
+  border-bottom: 1px solid #ddd;
+  transition: all ease .3s;
+}
+.search-result-list > li:hover {
+  border-bottom: 1px solid gray;
+}
+.search-result-title {
+  font-size: 16px;
+}
+.search-result {
+  line-height: 20px;
+}
+.search-keyword {
+  font-weight: normal;
+  color: #c00;
+}
+
+@media (min-width: 890px) {
+  .popup-btn-close {
+    position: absolute;
+    top: 15px;
+    left: 35px;
+    border: 1px solid #151515;
+    padding: 0px 10px;
+    border-top-left-radius: 8px;
+    cursor: pointer;
+    transition: all ease .3s;
+  }
+  .popup-btn-close:hover {
+    background: #151515;
+    opacity: .9;
+    color: #fff;
+  }
+}
+@media (max-width: 890px) {
+  .popup-btn-close {
+    font-size: 0;
+    position: fixed;
+    right: 20px;
+    bottom: 50px;
+    width: 50px;
+    height: 50px;
+    background: #fff;
+    border-radius: 50%;
+    box-shadow: 1px 1px 5px #888;
+    cursor: pointer;
+  }
+  .popup-btn-close::after {
+    content: '←';
+    color: #151515;
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-size: 20px;
+    width: 100%;
+    height: 100%;
+    line-height: 50px;
+    text-align: center;
+  }
+}
+</style>
+
+<div class="popup search-popup local-search-popup">
+  <span class="popup-btn-close">
+    ESC
+  </span>
+  <div class="container">
+    <div class="col-md-8 col-md-offset-2">
+      <div class="local-search-header clearfix">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="local-search-input-wrapper">
+          <input autocomplete="off" placeholder="Search..." type="text" id="local-search-input">
+        </div>
+      </div>
+      <div id="local-search-result"></div>
+    </div>
+  </div>
+</div>
+
+<script src="/js/ziploader.js"></script>
+
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.json";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').fadeOut(300);
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $('.popup').fadeIn(300);
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // get search zip version
+    $.get('/searchVersion.txt?t=' + (+new Date()), function(res) {
+      if (localStorage.getItem('searchVersion') !== res) {
+        localStorage.setItem('searchVersion', res);
+        initSearchJson();
+      }
+    });
+
+    function initSearchJson () {
+      initLoad(['/search.zip'], {
+        loadOptions: {
+          success: function(obj) {
+            localStorage.setItem('searchJson', obj['search.json'])
+          },
+          error: function(e) {
+            return console.log(e)
+          }
+        },
+        returnOptions: {
+          'json': TYPE_TEXT
+        },
+        mimeOptions:{
+          'json':'application/json'
+        }
+      })
+    }
+
+
+    // search function;
+    var searchFunc = function(search_id, content_id) {
+      'use strict';
+
+      isfetched = true;
+      var datas = JSON.parse(localStorage.getItem('searchJson'));
+      console.log(search_id)
+      var input = document.getElementById(search_id);
+      var resultContent = document.getElementById(content_id);
+      var inputEventFunction = function() {
+        var searchText = input.value.trim().toLowerCase();
+        var keywords = searchText.split(/[\s\-]+/);
+        if (keywords.length > 1) {
+          keywords.push(searchText);
+        }
+        var resultItems = [];
+        if (searchText.length > 0) {
+          // perform local searching
+          datas.forEach(function(data) {
+            var isMatch = false;
+            var hitCount = 0;
+            var searchTextCount = 0;
+            var title = data.title ? data.title.trim() : '';
+            var titleInLowerCase = title.toLowerCase();
+            var content = data.content ? data.content.trim().replace(/<[^>]+>/g,"") : '';
+            var contentInLowerCase = content.toLowerCase();
+            var articleUrl = decodeURIComponent(data.url);
+            var indexOfTitle = [];
+            var indexOfContent = [];
+            // only match articles with not empty titles
+            keywords.forEach(function(keyword) {
+              function getIndexByWord(word, text, caseSensitive) {
+                var wordLen = word.length;
+                if (wordLen === 0) {
+                  return [];
+                }
+                var startPosition = 0, position = [], index = [];
+                if (!caseSensitive) {
+                  text = text.toLowerCase();
+                  word = word.toLowerCase();
+                }
+                while ((position = text.indexOf(word, startPosition)) > -1) {
+                  index.push({position: position, word: word});
+                  startPosition = position + wordLen;
+                }
+                return index;
+              }
+
+              indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+              indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+            });
+            if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+              isMatch = true;
+              hitCount = indexOfTitle.length + indexOfContent.length;
+            }
+
+            // show search results
+
+            if (isMatch) {
+              // sort index by position of keyword
+
+              [indexOfTitle, indexOfContent].forEach(function (index) {
+                index.sort(function (itemLeft, itemRight) {
+                  if (itemRight.position !== itemLeft.position) {
+                    return itemRight.position - itemLeft.position;
+                  } else {
+                    return itemLeft.word.length - itemRight.word.length;
+                  }
+                });
+              });
+
+              // merge hits into slices
+
+              function mergeIntoSlice(text, start, end, index) {
+                var item = index[index.length - 1];
+                var position = item.position;
+                var word = item.word;
+                var hits = [];
+                var searchTextCountInSlice = 0;
+                while (position + word.length <= end && index.length != 0) {
+                  if (word === searchText) {
+                    searchTextCountInSlice++;
+                  }
+                  hits.push({position: position, length: word.length});
+                  var wordEnd = position + word.length;
+
+                  // move to next position of hit
+
+                  index.pop();
+                  while (index.length != 0) {
+                    item = index[index.length - 1];
+                    position = item.position;
+                    word = item.word;
+                    if (wordEnd > position) {
+                      index.pop();
+                    } else {
+                      break;
+                    }
+                  }
+                }
+                searchTextCount += searchTextCountInSlice;
+                return {
+                  hits: hits,
+                  start: start,
+                  end: end,
+                  searchTextCount: searchTextCountInSlice
+                };
+              }
+
+              var slicesOfTitle = [];
+              if (indexOfTitle.length != 0) {
+                slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+              }
+
+              var slicesOfContent = [];
+              while (indexOfContent.length != 0) {
+                var item = indexOfContent[indexOfContent.length - 1];
+                var position = item.position;
+                var word = item.word;
+                // cut out 100 characters
+                var start = position - 20;
+                var end = position + 80;
+                if(start < 0){
+                  start = 0;
+                }
+                if (end < position + word.length) {
+                  end = position + word.length;
+                }
+                if(end > content.length){
+                  end = content.length;
+                }
+                slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+              }
+
+              // sort slices in content by search text's count and hits' count
+
+              slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                  return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                  return sliceRight.hits.length - sliceLeft.hits.length;
+                } else {
+                  return sliceLeft.start - sliceRight.start;
+                }
+              });
+
+              // select top N slices in content
+
+              var upperBound = parseInt('2');
+              if (upperBound >= 0) {
+                slicesOfContent = slicesOfContent.slice(0, upperBound);
+              }
+
+              // highlight title and content
+
+              function highlightKeyword(text, slice) {
+                var result = '';
+                var prevEnd = slice.start;
+                slice.hits.forEach(function (hit) {
+                  result += text.substring(prevEnd, hit.position);
+                  var end = hit.position + hit.length;
+                  result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                  prevEnd = end;
+                });
+                result += text.substring(prevEnd, slice.end);
+                return result;
+              }
+
+              var resultItem = '';
+
+              if (slicesOfTitle.length != 0) {
+                resultItem += "<li><a target='_blank' href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+              } else {
+                resultItem += "<li><a target='_blank' href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+              }
+
+              slicesOfContent.forEach(function (slice) {
+                resultItem += "<a target='_blank' href='" + articleUrl + "'>" +
+                  "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                  "...</p>" + "</a>";
+              });
+
+              resultItem += "</li>";
+              resultItems.push({
+                item: resultItem,
+                searchTextCount: searchTextCount,
+                hitCount: hitCount,
+                id: resultItems.length
+              });
+            }
+          })
+        };
+        if (keywords.length === 1 && keywords[0] === "") {
+          resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+        } else if (resultItems.length === 0) {
+          resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+        } else {
+          resultItems.sort(function (resultLeft, resultRight) {
+            if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+              return resultRight.searchTextCount - resultLeft.searchTextCount;
+            } else if (resultLeft.hitCount !== resultRight.hitCount) {
+              return resultRight.hitCount - resultLeft.hitCount;
+            } else {
+              return resultRight.id - resultLeft.id;
+            }
+          });
+          var searchResultList = '<ul class=\"search-result-list\">';
+          resultItems.forEach(function (result) {
+            searchResultList += result.item;
+          })
+          searchResultList += "</ul>";
+          resultContent.innerHTML = searchResultList;
+        }
+      }
+
+      if ('auto' === 'auto') {
+        input.addEventListener('input', inputEventFunction);
+      } else {
+        $('.search-icon').click(inputEventFunction);
+        input.addEventListener('keypress', function (event) {
+          if (event.keyCode === 13) {
+            inputEventFunction();
+          }
+        });
+      }
+
+      // remove loading animation
+      $('body').css('overflow', '');
+
+      proceedsearch();
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        $('.sb-close').click();
+        searchFunc('local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+      
+      
+
+<!--
+
+<link rel="stylesheet" href="/dist/APlayer.min.css">
+<div id="aplayer"></div>
+<script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+<meting-js
+      server="netease"
+      type="playlist"
+      id="4904272454">
+</meting-js>
+-->
+
+</body>
+
+</html>
+
+
+
+
+
+
+
