@@ -204,7 +204,35 @@
 <p>添加：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">c.NotebookApp.ip=<span class="string">&#x27;*&#x27;</span></span><br><span class="line"><span class="comment">#允许通过任意绑定的服务器的ip访问</span></span><br><span class="line">c.NotebookApp.port =6006<span class="comment">#这个端口是docker容器和宿主机的映射端口</span></span><br><span class="line">c.NotebookApp.open_browser=False</span><br><span class="line"><span class="comment">#不自动打开浏览器</span></span><br><span class="line">c.NotebookApp.password=u<span class="string">&#x27;刚才复制的很长的那个密码&#x27;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure></p>
 <p>ok<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jupyter notebook --allow-root</span><br></pre></td></tr></table></figure></p>
 <p>尚未测试，原因同1。</p>
-<h3><span id="vpn配置">vpn配置</span></h3><p>有机会把梯子规则改一下。。</p>
+<p>2023.3.26</p>
+<p>成功（</p>
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/Screen%20Shot%202023-03-26%20at%2011.40.25%20AM.png" alt="Screen Shot 2023-03-26 at 11.40.25 AM"></p>
+<p>好慢好慢好慢<br><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/Screen%20Shot%202023-03-26%20at%2011.43.37%20AM.png" alt="Screen Shot 2023-03-26 at 11.43.37 AM"></p>
+<p>还是不要试图尝试用这个网络下载数据集。。。<br>但是gpu还是很快，跑一个resnet试一下。<br>2023.3.27<br>大失败，在d2l环境里不知道为什么就没有gpu了，，，<br>明明能够识别出来安装了gpu，但是一跑代码就是training on cpu////<br>重新用3090的机子试了一下并没有出现类似的问题。可能是环境的bug。。</p>
+<h3><span id="3090不兼容">3090不兼容</span></h3><p>这个问题网上一搜一堆解决方案，目前在尝试升级torch版本，能否成功尚未知。<br><a target="_blank" rel="noopener" href="https://blog.csdn.net/a563562675/article/details/121656894">https://blog.csdn.net/a563562675/article/details/121656894</a></p>
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/Screen%20Shot%202023-03-27%20at%205.33.00%20PM.png" alt="Screen Shot 2023-03-27 at 5.33.00 PM"><br>ok，成功。</p>
+<h3><span id="vpn配置">vpn配置</span></h3><p>有机会把梯子规则改一下。。<br>ok，只要添加一下服务器的url就可以了。</p>
+<h3><span id="总结">总结</span></h3><p>一套无坑配置：<br>拿到新的机子（以3090为例），ssh连接或者用平台提供的jupyter lab的终端也可以。</p>
+<ol>
+<li>切到/minicoda/bin文件夹，conda init初始化</li>
+<li>重启终端，按照d2l环境配置：conda create —name d2l python=3.9 -y，接着conda activate d2l。</li>
+<li>然后这里，由于这个用户默认为root，如果嗯装什么包他不会给你报错，但是亲测装了等于没有装，于是再起一个python的虚拟环境，也就是 python -m venv tutorial-env，source tutorial-env/bin/activate。</li>
+<li>然后安装torch，这里是坑最多的，3090的话直接pip3 install torch==1.7.1+cu110 torchvision==0.8.2+cu110 -f <a target="_blank" rel="noopener" href="https://download.pytorch.org/whl/cu110/torch_stable.html">https://download.pytorch.org/whl/cu110/torch_stable.html</a></li>
+<li>然后pip install d2l。</li>
+<li>这个时候基本上就可以在bash里跑py了，但是非常不优雅。于是下一步是配置jupyter。</li>
+<li>大致步骤<br>`jupyter-notebook —generate-config</li>
+</ol>
+<p>`jupyter-notebook password</p>
+<p>`vim /root/.jupyter/jupyter_notebook_config.json</p>
+<p>`vim /root/.jupyter/jupyter_notebook_config.py</p>
+<p>添加：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">c.NotebookApp.ip=<span class="string">&#x27;*&#x27;</span></span><br><span class="line"><span class="comment">#允许通过任意绑定的服务器的ip访问</span></span><br><span class="line">c.NotebookApp.port =6006<span class="comment">#这个端口是docker容器和宿主机的映射端口</span></span><br><span class="line">c.NotebookApp.open_browser=False</span><br><span class="line"><span class="comment">#不自动打开浏览器</span></span><br><span class="line">c.NotebookApp.password=u<span class="string">&#x27;刚才复制的很长的那个密码&#x27;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure></p>
+<p>ok<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jupyter notebook --allow-root</span><br></pre></td></tr></table></figure><br>注意是在激活d2l环境中的打开jupyter。</p>
+<ol>
+<li>到autodi控制台里面点开那个自定义服务，没有什么问题的话就是jupyter，其他使用方法就没有什么坑了。</li>
+</ol>
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/Screen%20Shot%202023-03-27%20at%205.44.57%20PM.png" alt="Screen Shot 2023-03-27 at 5.44.57 PM"></p>
+<p>3090的速度还是很不错的。</p>
+<h3><span id="ps">ps</span></h3><p>autodl的ssh登陆会和hexo自动部署到服务器的ssh密钥还是什么发生冲突，最简单粗暴的解决方法是直接吧.ssh文件夹里的konw-host文件删除，但是我看网上还有更优雅的解决方式。昨天看到部署博客报错我的心都凉了半截，还好只是我自己自作孽不是整个gitpage都崩了。</p>
 
             <div class="clearfix"></div>
             <hr class="nogutter">
