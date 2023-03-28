@@ -80,7 +80,7 @@
 				    
 				    <li><a href="/categories/Linux/" class="animsition-link">Linux<small>(1)</small></a></li>
 				    
-				    <li><a href="/categories/ML/" class="animsition-link">ML<small>(35)</small></a></li>
+				    <li><a href="/categories/ML/" class="animsition-link">ML<small>(36)</small></a></li>
 				    
 				    <li><a href="/categories/PWN-COLLEGE/" class="animsition-link">PWN.COLLEGE<small>(1)</small></a></li>
 				    
@@ -198,6 +198,47 @@
 
 <section id="intro">
     <div class="container">
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2022/04/12/week7-2.1md/">攻防世界 - one_man_army</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-04-12T02:02:09.112Z" itemprop="datePublished">
+          2022-04-12
+      </time>
+    
+    
+    | 
+    <a href='/tags/HEAP-Tcache/'>HEAP - Tcache</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+     
+overview
+libc是2.27。
+逆向增删查改。
+add没有什么特别的地方，纯纯的指针操作。没有结构体，没有保存指针到bss上。但是会对输入的size取低九位，虽然可以输入15位的size，但是生效的只有九位。所以只能add出 一个chunk。有点lonely wolf的味道。
+12345678printf(&quot;Size: &quot;); read(0, size_4, 0xFuLL); size_2 = 
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/04/12/week7-2.1md/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
         
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
@@ -553,46 +594,6 @@ add1head_ptr = (unsigned int *)malloc(0x18uLL);
                     
                     <p class="pull-right readMore">
                         <a href="/2022/04/07/ciscn_2019_double/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2022/04/06/ciscn_2021_lonelywolf/">LonelyWolf</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2022-04-06T12:19:37.401Z" itemprop="datePublished">
-          2022-04-06
-      </time>
-    
-    
-    | 
-    <a href='/tags/HEAP-Tcache/'>HEAP - Tcache</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-     
-overview​        开始做一些ciscn了。
-
-readd​        size不能大于0x78。
-1234567ptr = malloc(size);if ( ptr )&#123; size_struct = size_1; content_struct = ptr;//蚌埠住了，每次都会把这个指针覆盖为最新分配的content ptr。这下idx直接报废。 puts(&quot;Done!&quot
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2022/04/06/ciscn_2021_lonelywolf/">Read More...</a>
                     </p>
                     
                 </div>
