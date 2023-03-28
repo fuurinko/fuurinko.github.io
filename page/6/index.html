@@ -80,7 +80,7 @@
 				    
 				    <li><a href="/categories/Linux/" class="animsition-link">Linux<small>(1)</small></a></li>
 				    
-				    <li><a href="/categories/ML/" class="animsition-link">ML<small>(34)</small></a></li>
+				    <li><a href="/categories/ML/" class="animsition-link">ML<small>(35)</small></a></li>
 				    
 				    <li><a href="/categories/PWN-COLLEGE/" class="animsition-link">PWN.COLLEGE<small>(1)</small></a></li>
 				    
@@ -198,6 +198,48 @@
 
 <section id="intro">
     <div class="container">
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2022/10/15/cve-2018-1160/">cve-2018-1160分析</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-10-15T02:12:20.057Z" itemprop="datePublished">
+          2022-10-15
+      </time>
+    
+    
+    | 
+    <a href='/tags/cve/'>cve</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+    
+呃呃，这是一个阉割版，但是懒得改了，原文+代码 2.5w字，真的没那么敷衍的。
+环境搭建ubuntu 18.04 （libc-2.27.so）
+netatalk 二进制文件-》可以在pwnable上找到编译好的文件，非常方便。
+4：漏洞复现关闭地址随机化。
+1sudo bash -c &quot;echo 0 &gt; /proc/sys/kernel/randomize_va_space&quot;
+poc12345678
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/10/15/cve-2018-1160/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
         
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
@@ -560,41 +602,6 @@ ps：上一个note说到主要利用决策树进行分类。
                     
                     <p class="pull-right readMore">
                         <a href="/2022/07/16/ucore_lab1/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2022/07/16/vivi_2022年七月/">七月</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2022-07-16T08:36:24.556Z" itemprop="datePublished">
-          2022-07-16
-      </time>
-    
-    
-    | 
-    <a href='/tags/vivi/'>vivi</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        Here's something encrypted, password is required to continue reading.
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2022/07/16/vivi_2022年七月/">Read More...</a>
                     </p>
                     
                 </div>
