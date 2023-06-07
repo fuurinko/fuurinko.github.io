@@ -78,6 +78,8 @@
 				    
 				    <li><a href="/categories/CSAPP-LAB/" class="animsition-link">CSAPP LAB<small>(1)</small></a></li>
 				    
+				    <li><a href="/categories/EE/" class="animsition-link">EE<small>(5)</small></a></li>
+				    
 				    <li><a href="/categories/EN/" class="animsition-link">EN<small>(1)</small></a></li>
 				    
 				    <li><a href="/categories/Linux/" class="animsition-link">Linux<small>(1)</small></a></li>
@@ -200,6 +202,210 @@
 
 <section id="intro">
     <div class="container">
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2022/03/15/week3-1.2/">lab 10 hacknote</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-03-15T13:34:53.564Z" itemprop="datePublished">
+          2022-03-15
+      </time>
+    
+    
+    | 
+    <a href='/tags/UAF/'>UAF</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+     
+​        这个题已经做过好多遍了orz，因为不断的摆烂然后复健…..每次又是做这道
+​        逆一下。
+​        话说可以总结一下类似的题目的快速逆向方法。比如说一般肯定会定义一个结构体，结构体中包含比如content和指针的字段，然后如果有可以利用的uaf或者double free的话，就可以覆盖结构体中保存的指针字段，从而进一步攻击。
+​        回到这道题，这里的结构体包含两个字段，一个
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/03/15/week3-1.2/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2022/03/15/week3-1.1/">wustctf2020_easyfast</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-03-15T07:37:41.226Z" itemprop="datePublished">
+          2022-03-15
+      </time>
+    
+    
+    | 
+    <a href='/tags/UAF/'>UAF</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+     
+2022-3-15
+wustctf2020_easyfastchecksec :
+
+
+​        简单逆向一下，有后门函数，当这个地址上储存的数小于等于0时getshell。整体的程序的话是一个没什么特别的菜单，free处有uaf，edit处能对堆指针任意写。
+​        首先逆向以后大体的思路是利用这个UAF进行0x602090的地址处的覆盖。
+​        所以我们需要构造chunk pointer为0
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/03/15/week3-1.1/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2022/03/14/ciscn_2019_your_pwn/">2019_your_pwn</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-03-14T10:30:34.805Z" itemprop="datePublished">
+          2022-03-14
+      </time>
+    
+    
+    | 
+    <a href='/tags/STACK-ARRAY-OUT-OF-BOUNDS/'>STACK - ARRAY OUT OF BOUNDS</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+			
+				console.error("ReferenceError: value is not defined");
+			     
+​        因为是数组越界，每次只能读取一个字节，所以脚本需要循环，首先计算出偏移获取函数的地址，一般来说比较常规的思路是拿libc_start_main,只是这里的偏移比较远。
+​    ps： 关于如何在看起来比较混乱的栈中找到偏移量这件事
+​        首先要搞清楚函数逻辑，就
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/03/14/ciscn_2019_your_pwn/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2022/03/12/mess_pwn中的python字符串处理问题/">pwn中的python字符串处理问题</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-03-12T02:50:45.551Z" itemprop="datePublished">
+          2022-03-12
+      </time>
+    
+    
+    | 
+    <a href='/tags/mess/'>mess</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+     
+​        最近在pwncollege做题的时候常常遇到接收的字符串处理不当的问题，故总结整理一下。
+字符串截取123456789p.recv()[0:6]		#截取1-5个字符串p.recv()[2:6]		#截取2-5个字符串p.recv()[:]		#截取完整字符串p.recv()[2:]#从第二个索引开始截取p.recv()[-4:]#截取最后四个字符
+​        
+字符串处理​        一般来说
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/03/12/mess_pwn中的python字符串处理问题/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2022/03/10/pwn.college_ROP/">ROP</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-03-10T14:12:38.052Z" itemprop="datePublished">
+          2022-03-10
+      </time>
+    
+    
+    | 
+    <a href='/tags/pwncollege/'>pwncollege</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+     
+写在前面：如果是普通的环境，运行程序可能需要capstone，可以直接在官网下载源码编译，然后将编译好的动态链接库cp到lib里
+cp libcapstone.so.5 /lib/x86_64-linux-gnu/
+Level1​        最最最基础的rop了，和前前一个module的前面的有个level一模一样。
+1234567891011121314from pwn import*#context.termina
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/03/10/pwn.college_ROP/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
         
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
@@ -400,207 +606,6 @@ Level5gdb脚本。
                     
                     <p class="pull-right readMore">
                         <a href="/2022/02/14/pwn.college_Debugging Refresher/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2022/01/29/pwn.college_Assembly_Refresher/">Assembly_Refresher</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2022-01-29T13:51:29.070Z" itemprop="datePublished">
-          2022-01-29
-      </time>
-    
-    
-    | 
-    <a href='/tags/pwncollege/'>pwncollege</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-     
-Level1需要设置*rdi = 0x1337，
-如果是按照目的意思程序的汇编代码长这样子：
-12345.section .text    .intel_syntax noprefix    .global _start    _start :        mov rdi, 0x1337
-但是可以直接用pwntools传输mov rdi, 0x1337这一句。
-12345678910111213#!/usr/bin/en
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2022/01/29/pwn.college_Assembly_Refresher/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2022/01/29/pwn.college_Shellcode_Injection/">Shellcode_Injection</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2022-01-29T09:37:52.632Z" itemprop="datePublished">
-          2022-01-29
-      </time>
-    
-    
-    | 
-    <a href='/tags/pwncollege/'>pwncollege</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-     
-​        整个专题其实就是一个shellcode编写的小练习，并不需要自己寻找漏洞点，写好shellcode直接注入就行。
-​        如果要将服务器的文件传输到本地的话可以使用:
-1scp -i key -r hacker@dojo.pwn.college:/challenge [本地路径]
-Level1​        可以用pwntools的shellcraft模块，但是也可以手写shellcode。
-
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2022/01/29/pwn.college_Shellcode_Injection/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2022/01/17/pwn.college_Program_interaction/">Program_interaction</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2022-01-17T13:30:41.758Z" itemprop="datePublished">
-          2022-01-17
-      </time>
-    
-    
-    | 
-    <a href='/tags/pwncollege/'>pwncollege</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-     
-「前面不太记得了，从level3记起」
-level3./embryoio_level3  xkbdyoisnx    
-Level4export jouixn = xxx
-Level5​    一个标准输入重定向的考察，
-./embryoio_level5 &lt; /tmp/mihsjr
-​        还需要编辑mihsjr的内容为给的密码。
-Level6​        一个输出重定向，创建对应文件./embryo
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2022/01/17/pwn.college_Program_interaction/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2021/12/11/heap_unsortedbin leak/">unsortedbinleak</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2021-12-11T11:32:01.748Z" itemprop="datePublished">
-          2021-12-11
-      </time>
-    
-    
-    | 
-    <a href='/tags/HEAP-Unsortedbin/'>HEAP - Unsortedbin</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        ​    一个简单的trick。
-​        并且在trick就是tcache，接下来就是刷题熟练，最后再简单学习一下largin bin和small bin的利用。
-​        unsortedbin  由双向循环链表管理，表头为main_arena，所以表末尾的chunk的fd会指回main_arena，这样我们就获得了main_arena结构体内部的的地址，通过调试我们就能得到main_arena的真正的地址，并且ma
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2021/12/11/heap_unsortedbin leak/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2021/12/10/mess_ida 7.0 for mac疑难杂症： positive sp value has been found/">positive sp value has been found</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2021-12-10T08:05:39.212Z" itemprop="datePublished">
-          2021-12-10
-      </time>
-    
-    
-    | 
-    <a href='/tags/reverse/'>reverse</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-     
-0）​        自从抛弃虚拟机，利用ida for mac+pwndocker实现完全mac环境以后，深觉优雅的同时，也遇见了不少坑。
-​        其中ida的坑更是坑人于无形之中。因为如果不打开win的7.5（甚至7.6）做对比，你甚至不知道你遇见的一些奇怪的东西，是7.0 mac版特有的，已经被优化了的坑，还是自身逆向水平问题。
-​        作为一个逆向废物，7.0 for mac属实是给本来就逆不出
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2021/12/10/mess_ida 7.0 for mac疑难杂症： positive sp value has been found/">Read More...</a>
                     </p>
                     
                 </div>

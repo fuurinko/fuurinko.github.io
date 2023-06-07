@@ -78,6 +78,8 @@
 				    
 				    <li><a href="/categories/CSAPP-LAB/" class="animsition-link">CSAPP LAB<small>(1)</small></a></li>
 				    
+				    <li><a href="/categories/EE/" class="animsition-link">EE<small>(5)</small></a></li>
+				    
 				    <li><a href="/categories/EN/" class="animsition-link">EN<small>(1)</small></a></li>
 				    
 				    <li><a href="/categories/Linux/" class="animsition-link">Linux<small>(1)</small></a></li>
@@ -200,6 +202,206 @@
 
 <section id="intro">
     <div class="container">
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2022/04/03/幻想曲-01-春天/">春日和</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-04-02T16:00:00.000Z" itemprop="datePublished">
+          2022-04-03
+      </time>
+    
+    
+    | 
+    <a href='/tags/幻想曲/'>幻想曲</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        ​    
+         
+​        一系列的事情最终使我感觉，春天确实已经到了。
+​        首先是刷牙时无意发现的丢在洗衣机旁阴暗角落的，去年秋天栽下去的铃兰花长出的鲜嫩的叶片。那时候和小戴怀着赌一把的心理，一起将一些看起来黄不拉几的铃兰根系一颗一颗地埋在土里，还非常认真地每隔几天就浇水，但是泛着土色的幼芽接连几个月都毫无起色，有时候甚至看起来像发霉了一般，于是后几个月我和小戴谁也没有管它——我们俩一致认为它已经死
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/04/03/幻想曲-01-春天/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2022/04/02/heap_fastbin中uaf实现任意地址分配的检测问题/">fastbin中uaf实现任意地址分配的检测问题</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-04-02T00:37:40.817Z" itemprop="datePublished">
+          2022-04-02
+      </time>
+    
+    
+    | 
+    <a href='/tags/HEAP-Fastbin-Attack/'>HEAP - Fastbin Attack</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+     
+​        目前做到的与fastbin有关（包括Tcache），并且存在uaf漏洞，需要通过任意地址分配来实现利用的题大致有两类，一类对于申请的chunk，通过简单或者复杂的结构体管理，在一个note的结构体中通常包括size，content甚至指针等字段，我们可以通过覆盖指针实现任意地址分配。另一类则是相对逻辑比较简单的，并没有为note定义结构体，仅仅使用了类似数组的形式，这样的话覆盖free chunk的fd就
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/04/02/heap_fastbin中uaf实现任意地址分配的检测问题/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2022/04/01/week6-3.1/">NoLeak</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-04-01T13:34:22.000Z" itemprop="datePublished">
+          2022-04-01
+      </time>
+    
+    
+    | 
+    <a href='/tags/Chunk-Overlapping/'>Chunk Overlapping</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+     
+overview
+​        非常之畸形。
+re​        逻辑比较简单，结构体中只有一个chunk bp的字段。漏洞点也很魔幻，free只free结构体中保存的指针，而没有free malloc出来的ptr本身，并且没有置0，顺便edit的时候size没有限定，可以造成堆溢出。
+​        并且题目并没有可控的输出功能,虽然调用了write()，但是我们很难通过改got表来调用。    
+利用​    
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/04/01/week6-3.1/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2022/04/01/pwn.college_Dynamic_Allocator_Misuse/">Dynamic_Allocator_Misuse</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-04-01T12:34:14.000Z" itemprop="datePublished">
+          2022-04-01
+      </time>
+    
+    
+    | 
+    <a href='/tags/pwncollege/'>pwncollege</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+     
+Level1​        
+​        开门绿，你从未拥有过的全新体验（
+​        给出了增删查以及load flag的四个功能，free有uaf，纯纯的uaf啊。
+​        直接malloc flag_chunk_size，free，然后load flag，flag chunk被load在chunk0内存空间，然后puts就行。
+
+Level1.1​        故技重施。
+
+Level2.0
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/04/01/pwn.college_Dynamic_Allocator_Misuse/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2022/03/31/week5-4.1/">starctf_2019_quicksort</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-03-31T12:04:14.000Z" itemprop="datePublished">
+          2022-03-31
+      </time>
+    
+    
+    | 
+    <a href='/tags/HEAP-Heap-overflow/'>HEAP - Heap overflow</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+     
+overview​    
+libc大版本是2.23。
+re​        整体实现了一个简单的快速排序功能，在输入具体需要排序的数的时候存在溢出，但是由于开启了canary，并不是很好利用。并且num的储存其实是在堆上的，所以我以为这是个栈题，这其实是个堆题。
+12345678910111213141516171819memset(s, 0, sizeof(s));  num = 0;  puts(&quot;how 
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/03/31/week5-4.1/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
         
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
@@ -392,199 +594,6 @@ REinit1234567memset(s, 0, 0x50u); puts(&quot;Input your name:&quot;); my_read((i
                     
                     <p class="pull-right readMore">
                         <a href="/2022/03/25/heap_hof_bcloud/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2022/03/24/heap_hof_hitcontraininf11/">hitcon_training11</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2022-03-24T14:16:18.934Z" itemprop="datePublished">
-          2022-03-24
-      </time>
-    
-    
-    | 
-    <a href='/tags/HEAP-House-Of-Force/'>HEAP - House Of Force</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        % meting “7342554262” “netease” “playlist” “theme:#555” “mutex:true” “listmaxheight:340px” “preload:auto” %}     
-re​        含有后门函数，直接的想法是利用hof将chunk分配至某个可写的位置，然后覆盖为后门。
-1234v4 = malloc(0x10uLL); *v4 = hello_message; v4[1
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2022/03/24/heap_hof_hitcontraininf11/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2022/03/21/sum_一些板子/">一些板子</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2022-03-21T08:45:02.536Z" itemprop="datePublished">
-          2022-03-21
-      </time>
-    
-    
-    | 
-    <a href='/tags/Generalization/'>Generalization</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-     
-stackret2shellcode123456789101112from pwn import*from LibcSearcher import LibcSearchercontext.terminal = [&#x27;tmux&#x27;,&#x27;splitw&#x27;,&#x27;-h&#x27;]context.log_level = &quot;debug&quot;p = process(&quot;.
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2022/03/21/sum_一些板子/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2022/03/20/stack_ret2csu/">jarvisoj_level5</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2022-03-19T17:15:06.878Z" itemprop="datePublished">
-          2022-03-20
-      </time>
-    
-    
-    | 
-    <a href='/tags/STACK-Stack-Overflow/'>STACK - Stack Overflow</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-     
-jarvisoj_level5​        这个题吧，我好像以前做过，是个纯纯的ret2csu的板子题。
-12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364from pwn import*from LibcSearcher impor
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2022/03/20/stack_ret2csu/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2022/03/19/stack_learning_fmt/">格式化字符串</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2022-03-18T17:22:00.000Z" itemprop="datePublished">
-          2022-03-19
-      </time>
-    
-    
-    | 
-    <a href='/tags/STACK-Format/'>STACK - Format</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-     
-1）前言​        绿盟杯pwn1，格式化字符串+沙盒orw。保护全开。
-​        首先对于格式化字符串我的理解就不是很深刻，甚至从来没有完整地刷过一道格式化字符串的题目。
-​        所以碰到这道题，算是又给我敲了第nn个警钟。
-​        非常清晰地告诉我：我是垃圾。
-2）格式化字符串基本原理​        ctfwiki上的格式化字符串教程写得挺好的，可以参考。
-格式化字符串参数1%[pa
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2022/03/19/stack_learning_fmt/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2022/03/17/mess_ida的结构体识别/">ida的结构体识别</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2022-03-17T12:35:07.220Z" itemprop="datePublished">
-          2022-03-17
-      </time>
-    
-    
-    | 
-    <a href='/tags/mess/'>mess</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-     
-0​        最近发现做堆题最慢的不是调试，而是在逆向的过程中寻找思路，而一般堆题的菜单都是由结构体管理，所以如果能在ida中快速方便地查看结构体相关的指针操作就再好不过了。然而一般来说ida是无法直接识别结构体这种比较高级的数据结构的，所以需要我们手动去创建并修改。
-1​        首先可以在idastructures的界面手动添加一些结构体
-​        右键空白处，选择add struct type，便
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2022/03/17/mess_ida的结构体识别/">Read More...</a>
                     </p>
                     
                 </div>

@@ -78,6 +78,8 @@
 				    
 				    <li><a href="/categories/CSAPP-LAB/" class="animsition-link">CSAPP LAB<small>(1)</small></a></li>
 				    
+				    <li><a href="/categories/EE/" class="animsition-link">EE<small>(5)</small></a></li>
+				    
 				    <li><a href="/categories/EN/" class="animsition-link">EN<small>(1)</small></a></li>
 				    
 				    <li><a href="/categories/Linux/" class="animsition-link">Linux<small>(1)</small></a></li>
@@ -200,6 +202,199 @@
 
 <section id="intro">
     <div class="container">
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2022/03/24/heap_hof_hitcontraininf11/">hitcon_training11</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-03-24T14:16:18.934Z" itemprop="datePublished">
+          2022-03-24
+      </time>
+    
+    
+    | 
+    <a href='/tags/HEAP-House-Of-Force/'>HEAP - House Of Force</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        % meting “7342554262” “netease” “playlist” “theme:#555” “mutex:true” “listmaxheight:340px” “preload:auto” %}     
+re​        含有后门函数，直接的想法是利用hof将chunk分配至某个可写的位置，然后覆盖为后门。
+1234v4 = malloc(0x10uLL); *v4 = hello_message; v4[1
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/03/24/heap_hof_hitcontraininf11/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2022/03/21/sum_一些板子/">一些板子</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-03-21T08:45:02.536Z" itemprop="datePublished">
+          2022-03-21
+      </time>
+    
+    
+    | 
+    <a href='/tags/Generalization/'>Generalization</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+     
+stackret2shellcode123456789101112from pwn import*from LibcSearcher import LibcSearchercontext.terminal = [&#x27;tmux&#x27;,&#x27;splitw&#x27;,&#x27;-h&#x27;]context.log_level = &quot;debug&quot;p = process(&quot;.
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/03/21/sum_一些板子/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2022/03/20/stack_ret2csu/">jarvisoj_level5</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-03-19T17:15:06.878Z" itemprop="datePublished">
+          2022-03-20
+      </time>
+    
+    
+    | 
+    <a href='/tags/STACK-Stack-Overflow/'>STACK - Stack Overflow</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+     
+jarvisoj_level5​        这个题吧，我好像以前做过，是个纯纯的ret2csu的板子题。
+12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364from pwn import*from LibcSearcher impor
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/03/20/stack_ret2csu/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2022/03/19/stack_learning_fmt/">格式化字符串</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-03-18T17:22:00.000Z" itemprop="datePublished">
+          2022-03-19
+      </time>
+    
+    
+    | 
+    <a href='/tags/STACK-Format/'>STACK - Format</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+     
+1）前言​        绿盟杯pwn1，格式化字符串+沙盒orw。保护全开。
+​        首先对于格式化字符串我的理解就不是很深刻，甚至从来没有完整地刷过一道格式化字符串的题目。
+​        所以碰到这道题，算是又给我敲了第nn个警钟。
+​        非常清晰地告诉我：我是垃圾。
+2）格式化字符串基本原理​        ctfwiki上的格式化字符串教程写得挺好的，可以参考。
+格式化字符串参数1%[pa
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/03/19/stack_learning_fmt/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2022/03/17/mess_ida的结构体识别/">ida的结构体识别</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-03-17T12:35:07.220Z" itemprop="datePublished">
+          2022-03-17
+      </time>
+    
+    
+    | 
+    <a href='/tags/mess/'>mess</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+     
+0​        最近发现做堆题最慢的不是调试，而是在逆向的过程中寻找思路，而一般堆题的菜单都是由结构体管理，所以如果能在ida中快速方便地查看结构体相关的指针操作就再好不过了。然而一般来说ida是无法直接识别结构体这种比较高级的数据结构的，所以需要我们手动去创建并修改。
+1​        首先可以在idastructures的界面手动添加一些结构体
+​        右键空白处，选择add struct type，便
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/03/17/mess_ida的结构体识别/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
         
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
@@ -398,210 +593,6 @@ ccmc_pwnme2一道看起来人畜无害的栈题。但是有几个非常奇怪的
                     
                     <p class="pull-right readMore">
                         <a href="/2022/03/16/week3-2.1/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2022/03/15/week3-1.2/">lab 10 hacknote</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2022-03-15T13:34:53.564Z" itemprop="datePublished">
-          2022-03-15
-      </time>
-    
-    
-    | 
-    <a href='/tags/UAF/'>UAF</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-     
-​        这个题已经做过好多遍了orz，因为不断的摆烂然后复健…..每次又是做这道
-​        逆一下。
-​        话说可以总结一下类似的题目的快速逆向方法。比如说一般肯定会定义一个结构体，结构体中包含比如content和指针的字段，然后如果有可以利用的uaf或者double free的话，就可以覆盖结构体中保存的指针字段，从而进一步攻击。
-​        回到这道题，这里的结构体包含两个字段，一个
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2022/03/15/week3-1.2/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2022/03/15/week3-1.1/">wustctf2020_easyfast</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2022-03-15T07:37:41.226Z" itemprop="datePublished">
-          2022-03-15
-      </time>
-    
-    
-    | 
-    <a href='/tags/UAF/'>UAF</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-     
-2022-3-15
-wustctf2020_easyfastchecksec :
-
-
-​        简单逆向一下，有后门函数，当这个地址上储存的数小于等于0时getshell。整体的程序的话是一个没什么特别的菜单，free处有uaf，edit处能对堆指针任意写。
-​        首先逆向以后大体的思路是利用这个UAF进行0x602090的地址处的覆盖。
-​        所以我们需要构造chunk pointer为0
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2022/03/15/week3-1.1/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2022/03/14/ciscn_2019_your_pwn/">2019_your_pwn</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2022-03-14T10:30:34.805Z" itemprop="datePublished">
-          2022-03-14
-      </time>
-    
-    
-    | 
-    <a href='/tags/STACK-ARRAY-OUT-OF-BOUNDS/'>STACK - ARRAY OUT OF BOUNDS</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-			
-				console.error("ReferenceError: value is not defined");
-			     
-​        因为是数组越界，每次只能读取一个字节，所以脚本需要循环，首先计算出偏移获取函数的地址，一般来说比较常规的思路是拿libc_start_main,只是这里的偏移比较远。
-​    ps： 关于如何在看起来比较混乱的栈中找到偏移量这件事
-​        首先要搞清楚函数逻辑，就
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2022/03/14/ciscn_2019_your_pwn/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2022/03/12/mess_pwn中的python字符串处理问题/">pwn中的python字符串处理问题</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2022-03-12T02:50:45.551Z" itemprop="datePublished">
-          2022-03-12
-      </time>
-    
-    
-    | 
-    <a href='/tags/mess/'>mess</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-     
-​        最近在pwncollege做题的时候常常遇到接收的字符串处理不当的问题，故总结整理一下。
-字符串截取123456789p.recv()[0:6]		#截取1-5个字符串p.recv()[2:6]		#截取2-5个字符串p.recv()[:]		#截取完整字符串p.recv()[2:]#从第二个索引开始截取p.recv()[-4:]#截取最后四个字符
-​        
-字符串处理​        一般来说
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2022/03/12/mess_pwn中的python字符串处理问题/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2022/03/10/pwn.college_ROP/">ROP</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2022-03-10T14:12:38.052Z" itemprop="datePublished">
-          2022-03-10
-      </time>
-    
-    
-    | 
-    <a href='/tags/pwncollege/'>pwncollege</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-     
-写在前面：如果是普通的环境，运行程序可能需要capstone，可以直接在官网下载源码编译，然后将编译好的动态链接库cp到lib里
-cp libcapstone.so.5 /lib/x86_64-linux-gnu/
-Level1​        最最最基础的rop了，和前前一个module的前面的有个level一模一样。
-1234567891011121314from pwn import*#context.termina
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2022/03/10/pwn.college_ROP/">Read More...</a>
                     </p>
                     
                 </div>

@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<!--[if lte IE 8 ]>
+<html class="ie" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US">
+<![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!-->
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
+<!--<![endif]-->
+
+<head>
+
+  <title>chapter 3：传输媒介 | Rin</title>
+  <!-- Meta data -->
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content="Rin">
+    <meta name="author" content="Rin777">
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+
+    <!-- Favicon, (keep icon in root folder) -->
+    <link rel="Shortcut Icon" href="/img/favicon.ico" type="image/ico">
+
+    <link rel="alternate" href="/atom.xml" title="Rin" type="application/atom+xml">
+    <link rel="stylesheet" href="/css/all.css" media="screen" type="text/css">
+    
+
+    <!--[if IE 8]>
+    <link rel="stylesheet" type="text/css" href="/css/ie8.css" />
+    <![endif]-->
+
+    <!-- jQuery | Load our jQuery, with an alternative source fallback to a local version if request is unavailable -->
+    <script src="/js/jquery-1.11.1.min.js"></script>
+    <script>window.jQuery || document.write('<script src="js/jquery-1.11.1.min.js"><\/script>')</script>
+
+    <!-- Load these in the <head> for quicker IE8+ load times -->
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="/js/html5shiv.min.js"></script>
+    <script src="/js/respond.min.js"></script>
+    <![endif]-->
+
+  
+  
+  
+
+  <style>.col-md-8.col-md-offset-2.opening-statement img{display:none;}</style>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><link rel="stylesheet" href="/css/prism.css" type="text/css"></head>
+
+<!--
+<body class="post-template">
+-->
+<body id="index" class="lightnav animsition">
+      <!-- ============================ Off-canvas navigation =========================== -->
+
+    <div class="sb-slidebar sb-right sb-style-overlay sb-momentum-scrolling">
+        <div class="sb-close" aria-label="Close Menu" aria-hidden="true">
+            <img src="/img/close.png" alt="Close"/>
+        </div>
+        <!-- Lists in Slidebars -->
+        <ul class="sb-menu">
+            <li><a href="/" class="animsition-link" title="Home">Home</a></li>
+            <li><a href="/archives" class="animsition-link" title="archive">archives</a></li>
+            <!-- Dropdown Menu -->
+			 
+            
+        	<li>
+        		<a class="sb-toggle-submenu">Categories<span class="sb-caret"></span></a>
+            	<ul class="sb-submenu">
+				  	
+				    <li><a href="/categories/AUDITION/" class="animsition-link">AUDITION<small>(23)</small></a></li>
+				    
+				    <li><a href="/categories/Binary-security/" class="animsition-link">Binary_security<small>(101)</small></a></li>
+				    
+				    <li><a href="/categories/CSAPP-LAB/" class="animsition-link">CSAPP LAB<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/EE/" class="animsition-link">EE<small>(5)</small></a></li>
+				    
+				    <li><a href="/categories/EN/" class="animsition-link">EN<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/Linux/" class="animsition-link">Linux<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/ML/" class="animsition-link">ML<small>(36)</small></a></li>
+				    
+				    <li><a href="/categories/PWN-COLLEGE/" class="animsition-link">PWN.COLLEGE<small>(1)</small></a></li>
+				    
+				</ul>
+        	</li>
+			
+            
+            <li>
+                <a class="sb-toggle-submenu">Links<span class="sb-caret"></span></a>
+                <ul class="sb-submenu">
+                    
+                    <li><a target="_blank" rel="noopener" href="https://weibo.com/u/1682818607" class="animsition-link">没有营养的推广页</a></li>
+                    
+                    <li><a target="_blank" rel="noopener" href="http://www.2323bb.ltd" class="animsition-link">cc_sakura</a></li>
+                    
+                    <li><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_36995313" class="animsition-link">F@LLe0</a></li>
+                    
+                    <li><a target="_blank" rel="noopener" href="https://yyz9.cn" class="animsition-link">YYZ</a></li>
+                    
+                    <li><a target="_blank" rel="noopener" href="https://www.star123.top" class="animsition-link">star</a></li>
+                    
+                </ul>
+            </li>
+            
+        </ul>
+        <!-- Lists in Slidebars -->
+        <ul class="sb-menu secondary">
+            
+            <li><a href="javascript:;" class="popup-trigger" title="Search"><span class="search-icon"></span>Search</a></li>
+            
+            <li><a href="/about.html" class="animsition-link" title="about">About</a></li>
+            <li><a href="/atom.xml" class="animsition-link" title="rss">RSS</a></li>
+        </ul>
+    </div>
+    
+    <!-- ============================ END Off-canvas navigation =========================== -->
+
+    <!-- ============================ #sb-site Main Page Wrapper =========================== -->
+
+    <div id="sb-site">
+        <!-- #sb-site - All page content should be contained within this id, except the off-canvas navigation itself -->
+
+        <!-- ============================ Header & Logo bar =========================== -->
+
+        <div id="navigation" class="navbar navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="container">
+                    <!-- Nav logo -->
+                    <div class="logo">
+                        <a href="/" title="Logo" class="animsition-link">
+                         <img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/IMG_0282.jpg" alt="Logo" width="35px;"/> 
+                        </a>
+                    </div>
+                    <!-- // Nav logo -->
+                    <!-- Info-bar -->
+                    <nav>
+                        <ul class="nav">
+                            <li><a href="/" class="animsition-link">Rin</a></li>
+                            <li class="nolink"><span>Always </span>Creative.</li>
+                            
+                            <li><a href="https://github.com/" title="Github" target="_blank"><i class="icon-github"></i></a></li>
+                            
+                            
+                            
+                            
+                            
+                            <li class="nolink"><span>Welcome!</span></li>
+                        </ul>
+                    </nav>
+                    <!--// Info-bar -->
+                </div>
+                <!-- // .container -->
+                <div class="learnmore sb-toggle-right">More</div>
+                <button type="button" class="navbar-toggle menu-icon sb-toggle-right" title="More">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar before"></span>
+                <span class="icon-bar main"></span>
+                <span class="icon-bar after"></span>
+                </button>
+            </div>
+            <!-- // .navbar-inner -->
+        </div>
+
+        <!-- ============================ Header & Logo bar =========================== -->
+
+
+      
+<section id="intro">
+    <div class="container">
+        <div class="row col-md-offset-2">
+            <div class="col-md-8">
+    			<span class="post-meta">
+      <time datetime="2023-06-01T08:32:01.000Z" itemprop="datePublished">
+          2023-06-01
+      </time>
+    
+    
+    | 
+    <a href='/tags/电信传输/'>电信传输</a>
+    
+    
+</span>
+                <h1>chapter 3：传输媒介</h1>
+            </div>
+        </div>
+        <div class="col-md-8 col-md-offset-2">
+      		<p>本章关键：<br>了解常见金属传输线以及天线的性质。能够说出不同传输线的传输特征以及适合被传输的信号类型。<br>ps：我<strong>尽量</strong>将ppt和bnh的拓展（meiyong）内容分开写，避免分不主次。</p>
+<h1><span id="31-导向传输媒介">3.1 导向传输媒介</span></h1><p>主要介绍常见的有线传输媒介，包括同轴线，双绞线以及光纤。<br>首先开篇放了一个频率表，给每个频段的信号取了个名字，没啥大作用，我看名字起得也挺随意，意思不大。<br>然后给出一张几种传输线的传输特性：<br><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/Screen%20Shot%202023-06-04%20at%205.33.59%20PM.png" alt="Screen Shot 2023-06-04 at 5.33.59 PM"><br>我只截了前面个一个频率范围，因为这个东西在大作业里出现了，不过不用记得太精确，大致知道哪个适合高频哪个适合低频就行。<br>p6的三种线的图表不用深究（尤其光纤），后面还会出现的。<br>下面就是依次详细介绍线了。</p>
+<h2><span id="311-双绞线">3.1.1 双绞线</span></h2><h3><span id="3111-太长不看">3.1.1.1 太长不看</span></h3><ol>
+<li>比同轴线便宜（为什么这么说，因为这俩经常拿来比）【（曾经最便宜，但不如光纤】</li>
+<li>适合低频。（3.5khz 以下）</li>
+<li>物理特征：两条平行双导线拧合。</li>
+</ol>
+<h3><span id="3112-太长爱看不看">3.1.1.2 太长，爱看不看</span></h3><p>混杂一些bnh的科普，我也不知道有没有用，这个b酱东西总能把主次混杂搞得人分不清重点。</p>
+<h4><span id="物理特征">物理特征</span></h4><p>两条绝缘铜线拧合。<br>官方说法：A twisted pair consists of two insulated copper wires arranged <strong>in a regular spiral pattern</strong>.（这个英文表达挺学术的，建议背一下（）</p>
+<h5><span id="为什么要拧合">为什么要拧合</span></h5><p>（↡↡↡↡↡↡↡↡↡这是ppt上的内容↡↡↡↡↡↡↡↡↡↡↡↡）<br><strong>减少双导线耦合导致的码间干扰。</strong><br>（↡↡↡↡↡↡↡↡↡这是bng的演讲↡↡↡↡↡↡↡↡↡↡↡↡↡↡）<br>平行对称双导线存在耦合导致的干扰，为了减少这种干扰，理想状况是正交放置。但是现实情况下完全垂直摆放不太可能，所以就折中进行拧合从而模拟正交，两条线之间的角度虽然不是90，但是也比较大，可以一定程度减缓耦合。<br>因此，双绞线拧合的方向，密度与耦合强度强相关。</p>
+<h4><span id="应用">应用</span></h4><p>模拟及数字信号均可。<br>模拟：<br>通常用于语音信号传播以及the workhorse for communications within buildings。<br>数字：<br>connections to a digital data switch<br>within a building for local area networks supporting personal computers</p>
+<h4><span id="传输特征">传输特征</span></h4><ol>
+<li>容易收到串扰和噪声影响</li>
+<li>衰减随距离增大显著增加（近距离）</li>
+<li>适合低频近距离传输。</li>
+</ol>
+<h5><span id="拓展">拓展</span></h5><h5><span id="为什么适合低频">为什么适合低频</span></h5><ol>
+<li>频率越大，串扰越大。</li>
+<li>当频率升高，电线中的电荷会分布于表面，造成中心电阻很高，最后导致只有表面有电流。（在高频传输情况下，频率增加导致电流变化的速度更快。在双绞线中，电流的快速变化引起了更强烈的电荷堆积和电磁场辐射。由于电流变化速度的增加，电荷分布无法迅速跟随电流的变化，导致电荷在双绞线中的分布不再均匀，可能出现集中分布的现象。这种不均匀的电荷分布会增加线内和线间的串扰，干扰传输信号，并且信号衰减也会加剧）</li>
+</ol>
+<h4><span id="unshielded-and-shielded-twisted-pair">Unshielded and Shielded Twisted Pair</span></h4><p>电话线通常是没有壳的双绞线。更便宜，也更容易发生串扰等。</p>
+<h5><span id="具体种类">具体种类</span></h5><p>。。。感觉不是很重要。<br>就是适合频率不同的utp，分为类型3，4，5，最高频率分别为16mhz，20mhz，100mhz。不同的类型的主要区别是单位距离拧合的线缆数，数字越大越厉害。<br>以下是gpt4总结的（p12-p17）又臭又长的历史小故事，没啥用，图一乐。<br>\1. Voice-grade twisted pair cable (Category 3 UTP) prevalent in offices supports up to 16 Mbps. </p>
+<ol>
+<li>Growing data rate demands led to EIA-568-A (1995), introducing Category 5 UTP, supporting up to 100 Mbps. </li>
+<li>The primary difference: Category 5’s tighter twist pattern (0.6-0.85 cm), yielding better performance than Category 3’s 7.5-10 cm twist. </li>
+<li>Both Category 3 and 5 UTP performances include attenuation and near-end crosstalk considerations.<h2><span id="312-同轴线">3.1.2 同轴线</span></h2><h3><span id="3121-太长不看">3.1.2.1 太长不看</span></h3></li>
+<li>导线，外包括空心圆柱形导体。中空用绝缘物填充。</li>
+<li>适合高频，远距离传输（<strong>不容易受到串扰和干扰的影响</strong>）<h3><span id="3122-太长爱看不看">3.1.2.2 太长，爱看不看</span></h3><h4><span id="物理特征">物理特征</span></h4><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/Screen%20Shot%202023-06-04%20at%206.21.28%20PM.png" alt="Screen Shot 2023-06-04 at 6.21.28 PM"><br>就是两层导体画个同心圆，中间夹心了绝缘物质，最外层包裹了壳。</li>
+</ol>
+<h4><span id="应用">应用</span></h4><p>额，各种各种都可以，比较广泛的应用，还是电视线。（TV Distribution）</p>
+<ol>
+<li>电视线。（TV Distribution）</li>
+<li>长距离通话</li>
+<li>局域网</li>
+<li>Short-run computer system links</li>
+</ol>
+<h4><span id="传输特性">传输特性</span></h4><ol>
+<li>不容易受码间干扰（存在金属屏蔽），但是还是存在衰减噪声等问题。</li>
+<li>传输频率范围高。</li>
+<li>适合远距离传输，但是每隔一定距离需要设置放大器（模拟）或者再生器（数字，repeater）</li>
+</ol>
+<h2><span id="313-光纤">3.1.3 光纤</span></h2><p>后面会有专门的一章来讲光纤的传输特性，不过就算在这里篇幅其实也挺重的。</p>
+<h3><span id="3131-太长不看">3.1.3.1 太长不看</span></h3><ol>
+<li>频率好</li>
+<li>距离好</li>
+<li>价格好<br>好好好，总之啥都比前俩好，新时代福星，bnh的最爱。</li>
+</ol>
+<h3><span id="3132-太长爱看不看">3.1.3.2 太长，爱看不看</span></h3><h4><span id="物理特征">物理特征</span></h4><p>由二氧化硅或者塑料（只适合短距离）制成。<br><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/Screen%20Shot%202023-06-04%20at%206.35.04%20PM.png" alt="Screen Shot 2023-06-04 at 6.35.04 PM"></p>
+<h4><span id="应用">应用</span></h4><h4><span id="传输特征">传输特征</span></h4><h1><span id="32-无线传输媒介">3.2 无线传输媒介</span></h1><p>（p34）</p>
+<h2><span id="321-天线">3.2.1 天线</span></h2><h3><span id="定义">定义</span></h3><p>用来辐射或接受电磁能量的电导体。</p>
+<h3><span id="分类">分类</span></h3><h4><span id="isotropic-antenna">isotropic antenna</span></h4><p>天线的理想状况，在各个方向辐射的能量都相等。</p>
+<h4><span id="parabolic-reflective-antenna">Parabolic Reflective Antenna</span></h4><h3><span id="增益">增益</span></h3><p>天线增益被定义某一特定方向的能量输出。</p>
+<script type="math/tex; mode=display">
+G = \frac{4\pi A_{e}}{\lambda^2} = \frac{4\pi f^2A_{e}}{c^2}</script><p> $A_{e}$ 是天线的有效面积，对于抛物面天线而言，其有效面积大约为其口面面积的0.56倍。</p>
+<script type="math/tex; mode=display">
+A_{e} = 0.56A</script><p>结合天线的半径d，则有公式</p>
+<script type="math/tex; mode=display">
+G = \frac{4\cdot 0.56 \cdot \pi^2 d^2}{\lambda^2}</script><h3><span id="接收功率">接收功率</span></h3><script type="math/tex; mode=display">
+P_{r|dB} = P_{t|dB}  - L_{|dB}</script><p>即接收到的功率是发送功率减衰减。<br>这里有个不知道容不容易弄混的点。<br>考虑天线计算的时候大致有这么几个值（都用dB）<br>发送天线输出的功率，增益，衰减以及接收天线的功率。<br>减去衰减的那个发送功率指的是发送天线的有效辐射功率，即天线的有效面积乘以增益。用dB的话就是直接增益加输出功率。<br>所以以上的公式也可以写成：</p>
+<script type="math/tex; mode=display">
+P_{r|dB} = P_{t|dB}  +G_{|dB}- L_{|dB}</script><h2><span id="322-terrestrial-microwave">3.2.2 Terrestrial Microwave</span></h2><p>地表微波</p>
+<h3><span id="physical-description">Physical Description</span></h3><p> Terrestrial microwave utilizes <strong>parabolic dish antennas</strong> to transmit focused <strong>microwave signals</strong> for communication <strong>over land</strong>. It involves <strong>point-to-point links</strong> between antennas, often at elevated heights, and can be used for long-distance transmission or short-haul connections between buildings, bypassing traditional telecom providers.</p>
+<h3><span id="传输特性">传输特性</span></h3><p>频率通常在1-40 GHz。</p>
+<h5><span id="损耗">损耗</span></h5><script type="math/tex; mode=display">
+L = 10lg(\frac{4\pi d}{\lambda})^2 \ dB</script><p>ps:之前做大作业的时候一度分不清损耗是用这个算还是用后面的公示算。但是回过头来发现这个问题其实很简单，这个公式是考虑宏观意义上的自由空间损耗，没有任何关于“天线”的介入，考虑的对象是波本身，所以如果是涉及天线传输的系统就不应该使用这个公式（虽然基本上大部分信号由天线辐射，但这里就是不考虑天线）</p>
+<p>相比于金属传输线中损耗随着距离增加的指数级增长，微波损耗增长较慢，因此repeater的摆放间隔可以更远。</p>
+<h2><span id="323-satellite-microwave">3.2.3 Satellite Microwave</span></h2><h3><span id="物理性质">物理性质</span></h3><p>在传统的卫星通信链路中，卫星的主要作用是中继，将两个远距离的地面微波站连接链路。<br>卫星从上行频段接收信号，放大或者再生后将其从下行频段发送给地面站。一个轨道卫星可以在多个频段上工作。</p>
+<h3><span id="传输特性">传输特性</span></h3><h1><span id="33-无线传播">3.3 无线传播</span></h1><p>着重介绍不同类型下无线传播中的衰减损耗以及一些原理。<br>被天线辐射出的信号有三种传播路径：地表波，天波，line of sight。</p>
+<h2><span id="331-地表波传播">3.3.1 地表波传播</span></h2><h1><span id="34-line-of-sight-transmission">3.4 Line-of-Sight Transmission</span></h1><h2><span id="341-free-space-loss">3.4.1 Free Space Loss</span></h2><p>当接收天线和发射天线都是全向天线时，在自由空间中，其传输损耗应当为发射功率与接收功率之比：</p>
+<script type="math/tex; mode=display">
+L =\frac{P_{t}}{P_{r}} = \frac{(4\pi d)^2}{\lambda^2}</script><p>化为dB则有：</p>
+<script type="math/tex; mode=display">
+L_{dB} = 20lg(d_{km})+20lgf_{MHz}-147.56 = -20lg(\lambda)+20lgd_{KM}+21.98</script><p>如果考虑发射天线和接收天线并非全向天线，则还需要考虑它们各自的增益Gt和Gr</p>
+<script type="math/tex; mode=display">
+L_{dB} = 32.4+20lg(d_{km})+20lgf_{MHz} -G_{t|dB}-G_{r|dB}</script><p>或</p>
+<script type="math/tex; mode=display">
+L_{dB} =20lg(\lambda)+20lgd_{KM}-10lg(A_{r}A_{t})</script>
+            <div class="clearfix"></div>
+            <hr class="nogutter">
+        </div>
+        <nav class="m-pagination col-md-8 col-md-offset-2 col-sm-24" role="pagination">
+    
+    <a class="pull-left" href="../../06/chapter%205%EF%BC%9A%E9%87%91%E5%B1%9E%E4%BC%A0%E8%BE%93%E7%BA%BF%E7%90%86%E8%AE%BA/" style="float: left;">
+        ← chapter 5：金属传输线理论
+    </a>
+    
+    
+    <a class="pull-right" href="../chapter%204%20%EF%BC%9A%E5%A4%8D%E7%94%A8/">
+        chapter 4 ：复用 →
+    </a>
+    
+</nav>
+
+        <div class="col-md-8 col-md-offset-2 col-sm-24"><script type="text/javascript">
+  /**
+   * 搜狐畅言
+   */
+
+  /*
+  document.write('<div id="SOHUCS" sid="' + window.location.pathname.slice(1) + '" ></div>');
+
+  window.onload = function () {
+    (function () {
+      var appid = 'cytXXXX';
+      var conf = 'prod_xxxxxxxxxxxxxxxxx';
+      var width = window.innerWidth || document.documentElement.clientWidth;
+      var loadJs = function (d, a, id) {
+        var c = document.getElementsByTagName("head")[0] || document.head || document.documentElement;
+        var b = document.createElement("script");
+        b.setAttribute("type", "text/javascript");
+        b.setAttribute("charset", "UTF-8");
+        b.setAttribute("src", d);
+        if (id) {
+          b.setAttribute("id", id);
+        }
+        if (typeof a === "function") {
+          if (window.attachEvent) {
+            b.onreadystatechange = function () {
+              var e = b.readyState;
+              if (e === "loaded" || e === "complete") {
+                b.onreadystatechange = null;
+                a()
+              }
+            }
+          } else {
+            b.onload = a
+          }
+        }
+        c.appendChild(b)
+      };
+
+      loadJs("https://changyan.sohu.com/upload/changyan.js", function () {
+        window.changyan.api.config({
+          appid: appid,
+          conf: conf
+        })
+      });
+    })();
+  }
+  */
+
+</script>
+</div>
+    </div>
+</section>
+
+<!-- Highlight.js -->
+
+<link rel="stylesheet"
+href="//highlightjs.org/static/demo/styles/atom-one-light.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js">
+</script>
+<script>
+hljs.initHighlightingOnLoad();
+
+</script>
+
+
+      
+<!-- ============================ Footer =========================== -->
+
+<footer>
+    <div class="container">
+            <div class="copy">
+                <p>
+                    &copy; 2014<script>new Date().getFullYear()>2010&&document.write("-"+new Date().getFullYear());</script>, Content By Rin777. All Rights Reserved.
+                </p>
+                <p>Theme By <a target="_blank" rel="noopener" href="//go.kieran.top" style="color: #767D84">Kieran</a></p>
+            </div>
+            <div class="social">
+                <ul>
+                    
+                    <li><a href="https://github.com/" title="Github" target="_blank"><i class="icon-github"></i></a>&nbsp;</li>
+                    
+                    
+                    
+                    
+                    
+                </ul>
+            </div>
+            <div class="clearfix"> </div>
+        </div>
+</footer>
+
+<!-- ============================ END Footer =========================== -->
+      <!-- Load our scripts -->
+<!-- Resizable 'on-demand' full-height hero -->
+<script type="text/javascript">
+    var resizeHero = function () {
+        var hero = $(".cover,.heightblock"),
+            window1 = $(window);
+        hero.css({
+            "height": window1.height()
+        });
+    };
+
+    resizeHero();
+
+    $(window).resize(function () {
+        resizeHero();
+    });
+</script>
+<script src="/js/plugins.min.js"></script><!-- Bootstrap core and concatenated plugins always load here -->
+<script src="/js/scripts.js"></script><!-- Theme scripts -->
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$('#intro').find('img').each(function(){
+  var alt = this.alt;
+
+  if (alt){
+    $(this).after('<span class="caption" style="display:none">' + alt + '</span>');
+  }
+
+  $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox" rel="gallery" />');
+});
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+      
+            <style>
+.local-search-popup {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  background: rgba(255, 255, 255, .9);
+  color: #333;
+  z-index: 9999;
+  border-radius: 5px;
+  overflow: scroll;
+}
+#local-search-input {
+  width: 100%;
+  border: none;
+  outline: none;
+  border-bottom: 1px solid #151515;
+  background-color: initial;
+}
+.search-result-list {
+  list-style: none;
+  padding-left: 0;
+}
+.search-result-list > li {
+  margin-top: 15px;
+  border-bottom: 1px solid #ddd;
+  transition: all ease .3s;
+}
+.search-result-list > li:hover {
+  border-bottom: 1px solid gray;
+}
+.search-result-title {
+  font-size: 16px;
+}
+.search-result {
+  line-height: 20px;
+}
+.search-keyword {
+  font-weight: normal;
+  color: #c00;
+}
+
+@media (min-width: 890px) {
+  .popup-btn-close {
+    position: absolute;
+    top: 15px;
+    left: 35px;
+    border: 1px solid #151515;
+    padding: 0px 10px;
+    border-top-left-radius: 8px;
+    cursor: pointer;
+    transition: all ease .3s;
+  }
+  .popup-btn-close:hover {
+    background: #151515;
+    opacity: .9;
+    color: #fff;
+  }
+}
+@media (max-width: 890px) {
+  .popup-btn-close {
+    font-size: 0;
+    position: fixed;
+    right: 20px;
+    bottom: 50px;
+    width: 50px;
+    height: 50px;
+    background: #fff;
+    border-radius: 50%;
+    box-shadow: 1px 1px 5px #888;
+    cursor: pointer;
+  }
+  .popup-btn-close::after {
+    content: '←';
+    color: #151515;
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-size: 20px;
+    width: 100%;
+    height: 100%;
+    line-height: 50px;
+    text-align: center;
+  }
+}
+</style>
+
+<div class="popup search-popup local-search-popup">
+  <span class="popup-btn-close">
+    ESC
+  </span>
+  <div class="container">
+    <div class="col-md-8 col-md-offset-2">
+      <div class="local-search-header clearfix">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="local-search-input-wrapper">
+          <input autocomplete="off" placeholder="Search..." type="text" id="local-search-input">
+        </div>
+      </div>
+      <div id="local-search-result"></div>
+    </div>
+  </div>
+</div>
+
+<script src="/js/ziploader.js"></script>
+
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.json";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').fadeOut(300);
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $('.popup').fadeIn(300);
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // get search zip version
+    $.get('/searchVersion.txt?t=' + (+new Date()), function(res) {
+      if (localStorage.getItem('searchVersion') !== res) {
+        localStorage.setItem('searchVersion', res);
+        initSearchJson();
+      }
+    });
+
+    function initSearchJson () {
+      initLoad(['/search.zip'], {
+        loadOptions: {
+          success: function(obj) {
+            localStorage.setItem('searchJson', obj['search.json'])
+          },
+          error: function(e) {
+            return console.log(e)
+          }
+        },
+        returnOptions: {
+          'json': TYPE_TEXT
+        },
+        mimeOptions:{
+          'json':'application/json'
+        }
+      })
+    }
+
+
+    // search function;
+    var searchFunc = function(search_id, content_id) {
+      'use strict';
+
+      isfetched = true;
+      var datas = JSON.parse(localStorage.getItem('searchJson'));
+      console.log(search_id)
+      var input = document.getElementById(search_id);
+      var resultContent = document.getElementById(content_id);
+      var inputEventFunction = function() {
+        var searchText = input.value.trim().toLowerCase();
+        var keywords = searchText.split(/[\s\-]+/);
+        if (keywords.length > 1) {
+          keywords.push(searchText);
+        }
+        var resultItems = [];
+        if (searchText.length > 0) {
+          // perform local searching
+          datas.forEach(function(data) {
+            var isMatch = false;
+            var hitCount = 0;
+            var searchTextCount = 0;
+            var title = data.title ? data.title.trim() : '';
+            var titleInLowerCase = title.toLowerCase();
+            var content = data.content ? data.content.trim().replace(/<[^>]+>/g,"") : '';
+            var contentInLowerCase = content.toLowerCase();
+            var articleUrl = decodeURIComponent(data.url);
+            var indexOfTitle = [];
+            var indexOfContent = [];
+            // only match articles with not empty titles
+            keywords.forEach(function(keyword) {
+              function getIndexByWord(word, text, caseSensitive) {
+                var wordLen = word.length;
+                if (wordLen === 0) {
+                  return [];
+                }
+                var startPosition = 0, position = [], index = [];
+                if (!caseSensitive) {
+                  text = text.toLowerCase();
+                  word = word.toLowerCase();
+                }
+                while ((position = text.indexOf(word, startPosition)) > -1) {
+                  index.push({position: position, word: word});
+                  startPosition = position + wordLen;
+                }
+                return index;
+              }
+
+              indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+              indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+            });
+            if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+              isMatch = true;
+              hitCount = indexOfTitle.length + indexOfContent.length;
+            }
+
+            // show search results
+
+            if (isMatch) {
+              // sort index by position of keyword
+
+              [indexOfTitle, indexOfContent].forEach(function (index) {
+                index.sort(function (itemLeft, itemRight) {
+                  if (itemRight.position !== itemLeft.position) {
+                    return itemRight.position - itemLeft.position;
+                  } else {
+                    return itemLeft.word.length - itemRight.word.length;
+                  }
+                });
+              });
+
+              // merge hits into slices
+
+              function mergeIntoSlice(text, start, end, index) {
+                var item = index[index.length - 1];
+                var position = item.position;
+                var word = item.word;
+                var hits = [];
+                var searchTextCountInSlice = 0;
+                while (position + word.length <= end && index.length != 0) {
+                  if (word === searchText) {
+                    searchTextCountInSlice++;
+                  }
+                  hits.push({position: position, length: word.length});
+                  var wordEnd = position + word.length;
+
+                  // move to next position of hit
+
+                  index.pop();
+                  while (index.length != 0) {
+                    item = index[index.length - 1];
+                    position = item.position;
+                    word = item.word;
+                    if (wordEnd > position) {
+                      index.pop();
+                    } else {
+                      break;
+                    }
+                  }
+                }
+                searchTextCount += searchTextCountInSlice;
+                return {
+                  hits: hits,
+                  start: start,
+                  end: end,
+                  searchTextCount: searchTextCountInSlice
+                };
+              }
+
+              var slicesOfTitle = [];
+              if (indexOfTitle.length != 0) {
+                slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+              }
+
+              var slicesOfContent = [];
+              while (indexOfContent.length != 0) {
+                var item = indexOfContent[indexOfContent.length - 1];
+                var position = item.position;
+                var word = item.word;
+                // cut out 100 characters
+                var start = position - 20;
+                var end = position + 80;
+                if(start < 0){
+                  start = 0;
+                }
+                if (end < position + word.length) {
+                  end = position + word.length;
+                }
+                if(end > content.length){
+                  end = content.length;
+                }
+                slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+              }
+
+              // sort slices in content by search text's count and hits' count
+
+              slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                  return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                  return sliceRight.hits.length - sliceLeft.hits.length;
+                } else {
+                  return sliceLeft.start - sliceRight.start;
+                }
+              });
+
+              // select top N slices in content
+
+              var upperBound = parseInt('2');
+              if (upperBound >= 0) {
+                slicesOfContent = slicesOfContent.slice(0, upperBound);
+              }
+
+              // highlight title and content
+
+              function highlightKeyword(text, slice) {
+                var result = '';
+                var prevEnd = slice.start;
+                slice.hits.forEach(function (hit) {
+                  result += text.substring(prevEnd, hit.position);
+                  var end = hit.position + hit.length;
+                  result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                  prevEnd = end;
+                });
+                result += text.substring(prevEnd, slice.end);
+                return result;
+              }
+
+              var resultItem = '';
+
+              if (slicesOfTitle.length != 0) {
+                resultItem += "<li><a target='_blank' href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+              } else {
+                resultItem += "<li><a target='_blank' href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+              }
+
+              slicesOfContent.forEach(function (slice) {
+                resultItem += "<a target='_blank' href='" + articleUrl + "'>" +
+                  "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                  "...</p>" + "</a>";
+              });
+
+              resultItem += "</li>";
+              resultItems.push({
+                item: resultItem,
+                searchTextCount: searchTextCount,
+                hitCount: hitCount,
+                id: resultItems.length
+              });
+            }
+          })
+        };
+        if (keywords.length === 1 && keywords[0] === "") {
+          resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+        } else if (resultItems.length === 0) {
+          resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+        } else {
+          resultItems.sort(function (resultLeft, resultRight) {
+            if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+              return resultRight.searchTextCount - resultLeft.searchTextCount;
+            } else if (resultLeft.hitCount !== resultRight.hitCount) {
+              return resultRight.hitCount - resultLeft.hitCount;
+            } else {
+              return resultRight.id - resultLeft.id;
+            }
+          });
+          var searchResultList = '<ul class=\"search-result-list\">';
+          resultItems.forEach(function (result) {
+            searchResultList += result.item;
+          })
+          searchResultList += "</ul>";
+          resultContent.innerHTML = searchResultList;
+        }
+      }
+
+      if ('auto' === 'auto') {
+        input.addEventListener('input', inputEventFunction);
+      } else {
+        $('.search-icon').click(inputEventFunction);
+        input.addEventListener('keypress', function (event) {
+          if (event.keyCode === 13) {
+            inputEventFunction();
+          }
+        });
+      }
+
+      // remove loading animation
+      $('body').css('overflow', '');
+
+      proceedsearch();
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        $('.sb-close').click();
+        searchFunc('local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+      
+      
+
+<!--
+
+<link rel="stylesheet" href="/dist/APlayer.min.css">
+<div id="aplayer"></div>
+<script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+<meting-js
+      server="netease"
+      type="playlist"
+      id="4904272454">
+</meting-js>
+-->
+
+</body>
+
+</html>
+
+
+
+
+
+
+

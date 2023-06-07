@@ -78,6 +78,8 @@
 				    
 				    <li><a href="/categories/CSAPP-LAB/" class="animsition-link">CSAPP LAB<small>(1)</small></a></li>
 				    
+				    <li><a href="/categories/EE/" class="animsition-link">EE<small>(5)</small></a></li>
+				    
 				    <li><a href="/categories/EN/" class="animsition-link">EN<small>(1)</small></a></li>
 				    
 				    <li><a href="/categories/Linux/" class="animsition-link">Linux<small>(1)</small></a></li>
@@ -200,6 +202,206 @@
 
 <section id="intro">
     <div class="container">
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2022/04/27/week9_3.1_3x17/">pwnable - 3x17</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-04-27T03:44:23.414Z" itemprop="datePublished">
+          2022-04-27
+      </time>
+    
+    
+    | 
+    <a href='/tags/STACK-Other/'>STACK - Other</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+    
+overview
+​        轻松快乐的栈题，没有canary和pie那估计就是rop力。
+
+​        怪耶。
+​        居然是静态链接捏，那就不是ret2libc力。
+
+Reverse​    开幕雷击
+
+​    这是啥？
+​    秉持着看不懂就假装没有看到的原则，先看看得懂的地方。
+12345678910result = ++::result;if ( ::result == 1 )&#123;
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/04/27/week9_3.1_3x17/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2022/04/24/week8_7.1_dubblesort/">pwnable - doubblesort</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-04-24T07:07:29.428Z" itemprop="datePublished">
+          2022-04-24
+      </time>
+    
+    
+    | 
+    <a href='/tags/STACK-Other/'>STACK - Other</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+     
+overview
+​    
+逆向​    又是排序。但是这个是个纯纯的栈题，并且保护全开，那就是不能rop，估计又是要逆清然后找漏洞捏。照我之前做的那个快排的经验，排序本身应该没有漏洞，漏洞出在num地址的溢出。
+main12345678910111213141516171819202122232425262728293031323334353637383940414243int __cdecl main(int arg
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/04/24/week8_7.1_dubblesort/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2022/04/16/heap_challenge_*ctf_2022_examination/">examination</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-04-16T07:37:48.671Z" itemprop="datePublished">
+          2022-04-16
+      </time>
+    
+    
+    | 
+    <a href='/tags/HEAP-ChunkOverlapping/'>HEAP - ChunkOverlapping</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+     
+overivew
+​        其实把程序简化来看的话就是一道比较常规的chunk overlapping，漏洞很明显，但是又不完全明显，需要先认真把程序逆清楚。在pwn题的几个环节中，逆向确定漏洞点，分析漏洞寻找思路，写exp布置堆风水，调试扣细节，我觉得最头疼的可能就是逆向了，虽然过程也许不难，但是真的很bewilder。
+​        其实这个程序看似非常复杂，菜单就写了十五分钟，但逆来逆去最关键居然的还是那
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/04/16/heap_challenge_*ctf_2022_examination/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2022/04/15/sum_heap知识点总结-2022-3～4/">heap知识点总结</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-04-14T16:00:00.000Z" itemprop="datePublished">
+          2022-04-15
+      </time>
+    
+    
+    | 
+    <a href='/tags/Generalization/'>Generalization</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+     
+​        对于这些天题目的一些小归纳。目前的涵盖范围是高级house技术以及高版本glibc应用以外的所有题型。
+逆向大致​        一般来说大多数菜单题都会申请的比如说note定义结构体，当然也有那种纯纯利用malloc出的ptr进行读写操作的，但是比较少。
+结构体逆向​        首先需要利用眼力，想 象 力和动调逆出这个结构体里的字段，以及其占用的size，在内存空间的布局。如果足够闲也可以在ida
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/04/15/sum_heap知识点总结-2022-3～4/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2022/04/13/vivi_2022年三月/">三月</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-04-13T03:35:35.186Z" itemprop="datePublished">
+          2022-04-13
+      </time>
+    
+    
+    | 
+    <a href='/tags/vivi/'>vivi</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        Here's something encrypted, password is required to continue reading.
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/04/13/vivi_2022年三月/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
         
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
@@ -392,205 +594,6 @@ add​        最多申请三个house。并且在申请house开始为每个house
                     
                     <p class="pull-right readMore">
                         <a href="/2022/04/10/week6-7.2/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2022/04/10/heap_learning_house_of_orange/">house_of_orange trick学习</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2022-04-10T08:08:15.730Z" itemprop="datePublished">
-          2022-04-10
-      </time>
-    
-    
-    | 
-    <a href='/tags/HEAP-House-Of-Orange/'>HEAP - House Of Orange</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-     
-​        多年以后，秃头还记得第一次听梅丽桑德与佩利亚斯的那个下午，德彪西的抽象艺术直接把我整麻了。虽然德彪西真的很好听，但是做题的时候如果一直听德彪西，不协和音程与大量全音阶的使用会让整个人都会变得抽象魔幻起来，最后越做越emo。
-​        此刻因为听了一天抽象音乐而变得呆滞的秃头正打算学习一些轻松愉快的知识来缓解沉闷的气氛，就比如这个久仰大名但是一直没有接触的house of orange。
-​    
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2022/04/10/heap_learning_house_of_orange/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2022/04/10/ciscn_2021_silverwolf/">SilverWolf</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2022-04-10T00:54:01.043Z" itemprop="datePublished">
-          2022-04-10
-      </time>
-    
-    
-    | 
-    <a href='/tags/HEAP-Seccomp/'>HEAP - Seccomp</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-     
-overview​        这个题在程序上与lonewolf只有一个区别就是开了沙箱，需要orw，但是堆上的seccomp和栈上的利用难度可以说是毫无关系，因为之前已经做了lonelywolf，并且从来没有做过堆上的orw，漏洞点就不看了，只关注于orw的实现吧。
-
-​        init()过程中开启了seccomp，禁用了除orw以外的所有系统调用。
-利用orw前的一些操作​        orw part之
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2022/04/10/ciscn_2021_silverwolf/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2022/04/09/ciscn_2019_daliy/">daliy(不想做了)</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2022-04-09T08:20:21.957Z" itemprop="datePublished">
-          2022-04-09
-      </time>
-    
-    
-    | 
-    <a href='/tags/HEAP-Fastbin-Attack/'>HEAP - Fastbin Attack</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-			
-				console.error("ReferenceError: value is not defined");
-			     
-Overview
-​        还可以。估计是个中等题。libc应该还是2.23。不得不说2019的ciscn初赛pwn确实是没有什么难度的。
-Readd​        第一次申请chunk时，操作如下：
-123456789if ( !v0 )        &#123;        
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2022/04/09/ciscn_2019_daliy/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2022/04/09/ciscn_2019_baby_pwn/">baby_pwn</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2022-04-09T07:56:00.647Z" itemprop="datePublished">
-          2022-04-09
-      </time>
-    
-    
-    | 
-    <a href='/tags/STACK-ret2dlreslove/'>STACK - ret2dlreslove</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-			
-				console.error("ReferenceError: value is not defined");
-			     
-overview
-​        怪椰。
-re123456ssize_t vuln()&#123;  char buf[40]; // [esp+0h] [ebp-28h] BYREF  return read(0, buf, 0x100u);&#125;
-​    
-蚌埠住了，ret2dl
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2022/04/09/ciscn_2019_baby_pwn/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2022/04/08/幻想曲-02-春夜/">春夜</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2022-04-07T17:25:10.897Z" itemprop="datePublished">
-          2022-04-08
-      </time>
-    
-    
-    | 
-    <a href='/tags/幻想曲/'>幻想曲</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        Here's something encrypted, password is required to continue reading.
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2022/04/08/幻想曲-02-春夜/">Read More...</a>
                     </p>
                     
                 </div>

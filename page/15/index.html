@@ -78,6 +78,8 @@
 				    
 				    <li><a href="/categories/CSAPP-LAB/" class="animsition-link">CSAPP LAB<small>(1)</small></a></li>
 				    
+				    <li><a href="/categories/EE/" class="animsition-link">EE<small>(5)</small></a></li>
+				    
 				    <li><a href="/categories/EN/" class="animsition-link">EN<small>(1)</small></a></li>
 				    
 				    <li><a href="/categories/Linux/" class="animsition-link">Linux<small>(1)</small></a></li>
@@ -200,6 +202,207 @@
 
 <section id="intro">
     <div class="container">
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2022/01/29/pwn.college_Assembly_Refresher/">Assembly_Refresher</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-01-29T13:51:29.070Z" itemprop="datePublished">
+          2022-01-29
+      </time>
+    
+    
+    | 
+    <a href='/tags/pwncollege/'>pwncollege</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+     
+Level1需要设置*rdi = 0x1337，
+如果是按照目的意思程序的汇编代码长这样子：
+12345.section .text    .intel_syntax noprefix    .global _start    _start :        mov rdi, 0x1337
+但是可以直接用pwntools传输mov rdi, 0x1337这一句。
+12345678910111213#!/usr/bin/en
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/01/29/pwn.college_Assembly_Refresher/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2022/01/29/pwn.college_Shellcode_Injection/">Shellcode_Injection</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-01-29T09:37:52.632Z" itemprop="datePublished">
+          2022-01-29
+      </time>
+    
+    
+    | 
+    <a href='/tags/pwncollege/'>pwncollege</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+     
+​        整个专题其实就是一个shellcode编写的小练习，并不需要自己寻找漏洞点，写好shellcode直接注入就行。
+​        如果要将服务器的文件传输到本地的话可以使用:
+1scp -i key -r hacker@dojo.pwn.college:/challenge [本地路径]
+Level1​        可以用pwntools的shellcraft模块，但是也可以手写shellcode。
+
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/01/29/pwn.college_Shellcode_Injection/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2022/01/17/pwn.college_Program_interaction/">Program_interaction</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-01-17T13:30:41.758Z" itemprop="datePublished">
+          2022-01-17
+      </time>
+    
+    
+    | 
+    <a href='/tags/pwncollege/'>pwncollege</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+     
+「前面不太记得了，从level3记起」
+level3./embryoio_level3  xkbdyoisnx    
+Level4export jouixn = xxx
+Level5​    一个标准输入重定向的考察，
+./embryoio_level5 &lt; /tmp/mihsjr
+​        还需要编辑mihsjr的内容为给的密码。
+Level6​        一个输出重定向，创建对应文件./embryo
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/01/17/pwn.college_Program_interaction/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2021/12/11/heap_unsortedbin leak/">unsortedbinleak</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2021-12-11T11:32:01.748Z" itemprop="datePublished">
+          2021-12-11
+      </time>
+    
+    
+    | 
+    <a href='/tags/HEAP-Unsortedbin/'>HEAP - Unsortedbin</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        ​    一个简单的trick。
+​        并且在trick就是tcache，接下来就是刷题熟练，最后再简单学习一下largin bin和small bin的利用。
+​        unsortedbin  由双向循环链表管理，表头为main_arena，所以表末尾的chunk的fd会指回main_arena，这样我们就获得了main_arena结构体内部的的地址，通过调试我们就能得到main_arena的真正的地址，并且ma
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2021/12/11/heap_unsortedbin leak/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2021/12/10/mess_ida 7.0 for mac疑难杂症： positive sp value has been found/">positive sp value has been found</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2021-12-10T08:05:39.212Z" itemprop="datePublished">
+          2021-12-10
+      </time>
+    
+    
+    | 
+    <a href='/tags/reverse/'>reverse</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+     
+0）​        自从抛弃虚拟机，利用ida for mac+pwndocker实现完全mac环境以后，深觉优雅的同时，也遇见了不少坑。
+​        其中ida的坑更是坑人于无形之中。因为如果不打开win的7.5（甚至7.6）做对比，你甚至不知道你遇见的一些奇怪的东西，是7.0 mac版特有的，已经被优化了的坑，还是自身逆向水平问题。
+​        作为一个逆向废物，7.0 for mac属实是给本来就逆不出
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2021/12/10/mess_ida 7.0 for mac疑难杂症： positive sp value has been found/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
         
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
@@ -401,209 +604,6 @@ Seccomp的模式以及参数比较多，这里只
                     
                     <p class="pull-right readMore">
                         <a href="/2021/11/11/stack_learning_Seccomp机制学习/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2021/11/11/mess_pwndocker的pwn题体验（下）/">pwndocker的pwn题体验（下</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2021-11-10T20:04:03.336Z" itemprop="datePublished">
-          2021-11-11
-      </time>
-    
-    
-    | 
-    <a href='/tags/mess/'>mess</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-     
-0）​        哈哈，还是连续剧，我也想不到捏。我也不想捏。
-1）问题​        pwndocker体验了快一周，目前来说主要问题有这几个：
-
-启动tmux进行调试时机器发热严重，风扇狂转
-
-挂载文件夹内文件不同步
-
-快照的制作相对麻烦（时间久，步骤多）
-
-打开需要输入命令，有点烦。
-​    想了怪久的，就想到这三点，第三点纯属鸡蛋里挑骨头，主要pwndocker体验确实比较优雅，为了美观用vim编辑exp我
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2021/11/11/mess_pwndocker的pwn题体验（下）/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2021/11/07/stack_learningsrop学习/">SROP学习</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2021-11-07T11:11:19.208Z" itemprop="datePublished">
-          2021-11-07
-      </time>
-    
-    
-    | 
-    <a href='/tags/STACK-SROP/'>STACK - SROP</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-     
-1)前言​        在看完csapp的异常控制流之后，对于信号以及系统调用有了更加深入的了解，故借此机会探明SROP，这个本身并不复杂的知识点。
-2）SROP原理​         当用户向内核发起signal时，此时系统切换为内核态，并且由内核保存进程的上下文（通常是一些寄存器状态）至用户栈，然后切换回用户态，执行信号处理程序。程序执行完毕后，再次切换成内核态，将保存的寄存器状态恢复后返回用户态。
-​       
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2021/11/07/stack_learningsrop学习/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2021/11/02/mess_pwndocker的pwn题体验（上）/">pwndocker的pwn题体验（上）</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2021-11-02T14:54:29.012Z" itemprop="datePublished">
-          2021-11-02
-      </time>
-    
-    
-    | 
-    <a href='/tags/pwnable/'>pwnable</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-     
-1）前言​        之前看到star大哥开始学pwn力，而且是使用的iterm+pwndocker的环境，觉得非常优雅，便一直想尝试一下，正好最近在研究docker的使用，可以拿来试一试。并且pwndocker也可以十分优雅地指定我们环境的glibc版本，所以是一个非常值得尝试的事。
-2）pwndocker启动​        首先是如何build pwndocker的问题。
-​        如果直接docker 
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2021/11/02/mess_pwndocker的pwn题体验（上）/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2021/10/31/mess_基于ctf pwn环境的docker配置/">基于ctf pwn环境的docker搭建</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2021-10-31T15:04:01.604Z" itemprop="datePublished">
-          2021-10-31
-      </time>
-    
-    
-    | 
-    <a href='/tags/mess/'>mess</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-     
-​    最近为了校内的萌新赛，需要出一些简单的pwn题，然后把它们搓进docker。虽然步骤并不是非常复杂，而且有现成的框架，但我发现如果纯粹按照网上框架的一件脚本运行的话，遇到报错根本无法解决，所以看图说话之外我还需要较为系统地学习docker知识。
-docker基础架构​    对于docker，在了解基础命令之前我们需要了解的就是，容器以及虚拟化的大致概念。
-1.1    为什么要有docker？​    一个程序
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2021/10/31/mess_基于ctf pwn环境的docker配置/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2021/10/29/mess_typora主题配置的一些心得/">typora主题配置的一些心得</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2021-10-29T15:20:57.419Z" itemprop="datePublished">
-          2021-10-29
-      </time>
-    
-    
-    | 
-    <a href='/tags/mess/'>mess</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-     
-1）​    由于看腻了typora原主题的python高亮的丑兮兮的屎黄色注释，决定换个主题。然而找遍整个主题列表，并没有我看得上的主题。本来打算作罢，但想起最近因为写小程序，学了一些简单的css，是不是可以尝试一下修改某些主题的css文件，打造一个自己喜欢的主题捏。
-2）​    在下载主题的过程中我大致了解了一下typora主题开发的大致内容，其实主体感觉就是css（除了css，就是各种需要的字体。
-​    这里以
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2021/10/29/mess_typora主题配置的一些心得/">Read More...</a>
                     </p>
                     
                 </div>

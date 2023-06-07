@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<!--[if lte IE 8 ]>
+<html class="ie" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US">
+<![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!-->
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
+<!--<![endif]-->
+
+<head>
+
+  <title>chapter 2 ：数据传输 | Rin</title>
+  <!-- Meta data -->
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content="Rin">
+    <meta name="author" content="Rin777">
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+
+    <!-- Favicon, (keep icon in root folder) -->
+    <link rel="Shortcut Icon" href="/img/favicon.ico" type="image/ico">
+
+    <link rel="alternate" href="/atom.xml" title="Rin" type="application/atom+xml">
+    <link rel="stylesheet" href="/css/all.css" media="screen" type="text/css">
+    
+
+    <!--[if IE 8]>
+    <link rel="stylesheet" type="text/css" href="/css/ie8.css" />
+    <![endif]-->
+
+    <!-- jQuery | Load our jQuery, with an alternative source fallback to a local version if request is unavailable -->
+    <script src="/js/jquery-1.11.1.min.js"></script>
+    <script>window.jQuery || document.write('<script src="js/jquery-1.11.1.min.js"><\/script>')</script>
+
+    <!-- Load these in the <head> for quicker IE8+ load times -->
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="/js/html5shiv.min.js"></script>
+    <script src="/js/respond.min.js"></script>
+    <![endif]-->
+
+  
+  
+  
+
+  <style>.col-md-8.col-md-offset-2.opening-statement img{display:none;}</style>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><link rel="stylesheet" href="/css/prism.css" type="text/css"></head>
+
+<!--
+<body class="post-template">
+-->
+<body id="index" class="lightnav animsition">
+      <!-- ============================ Off-canvas navigation =========================== -->
+
+    <div class="sb-slidebar sb-right sb-style-overlay sb-momentum-scrolling">
+        <div class="sb-close" aria-label="Close Menu" aria-hidden="true">
+            <img src="/img/close.png" alt="Close"/>
+        </div>
+        <!-- Lists in Slidebars -->
+        <ul class="sb-menu">
+            <li><a href="/" class="animsition-link" title="Home">Home</a></li>
+            <li><a href="/archives" class="animsition-link" title="archive">archives</a></li>
+            <!-- Dropdown Menu -->
+			 
+            
+        	<li>
+        		<a class="sb-toggle-submenu">Categories<span class="sb-caret"></span></a>
+            	<ul class="sb-submenu">
+				  	
+				    <li><a href="/categories/AUDITION/" class="animsition-link">AUDITION<small>(23)</small></a></li>
+				    
+				    <li><a href="/categories/Binary-security/" class="animsition-link">Binary_security<small>(101)</small></a></li>
+				    
+				    <li><a href="/categories/CSAPP-LAB/" class="animsition-link">CSAPP LAB<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/EE/" class="animsition-link">EE<small>(5)</small></a></li>
+				    
+				    <li><a href="/categories/EN/" class="animsition-link">EN<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/Linux/" class="animsition-link">Linux<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/ML/" class="animsition-link">ML<small>(36)</small></a></li>
+				    
+				    <li><a href="/categories/PWN-COLLEGE/" class="animsition-link">PWN.COLLEGE<small>(1)</small></a></li>
+				    
+				</ul>
+        	</li>
+			
+            
+            <li>
+                <a class="sb-toggle-submenu">Links<span class="sb-caret"></span></a>
+                <ul class="sb-submenu">
+                    
+                    <li><a target="_blank" rel="noopener" href="https://weibo.com/u/1682818607" class="animsition-link">没有营养的推广页</a></li>
+                    
+                    <li><a target="_blank" rel="noopener" href="http://www.2323bb.ltd" class="animsition-link">cc_sakura</a></li>
+                    
+                    <li><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_36995313" class="animsition-link">F@LLe0</a></li>
+                    
+                    <li><a target="_blank" rel="noopener" href="https://yyz9.cn" class="animsition-link">YYZ</a></li>
+                    
+                    <li><a target="_blank" rel="noopener" href="https://www.star123.top" class="animsition-link">star</a></li>
+                    
+                </ul>
+            </li>
+            
+        </ul>
+        <!-- Lists in Slidebars -->
+        <ul class="sb-menu secondary">
+            
+            <li><a href="javascript:;" class="popup-trigger" title="Search"><span class="search-icon"></span>Search</a></li>
+            
+            <li><a href="/about.html" class="animsition-link" title="about">About</a></li>
+            <li><a href="/atom.xml" class="animsition-link" title="rss">RSS</a></li>
+        </ul>
+    </div>
+    
+    <!-- ============================ END Off-canvas navigation =========================== -->
+
+    <!-- ============================ #sb-site Main Page Wrapper =========================== -->
+
+    <div id="sb-site">
+        <!-- #sb-site - All page content should be contained within this id, except the off-canvas navigation itself -->
+
+        <!-- ============================ Header & Logo bar =========================== -->
+
+        <div id="navigation" class="navbar navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="container">
+                    <!-- Nav logo -->
+                    <div class="logo">
+                        <a href="/" title="Logo" class="animsition-link">
+                         <img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/IMG_0282.jpg" alt="Logo" width="35px;"/> 
+                        </a>
+                    </div>
+                    <!-- // Nav logo -->
+                    <!-- Info-bar -->
+                    <nav>
+                        <ul class="nav">
+                            <li><a href="/" class="animsition-link">Rin</a></li>
+                            <li class="nolink"><span>Always </span>Creative.</li>
+                            
+                            <li><a href="https://github.com/" title="Github" target="_blank"><i class="icon-github"></i></a></li>
+                            
+                            
+                            
+                            
+                            
+                            <li class="nolink"><span>Welcome!</span></li>
+                        </ul>
+                    </nav>
+                    <!--// Info-bar -->
+                </div>
+                <!-- // .container -->
+                <div class="learnmore sb-toggle-right">More</div>
+                <button type="button" class="navbar-toggle menu-icon sb-toggle-right" title="More">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar before"></span>
+                <span class="icon-bar main"></span>
+                <span class="icon-bar after"></span>
+                </button>
+            </div>
+            <!-- // .navbar-inner -->
+        </div>
+
+        <!-- ============================ Header & Logo bar =========================== -->
+
+
+      
+<section id="intro">
+    <div class="container">
+        <div class="row col-md-offset-2">
+            <div class="col-md-8">
+    			<span class="post-meta">
+      <time datetime="2023-05-29T13:05:01.344Z" itemprop="datePublished">
+          2023-05-29
+      </time>
+    
+    
+    | 
+    <a href='/tags/电信传输/'>电信传输</a>
+    
+    
+</span>
+                <h1>chapter 2 ：数据传输</h1>
+            </div>
+        </div>
+        <div class="col-md-8 col-md-offset-2">
+      		<p>对于又臭又长的ppt以及bnh上课内容（依靠我仅存的抽象笔记）的关键提取</p>
+<p>部分内容多参照gpt3.5+gpt4以及[<a target="_blank" rel="noopener" href="https://l61012345.top/2022/06/08/学习笔记/传输线/知识点整理/#时延失真-色散]），存在一定hallucination但是概率不是特别大。">https://l61012345.top/2022/06/08/学习笔记/传输线/知识点整理/#时延失真-色散]），存在一定hallucination但是概率不是特别大。</a></p>
+<h1><span id="key-points">key points</span></h1><p>两面ppt（3-4）<br>整个ppt内容分为四个部分；</p>
+<ol>
+<li>任何信息都由信号传递</li>
+<li>信号为频率的组合，衡量频率的关键参数是带宽</li>
+<li>传输设备中主要考虑的问题是传输损耗，尤其是衰减。</li>
+<li>设计传输设备时需要注意四个点：信号带宽、数据率、噪声、错误等级。</li>
+</ol>
+<h1><span id="21-传输中的术语">2.1 传输中的术语</span></h1><h3><span id="211-guided-or-unguided">2.1.1 guided or unguided</span></h3><p>可以简单地理解为有线or无线。</p>
+<h4><span id="2111-guided">2.1.1.1 guided</span></h4><p>有线传输</p>
+<h5><span id="1point2point">1）point2point</span></h5><p>点对点，即direct link在guided传输下的体现</p>
+<h5><span id="2multipoint">2）multipoint</span></h5><p>多对一，两个设备以上的媒体共享同一个设备。</p>
+<h4><span id="2112-direct-link">2.1.1.2 direct link</span></h4><p>两个终端互相传输，不存在中间设备。无论guided或unguided都可以使用direct link。</p>
+<h4><span id="2113-unguided">2.1.1.3 unguided</span></h4><p>无线传输</p>
+<h4><span id="2114">2.1.1.4</span></h4><h5><span id="1-simplex">1） simplex</span></h5><p>任何时间内信号只沿一个方向传递，i.e：固定A终端发B终端收</p>
+<h5><span id="2-half-duplex">2） half-duplex</span></h5><p>同一时间内信号只沿一个方向传递，但不同时间内方向可以颠倒。i.e：t1 A发B收，t2B发A收</p>
+<h5><span id="3-full-duplex">3） full-duplex</span></h5><p>任何时间内终端都可以同时收发信息。</p>
+<h3><span id="212-带宽-频谱-频率">2.1.2 带宽 频谱 频率</span></h3><p>信号延伸的整个频谱范围为绝对带宽，能量集中的范围为相对带宽。<br>根据香农公示及奈奎斯特采样定理可推出带宽越大，该系统的传输的数据率越大。</p>
+<h1><span id="22-模拟amp数字信号传输">2.2 模拟&amp;数字信号传输</span></h1><p>注意区分传输与信号，belike 模拟传输不等于模拟信号传输</p>
+<h2><span id="220-模拟amp数字信号">2.2.0 模拟&amp;数字信号</span></h2><p>没啥好说的，注意几个点：</p>
+<ol>
+<li>数字信号无法在非导向传输媒介中传输，传输成本便宜，但更容易受到衰减和噪声的影响（因为噪声可能会将0干扰为1或1干扰为0）</li>
+<li>由于数字信号更容易受到影响，因此只适合进行短距离传播，所以需要使用转发器。</li>
+</ol>
+<p>此外，bnh多次强调要记一下语音信号的频率在300-3400Hz。。。</p>
+<h2><span id="221-数字传输">2.2.1 数字传输</span></h2><p>几个特点：</p>
+<ol>
+<li>数字传输只传输比特流（二进制）。</li>
+<li>由于前文提到的数字传输容易受干扰，所以通常只能传输较短距离。为了使距离增加，需要加入repeaters，用来对信号检测及再生。</li>
+</ol>
+<h2><span id="222-模拟传输">2.2.2 模拟传输</span></h2><p>ppt主要讲了三个特点：</p>
+<ol>
+<li>模拟传输不关心数据的类型（是数字信号or模拟信号）</li>
+<li>模拟传输会收受到衰减的影响，因此需要在系统中通过放大器增强信号，然而放大器同时也会增强噪声。</li>
+<li>虽然放大器对信号和噪声多次放大，但总的来说模拟传输对干扰的抵抗力比较好，数据还是能保持较好的可读性。（数字传输则反之）</li>
+<li>如果模拟传输的是数字信号，也可以在系统中加入repeaters，代替放大器，获得更加干净的信号。</li>
+</ol>
+<h2><span id="223-总结">2.2.3 总结</span></h2><p>主要讲了模拟和数字传输的特点，最后一张ppt说大部分的电信设备都是基于数字传输，由于以下几个特点：</p>
+<ol>
+<li>科技进步，数字传输越来越便宜好用</li>
+<li>用repeaters，保证数据完整。</li>
+<li>多路复用，高效高容量</li>
+<li>提高安全和隐私</li>
+</ol>
+<h1><span id="23-传输损耗">2.3 传输损耗</span></h1><h2><span id="230">2.3.0</span></h2><p>传输损耗主要有</p>
+<ol>
+<li>衰减</li>
+<li>失真</li>
+<li>噪声</li>
+</ol>
+<h2><span id="231-衰减">2.3.1 衰减</span></h2><p>对于导向传输，衰减通常可以被视作为一个与距离成正比的数，但对于非导向传输，衰减的计算相对复杂得多。</p>
+<h3><span id="导致的问题">导致的问题</span></h3><p>由于衰减的存在，在设计传输系统时必要要考虑如下三个问题：</p>
+<ol>
+<li>保证信号能够传输足够长。</li>
+<li>保证信号在接受时有足够的能量以被检测到。</li>
+<li>衰减是随着频率变化的，因此要考虑到信号的频率对衰减的影响。</li>
+</ol>
+<h3><span id="解决方式">解决方式</span></h3><p>针对三个问题列出对应的解决方案：<br>1和2都可以通过每隔一段特定距离后设置repeaters或放大器来解决，但是需要注意生成的信号不能太小也不能太大，太大会导致接收到的信号失真。<br>问题3对于模拟信号尤为显著，因为模拟信号的频率不同。解决的方法是equalizing attenuation across a band of frequencies，额。均分带宽频率的衰减。举例：对于电话线，加载线圈从而改变线路的电性质，使衰减变得平滑。或者利用放大器，更多地放大高频而不是低频。</p>
+<h3><span id="衰减量化">衰减量化</span></h3><p>相对衰减值：<br>以1000Hz时的功率为参照。</p>
+<script type="math/tex; mode=display">
+N_{f} = -10lg\frac{P_{f}}{P_{1000}}</script><h2><span id="232-失真时延失真">2.3.2 失真（时延失真）</span></h2><p>时延失真(delay distortion)是由于<strong>导向媒体信号传播群速度随着频率的不同而改变</strong>。对频带有限的信号而言，靠近中心频率的地方传播速度更快。不同频率的信号到达接收机的时间不同，从而产生不同频率信号的相移。<br>时延失真会导致码间串扰，是传输容量受限的主要因素。<br>均衡技术的使用可以减小时延失真。 </p>
+<h2><span id="233-噪声">2.3.3 噪声</span></h2><p>主要分为</p>
+<ol>
+<li>热噪声(thermal noise)</li>
+<li>互调噪声(intermodulation noise)</li>
+<li>码间串扰(crosstalk)</li>
+<li>脉冲噪声(impluse noise)</li>
+</ol>
+<p>以上噪声的不可控程度随顺序逐步增大（即impulse noise最不可控）</p>
+<h3><span id="2331-热噪声">2.3.3.1 热噪声</span></h3><p>可以视为白噪声。</p>
+<h5><span id="量化">量化</span></h5><script type="math/tex; mode=display">N = kTB</script><p>k 为常量<br>T为开尔文温度<br>B为带宽</p>
+<h3><span id="2332-intermodulation-noise">2.3.3.2 intermodulation noise</span></h3><h4><span id="定义">定义</span></h4><p>互调噪声发生在不同频率的信号共享同一传输媒体时。不同频率的信号通过同一非线性传输元件（如放大器等）所产生的信号叠加可能对其他工作频率产生影响。</p>
+<h3><span id="2333-crosstalk">2.3.3.3 crosstalk</span></h3><p>相邻传输线发生电耦合，使得相邻传输线之间相互干扰产生的噪声。</p>
+<h3><span id="2334-impluse-noise">2.3.3.4 impluse noise</span></h3><ul>
+<li>一种非连续的噪声，由不规则的脉冲或者持续时间短而振幅大的噪声尖峰组成。<br>  在数字通信中，<strong>冲激噪声是差错的主要起因</strong>。</li>
+</ul>
+<h1><span id="24-频道容量">2.4 频道容量</span></h1><h2><span id="241-概述">2.4.1 概述</span></h2><p>定义：频道可以传输的最大数据率。</p>
+<p>频道容量与以下四个术语相关：（<strong>bnh建议在脑子里有清晰的定义，我的评价是记不了吃亏记不了上当，但信bnh你就输了</strong>）</p>
+<p>data rate：比特率<br>Bandwidth：额，传输信号被transmitter和传输媒介限制的带宽<br>Noise：信道平均噪声<br>Error rate：发生错误的比率</p>
+<p>虽然带宽越大越好，但是大带宽的设备贵，所以俺们的目的是对于给定带宽，做到错误率越低，比特率越高，然后阻挠俺们实现目的的一个关键因素就是噪声。</p>
+<h2><span id="242-奈奎斯特带宽-香浓公示大集合">2.4.2 奈奎斯特带宽 + 香浓公示大集合</span></h2><h3><span id="奈奎斯特带宽">奈奎斯特带宽</span></h3><p>通信原理也学过了。简单来说就是保证不发生码间干扰的最小采样频率，就是两倍带宽。<br>简单粗暴地记忆<br>奈奎斯特带宽就是两倍的信号带宽。<br>有了奈奎斯特带宽，就有了一个奈奎斯特公式，用于计算<strong>离散</strong>信号传输的最大数据传输速率。根据奈奎斯特公式，最大传输速率（R）等于信道带宽（B）乘以每个信号样本可以表示的离散级数（N），即：</p>
+<pre><code>$$
+</code></pre><p>R = 2B log2(N)</p>
+<script type="math/tex; mode=display">
+其中，B表示信道的带宽，N表示每个样本可以表示的离散级数（通常为2的幂次方）。奈奎斯特公式表明，增加信道带宽和每个样本可表示的离散级数都能提高传输速率。然而，实际传输速率可能会受到噪声、干扰和信号调制等因素的限制。（generated by gpt3.5）
+之前我们将频道容量定义为可以传输的最大数据率，因此该s公式又能够改写为：</script><p>C = 2B log2(M)</p>
+<script type="math/tex; mode=display">
+即ppt中展现的形式。
+#### 例
+![Screen Shot 2023-06-03 at 10.51.25 AM](https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/Screen%20Shot%202023-06-03%20at%2010.51.25%20AM.png)
+就是把B= 3100hz，M=8代入上面的公式。
+很显然，奈奎斯特公式揭示了当其他条件不变时，增加带宽就能够增加频道容量，但是之前有说到过噪声等因素同样会影响频道容量，于是下面就介绍了香农公式。
+
+### 香农公式
+
+香农公式主要通过引入信噪比来建立频道容量与噪声的关系。</script><p>SNR_{dB} = 10lg \frac{Signal \  power}{Noise \  Power}</p>
+<script type="math/tex; mode=display">
+香农公式：
+（此处snr不是分贝值）</script><p>C = B\log_{2}(1+SNR)</p>
+<p>$$</p>
+<h3><span id="香农奈奎斯特">香农+奈奎斯特</span></h3><p>可以看到两个公式都是用来计算频道容量，但是存在区别：</p>
+<ol>
+<li>奈奎斯特公式用于计算离散信号频道容量，而香农公式用于计算信道容量（大部分情况下）</li>
+<li>通常情况下香农公式计算出来的频道容量是一个频道所能容纳的最大最理想的比特率，而奈奎斯特公式基于对连续信号采样出的离散信号，且不考虑信噪比，计算出的值通常小于香农公式。</li>
+<li>总的来说两个公式是完全不同场景下的应用，基本题目要给的话条件还是分得很清楚。<h4><span id="例">例</span></h4><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/Screen%20Shot%202023-06-03%20at%2011.08.14%20AM.png" alt="Screen Shot 2023-06-03 at 11.08.14 AM"></li>
+</ol>
+<p>可以看到这个例子也是先用香农公式给频道算了容量，因为通常情况下，我们是根据指定的频道带宽来选择信号带宽。<br>所以这里也是同理，首先指定频道带宽，于是根据香农公式算出理想情况下的频道容量。<br>然后根据奈奎斯特公式，在满足最小采样频率的条件下算出能到达理想容量的离散级数。<br>（离散级数就是一个采样点能表示的离散值的数量，例如二进制一个采样点只能表示0或者1，所以离散级数是2）</p>
+<h2><span id="243-总结">2.4.3 总结</span></h2><p>还记得四个bnh亲点的“术语”吗/<br>带宽，数据率，噪声，错误率。<br>将四个术语关联起来就是，我们想要提高频道的容量，即频道传输的最大数据率，决定因素有带宽和噪声，其中带宽是频道传输容量的基础，而噪声影响了错误率。同时因为带宽越大噪声越大，从而错误率也越大，所以在设计传输系统时需要考虑各个参数的平衡。</p>
+
+            <div class="clearfix"></div>
+            <hr class="nogutter">
+        </div>
+        <nav class="m-pagination col-md-8 col-md-offset-2 col-sm-24" role="pagination">
+    
+    <a class="pull-left" href="../../../06/01/chapter%204%20%EF%BC%9A%E5%A4%8D%E7%94%A8/" style="float: left;">
+        ← chapter 4 ：复用
+    </a>
+    
+    
+    <a class="pull-right" href="../chapter%201%20%EF%BC%9A%20%E7%94%B5%E4%BF%A1%E4%BC%A0%E8%BE%93%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/">
+        chapter 1 ： 电信传输的基本概念 →
+    </a>
+    
+</nav>
+
+        <div class="col-md-8 col-md-offset-2 col-sm-24"><script type="text/javascript">
+  /**
+   * 搜狐畅言
+   */
+
+  /*
+  document.write('<div id="SOHUCS" sid="' + window.location.pathname.slice(1) + '" ></div>');
+
+  window.onload = function () {
+    (function () {
+      var appid = 'cytXXXX';
+      var conf = 'prod_xxxxxxxxxxxxxxxxx';
+      var width = window.innerWidth || document.documentElement.clientWidth;
+      var loadJs = function (d, a, id) {
+        var c = document.getElementsByTagName("head")[0] || document.head || document.documentElement;
+        var b = document.createElement("script");
+        b.setAttribute("type", "text/javascript");
+        b.setAttribute("charset", "UTF-8");
+        b.setAttribute("src", d);
+        if (id) {
+          b.setAttribute("id", id);
+        }
+        if (typeof a === "function") {
+          if (window.attachEvent) {
+            b.onreadystatechange = function () {
+              var e = b.readyState;
+              if (e === "loaded" || e === "complete") {
+                b.onreadystatechange = null;
+                a()
+              }
+            }
+          } else {
+            b.onload = a
+          }
+        }
+        c.appendChild(b)
+      };
+
+      loadJs("https://changyan.sohu.com/upload/changyan.js", function () {
+        window.changyan.api.config({
+          appid: appid,
+          conf: conf
+        })
+      });
+    })();
+  }
+  */
+
+</script>
+</div>
+    </div>
+</section>
+
+<!-- Highlight.js -->
+
+<link rel="stylesheet"
+href="//highlightjs.org/static/demo/styles/atom-one-light.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js">
+</script>
+<script>
+hljs.initHighlightingOnLoad();
+
+</script>
+
+
+      
+<!-- ============================ Footer =========================== -->
+
+<footer>
+    <div class="container">
+            <div class="copy">
+                <p>
+                    &copy; 2014<script>new Date().getFullYear()>2010&&document.write("-"+new Date().getFullYear());</script>, Content By Rin777. All Rights Reserved.
+                </p>
+                <p>Theme By <a target="_blank" rel="noopener" href="//go.kieran.top" style="color: #767D84">Kieran</a></p>
+            </div>
+            <div class="social">
+                <ul>
+                    
+                    <li><a href="https://github.com/" title="Github" target="_blank"><i class="icon-github"></i></a>&nbsp;</li>
+                    
+                    
+                    
+                    
+                    
+                </ul>
+            </div>
+            <div class="clearfix"> </div>
+        </div>
+</footer>
+
+<!-- ============================ END Footer =========================== -->
+      <!-- Load our scripts -->
+<!-- Resizable 'on-demand' full-height hero -->
+<script type="text/javascript">
+    var resizeHero = function () {
+        var hero = $(".cover,.heightblock"),
+            window1 = $(window);
+        hero.css({
+            "height": window1.height()
+        });
+    };
+
+    resizeHero();
+
+    $(window).resize(function () {
+        resizeHero();
+    });
+</script>
+<script src="/js/plugins.min.js"></script><!-- Bootstrap core and concatenated plugins always load here -->
+<script src="/js/scripts.js"></script><!-- Theme scripts -->
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$('#intro').find('img').each(function(){
+  var alt = this.alt;
+
+  if (alt){
+    $(this).after('<span class="caption" style="display:none">' + alt + '</span>');
+  }
+
+  $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox" rel="gallery" />');
+});
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+      
+            <style>
+.local-search-popup {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  background: rgba(255, 255, 255, .9);
+  color: #333;
+  z-index: 9999;
+  border-radius: 5px;
+  overflow: scroll;
+}
+#local-search-input {
+  width: 100%;
+  border: none;
+  outline: none;
+  border-bottom: 1px solid #151515;
+  background-color: initial;
+}
+.search-result-list {
+  list-style: none;
+  padding-left: 0;
+}
+.search-result-list > li {
+  margin-top: 15px;
+  border-bottom: 1px solid #ddd;
+  transition: all ease .3s;
+}
+.search-result-list > li:hover {
+  border-bottom: 1px solid gray;
+}
+.search-result-title {
+  font-size: 16px;
+}
+.search-result {
+  line-height: 20px;
+}
+.search-keyword {
+  font-weight: normal;
+  color: #c00;
+}
+
+@media (min-width: 890px) {
+  .popup-btn-close {
+    position: absolute;
+    top: 15px;
+    left: 35px;
+    border: 1px solid #151515;
+    padding: 0px 10px;
+    border-top-left-radius: 8px;
+    cursor: pointer;
+    transition: all ease .3s;
+  }
+  .popup-btn-close:hover {
+    background: #151515;
+    opacity: .9;
+    color: #fff;
+  }
+}
+@media (max-width: 890px) {
+  .popup-btn-close {
+    font-size: 0;
+    position: fixed;
+    right: 20px;
+    bottom: 50px;
+    width: 50px;
+    height: 50px;
+    background: #fff;
+    border-radius: 50%;
+    box-shadow: 1px 1px 5px #888;
+    cursor: pointer;
+  }
+  .popup-btn-close::after {
+    content: '←';
+    color: #151515;
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-size: 20px;
+    width: 100%;
+    height: 100%;
+    line-height: 50px;
+    text-align: center;
+  }
+}
+</style>
+
+<div class="popup search-popup local-search-popup">
+  <span class="popup-btn-close">
+    ESC
+  </span>
+  <div class="container">
+    <div class="col-md-8 col-md-offset-2">
+      <div class="local-search-header clearfix">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="local-search-input-wrapper">
+          <input autocomplete="off" placeholder="Search..." type="text" id="local-search-input">
+        </div>
+      </div>
+      <div id="local-search-result"></div>
+    </div>
+  </div>
+</div>
+
+<script src="/js/ziploader.js"></script>
+
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.json";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').fadeOut(300);
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $('.popup').fadeIn(300);
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // get search zip version
+    $.get('/searchVersion.txt?t=' + (+new Date()), function(res) {
+      if (localStorage.getItem('searchVersion') !== res) {
+        localStorage.setItem('searchVersion', res);
+        initSearchJson();
+      }
+    });
+
+    function initSearchJson () {
+      initLoad(['/search.zip'], {
+        loadOptions: {
+          success: function(obj) {
+            localStorage.setItem('searchJson', obj['search.json'])
+          },
+          error: function(e) {
+            return console.log(e)
+          }
+        },
+        returnOptions: {
+          'json': TYPE_TEXT
+        },
+        mimeOptions:{
+          'json':'application/json'
+        }
+      })
+    }
+
+
+    // search function;
+    var searchFunc = function(search_id, content_id) {
+      'use strict';
+
+      isfetched = true;
+      var datas = JSON.parse(localStorage.getItem('searchJson'));
+      console.log(search_id)
+      var input = document.getElementById(search_id);
+      var resultContent = document.getElementById(content_id);
+      var inputEventFunction = function() {
+        var searchText = input.value.trim().toLowerCase();
+        var keywords = searchText.split(/[\s\-]+/);
+        if (keywords.length > 1) {
+          keywords.push(searchText);
+        }
+        var resultItems = [];
+        if (searchText.length > 0) {
+          // perform local searching
+          datas.forEach(function(data) {
+            var isMatch = false;
+            var hitCount = 0;
+            var searchTextCount = 0;
+            var title = data.title ? data.title.trim() : '';
+            var titleInLowerCase = title.toLowerCase();
+            var content = data.content ? data.content.trim().replace(/<[^>]+>/g,"") : '';
+            var contentInLowerCase = content.toLowerCase();
+            var articleUrl = decodeURIComponent(data.url);
+            var indexOfTitle = [];
+            var indexOfContent = [];
+            // only match articles with not empty titles
+            keywords.forEach(function(keyword) {
+              function getIndexByWord(word, text, caseSensitive) {
+                var wordLen = word.length;
+                if (wordLen === 0) {
+                  return [];
+                }
+                var startPosition = 0, position = [], index = [];
+                if (!caseSensitive) {
+                  text = text.toLowerCase();
+                  word = word.toLowerCase();
+                }
+                while ((position = text.indexOf(word, startPosition)) > -1) {
+                  index.push({position: position, word: word});
+                  startPosition = position + wordLen;
+                }
+                return index;
+              }
+
+              indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+              indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+            });
+            if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+              isMatch = true;
+              hitCount = indexOfTitle.length + indexOfContent.length;
+            }
+
+            // show search results
+
+            if (isMatch) {
+              // sort index by position of keyword
+
+              [indexOfTitle, indexOfContent].forEach(function (index) {
+                index.sort(function (itemLeft, itemRight) {
+                  if (itemRight.position !== itemLeft.position) {
+                    return itemRight.position - itemLeft.position;
+                  } else {
+                    return itemLeft.word.length - itemRight.word.length;
+                  }
+                });
+              });
+
+              // merge hits into slices
+
+              function mergeIntoSlice(text, start, end, index) {
+                var item = index[index.length - 1];
+                var position = item.position;
+                var word = item.word;
+                var hits = [];
+                var searchTextCountInSlice = 0;
+                while (position + word.length <= end && index.length != 0) {
+                  if (word === searchText) {
+                    searchTextCountInSlice++;
+                  }
+                  hits.push({position: position, length: word.length});
+                  var wordEnd = position + word.length;
+
+                  // move to next position of hit
+
+                  index.pop();
+                  while (index.length != 0) {
+                    item = index[index.length - 1];
+                    position = item.position;
+                    word = item.word;
+                    if (wordEnd > position) {
+                      index.pop();
+                    } else {
+                      break;
+                    }
+                  }
+                }
+                searchTextCount += searchTextCountInSlice;
+                return {
+                  hits: hits,
+                  start: start,
+                  end: end,
+                  searchTextCount: searchTextCountInSlice
+                };
+              }
+
+              var slicesOfTitle = [];
+              if (indexOfTitle.length != 0) {
+                slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+              }
+
+              var slicesOfContent = [];
+              while (indexOfContent.length != 0) {
+                var item = indexOfContent[indexOfContent.length - 1];
+                var position = item.position;
+                var word = item.word;
+                // cut out 100 characters
+                var start = position - 20;
+                var end = position + 80;
+                if(start < 0){
+                  start = 0;
+                }
+                if (end < position + word.length) {
+                  end = position + word.length;
+                }
+                if(end > content.length){
+                  end = content.length;
+                }
+                slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+              }
+
+              // sort slices in content by search text's count and hits' count
+
+              slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                  return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                  return sliceRight.hits.length - sliceLeft.hits.length;
+                } else {
+                  return sliceLeft.start - sliceRight.start;
+                }
+              });
+
+              // select top N slices in content
+
+              var upperBound = parseInt('2');
+              if (upperBound >= 0) {
+                slicesOfContent = slicesOfContent.slice(0, upperBound);
+              }
+
+              // highlight title and content
+
+              function highlightKeyword(text, slice) {
+                var result = '';
+                var prevEnd = slice.start;
+                slice.hits.forEach(function (hit) {
+                  result += text.substring(prevEnd, hit.position);
+                  var end = hit.position + hit.length;
+                  result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                  prevEnd = end;
+                });
+                result += text.substring(prevEnd, slice.end);
+                return result;
+              }
+
+              var resultItem = '';
+
+              if (slicesOfTitle.length != 0) {
+                resultItem += "<li><a target='_blank' href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+              } else {
+                resultItem += "<li><a target='_blank' href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+              }
+
+              slicesOfContent.forEach(function (slice) {
+                resultItem += "<a target='_blank' href='" + articleUrl + "'>" +
+                  "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                  "...</p>" + "</a>";
+              });
+
+              resultItem += "</li>";
+              resultItems.push({
+                item: resultItem,
+                searchTextCount: searchTextCount,
+                hitCount: hitCount,
+                id: resultItems.length
+              });
+            }
+          })
+        };
+        if (keywords.length === 1 && keywords[0] === "") {
+          resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+        } else if (resultItems.length === 0) {
+          resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+        } else {
+          resultItems.sort(function (resultLeft, resultRight) {
+            if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+              return resultRight.searchTextCount - resultLeft.searchTextCount;
+            } else if (resultLeft.hitCount !== resultRight.hitCount) {
+              return resultRight.hitCount - resultLeft.hitCount;
+            } else {
+              return resultRight.id - resultLeft.id;
+            }
+          });
+          var searchResultList = '<ul class=\"search-result-list\">';
+          resultItems.forEach(function (result) {
+            searchResultList += result.item;
+          })
+          searchResultList += "</ul>";
+          resultContent.innerHTML = searchResultList;
+        }
+      }
+
+      if ('auto' === 'auto') {
+        input.addEventListener('input', inputEventFunction);
+      } else {
+        $('.search-icon').click(inputEventFunction);
+        input.addEventListener('keypress', function (event) {
+          if (event.keyCode === 13) {
+            inputEventFunction();
+          }
+        });
+      }
+
+      // remove loading animation
+      $('body').css('overflow', '');
+
+      proceedsearch();
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        $('.sb-close').click();
+        searchFunc('local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+      
+      
+
+<!--
+
+<link rel="stylesheet" href="/dist/APlayer.min.css">
+<div id="aplayer"></div>
+<script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+<meting-js
+      server="netease"
+      type="playlist"
+      id="4904272454">
+</meting-js>
+-->
+
+</body>
+
+</html>
+
+
+
+
+
+
+
