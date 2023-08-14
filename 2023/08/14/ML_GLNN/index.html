@@ -195,7 +195,9 @@
         </div>
         <div class="col-md-8 col-md-offset-2">
       		<p>​    
-    <div id="aplayer-OsDSSeib" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div>     </p>
+    <div id="aplayer-IBUDGGUH" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div>     </p>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+
 <h1><span id="1-glnn">1 GLNN</span></h1><p>通过 KD将GNN与MLP结合，突破 data dependency造成的性能局限性。</p>
 <h2><span id="11-introduction">1.1 introduction</span></h2><p>对于大型工业应用来说，MLP依然占主导地位。因为GNN存在的data dependency会导致干扰而使得其难以利用于latency-constrained applications（就是需要低延迟的应用）。<br>因此克服GNN的data dependency至关重要。<br>论文考虑了MLP不受data dependency的限制与GNN的特性，结合两者的特点，通过对Knowledge Graph进行distill，从而改善GNN的latency问题。<br>即“bridge the two worlds, enjoying the low-latency, dependency-free nature of MLPs and the graph context-awareness of GNNs at the same time”<br>同时结合MLP和GNN的优点。</p>
 <h3><span id="111-present-work">1.1.1 Present work</span></h3><p>如何结合？论文给出的关键思路是将原本对时间非常敏感的模型训练步骤转变为对时间不不敏感的less time-sensitive training step（通常多小时或者天的延迟也是可以接受的），即“Graph-less Neural Network（GLNN）”<br>用KD的话解释就是KD from a GNN teacher to a student MLP。<br>论文的结果是无论是从时间还是表现上来看，GLNN都优于一般的GNN以及MLP。</p>

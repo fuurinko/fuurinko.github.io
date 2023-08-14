@@ -195,7 +195,9 @@
         </div>
         <div class="col-md-8 col-md-offset-2">
       		<p>​    
-    <div id="aplayer-wcoEuPMM" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div>     </p>
+    <div id="aplayer-zxxzxOcP" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div>     </p>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+
 <h1><span id="2-revisiting-data-free-knowledge-distillation-with-poisoned-teachers">2 Revisiting Data-Free Knowledge Distillation with Poisoned Teachers</span></h1><h2><span id="21-abstract">2.1 abstract</span></h2><p>Data-free KD能够使得我们在没有net-t data的情况下蒸馏net-s，但其中预训练的net-t安全性有待商榷。论文讨论了data-free KD的安全性，并提出了Anti-Backdoor Data-Free KD。</p>
 <h2><span id="22-introduction">2.2 introduction</span></h2><p>Data-free KD技术使得net-t 原始训练数据受保护情况下的应用成为可能，但其中包含的安全问题不容小觑：student能否信任不可信teacher的迁移知识？例如当预训练teacher模型本身的训练数据就是被污染或未清洁时。<br>如果net-t被污染的话，net-s很可能在没有使用原始数据的情况下继承这种污染，并反映出与net-t相同的表现。例如如果net-t留有backdoor，那么net-s很可能也会通过distill学习到这个backdoor。<br>论文首先通过测试10 backdoor attacks下data- free backdoor transfer的情况。</p>
 <p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/Screen%20Shot%202023-08-13%20at%2011.55.43%20PM.png" alt="Screen Shot 2023-08-13 at 11.55.43 PM"></p>
