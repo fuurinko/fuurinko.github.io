@@ -84,7 +84,7 @@
 				    
 				    <li><a href="/categories/Linux/" class="animsition-link">Linux<small>(1)</small></a></li>
 				    
-				    <li><a href="/categories/ML/" class="animsition-link">ML<small>(36)</small></a></li>
+				    <li><a href="/categories/ML/" class="animsition-link">ML<small>(38)</small></a></li>
 				    
 				    <li><a href="/categories/PWN-COLLEGE/" class="animsition-link">PWN.COLLEGE<small>(1)</small></a></li>
 				    
@@ -202,6 +202,79 @@
 
 <section id="intro">
     <div class="container">
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2023/03/27/D2L_023_Sequential_Model/">23_Sequence_Model</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2023-03-27T08:17:59.741Z" itemprop="datePublished">
+          2023-03-27
+      </time>
+    
+    
+    | 
+    <a href='/tags/d2l/'>d2l</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+
+23.1 PrefaceSo this module involving the natrue language processing problem.And the first basics are sequential model.
+23.2 DescriptionArguablely, time is a important factor in a lot of problems, for example ,if we wan
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2023/03/27/D2L_023_Sequential_Model/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2023/03/24/ml_菜鸟云GPU方案/">菜鸟云GPU方案</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2023-03-24T12:27:37.596Z" itemprop="datePublished">
+          2023-03-24
+      </time>
+    
+    
+    | 
+    <a href='/tags/mess/'>mess</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        腾讯云随便点了一个四十五块十五天的套餐，不过我知道十五天后不可能是这个价，虽然速度很垃圾但是便宜。然后安装jupyter以及一些必须的裤。jupyter还是很舒服，但是如果开了梯子就慢成树懒。性能的话d2l里Alexnet跑mnish 也不快，但至少比colab无gpu或者可怜的mbp inter的cpu跑得快。我下午还抱有一丝侥幸心理想说不定我电脑撑得住呢。结果快二十分钟一个epoch都没有跑完，cpu python占用率99.9%。
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2023/03/24/ml_菜鸟云GPU方案/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
         
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
@@ -509,82 +582,6 @@ However , it;s essential for us
                     
                     <p class="pull-right readMore">
                         <a href="/2023/03/20/D2L_015_Dropout/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2023/03/19/D2L_013_Model_Selection_&_Fit/">13_Model_Selection_&_Fit</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2023-03-19T10:24:32.649Z" itemprop="datePublished">
-          2023-03-19
-      </time>
-    
-    
-    | 
-    <a href='/tags/d2l/'>d2l</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-
-13.0 PrefaceThe object of Mearning learning is find out the pattern of a question, but we need to verify the  model is indeed find the pattern or just memorize some datas.So at this module we are going to talk about so
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2023/03/19/D2L_013_Model_Selection_&_Fit/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2023/03/19/D2L_012_MLP_Realization/">12_MLP_Realization</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2023-03-19T09:54:11.395Z" itemprop="datePublished">
-          2023-03-19
-      </time>
-    
-    
-    | 
-    <a href='/tags/d2l/'>d2l</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-
-
-dataset reading123456import torchfrom torch import nnfrom d2l import torch as d2lbatch_size = 256train_iter, test_iter = d2l.load_data_fashion_mnist(batch_size)
-Define the layers1234567891011121314num_inputs, num_outp
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2023/03/19/D2L_012_MLP_Realization/">Read More...</a>
                     </p>
                     
                 </div>
