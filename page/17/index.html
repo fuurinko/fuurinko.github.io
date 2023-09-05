@@ -84,7 +84,7 @@
 				    
 				    <li><a href="/categories/Linux/" class="animsition-link">Linux<small>(1)</small></a></li>
 				    
-				    <li><a href="/categories/ML/" class="animsition-link">ML<small>(41)</small></a></li>
+				    <li><a href="/categories/ML/" class="animsition-link">ML<small>(42)</small></a></li>
 				    
 				    <li><a href="/categories/PWN-COLLEGE/" class="animsition-link">PWN.COLLEGE<small>(1)</small></a></li>
 				    
@@ -202,6 +202,45 @@
 
 <section id="intro">
     <div class="container">
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2021/10/29/mess_typora主题配置的一些心得/">typora主题配置的一些心得</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2021-10-29T15:20:57.419Z" itemprop="datePublished">
+          2021-10-29
+      </time>
+    
+    
+    | 
+    <a href='/tags/mess/'>mess</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+     
+1）​    由于看腻了typora原主题的python高亮的丑兮兮的屎黄色注释，决定换个主题。然而找遍整个主题列表，并没有我看得上的主题。本来打算作罢，但想起最近因为写小程序，学了一些简单的css，是不是可以尝试一下修改某些主题的css文件，打造一个自己喜欢的主题捏。
+2）​    在下载主题的过程中我大致了解了一下typora主题开发的大致内容，其实主体感觉就是css（除了css，就是各种需要的字体。
+​    这里以
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2021/10/29/mess_typora主题配置的一些心得/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
         
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
@@ -560,46 +599,6 @@ ret2dl_advanced1)review当FULL RELRO保护开启时，通过 dl_run_time来获�
                     
                     <p class="pull-right readMore">
                         <a href="/2021/08/02/stack_ret2dl_advanced/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2021/05/24/heap_challenge_message/">Message</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2021-05-24T09:18:33.269Z" itemprop="datePublished">
-          2021-05-24
-      </time>
-    
-    
-    | 
-    <a href='/tags/HEAP-ChunkOverlapping/'>HEAP - ChunkOverlapping</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-     
-第二道fastbin double free。
-123free(*(void **)&amp;dword_602060[4 * v1 + 2]);      dword_602060[4 * v1] = 0;      --dword_60204C;
-这里没有把指针置为null，所以会产生uaf漏洞。
-ida大体分析了一下就会发现，由于没有后门函数，这道题会比上一道难。而且由于RELRO的开启，got所在的数据段是只读的，
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2021/05/24/heap_challenge_message/">Read More...</a>
                     </p>
                     
                 </div>

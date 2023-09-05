@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<!--[if lte IE 8 ]>
+<html class="ie" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US">
+<![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!-->
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
+<!--<![endif]-->
+
+<head>
+
+  <title>一些论文复现 | Rin</title>
+  <!-- Meta data -->
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content="Rin">
+    <meta name="author" content="Rin777">
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+
+    <!-- Favicon, (keep icon in root folder) -->
+    <link rel="Shortcut Icon" href="/img/favicon.ico" type="image/ico">
+
+    <link rel="alternate" href="/atom.xml" title="Rin" type="application/atom+xml">
+    <link rel="stylesheet" href="/css/all.css" media="screen" type="text/css">
+    
+
+    <!--[if IE 8]>
+    <link rel="stylesheet" type="text/css" href="/css/ie8.css" />
+    <![endif]-->
+
+    <!-- jQuery | Load our jQuery, with an alternative source fallback to a local version if request is unavailable -->
+    <script src="/js/jquery-1.11.1.min.js"></script>
+    <script>window.jQuery || document.write('<script src="js/jquery-1.11.1.min.js"><\/script>')</script>
+
+    <!-- Load these in the <head> for quicker IE8+ load times -->
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="/js/html5shiv.min.js"></script>
+    <script src="/js/respond.min.js"></script>
+    <![endif]-->
+
+  
+  
+  
+
+  <style>.col-md-8.col-md-offset-2.opening-statement img{display:none;}</style>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><link rel="stylesheet" href="/css/prism.css" type="text/css"></head>
+
+<!--
+<body class="post-template">
+-->
+<body id="index" class="lightnav animsition">
+      <!-- ============================ Off-canvas navigation =========================== -->
+
+    <div class="sb-slidebar sb-right sb-style-overlay sb-momentum-scrolling">
+        <div class="sb-close" aria-label="Close Menu" aria-hidden="true">
+            <img src="/img/close.png" alt="Close"/>
+        </div>
+        <!-- Lists in Slidebars -->
+        <ul class="sb-menu">
+            <li><a href="/" class="animsition-link" title="Home">Home</a></li>
+            <li><a href="/archives" class="animsition-link" title="archive">archives</a></li>
+            <!-- Dropdown Menu -->
+			 
+            
+        	<li>
+        		<a class="sb-toggle-submenu">Categories<span class="sb-caret"></span></a>
+            	<ul class="sb-submenu">
+				  	
+				    <li><a href="/categories/AUDITION/" class="animsition-link">AUDITION<small>(23)</small></a></li>
+				    
+				    <li><a href="/categories/Binary-security/" class="animsition-link">Binary_security<small>(101)</small></a></li>
+				    
+				    <li><a href="/categories/CSAPP-LAB/" class="animsition-link">CSAPP LAB<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/EE/" class="animsition-link">EE<small>(5)</small></a></li>
+				    
+				    <li><a href="/categories/EN/" class="animsition-link">EN<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/Linux/" class="animsition-link">Linux<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/ML/" class="animsition-link">ML<small>(42)</small></a></li>
+				    
+				    <li><a href="/categories/PWN-COLLEGE/" class="animsition-link">PWN.COLLEGE<small>(1)</small></a></li>
+				    
+				</ul>
+        	</li>
+			
+            
+            <li>
+                <a class="sb-toggle-submenu">Links<span class="sb-caret"></span></a>
+                <ul class="sb-submenu">
+                    
+                    <li><a target="_blank" rel="noopener" href="https://weibo.com/u/1682818607" class="animsition-link">没有营养的推广页</a></li>
+                    
+                    <li><a target="_blank" rel="noopener" href="http://www.2323bb.ltd" class="animsition-link">cc_sakura</a></li>
+                    
+                    <li><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_36995313" class="animsition-link">F@LLe0</a></li>
+                    
+                    <li><a target="_blank" rel="noopener" href="https://yyz9.cn" class="animsition-link">YYZ</a></li>
+                    
+                    <li><a target="_blank" rel="noopener" href="https://www.star123.top" class="animsition-link">star</a></li>
+                    
+                </ul>
+            </li>
+            
+        </ul>
+        <!-- Lists in Slidebars -->
+        <ul class="sb-menu secondary">
+            
+            <li><a href="javascript:;" class="popup-trigger" title="Search"><span class="search-icon"></span>Search</a></li>
+            
+            <li><a href="/about.html" class="animsition-link" title="about">About</a></li>
+            <li><a href="/atom.xml" class="animsition-link" title="rss">RSS</a></li>
+        </ul>
+    </div>
+    
+    <!-- ============================ END Off-canvas navigation =========================== -->
+
+    <!-- ============================ #sb-site Main Page Wrapper =========================== -->
+
+    <div id="sb-site">
+        <!-- #sb-site - All page content should be contained within this id, except the off-canvas navigation itself -->
+
+        <!-- ============================ Header & Logo bar =========================== -->
+
+        <div id="navigation" class="navbar navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="container">
+                    <!-- Nav logo -->
+                    <div class="logo">
+                        <a href="/" title="Logo" class="animsition-link">
+                         <img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/IMG_0282.jpg" alt="Logo" width="35px;"/> 
+                        </a>
+                    </div>
+                    <!-- // Nav logo -->
+                    <!-- Info-bar -->
+                    <nav>
+                        <ul class="nav">
+                            <li><a href="/" class="animsition-link">Rin</a></li>
+                            <li class="nolink"><span>Always </span>Creative.</li>
+                            
+                            <li><a href="https://github.com/" title="Github" target="_blank"><i class="icon-github"></i></a></li>
+                            
+                            
+                            
+                            
+                            
+                            <li class="nolink"><span>Welcome!</span></li>
+                        </ul>
+                    </nav>
+                    <!--// Info-bar -->
+                </div>
+                <!-- // .container -->
+                <div class="learnmore sb-toggle-right">More</div>
+                <button type="button" class="navbar-toggle menu-icon sb-toggle-right" title="More">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar before"></span>
+                <span class="icon-bar main"></span>
+                <span class="icon-bar after"></span>
+                </button>
+            </div>
+            <!-- // .navbar-inner -->
+        </div>
+
+        <!-- ============================ Header & Logo bar =========================== -->
+
+
+      
+<section id="intro">
+    <div class="container">
+        <div class="row col-md-offset-2">
+            <div class="col-md-8">
+    			<span class="post-meta">
+      <time datetime="2023-08-30T15:08:45.666Z" itemprop="datePublished">
+          2023-08-30
+      </time>
+    
+    
+    | 
+    <a href='/tags/GNN/'>GNN</a>
+    
+    
+</span>
+                <h1>一些论文复现</h1>
+            </div>
+        </div>
+        <div class="col-md-8 col-md-offset-2">
+      		<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+
+
+
+<h1><span id="1-backdoor-samples-generation">1 backdoor samples generation</span></h1><p>首先要找到自己一个稳定而简单的可以生成glnn能够识别的backdoor samples。</p>
+<h2><span id="11-subgraph">1.1 subgraph</span></h2><p>参考论文：Backdoor Attacks to Graph Neural Networks<br>对应代码<br><a target="_blank" rel="noopener" href="https://github.com/zaixizhang/graphbackdoor">https://github.com/zaixizhang/graphbackdoor</a></p>
+<h3><span id="111-复现">1.1.1 复现</span></h3><p>将依赖存入 txt，然后<br>云gpu 预装的torch版本最好低于1.2，不然就会出现安装不了的尴尬情况，但是结果目测似乎与torch版本无关，总之就是都能跑。不过我这里直接用的torch 1.2.0.<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install -r xx.txt</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">matplotlib==3.1.1</span><br><span class="line">numpy==1.17.1</span><br><span class="line">torch==1.2.0</span><br><span class="line">scipy==1.3.1</span><br><span class="line">networkx==2.4</span><br><span class="line">tqdm==4.47.0</span><br><span class="line">pickle==0.7.5</span><br><span class="line">scikit-learn</span><br></pre></td></tr></table></figure>
+<p> ps：显示sklearn缺失请：<br> <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install -U scikit-learn</span><br></pre></td></tr></table></figure><br>pickle显示无法安装直接忽略，它本身就是python的一个包，不需要另外安装，版本什么的目测无所谓。</p>
+<p>这个代码写得很抽象，要把这些存中间文件或者结果的文件夹手动创建一遍，不然会报错，我不知道是我的bug还是写代码的人的问题。我感觉是他的问题。<br><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/Screen%20Shot%202023-09-02%20at%205.29.18%20PM.png" alt="Screen Shot 2023-09-02 at 5.29.18 PM"><br>把该mkdir的文件夹建好一键执行shell就可以开跑。2080ti 100个epoch大概要跑三分钟。<br>每五个epoch会给出test的acc，两行分别是GCN和GIN的结果（），可以看到达到惊人的95%<br>这样下来这边的backdoor attack算是成功的。<br><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/Screen%20Shot%202023-09-02%20at%205.28.41%20PM.png" alt="Screen Shot 2023-09-02 at 5.28.41 PM"></p>
+<h3><span id="112-代码">1.1.2 代码</span></h3><h4><span id="backdoor_graph_generation_random">backdoor_graph_generation_random</span></h4><p>函数将图分为了大致四个类型</p>
+<p>简要写一个对于代码的分析。。<br><code>main_backdoor.py</code>主要就是训练的框架，是个machine learning的code都大差不差。真正有用的函数都在<code>util.py</code>里。</p>
+<h4><span id="mainpy">main.py</span></h4><h4><span id="utilpy">util.py</span></h4><h3><span id="113-问题">1.1.3 问题</span></h3><p>这个代码用的数据集是没有经过处理的原始txt 文件，并不是很能与glnn适配。<br>——》去论文里看一下用的数据集的介绍，然后看看这个数据集能不能经过处理之后apply到glnn上。</p>
+<h2><span id="12-ugba">1.2 UGBA</span></h2><h3><span id="121-复现">1.2.1 复现</span></h3><p>环境配了好久，但是code有bug无法复现。。。</p>
+<p>trigger generation阶段直接保存samples to npz。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">torch.save(&#123;</span><br><span class="line"></span><br><span class="line"><span class="string">&#x27;poison_x&#x27;</span>: poison_x,</span><br><span class="line"></span><br><span class="line"><span class="string">&#x27;poison_edge_index&#x27;</span>: poison_edge_index,</span><br><span class="line"></span><br><span class="line"><span class="string">&#x27;poison_edge_weights&#x27;</span>: poison_edge_weights,</span><br><span class="line"></span><br><span class="line"><span class="string">&#x27;poison_labels&#x27;</span>: poison_labels</span><br><span class="line"></span><br><span class="line">&#125;, <span class="string">&#x27;./backdoor_samples.pth&#x27;</span>)</span><br></pre></td></tr></table></figure></p>
+<h2><span id="13-backdoor2">1.3 backdoor2</span></h2><p>pip install dgl-cu101 -f <a target="_blank" rel="noopener" href="https://data.dgl.ai/wheels/repo.html">https://data.dgl.ai/wheels/repo.html</a></p>
+<h3><span id="131-复现">1.3.1 复现</span></h3><p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/Screen%20Shot%202023-09-05%20at%203.29.42%20AM.png" alt="Screen Shot 2023-09-05 at 3.29.42 AM"></p>
+<h3><span id="132-code">1.3.2 code</span></h3><h1><span id="2-glnn">2 GLNN</span></h1><p>然后来尝试跑一下GLNN的code。</p>
+<h2><span id="21-train">2.1 train</span></h2><p>先下好数据集，然后建文件夹</p>
+<p>数据集介绍<br>glnn使用的数据集是<code>cora.npz</code><br><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/Screen%20Shot%202023-09-04%20at%203.22.37%20PM.png" alt="Screen Shot 2023-09-04 at 3.22.37 PM"></p>
+<ol>
+<li><p><strong>adj_data, adj_indices, adj_indptr, adj_shape</strong>:<br>These arrays represent the adjacency matrix of the graph in the Compressed Sparse Row (CSR) format. In CSR format:</p>
+<ul>
+<li><code>adj_data</code>: Contains the non-zero values of the matrix.</li>
+<li><code>adj_indices</code>: Contains the column indices for each non-zero value.</li>
+<li><code>adj_indptr</code>: Contains the index in <code>adj_data</code> where each row starts.</li>
+<li><code>adj_shape</code>: Specifies the shape of the adjacency matrix.</li>
+</ul>
+<p>Together, these arrays allow you to reconstruct the adjacency matrix of the graph efficiently, especially when the graph is sparse.</p>
+</li>
+<li><p><strong>attr_data, attr_indices, attr_indptr, attr_shape</strong>:<br>These arrays represent the node attribute matrix in the CSR format, similar to the adjacency matrix. The node attribute matrix specifies features or attributes for each node in the graph.</p>
+<ul>
+<li><code>attr_data</code>: Contains the non-zero values of the node attribute matrix.</li>
+<li><code>attr_indices</code>: Contains the column indices for each non-zero value in the attribute matrix.</li>
+<li><code>attr_indptr</code>: Contains the index in <code>attr_data</code> where each row of the attribute matrix starts.</li>
+<li><code>attr_shape</code>: Specifies the shape of the node attribute matrix.</li>
+</ul>
+</li>
+<li><p><strong>labels</strong>:<br>This array contains the labels or classes for each node in the graph. It’s typically used in node classification tasks.</p>
+</li>
+<li><p><strong>node_names</strong>:<br>This array contains the names or identifiers for each node in the graph. It helps in mapping the nodes to their corresponding attributes, labels, and positions in the adjacency matrix.</p>
+</li>
+<li><p><strong>class_names</strong>:<br>This array contains the names or identifiers for each class or label in the dataset. It helps in understanding the meaning or context of each label in the <code>labels</code> array.</p>
+</li>
+</ol>
+<p>In summary, these arrays provide a comprehensive representation of a graph, including its structure (adjacency matrix), node attributes, node labels, and other metadata.</p>
+<p>而ugba使用的则是pyg库处理的数据集。</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_45928096/article/details/126910291">https://blog.csdn.net/weixin_45928096/article/details/126910291</a></p>
+<p>格式大概是<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Data(x, edge_index, edge_attr, y）</span><br></pre></td></tr></table></figure></p>
+<h4><span id="idea">idea</span></h4><p> 以transductive mode为例，训练一个model需要的data至少有</p>
+<ol>
+<li>graph（用adj+包生成）</li>
+<li>feats（adj, features, labels = data.unpack()）</li>
+<li>label（unpack，binarize）</li>
+<li>idx（idx_train, idx_val, idx_test）（get_train_val_test_split</li>
+</ol>
+<p>这个用的是transductive模式<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python train_teacher.py --exp_setting tran --teacher GCN --dataset cora</span><br></pre></td></tr></table></figure><br>这个基本秒出结果</p>
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/Screen%20Shot%202023-09-03%20at%2012.21.32%20AM.png" alt="Screen Shot 2023-09-03 at 12.21.32 AM"></p>
+<p>随便试了一些模型和数据集，基本上能和论文给出的实验数据对上。<img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/Screen%20Shot%202023-09-03%20at%2012.22.42%20AM.png" alt="Screen Shot 2023-09-03 at 12.22.42 AM"></p>
+<p>训练出来的teacher model就在这个路径下，可以看到刚才训练了三个数据集都分别有。<br><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/Screen%20Shot%202023-09-03%20at%2012.27.17%20AM.png" alt="Screen Shot 2023-09-03 at 12.27.17 AM"></p>
+<p>训练student模型使用了inductive mode，其实本质上和tran没有太大的区别，只是让mlp的泛化能力更强一些。<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python train_student.py --exp_setting tran --teacher GCN --student MLP --dataset cora --out_t_path  ./outputs/transductive/cora/GCN/seed_0/out.npz</span><br></pre></td></tr></table></figure></p>
+<p>参数之类的比较清晰。</p>
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/Screen%20Shot%202023-09-02%20at%209.19.12%20PM.png" alt="Screen Shot 2023-09-02 at 9.19.12 PM"></p>
+<h2><span id="22-code">2.2 code</span></h2><p>由于该项目差不多是整个实验的大框架，所以这里详细分析一下。<br>即以运行的顺序对不熟悉的函数进行功能性分析。<br>通过该代码分析需要理解：</p>
+<ol>
+<li>原始的kd如何通过代码实现</li>
+<li>glnn又是如何实现<h3><span id="train-teacherpy">train teacher.py</span></h3>首先我们需要train一个teacher model<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python train_teacher.py --exp_setting tran --teacher GCN --dataset cora</span><br></pre></td></tr></table></figure>
+这里指定了训练模式是transduction，被训练的model是GCN，用的cora数据集。<h4><span id="概念">概念</span></h4>首先有一个transduction 和 Inductive mode.<br>transduction 指的是stu model预测的是原本的graph？<br>induction指的是stu 能够预测新的graph？</li>
+</ol>
+<h4><span id="import">import</span></h4><p>没有什么特别值得注意的地方<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> argparse</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> torch.optim <span class="keyword">as</span> optim</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> pathlib <span class="keyword">import</span> Path</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> models <span class="keyword">import</span> Model</span><br><span class="line"><span class="comment"># 导入models.py 定义的 Model类，其中又包含几个重要模型的类</span></span><br><span class="line"><span class="keyword">from</span> dataloader <span class="keyword">import</span> load_data</span><br><span class="line"><span class="keyword">from</span> utils <span class="keyword">import</span> (</span><br><span class="line"></span><br><span class="line">get_logger,</span><br><span class="line"></span><br><span class="line">get_evaluator,</span><br><span class="line"></span><br><span class="line">set_seed,</span><br><span class="line"></span><br><span class="line">get_training_config,</span><br><span class="line"></span><br><span class="line">check_writable,</span><br><span class="line"></span><br><span class="line">compute_min_cut_loss,</span><br><span class="line"></span><br><span class="line">graph_split,</span><br><span class="line"></span><br><span class="line">feature_prop,</span><br><span class="line"></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> train_and_eval <span class="keyword">import</span> run_transductive, run_inductive</span><br></pre></td></tr></table></figure></p>
+<h4><span id="main">main</span></h4><p>先大致梳理一遍流程，具体的函数会在后文详细分析<br>首先获取所有命令行参数。<br>根据<code>num_exp</code>来判断<code>run</code>函数需要执行多少次。<br>一次就调用一遍<code>run</code>，多次就调用<code>repeat_run</code>，并分别返回score或score与其标准差。<br>然后将score从数组的float类型转换为string类型并打印输出以及保存在<code>exp_results</code>文件中。<br>然后我们根据main的调用顺序依次分析被调函数。</p>
+<h4><span id="get-args">get args()</span></h4><p>基本上整个函数都是用<code>argparse</code>模块来从命令行获取函数运行时的参数。简单来说就是自定义一些命令行的可选参数使得脚本执行的时候更直观方便地直接在命令行中控制参数。<br>这个函数定义了很多参数，但是example中实际执行时需要规定的并不多，基本都是默认值，比较重要的需要用户自定义的例如 <code>exp setting</code><br>内容没有必要细看，需要的时候对照查找就好。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">parser.add_argument(</span><br><span class="line"></span><br><span class="line"><span class="string">&quot;--exp_setting&quot;</span>,</span><br><span class="line"></span><br><span class="line"><span class="built_in">type</span>=<span class="built_in">str</span>,</span><br><span class="line"></span><br><span class="line">default=<span class="string">&quot;tran&quot;</span>,</span><br><span class="line"></span><br><span class="line"><span class="built_in">help</span>=<span class="string">&quot;Experiment setting, one of [tran, ind]&quot;</span>,</span><br><span class="line"></span><br><span class="line">)</span><br></pre></td></tr></table></figure></p>
+<h4><span id="run">run()</span></h4><p>也是最关键的函数。</p>
+<h5><span id="return">return</span></h5><p>首先注释说明了返回值是测试集的评估分数。<br>且<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">len(score_lst) = 1 for the transductive setting.</span><br><span class="line">len(score_lst) = 2 for the inductive/production setting.</span><br></pre></td></tr></table></figure></p>
+<h5><span id="set_seed">set_seed</span></h5><p>函数参数通过<code>args.seed</code>获取。<br>主要功能就是获取随机种子，其中会根据device是cpu或gpu进行一些调整。</p>
+<h5><span id="获取device">获取device</span></h5><p>接着检查gpu状态，如果有则设置device为cuda。</p>
+<h5><span id="创建文件夹">创建文件夹</span></h5><p>根据指定的模式创建对应路径的输出文件所在的文件夹。<br>    如果选择的是tran，则在指定路径下创建相对应的指定名称的文件夹，ind同理，但是文件夹名称会多出<code>split_rate</code>参数，具体功能在后面说明。</p>
+<h5><span id="检测输出文件夹状态">检测输出文件夹状态</span></h5><p>接着大致检查一下输出文件夹是否可写，如果没什么问题就在终端输出文件夹对应路径。</p>
+<h5><span id="load-data">load data</span></h5><p>首先是调用了<code>dataloader.py</code>定义的<code>load_data</code>函数。<br>简单来说就是根据dataset的不同，又进入不同的特定的数据加载函数中，例如cpf数据集调用了<code>load_cpf_data</code><br>读取数据部分，调用的是<code>load_npz_to_sparse_graph(data_path)</code>,将返回值赋给data。<br><code>load_npz_to_sparse_graph(data_path)</code>大概将就是读取npz的一些arrays，然后把arrays储存到各种对应的变量中。</p>
+<p>接下来就是对读入的raw data的一些简单的处理。</p>
+<h6><span id="standardize">standardize()</span></h6><p>removing self-loops and extracting the largest connected component using the <code>standardize</code> method.</p>
+<h6><span id="unpack">unpack()</span></h6><p>默认的方法。</p>
+<ul>
+<li>The adjacency matrix (<code>adj</code>), node features (<code>features</code>), and labels (<code>labels</code>) are then unpacked from the data.<h6><span id="binarize_labelslabels">binarize_labels(labels)</span></h6>converts multi-class labels into a one-hot encoded format.</li>
+</ul>
+<p>然后将刚刚处理的一些数据从sparse matrix format 转为 a dense numpy array继而转为tensor，包括g, labels, idx_train, idx_val, idx_test。<br>其中<code>g = dgl.graph((adj_sp.row, adj_sp.col))</code>是利用dgl包根据领接矩阵生成的图。<br>数据加载完成之后，打印加载的情况，例如有多少节点和边，feature和label的维度等。因为之前已经生成好graph了，所以获取这类信息只需要调用<code>.number_of_nodes()</code>等方法。</p>
+<h5><span id="model初始化">model初始化</span></h5><p>然后初始化model的一些参数，例如设备，优化器，损失函数等等。这里比较常规就不展开说。</p>
+<p>各类初始化工作完成之后就进入训练过程。</p>
+<h5><span id="data-split-and-run">Data split and run</span></h5><p>首先如果是选择tran模式，实际调用了<code>run_transductive()</code>。这个函数也是根据模型的不同有不同的操作‘。<br>首先确定indices有三种，test，train和val。<br>然后传递参数进入run_transductive()。</p>
+<p>开头还是基本的初始化。接着根据model选择的不同分为三种情况：sage，mlp和其他。<br>例如mode name是gcn，那么直接调用train函数，返回loss。（Input the entire graph <code>g</code> as data.）<br>后面的criterion等也比较常规，接着就是每五轮评估一次，然后输出最好的acc。</p>
+<p>ind模式其实就是在数据集中多加了一个obs g（就是利用已有的graph生成的新graph）</p>
+<h5><span id="结果输出amp保存">结果输出&amp;保存</span></h5><p>out 储存了model的分类结果。<br>同时可以保存model的参数。</p>
+<h3><span id="train-studentpy">train student.py</span></h3><p>整体和teacher是差不多的，比较关键的在于输入的数据到底是个啥，<br>但是如果只是从代码能不能跑的角度，只要teacher train有output.npz，student model理论上就能够train动。<br>就看一眼<code>distill_run_transductive</code>函数<br>他其实就是用了teacher model的输出作为一部分feature<br>训练的过程也就是一个mlp，比较简单。</p>
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/Screen%20Shot%202023-09-03%20at%201.01.33%20AM.png" alt="Screen Shot 2023-09-03 at 1.01.33 AM"></p>
+
+            <div class="clearfix"></div>
+            <hr class="nogutter">
+        </div>
+        <nav class="m-pagination col-md-8 col-md-offset-2 col-sm-24" role="pagination">
+    
+    <a class="pull-left" href="../../../09/03/network,%20graph,%20and%20Networkx/" style="float: left;">
+        ← Networkx Note
+    </a>
+    
+    
+    <a class="pull-right" href="../../14/KD/">
+        Knowledge Distillation Overview →
+    </a>
+    
+</nav>
+
+        <div class="col-md-8 col-md-offset-2 col-sm-24"><script type="text/javascript">
+  /**
+   * 搜狐畅言
+   */
+
+  /*
+  document.write('<div id="SOHUCS" sid="' + window.location.pathname.slice(1) + '" ></div>');
+
+  window.onload = function () {
+    (function () {
+      var appid = 'cytXXXX';
+      var conf = 'prod_xxxxxxxxxxxxxxxxx';
+      var width = window.innerWidth || document.documentElement.clientWidth;
+      var loadJs = function (d, a, id) {
+        var c = document.getElementsByTagName("head")[0] || document.head || document.documentElement;
+        var b = document.createElement("script");
+        b.setAttribute("type", "text/javascript");
+        b.setAttribute("charset", "UTF-8");
+        b.setAttribute("src", d);
+        if (id) {
+          b.setAttribute("id", id);
+        }
+        if (typeof a === "function") {
+          if (window.attachEvent) {
+            b.onreadystatechange = function () {
+              var e = b.readyState;
+              if (e === "loaded" || e === "complete") {
+                b.onreadystatechange = null;
+                a()
+              }
+            }
+          } else {
+            b.onload = a
+          }
+        }
+        c.appendChild(b)
+      };
+
+      loadJs("https://changyan.sohu.com/upload/changyan.js", function () {
+        window.changyan.api.config({
+          appid: appid,
+          conf: conf
+        })
+      });
+    })();
+  }
+  */
+
+</script>
+</div>
+    </div>
+</section>
+
+<!-- Highlight.js -->
+
+<link rel="stylesheet"
+href="//highlightjs.org/static/demo/styles/atom-one-light.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js">
+</script>
+<script>
+hljs.initHighlightingOnLoad();
+
+</script>
+
+
+      
+<!-- ============================ Footer =========================== -->
+
+<footer>
+    <div class="container">
+            <div class="copy">
+                <p>
+                    &copy; 2014<script>new Date().getFullYear()>2010&&document.write("-"+new Date().getFullYear());</script>, Content By Rin777. All Rights Reserved.
+                </p>
+                <p>Theme By <a target="_blank" rel="noopener" href="//go.kieran.top" style="color: #767D84">Kieran</a></p>
+            </div>
+            <div class="social">
+                <ul>
+                    
+                    <li><a href="https://github.com/" title="Github" target="_blank"><i class="icon-github"></i></a>&nbsp;</li>
+                    
+                    
+                    
+                    
+                    
+                </ul>
+            </div>
+            <div class="clearfix"> </div>
+        </div>
+</footer>
+
+<!-- ============================ END Footer =========================== -->
+      <!-- Load our scripts -->
+<!-- Resizable 'on-demand' full-height hero -->
+<script type="text/javascript">
+    var resizeHero = function () {
+        var hero = $(".cover,.heightblock"),
+            window1 = $(window);
+        hero.css({
+            "height": window1.height()
+        });
+    };
+
+    resizeHero();
+
+    $(window).resize(function () {
+        resizeHero();
+    });
+</script>
+<script src="/js/plugins.min.js"></script><!-- Bootstrap core and concatenated plugins always load here -->
+<script src="/js/scripts.js"></script><!-- Theme scripts -->
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$('#intro').find('img').each(function(){
+  var alt = this.alt;
+
+  if (alt){
+    $(this).after('<span class="caption" style="display:none">' + alt + '</span>');
+  }
+
+  $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox" rel="gallery" />');
+});
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+      
+            <style>
+.local-search-popup {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  background: rgba(255, 255, 255, .9);
+  color: #333;
+  z-index: 9999;
+  border-radius: 5px;
+  overflow: scroll;
+}
+#local-search-input {
+  width: 100%;
+  border: none;
+  outline: none;
+  border-bottom: 1px solid #151515;
+  background-color: initial;
+}
+.search-result-list {
+  list-style: none;
+  padding-left: 0;
+}
+.search-result-list > li {
+  margin-top: 15px;
+  border-bottom: 1px solid #ddd;
+  transition: all ease .3s;
+}
+.search-result-list > li:hover {
+  border-bottom: 1px solid gray;
+}
+.search-result-title {
+  font-size: 16px;
+}
+.search-result {
+  line-height: 20px;
+}
+.search-keyword {
+  font-weight: normal;
+  color: #c00;
+}
+
+@media (min-width: 890px) {
+  .popup-btn-close {
+    position: absolute;
+    top: 15px;
+    left: 35px;
+    border: 1px solid #151515;
+    padding: 0px 10px;
+    border-top-left-radius: 8px;
+    cursor: pointer;
+    transition: all ease .3s;
+  }
+  .popup-btn-close:hover {
+    background: #151515;
+    opacity: .9;
+    color: #fff;
+  }
+}
+@media (max-width: 890px) {
+  .popup-btn-close {
+    font-size: 0;
+    position: fixed;
+    right: 20px;
+    bottom: 50px;
+    width: 50px;
+    height: 50px;
+    background: #fff;
+    border-radius: 50%;
+    box-shadow: 1px 1px 5px #888;
+    cursor: pointer;
+  }
+  .popup-btn-close::after {
+    content: '←';
+    color: #151515;
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-size: 20px;
+    width: 100%;
+    height: 100%;
+    line-height: 50px;
+    text-align: center;
+  }
+}
+</style>
+
+<div class="popup search-popup local-search-popup">
+  <span class="popup-btn-close">
+    ESC
+  </span>
+  <div class="container">
+    <div class="col-md-8 col-md-offset-2">
+      <div class="local-search-header clearfix">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="local-search-input-wrapper">
+          <input autocomplete="off" placeholder="Search..." type="text" id="local-search-input">
+        </div>
+      </div>
+      <div id="local-search-result"></div>
+    </div>
+  </div>
+</div>
+
+<script src="/js/ziploader.js"></script>
+
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.json";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').fadeOut(300);
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $('.popup').fadeIn(300);
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // get search zip version
+    $.get('/searchVersion.txt?t=' + (+new Date()), function(res) {
+      if (localStorage.getItem('searchVersion') !== res) {
+        localStorage.setItem('searchVersion', res);
+        initSearchJson();
+      }
+    });
+
+    function initSearchJson () {
+      initLoad(['/search.zip'], {
+        loadOptions: {
+          success: function(obj) {
+            localStorage.setItem('searchJson', obj['search.json'])
+          },
+          error: function(e) {
+            return console.log(e)
+          }
+        },
+        returnOptions: {
+          'json': TYPE_TEXT
+        },
+        mimeOptions:{
+          'json':'application/json'
+        }
+      })
+    }
+
+
+    // search function;
+    var searchFunc = function(search_id, content_id) {
+      'use strict';
+
+      isfetched = true;
+      var datas = JSON.parse(localStorage.getItem('searchJson'));
+      console.log(search_id)
+      var input = document.getElementById(search_id);
+      var resultContent = document.getElementById(content_id);
+      var inputEventFunction = function() {
+        var searchText = input.value.trim().toLowerCase();
+        var keywords = searchText.split(/[\s\-]+/);
+        if (keywords.length > 1) {
+          keywords.push(searchText);
+        }
+        var resultItems = [];
+        if (searchText.length > 0) {
+          // perform local searching
+          datas.forEach(function(data) {
+            var isMatch = false;
+            var hitCount = 0;
+            var searchTextCount = 0;
+            var title = data.title ? data.title.trim() : '';
+            var titleInLowerCase = title.toLowerCase();
+            var content = data.content ? data.content.trim().replace(/<[^>]+>/g,"") : '';
+            var contentInLowerCase = content.toLowerCase();
+            var articleUrl = decodeURIComponent(data.url);
+            var indexOfTitle = [];
+            var indexOfContent = [];
+            // only match articles with not empty titles
+            keywords.forEach(function(keyword) {
+              function getIndexByWord(word, text, caseSensitive) {
+                var wordLen = word.length;
+                if (wordLen === 0) {
+                  return [];
+                }
+                var startPosition = 0, position = [], index = [];
+                if (!caseSensitive) {
+                  text = text.toLowerCase();
+                  word = word.toLowerCase();
+                }
+                while ((position = text.indexOf(word, startPosition)) > -1) {
+                  index.push({position: position, word: word});
+                  startPosition = position + wordLen;
+                }
+                return index;
+              }
+
+              indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+              indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+            });
+            if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+              isMatch = true;
+              hitCount = indexOfTitle.length + indexOfContent.length;
+            }
+
+            // show search results
+
+            if (isMatch) {
+              // sort index by position of keyword
+
+              [indexOfTitle, indexOfContent].forEach(function (index) {
+                index.sort(function (itemLeft, itemRight) {
+                  if (itemRight.position !== itemLeft.position) {
+                    return itemRight.position - itemLeft.position;
+                  } else {
+                    return itemLeft.word.length - itemRight.word.length;
+                  }
+                });
+              });
+
+              // merge hits into slices
+
+              function mergeIntoSlice(text, start, end, index) {
+                var item = index[index.length - 1];
+                var position = item.position;
+                var word = item.word;
+                var hits = [];
+                var searchTextCountInSlice = 0;
+                while (position + word.length <= end && index.length != 0) {
+                  if (word === searchText) {
+                    searchTextCountInSlice++;
+                  }
+                  hits.push({position: position, length: word.length});
+                  var wordEnd = position + word.length;
+
+                  // move to next position of hit
+
+                  index.pop();
+                  while (index.length != 0) {
+                    item = index[index.length - 1];
+                    position = item.position;
+                    word = item.word;
+                    if (wordEnd > position) {
+                      index.pop();
+                    } else {
+                      break;
+                    }
+                  }
+                }
+                searchTextCount += searchTextCountInSlice;
+                return {
+                  hits: hits,
+                  start: start,
+                  end: end,
+                  searchTextCount: searchTextCountInSlice
+                };
+              }
+
+              var slicesOfTitle = [];
+              if (indexOfTitle.length != 0) {
+                slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+              }
+
+              var slicesOfContent = [];
+              while (indexOfContent.length != 0) {
+                var item = indexOfContent[indexOfContent.length - 1];
+                var position = item.position;
+                var word = item.word;
+                // cut out 100 characters
+                var start = position - 20;
+                var end = position + 80;
+                if(start < 0){
+                  start = 0;
+                }
+                if (end < position + word.length) {
+                  end = position + word.length;
+                }
+                if(end > content.length){
+                  end = content.length;
+                }
+                slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+              }
+
+              // sort slices in content by search text's count and hits' count
+
+              slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                  return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                  return sliceRight.hits.length - sliceLeft.hits.length;
+                } else {
+                  return sliceLeft.start - sliceRight.start;
+                }
+              });
+
+              // select top N slices in content
+
+              var upperBound = parseInt('2');
+              if (upperBound >= 0) {
+                slicesOfContent = slicesOfContent.slice(0, upperBound);
+              }
+
+              // highlight title and content
+
+              function highlightKeyword(text, slice) {
+                var result = '';
+                var prevEnd = slice.start;
+                slice.hits.forEach(function (hit) {
+                  result += text.substring(prevEnd, hit.position);
+                  var end = hit.position + hit.length;
+                  result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                  prevEnd = end;
+                });
+                result += text.substring(prevEnd, slice.end);
+                return result;
+              }
+
+              var resultItem = '';
+
+              if (slicesOfTitle.length != 0) {
+                resultItem += "<li><a target='_blank' href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+              } else {
+                resultItem += "<li><a target='_blank' href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+              }
+
+              slicesOfContent.forEach(function (slice) {
+                resultItem += "<a target='_blank' href='" + articleUrl + "'>" +
+                  "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                  "...</p>" + "</a>";
+              });
+
+              resultItem += "</li>";
+              resultItems.push({
+                item: resultItem,
+                searchTextCount: searchTextCount,
+                hitCount: hitCount,
+                id: resultItems.length
+              });
+            }
+          })
+        };
+        if (keywords.length === 1 && keywords[0] === "") {
+          resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+        } else if (resultItems.length === 0) {
+          resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+        } else {
+          resultItems.sort(function (resultLeft, resultRight) {
+            if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+              return resultRight.searchTextCount - resultLeft.searchTextCount;
+            } else if (resultLeft.hitCount !== resultRight.hitCount) {
+              return resultRight.hitCount - resultLeft.hitCount;
+            } else {
+              return resultRight.id - resultLeft.id;
+            }
+          });
+          var searchResultList = '<ul class=\"search-result-list\">';
+          resultItems.forEach(function (result) {
+            searchResultList += result.item;
+          })
+          searchResultList += "</ul>";
+          resultContent.innerHTML = searchResultList;
+        }
+      }
+
+      if ('auto' === 'auto') {
+        input.addEventListener('input', inputEventFunction);
+      } else {
+        $('.search-icon').click(inputEventFunction);
+        input.addEventListener('keypress', function (event) {
+          if (event.keyCode === 13) {
+            inputEventFunction();
+          }
+        });
+      }
+
+      // remove loading animation
+      $('body').css('overflow', '');
+
+      proceedsearch();
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        $('.sb-close').click();
+        searchFunc('local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+      
+      
+
+<!--
+
+<link rel="stylesheet" href="/dist/APlayer.min.css">
+<div id="aplayer"></div>
+<script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+<meting-js
+      server="netease"
+      type="playlist"
+      id="4904272454">
+</meting-js>
+-->
+
+</body>
+
+</html>
+
+
+
+
+
+
+
