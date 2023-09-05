@@ -84,7 +84,7 @@
 				    
 				    <li><a href="/categories/Linux/" class="animsition-link">Linux<small>(1)</small></a></li>
 				    
-				    <li><a href="/categories/ML/" class="animsition-link">ML<small>(39)</small></a></li>
+				    <li><a href="/categories/ML/" class="animsition-link">ML<small>(41)</small></a></li>
 				    
 				    <li><a href="/categories/PWN-COLLEGE/" class="animsition-link">PWN.COLLEGE<small>(1)</small></a></li>
 				    
@@ -202,6 +202,90 @@
 
 <section id="intro">
     <div class="container">
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2021/12/06/heap_learning_fastbin_attack/">fastbin attack</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2021-12-06T08:17:00.507Z" itemprop="datePublished">
+          2021-12-06
+      </time>
+    
+    
+    | 
+    <a href='/tags/HEAP-Fastbin-Attack/'>HEAP - Fastbin Attack</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+     
+fastbin​    长度在32-160(32位系统是16-80)的free堆块。通过fastbinlist储存，单向链表，所以fast。fastbin attack一个最简单的利用就是UAF，其次就是fastbin double free。ctf pwn中与fastbin相关的还有就是在unsortedbin attack中涉及到的，也是ptmalloc机制中的一种的malloc_consolidate，其中也有可以攻
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2021/12/06/heap_learning_fastbin_attack/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2021/12/03/mess_malloc_lab/">csapp malloc lab</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2021-12-03T08:46:22.570Z" itemprop="datePublished">
+          2021-12-03
+      </time>
+    
+    
+    | 
+    <a href='/tags/csapp-lab/'>csapp lab</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+     
+0）前言​        鸽了三个月的malloc lab，作为复习堆题的开始。
+​        计画完成时间是12.5之前，也就是三天。
+1）大体设计​        对于整体的操作的大致模型以及allocater和freer需要做的工作如下：
+​        分配器：
+
+在第一次分配chunk时，对堆空间进行初始化=&gt;mm_init()    
+
+创建指定类型的chunk。
+​    free
+
+利用隐式空闲
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2021/12/03/mess_malloc_lab/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
         
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
@@ -522,87 +606,6 @@ docker基础架构​    对于docker，在了解基础命令之前我们需要�
                     
                     <p class="pull-right readMore">
                         <a href="/2021/10/29/mess_typora主题配置的一些心得/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2021/10/27/mess_解决gcc无法编译32位程序的问题/">解决gcc无法编译32位程序的问题</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2021-10-27T12:26:56.705Z" itemprop="datePublished">
-          2021-10-27
-      </time>
-    
-    
-    | 
-    <a href='/tags/linux-primary/'>linux primary</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-     
-1）前言​    之前一直被gcc无法编译32位程序而困扰，但是问题一直拖着没有解决，趁着今天比较闲，把这个问题彻底解决一下。
-2)过程​    首先我们尝试编译32位程序，gcc报错：
-​    缺少头文件，实则是没有安装多架构gcc。
-​    试图安装，失败，报错如下：
-​    这里有个坑了我好久的东西，就是这个报错
-E: Unable to correct problems, you have held brok
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2021/10/27/mess_解决gcc无法编译32位程序的问题/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2021/10/27/sum_gdb附加调试的一些黑魔法/">gdb附加调试的一些黑魔法</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2021-10-27T03:21:25.650Z" itemprop="datePublished">
-          2021-10-27
-      </time>
-    
-    
-    | 
-    <a href='/tags/MESS/'>MESS</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-     
-1）abstract​    这个part主要综合了一些奇怪的调试中遇到的问题，不定期更新。
-2）格式化字符串-cctf-pwn31）pause（p）导致ERROR: Could not find ELF base问题​    在开始动调这个exp的时候，发现一个很奇怪的点就是如果下的断点的模式gdb.attach(sh)，那么程序会异常退出，大概是这样：
-123456789101112131415161718192021
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2021/10/27/sum_gdb附加调试的一些黑魔法/">Read More...</a>
                     </p>
                     
                 </div>
