@@ -84,7 +84,7 @@
 				    
 				    <li><a href="/categories/Linux/" class="animsition-link">Linux<small>(1)</small></a></li>
 				    
-				    <li><a href="/categories/ML/" class="animsition-link">ML<small>(42)</small></a></li>
+				    <li><a href="/categories/ML/" class="animsition-link">ML<small>(43)</small></a></li>
 				    
 				    <li><a href="/categories/PWN-COLLEGE/" class="animsition-link">PWN.COLLEGE<small>(1)</small></a></li>
 				    
@@ -202,6 +202,46 @@
 
 <section id="intro">
     <div class="container">
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2022/03/12/mess_pwn中的python字符串处理问题/">pwn中的python字符串处理问题</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-03-12T02:50:45.551Z" itemprop="datePublished">
+          2022-03-12
+      </time>
+    
+    
+    | 
+    <a href='/tags/mess/'>mess</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+     
+​        最近在pwncollege做题的时候常常遇到接收的字符串处理不当的问题，故总结整理一下。
+字符串截取123456789p.recv()[0:6]		#截取1-5个字符串p.recv()[2:6]		#截取2-5个字符串p.recv()[:]		#截取完整字符串p.recv()[2:]#从第二个索引开始截取p.recv()[-4:]#截取最后四个字符
+​        
+字符串处理​        一般来说
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/03/12/mess_pwn中的python字符串处理问题/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
         
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
@@ -567,43 +607,6 @@ Level6​        一个输出重定向，创建对应文件./embryo
                     
                     <p class="pull-right readMore">
                         <a href="/2022/01/17/pwn.college_Program_interaction/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2021/12/11/heap_unsortedbin leak/">unsortedbinleak</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2021-12-11T11:32:01.748Z" itemprop="datePublished">
-          2021-12-11
-      </time>
-    
-    
-    | 
-    <a href='/tags/HEAP-Unsortedbin/'>HEAP - Unsortedbin</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        ​    一个简单的trick。
-​        并且在trick就是tcache，接下来就是刷题熟练，最后再简单学习一下largin bin和small bin的利用。
-​        unsortedbin  由双向循环链表管理，表头为main_arena，所以表末尾的chunk的fd会指回main_arena，这样我们就获得了main_arena结构体内部的的地址，通过调试我们就能得到main_arena的真正的地址，并且ma
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2021/12/11/heap_unsortedbin leak/">Read More...</a>
                     </p>
                     
                 </div>
