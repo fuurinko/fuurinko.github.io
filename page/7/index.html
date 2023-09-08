@@ -74,7 +74,7 @@
 				  	
 				    <li><a href="/categories/AUDITION/" class="animsition-link">AUDITION<small>(23)</small></a></li>
 				    
-				    <li><a href="/categories/Binary-security/" class="animsition-link">Binary_security<small>(101)</small></a></li>
+				    <li><a href="/categories/Binary-security/" class="animsition-link">Binary_security<small>(102)</small></a></li>
 				    
 				    <li><a href="/categories/CSAPP-LAB/" class="animsition-link">CSAPP LAB<small>(1)</small></a></li>
 				    
@@ -196,6 +196,43 @@
 
 <section id="intro">
     <div class="container">
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2022/10/24/mess_GDB 中ni 与 si的魔法/">mess_GDB中ni与si的魔法</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-10-24T11:57:06.272Z" itemprop="datePublished">
+          2022-10-24
+      </time>
+    
+    
+    | 
+    <a href='/tags/GDB/'>GDB</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        ​        关于gdb中ni 、n、si、s的区别，是一个很基础的问题：n/s都是C语言级的断点定位。s会进入C函数内部，n不会。ni/si都是汇编级别的断点定位。si会进入汇编和C函数内部, ni不会。
+​        然而众所周知，gdb下软件断点的原理是在代码中插入 int 3，引发中断后执行系统调用ptrace，那么同样是插入指令，为什么这两种指令会有不同影响？
+gdb指令级单步的实现首先还是复习一下老生常谈（的软硬断点
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/10/24/mess_GDB 中ni 与 si的魔法/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
         
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
@@ -558,44 +595,6 @@ ps：上一个note说到主要利用决策树进行分类。
                     
                     <p class="pull-right readMore">
                         <a href="/2022/09/30/ml_CS 329P | note 2/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2022/09/29/ml_CS 329P |  note1/">CS 329P note1</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2022-09-29T01:24:04.320Z" itemprop="datePublished">
-          2022-09-29
-      </time>
-    
-    
-    | 
-    <a href='/tags/CS329P/'>CS329P</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        ​    
-         
-0：胡言乱语由于一些奇怪的原因，半被迫开始学习机器学习。关于学习资料，某位不愿意公开姓名的老同学特别给我推荐了https://www.bilibili.com/video/BV1Xh411p7M9/?spm_id_from=333.788&amp;vd_source=b424d92c840f16ffa9a14a3d99dfc564这套课程，说这是他压箱底的宝贝资源。
-所以大致记录一下学习过程，第一part
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2022/09/29/ml_CS 329P |  note1/">Read More...</a>
                     </p>
                     
                 </div>
