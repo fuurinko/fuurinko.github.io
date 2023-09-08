@@ -53,8 +53,8 @@
 	}
 }
 body {
-	background-color: #ffffff6a;
-	background-color: rgb(255, 255, 255);
+	background-color: #000000;
+	background-color: rgba(255, 255, 255, 0.813);
     font-family: "Open Sans", "Helvetica Neue", "Helvetica", "Hiragino Sans GB", "Microsoft YaHei", "Source Han Sans CN", "WenQuanYi Micro Hei", Arial, sans-serif;
 	color: #666;
 	font-style: normal;
@@ -97,7 +97,7 @@ h2 {
 	font-size: 22px;
 	line-height: 30px;
 	letter-spacing: 1px;
-	color: #f37d7d;
+	color: #491212;
 }
 @media (max-width:768px) {
 	h2 {
@@ -113,7 +113,7 @@ h3 {
 	line-height: 37px;
 	font-size: 20px;
 	margin-top: 0;
-	color: #aa6ebe;
+	color: #aa9111;
 }
 h4 {
 	font-style: normal;
@@ -131,7 +131,7 @@ h6 span,
 .navbar .nav > li > span {
 	font-family: 'Georgia', "Open Sans", "Helvetica Neue", "Helvetica", "Hiragino Sans GB", "Microsoft YaHei", "Source Han Sans CN", "WenQuanYi Micro Hei", Arial, sans-serif;
 
-	font-style: italic;
+	font-style: normal;
 	margin-left: 4px;
 	margin-right: 3px;
 	text-transform: none;
@@ -142,10 +142,12 @@ h1 span {
 	top: -2px
 }
 section {
-	background-color: #fff;
+	background-color: #ffffff7e;
 	position: relative;
 	padding-top: 60px;
 	z-index: 4;
+	-webkit-backdrop-filter: blur(10px);
+	backdrop-filter: blur(10px);
 }
 a,
 a:hover,
@@ -170,7 +172,7 @@ blockquote {
 }
 blockquote p {
 	font-family: 'Georgia', "Open Sans", "Helvetica Neue", "Helvetica", "Hiragino Sans GB", "Microsoft YaHei", "Source Han Sans CN", "WenQuanYi Micro Hei", Arial, sans-serif;
-	font-style: italic;
+	font-style: normal;
 	font-size: 15px;
 }
 blockquote footer {
@@ -179,6 +181,8 @@ blockquote footer {
 	padding: 0;
 	font-size: 12px;
 }
+
+
 .table-responsive {
 	margin: 40px 0;
 }
@@ -188,7 +192,7 @@ blockquote footer {
 .container {
   padding-right: 20px;
   padding-left: 20px;
-  color: #ff71bd;
+  color: #c4538f;
 }
 @media (min-width: 768px) {
 	.container {
@@ -197,7 +201,7 @@ blockquote footer {
 	}
 }
 ::selection {
-	color: #ffffff;
+	color: #980000;
 	background: #151515;
 }
 ::-moz-selection {
@@ -713,7 +717,7 @@ html.sb-init.sb-active.sb-active-right #projects .filter-item div a {
 	opacity: 1;
 }
 .sb-slidebar {
-	background-color: #151515; /* Background colour. */
+	background-color: #000000d8; /* Background colour. */
 	color: #666; /* Text colour. */
 	font-weight: 700;
 	font-size: 14px;
@@ -723,7 +727,7 @@ html.sb-init.sb-active.sb-active-right #projects .filter-item div a {
 	overflow-x: hidden;
 }
 .sb-slidebar a {
-	color: #666; /* Link colour. */
+	color: #3f98fe; /* Link colour. */
 	text-decoration: none;
 	font-weight: 700;
 	text-transform: uppercase;
@@ -742,7 +746,7 @@ html.sb-init.sb-active.sb-active-right #projects .filter-item div a {
 	width: 100%;
 	padding: 0;
 	margin: 0;
-	color: #666;
+	color: #ff82cd;
 	font-style: normal;
 	font-weight: 600;
 	line-height: 20px;
@@ -760,7 +764,7 @@ html.sb-init.sb-active.sb-active-right #projects .filter-item div a {
 	display: inline-block;
 	font-weight: 600;
 	font-style: normal;
-	color: #666;
+	color: #ff75fd;
 	cursor: pointer;
 	line-height: 20px;
 	padding: 3px 10px; /* Creates an even padding the same size as your font. */
