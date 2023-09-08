@@ -189,7 +189,7 @@
         </div>
         <div class="col-md-8 col-md-offset-2">
       		
-    <div id="aplayer-kWbOYQcC" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div> 
+    <div id="aplayer-EefOGEUa" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div> 
 <h1><span id="overivew">overivew</span></h1><p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-04-21%20%E4%B8%8B%E5%8D%888.26.01.png" alt="截屏2022-04-21 下午8.26.01"></p>
 <p>​        其实把程序简化来看的话就是一道比较常规的chunk overlapping，漏洞很明显，但是又不完全明显，需要先认真把程序逆清楚。在pwn题的几个环节中，逆向确定漏洞点，分析漏洞寻找思路，写exp布置堆风水，调试扣细节，我觉得最头疼的可能就是逆向了，虽然过程也许不难，但是真的很bewilder。</p>
 <p>​        其实这个程序看似非常复杂，菜单就写了十五分钟，但逆来逆去最关键居然的还是那个一眼uint溢出的漏洞，真的很难绷。利用它获得heap base和任意地址加1，于是比较自然的思路就是构造一个off by one进行chunk overlap。虽然但是当时花了大半天时间看musl pwn，没看出来，晚上还被拉出去看电影了，于是examination也懒得看了。主要是逆向逆得脑壳疼，程序没逆干净那个任意地址+1也没有利用的完整思路，晚上十点多坐在麦当劳写了会儿菜单就爬了，总共也没看超过一个小时，第二天起床发现学长通宵排堆结果失误了，确实没有绷住。这么会堆风水，以后职业算卦好了。</p>

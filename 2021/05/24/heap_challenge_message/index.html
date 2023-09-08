@@ -189,7 +189,7 @@
         </div>
         <div class="col-md-8 col-md-offset-2">
       		
-    <div id="aplayer-qUtowsaU" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div> 
+    <div id="aplayer-JWwvKXmp" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="7342554262" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div> 
 <p>第二道fastbin double free。</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">free</span>(*(<span class="keyword">void</span> **)&amp;dword_602060[<span class="number">4</span> * v1 + <span class="number">2</span>]);</span><br><span class="line">      dword_602060[<span class="number">4</span> * v1] = <span class="number">0</span>;</span><br><span class="line">      --dword_60204C;</span><br></pre></td></tr></table></figure>
 <p>这里没有把指针置为null，所以会产生uaf漏洞。</p>

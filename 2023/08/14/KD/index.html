@@ -191,7 +191,7 @@
       		<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
 
 
-    <div id="aplayer-aiaMvghw" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="1844479015" data-server="netease" data-type="song" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div>  
+    <div id="aplayer-mmZDhnWa" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="1844479015" data-server="netease" data-type="song" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div>  
 <p>基于三篇比较经典的论文对KD有一个更加深入的认知。<br>-Distilling the Knowledge in a Neural Network</p>
 <h1><span id="1-distilling-the-knowledge-in-a-neural-network">1 Distilling the Knowledge in a Neural Network</span></h1><h2><span id="11-abstract">1.1 Abstract</span></h2><p>提升ml性能的一个方法是整个多个算法求平均，然而当某些模型太大时，由于部署平台算力有限，效率降低。论文提出一种通过知识蒸馏将集成的模型压缩为单个小模型的方法，且该方法在MNIST数据集上取得了惊人的好结果。</p>
 <h2><span id="12-具体思想">1.2 具体思想</span></h2><p>论文实际研究的点在于小模型如何学习大模型的泛化能力。<br>一个明显的方法是学习大模型产生的soft labels，即每项对应的标签概率。当soft lable的熵较大时，其能提供的信息也就越多。<br>所以这里采用的大致流程是，对于某数据集，利用teacher model生成包含更多助于泛化的信息的soft labels，然后用soft labels来训练student model。</p>
