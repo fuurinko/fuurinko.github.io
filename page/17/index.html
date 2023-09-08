@@ -339,10 +339,10 @@ E: Unable to correct problems, you have held brok
                     <p>
                       
                         
-     
+      
 1）abstract​    这个part主要综合了一些奇怪的调试中遇到的问题，不定期更新。
 2）格式化字符串-cctf-pwn31）pause（p）导致ERROR: Could not find ELF base问题​    在开始动调这个exp的时候，发现一个很奇怪的点就是如果下的断点的模式gdb.attach(sh)，那么程序会异常退出，大概是这样：
-123456789101112131415161718192021
+12345678910111213141516171819202
                       
                     </p>
                     
@@ -377,14 +377,14 @@ E: Unable to correct problems, you have held brok
                 <div class="col-md-8">
                     <p>
                       
-                        
+                        ​    
      
 [TOC]
 汇编语言1）寻址1/直接寻址1mov     rax, fs:28h #直接寻址，fs段寄存器+偏移量。这里其实是一个canary的值。
 2/间接寻址间接在使用指针以及解引用的形式
 1mov     [rbp+var_8], rax # 寄存器相对寻址。相当于把rax，也就是这个canary值放到rbp+var_8的地方。
 3/比例寻址例如在数组遍历中
-123456.dataarrayD 1,2,3,4.cod
+123456.dataarrayD 1,2,3,
                       
                     </p>
                     
@@ -540,9 +540,9 @@ Tcache全名为Thread Local Caching，它为每个线程创建一个缓存，里
                     <p>
                       
                         
-     
+      
 ELF文件下对于PIE保护和ASLR的重新认识0）​    复现红色高跟鞋的时候，在ida修复swithc结构的时候碰见了一个问题。因为题目的源文件是有pie保护的，所以ida中的地址是很难看的随机化模式。虽然这些随机化的地址对于我们patch文件毫无影响，但是就是突发奇想，看看能不能找到方法来通过patch将elf文件的pie保护给禁用。
-1）​    如果用010editor打开一个PE文件，我们能够很方便的通过修改P
+1）​    如果用010editor打开一个PE文件，我们能够很方便的通过修改
                       
                     </p>
                     
@@ -577,15 +577,14 @@ ELF文件下对于PIE保护和ASLR的重新认识0）​    复现红色高跟�
                 <div class="col-md-8">
                     <p>
                       
-                        
-     
+                        ​    
+      
 patch alarm比较弱智的一个操作，但是如果没注意到的话还是有一点点坑。
 一般来说许多题都喜欢在main函数里加alarm。
 alarm会导致调试的时候超时，如果没有解决的话基本不能调试。算最基础的的反调试手法了。
 ps:关于超时的那个报错当时还好好研究了一会儿来着。就是一个sigxxx，sigalarm好像，然后默认返回中止程序。
 解决方案也比较弱智。就是直接patch掉就好了。
-ida都关了懒得上图了。
-单双引号
+ida都关了懒得上图了
                       
                     </p>
                     

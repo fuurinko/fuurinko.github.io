@@ -220,8 +220,10 @@
                       
                         
 
+
+      
 From this module we begin to explore how to achive a nerwork by using Pytorch, leaning some basic ideas in implement deep nerual network in pytorch.
-18.1 ModulesIt turns out that it’s more valuable to use modules which
+18.1 ModulesIt turns out that it’s more valuable to use modul
                       
                     </p>
                     
@@ -259,7 +261,9 @@ From this module we begin to explore how to achive a nerwork by using Pytorch, l
                         
 
 keras:[[ai_lab_note_001]]
-19.1 From Full Connection Layer To Convolutional Neural Network19.1.1 Limitaion of Full Connection Layer MLPImagin a picture with 12M pixels, and each pixels use R,G,B ,three color channels, a
+
+      
+19.1 From Full Connection Layer To Convolutional Neural Network19.1.1 Limitaion of Full Connection Layer MLPImagin a picture with 12M pixels, and each pixels use R,G,B ,three color cha
                       
                     </p>
                     
@@ -296,13 +300,15 @@ keras:[[ai_lab_note_001]]
                       
                         
 
+
+      
 17.1 Exploding Gradients17.1.1 DescriptionGiven a nerual network with d layers:
 
 \mathbf{h}^t = f_{t}(\mathbf{h^t-1})We can apply chain rule to work out it gradient towards wt:
 
 And take a MLP for instance:
 
-f_{t}(\mat
+f_
                       
                     </p>
                     
@@ -339,12 +345,14 @@ f_{t}(\mat
                       
                         
 
+
+      
 16.1 Forward PropagationThe caculation graph as follows:
 
 We can consider it as a relatively common froward way to caculate the output.
 
 1)\   \  \mathbf{z} = \mathbf{w_{1}}\mathbf{x},
-2) \ \ \mathbf{h} = \sigma(\mathb
+2) \ \ \mathbf{h} = \sigm
                       
                     </p>
                     
@@ -381,8 +389,10 @@ We can consider it as a relatively common froward way to caculate the output.
                       
                         
 
+
+      
 15.1 Why use DropoutA good model should be rebust whatever the inputs are1) Data with nosie is same as Tikhonov regularization.2) Input the nosie to the network can increase smoothness.
-However , it;s essential for us 
+However , it;s essential
                       
                     </p>
                     
@@ -419,7 +429,9 @@ However , it;s essential for us
                       
                         
 
-13.0 PrefaceThe object of Mearning learning is find out the pattern of a question, but we need to verify the  model is indeed find the pattern or just memorize some datas.So at this module we are going to talk about so
+
+      
+13.0 PrefaceThe object of Mearning learning is find out the pattern of a question, but we need to verify the  model is indeed find the pattern or just memorize some datas.So at this module we are going to talk 
                       
                     </p>
                     
@@ -457,8 +469,9 @@ However , it;s essential for us
                         
 
 
+      
 dataset reading123456import torchfrom torch import nnfrom d2l import torch as d2lbatch_size = 256train_iter, test_iter = d2l.load_data_fashion_mnist(batch_size)
-Define the layers1234567891011121314num_inputs, num_outp
+Define the layers1234567891011121314num_inputs, n
                       
                     </p>
                     
@@ -495,8 +508,9 @@ Define the layers1234567891011121314num_inputs, num_outp
                       
                         
 
-11.1 One Layers Perceptron11.1.0 Limitation of Linear ModelLinear model  implies the weaker assumption of monotonicity,when the featrues of inputs increase, it’s hard to just describe the model by a linear model.
-11.1.
+
+      
+11.1 One Layers Perceptron11.1.0 Limitation of Linear ModelLinear model  implies the weaker assumption of monotonicity,when the featrues of inputs increase, it’s hard to just describe the model by a linear mode
                       
                     </p>
                     
@@ -532,8 +546,8 @@ Define the layers1234567891011121314num_inputs, num_outp
                     <p>
                       
                         
+      
 Reading DatasetUsing the function to load the mnist dataset.123456import torchfrom IPython import displayfrom d2l import torch as d2lbatch_size = 256train_iter, test_iter = d2l.load_data_fashion_mnist(batch_size)
-Flatte
                       
                     </p>
                     

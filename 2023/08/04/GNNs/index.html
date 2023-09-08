@@ -49,7 +49,10 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
-<!-- hexo injector head_end end --><link rel="stylesheet" href="/css/prism.css" type="text/css"></head>
+<!-- hexo injector head_end end --><link rel="stylesheet" href="/css/prism.css" type="text/css"><link rel="stylesheet" href="/assets/css/APlayer.min.css" class="aplayer-style-marker">
+<script src="/assets/js/APlayer.min.js" class="aplayer-script-marker"></script>
+<script src="/assets/js/Meting.min.js" class="meting-script-marker"></script>
+</head>
 
 <!--
 <body class="post-template">
@@ -187,6 +190,8 @@
         <div class="col-md-8 col-md-offset-2">
       		<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
 
+
+    <div id="aplayer-fNdgKLvz" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="1844479015" data-server="netease" data-type="song" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div>  
 <p>【<a target="_blank" rel="noopener" href="https://distill.pub/2021/understanding-gnns/】">https://distill.pub/2021/understanding-gnns/】</a><br>【<a target="_blank" rel="noopener" href="https://distill.pub/2021/gnn-intro/】">https://distill.pub/2021/gnn-intro/】</a><br>笔记主要基于以上两篇博客。</p>
 <p>抽象来将图神经网络就是将原本输入的图像也好文本也好用graph结构替代，从而模型网络设计等也要相应进行调整。笔记会从最简单的MLP -〉 CNN -〉 Attention，对应到图神经网络即为 GNN - GCN - GAN。最后会衍生一些知识图谱之类的知识以及一些paper的简单核心提取。</p>
 <h1><span id="1-graph-neural-networks">1 Graph  Neural Networks</span></h1><h2><span id="11-why-graph">1.1 Why Graph</span></h2><p>当我们想利用神经网络同时学习节点的内容，节点与节点之间的关系以及整个系统之间的关系时，很显然简单的文本或者图像很难实现。<br>举几个比较常见的例子，我们想要学习twitter中的特定用户的社交网络模式，其中就有A关注B，B关注C，C关注A，这样就能形成简单的图结构。<br>那么问题在于，只是实现单纯的社交网络结构的话，其实用文本或者图像描述也可以，为什么要大费周章使用图结构呢》<br>这还是因为图的一个重要特征就是图并不存在天然的顺序，如果使用顺序来完整地表达图的话，那么就需要将图分解成所有可能的序列，然后对序列进行建模，很显然这需要极为庞大的计算量。</p>

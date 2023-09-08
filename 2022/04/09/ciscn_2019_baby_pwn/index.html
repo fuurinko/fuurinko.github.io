@@ -49,7 +49,10 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
-<!-- hexo injector head_end end --><link rel="stylesheet" href="/css/prism.css" type="text/css"></head>
+<!-- hexo injector head_end end --><link rel="stylesheet" href="/css/prism.css" type="text/css"><link rel="stylesheet" href="/assets/css/APlayer.min.css" class="aplayer-style-marker">
+<script src="/assets/js/APlayer.min.js" class="aplayer-script-marker"></script>
+<script src="/assets/js/Meting.min.js" class="meting-script-marker"></script>
+</head>
 
 <!--
 <body class="post-template">
@@ -186,9 +189,7 @@
         </div>
         <div class="col-md-8 col-md-offset-2">
       		
-			<script>
-				console.error("ReferenceError: value is not defined");
-			</script>     
+    <div id="aplayer-zuhbxEYS" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="1844479015" data-server="netease" data-type="song" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div> 
 <h1><span id="overview">overview</span></h1><p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/%E6%88%AA%E5%B1%8F2022-04-09%20%E4%B8%8B%E5%8D%883.56.19.png" alt="截屏2022-04-09 下午3.56.19"></p>
 <p>​        怪椰。</p>
 <h1><span id="re">re</span></h1><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">ssize_t</span> <span class="title">vuln</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">char</span> buf[<span class="number">40</span>]; <span class="comment">// [esp+0h] [ebp-28h] BYREF</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> read(<span class="number">0</span>, buf, <span class="number">0x100</span>u);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>

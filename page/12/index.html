@@ -219,14 +219,13 @@
                     <p>
                       
                         
-			
-				console.error("ReferenceError: value is not defined");
-			     
+     
 overview
 ​        怪椰。
 re123456ssize_t vuln()&#123;  char buf[40]; // [esp+0h] [ebp-28h] BYREF  return read(0, buf, 0x100u);&#125;
 ​    
-蚌埠住了，ret2dl
+蚌埠住了，ret2dl的板子题。蚌埠住了蚌埠住了蚌埠住了蚌埠住了蚌埠住了利用​        翻出板子，已经成功了一半。
+​        醒醒，你好像没
                       
                     </p>
                     
@@ -340,11 +339,11 @@ add1head_ptr = (unsigned int *)malloc(0x18uLL);
                     <p>
                       
                         
-     
+      
 overview​        开始做一些ciscn了。
 
 readd​        size不能大于0x78。
-1234567ptr = malloc(size);if ( ptr )&#123; size_struct = size_1; content_struct = ptr;//蚌埠住了，每次都会把这个指针覆盖为最新分配的content ptr。这下idx直接报废。 puts(&quot;Done!&quot
+1234567ptr = malloc(size);if ( ptr )&#123; size_struct = size_1; content_struct = ptr;//蚌埠住了，每次都会把这个指针覆盖为最新分配的content ptr。这下idx直接报废。 puts(&quot;Done!&quo
                       
                     </p>
                     
@@ -380,11 +379,11 @@ readd​        size不能大于0x78。
                     <p>
                       
                         
-     
+      
 stack控制程序执行流栈溢出ret2syscall​        利用程序自带的gadget，构造syscall。
 ​        对应板子
 ret2libc/csu​        比较模版化，值得一题的就是，system()的执行要求此时栈是16位对齐的，所以如果getshell失败不妨多ret一次。        
-ret2shellcode​        在rwx的内存空间(不一定是栈）上写shellcod
+ret2shellcode​        在rwx的内存空间(不一定是栈）上写shellco
                       
                     </p>
                     
@@ -497,9 +496,10 @@ UNLINKunlink大致概念​        就是将free chunk从双向循环链表中�
                     <p>
                       
                         ​    
-         
+     
 ​        一系列的事情最终使我感觉，春天确实已经到了。
-​        首先是刷牙时无意发现的丢在洗衣机旁阴暗角落的，去年秋天栽下去的铃兰花长出的鲜嫩的叶片。那时候和小戴怀着赌一把的心理，一起将一些看起来黄不拉几的铃兰根系一颗一颗地埋在土里，还非常认真地每隔几天就浇水，但是泛着土色的幼芽接连几个月都毫无起色，有时候甚至看起来像发霉了一般，于是后几个月我和小戴谁也没有管它——我们俩一致认为它已经死
+​        首先是刷牙时无意发现的丢在洗衣机旁阴暗角落的，去年秋天栽下去的铃兰花长出的鲜嫩的叶片。那时候和小戴怀着赌一把的心理，一起将一些看起来黄不拉几的铃兰根系一颗一颗地埋在土里，还非常认真地每隔几天就浇水，但是泛着土色的幼芽接连几个月都毫无起色，有时候甚至看起来像发霉了一般，于是后几个月我和小戴谁也没有管它——我们俩一致认为它已经死了。 
+
                       
                     </p>
                     
@@ -571,13 +571,13 @@ UNLINKunlink大致概念​        就是将free chunk从双向循环链表中�
                 <div class="col-md-8">
                     <p>
                       
-                        
+                        ​    
      
 overview
 ​        非常之畸形。
 re​        逻辑比较简单，结构体中只有一个chunk bp的字段。漏洞点也很魔幻，free只free结构体中保存的指针，而没有free malloc出来的ptr本身，并且没有置0，顺便edit的时候size没有限定，可以造成堆溢出。
 ​        并且题目并没有可控的输出功能,虽然调用了write()，但是我们很难通过改got表来调用。    
-利用​    
+利用
                       
                     </p>
                     

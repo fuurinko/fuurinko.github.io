@@ -253,12 +253,12 @@
                 <div class="col-md-8">
                     <p>
                       
-                        
-    
+                        ​    
+     
 overview​        除了pie其他都开，这样就不能修改got表了。
 ​        libc是2.27，需要考虑的就是tcache，
 reverse​        这道题的逻辑也比较简单，堆块的分配给我的感觉是比较类似21年ciscn的lonelywolf，也是只能申请一个chunk，然后free处直接free整个malloc出的ptr，info则是打印我们输入的name。
-12printf(&quot;N
+12printf(&
                       
                     </p>
                     
@@ -293,12 +293,12 @@ reverse​        这道题的逻辑也比较简单，堆块的分配给我的�
                 <div class="col-md-8">
                     <p>
                       
-                        
-    
+                        ​    
+     
 overview&amp;reverse​        
 ​        
 ​    比较明显是一道堆上的shellcode，程序逻辑比较简单,就是以idx创建不同的note，然后每个note只储存name，没有结构体啥的，Name，也就是我们输入进堆块的数据，必须是可见字符。之前做过一道类似的题，也是一个可见字符shellcode，可以用专门的工具或者嗯写出对应的可见字符版本的shellcode。
-利用​       
+利用​ 
                       
                     </p>
                     
@@ -333,14 +333,13 @@ overview&amp;reverse​
                 <div class="col-md-8">
                     <p>
                       
-                        
-    
+                        ​    
+     
 overview
 reverseopen​        打开一个文件，但是文件名不能包含flag.顺便在0x804B0C0上初始化了一块magic buf，此外，一次只能打开一个文件。
 read​        读取文件到magic buf。
 1result = fread(magicbuf, 0x18Fu, 1u, fp);
-write​        对flag的一些字符串进行过滤，然后put magic buf。
-c
+write​        对flag的一些字符串进行过滤，然后put magic 
                       
                     </p>
                     
@@ -410,14 +409,14 @@ c
                 <div class="col-md-8">
                     <p>
                       
-                        
-    
+                        ​    
+     
 overview​        怎么这么多32位的。
 
 ​        这个题我去年暑假的时候就做过，但是当时明显超出了我的能力范围，属于是wp都看不懂。不过pwnable这几个题目前来说我都能独立完成，所以这个也说不定。
 ​        总觉得我现在做题的类型很怪。
 reverse​        还是没有去除符号表，好。我依稀记得去年八月的时候我觉得这个题非常难逆，然后是实现了一个双链表。
-main​       
+main​ 
                       
                     </p>
                     
@@ -452,13 +451,13 @@ main​
                 <div class="col-md-8">
                     <p>
                       
-                        
-    
+                        ​    
+     
 overview
 reverse​        好，还有符号表，真好。这个题比较怪，这是一个菜单题，但是却是栈题。
 ​        好像还是个简单的小游戏。
 create_bullet​        这个逻辑看来也是只能创建一个bullet这样。
-12345678if ( *bullet_list )  return puts(&quot;You have been created the Bullet !&quot;
+12345678if ( *bullet_list )  return puts(&quot;You have been created the Bullet !
                       
                     </p>
                     
@@ -493,8 +492,8 @@ create_bullet​        这个逻辑看来也是只能创建一个bullet这样�
                 <div class="col-md-8">
                     <p>
                       
-                        
-    
+                        ​    
+     
 overview
 ​        轻松快乐的栈题，没有canary和pie那估计就是rop力。
 
@@ -505,7 +504,7 @@ Reverse​    开幕雷击
 
 ​    这是啥？
 ​    秉持着看不懂就假装没有看到的原则，先看看得懂的地方。
-12345678910result = ++::result;if ( ::result == 1 )&#123;
+12345678910result = ++::result;if ( ::result == 1 )
                       
                     </p>
                     
@@ -540,12 +539,12 @@ Reverse​    开幕雷击
                 <div class="col-md-8">
                     <p>
                       
-                        
+                        ​    
      
 overview
 ​    
 逆向​    又是排序。但是这个是个纯纯的栈题，并且保护全开，那就是不能rop，估计又是要逆清然后找漏洞捏。照我之前做的那个快排的经验，排序本身应该没有漏洞，漏洞出在num地址的溢出。
-main12345678910111213141516171819202122232425262728293031323334353637383940414243int __cdecl main(int arg
+main12345678910111213141516171819202122232425262728293031323334353637383940414243int __cdecl main(in
                       
                     </p>
                     

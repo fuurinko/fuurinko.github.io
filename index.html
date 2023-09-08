@@ -218,9 +218,11 @@
                 <div class="col-md-8">
                     <p>
                       
-                        conda1234567conda create -n xx python=xxconda init bashrestart bashconda activate xxconda deactivate xx
+                        ​    
+     
+conda1234567conda create -n xx python=xxconda init bashrestart bashconda activate xxconda deactivate xx
 此后所有 conda install或者pip install 都会被配置在这个相对隔离的环境中
-torch版本torchtorch最好不要无脑pip安装，因为通常它只会安装最新版，而不是适合你的环境的版本。所以稳妥的做法是看复现环
+torch版本torchtorch最好不要无脑pip安装，因为通常它只会安装最新版，而不是适合你的环境的版本。
                       
                     </p>
                     
@@ -296,11 +298,11 @@ minimum spanning tree即最小生成树一个图能生成多个树，树可以�
                       
                         
 
-
-
+​    
+     
 1 backdoor samples generation首先要找到自己一个稳定而简单的可以生成glnn能够识别的backdoor samples。
 1.1 subgraph参考论文：Backdoor Attacks to Graph Neural Networks对应代码https://github.com/zaixizhang/graphbackdoor
-1.1.1 复现将依赖存入 txt，然后云gpu 预装的torch版本
+1.1.1 复现将依赖存入 txt，然后云gpu 
                       
                     </p>
                     
@@ -337,8 +339,10 @@ minimum spanning tree即最小生成树一个图能生成多个树，树可以�
                       
                         
 
+
+      
 基于三篇比较经典的论文对KD有一个更加深入的认知。-Distilling the Knowledge in a Neural Network
-1 Distilling the Knowledge in a Neural Network1.1 Abstract提升ml性能的一个方法是整个多个算法求平均，然而当某些模型太大时，由于部署平台算力有限，效率降低。论文提出一种通过知识蒸馏将集成的模型压缩为单个小模型的方法，且该方法在MNIST
+1 Distilling the Knowledge in a Neural Network1.1 Abstract提升ml性能的一个方法是整个多个算法求平均，然而当某些模型太大时，由于部署平台算力有限，效率降低。论文提出一种通过知识蒸馏将集成的模型压缩为单个小模型的方法，且该
                       
                     </p>
                     
@@ -373,12 +377,12 @@ minimum spanning tree即最小生成树一个图能生成多个树，树可以�
                 <div class="col-md-8">
                     <p>
                       
-                        ​    
-         
+                        
+      
 
 
 2 Revisiting Data-Free Knowledge Distillation with Poisoned Teachers2.1 abstractData-free KD能够使得我们在没有net-t data的情况下蒸馏net-s，但其中预训练的net-t安全性有待商榷。论文讨论了data-free KD的安全性，并提出了Anti-Backdoor Data-Free KD。
-2.2 i
+2.2 introduct
                       
                     </p>
                     
@@ -413,12 +417,12 @@ minimum spanning tree即最小生成树一个图能生成多个树，树可以�
                 <div class="col-md-8">
                     <p>
                       
-                        ​    
-         
+                        
+      
 
 
 1 GLNN通过 KD将GNN与MLP结合，突破 data dependency造成的性能局限性。
-1.1 introduction对于大型工业应用来说，MLP依然占主导地位。因为GNN存在的data dependency会导致干扰而使得其难以利用于latency-constrained applications（就是需要低延迟的应用）。因此克服GNN的data dependency至关重要。论文考虑
+1.1 introduction对于大型工业应用来说，MLP依然占主导地位。因为GNN存在的data dependency会导致干扰而使得其难以利用于latency-constrained applications（就是需要低延迟的应用）。因此克服GNN的data dependency至关重要。论文考虑了MLP不受da
                       
                     </p>
                     
@@ -455,8 +459,10 @@ minimum spanning tree即最小生成树一个图能生成多个树，树可以�
                       
                         
 
+
+      
 【https://distill.pub/2021/understanding-gnns/】【https://distill.pub/2021/gnn-intro/】笔记主要基于以上两篇博客。
-抽象来将图神经网络就是将原本输入的图像也好文本也好用graph结构替代，从而模型网络设计等也要相应进行调整。笔记会从最简单的MLP -〉 CNN -〉 Attention，对应到图神经网络即为 GNN - GCN - GAN。最后会衍生一些知
+抽象来将图神经网络就是将原本输入的图像也好文本也好用graph结构替代，从而模型网络设计等也要相应进行调整。笔记会从最简单的MLP -〉 CNN -〉 Attention，对应到图神经网络即为 GNN - GCN - GAN。
                       
                     </p>
                     
