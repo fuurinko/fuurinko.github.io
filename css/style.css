@@ -54,7 +54,7 @@
 }
 body {
 	background-color: #ffffff6a;
-	background-color: rgba(255, 158, 228, 0.378);
+	background-color: rgb(255, 255, 255);
     font-family: "Open Sans", "Helvetica Neue", "Helvetica", "Hiragino Sans GB", "Microsoft YaHei", "Source Han Sans CN", "WenQuanYi Micro Hei", Arial, sans-serif;
 	color: #666;
 	font-style: normal;
@@ -186,6 +186,7 @@ blockquote footer {
 .container {
   padding-right: 20px;
   padding-left: 20px;
+  color: #760000;
 }
 @media (min-width: 768px) {
 	.container {
@@ -553,8 +554,8 @@ nav i.icon-basic-eye {
 	border-bottom: none;
 }
 #blog-post .navbar-inner {
-	background-color: #fff;
-	background-color: rgba(255,255,255,.9);
+	background-color: #ffffff92;
+	background-color: rgba(255, 255, 255, 0.664);
 }
 .lightnav .navbar-inner.lightnav-alt .nav > li > a,
 .lightnav .navbar-inner.lightnav-alt .learnmore {
