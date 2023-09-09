@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<!--[if lte IE 8 ]>
+<html class="ie" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US">
+<![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!-->
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
+<!--<![endif]-->
+
+<head>
+
+  <title>Graph data processing | Rin</title>
+  <!-- Meta data -->
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content="Rin">
+    <meta name="author" content="Rin777">
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+
+    <!-- Favicon, (keep icon in root folder) -->
+    <link rel="Shortcut Icon" href="/img/favicon.ico" type="image/ico">
+
+    <link rel="alternate" href="/atom.xml" title="Rin" type="application/atom+xml">
+    <link rel="stylesheet" href="/css/all.css" media="screen" type="text/css">
+    
+
+    <!--[if IE 8]>
+    <link rel="stylesheet" type="text/css" href="/css/ie8.css" />
+    <![endif]-->
+
+    <!-- jQuery | Load our jQuery, with an alternative source fallback to a local version if request is unavailable -->
+    <script src="/js/jquery-1.11.1.min.js"></script>
+    <script>window.jQuery || document.write('<script src="js/jquery-1.11.1.min.js"><\/script>')</script>
+
+    <!-- Load these in the <head> for quicker IE8+ load times -->
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="/js/html5shiv.min.js"></script>
+    <script src="/js/respond.min.js"></script>
+    <![endif]-->
+
+  
+  
+  
+
+  <style>.col-md-8.col-md-offset-2.opening-statement img{display:none;}</style>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><link rel="stylesheet" href="/css/prism.css" type="text/css"></head>
+
+<!--
+<body class="post-template">
+-->
+<body id="index" class="lightnav animsition">
+      <!-- ============================ Off-canvas navigation =========================== -->
+
+    <div class="sb-slidebar sb-right sb-style-overlay sb-momentum-scrolling">
+        <div class="sb-close" aria-label="Close Menu" aria-hidden="true">
+            <img src="/img/close.png" alt="Close"/>
+        </div>
+        <!-- Lists in Slidebars -->
+        <ul class="sb-menu">
+            <li><a href="/" class="animsition-link" title="Home">Home</a></li>
+            <li><a href="/archives" class="animsition-link" title="archive">archives</a></li>
+            <!-- Dropdown Menu -->
+			 
+            
+        	<li>
+        		<a class="sb-toggle-submenu">Categories<span class="sb-caret"></span></a>
+            	<ul class="sb-submenu">
+				  	
+				    <li><a href="/categories/AUDITION/" class="animsition-link">AUDITION<small>(23)</small></a></li>
+				    
+				    <li><a href="/categories/Binary-security/" class="animsition-link">Binary_security<small>(102)</small></a></li>
+				    
+				    <li><a href="/categories/CSAPP-LAB/" class="animsition-link">CSAPP LAB<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/EE/" class="animsition-link">EE<small>(5)</small></a></li>
+				    
+				    <li><a href="/categories/EN/" class="animsition-link">EN<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/Linux/" class="animsition-link">Linux<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/ML/" class="animsition-link">ML<small>(44)</small></a></li>
+				    
+				    <li><a href="/categories/PWN-COLLEGE/" class="animsition-link">PWN.COLLEGE<small>(1)</small></a></li>
+				    
+				</ul>
+        	</li>
+			
+            
+            <li>
+                <a class="sb-toggle-submenu">Links<span class="sb-caret"></span></a>
+                <ul class="sb-submenu">
+                    
+                    <li><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1Wh4y1o7Xh" class="animsition-link">INNOUT「系统过载」SYSTEM专场演出</a></li>
+                    
+                    <li><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1Kv411574g" class="animsition-link">普通周末 肖骏个人音乐演出 《边境Frontier》</a></li>
+                    
+                </ul>
+            </li>
+            
+        </ul>
+        <!-- Lists in Slidebars -->
+        <ul class="sb-menu secondary">
+            
+            <li><a href="javascript:;" class="popup-trigger" title="Search"><span class="search-icon"></span>Search</a></li>
+            
+            <li><a href="/about.html" class="animsition-link" title="about">About</a></li>
+            <li><a href="/atom.xml" class="animsition-link" title="rss">RSS</a></li>
+        </ul>
+    </div>
+    
+    <!-- ============================ END Off-canvas navigation =========================== -->
+
+    <!-- ============================ #sb-site Main Page Wrapper =========================== -->
+
+    <div id="sb-site">
+        <!-- #sb-site - All page content should be contained within this id, except the off-canvas navigation itself -->
+
+        <!-- ============================ Header & Logo bar =========================== -->
+
+        <div id="navigation" class="navbar navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="container">
+                    <!-- Nav logo -->
+                    <div class="logo">
+                        <a href="/" title="Logo" class="animsition-link">
+                         <img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/98f52bd6gy1hfqk9tjohfg20xc0xc7e6.gif" alt="Logo" width="35px;"/> 
+                        </a>
+                    </div>
+                    <!-- // Nav logo -->
+                    <!-- Info-bar -->
+                    <nav>
+                        <ul class="nav">
+                            <li><a href="/" class="animsition-link">Rin</a></li>
+                            <li class="nolink"><span>Always </span>Creative.</li>
+                            
+                            <li><a href="https://github.com/" title="Github" target="_blank"><i class="icon-github"></i></a></li>
+                            
+                            
+                            
+                            
+                            
+                            <li class="nolink"><span>Welcome!</span></li>
+                        </ul>
+                    </nav>
+                    <!--// Info-bar -->
+                </div>
+                <!-- // .container -->
+                <div class="learnmore sb-toggle-right">More</div>
+                <button type="button" class="navbar-toggle menu-icon sb-toggle-right" title="More">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar before"></span>
+                <span class="icon-bar main"></span>
+                <span class="icon-bar after"></span>
+                </button>
+            </div>
+            <!-- // .navbar-inner -->
+        </div>
+
+        <!-- ============================ Header & Logo bar =========================== -->
+
+
+      
+<section id="intro">
+    <div class="container">
+        <div class="row col-md-offset-2">
+            <div class="col-md-8">
+    			<span class="post-meta">
+      <time datetime="2023-09-06T12:18:15.909Z" itemprop="datePublished">
+          2023-09-06
+      </time>
+    
+    
+    | 
+    <a href='/tags/GNN/'>GNN</a>
+    
+    
+</span>
+                <h1>Graph data processing</h1>
+            </div>
+        </div>
+        <div class="col-md-8 col-md-offset-2">
+      		<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+
+<p>——&gt;图神经网络数据处理指(bi)南(ji)</p>
+<p><a target="_blank" rel="noopener" href="https://chenglu.me/blogs/torch-geometric-dataset">https://chenglu.me/blogs/torch-geometric-dataset</a></p>
+<h1><span id="0-graph基础">0 graph基础</span></h1><h2><span id="01-graph常见表示方式">0.1 graph常见表示方式</span></h2><p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/Screen%20Shot%202023-09-07%20at%207.46.55%20PM.png" alt="Screen Shot 2023-09-07 at 7.46.55 PM"></p>
+<p>**节点对</p>
+<p><strong>邻接列表</strong><br><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/Screen%20Shot%202023-09-07%20at%207.55.53%20PM.png" alt="Screen Shot 2023-09-07 at 7.55.53 PM"><br><strong>邻接矩阵</strong></p>
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/Screen%20Shot%202023-09-07%20at%207.51.00%20PM.png" alt="Screen Shot 2023-09-07 at 7.51.00 PM"></p>
+<h1><span id="1-常见数据集">1 常见数据集</span></h1><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/w55100/article/details/115911550">https://blog.csdn.net/w55100/article/details/115911550</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/u010159842/article/details/103348257?spm=1001.2101.3001.6650.1&amp;utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7ERate-1-103348257-blog-115911550.235%5Ev38%5Epc_relevant_default_base&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7ERate-1-103348257-blog-115911550.235%5Ev38%5Epc_relevant_default_base">https://blog.csdn.net/u010159842/article/details/103348257?spm=1001.2101.3001.6650.1&amp;utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7ERate-1-103348257-blog-115911550.235%5Ev38%5Epc_relevant_default_base&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7ERate-1-103348257-blog-115911550.235%5Ev38%5Epc_relevant_default_base</a><br>这两篇博客各自整理了常见的图神经网络中使用的数据集。</p>
+<h2><span id="11-cora">1.1 Cora</span></h2><p>我接触到第一个图数据集，目前见到的常见的样子就是<code>cora.npz</code><br>，实际上就是七个数组的np压缩版本。<br><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/Screen%20Shot%202023-09-07%20at%204.50.10%20PM.png" alt="Screen Shot 2023-09-07 at 4.50.10 PM"></p>
+<p>还有另外一个版本，就是利用<code>planetoid</code>方法下载下来的数据集，大致会有<br>这么八个文件：<br><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/Screen%20Shot%202023-09-07%20at%205.16.42%20PM.png" alt="Screen Shot 2023-09-07 at 5.16.42 PM"><br>处理之后就是生成一个pyg可以识别的对象文件。<br><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/Screen%20Shot%202023-09-07%20at%205.39.56%20PM.png" alt="Screen Shot 2023-09-07 at 5.39.56 PM"></p>
+<h1><span id="2-常见框架">2 常见框架</span></h1><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/115342917">https://zhuanlan.zhihu.com/p/115342917</a></p>
+<h2><span id="21-pyg">2.1 PyG</span></h2><h3><span id="data类">data类</span></h3><p><a target="_blank" rel="noopener" href="https://xdocs.dgl.ai/en/0.8.x/guide_cn/data-process.html">官方文档</a><br>[教程？](<a target="_blank" rel="noopener" href="https://chenglu.me/blogs/torch-geometric-dataset">https://chenglu.me/blogs/torch-geometric-dataset</a></p>
+<p>在PyG中，单个graph定义为<code>torch_geometric.data.Data</code>实例，默认有以下属性：</p>
+<ul>
+<li><p><code>data.x</code>：节点特征矩阵，shape为<code>[num_nodes, num_node_features]</code>。</p>
+</li>
+<li><p><code>data.edge_index</code>：COO格式的graph connectivity矩阵，shape为<code>[2, num_edges]</code>，类型为<code>torch.long</code></p>
+</li>
+<li><p><code>data.edge_attr</code>：边的特征矩阵，shape为<code>[num_edges, num_edge_features]</code>。</p>
+</li>
+<li><p><code>data.y</code>：训练的target，shape不固定，比如，对于node-level任务，形状为<code>[num_nodes, *]</code>，对于graph-level任务，形状为<code>[1, *]</code></p>
+</li>
+<li><p><code>data.pos</code>：节点的位置(position)矩阵，shape为<code>[num_nodes, num_dimensions]</code>。</p>
+</li>
+</ul>
+<p>以数据集cora为例<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dataset = Planetoid(root=<span class="string">&#x27;/tmp/Cora&#x27;</span>, name=<span class="string">&#x27;Cora&#x27;</span>)</span><br></pre></td></tr></table></figure></p>
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/Screen%20Shot%202023-09-08%20at%204.54.24%20PM.png" alt="Screen Shot 2023-09-08 at 4.54.24 PM"><br><code>data set</code>的一些属性如下：</p>
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/Screen%20Shot%202023-09-08%20at%204.54.42%20PM.png" alt="Screen Shot 2023-09-08 at 4.54.42 PM"></p>
+<h3><span id="数据增强">数据增强</span></h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">dataset = Planetoid(root=<span class="string">&#x27;./data/&#x27;</span>, \</span><br><span class="line"></span><br><span class="line">name=args.dataset</span><br><span class="line"></span><br><span class="line">transform=transform)</span><br></pre></td></tr></table></figure>
+<p>参数中设置开启transform，则可以自动对数据集进行变换/增强。</p>
+<h3><span id="batch">Batch</span></h3><p>图有一个特性，如果节点之间没有连接，则它们不会相互传递消息。因此可以直接将几个图堆叠成一个超图（HyperGraph），而这个超图中的每个小图就像一座孤岛，彼此之间没有连接关系。因为堆叠起来的大图仍然是一张「图」，在结构上可以直接用于所有图模型，因此在模型层面也无需做任何改动。<br><code>torch_geometric.loader.DataLoader</code> 会自动完成上述的 batching 操作。</p>
+<h2><span id="22-dgl">2.2 DGL</span></h2><p>因为目前在看的一个项目用的是dgl，所以咱们暂时先深入研究一下dgl好了。<br>从官方文档开始。<br><a target="_blank" rel="noopener" href="https://docs.dgl.ai">https://docs.dgl.ai</a></p>
+<h3><span id="221-构建dglgraph">2.2.1 构建DGLgraph</span></h3><h4><span id="利用tensor构建">利用tensor构建</span></h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">u, v = th.tensor([<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>]), th.tensor([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">3</span>])</span><br><span class="line">g = dgl.graph((u, v))</span><br></pre></td></tr></table></figure>
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/Screen%20Shot%202023-09-08%20at%205.21.09%20PM.png" alt="Screen Shot 2023-09-08 at 5.21.09 PM"></p>
+<p>边分别是：<br>[0-&gt;1],[0-&gt;2],[0-&gt;3],[1-&gt;3] x2</p>
+<h4><span id="利用scipy稀疏矩阵构建">利用SciPy稀疏矩阵构建</span></h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> dgl</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> torch <span class="keyword">as</span> th</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> scipy.sparse <span class="keyword">as</span> sp</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>spmat = sp.rand(<span class="number">100</span>, <span class="number">100</span>, density=<span class="number">0.05</span>) <span class="comment"># 5%非零项</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>dgl.from_scipy(spmat)                   <span class="comment"># 来自SciPy</span></span><br><span class="line">Graph(num_nodes=<span class="number">100</span>, num_edges=<span class="number">500</span>,</span><br><span class="line">      ndata_schemes=&#123;&#125;</span><br><span class="line">      edata_schemes=&#123;&#125;)</span><br></pre></td></tr></table></figure>
+<h4><span id="利用networkx构建">利用Networkx构建</span></h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> networkx <span class="keyword">as</span> nx</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>nx_g = nx.path_graph(<span class="number">5</span>) <span class="comment"># 一条链路0-1-2-3-4</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>dgl.from_networkx(nx_g) <span class="comment"># 来自NetworkX</span></span><br><span class="line">Graph(num_nodes=<span class="number">5</span>, num_edges=<span class="number">8</span>,</span><br><span class="line">      ndata_schemes=&#123;&#125;</span><br><span class="line">      edata_schemes=&#123;&#125;)</span><br></pre></td></tr></table></figure>
+<h4><span id="从磁盘加载">从磁盘加载</span></h4><p>常见可加载格式：<br>CSV<br>JSON<br>DGL二进制格式</p>
+<h3><span id="222-graph-data-概述">2.2.2 Graph data 概述</span></h3><p><code>g.nodes()</code></p>
+<p>获取节点ID</p>
+<p><code>g.edges()</code><br>获取边对应的端点</p>
+<h1><span id="reference"># reference</span></h1><h3><span id="图数据概览">图数据概览</span></h3><p><a target="_blank" rel="noopener" href="https://www.epubit.com/courseDetails?id=PCC72369cd0eb9e7">https://www.epubit.com/courseDetails?id=PCC72369cd0eb9e7</a> 视频网课</p>
+<h3><span id="pyg教程">PyG教程</span></h3><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/78452993"># 番外篇：PyG框架及Cora数据集简介</a></p>
+
+            <div class="clearfix"></div>
+            <hr class="nogutter">
+        </div>
+        <nav class="m-pagination col-md-8 col-md-offset-2 col-sm-24" role="pagination">
+    
+    <a class="pull-left" href="../../08/test/" style="float: left;">
+        ← test
+    </a>
+    
+    
+    <a class="pull-right" href="../../05/%E4%BA%91GPU+%E8%AE%BA%E6%96%87%E5%A4%8D%E7%8E%B0%20%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BAtips/">
+        云GPU+论文复现 环境搭建tips →
+    </a>
+    
+</nav>
+
+        <div class="col-md-8 col-md-offset-2 col-sm-24"><script type="text/javascript">
+  /**
+   * 搜狐畅言
+   */
+
+  /*
+  document.write('<div id="SOHUCS" sid="' + window.location.pathname.slice(1) + '" ></div>');
+
+  window.onload = function () {
+    (function () {
+      var appid = 'cytXXXX';
+      var conf = 'prod_xxxxxxxxxxxxxxxxx';
+      var width = window.innerWidth || document.documentElement.clientWidth;
+      var loadJs = function (d, a, id) {
+        var c = document.getElementsByTagName("head")[0] || document.head || document.documentElement;
+        var b = document.createElement("script");
+        b.setAttribute("type", "text/javascript");
+        b.setAttribute("charset", "UTF-8");
+        b.setAttribute("src", d);
+        if (id) {
+          b.setAttribute("id", id);
+        }
+        if (typeof a === "function") {
+          if (window.attachEvent) {
+            b.onreadystatechange = function () {
+              var e = b.readyState;
+              if (e === "loaded" || e === "complete") {
+                b.onreadystatechange = null;
+                a()
+              }
+            }
+          } else {
+            b.onload = a
+          }
+        }
+        c.appendChild(b)
+      };
+
+      loadJs("https://changyan.sohu.com/upload/changyan.js", function () {
+        window.changyan.api.config({
+          appid: appid,
+          conf: conf
+        })
+      });
+    })();
+  }
+  */
+
+</script>
+</div>
+    </div>
+</section>
+
+<!-- Highlight.js -->
+
+<link rel="stylesheet"
+href="//highlightjs.org/static/demo/styles/atom-one-light.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js">
+</script>
+<script>
+hljs.initHighlightingOnLoad();
+
+</script>
+
+
+      
+<!-- ============================ Footer =========================== -->
+
+<footer>
+    <div class="container">
+            <div class="copy">
+                <p>
+                    &copy; 2014<script>new Date().getFullYear()>2010&&document.write("-"+new Date().getFullYear());</script>, Content By Rin777. All Rights Reserved.
+                </p>
+                <p>Theme By <a target="_blank" rel="noopener" href="//go.kieran.top" style="color: #767D84">Kieran</a></p>
+            </div>
+            <div class="social">
+                <ul>
+                    
+                    <li><a href="https://github.com/" title="Github" target="_blank"><i class="icon-github"></i></a>&nbsp;</li>
+                    
+                    
+                    
+                    
+                    
+                </ul>
+            </div>
+            <div class="clearfix"> </div>
+        </div>
+</footer>
+
+<!-- ============================ END Footer =========================== -->
+      <!-- Load our scripts -->
+<!-- Resizable 'on-demand' full-height hero -->
+<script type="text/javascript">
+    var resizeHero = function () {
+        var hero = $(".cover,.heightblock"),
+            window1 = $(window);
+        hero.css({
+            "height": window1.height()
+        });
+    };
+
+    resizeHero();
+
+    $(window).resize(function () {
+        resizeHero();
+    });
+</script>
+<script src="/js/plugins.min.js"></script><!-- Bootstrap core and concatenated plugins always load here -->
+<script src="/js/scripts.js"></script><!-- Theme scripts -->
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$('#intro').find('img').each(function(){
+  var alt = this.alt;
+
+  if (alt){
+    $(this).after('<span class="caption" style="display:none">' + alt + '</span>');
+  }
+
+  $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox" rel="gallery" />');
+});
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+      
+            <style>
+.local-search-popup {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  background: rgba(255, 255, 255, .9);
+  color: #333;
+  z-index: 9999;
+  border-radius: 5px;
+  overflow: scroll;
+}
+#local-search-input {
+  width: 100%;
+  border: none;
+  outline: none;
+  border-bottom: 1px solid #151515;
+  background-color: initial;
+}
+.search-result-list {
+  list-style: none;
+  padding-left: 0;
+}
+.search-result-list > li {
+  margin-top: 15px;
+  border-bottom: 1px solid #ddd;
+  transition: all ease .3s;
+}
+.search-result-list > li:hover {
+  border-bottom: 1px solid gray;
+}
+.search-result-title {
+  font-size: 16px;
+}
+.search-result {
+  line-height: 20px;
+}
+.search-keyword {
+  font-weight: normal;
+  color: #c00;
+}
+
+@media (min-width: 890px) {
+  .popup-btn-close {
+    position: absolute;
+    top: 15px;
+    left: 35px;
+    border: 1px solid #151515;
+    padding: 0px 10px;
+    border-top-left-radius: 8px;
+    cursor: pointer;
+    transition: all ease .3s;
+  }
+  .popup-btn-close:hover {
+    background: #151515;
+    opacity: .9;
+    color: #fff;
+  }
+}
+@media (max-width: 890px) {
+  .popup-btn-close {
+    font-size: 0;
+    position: fixed;
+    right: 20px;
+    bottom: 50px;
+    width: 50px;
+    height: 50px;
+    background: #fff;
+    border-radius: 50%;
+    box-shadow: 1px 1px 5px #888;
+    cursor: pointer;
+  }
+  .popup-btn-close::after {
+    content: '←';
+    color: #151515;
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-size: 20px;
+    width: 100%;
+    height: 100%;
+    line-height: 50px;
+    text-align: center;
+  }
+}
+</style>
+
+<div class="popup search-popup local-search-popup">
+  <span class="popup-btn-close">
+    ESC
+  </span>
+  <div class="container">
+    <div class="col-md-8 col-md-offset-2">
+      <div class="local-search-header clearfix">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="local-search-input-wrapper">
+          <input autocomplete="off" placeholder="Search..." type="text" id="local-search-input">
+        </div>
+      </div>
+      <div id="local-search-result"></div>
+    </div>
+  </div>
+</div>
+
+<script src="/js/ziploader.js"></script>
+
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.json";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').fadeOut(300);
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $('.popup').fadeIn(300);
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // get search zip version
+    $.get('/searchVersion.txt?t=' + (+new Date()), function(res) {
+      if (localStorage.getItem('searchVersion') !== res) {
+        localStorage.setItem('searchVersion', res);
+        initSearchJson();
+      }
+    });
+
+    function initSearchJson () {
+      initLoad(['/search.zip'], {
+        loadOptions: {
+          success: function(obj) {
+            localStorage.setItem('searchJson', obj['search.json'])
+          },
+          error: function(e) {
+            return console.log(e)
+          }
+        },
+        returnOptions: {
+          'json': TYPE_TEXT
+        },
+        mimeOptions:{
+          'json':'application/json'
+        }
+      })
+    }
+
+
+    // search function;
+    var searchFunc = function(search_id, content_id) {
+      'use strict';
+
+      isfetched = true;
+      var datas = JSON.parse(localStorage.getItem('searchJson'));
+      console.log(search_id)
+      var input = document.getElementById(search_id);
+      var resultContent = document.getElementById(content_id);
+      var inputEventFunction = function() {
+        var searchText = input.value.trim().toLowerCase();
+        var keywords = searchText.split(/[\s\-]+/);
+        if (keywords.length > 1) {
+          keywords.push(searchText);
+        }
+        var resultItems = [];
+        if (searchText.length > 0) {
+          // perform local searching
+          datas.forEach(function(data) {
+            var isMatch = false;
+            var hitCount = 0;
+            var searchTextCount = 0;
+            var title = data.title ? data.title.trim() : '';
+            var titleInLowerCase = title.toLowerCase();
+            var content = data.content ? data.content.trim().replace(/<[^>]+>/g,"") : '';
+            var contentInLowerCase = content.toLowerCase();
+            var articleUrl = decodeURIComponent(data.url);
+            var indexOfTitle = [];
+            var indexOfContent = [];
+            // only match articles with not empty titles
+            keywords.forEach(function(keyword) {
+              function getIndexByWord(word, text, caseSensitive) {
+                var wordLen = word.length;
+                if (wordLen === 0) {
+                  return [];
+                }
+                var startPosition = 0, position = [], index = [];
+                if (!caseSensitive) {
+                  text = text.toLowerCase();
+                  word = word.toLowerCase();
+                }
+                while ((position = text.indexOf(word, startPosition)) > -1) {
+                  index.push({position: position, word: word});
+                  startPosition = position + wordLen;
+                }
+                return index;
+              }
+
+              indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+              indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+            });
+            if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+              isMatch = true;
+              hitCount = indexOfTitle.length + indexOfContent.length;
+            }
+
+            // show search results
+
+            if (isMatch) {
+              // sort index by position of keyword
+
+              [indexOfTitle, indexOfContent].forEach(function (index) {
+                index.sort(function (itemLeft, itemRight) {
+                  if (itemRight.position !== itemLeft.position) {
+                    return itemRight.position - itemLeft.position;
+                  } else {
+                    return itemLeft.word.length - itemRight.word.length;
+                  }
+                });
+              });
+
+              // merge hits into slices
+
+              function mergeIntoSlice(text, start, end, index) {
+                var item = index[index.length - 1];
+                var position = item.position;
+                var word = item.word;
+                var hits = [];
+                var searchTextCountInSlice = 0;
+                while (position + word.length <= end && index.length != 0) {
+                  if (word === searchText) {
+                    searchTextCountInSlice++;
+                  }
+                  hits.push({position: position, length: word.length});
+                  var wordEnd = position + word.length;
+
+                  // move to next position of hit
+
+                  index.pop();
+                  while (index.length != 0) {
+                    item = index[index.length - 1];
+                    position = item.position;
+                    word = item.word;
+                    if (wordEnd > position) {
+                      index.pop();
+                    } else {
+                      break;
+                    }
+                  }
+                }
+                searchTextCount += searchTextCountInSlice;
+                return {
+                  hits: hits,
+                  start: start,
+                  end: end,
+                  searchTextCount: searchTextCountInSlice
+                };
+              }
+
+              var slicesOfTitle = [];
+              if (indexOfTitle.length != 0) {
+                slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+              }
+
+              var slicesOfContent = [];
+              while (indexOfContent.length != 0) {
+                var item = indexOfContent[indexOfContent.length - 1];
+                var position = item.position;
+                var word = item.word;
+                // cut out 100 characters
+                var start = position - 20;
+                var end = position + 80;
+                if(start < 0){
+                  start = 0;
+                }
+                if (end < position + word.length) {
+                  end = position + word.length;
+                }
+                if(end > content.length){
+                  end = content.length;
+                }
+                slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+              }
+
+              // sort slices in content by search text's count and hits' count
+
+              slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                  return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                  return sliceRight.hits.length - sliceLeft.hits.length;
+                } else {
+                  return sliceLeft.start - sliceRight.start;
+                }
+              });
+
+              // select top N slices in content
+
+              var upperBound = parseInt('2');
+              if (upperBound >= 0) {
+                slicesOfContent = slicesOfContent.slice(0, upperBound);
+              }
+
+              // highlight title and content
+
+              function highlightKeyword(text, slice) {
+                var result = '';
+                var prevEnd = slice.start;
+                slice.hits.forEach(function (hit) {
+                  result += text.substring(prevEnd, hit.position);
+                  var end = hit.position + hit.length;
+                  result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                  prevEnd = end;
+                });
+                result += text.substring(prevEnd, slice.end);
+                return result;
+              }
+
+              var resultItem = '';
+
+              if (slicesOfTitle.length != 0) {
+                resultItem += "<li><a target='_blank' href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+              } else {
+                resultItem += "<li><a target='_blank' href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+              }
+
+              slicesOfContent.forEach(function (slice) {
+                resultItem += "<a target='_blank' href='" + articleUrl + "'>" +
+                  "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                  "...</p>" + "</a>";
+              });
+
+              resultItem += "</li>";
+              resultItems.push({
+                item: resultItem,
+                searchTextCount: searchTextCount,
+                hitCount: hitCount,
+                id: resultItems.length
+              });
+            }
+          })
+        };
+        if (keywords.length === 1 && keywords[0] === "") {
+          resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+        } else if (resultItems.length === 0) {
+          resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+        } else {
+          resultItems.sort(function (resultLeft, resultRight) {
+            if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+              return resultRight.searchTextCount - resultLeft.searchTextCount;
+            } else if (resultLeft.hitCount !== resultRight.hitCount) {
+              return resultRight.hitCount - resultLeft.hitCount;
+            } else {
+              return resultRight.id - resultLeft.id;
+            }
+          });
+          var searchResultList = '<ul class=\"search-result-list\">';
+          resultItems.forEach(function (result) {
+            searchResultList += result.item;
+          })
+          searchResultList += "</ul>";
+          resultContent.innerHTML = searchResultList;
+        }
+      }
+
+      if ('auto' === 'auto') {
+        input.addEventListener('input', inputEventFunction);
+      } else {
+        $('.search-icon').click(inputEventFunction);
+        input.addEventListener('keypress', function (event) {
+          if (event.keyCode === 13) {
+            inputEventFunction();
+          }
+        });
+      }
+
+      // remove loading animation
+      $('body').css('overflow', '');
+
+      proceedsearch();
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        $('.sb-close').click();
+        searchFunc('local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+      
+      
+
+<!--
+
+<link rel="stylesheet" href="/dist/APlayer.min.css">
+<div id="aplayer"></div>
+<script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+<meting-js
+      server="netease"
+      type="playlist"
+      id="4904272454">
+</meting-js>
+-->
+
+</body>
+
+</html>
+
+
+
+
+
+
+
