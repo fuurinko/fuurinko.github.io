@@ -84,7 +84,7 @@
 				    
 				    <li><a href="/categories/Linux/" class="animsition-link">Linux<small>(1)</small></a></li>
 				    
-				    <li><a href="/categories/ML/" class="animsition-link">ML<small>(44)</small></a></li>
+				    <li><a href="/categories/ML/" class="animsition-link">ML<small>(45)</small></a></li>
 				    
 				    <li><a href="/categories/PWN-COLLEGE/" class="animsition-link">PWN.COLLEGE<small>(1)</small></a></li>
 				    
@@ -196,6 +196,46 @@
 
 <section id="intro">
     <div class="container">
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2022/04/24/week8_7.1_dubblesort/">pwnable - doubblesort</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-04-24T07:07:29.428Z" itemprop="datePublished">
+          2022-04-24
+      </time>
+    
+    
+    | 
+    <a href='/tags/STACK-Other/'>STACK - Other</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        ​    
+     
+overview
+​    
+逆向​    又是排序。但是这个是个纯纯的栈题，并且保护全开，那就是不能rop，估计又是要逆清然后找漏洞捏。照我之前做的那个快排的经验，排序本身应该没有漏洞，漏洞出在num地址的溢出。
+main12345678910111213141516171819202122232425262728293031323334353637383940414243int __cdecl main(in
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/04/24/week8_7.1_dubblesort/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
         
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
@@ -540,46 +580,6 @@ add​        最多申请三个house。并且在申请house开始为每个house
                     
                     <p class="pull-right readMore">
                         <a href="/2022/04/10/heap_learning_house_of_orange/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2022/04/10/ciscn_2021_silverwolf/">SilverWolf</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2022-04-10T00:54:01.043Z" itemprop="datePublished">
-          2022-04-10
-      </time>
-    
-    
-    | 
-    <a href='/tags/HEAP-Seccomp/'>HEAP - Seccomp</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-      
-overview​        这个题在程序上与lonewolf只有一个区别就是开了沙箱，需要orw，但是堆上的seccomp和栈上的利用难度可以说是毫无关系，因为之前已经做了lonelywolf，并且从来没有做过堆上的orw，漏洞点就不看了，只关注于orw的实现吧。
-
-​        init()过程中开启了seccomp，禁用了除orw以外的所有系统调用。
-利用orw前的一些操作​        orw part
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2022/04/10/ciscn_2021_silverwolf/">Read More...</a>
                     </p>
                     
                 </div>
