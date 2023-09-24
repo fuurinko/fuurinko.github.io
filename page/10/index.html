@@ -84,7 +84,7 @@
 				    
 				    <li><a href="/categories/Linux/" class="animsition-link">Linux<small>(1)</small></a></li>
 				    
-				    <li><a href="/categories/ML/" class="animsition-link">ML<small>(45)</small></a></li>
+				    <li><a href="/categories/ML/" class="animsition-link">ML<small>(46)</small></a></li>
 				    
 				    <li><a href="/categories/PWN-COLLEGE/" class="animsition-link">PWN.COLLEGE<small>(1)</small></a></li>
 				    
@@ -196,6 +196,47 @@
 
 <section id="intro">
     <div class="container">
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2022/05/15/week11_7.2_pawnable_secret_of_my_heart/">pawnable - secret_of_my_heart</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-05-15T06:05:36.744Z" itemprop="datePublished">
+          2022-05-15
+      </time>
+    
+    
+    | 
+    <a href='/tags/HEAP-ChunkOverlapping/'>HEAP - ChunkOverlapping</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        ​    
+     
+overview​        蛮好，好久没有做到全绿的题了。
+
+​        程序还是菜单，增删查三个功能，并不是特别友好。
+reversemem_init​        初始化了一个随机地址的0x1000的空间，并把它的指针存放在bss段上。
+1234while ( v2 &lt;= 0x10000 )    v2 = rand() &amp; 0xFFFFF000;  unk_202018 = mm
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/05/15/week11_7.2_pawnable_secret_of_my_heart/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
         
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
@@ -547,53 +588,6 @@ create_bullet​        这个逻辑看来也是只能创建一个bullet这样�
                     
                     <p class="pull-right readMore">
                         <a href="/2022/04/28/week9_4.1_silver_bullet/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2022/04/27/week9_3.1_3x17/">pwnable - 3x17</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2022-04-27T03:44:23.414Z" itemprop="datePublished">
-          2022-04-27
-      </time>
-    
-    
-    | 
-    <a href='/tags/STACK-Other/'>STACK - Other</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        ​    
-     
-overview
-​        轻松快乐的栈题，没有canary和pie那估计就是rop力。
-
-​        怪耶。
-​        居然是静态链接捏，那就不是ret2libc力。
-
-Reverse​    开幕雷击
-
-​    这是啥？
-​    秉持着看不懂就假装没有看到的原则，先看看得懂的地方。
-12345678910result = ++::result;if ( ::result == 1 )
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2022/04/27/week9_3.1_3x17/">Read More...</a>
                     </p>
                     
                 </div>
