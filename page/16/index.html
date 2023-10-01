@@ -84,7 +84,7 @@
 				    
 				    <li><a href="/categories/Linux/" class="animsition-link">Linux<small>(1)</small></a></li>
 				    
-				    <li><a href="/categories/ML/" class="animsition-link">ML<small>(48)</small></a></li>
+				    <li><a href="/categories/ML/" class="animsition-link">ML<small>(49)</small></a></li>
 				    
 				    <li><a href="/categories/PWN-COLLEGE/" class="animsition-link">PWN.COLLEGE<small>(1)</small></a></li>
 				    
@@ -196,6 +196,46 @@
 
 <section id="intro">
     <div class="container">
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2022/02/28/pwn.college_Sandboxing/">Sandboxing</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-02-28T13:59:27.326Z" itemprop="datePublished">
+          2022-02-28
+      </time>
+    
+    
+    | 
+    <a href='/tags/pwncollege/'>pwncollege</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+     
+Level1​        首先考察chroot
+​        因为程序在将根目录设置为/jail的时候并没有切换当前工作目录为/jail，所以我们实际上还是在/目录，因此可以直接通过argv[1]    读取flag。
+​        执行脚本的时候需要添加cwd参数，使其工作目录为/
+Level2123shellcode = asm(shellcraft.readfile(&#x27;flag&#x27;,1)
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/02/28/pwn.college_Sandboxing/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
         
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
@@ -561,47 +601,6 @@ fastbin​    长度在32-160(32位系统是16-80)的free堆块。通过fastbinl
                     
                     <p class="pull-right readMore">
                         <a href="/2021/12/03/mess_malloc_lab/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2021/11/22/other_openstack学习笔记/">openstack学习笔记</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2021-11-22T08:56:23.363Z" itemprop="datePublished">
-          2021-11-22
-      </time>
-    
-    
-    | 
-    <a href='/tags/SRE/'>SRE</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        ​    
-     
-​        为了跟上网校的集群重构计划，这下狠狠地开始学习运维了。
-​        在开始具体的openstack学习之前，首先需要学习一下一些基本的运维概念。
-虚拟化/容器化​        之前在学习docker的时候对于容器化已经有一个比较到位的认知了，而与容器化相对应的虚拟化并没有深入理解。
-​        这里的虚拟化特指服务器虚拟化。就是在一台服务器上运行虚拟运行多个服务器。
-虚拟化分类完全
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2021/11/22/other_openstack学习笔记/">Read More...</a>
                     </p>
                     
                 </div>

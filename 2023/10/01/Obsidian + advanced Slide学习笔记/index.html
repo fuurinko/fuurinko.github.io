@@ -1,0 +1,1041 @@
+<!DOCTYPE html>
+<!--[if lte IE 8 ]>
+<html class="ie" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US">
+<![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!-->
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
+<!--<![endif]-->
+
+<head>
+
+  <title>Advanced Slide 学习笔记 | Rin</title>
+  <!-- Meta data -->
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content="Rin">
+    <meta name="author" content="Rin777">
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+
+    <!-- Favicon, (keep icon in root folder) -->
+    <link rel="Shortcut Icon" href="/img/favicon.ico" type="image/ico">
+
+    <link rel="alternate" href="/atom.xml" title="Rin" type="application/atom+xml">
+    <link rel="stylesheet" href="/css/all.css" media="screen" type="text/css">
+    
+
+    <!--[if IE 8]>
+    <link rel="stylesheet" type="text/css" href="/css/ie8.css" />
+    <![endif]-->
+
+    <!-- jQuery | Load our jQuery, with an alternative source fallback to a local version if request is unavailable -->
+    <script src="/js/jquery-1.11.1.min.js"></script>
+    <script>window.jQuery || document.write('<script src="js/jquery-1.11.1.min.js"><\/script>')</script>
+
+    <!-- Load these in the <head> for quicker IE8+ load times -->
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="/js/html5shiv.min.js"></script>
+    <script src="/js/respond.min.js"></script>
+    <![endif]-->
+
+  
+  
+  
+
+  <style>.col-md-8.col-md-offset-2.opening-statement img{display:none;}</style>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><link rel="stylesheet" href="/css/prism.css" type="text/css"></head>
+
+<!--
+<body class="post-template">
+-->
+<body id="index" class="lightnav animsition">
+      <!-- ============================ Off-canvas navigation =========================== -->
+
+    <div class="sb-slidebar sb-right sb-style-overlay sb-momentum-scrolling">
+        <div class="sb-close" aria-label="Close Menu" aria-hidden="true">
+            <img src="/img/close.png" alt="Close"/>
+        </div>
+        <!-- Lists in Slidebars -->
+        <ul class="sb-menu">
+            <li><a href="/" class="animsition-link" title="Home">Home</a></li>
+            <li><a href="/archives" class="animsition-link" title="archive">archives</a></li>
+            <!-- Dropdown Menu -->
+			 
+            
+        	<li>
+        		<a class="sb-toggle-submenu">Categories<span class="sb-caret"></span></a>
+            	<ul class="sb-submenu">
+				  	
+				    <li><a href="/categories/AUDITION/" class="animsition-link">AUDITION<small>(23)</small></a></li>
+				    
+				    <li><a href="/categories/Binary-security/" class="animsition-link">Binary_security<small>(101)</small></a></li>
+				    
+				    <li><a href="/categories/CSAPP-LAB/" class="animsition-link">CSAPP LAB<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/EE/" class="animsition-link">EE<small>(5)</small></a></li>
+				    
+				    <li><a href="/categories/EN/" class="animsition-link">EN<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/Linux/" class="animsition-link">Linux<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/ML/" class="animsition-link">ML<small>(49)</small></a></li>
+				    
+				    <li><a href="/categories/PWN-COLLEGE/" class="animsition-link">PWN.COLLEGE<small>(1)</small></a></li>
+				    
+				</ul>
+        	</li>
+			
+            
+            <li>
+                <a class="sb-toggle-submenu">Links<span class="sb-caret"></span></a>
+                <ul class="sb-submenu">
+                    
+                    <li><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1Wh4y1o7Xh" class="animsition-link">INNOUT「系统过载」SYSTEM专场演出</a></li>
+                    
+                    <li><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1Kv411574g" class="animsition-link">普通周末 肖骏个人音乐演出 《边境Frontier》</a></li>
+                    
+                </ul>
+            </li>
+            
+        </ul>
+        <!-- Lists in Slidebars -->
+        <ul class="sb-menu secondary">
+            
+            <li><a href="javascript:;" class="popup-trigger" title="Search"><span class="search-icon"></span>Search</a></li>
+            
+            <li><a href="/about.html" class="animsition-link" title="about">About</a></li>
+            <li><a href="/atom.xml" class="animsition-link" title="rss">RSS</a></li>
+        </ul>
+    </div>
+    
+    <!-- ============================ END Off-canvas navigation =========================== -->
+
+    <!-- ============================ #sb-site Main Page Wrapper =========================== -->
+
+    <div id="sb-site">
+        <!-- #sb-site - All page content should be contained within this id, except the off-canvas navigation itself -->
+
+        <!-- ============================ Header & Logo bar =========================== -->
+
+        <div id="navigation" class="navbar navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="container">
+                    <!-- Nav logo -->
+                    <div class="logo">
+                        <a href="/" title="Logo" class="animsition-link">
+                         <img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/98f52bd6gy1hfqk9tjohfg20xc0xc7e6.gif" alt="Logo" width="35px;"/> 
+                        </a>
+                    </div>
+                    <!-- // Nav logo -->
+                    <!-- Info-bar -->
+                    <nav>
+                        <ul class="nav">
+                            <li><a href="/" class="animsition-link">Rin</a></li>
+                            <li class="nolink"><span>Always </span>Creative.</li>
+                            
+                            <li><a href="https://github.com/" title="Github" target="_blank"><i class="icon-github"></i></a></li>
+                            
+                            
+                            
+                            
+                            
+                            <li class="nolink"><span>Welcome!</span></li>
+                        </ul>
+                    </nav>
+                    <!--// Info-bar -->
+                </div>
+                <!-- // .container -->
+                <div class="learnmore sb-toggle-right">More</div>
+                <button type="button" class="navbar-toggle menu-icon sb-toggle-right" title="More">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar before"></span>
+                <span class="icon-bar main"></span>
+                <span class="icon-bar after"></span>
+                </button>
+            </div>
+            <!-- // .navbar-inner -->
+        </div>
+
+        <!-- ============================ Header & Logo bar =========================== -->
+
+
+      
+<section id="intro">
+    <div class="container">
+        <div class="row col-md-offset-2">
+            <div class="col-md-8">
+    			<span class="post-meta">
+      <time datetime="2023-10-01T08:44:54.140Z" itemprop="datePublished">
+          2023-10-01
+      </time>
+    
+    
+    | 
+    <a href='/tags/mess/'>mess</a>
+    
+    
+</span>
+                <h1>Advanced Slide 学习笔记</h1>
+            </div>
+        </div>
+        <div class="col-md-8 col-md-offset-2">
+      		<p>官方文档中文版（<br><a target="_blank" rel="noopener" href="https://www.cnblogs.com/liuzhongkun/p/17096534.html#tid-ed2Qbw">https://www.cnblogs.com/liuzhongkun/p/17096534.html#tid-ed2Qbw</a><br>网上并没有什么太过详细的白话版教程，而我想要的其实是对于任意的充满了我的废话的笔记都能够快速地生成slide。<br>首先熟悉一下advanced slide的基础用法，官方文档里给了很多功能，我就选几个我感兴趣的写上去。</p>
+<h2><span id="1-基础用法">1 基础用法</span></h2><p>简单来说这个插件就是一个基于revealJS的md转slide工具，所以绝大部分功能是revealJS的一个阉割版的封装。以下为基础功能：</p>
+<h3><span id="11-创建ppt页面">1.1 创建ppt页面</span></h3><p>用—-分割每个页面</p>
+<h3><span id="12-split">1.2 split</span></h3><p>通过设置 even 属性，拆分元素的内容被平均分配：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;split even&gt; </span><br><span class="line">a</span><br><span class="line"></span><br><span class="line">b</span><br><span class="line"></span><br><span class="line">c</span><br><span class="line">&lt;/split&gt;</span><br></pre></td></tr></table></figure>
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/20231001170206.png" alt="image.png"></p>
+<p>比例分割一张幻灯片，左右分别代表滑动栏的比例，gap数量指间隔大小。<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;split left=&quot;2&quot; right=&quot;1&quot; gap=&quot;2&quot;&gt;</span><br><span class="line"> </span><br><span class="line">**Lorem Ipsum** is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry&#x27;s standard dummy text ever since the 1500s</span><br><span class="line">when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap</span><br><span class="line">	</span><br><span class="line">into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem</span><br><span class="line">&lt;/split&gt;</span><br></pre></td></tr></table></figure><br>效果</p>
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/20231001165632.png" alt="image.png"></p>
+<h3><span id="13-grid">1.3 Grid</span></h3><h4><span id="131-空间分割">1.3.1 空间分割</span></h4><p>相当于直接画个框，可以直接用drop规定坐标，但是太麻烦了，用预定义的就行，具体参数如下：</p>
+<ul>
+<li>center</li>
+<li>top</li>
+<li>bottom</li>
+<li>left</li>
+<li>right</li>
+<li>topleft</li>
+<li>topright</li>
+<li>bottomleft</li>
+<li>bottomright</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;grid drag=&quot;40 30&quot; drop=&quot;topleft&quot; bg=&quot;red&quot;&gt;</span><br><span class="line">Top Left</span><br><span class="line">&lt;/grid&gt;</span><br><span class="line"> </span><br><span class="line">&lt;grid drop=&quot;right&quot; bg=&quot;green&quot;&gt;</span><br><span class="line">Right with default size</span><br><span class="line">&lt;/grid&gt;</span><br><span class="line"> </span><br><span class="line">&lt;grid drag=&quot;80 30&quot; drop=&quot;bottom&quot; bg=&quot;coral&quot;&gt;</span><br><span class="line">Bottom</span><br><span class="line">&lt;/grid&gt;</span><br></pre></td></tr></table></figure>
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/20231001170628.png" alt="image.png"></p>
+<h4><span id="132-模糊">1.3.2 模糊</span></h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;grid  drag=&quot;width height&quot; drop=&quot;x y&quot; filter=&quot;effect&quot;&gt;</span><br></pre></td></tr></table></figure>
+<p>effect可选：</p>
+<ul>
+<li>blur</li>
+<li>bright</li>
+<li>contrast</li>
+<li>grayscale</li>
+<li>hue</li>
+<li>invert</li>
+<li>saturate</li>
+<li>sepia</li>
+</ul>
+<h3><span id="14-模板">1.4 模板</span></h3><p>新建一个文件，然后取名xx，内容如下<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;% content %&gt;</span><br><span class="line"> </span><br><span class="line">&lt;grid drag=&quot;100 6&quot; drop=&quot;bottom&quot;&gt;</span><br><span class="line">&lt;% footer %&gt;</span><br><span class="line">&lt;/grid&gt;</span><br></pre></td></tr></table></figure><br>这就新建了一个模板文件，需要用到的时候直接在note中加入<!-- slide template="[[x x]]" -->来引用.</p>
+<p>简单来说就是我不想每次都在note里面整那么多html语法，所以就写了一个util文件，里面预定义了很多函数。每次我在note里面就只需要引用函数名就可以调用函数了。<br>这里函数就是模板中定义的&lt;% footer %&gt;等，引用的格式则是：<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">::: footer</span><br><span class="line">xxx</span><br><span class="line">:::</span><br></pre></td></tr></table></figure><br>效果：<br><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/20231001171616.png" alt="image.png"></p>
+<h3><span id="15-slide-configuration">1.5 slide configuration</span></h3><p>property中设置</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+<th>Possible Values</th>
+<th>Default Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>width</td>
+<td>设置演示文稿的宽度</td>
+<td>number</td>
+<td>960</td>
+</tr>
+<tr>
+<td>height</td>
+<td>设置演示文稿的宽度</td>
+<td>number</td>
+<td>700:</td>
+</tr>
+<tr>
+<td>margin</td>
+<td>内容周围的空白区域</td>
+<td>number</td>
+<td>0.04:</td>
+</tr>
+<tr>
+<td>minScale</td>
+<td>应用于内容的最小可能比例的界限</td>
+<td>number</td>
+<td>0.2</td>
+</tr>
+<tr>
+<td>maxScale</td>
+<td>应用于内容的最大可能规模的界限</td>
+<td>number</td>
+<td>2.0</td>
+</tr>
+<tr>
+<td>notesSeparator</td>
+<td>设置注释分隔符</td>
+<td>string</td>
+<td>note:</td>
+</tr>
+<tr>
+<td>separator</td>
+<td>设置幻灯片分隔符</td>
+<td>string</td>
+<td>^( ?\</td>
+<td>)—( ?\</td>
+<td>)$</td>
+</tr>
+<tr>
+<td>verticalSeparator</td>
+<td>设置垂直滑动分隔符</td>
+<td>string</td>
+<td>^( ?\</td>
+<td>)–( ?\</td>
+<td>)$</td>
+</tr>
+<tr>
+<td>enableLinks</td>
+<td>在幻灯片中启用反向链接</td>
+<td>true / false</td>
+<td>false</td>
+</tr>
+<tr>
+<td>theme</td>
+<td>设置主题</td>
+<td><a target="_blank" rel="noopener" href="https://mszturc.github.io/obsidian-advanced-slides/themes/">see theme docs</a></td>
+<td>black</td>
+</tr>
+<tr>
+<td>highlightTheme</td>
+<td>设置高亮主题</td>
+<td><a target="_blank" rel="noopener" href="https://mszturc.github.io/obsidian-advanced-slides/themes/">see theme docs</a></td>
+<td>zenburn</td>
+</tr>
+<tr>
+<td>css</td>
+<td>添加更多的 css 文件</td>
+<td></td>
+<td>[]</td>
+</tr>
+<tr>
+<td>enableOverview</td>
+<td>在幻灯片的右下角显示概览按钮</td>
+<td>true / false</td>
+<td>false</td>
+</tr>
+<tr>
+<td>enableChalkboard</td>
+<td>为幻灯片激活黑板</td>
+<td>true / false</td>
+<td>false</td>
+</tr>
+<tr>
+<td>controls</td>
+<td>显示演示控制箭头</td>
+<td>true / false</td>
+<td>true</td>
+</tr>
+<tr>
+<td>controlsLayout</td>
+<td>确定控件出现的位置</td>
+<td>edges / bottom-right</td>
+<td>bottom-right</td>
+</tr>
+<tr>
+<td>progress</td>
+<td>显示演示进度条</td>
+<td>true / false</td>
+<td>true</td>
+</tr>
+<tr>
+<td>slideNumber</td>
+<td>显示当前幻灯片的页码</td>
+<td><a target="_blank" rel="noopener" href="https://revealjs.com/config/">see reveal.js docs</a></td>
+<td>false</td>
+</tr>
+<tr>
+<td>overview</td>
+<td>启用幻灯片概览模式</td>
+<td>true / false</td>
+<td>true</td>
+</tr>
+<tr>
+<td>center</td>
+<td>幻灯片的垂直居中</td>
+<td>true / false</td>
+<td>true</td>
+</tr>
+<tr>
+<td>loop</td>
+<td>循环演示</td>
+<td>true / false</td>
+<td>false</td>
+</tr>
+<tr>
+<td>rtl</td>
+<td>将呈现方向更改为 RTL</td>
+<td>true / false</td>
+<td>false</td>
+</tr>
+<tr>
+<td>shuffle</td>
+<td>每次加载演示文稿时随机化幻灯片的顺序</td>
+<td>true / false</td>
+<td>false</td>
+</tr>
+<tr>
+<td>fragments</td>
+<td>全局打开和关闭片段</td>
+<td>true / false</td>
+<td>true</td>
+</tr>
+<tr>
+<td>showNotes</td>
+<td>标记演讲者注释是否应该对所有观众可见</td>
+<td>true / false</td>
+<td>false</td>
+</tr>
+<tr>
+<td>autoSlide</td>
+<td>控制自动前进到下一张幻灯片</td>
+<td>number (in milliseconds)</td>
+<td>0</td>
+</tr>
+<tr>
+<td>transition</td>
+<td>过渡风格</td>
+<td>none / fade / slide / convex / concave / zoom</td>
+<td>slide</td>
+</tr>
+<tr>
+<td>transitionSpeed</td>
+<td>过渡速度</td>
+<td>default / fast / slow</td>
+<td>default</td>
+</tr>
+<tr>
+<td>bg</td>
+<td>为所有幻灯片设置默认背景</td>
+<td><a target="_blank" rel="noopener" href="https://mszturc.github.io/obsidian-advanced-slides/extend-syntax/slidebackground/">see slide background docs</a></td>
+<td>‘#ffffff’</td>
+</tr>
+<tr>
+<td>markdown</td>
+<td>设置标记的选项</td>
+<td>(see note below)</td>
+<td>(see note below)</td>
+</tr>
+<tr>
+<td>enableTimeBar</td>
+<td>激活幻灯片的流逝计时器栏</td>
+<td>true / false</td>
+<td>false</td>
+</tr>
+<tr>
+<td>timeForPresentation</td>
+<td>以秒为单位设置流逝计时器的时间</td>
+<td>number</td>
+<td>120</td>
+</tr>
+<tr>
+<td>defaultTemplate</td>
+<td>设置将应用于所有幻灯片的模板</td>
+<td><a target="_blank" rel="noopener" href="https://mszturc.github.io/obsidian-advanced-slides/templates/#default-template">see template docs</a></td>
+<td>null</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2><span id="2-gpt优化">2 GPT优化</span></h2><p>我的prompt：<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Help me to generate slide.</span><br><span class="line">You need to extract the key points of each section, optimize superfluous words, only focus on experimental motif and results, also reserve all figures as md formats:</span><br><span class="line">生成slide时，遵循以下规则：</span><br><span class="line">1. 当每个section包含实验结果时，将其在单独的页面呈现，且页只展示一张图，如果页面不够可以增加新的页面。但是每一页需要在上方标明图片所属的标题。</span><br><span class="line">2. 幻灯片中文生成</span><br></pre></td></tr></table></figure></p>
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/20231001174231.png" alt="image.png"><br>可以看到确实过滤掉了大部分废话，然后对propose和result有一个大致正确的总结，在这上面再进行细节的调整也会方便很多。</p>
+
+            <div class="clearfix"></div>
+            <hr class="nogutter">
+        </div>
+        <nav class="m-pagination col-md-8 col-md-offset-2 col-sm-24" role="pagination">
+    
+    
+    <a class="pull-right" href="../../../09/25/Graph%E6%95%B0%E6%8D%AE%E6%93%8D%E4%BD%9C/">
+        Graph数据处理 →
+    </a>
+    
+</nav>
+
+        <div class="col-md-8 col-md-offset-2 col-sm-24"><script type="text/javascript">
+  /**
+   * 搜狐畅言
+   */
+
+  /*
+  document.write('<div id="SOHUCS" sid="' + window.location.pathname.slice(1) + '" ></div>');
+
+  window.onload = function () {
+    (function () {
+      var appid = 'cytXXXX';
+      var conf = 'prod_xxxxxxxxxxxxxxxxx';
+      var width = window.innerWidth || document.documentElement.clientWidth;
+      var loadJs = function (d, a, id) {
+        var c = document.getElementsByTagName("head")[0] || document.head || document.documentElement;
+        var b = document.createElement("script");
+        b.setAttribute("type", "text/javascript");
+        b.setAttribute("charset", "UTF-8");
+        b.setAttribute("src", d);
+        if (id) {
+          b.setAttribute("id", id);
+        }
+        if (typeof a === "function") {
+          if (window.attachEvent) {
+            b.onreadystatechange = function () {
+              var e = b.readyState;
+              if (e === "loaded" || e === "complete") {
+                b.onreadystatechange = null;
+                a()
+              }
+            }
+          } else {
+            b.onload = a
+          }
+        }
+        c.appendChild(b)
+      };
+
+      loadJs("https://changyan.sohu.com/upload/changyan.js", function () {
+        window.changyan.api.config({
+          appid: appid,
+          conf: conf
+        })
+      });
+    })();
+  }
+  */
+
+</script>
+</div>
+    </div>
+</section>
+
+<!-- Highlight.js -->
+
+<link rel="stylesheet"
+href="//highlightjs.org/static/demo/styles/atom-one-light.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js">
+</script>
+<script>
+hljs.initHighlightingOnLoad();
+
+</script>
+
+
+      
+<!-- ============================ Footer =========================== -->
+
+<footer>
+    <div class="container">
+            <div class="copy">
+                <p>
+                    &copy; 2014<script>new Date().getFullYear()>2010&&document.write("-"+new Date().getFullYear());</script>, Content By Rin777. All Rights Reserved.
+                </p>
+                <p>Theme By <a target="_blank" rel="noopener" href="//go.kieran.top" style="color: #767D84">Kieran</a></p>
+            </div>
+            <div class="social">
+                <ul>
+                    
+                    <li><a href="https://github.com/" title="Github" target="_blank"><i class="icon-github"></i></a>&nbsp;</li>
+                    
+                    
+                    
+                    
+                    
+                </ul>
+            </div>
+            <div class="clearfix"> </div>
+        </div>
+</footer>
+
+<!-- ============================ END Footer =========================== -->
+      <!-- Load our scripts -->
+<!-- Resizable 'on-demand' full-height hero -->
+<script type="text/javascript">
+    var resizeHero = function () {
+        var hero = $(".cover,.heightblock"),
+            window1 = $(window);
+        hero.css({
+            "height": window1.height()
+        });
+    };
+
+    resizeHero();
+
+    $(window).resize(function () {
+        resizeHero();
+    });
+</script>
+<script src="/js/plugins.min.js"></script><!-- Bootstrap core and concatenated plugins always load here -->
+<script src="/js/scripts.js"></script><!-- Theme scripts -->
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$('#intro').find('img').each(function(){
+  var alt = this.alt;
+
+  if (alt){
+    $(this).after('<span class="caption" style="display:none">' + alt + '</span>');
+  }
+
+  $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox" rel="gallery" />');
+});
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+      
+            <style>
+.local-search-popup {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  background: rgba(255, 255, 255, .9);
+  color: #333;
+  z-index: 9999;
+  border-radius: 5px;
+  overflow: scroll;
+}
+#local-search-input {
+  width: 100%;
+  border: none;
+  outline: none;
+  border-bottom: 1px solid #151515;
+  background-color: initial;
+}
+.search-result-list {
+  list-style: none;
+  padding-left: 0;
+}
+.search-result-list > li {
+  margin-top: 15px;
+  border-bottom: 1px solid #ddd;
+  transition: all ease .3s;
+}
+.search-result-list > li:hover {
+  border-bottom: 1px solid gray;
+}
+.search-result-title {
+  font-size: 16px;
+}
+.search-result {
+  line-height: 20px;
+}
+.search-keyword {
+  font-weight: normal;
+  color: #c00;
+}
+
+@media (min-width: 890px) {
+  .popup-btn-close {
+    position: absolute;
+    top: 15px;
+    left: 35px;
+    border: 1px solid #151515;
+    padding: 0px 10px;
+    border-top-left-radius: 8px;
+    cursor: pointer;
+    transition: all ease .3s;
+  }
+  .popup-btn-close:hover {
+    background: #151515;
+    opacity: .9;
+    color: #fff;
+  }
+}
+@media (max-width: 890px) {
+  .popup-btn-close {
+    font-size: 0;
+    position: fixed;
+    right: 20px;
+    bottom: 50px;
+    width: 50px;
+    height: 50px;
+    background: #fff;
+    border-radius: 50%;
+    box-shadow: 1px 1px 5px #888;
+    cursor: pointer;
+  }
+  .popup-btn-close::after {
+    content: '←';
+    color: #151515;
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-size: 20px;
+    width: 100%;
+    height: 100%;
+    line-height: 50px;
+    text-align: center;
+  }
+}
+</style>
+
+<div class="popup search-popup local-search-popup">
+  <span class="popup-btn-close">
+    ESC
+  </span>
+  <div class="container">
+    <div class="col-md-8 col-md-offset-2">
+      <div class="local-search-header clearfix">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="local-search-input-wrapper">
+          <input autocomplete="off" placeholder="Search..." type="text" id="local-search-input">
+        </div>
+      </div>
+      <div id="local-search-result"></div>
+    </div>
+  </div>
+</div>
+
+<script src="/js/ziploader.js"></script>
+
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.json";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').fadeOut(300);
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $('.popup').fadeIn(300);
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // get search zip version
+    $.get('/searchVersion.txt?t=' + (+new Date()), function(res) {
+      if (localStorage.getItem('searchVersion') !== res) {
+        localStorage.setItem('searchVersion', res);
+        initSearchJson();
+      }
+    });
+
+    function initSearchJson () {
+      initLoad(['/search.zip'], {
+        loadOptions: {
+          success: function(obj) {
+            localStorage.setItem('searchJson', obj['search.json'])
+          },
+          error: function(e) {
+            return console.log(e)
+          }
+        },
+        returnOptions: {
+          'json': TYPE_TEXT
+        },
+        mimeOptions:{
+          'json':'application/json'
+        }
+      })
+    }
+
+
+    // search function;
+    var searchFunc = function(search_id, content_id) {
+      'use strict';
+
+      isfetched = true;
+      var datas = JSON.parse(localStorage.getItem('searchJson'));
+      console.log(search_id)
+      var input = document.getElementById(search_id);
+      var resultContent = document.getElementById(content_id);
+      var inputEventFunction = function() {
+        var searchText = input.value.trim().toLowerCase();
+        var keywords = searchText.split(/[\s\-]+/);
+        if (keywords.length > 1) {
+          keywords.push(searchText);
+        }
+        var resultItems = [];
+        if (searchText.length > 0) {
+          // perform local searching
+          datas.forEach(function(data) {
+            var isMatch = false;
+            var hitCount = 0;
+            var searchTextCount = 0;
+            var title = data.title ? data.title.trim() : '';
+            var titleInLowerCase = title.toLowerCase();
+            var content = data.content ? data.content.trim().replace(/<[^>]+>/g,"") : '';
+            var contentInLowerCase = content.toLowerCase();
+            var articleUrl = decodeURIComponent(data.url);
+            var indexOfTitle = [];
+            var indexOfContent = [];
+            // only match articles with not empty titles
+            keywords.forEach(function(keyword) {
+              function getIndexByWord(word, text, caseSensitive) {
+                var wordLen = word.length;
+                if (wordLen === 0) {
+                  return [];
+                }
+                var startPosition = 0, position = [], index = [];
+                if (!caseSensitive) {
+                  text = text.toLowerCase();
+                  word = word.toLowerCase();
+                }
+                while ((position = text.indexOf(word, startPosition)) > -1) {
+                  index.push({position: position, word: word});
+                  startPosition = position + wordLen;
+                }
+                return index;
+              }
+
+              indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+              indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+            });
+            if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+              isMatch = true;
+              hitCount = indexOfTitle.length + indexOfContent.length;
+            }
+
+            // show search results
+
+            if (isMatch) {
+              // sort index by position of keyword
+
+              [indexOfTitle, indexOfContent].forEach(function (index) {
+                index.sort(function (itemLeft, itemRight) {
+                  if (itemRight.position !== itemLeft.position) {
+                    return itemRight.position - itemLeft.position;
+                  } else {
+                    return itemLeft.word.length - itemRight.word.length;
+                  }
+                });
+              });
+
+              // merge hits into slices
+
+              function mergeIntoSlice(text, start, end, index) {
+                var item = index[index.length - 1];
+                var position = item.position;
+                var word = item.word;
+                var hits = [];
+                var searchTextCountInSlice = 0;
+                while (position + word.length <= end && index.length != 0) {
+                  if (word === searchText) {
+                    searchTextCountInSlice++;
+                  }
+                  hits.push({position: position, length: word.length});
+                  var wordEnd = position + word.length;
+
+                  // move to next position of hit
+
+                  index.pop();
+                  while (index.length != 0) {
+                    item = index[index.length - 1];
+                    position = item.position;
+                    word = item.word;
+                    if (wordEnd > position) {
+                      index.pop();
+                    } else {
+                      break;
+                    }
+                  }
+                }
+                searchTextCount += searchTextCountInSlice;
+                return {
+                  hits: hits,
+                  start: start,
+                  end: end,
+                  searchTextCount: searchTextCountInSlice
+                };
+              }
+
+              var slicesOfTitle = [];
+              if (indexOfTitle.length != 0) {
+                slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+              }
+
+              var slicesOfContent = [];
+              while (indexOfContent.length != 0) {
+                var item = indexOfContent[indexOfContent.length - 1];
+                var position = item.position;
+                var word = item.word;
+                // cut out 100 characters
+                var start = position - 20;
+                var end = position + 80;
+                if(start < 0){
+                  start = 0;
+                }
+                if (end < position + word.length) {
+                  end = position + word.length;
+                }
+                if(end > content.length){
+                  end = content.length;
+                }
+                slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+              }
+
+              // sort slices in content by search text's count and hits' count
+
+              slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                  return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                  return sliceRight.hits.length - sliceLeft.hits.length;
+                } else {
+                  return sliceLeft.start - sliceRight.start;
+                }
+              });
+
+              // select top N slices in content
+
+              var upperBound = parseInt('2');
+              if (upperBound >= 0) {
+                slicesOfContent = slicesOfContent.slice(0, upperBound);
+              }
+
+              // highlight title and content
+
+              function highlightKeyword(text, slice) {
+                var result = '';
+                var prevEnd = slice.start;
+                slice.hits.forEach(function (hit) {
+                  result += text.substring(prevEnd, hit.position);
+                  var end = hit.position + hit.length;
+                  result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                  prevEnd = end;
+                });
+                result += text.substring(prevEnd, slice.end);
+                return result;
+              }
+
+              var resultItem = '';
+
+              if (slicesOfTitle.length != 0) {
+                resultItem += "<li><a target='_blank' href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+              } else {
+                resultItem += "<li><a target='_blank' href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+              }
+
+              slicesOfContent.forEach(function (slice) {
+                resultItem += "<a target='_blank' href='" + articleUrl + "'>" +
+                  "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                  "...</p>" + "</a>";
+              });
+
+              resultItem += "</li>";
+              resultItems.push({
+                item: resultItem,
+                searchTextCount: searchTextCount,
+                hitCount: hitCount,
+                id: resultItems.length
+              });
+            }
+          })
+        };
+        if (keywords.length === 1 && keywords[0] === "") {
+          resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+        } else if (resultItems.length === 0) {
+          resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+        } else {
+          resultItems.sort(function (resultLeft, resultRight) {
+            if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+              return resultRight.searchTextCount - resultLeft.searchTextCount;
+            } else if (resultLeft.hitCount !== resultRight.hitCount) {
+              return resultRight.hitCount - resultLeft.hitCount;
+            } else {
+              return resultRight.id - resultLeft.id;
+            }
+          });
+          var searchResultList = '<ul class=\"search-result-list\">';
+          resultItems.forEach(function (result) {
+            searchResultList += result.item;
+          })
+          searchResultList += "</ul>";
+          resultContent.innerHTML = searchResultList;
+        }
+      }
+
+      if ('auto' === 'auto') {
+        input.addEventListener('input', inputEventFunction);
+      } else {
+        $('.search-icon').click(inputEventFunction);
+        input.addEventListener('keypress', function (event) {
+          if (event.keyCode === 13) {
+            inputEventFunction();
+          }
+        });
+      }
+
+      // remove loading animation
+      $('body').css('overflow', '');
+
+      proceedsearch();
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        $('.sb-close').click();
+        searchFunc('local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+      
+      
+
+<!--
+
+<link rel="stylesheet" href="/dist/APlayer.min.css">
+<div id="aplayer"></div>
+<script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+<meting-js
+      server="netease"
+      type="playlist"
+      id="4904272454">
+</meting-js>
+-->
+
+</body>
+
+</html>
+
+
+
+
+
+
+
