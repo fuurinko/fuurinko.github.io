@@ -8,7 +8,7 @@
 
 <head>
 
-  <title>Torch Docs Collection | Rin</title>
+  <title>Graph数据处理 | Rin</title>
   <!-- Meta data -->
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -49,7 +49,10 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
-<!-- hexo injector head_end end --><link rel="stylesheet" href="/css/prism.css" type="text/css"></head>
+<!-- hexo injector head_end end --><link rel="stylesheet" href="/css/prism.css" type="text/css"><link rel="stylesheet" href="/assets/css/APlayer.min.css" class="aplayer-style-marker">
+<script src="/assets/js/APlayer.min.js" class="aplayer-script-marker"></script>
+<script src="/assets/js/Meting.min.js" class="meting-script-marker"></script>
+</head>
 
 <!--
 <body class="post-template">
@@ -84,7 +87,7 @@
 				    
 				    <li><a href="/categories/Linux/" class="animsition-link">Linux<small>(1)</small></a></li>
 				    
-				    <li><a href="/categories/ML/" class="animsition-link">ML<small>(49)</small></a></li>
+				    <li><a href="/categories/ML/" class="animsition-link">ML<small>(50)</small></a></li>
 				    
 				    <li><a href="/categories/PWN-COLLEGE/" class="animsition-link">PWN.COLLEGE<small>(1)</small></a></li>
 				    
@@ -171,35 +174,37 @@
         <div class="row col-md-offset-2">
             <div class="col-md-8">
     			<span class="post-meta">
-      <time datetime="2023-09-25T13:49:38.091Z" itemprop="datePublished">
+      <time datetime="2023-09-25T14:04:21.688Z" itemprop="datePublished">
           2023-09-25
       </time>
     
     
     | 
-    <a href='/tags/mess/'>mess</a>
+    <a href='/tags/GNN/'>GNN</a>
     
     
 </span>
-                <h1>Torch Docs Collection</h1>
+                <h1>Graph数据处理</h1>
             </div>
         </div>
         <div class="col-md-8 col-md-offset-2">
-      		<p>记录在看or写代码时不会的函数。</p>
-<h1><span id="1-pytorch">1 Pytorch</span></h1><h2><span id="11-tensor操作">1.1 tensor操作</span></h2><h3><span id="torchmax">torch.max</span></h3><p>返回给定tensor中的最大值<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">a = torch.randn(<span class="number">1</span>, <span class="number">3</span>)</span><br><span class="line"><span class="comment">#tensor([[ 0.6763,  0.7445, -2.2369]])</span></span><br><span class="line">torch.<span class="built_in">max</span>(a)</span><br><span class="line"><span class="comment">#tensor(0.7445)</span></span><br></pre></td></tr></table></figure></p>
-
+      		
+    <div id="aplayer-JtMRfJqS" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="22693394" data-server="netease" data-type="song" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div>  
+<h2><span id="创建graph类">创建Graph类</span></h2><p>一般在数据处理的时候，都会首先创造一个graph类，然后定义初始化其中的各种熟悉。<br>例如以下代码：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">S2VGraph</span>(<span class="params"><span class="built_in">object</span></span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, g, label, node_tags=<span class="literal">None</span>, node_features=<span class="literal">None</span></span>):</span></span><br><span class="line">        <span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">            g: a networkx graph</span></span><br><span class="line"><span class="string">            label: an integer graph label</span></span><br><span class="line"><span class="string">            node_tags: a list of integer node tags</span></span><br><span class="line"><span class="string">            node_features: a torch float tensor, one-hot representation of the tag that is used as input to neural nets</span></span><br><span class="line"><span class="string">            edge_mat: a torch long tensor, contain edge list, will be used to create torch sparse tensor</span></span><br><span class="line"><span class="string">            neighbors: list of neighbors (without self-loop)</span></span><br><span class="line"><span class="string">        &#x27;&#x27;&#x27;</span></span><br><span class="line">        self.label = label</span><br><span class="line">        self.g = g</span><br><span class="line">        self.node_tags = node_tags</span><br><span class="line">        self.neighbors = []</span><br><span class="line">        self.node_features = <span class="number">0</span></span><br><span class="line">        self.edge_mat = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">        self.max_neighbor = <span class="number">0</span></span><br></pre></td></tr></table></figure></p>
+<h2><span id="遍历图">遍历图</span></h2><h4><span id="利用edge-matrix获取节点数">利用edge matrix获取节点数</span></h4><p>示例代码<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">num_nodes = torch.<span class="built_in">max</span>(train_graphs[idx].edge_mat).numpy() + <span class="number">1</span></span><br></pre></td></tr></table></figure><br>这里用了<code>.edge_mat</code>，即边矩阵。返回边列表最大节点（节点从0依次排序），则能够获得总结点数。</p>
+<h2><span id="边">边</span></h2>
             <div class="clearfix"></div>
             <hr class="nogutter">
         </div>
         <nav class="m-pagination col-md-8 col-md-offset-2 col-sm-24" role="pagination">
     
-    <a class="pull-left" href="../Graph%E6%95%B0%E6%8D%AE%E6%93%8D%E4%BD%9C/" style="float: left;">
-        ← Graph数据处理
+    <a class="pull-left" href="../../../10/01/Obsidian%20+%20advanced%20Slide%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" style="float: left;">
+        ← Advanced Slide 学习笔记
     </a>
     
     
-    <a class="pull-right" href="../../24/%E5%9F%BA%E4%BA%8EDGL%E5%8F%8ANetworkx%E7%9A%84Subgraph%E7%94%9F%E6%88%90%E6%A6%82%E8%A7%88/">
-        基于DGL及nx的Subgraph生成概览 →
+    <a class="pull-right" href="../ml_Torch%20Docs%20Collection/">
+        Torch Docs Collection →
     </a>
     
 </nav>

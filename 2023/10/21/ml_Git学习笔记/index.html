@@ -8,7 +8,7 @@
 
 <head>
 
-  <title>GNN Overview | Rin</title>
+  <title>Git学习笔记 | Rin</title>
   <!-- Meta data -->
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -49,10 +49,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
-<!-- hexo injector head_end end --><link rel="stylesheet" href="/css/prism.css" type="text/css"><link rel="stylesheet" href="/assets/css/APlayer.min.css" class="aplayer-style-marker">
-<script src="/assets/js/APlayer.min.js" class="aplayer-script-marker"></script>
-<script src="/assets/js/Meting.min.js" class="meting-script-marker"></script>
-</head>
+<!-- hexo injector head_end end --><link rel="stylesheet" href="/css/prism.css" type="text/css"></head>
 
 <!--
 <body class="post-template">
@@ -87,7 +84,7 @@
 				    
 				    <li><a href="/categories/Linux/" class="animsition-link">Linux<small>(1)</small></a></li>
 				    
-				    <li><a href="/categories/ML/" class="animsition-link">ML<small>(49)</small></a></li>
+				    <li><a href="/categories/ML/" class="animsition-link">ML<small>(50)</small></a></li>
 				    
 				    <li><a href="/categories/PWN-COLLEGE/" class="animsition-link">PWN.COLLEGE<small>(1)</small></a></li>
 				    
@@ -174,62 +171,38 @@
         <div class="row col-md-offset-2">
             <div class="col-md-8">
     			<span class="post-meta">
-      <time datetime="2023-08-04T04:36:33.773Z" itemprop="datePublished">
-          2023-08-04
+      <time datetime="2023-10-21T12:54:02.923Z" itemprop="datePublished">
+          2023-10-21
       </time>
     
     
     | 
-    <a href='/tags/GNN/'>GNN</a>
+    <a href='/tags/mess/'>mess</a>
     
     
 </span>
-                <h1>GNN Overview</h1>
+                <h1>Git学习笔记</h1>
             </div>
         </div>
         <div class="col-md-8 col-md-offset-2">
-      		<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
-
-
-    <div id="aplayer-SqrvDSoe" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="22693394" data-server="netease" data-type="song" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div>  
-<p>【<a target="_blank" rel="noopener" href="https://distill.pub/2021/understanding-gnns/】">https://distill.pub/2021/understanding-gnns/】</a><br>【<a target="_blank" rel="noopener" href="https://distill.pub/2021/gnn-intro/】">https://distill.pub/2021/gnn-intro/】</a><br>笔记主要基于以上两篇博客。</p>
-<p>抽象来将图神经网络就是将原本输入的图像也好文本也好用graph结构替代，从而模型网络设计等也要相应进行调整。笔记会从最简单的MLP -〉 CNN -〉 Attention，对应到图神经网络即为 GNN - GCN - GAN。最后会衍生一些知识图谱之类的知识以及一些paper的简单核心提取。</p>
-<h1><span id="1-graph-neural-networks">1 Graph  Neural Networks</span></h1><h2><span id="11-why-graph">1.1 Why Graph</span></h2><p>当我们想利用神经网络同时学习节点的内容，节点与节点之间的关系以及整个系统之间的关系时，很显然简单的文本或者图像很难实现。<br>举几个比较常见的例子，我们想要学习twitter中的特定用户的社交网络模式，其中就有A关注B，B关注C，C关注A，这样就能形成简单的图结构。<br>那么问题在于，只是实现单纯的社交网络结构的话，其实用文本或者图像描述也可以，为什么要大费周章使用图结构呢》<br>这还是因为图的一个重要特征就是图并不存在天然的顺序，如果使用顺序来完整地表达图的话，那么就需要将图分解成所有可能的序列，然后对序列进行建模，很显然这需要极为庞大的计算量。</p>
-<h2><span id="12-图的基本介绍">1.2 图的基本介绍</span></h2><p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/Screen%20Shot%202023-08-04%20at%2010.29.35%20PM.png" alt="Screen Shot 2023-08-04 at 10.29.35 PM"></p>
-<p>从上图我们可以看出图的三个重要组成部分，即节点V，边缘E和全局信息U（例如一共有多少个节点，最长的路径是？）</p>
-<h3><span id="有向or无向">有向or无向</span></h3><p>图被分为有向（undirected edge） 和无向图「directed edge」。<br>![[Screen Shot 2023-08-04 at 10.35.01 PM.png]]<br>但实际上无向图可以看作是两个有向边的结合。</p>
-<h3><span id="异质or同质图homogeneous-and-heterogeneous-graphs">异质or同质图（homogeneous and Heterogeneous Graphs）</span></h3><p>这个概念可以联系高中化学的同分异构体。<br>同质图就是每个节点的种类都是相同的，异质图则是图包含多种不同的节点。</p>
-<h3><span id="带有边信息的图graphs-with-edge-information">带有边信息的图(Graphs with Edge Information)</span></h3><p>此类型的图，每一个边都包含额外的信息，例如边的种类。<br>举个简单的例子 twitter中 A和B的边就可以包含 following unfollow 以及 block。</p>
-<h3><span id="对称性symmetric">对称性（symmetric）</span></h3><p>指的是改变图的排列顺序，图不会被改变。</p>
-<h2><span id="13-gnn基本任务">1.3 GNN基本任务</span></h2><p>即我们需要GNN来做什么。<br>目前大致会将任务分为三类：graph-level, node-level, and edge-level.</p>
-<h3><span id="graph-level-task">Graph-level task</span></h3><p> predict the property of an entire graph.<br> 预测整张图的特性，例如如下的例子，判断哪个图是两个环。<br>![[Screen Shot 2023-08-04 at 11.45.14 PM.png]]</p>
-<h3><span id="node-level">node-level</span></h3><p>判断节点的类型<br>例如判断某个节点与A的互动更多还是与B的互动更多。</p>
-<h3><span id="edge-level">edge-level</span></h3><p>判断边的类型</p>
-<h2><span id="14-如何将图运用在神经网络">1.4 如何将图运用在神经网络</span></h2><p>其实就是如何表示图的三个组成部分的问题。<br>对于节点，边我们都可以用简单的向量来表示，但是如何表示点和边的连接性呢？<br>如果使用领接矩阵，当图的节点比较多时，矩阵会变得尤其大，且很有可能成为稀疏矩阵，此时存储的性价比非常低。<br>同时我们需要保证当点与边的顺序被打乱，其对应的连接性仍然能一一对应，并且不同的顺序并不会改变图本身。<br>我们可以用一种看起来原始的方法，就是维护一个列表，存储每一条边连接的两个节点。<br>![[Screen Shot 2023-08-04 at 11.56.40 PM.png]]<br>这样例如当边的位置顺序被调换，我们只需要相应改变领接列表中数组的顺序即可。</p>
-<h2><span id="15-图信息的传播message-propagate">1.5 图信息的传播（message propagate）</span></h2><p>在正式介绍message passing前，我们先了解一下最简单的GNN的形态。</p>
-<h3><span id="无message-passing的gnn">无message passing的GNN</span></h3><p>这个概念比较简单，就是对于图的三个元素分别放进MLP中更新学习。<br>对于单层的GNN layer包含三个MLP，分别对应顶点，边和全局的MLP。<br>![[Screen Shot 2023-08-05 at 12.20.33 AM.png]]<br>这样处理满足我们之前提到过的不影响图的对称性的同时对图进行更新。</p>
-<h4><span id="pooling">pooling</span></h4><p>即我们可以利用相邻的其他元素来提取某一元素的特征。<br>比如我们需要某个节点的特征，所以我们将相邻的边的信息汇聚，以其作为该节点的特征。</p>
-<h4><span id="问题">问题</span></h4><p>但是这种做法存在一个显而易见的问题，即我们并没有很好地利用图的连接性，图的三个特征似乎是割裂的。就如同三种完全不同的数据分别放进了mlp一样，并不能很好地发挥图的特性。</p>
-<p>信息传递的机制就是为了解决这个问题。</p>
-<h3><span id="有message-passing的gnn">有message passing的GNN</span></h3><p>其实就是沿用了上面讲的pooling的类似概念，我们可以用某一节点的相邻节点通过特定的汇聚方程来提取特征，进而用被汇聚的节点学习。<br>![[Screen Shot 2023-08-05 at 12.30.40 AM.png]]<br>这点和CNN其实比较类似，只不过CNN时用卷积核做卷积运算汇聚，这里的汇聚方式应该是求平均或者相加等。区别在于对与被汇聚的每一个相邻节点其权重都是相同的，而CNN的权重没记错的话应该是被学习的变量。<br>此外还有多种信息传递的方式，比如说先将边的信息传递给顶点，更新后顶点再传递回去，从而实现信息的传递交互，体现图的特性。这里博客列举了多种信息传递的方式，其实原理都类似。<br>并且这个也没有谁高谁低的问题，就是主打一个玄学炼丹。<br>![[Screen Shot 2023-08-05 at 12.38.27 AM.png]]<br>其他的内容俺们放在1.3讲</p>
-<h1><span id="2-graph-convolution">2 Graph Convolution</span></h1><p>这一章涉及到一些图卷积网络的数学原理</p>
-<h2><span id="20-preface">2.0 preface</span></h2><p>很早之前我们学过CNN的概念，即对于图像做卷积—用一个特定大小的卷积核或者说窗口对某个像素及其周围的像素做卷积运算，从而聚合几个像素的特征，保证效果的同时减小了MLP的运算复杂度。<br>还是按照博客的顺序来讲吧。</p>
-<h2><span id="21-从cnn到gcn">2.1 从CNN到GCN</span></h2><p>如果单纯将cnn的概念拓展到GCN的话，会有一个非常明显的问题：<br>CNN的每一次卷积投影的像素位置都是固定的，然而图并没有这个特性，所以如何将位置并不固定的图投影汇聚？</p>
-<h3><span id="polynomial-filters-on-graphs">Polynomial Filters on Graphs</span></h3><p>额，好像目前没有见到官方翻译，多项式滤波器。。？</p>
-<h1><span id="3-advanced-gnn">3 Advanced GNN</span></h1><h2><span id="gat">GAT</span></h2><p>GAT的核心思想是利用注意力机制来捕捉节点之间的关系。在GAT中，每个节点都会对其邻居节点进行”关注”，并根据邻居节点的信息来更新自己的信息。这种”关注”不是平等的，而是有所侧重的。也就是说，每个节点会更加关注与自己更相关或更重要的邻居节点，而对于不太相关或不太重要的邻居节点则关注较少。这种侧重的程度，就是我们所说的”注意力权重”。</p>
+      		<h1><span id="0">0</span></h1><p>因为之前只是普通赛棍，开发需求仅限于代码不超过一千行的脚本，所以对git确实是没有硬性需求。但是最近确实是半只脚踏进开发的领域，确实觉得没有版本管理工具还是不行，索性学习一下。</p>
+<h1><span id="1-本地git">1 本地git</span></h1><p>命令比较简单，找到一个文件夹然后<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git init <span class="comment">#初始化当前文件夹</span></span><br><span class="line">git add . <span class="comment">#添加所有文件至暂存区</span></span><br><span class="line">git commit -m <span class="string">&quot;description&quot;</span> <span class="comment">#将暂存区文件推送至版本库</span></span><br></pre></td></tr></table></figure><br>相当于暂存区就是一个缓冲区，而push的时候也只有版本库中的文件才会被推送的远端。<br>以下是常见操作<br><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/20231021213727.png" alt="image.png"></p>
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/20231021213738.png" alt="image.png"></p>
+<h1><span id="远程git">远程git</span></h1><p>以github为服务器。主要有以下步骤：</p>
+<h2><span id="github账户ssh连接">github账户ssh连接</span></h2><p>本地git和远程GitHub服务器通过ssh连接，所以需要先配置免密登陆，主要步骤其实大差不差就直接贴教程链接了。<br><a target="_blank" rel="noopener" href="https://www.runoob.com/git/git-remote-repo.html"># Git 远程仓库(Github)</a><br>直接创建新仓库，然后找到<br><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/20231021214124.png" alt="image.png"></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git branch -M main</span><br><span class="line">git remote add origin git@github.com:fuurinko/Intern.git</span><br><span class="line">git push -u origin main</span><br></pre></td></tr></table></figure>
+<p>刷新一下github就有代码了。</p>
+<h2><span id="workflow">workflow</span></h2><p>因为目前我还没有涉及多人协作开发的场景，所以git的<code>fetch</code>对我来讲其实意义不大。所以这里正常的工作流就是，修改代码，然后将修改的代码即使推送到远端。<br>例<br>修改这个文件然后查看，确实能看到历史版本</p>
+<p><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/20231021214639.png" alt="image.png"></p>
 
             <div class="clearfix"></div>
             <hr class="nogutter">
         </div>
         <nav class="m-pagination col-md-8 col-md-offset-2 col-sm-24" role="pagination">
     
-    <a class="pull-left" href="../../14/ML_GLNN/" style="float: left;">
-        ← GLNN
-    </a>
     
-    
-    <a class="pull-right" href="../../../06/06/chapter%205%EF%BC%9A%E9%87%91%E5%B1%9E%E4%BC%A0%E8%BE%93%E7%BA%BF%E7%90%86%E8%AE%BA/">
-        chapter 5：金属传输线理论 →
+    <a class="pull-right" href="../../01/Obsidian%20+%20advanced%20Slide%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+        Advanced Slide 学习笔记 →
     </a>
     
 </nav>
