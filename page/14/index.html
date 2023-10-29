@@ -84,7 +84,7 @@
 				    
 				    <li><a href="/categories/Linux/" class="animsition-link">Linux<small>(1)</small></a></li>
 				    
-				    <li><a href="/categories/ML/" class="animsition-link">ML<small>(50)</small></a></li>
+				    <li><a href="/categories/ML/" class="animsition-link">ML<small>(51)</small></a></li>
 				    
 				    <li><a href="/categories/PWN-COLLEGE/" class="animsition-link">PWN.COLLEGE<small>(1)</small></a></li>
 				    
@@ -196,6 +196,48 @@
 
 <section id="intro">
     <div class="container">
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2022/03/30/week5-3.1/">gyctf_2020_force</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-03-30T03:21:26.675Z" itemprop="datePublished">
+          2022-03-30
+      </time>
+    
+    
+    | 
+    <a href='/tags/hof/'>hof</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        ​    
+     
+overview
+好绿。
+逆向​        程序比较简约，只有add和put两个功能。逻辑也不复杂。漏洞的话也比较明显，一个是程序直接把heap base白给了。另一个是虽然询问了size的大小，但是在实际add的时候完全没有根据size分配chunk,并且可以分配很大size的chunk。
+​        
+​        导致我们可以很轻易地修改top chunk的size。        
+​   
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/03/30/week5-3.1/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
         
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
@@ -543,49 +585,6 @@ jarvisoj_level5​        这个题吧，我好像以前做过，是个纯纯的
                     
                     <p class="pull-right readMore">
                         <a href="/2022/03/17/mess_ida的结构体识别/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2022/03/17/week3-3.2/">2014 hack.lu oreo</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2022-03-17T07:05:44.803Z" itemprop="datePublished">
-          2022-03-17
-      </time>
-    
-    
-    | 
-    <a href='/tags/UAF/'>UAF</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-         
-overview​        
-​        搞不懂为什么这么多题都要stripped。
-逆向add​        申请0x38大小的chunk，user space开始处存枪支的description,+0x19处存放枪支的name。
-​        输入name的时候，最大长度为56，导致能够溢出，覆盖fd字段。
-​        同时每输入信息以后都会有一个保存指针的操作：
-free
-​     
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2022/03/17/week3-3.2/">Read More...</a>
                     </p>
                     
                 </div>

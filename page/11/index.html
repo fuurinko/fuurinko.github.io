@@ -84,7 +84,7 @@
 				    
 				    <li><a href="/categories/Linux/" class="animsition-link">Linux<small>(1)</small></a></li>
 				    
-				    <li><a href="/categories/ML/" class="animsition-link">ML<small>(50)</small></a></li>
+				    <li><a href="/categories/ML/" class="animsition-link">ML<small>(51)</small></a></li>
 				    
 				    <li><a href="/categories/PWN-COLLEGE/" class="animsition-link">PWN.COLLEGE<small>(1)</small></a></li>
 				    
@@ -196,6 +196,46 @@
 
 <section id="intro">
     <div class="container">
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2022/05/11/week11_3_ pwnable_deathnote/">pwnable - death_note</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-05-11T10:52:04.960Z" itemprop="datePublished">
+          2022-05-11
+      </time>
+    
+    
+    | 
+    <a href='/tags/STACK-ret2shellcode/'>STACK - ret2shellcode</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        ​    
+     
+overview&amp;reverse​        
+​        
+​    比较明显是一道堆上的shellcode，程序逻辑比较简单,就是以idx创建不同的note，然后每个note只储存name，没有结构体啥的，Name，也就是我们输入进堆块的数据，必须是可见字符。之前做过一道类似的题，也是一个可见字符shellcode，可以用专门的工具或者嗯写出对应的可见字符版本的shellcode。
+利用​ 
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/05/11/week11_3_ pwnable_deathnote/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
         
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
@@ -548,44 +588,6 @@ overivew
                     
                     <p class="pull-right readMore">
                         <a href="/2022/04/13/vivi_2022年三月/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2022/04/13/heap_learning_glibc源码分析/">ptmalloc2源码分析</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2022-04-13T03:21:41.918Z" itemprop="datePublished">
-          2022-04-13
-      </time>
-    
-    
-    | 
-    <a href='/tags/HEAP-sourcecode-analysis/'>HEAP - sourcecode analysis</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-     
-prelude​        感觉源码分析是很多佬都做过的一件事情，但是对于我来说源码分析确实是件比较困难的事，但正因为困难，才有必要攻克，之后的高版本或者诡异版本glibc题少不了源码分析，也当是一个修炼吧。文章分析的大致顺序是按照int_malloc以及int_free的函数顺序介绍的，其中会穿插一些被调用的函数的介绍。
-csapp malloc lab review​        在着手看源码之前先复习一下csa
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2022/04/13/heap_learning_glibc源码分析/">Read More...</a>
                     </p>
                     
                 </div>
