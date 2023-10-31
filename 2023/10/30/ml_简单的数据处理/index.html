@@ -52,7 +52,7 @@
 <!-- hexo injector head_end end --><link rel="stylesheet" href="/css/prism.css" type="text/css"></head>
 
 <!--
-<body class="home-template">
+<body class="post-template">
 -->
 <body id="index" class="lightnav animsition">
       <!-- ============================ Off-canvas navigation =========================== -->
@@ -165,239 +165,101 @@
         <!-- ============================ Header & Logo bar =========================== -->
 
 
-      <!-- ============================ Hero Image =========================== -->
-
-<section id="hero" class="scrollme">
-    <div class="container-fluid element-img" style="background: url(https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/98f52bd6gy1hfqk9tjohfg20xc0xc7e6.gif) no-repeat center center fixed;background-size: cover">
-        <div class="row">
-            <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-8 col-md-offset-2 vertical-align cover boost text-center">
-                <div class="center-me animateme" data-when="exit" data-from="0" data-to="0.6" data-opacity="0" data-translatey="100">
-                    <div>
-                        
-                        <h2></h2>
-                        <p></p>
-                        
-
-                    </div>
-                </div>
-            </div>
-            <!-- // .col-md-12 -->
-        </div>
-        <div class="herofade beige-dk"></div>
-    </div>
-</section>
-
-<!-- Height spacing helper -->
-<div class="heightblock"></div>
-<!-- // End height spacing helper -->
-
-<!-- ============================ END Hero Image =========================== -->
-<!-- ============================ Content =========================== -->
-
+      
 <section id="intro">
     <div class="container">
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2021/05/24/heap_challenge_message/">Message</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2021-05-24T09:18:33.269Z" itemprop="datePublished">
-          2021-05-24
+        <div class="row col-md-offset-2">
+            <div class="col-md-8">
+    			<span class="post-meta">
+      <time datetime="2023-10-30T14:53:08.308Z" itemprop="datePublished">
+          2023-10-30
       </time>
     
-    
-    | 
-    <a href='/tags/HEAP-ChunkOverlapping/'>HEAP - ChunkOverlapping</a>
-    
-    
 </span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-     
-第二道fastbin double free。
-123free(*(void **)&amp;dword_602060[4 * v1 + 2]);      dword_602060[4 * v1] = 0;      --dword_60204C;
-这里没有把指针置为null，所以会产生uaf漏洞。
-ida大体分析了一下就会发现，由于没有后门函数，这道题会比上一道难。而且由于RELRO的开启，got所在的数据段是只读的，
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2021/05/24/heap_challenge_message/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
+                <h1></h1>
             </div>
         </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2021/04/24/sum_杂碎的指令/">杂碎的指令</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2021-04-23T16:50:26.062Z" itemprop="datePublished">
-          2021-04-24
-      </time>
-    
-    
-    | 
-    <a href='/tags/mess/'>mess</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        [TOC]
-​    
-     
-杂碎的知识点1）调试相关1）gdbropgagdet
-ROPgadget —binary （） —only “pop|ret” | grep rdi
-(基本适用于ret2csu这种万能gagdet的寻找)
-例如ROPgadget --binary calc --only &quot;pop|ret&quot; | grep eax
-2）内存断点？硬件断点？原理对所访问内存地址设置为不可读写，当访问时触
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2021/04/24/sum_杂碎的指令/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
+        <div class="col-md-8 col-md-offset-2">
+      		<h2><span id="每行读变量">每行读变量</span></h2><p>例如<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">defense mode: none</span><br><span class="line">trigger mode: <span class="number">1</span></span><br><span class="line">Overall ASR: <span class="number">0.9980</span> (GCN model, Seed: <span class="number">320</span>)</span><br><span class="line">trigger_class:<span class="number">0</span></span><br><span class="line">predict node:tensor([<span class="number">3</span>, <span class="number">4</span>, <span class="number">3</span>, <span class="number">0</span>, <span class="number">3</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">3</span>, <span class="number">3</span>, <span class="number">3</span>, <span class="number">0</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">3</span>, <span class="number">3</span>, <span class="number">3</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">1</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">5</span>, <span class="number">4</span>, <span class="number">3</span>,</span><br><span class="line">        <span class="number">3</span>, <span class="number">3</span>, <span class="number">6</span>, <span class="number">3</span>, <span class="number">2</span>, <span class="number">4</span>, <span class="number">3</span>, <span class="number">6</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">2</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">5</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">4</span>, <span class="number">3</span>, <span class="number">3</span>, <span class="number">2</span>, <span class="number">5</span>,</span><br><span class="line">        <span class="number">3</span>, <span class="number">3</span>, <span class="number">6</span>, <span class="number">3</span>, <span class="number">3</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">6</span>, <span class="number">0</span>, <span class="number">3</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">0</span>, <span class="number">3</span>, <span class="number">3</span>, <span class="number">2</span>, <span class="number">0</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">2</span>, <span class="number">6</span>, <span class="number">5</span>, <span class="number">2</span>,</span><br><span class="line">        <span class="number">2</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">4</span>, <span class="number">3</span>, <span class="number">6</span>, <span class="number">3</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">4</span>, <span class="number">2</span>, <span class="number">4</span>, <span class="number">4</span>, <span class="number">3</span>, <span class="number">6</span>, <span class="number">0</span>, <span class="number">4</span>, <span class="number">2</span>, <span class="number">4</span>, <span class="number">6</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">0</span>,</span><br><span class="line">        <span class="number">6</span>, <span class="number">5</span>, <span class="number">0</span>, <span class="number">6</span>], device=<span class="string">&#x27;cuda:0&#x27;</span>)</span><br><span class="line">Different <span class="class"><span class="keyword">class</span> <span class="title">numbers</span>:</span><span class="number">34</span></span><br><span class="line">Target <span class="class"><span class="keyword">class</span> <span class="title">numbers</span>:</span><span class="number">15</span></span><br><span class="line"></span><br><span class="line">defense mode: none</span><br><span class="line">trigger mode: <span class="number">1</span></span><br><span class="line">Overall ASR: <span class="number">0.9320</span> (GCN model, Seed: <span class="number">320</span>)</span><br><span class="line">trigger_class:<span class="number">1</span></span><br><span class="line">predict node:tensor([<span class="number">3</span>, <span class="number">4</span>, <span class="number">3</span>, <span class="number">1</span>, <span class="number">3</span>, <span class="number">3</span>, <span class="number">1</span>, <span class="number">3</span>, <span class="number">3</span>, <span class="number">3</span>, <span class="number">3</span>, <span class="number">0</span>, <span class="number">4</span>, <span class="number">3</span>, <span class="number">3</span>, <span class="number">3</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">1</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">5</span>, <span class="number">4</span>, <span class="number">3</span>,</span><br><span class="line">        <span class="number">3</span>, <span class="number">3</span>, <span class="number">3</span>, <span class="number">3</span>, <span class="number">2</span>, <span class="number">4</span>, <span class="number">3</span>, <span class="number">1</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">2</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">5</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">4</span>, <span class="number">3</span>, <span class="number">3</span>, <span class="number">2</span>, <span class="number">5</span>,</span><br><span class="line">        <span class="number">3</span>, <span class="number">3</span>, <span class="number">1</span>, <span class="number">3</span>, <span class="number">3</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">6</span>, <span class="number">3</span>, <span class="number">3</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">3</span>, <span class="number">3</span>, <span class="number">3</span>, <span class="number">2</span>, <span class="number">0</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">2</span>, <span class="number">6</span>, <span class="number">5</span>, <span class="number">2</span>,</span><br><span class="line">        <span class="number">2</span>, <span class="number">2</span>, <span class="number">0</span>, <span class="number">4</span>, <span class="number">3</span>, <span class="number">3</span>, <span class="number">3</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">3</span>, <span class="number">2</span>, <span class="number">4</span>, <span class="number">4</span>, <span class="number">3</span>, <span class="number">6</span>, <span class="number">1</span>, <span class="number">4</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">6</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">0</span>,</span><br><span class="line">        <span class="number">6</span>, <span class="number">5</span>, <span class="number">3</span>, <span class="number">6</span>], device=<span class="string">&#x27;cuda:0&#x27;</span>)</span><br><span class="line">Different <span class="class"><span class="keyword">class</span> <span class="title">numbers</span>:</span><span class="number">35</span></span><br><span class="line">Target <span class="class"><span class="keyword">class</span> <span class="title">numbers</span>:</span><span class="number">8</span></span><br></pre></td></tr></table></figure><br>这种数据把他处理成，matplotlib能看懂的数组。<br>肯定首先要把文件打开，然后读每一行。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&quot;your_file_path.txt&quot;</span>, <span class="string">&quot;r&quot;</span>) <span class="keyword">as</span> file: </span><br><span class="line">	data = file.read()</span><br><span class="line">segments = data.split(<span class="string">&quot;\n\n&quot;</span>)</span><br><span class="line">parsed_data = []</span><br></pre></td></tr></table></figure><br><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/20231030225709.png" alt="image.png"></p>
+<p><code>segment</code>的作用是划分data的终止部分。<br>然后需要划分每一行，去除所有空格之后以换行符为界限。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">segments = data.strip().split(<span class="string">&quot;\n\n&quot;</span>)</span><br><span class="line">parsed_data = []</span><br><span class="line"><span class="keyword">for</span> segment <span class="keyword">in</span> segments:</span><br><span class="line">    lines = segment.split(<span class="string">&quot;\n&quot;</span>)</span><br><span class="line">    segment_data = &#123;&#125;</span><br></pre></td></tr></table></figure></p>
+<p>然后就是每一行内把key 和 value读出来。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> segment <span class="keyword">in</span> segments:</span><br><span class="line">    lines = segment.split(<span class="string">&quot;\n&quot;</span>)</span><br><span class="line">    segment_data = &#123;&#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span> line <span class="keyword">in</span> lines:</span><br><span class="line">        parts = line.split(<span class="string">&quot;:&quot;</span>)</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">len</span>(parts) == <span class="number">2</span>:</span><br><span class="line">            key, value = parts</span><br><span class="line">            segment_data[key] = value</span><br><span class="line">            <span class="built_in">print</span>(key)</span><br></pre></td></tr></table></figure><br>这里的parts可以理解为用分隔符“：”将一行分为几个部分。<br>然后有n个：就划分为n+1个部分。<br><img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/20231031151334.png" alt="image.png"><br>这里可以很清晰地看到每行用一个数组表示，数组中的元素就是被划分出来的部分。<br>其中<code>[&#39;Overall ASR&#39;, &#39; 1.0000 (GCN model, Seed&#39;, &#39; 320)&#39;]</code>是有三个元素，即三个部分，是因为seed那也有一个冒号。<br>后面的代码就很好理解了。<br>成功地把实验数据读进变量之后就很好操作了。</p>
+
+            <div class="clearfix"></div>
+            <hr class="nogutter">
         </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2021/01/01/随记-006/">随记-006</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2020-12-31T16:00:00.000Z" itemprop="datePublished">
-          2021-01-01
-      </time>
+        <nav class="m-pagination col-md-8 col-md-offset-2 col-sm-24" role="pagination">
     
     
-    | 
-    <a href='/tags/进步报告/'>进步报告</a>
+    <a class="pull-right" href="../../29/ml_pathlib%20%E7%AC%94%E8%AE%B0/">
+        pathlib 笔记 →
+    </a>
     
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        Here's something encrypted, password is required to continue reading.
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2021/01/01/随记-006/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/1919/08/10/note_深夜高速-1/">1</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="1919-08-09T15:34:14.000Z" itemprop="datePublished">
-          1919-08-10
-      </time>
-    
-    
-    | 
-    <a href='/tags/深夜高速/'>深夜高速</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        Here's something encrypted, password is required to continue reading.
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/1919/08/10/note_深夜高速-1/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/1919/08/10/幻想曲-04-夏 其二/">夏 其二</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="1919-08-09T15:00:00.000Z" itemprop="datePublished">
-          1919-08-10
-      </time>
-    
-    
-    | 
-    <a href='/tags/幻想曲/'>幻想曲</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        Here's something encrypted, password is required to continue reading.
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/1919/08/10/幻想曲-04-夏 其二/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <nav class="pagination" role="pagination">
-          <a class="pull-left" href="../18/">← Newer Posts</a>
-          
-        </nav>
+</nav>
+
+        <div class="col-md-8 col-md-offset-2 col-sm-24"><script type="text/javascript">
+  /**
+   * 搜狐畅言
+   */
+
+  /*
+  document.write('<div id="SOHUCS" sid="' + window.location.pathname.slice(1) + '" ></div>');
+
+  window.onload = function () {
+    (function () {
+      var appid = 'cytXXXX';
+      var conf = 'prod_xxxxxxxxxxxxxxxxx';
+      var width = window.innerWidth || document.documentElement.clientWidth;
+      var loadJs = function (d, a, id) {
+        var c = document.getElementsByTagName("head")[0] || document.head || document.documentElement;
+        var b = document.createElement("script");
+        b.setAttribute("type", "text/javascript");
+        b.setAttribute("charset", "UTF-8");
+        b.setAttribute("src", d);
+        if (id) {
+          b.setAttribute("id", id);
+        }
+        if (typeof a === "function") {
+          if (window.attachEvent) {
+            b.onreadystatechange = function () {
+              var e = b.readyState;
+              if (e === "loaded" || e === "complete") {
+                b.onreadystatechange = null;
+                a()
+              }
+            }
+          } else {
+            b.onload = a
+          }
+        }
+        c.appendChild(b)
+      };
+
+      loadJs("https://changyan.sohu.com/upload/changyan.js", function () {
+        window.changyan.api.config({
+          appid: appid,
+          conf: conf
+        })
+      });
+    })();
+  }
+  */
+
+</script>
+</div>
     </div>
 </section>
-<section id="statement">
-    <div class="container text-center wow fadeInUp" data-wow-delay="0.5s">
-        <div class="row">
-            <p></p>
-        </div>
-    </div>
-</section>
-<!-- ============================ END Content =========================== -->
+
+<!-- Highlight.js -->
+
+<link rel="stylesheet"
+href="//highlightjs.org/static/demo/styles/atom-one-light.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js">
+</script>
+<script>
+hljs.initHighlightingOnLoad();
+
+</script>
+
 
       
 <!-- ============================ Footer =========================== -->
