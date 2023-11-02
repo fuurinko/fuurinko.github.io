@@ -84,7 +84,7 @@
 				    
 				    <li><a href="/categories/Linux/" class="animsition-link">Linux<small>(1)</small></a></li>
 				    
-				    <li><a href="/categories/ML/" class="animsition-link">ML<small>(52)</small></a></li>
+				    <li><a href="/categories/ML/" class="animsition-link">ML<small>(53)</small></a></li>
 				    
 				    <li><a href="/categories/PWN-COLLEGE/" class="animsition-link">PWN.COLLEGE<small>(1)</small></a></li>
 				    
@@ -196,6 +196,50 @@
 
 <section id="intro">
     <div class="container">
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2022/06/11/ciscn_2022_newest_note/">newest_note</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-06-11T04:51:16.916Z" itemprop="datePublished">
+          2022-06-11
+      </time>
+    
+    
+    | 
+    <a href='/tags/HEAP-Fastbin-Attack/'>HEAP - Fastbin Attack</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+    
+给分享会准备的一个简单的复现。
+太长不看
+逆向确定漏洞点-uaf以及越界读写
+glibc2.32指针异或绕过
+glibc2.34取消malloc free hook后的利用方式
+
+check
+​        依旧是保护全开。这里比较不好的地方就是libc的版本比较高。2.34有一个众所周知的更新就是去掉了malloc_hook以及free_hook。所以劫持程序流的方式也不再是从前的无脑打hook了。像湖湘杯的house 
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/06/11/ciscn_2022_newest_note/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
         
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
@@ -567,41 +611,6 @@ overview​        上一道题不给我调试符号，我还能找到类似的�
                     
                     <p class="pull-right readMore">
                         <a href="/2022/05/14/week11_6_pwnable_re-alloc/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2022/05/13/幻想曲-03-夏/">夏</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2022-05-13T15:00:21.492Z" itemprop="datePublished">
-          2022-05-13
-      </time>
-    
-    
-    | 
-    <a href='/tags/幻想曲/'>幻想曲</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        Here's something encrypted, password is required to continue reading.
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2022/05/13/幻想曲-03-夏/">Read More...</a>
                     </p>
                     
                 </div>
