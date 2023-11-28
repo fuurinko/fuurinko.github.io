@@ -84,7 +84,7 @@
 				    
 				    <li><a href="/categories/Linux/" class="animsition-link">Linux<small>(1)</small></a></li>
 				    
-				    <li><a href="/categories/ML/" class="animsition-link">ML<small>(53)</small></a></li>
+				    <li><a href="/categories/ML/" class="animsition-link">ML<small>(54)</small></a></li>
 				    
 				    <li><a href="/categories/PWN-COLLEGE/" class="animsition-link">PWN.COLLEGE<small>(1)</small></a></li>
 				    
@@ -196,6 +196,44 @@
 
 <section id="intro">
     <div class="container">
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2022/03/20/stack_ret2csu/">jarvisoj_level5</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-03-19T17:15:06.878Z" itemprop="datePublished">
+          2022-03-20
+      </time>
+    
+    
+    | 
+    <a href='/tags/STACK-Stack-Overflow/'>STACK - Stack Overflow</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+       
+jarvisoj_level5​        这个题吧，我好像以前做过，是个纯纯的ret2csu的板子题。
+12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364from pwn import*from LibcSearcher imp
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/03/20/stack_ret2csu/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
         
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
@@ -558,47 +596,6 @@ wustctf2020_easyfastchecksec :
                     
                     <p class="pull-right readMore">
                         <a href="/2022/03/15/week3-1.1/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2022/03/14/ciscn_2019_your_pwn/">2019_your_pwn</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2022-03-14T10:30:34.805Z" itemprop="datePublished">
-          2022-03-14
-      </time>
-    
-    
-    | 
-    <a href='/tags/STACK-ARRAY-OUT-OF-BOUNDS/'>STACK - ARRAY OUT OF BOUNDS</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-			
-				console.error("ReferenceError: value is not defined");
-			     
-​        因为是数组越界，每次只能读取一个字节，所以脚本需要循环，首先计算出偏移获取函数的地址，一般来说比较常规的思路是拿libc_start_main,只是这里的偏移比较远。
-​    ps： 关于如何在看起来比较混乱的栈中找到偏移量这件事
-​        首先要搞清楚函数逻辑，就
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2022/03/14/ciscn_2019_your_pwn/">Read More...</a>
                     </p>
                     
                 </div>

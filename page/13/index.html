@@ -84,7 +84,7 @@
 				    
 				    <li><a href="/categories/Linux/" class="animsition-link">Linux<small>(1)</small></a></li>
 				    
-				    <li><a href="/categories/ML/" class="animsition-link">ML<small>(53)</small></a></li>
+				    <li><a href="/categories/ML/" class="animsition-link">ML<small>(54)</small></a></li>
 				    
 				    <li><a href="/categories/PWN-COLLEGE/" class="animsition-link">PWN.COLLEGE<small>(1)</small></a></li>
 				    
@@ -196,6 +196,48 @@
 
 <section id="intro">
     <div class="container">
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2022/04/09/ciscn_2019_daliy/">daliy(不想做了)</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-04-09T08:20:21.957Z" itemprop="datePublished">
+          2022-04-09
+      </time>
+    
+    
+    | 
+    <a href='/tags/HEAP-Fastbin-Attack/'>HEAP - Fastbin Attack</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+			
+				console.error("ReferenceError: value is not defined");
+			     
+Overview
+​        还可以。估计是个中等题。libc应该还是2.23。不得不说2019的ciscn初赛pwn确实是没有什么难度的。
+Readd​        第一次申请chunk时，操作如下：
+123456789if ( !v0 )        &#123;        
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/04/09/ciscn_2019_daliy/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
         
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
@@ -542,47 +584,6 @@ UNLINKunlink大致概念​        就是将free chunk从双向循环链表中�
                     
                     <p class="pull-right readMore">
                         <a href="/2022/04/02/heap_fastbin中uaf实现任意地址分配的检测问题/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2022/04/01/week6-3.1/">NoLeak</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2022-04-01T13:34:22.000Z" itemprop="datePublished">
-          2022-04-01
-      </time>
-    
-    
-    | 
-    <a href='/tags/Chunk-Overlapping/'>Chunk Overlapping</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        ​    
-     
-overview
-​        非常之畸形。
-re​        逻辑比较简单，结构体中只有一个chunk bp的字段。漏洞点也很魔幻，free只free结构体中保存的指针，而没有free malloc出来的ptr本身，并且没有置0，顺便edit的时候size没有限定，可以造成堆溢出。
-​        并且题目并没有可控的输出功能,虽然调用了write()，但是我们很难通过改got表来调用。    
-利用
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2022/04/01/week6-3.1/">Read More...</a>
                     </p>
                     
                 </div>

@@ -84,7 +84,7 @@
 				    
 				    <li><a href="/categories/Linux/" class="animsition-link">Linux<small>(1)</small></a></li>
 				    
-				    <li><a href="/categories/ML/" class="animsition-link">ML<small>(53)</small></a></li>
+				    <li><a href="/categories/ML/" class="animsition-link">ML<small>(54)</small></a></li>
 				    
 				    <li><a href="/categories/PWN-COLLEGE/" class="animsition-link">PWN.COLLEGE<small>(1)</small></a></li>
 				    
@@ -196,6 +196,48 @@
 
 <section id="intro">
     <div class="container">
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2021/08/03/sum_pwn题中的一些奇怪的姿势/">pwn题中的一些奇怪的姿势</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2021-08-03T06:56:14.000Z" itemprop="datePublished">
+          2021-08-03
+      </time>
+    
+    
+    | 
+    <a href='/tags/Generalization/'>Generalization</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        ​    
+      
+patch alarm比较弱智的一个操作，但是如果没注意到的话还是有一点点坑。
+一般来说许多题都喜欢在main函数里加alarm。
+alarm会导致调试的时候超时，如果没有解决的话基本不能调试。算最基础的的反调试手法了。
+ps:关于超时的那个报错当时还好好研究了一会儿来着。就是一个sigxxx，sigalarm好像，然后默认返回中止程序。
+解决方案也比较弱智。就是直接patch掉就好了。
+ida都关了懒得上图了
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2021/08/03/sum_pwn题中的一些奇怪的姿势/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
         
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
