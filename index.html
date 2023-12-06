@@ -84,7 +84,7 @@
 				    
 				    <li><a href="/categories/Linux/" class="animsition-link">Linux<small>(1)</small></a></li>
 				    
-				    <li><a href="/categories/ML/" class="animsition-link">ML<small>(54)</small></a></li>
+				    <li><a href="/categories/ML/" class="animsition-link">ML<small>(55)</small></a></li>
 				    
 				    <li><a href="/categories/PWN-COLLEGE/" class="animsition-link">PWN.COLLEGE<small>(1)</small></a></li>
 				    
@@ -196,6 +196,45 @@
 
 <section id="intro">
     <div class="container">
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2023/12/04/ml_easy_cluster/">ml_easy_cluster</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2023-12-04T09:13:16.200Z" itemprop="datePublished">
+          2023-12-04
+      </time>
+    
+    
+    | 
+    <a href='/tags/mess/'>mess</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        无监督聚类简单来讲就是没有label的数据分类。常见算法
+K-means随机生成k个聚类中心（k个点），对其余点，分别计算与这k个点的距离，然后离得近的点标红，然后再分别取中点继续跟附近的点标红，以此不停迭代直到收敛。每次迭代变化的都是中心点的位置。所以这里迭代的次数很重要。K-mean的目标函数就如图
+即对任意点于中心点距离的最小化。橘色点是收敛之后的中心点（cluster centroid），自然分别与中心离得近的点就是一个类。
+
+
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2023/12/04/ml_easy_cluster/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
         
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
@@ -517,42 +556,6 @@ UGBA那边倒是可以直接保存训练好的参数，那么就看lth这里具�
                     
                     <p class="pull-right readMore">
                         <a href="/2023/09/24/基于DGL及Networkx的Subgraph生成概览/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2023/09/24/shell脚本实现改变参数多次运行python文件/">shell脚本实现改变参数多次运行python文件</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2023-09-24T02:24:28.650Z" itemprop="datePublished">
-          2023-09-24
-      </time>
-    
-    
-    | 
-    <a href='/tags/mess/'>mess</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        其实就是blog好久没更新了水一下博客。我的需求是每次跑的时候改变trigger的值，从0到200，每次加10.这个是比较粗糙（可解释性高）的版本，直接写一个for循环，然后在cmd规定参数值时用 $xxx 代替
-123456789for (( trigger_number=0; trigger_number&lt;=200; trigger_number+=10 ))dopython train_teacher.py --exp_se
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2023/09/24/shell脚本实现改变参数多次运行python文件/">Read More...</a>
                     </p>
                     
                 </div>
