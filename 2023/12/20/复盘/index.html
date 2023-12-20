@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<!--[if lte IE 8 ]>
+<html class="ie" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US">
+<![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!-->
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
+<!--<![endif]-->
+
+<head>
+
+  <title>复盘 | Rin</title>
+  <!-- Meta data -->
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content="Rin">
+    <meta name="author" content="Rin777">
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+
+    <!-- Favicon, (keep icon in root folder) -->
+    <link rel="Shortcut Icon" href="/img/favicon.ico" type="image/ico">
+
+    <link rel="alternate" href="/atom.xml" title="Rin" type="application/atom+xml">
+    <link rel="stylesheet" href="/css/all.css" media="screen" type="text/css">
+    
+
+    <!--[if IE 8]>
+    <link rel="stylesheet" type="text/css" href="/css/ie8.css" />
+    <![endif]-->
+
+    <!-- jQuery | Load our jQuery, with an alternative source fallback to a local version if request is unavailable -->
+    <script src="/js/jquery-1.11.1.min.js"></script>
+    <script>window.jQuery || document.write('<script src="js/jquery-1.11.1.min.js"><\/script>')</script>
+
+    <!-- Load these in the <head> for quicker IE8+ load times -->
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="/js/html5shiv.min.js"></script>
+    <script src="/js/respond.min.js"></script>
+    <![endif]-->
+
+  
+  
+  
+
+  <style>.col-md-8.col-md-offset-2.opening-statement img{display:none;}</style>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><link rel="stylesheet" href="/css/prism.css" type="text/css"></head>
+
+<!--
+<body class="post-template">
+-->
+<body id="index" class="lightnav animsition">
+      <!-- ============================ Off-canvas navigation =========================== -->
+
+    <div class="sb-slidebar sb-right sb-style-overlay sb-momentum-scrolling">
+        <div class="sb-close" aria-label="Close Menu" aria-hidden="true">
+            <img src="/img/close.png" alt="Close"/>
+        </div>
+        <!-- Lists in Slidebars -->
+        <ul class="sb-menu">
+            <li><a href="/" class="animsition-link" title="Home">Home</a></li>
+            <li><a href="/archives" class="animsition-link" title="archive">archives</a></li>
+            <!-- Dropdown Menu -->
+			 
+            
+        	<li>
+        		<a class="sb-toggle-submenu">Categories<span class="sb-caret"></span></a>
+            	<ul class="sb-submenu">
+				  	
+				    <li><a href="/categories/AUDITION/" class="animsition-link">AUDITION<small>(23)</small></a></li>
+				    
+				    <li><a href="/categories/Binary-security/" class="animsition-link">Binary_security<small>(101)</small></a></li>
+				    
+				    <li><a href="/categories/CSAPP-LAB/" class="animsition-link">CSAPP LAB<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/EE/" class="animsition-link">EE<small>(5)</small></a></li>
+				    
+				    <li><a href="/categories/EN/" class="animsition-link">EN<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/Linux/" class="animsition-link">Linux<small>(1)</small></a></li>
+				    
+				    <li><a href="/categories/ML/" class="animsition-link">ML<small>(57)</small></a></li>
+				    
+				    <li><a href="/categories/PWN-COLLEGE/" class="animsition-link">PWN.COLLEGE<small>(1)</small></a></li>
+				    
+				</ul>
+        	</li>
+			
+            
+            <li>
+                <a class="sb-toggle-submenu">Links<span class="sb-caret"></span></a>
+                <ul class="sb-submenu">
+                    
+                    <li><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1Wh4y1o7Xh" class="animsition-link">INNOUT「系统过载」SYSTEM专场演出</a></li>
+                    
+                    <li><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1Kv411574g" class="animsition-link">普通周末 肖骏个人音乐演出 《边境Frontier》</a></li>
+                    
+                </ul>
+            </li>
+            
+        </ul>
+        <!-- Lists in Slidebars -->
+        <ul class="sb-menu secondary">
+            
+            <li><a href="javascript:;" class="popup-trigger" title="Search"><span class="search-icon"></span>Search</a></li>
+            
+            <li><a href="/about.html" class="animsition-link" title="about">About</a></li>
+            <li><a href="/atom.xml" class="animsition-link" title="rss">RSS</a></li>
+        </ul>
+    </div>
+    
+    <!-- ============================ END Off-canvas navigation =========================== -->
+
+    <!-- ============================ #sb-site Main Page Wrapper =========================== -->
+
+    <div id="sb-site">
+        <!-- #sb-site - All page content should be contained within this id, except the off-canvas navigation itself -->
+
+        <!-- ============================ Header & Logo bar =========================== -->
+
+        <div id="navigation" class="navbar navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="container">
+                    <!-- Nav logo -->
+                    <div class="logo">
+                        <a href="/" title="Logo" class="animsition-link">
+                         <img src="https://rin777-1306176007.cos.ap-nanjing.myqcloud.com/98f52bd6gy1hfqk9tjohfg20xc0xc7e6.gif" alt="Logo" width="35px;"/> 
+                        </a>
+                    </div>
+                    <!-- // Nav logo -->
+                    <!-- Info-bar -->
+                    <nav>
+                        <ul class="nav">
+                            <li><a href="/" class="animsition-link">Rin</a></li>
+                            <li class="nolink"><span>Always </span>Creative.</li>
+                            
+                            <li><a href="https://github.com/" title="Github" target="_blank"><i class="icon-github"></i></a></li>
+                            
+                            
+                            
+                            
+                            
+                            <li class="nolink"><span>Welcome!</span></li>
+                        </ul>
+                    </nav>
+                    <!--// Info-bar -->
+                </div>
+                <!-- // .container -->
+                <div class="learnmore sb-toggle-right">More</div>
+                <button type="button" class="navbar-toggle menu-icon sb-toggle-right" title="More">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar before"></span>
+                <span class="icon-bar main"></span>
+                <span class="icon-bar after"></span>
+                </button>
+            </div>
+            <!-- // .navbar-inner -->
+        </div>
+
+        <!-- ============================ Header & Logo bar =========================== -->
+
+
+      
+<section id="intro">
+    <div class="container">
+        <div class="row col-md-offset-2">
+            <div class="col-md-8">
+    			<span class="post-meta">
+      <time datetime="2023-12-20T13:27:25.877Z" itemprop="datePublished">
+          2023-12-20
+      </time>
+    
+    
+    | 
+    <a href='/tags/GNN/'>GNN</a>
+    
+    
+</span>
+                <h1>复盘</h1>
+            </div>
+        </div>
+        <div class="col-md-8 col-md-offset-2">
+      		<p>上一周伪生死十天，虽然同时伴随着高强度的摆烂与爆肝的周期交替。大致就是一整晚不睡觉做实验，然后白天从早睡到晚，见缝插针还趁着普通人复活的劲？把一巡和相关播客又重温了一遍。</p>
+<p>趁着手上干劲不是很足的功夫先复盘一下这四个月。</p>
+<p>四个月前，也就是八月中旬我大概还是个啥也不懂的水货，虽然现在也是。</p>
+<p>之前在知乎看清华大学本科特等奖学金候选人相关问答，其中一位候选人大四手握六篇顶会，这不仅让我想到郭老版之前在群里转发的小红书《为什么有的本科生已经多篇顶会，但大部分博士生一篇顶会都没有》中的名言金句：”他大一进组，发现同组师兄工位摆着xx最佳学生论文奖杯，师兄手把手带，于是一个月以后他阅读顶会论文如斩草。”。资源好确实是一回事，谁也不能轻视其本身的实力。事实就是，就算资源相似的情况下，人和人做research的能力那就是大相径庭。</p>
+<p>上周发现那个bug之后，虽然现在也证明确实有点源于知识累积不足的自己吓自己，但是确实也让我更加看清了我当下的处境以及自己这活干得到底有多埋汰。</p>
+<p>废话说完了以下是我的一些感想。</p>
+<p>知乎上还有一个问题叫做“如何看一个本科生是否具有科研天赋。”这个问题问得很有意思，重点是”本科生和””天赋”。回答者也是cs领域，尤其ai偏多。大致的回答集中于：</p>
+<ol>
+<li>对代码的专注与坚持。</li>
+</ol>
+<p>听着好像有点打太极，但是其实真不是打太极，实验有时候真就是每天一个bug，一个bug修一下午。尤其是新手（本科生）初探某领域，在本身代码基础不牢，知识积累不够深的情况下，bug率高是必然的。于是需要坚持每天坐在电脑前超过十小时改代码很难说不是一件难熬的事。其实这就已经筛掉了一大批怎么说，对代码和研究领域本身就不是那么热情的人。我认识的很多搞安全和开发的同学和朋友，无论是真的算法爷码农或者脚本小子，大家就真的是能坐在vsc前几个小时一动不动的，也就是进入所谓的心流状态。但是也存在一大批没法从写代码中获得正反馈的，这种状态类似我学通信，当真的从骨子里讨厌学习一门科目的时候，任何所谓的成功其实没有办法带来正反馈，而失败则会带来加倍的沮丧感。虽然我并不亲身认识这样的人，但能类比我学通信工程的一切知识，或者做作业复习考试，考试周的每一秒都像在受刑。就像老调常谈的心灵鸡汤中说到的那样，工作的动力应当来自内部，而不是外部压力。所以一句话总结，不热爱代码的本科生不适合做科研（本科生就想搞理论是吧<em>*</em>）,略幸运的是我大概咩有被这一条筛掉。</p>
+<ol>
+<li>self- motivated<br>这个词来源于裴老板的招生广告，但是其实大多数教授都会用这个词来形容心仪的学生（<br>简单来说就是你需要一定的独立思考能力，而不是做一个会生成代码和实验数据的coding gpt 中国卷王特供版。但是这个词其实挺玄幻的，独立思考的能力对大多数人来讲是强弱的问题，而不是有没有的问题。而每个教授对强弱通常有不同的判定标准，或者说期望值。同时这个词通常来讲并不是一个单独的底层能力，而更倾向于是多种能力导致的行为结果。</li>
+</ol>
+<p>最理想的情况就是<br>1）你有一个宏伟的意义或者目标，而不是为了混口饭吃。<br>2）执行力：你时刻都能够为了这个目标而立即行动<br>3）知识检索，自学能力：面对困难，你能系统地学习底层知识，或者大量查阅论文，从更高维度去思考解决问题，而不是固步自封在舒适圈内寻找治标不治本的方案。举个例子。当你发现一个模型performance不行，你只选择调参，跑出一个差强人意的结果就说ok这个实验完成了。有可能调参的过程很痛苦，例如跑出一次结果需要等一个小时，然后调出满意的结果需要修代码。需要多次重复实验，可能总耗时超过几十小时。你能说你不努力，不爱科研吗？当然不能，但是有可能的情况是面对同样的问题，别组大佬花一下午遍历论文，然后发现一种很适合的方案，一做实验，acc吊打你，总耗时6h。所以这个点又能与另一个点联系，叫做拓展学术视野。<br>4）自我迭代的意识与能力。总的来讲就是注重细节的优化。例如科研过程中有一个很重要的细节问题就是科研实验结果记录。首先意识到你的实验结果记录有什么问题，然后怎么改，下次结果能不能克服惰性好好整理。又或者科研代码不写注释，结果一个月以后根本看不懂，又又或者代码来源于gpt，实则有些功能怎么实现的你也不清楚，也不去好好看，能用就行。又又又或者不刷算法题，不去独立地提升代码开发能力，导致稍微复杂的代码写成屎山，这些个问题能不能意识到，能不能改，说实话很大程度上来源于你的导师对你的监管力度。如果你恰巧遇到一个愿意在这些细节上拷打你的导师，那么算是幸运了，但是如果你是remote，或者你的导师确实太忙，那么这些所有问题都需要自我迭代。意识到细节的问题，就已经很难了，但改善通常更难。论文的ddl还有一个月，你可能再去每天花两个小时提升代码能力吗？已经养成实验数据草草保存一下不分类不总结不画图的习惯，下次再产出实验数据，能一步到位吗？gpt代码又长又杂，你可能每一行仔细检查后再放上去吗？</p>
+<p>前两天看一个丧尸片，里面丧尸化的人偶尔会恢复神智，其中有的人会装作健康而试图偷偷潜入有食物的被封锁的公寓楼。公寓楼与外界只用脆弱的上锁玻璃门隔开，当楼中的女主质疑丧尸，或者恢复意识的人会不会砸开玻璃门进入，男主说不会，大部分人们做坏事都是试图寻找存在的借口，将自己的责任撇清，比如他们进来会说“门没关”，而不是“砸门。”，即使门是他逼人开的。这个伏笔后来也得到验证，一个丧尸追赶外出归来的人，并借此进入公寓，被男女主逮着时说“我看外面门没关。”</p>
+<p>人的思维惯性以及对新事物下意识的恐惧就是这扇玻璃门，面对困难通常我就呆在舒适圈中了，舒适圈不仅能让你少吃一些看苦，还为你提供正当理由，因为一直以来这么做都没有什么问题，所以接下来也一直这么做，肯定也没有什么问题。所以不去探寻新的解决方法对我来讲是无可厚非的，是可以被原谅的。</p>
+<p>但是有些时候一直践行的方案理智来讲是不科学不恰当的，他们注定不会带来成功。</p>
+<p>总结来讲就是发现问题，并改善问题，都很难，同时如果你当下的任务做得还不错，没有显著问题，都没有人来挑你的刺时，就更难了。所以为了更好的结果，自我迭代吧。</p>
+<p>大的讲完了，再讲一下细节。<br>列一下我认为ai科研需要注意的问题以及我可能的解决方案。</p>
+<ol>
+<li>idea。<br>之前一直有人戏称 Idea is cheap。着实没有执行力的人的idea非常cheap，idea被提出后肯定需要一步一步的实验去验证可行性。但是刨除执不执行的问题，不同人提出的idea也是天壤之别。例如我提的idea和裴老板提的idea。一个非常切实的问题就是idea的价值与novel性取决于你的学术视野以及知识积累。例如我上周觉得基于clean data的distillation理论上可以防御任何backdoor attack。我其实知道可能存在这样那样的问题，也上网搜类似的文章，甚至还问了gpt可行性，但是结果是我还是坚持我这个idea，觉得挺好的。但是meeting的时候裴老板一下就指出，backdoor attack的目标群体通常是大型公司，而确保大型公司的data完全clean是很难的。</li>
+</ol>
+<p>在这之前我就完全没有意识到clean data的获取是一个问题，同时也完全忘记目标是也只是大型商业公司。我假想的场景只来源于我粗鄙的见识，例如实验室的交叉领域研究需要模型，他们的pre train模型通常来自于互联网，而数据一般都是自己标注，所以不会有含trigger的data，但是裴老板说：没有人会攻击他们。</p>
+<p>有肯定有，但是相比较来讲，概率和范围都是相对小的，所以会影响论文的质量，从而降低中稿率。</p>
+<p>我当然不是在argue人家科研动机不够纯粹，我自己仍然觉得这是一个很有意思的方向，只是确实缺少商业价值的认知。本身这个项目就是一个与商业应用强绑定的东西，还不去考虑商业价值就有点本末倒置了。</p>
+<p>所以一个idea，要同时具有novel，可行性，与强商业或者学术价值，其实很难。需要提出者对场景和领域有全面的了解。试想我的naive idea，如果花大力气做完对比实验，结果最后审稿人直接argue你的场景，然后不接受。那么你的工作意义何在。之所以这个idea被否决，是因为我的认知不够全面，没有充分考虑到backdoor attack的主流应用场景，但是如果你特莽，说我就要做这个，你不能因为场景不常见而否定它？那简单，你paper发不出去呗。</p>
+<p>虽然说唯发paper是论不够纯粹，但是你idea的学术价值都是基于有paper的情况下，为了能把东西发出去确实要做一些妥协。举个极端的例子，你被人抢劫，是花钱消灾，还是为了守财你死我亡？这就有点像搞艺术，先做点喜闻乐见的东西活跃名头，在有充足的资本后再搞自己一意孤行东西比较符合人性。</p>
+<p>所以闭门造车弄自己的idea很危险。需要权威人士的意见。</p>
+<ol>
+<li>代码准确性</li>
+</ol>
+<p>research code挺极端的，有时有风格不拘一格，一百篇论文code有一百种格式，理论上只要能跑，屎山也没啥问题。但是有时其准确性要求远远高于普通的开发，因为你这部分的代码结果会影响之后所有的研究进展，要是前期的实验代码有问题，那有可能颠覆后期所有结果。我上周就差点遇到这个问题，只不过meeting后发现原来的问题好像也不是问题。</p>
+<p>research code最大的问题其实是结果的未知性。一般的场景是预想一个结果，然后做实验，跑出这个结果了，好，再基于这个结果想另外一个实验，以此类推。如果没跑出来结果，那就有问题了，是你本身预想的结果理论上就是错的，还是你代码的问题。要是一时半会儿找不着bug，坏了，那是不是研究方向有问题？这条路就走死了？就先不论要设计多个其他实验反方向验证了，有时候问题出在更高的理论维度，但是大致方向是正确的，但就你现在的知识储备完全没能力修，那怎么办？</p>
+<p>就算你的实验结果是符合预期的，也不一定能反证推论成立。因为有太多你没法预料的bug能导致同样的结果。而要是你基于错误的推论走了很远怎么办？举个例子，有一个晚上我做了三个小时的实验，已经针对结果给结论了，随手再换了一个变量，发现结果一样。这就不对了，于是找半天，发现是python一个变量copy后改变其值，因为我用的是<code>a=b</code>而不是<code>a = b.copy()/b.clone()</code>连带原本被copy的对象也改变了。 但是a=b，引用相同地址很好理解，但是常理你一旦改变a的值，地址就会重新改变，a和b就没关系了，不可能出现a变b也变的情况，但是很不凑巧他就是发生了。而我之前的实验结果都是基于这个bug的。</p>
+<p>试想下次再出现这种bug，要是我咩有意识到，那么问题不就埋下了？<br>而且如果是一个对该领域半生不熟的新手，那么本身认知就不充分的情况下，产生的问题只会更大更严重。</p>
+<p>所以这就是一个矛盾点。</p>
+<p>科研代码本身需要高度准确，但是科研通常都是面对未知的挑战，探索未知又通畅代表你没法对整个情况有一个准确的认知。不像开发，基本上所有代码，能跑就不是问题，预期结果，或者说需求是100%固定的，不会因为你的结果而改变。能做就能，不能做有的是人想做（（（</p>
+<p>那么出路就是，尽量减少低级错误。例如我举例的变量copy问题，然后写代码前对整个局面冷静分析。先思考再动手，而不是把功能先丢给gpt，无脑cv。或”先写着看看“。一般这种写着写着就会忘记思考，然后搞错出发点。</p>
+<ol>
+<li>学术视野<br>之前也多次提到这个问题。总的来讲就是你对这个领域的了解深入程度，你看多多少该领域的论文，你清楚多少该领域的应用细节。</li>
+</ol>
+<p>本科生的学术视野的起跑线位置和速度通常都是0。但加速度就不一定了。我在这方面真没啥发言权，这是我亟需改进的地方，我基本是老板手把手带的，idea和进展全靠提点，也是最近才萌生了提高学术视野的意识。，</p>
+<p>Philadelphia<br>visceral</p>
+
+            <div class="clearfix"></div>
+            <hr class="nogutter">
+        </div>
+        <nav class="m-pagination col-md-8 col-md-offset-2 col-sm-24" role="pagination">
+    
+    
+    <a class="pull-right" href="../../08/ml_%E6%A8%A1%E5%9E%8B%E9%AD%94%E6%94%B9%E5%A4%A7%E6%B3%95/">
+        模型魔改大法 →
+    </a>
+    
+</nav>
+
+        <div class="col-md-8 col-md-offset-2 col-sm-24"><script type="text/javascript">
+  /**
+   * 搜狐畅言
+   */
+
+  /*
+  document.write('<div id="SOHUCS" sid="' + window.location.pathname.slice(1) + '" ></div>');
+
+  window.onload = function () {
+    (function () {
+      var appid = 'cytXXXX';
+      var conf = 'prod_xxxxxxxxxxxxxxxxx';
+      var width = window.innerWidth || document.documentElement.clientWidth;
+      var loadJs = function (d, a, id) {
+        var c = document.getElementsByTagName("head")[0] || document.head || document.documentElement;
+        var b = document.createElement("script");
+        b.setAttribute("type", "text/javascript");
+        b.setAttribute("charset", "UTF-8");
+        b.setAttribute("src", d);
+        if (id) {
+          b.setAttribute("id", id);
+        }
+        if (typeof a === "function") {
+          if (window.attachEvent) {
+            b.onreadystatechange = function () {
+              var e = b.readyState;
+              if (e === "loaded" || e === "complete") {
+                b.onreadystatechange = null;
+                a()
+              }
+            }
+          } else {
+            b.onload = a
+          }
+        }
+        c.appendChild(b)
+      };
+
+      loadJs("https://changyan.sohu.com/upload/changyan.js", function () {
+        window.changyan.api.config({
+          appid: appid,
+          conf: conf
+        })
+      });
+    })();
+  }
+  */
+
+</script>
+</div>
+    </div>
+</section>
+
+<!-- Highlight.js -->
+
+<link rel="stylesheet"
+href="//highlightjs.org/static/demo/styles/atom-one-light.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js">
+</script>
+<script>
+hljs.initHighlightingOnLoad();
+
+</script>
+
+
+      
+<!-- ============================ Footer =========================== -->
+
+<footer>
+    <div class="container">
+            <div class="copy">
+                <p>
+                    &copy; 2014<script>new Date().getFullYear()>2010&&document.write("-"+new Date().getFullYear());</script>, Content By Rin777. All Rights Reserved.
+                </p>
+                <p>Theme By <a target="_blank" rel="noopener" href="//go.kieran.top" style="color: #767D84">Kieran</a></p>
+            </div>
+            <div class="social">
+                <ul>
+                    
+                    <li><a href="https://github.com/" title="Github" target="_blank"><i class="icon-github"></i></a>&nbsp;</li>
+                    
+                    
+                    
+                    
+                    
+                </ul>
+            </div>
+            <div class="clearfix"> </div>
+        </div>
+</footer>
+
+<!-- ============================ END Footer =========================== -->
+      <!-- Load our scripts -->
+<!-- Resizable 'on-demand' full-height hero -->
+<script type="text/javascript">
+    var resizeHero = function () {
+        var hero = $(".cover,.heightblock"),
+            window1 = $(window);
+        hero.css({
+            "height": window1.height()
+        });
+    };
+
+    resizeHero();
+
+    $(window).resize(function () {
+        resizeHero();
+    });
+</script>
+<script src="/js/plugins.min.js"></script><!-- Bootstrap core and concatenated plugins always load here -->
+<script src="/js/scripts.js"></script><!-- Theme scripts -->
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$('#intro').find('img').each(function(){
+  var alt = this.alt;
+
+  if (alt){
+    $(this).after('<span class="caption" style="display:none">' + alt + '</span>');
+  }
+
+  $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox" rel="gallery" />');
+});
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+      
+            <style>
+.local-search-popup {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  background: rgba(255, 255, 255, .9);
+  color: #333;
+  z-index: 9999;
+  border-radius: 5px;
+  overflow: scroll;
+}
+#local-search-input {
+  width: 100%;
+  border: none;
+  outline: none;
+  border-bottom: 1px solid #151515;
+  background-color: initial;
+}
+.search-result-list {
+  list-style: none;
+  padding-left: 0;
+}
+.search-result-list > li {
+  margin-top: 15px;
+  border-bottom: 1px solid #ddd;
+  transition: all ease .3s;
+}
+.search-result-list > li:hover {
+  border-bottom: 1px solid gray;
+}
+.search-result-title {
+  font-size: 16px;
+}
+.search-result {
+  line-height: 20px;
+}
+.search-keyword {
+  font-weight: normal;
+  color: #c00;
+}
+
+@media (min-width: 890px) {
+  .popup-btn-close {
+    position: absolute;
+    top: 15px;
+    left: 35px;
+    border: 1px solid #151515;
+    padding: 0px 10px;
+    border-top-left-radius: 8px;
+    cursor: pointer;
+    transition: all ease .3s;
+  }
+  .popup-btn-close:hover {
+    background: #151515;
+    opacity: .9;
+    color: #fff;
+  }
+}
+@media (max-width: 890px) {
+  .popup-btn-close {
+    font-size: 0;
+    position: fixed;
+    right: 20px;
+    bottom: 50px;
+    width: 50px;
+    height: 50px;
+    background: #fff;
+    border-radius: 50%;
+    box-shadow: 1px 1px 5px #888;
+    cursor: pointer;
+  }
+  .popup-btn-close::after {
+    content: '←';
+    color: #151515;
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-size: 20px;
+    width: 100%;
+    height: 100%;
+    line-height: 50px;
+    text-align: center;
+  }
+}
+</style>
+
+<div class="popup search-popup local-search-popup">
+  <span class="popup-btn-close">
+    ESC
+  </span>
+  <div class="container">
+    <div class="col-md-8 col-md-offset-2">
+      <div class="local-search-header clearfix">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="local-search-input-wrapper">
+          <input autocomplete="off" placeholder="Search..." type="text" id="local-search-input">
+        </div>
+      </div>
+      <div id="local-search-result"></div>
+    </div>
+  </div>
+</div>
+
+<script src="/js/ziploader.js"></script>
+
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.json";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').fadeOut(300);
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $('.popup').fadeIn(300);
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // get search zip version
+    $.get('/searchVersion.txt?t=' + (+new Date()), function(res) {
+      if (localStorage.getItem('searchVersion') !== res) {
+        localStorage.setItem('searchVersion', res);
+        initSearchJson();
+      }
+    });
+
+    function initSearchJson () {
+      initLoad(['/search.zip'], {
+        loadOptions: {
+          success: function(obj) {
+            localStorage.setItem('searchJson', obj['search.json'])
+          },
+          error: function(e) {
+            return console.log(e)
+          }
+        },
+        returnOptions: {
+          'json': TYPE_TEXT
+        },
+        mimeOptions:{
+          'json':'application/json'
+        }
+      })
+    }
+
+
+    // search function;
+    var searchFunc = function(search_id, content_id) {
+      'use strict';
+
+      isfetched = true;
+      var datas = JSON.parse(localStorage.getItem('searchJson'));
+      console.log(search_id)
+      var input = document.getElementById(search_id);
+      var resultContent = document.getElementById(content_id);
+      var inputEventFunction = function() {
+        var searchText = input.value.trim().toLowerCase();
+        var keywords = searchText.split(/[\s\-]+/);
+        if (keywords.length > 1) {
+          keywords.push(searchText);
+        }
+        var resultItems = [];
+        if (searchText.length > 0) {
+          // perform local searching
+          datas.forEach(function(data) {
+            var isMatch = false;
+            var hitCount = 0;
+            var searchTextCount = 0;
+            var title = data.title ? data.title.trim() : '';
+            var titleInLowerCase = title.toLowerCase();
+            var content = data.content ? data.content.trim().replace(/<[^>]+>/g,"") : '';
+            var contentInLowerCase = content.toLowerCase();
+            var articleUrl = decodeURIComponent(data.url);
+            var indexOfTitle = [];
+            var indexOfContent = [];
+            // only match articles with not empty titles
+            keywords.forEach(function(keyword) {
+              function getIndexByWord(word, text, caseSensitive) {
+                var wordLen = word.length;
+                if (wordLen === 0) {
+                  return [];
+                }
+                var startPosition = 0, position = [], index = [];
+                if (!caseSensitive) {
+                  text = text.toLowerCase();
+                  word = word.toLowerCase();
+                }
+                while ((position = text.indexOf(word, startPosition)) > -1) {
+                  index.push({position: position, word: word});
+                  startPosition = position + wordLen;
+                }
+                return index;
+              }
+
+              indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+              indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+            });
+            if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+              isMatch = true;
+              hitCount = indexOfTitle.length + indexOfContent.length;
+            }
+
+            // show search results
+
+            if (isMatch) {
+              // sort index by position of keyword
+
+              [indexOfTitle, indexOfContent].forEach(function (index) {
+                index.sort(function (itemLeft, itemRight) {
+                  if (itemRight.position !== itemLeft.position) {
+                    return itemRight.position - itemLeft.position;
+                  } else {
+                    return itemLeft.word.length - itemRight.word.length;
+                  }
+                });
+              });
+
+              // merge hits into slices
+
+              function mergeIntoSlice(text, start, end, index) {
+                var item = index[index.length - 1];
+                var position = item.position;
+                var word = item.word;
+                var hits = [];
+                var searchTextCountInSlice = 0;
+                while (position + word.length <= end && index.length != 0) {
+                  if (word === searchText) {
+                    searchTextCountInSlice++;
+                  }
+                  hits.push({position: position, length: word.length});
+                  var wordEnd = position + word.length;
+
+                  // move to next position of hit
+
+                  index.pop();
+                  while (index.length != 0) {
+                    item = index[index.length - 1];
+                    position = item.position;
+                    word = item.word;
+                    if (wordEnd > position) {
+                      index.pop();
+                    } else {
+                      break;
+                    }
+                  }
+                }
+                searchTextCount += searchTextCountInSlice;
+                return {
+                  hits: hits,
+                  start: start,
+                  end: end,
+                  searchTextCount: searchTextCountInSlice
+                };
+              }
+
+              var slicesOfTitle = [];
+              if (indexOfTitle.length != 0) {
+                slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+              }
+
+              var slicesOfContent = [];
+              while (indexOfContent.length != 0) {
+                var item = indexOfContent[indexOfContent.length - 1];
+                var position = item.position;
+                var word = item.word;
+                // cut out 100 characters
+                var start = position - 20;
+                var end = position + 80;
+                if(start < 0){
+                  start = 0;
+                }
+                if (end < position + word.length) {
+                  end = position + word.length;
+                }
+                if(end > content.length){
+                  end = content.length;
+                }
+                slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+              }
+
+              // sort slices in content by search text's count and hits' count
+
+              slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                  return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                  return sliceRight.hits.length - sliceLeft.hits.length;
+                } else {
+                  return sliceLeft.start - sliceRight.start;
+                }
+              });
+
+              // select top N slices in content
+
+              var upperBound = parseInt('2');
+              if (upperBound >= 0) {
+                slicesOfContent = slicesOfContent.slice(0, upperBound);
+              }
+
+              // highlight title and content
+
+              function highlightKeyword(text, slice) {
+                var result = '';
+                var prevEnd = slice.start;
+                slice.hits.forEach(function (hit) {
+                  result += text.substring(prevEnd, hit.position);
+                  var end = hit.position + hit.length;
+                  result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                  prevEnd = end;
+                });
+                result += text.substring(prevEnd, slice.end);
+                return result;
+              }
+
+              var resultItem = '';
+
+              if (slicesOfTitle.length != 0) {
+                resultItem += "<li><a target='_blank' href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+              } else {
+                resultItem += "<li><a target='_blank' href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+              }
+
+              slicesOfContent.forEach(function (slice) {
+                resultItem += "<a target='_blank' href='" + articleUrl + "'>" +
+                  "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                  "...</p>" + "</a>";
+              });
+
+              resultItem += "</li>";
+              resultItems.push({
+                item: resultItem,
+                searchTextCount: searchTextCount,
+                hitCount: hitCount,
+                id: resultItems.length
+              });
+            }
+          })
+        };
+        if (keywords.length === 1 && keywords[0] === "") {
+          resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+        } else if (resultItems.length === 0) {
+          resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+        } else {
+          resultItems.sort(function (resultLeft, resultRight) {
+            if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+              return resultRight.searchTextCount - resultLeft.searchTextCount;
+            } else if (resultLeft.hitCount !== resultRight.hitCount) {
+              return resultRight.hitCount - resultLeft.hitCount;
+            } else {
+              return resultRight.id - resultLeft.id;
+            }
+          });
+          var searchResultList = '<ul class=\"search-result-list\">';
+          resultItems.forEach(function (result) {
+            searchResultList += result.item;
+          })
+          searchResultList += "</ul>";
+          resultContent.innerHTML = searchResultList;
+        }
+      }
+
+      if ('auto' === 'auto') {
+        input.addEventListener('input', inputEventFunction);
+      } else {
+        $('.search-icon').click(inputEventFunction);
+        input.addEventListener('keypress', function (event) {
+          if (event.keyCode === 13) {
+            inputEventFunction();
+          }
+        });
+      }
+
+      // remove loading animation
+      $('body').css('overflow', '');
+
+      proceedsearch();
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        $('.sb-close').click();
+        searchFunc('local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+      
+      
+
+<!--
+
+<link rel="stylesheet" href="/dist/APlayer.min.css">
+<div id="aplayer"></div>
+<script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+<meting-js
+      server="netease"
+      type="playlist"
+      id="4904272454">
+</meting-js>
+-->
+
+</body>
+
+</html>
+
+
+
+
+
+
+
