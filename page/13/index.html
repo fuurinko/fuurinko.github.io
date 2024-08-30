@@ -84,6 +84,8 @@
 				    
 				    <li><a href="/categories/Linux/" class="animsition-link">Linux<small>(1)</small></a></li>
 				    
+				    <li><a href="/categories/MESS/" class="animsition-link">MESS<small>(1)</small></a></li>
+				    
 				    <li><a href="/categories/ML/" class="animsition-link">ML<small>(57)</small></a></li>
 				    
 				    <li><a href="/categories/PWN-COLLEGE/" class="animsition-link">PWN.COLLEGE<small>(1)</small></a></li>
@@ -196,6 +198,45 @@
 
 <section id="intro">
     <div class="container">
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2022/04/10/heap_learning_io_file/">IO_FILE学习</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-04-10T14:44:00.000Z" itemprop="datePublished">
+          2022-04-10
+      </time>
+    
+    
+    | 
+    <a href='/tags/io-file/'>io_file</a>
+    
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        
+     
+overview大致原理​        glibc定义了_IO_FILE这样一个结构体来管理io file。io_file结构体里定义了一堆相关的变量，但是真正关键的是其中包含的_IO_FILE_plus结构。 libc2.23 版本下，32 位的 vtable 偏移为 0x94，64 位偏移为 0xd8。
+​        结构源码如下：
+12345struct _IO_FILE_plus&#123;    _IO_F
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/04/10/heap_learning_io_file/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
         
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
@@ -551,45 +592,6 @@ ret2shellcode​        在rwx的内存空间(不一定是栈）上写shellco
                     
                     <p class="pull-right readMore">
                         <a href="/2022/04/06/sum_stack_summary/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2022/04/05/heap_learning_unlink/">UNLINK</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2022-04-04T16:00:00.000Z" itemprop="datePublished">
-          2022-04-05
-      </time>
-    
-    
-    | 
-    <a href='/tags/HEAP-Unlink/'>HEAP - Unlink</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        
-         
-0:​        还是一个旧的笔记的内容增加以及纠错。这篇我也不记得是什么时候写的了，也是半年前吧。
-UNLINKunlink大致概念​        就是将free chunk从双向循环链表中解链的过程，具体触发这个过程的操作比较常见的有与当前物理相邻的chunk合并的过程等。因为是双向链表，自然已经超出了fastbin的范围，一般申请的chunk也要大于0x60了。
-​        在ptmalloc中u
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2022/04/05/heap_learning_unlink/">Read More...</a>
                     </p>
                     
                 </div>

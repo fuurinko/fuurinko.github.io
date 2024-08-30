@@ -84,6 +84,8 @@
 				    
 				    <li><a href="/categories/Linux/" class="animsition-link">Linux<small>(1)</small></a></li>
 				    
+				    <li><a href="/categories/MESS/" class="animsition-link">MESS<small>(1)</small></a></li>
+				    
 				    <li><a href="/categories/ML/" class="animsition-link">ML<small>(57)</small></a></li>
 				    
 				    <li><a href="/categories/PWN-COLLEGE/" class="animsition-link">PWN.COLLEGE<small>(1)</small></a></li>
@@ -196,6 +198,41 @@
 
 <section id="intro">
     <div class="container">
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
+                    <h3><a href="/2022/07/15/mess_vmware fusion无法复制粘贴问题/">vmware fusion无法复制粘贴问题</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2022-07-15T14:28:51.623Z" itemprop="datePublished">
+          2022-07-15
+      </time>
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        Ubuntu20.04安装vmware tools时显示segment fault，虽然最后显示成功安装，但是没有任何效果，依旧不能复制粘贴。
+解决方式：
+首先删除已经安装的vmware tools。具体方法是
+12cd vmware-tools-distrib/binsudo ./vmware-uninstall-tools.pl
+接着直接
+1sudo apt-get install open-vm-tools open-vm-too
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2022/07/15/mess_vmware fusion无法复制粘贴问题/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
         
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
@@ -559,47 +596,6 @@ reverse​         有了上一次的经验就知道这个题的前面的随机�
                     
                     <p class="pull-right readMore">
                         <a href="/2022/05/18/week12_3.1_pawnable_babystack/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2022/05/17/week12_2_pawnable_spirited_away/">pawnable - spirited_away</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2022-05-17T02:47:48.848Z" itemprop="datePublished">
-          2022-05-17
-      </time>
-    
-    
-    | 
-    <a href='/tags/STACK/'>STACK</a>
-    
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        ​    
-     
-overview​    栈题。
-reverse有一点诡异。
-整体的逻辑非常清晰简单，但是有疑惑的地方。
-12345if ( choice == &#x27;Y&#x27; || choice == &#x27;y&#x27; )&#123;  free(name);                               // UAF??  goto LABEL_2;&#125;
-​        这里将n
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2022/05/17/week12_2_pawnable_spirited_away/">Read More...</a>
                     </p>
                     
                 </div>
