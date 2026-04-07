@@ -195,6 +195,43 @@ h1 {
   color: var(--muted);
 }
 
+.article-panel {
+  max-width: 920px;
+}
+
+.article-body h2,
+.article-body h3 {
+  margin-top: 1.8em;
+  margin-bottom: 0.7em;
+}
+
+.article-body p,
+.article-body li {
+  color: var(--ink);
+}
+
+.article-body img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 18px;
+  display: block;
+  margin: 18px 0;
+}
+
+.article-body pre {
+  overflow-x: auto;
+  padding: 18px;
+  border-radius: 16px;
+  background: #1f1b18;
+  color: #f8efe8;
+}
+
+.article-body pre code {
+  background: transparent;
+  padding: 0;
+  color: inherit;
+}
+
 code {
   padding: 2px 6px;
   border-radius: 8px;

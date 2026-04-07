@@ -1,14 +1,20 @@
 [
   {
     "title": "getshell是什么？",
-    "path": "#",
+    "path": "/posts/getshell-shi-shen-me.html",
     "category": "MESS",
     "summary": "对 getshell 这个概念的一次重新理解，从 socket 交互一路想到实际利用。"
   },
   {
     "title": "随记-001",
-    "path": "#",
+    "path": "/posts/sui-ji-001.html",
     "category": "随记",
     "summary": "方法论、斯多葛和消费主义，一篇比较典型的随记。"
+  },
+  {
+    "title": "春日和",
+    "path": "/posts/chun-ri-he.html",
+    "category": "幻想曲",
+    "summary": "关于铃兰、樱花、雨水和春天的一篇短文。"
   }
 ]
