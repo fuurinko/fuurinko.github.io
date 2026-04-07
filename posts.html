@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>文章 | Fuurinko</title>
+    <meta name="description" content="Fuurinko 的文章列表。" />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="site-shell">
+      <header class="site-header compact">
+        <div>
+          <p class="site-kicker">Posts</p>
+          <h1>文章</h1>
+        </div>
+        <nav class="site-nav">
+          <a href="/">首页</a>
+          <a href="/posts.html" aria-current="page">文章</a>
+          <a href="/about.html">关于</a>
+        </nav>
+      </header>
+
+      <main class="panel posts-panel">
+        <p class="panel-label">Current Stage</p>
+        <h2>这是重构版本的文章入口。</h2>
+        <p>
+          现在先提供统一入口，后面可以继续加分类页、归档页和搜索。你只需要把文章整理成 HTML 或者 Markdown 转换后的页面，链接到这里就可以。
+        </p>
+
+        <div id="post-list" class="placeholder-list"></div>
+      </main>
+    </div>
+    <script>
+      async function loadPosts() {
+        const container = document.getElementById("post-list");
+        try {
+          const res = await fetch("/posts.json");
+          const posts = await res.json();
+          container.innerHTML = posts
+            .map(
+              (post) => `
+                <article class="post-item">
+                  <p class="post-meta">${post.category}</p>
+                  <h3><a href="${post.path}">${post.title}</a></h3>
+                  <p>${post.summary}</p>
+                </article>
+              `,
+            )
+            .join("");
+        } catch (err) {
+          container.innerHTML =
+            "<article class='post-item'><p>文章列表暂时加载失败，但页面结构已经准备好了。</p></article>";
+        }
+      }
+      loadPosts();
+    </script>
+  </body>
+</html>
